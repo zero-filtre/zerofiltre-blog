@@ -1,1 +1,44 @@
-<p>shell works!</p>
+<mat-sidenav-container class="sidenav-container bg-white shadow-md py-3">
+
+    <!-- SIDENAV -->
+
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="false">
+        <mat-toolbar>Menu</mat-toolbar>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/a-propos" (click)="drawer.close()">A Propos</a>
+            <a mat-list-item routerLink="/articles" (click)="drawer.close()">Articles</a>
+            <a mat-list-item routerLink="/whatsapp" (click)="drawer.close()">33 7 53 42 86 23</a>
+            <a mat-list-item routerLink="/github" (click)="drawer.close()">Github</a>
+            <a mat-list-item routerLink="/linkedin" (click)="drawer.close()">LinkedIn</a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+
+        <!-- TOP TOOLBAR-->
+
+        <mat-toolbar class="flex justify-between bg-white max-w-7xl mx-auto">
+            <span class="logo" routerLink="/">Zerofiltre</span>
+
+            <span class="fill-space"></span>
+
+            <div *ngIf="!(isHandset$ | async)">
+                <a mat-button routerLink="/a-propos">A Propos</a>
+                <a mat-button routerLink="/articles">Articles</a>
+                <a mat-button routerLink="/whatsapp">33 7 53 42 86 23</a>
+                <a mat-button routerLink="/github">Github</a>
+                <a mat-button routerLink="/linkedin">LinkedIn</a>
+            </div>
+
+            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+                *ngIf="isHandset$ | async">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <!-- TRANSCLUSION -->
+        <ng-content></ng-content>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

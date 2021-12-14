@@ -10,7 +10,6 @@ export class AppComponent implements OnInit {
   constructor(private snackbar:MatSnackBar) {}
 
   ngOnInit(): void {
-    this.snackbar.open('Snackbar open')
   }
 
   title = 'zerofitre-blog';
