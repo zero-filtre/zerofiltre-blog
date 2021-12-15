@@ -1,0 +1,15 @@
+.useful-links {
+  @apply text-center md:text-left md:grid grid-cols-3 gap-5;
+}
+
+.services,
+.achievments,
+.articles,
+.legal,
+.contact {
+  @apply mt-8 md:mt-0;
+}
+
+.yellow-text {
+  @apply text-accent font-bold;
+}
