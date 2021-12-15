@@ -16,7 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShellComponent } from './shell/shell.component';
 import { FooterComponent } from './footer/footer.component';
 
-const components = [ShellComponent];
+const components = [ShellComponent, FooterComponent];
 
 const modules = [
   CommonModule,
@@ -36,12 +36,11 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, FooterComponent],
+  declarations: [...components],
   imports: [...modules],
   exports: [
     ...components,
     ...modules,
-    FooterComponent,
   ]
 })
 export class SharedModule {}

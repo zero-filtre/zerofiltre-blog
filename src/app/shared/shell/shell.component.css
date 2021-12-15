@@ -1,3 +1,17 @@
 .top-toolbar {
   @apply px-0;
 }
+
+.top-toolbar a:hover {
+  @apply hover:text-primary-500 hover:bg-white;
+}
+
+.top-toolbar a div {
+  @apply font-normal;
+}
+
+.sidenav {
+  width: 200px;
+  height: fit-content;
+  padding: 100px 0 40px 0;
+}
