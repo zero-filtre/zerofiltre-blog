@@ -2,16 +2,20 @@
   @apply px-0;
 }
 
-.top-toolbar a:hover {
-  @apply hover:text-primary-500 hover:bg-white;
+.top-toolbar .navLink {
+  @apply mx-4 hover:text-primary-500;
 }
 
-.top-toolbar a div {
-  @apply font-normal;
+.top-toolbar .navLink div {
+  @apply text-sm font-montserat font-normal;
 }
 
 .sidenav {
   width: 200px;
   height: fit-content;
   padding: 100px 0 40px 0;
+}
+
+.sidenav .sidenavLink div {
+  @apply text-sm font-montserat font-normal;
 }

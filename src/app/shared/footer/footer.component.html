@@ -2,7 +2,7 @@
     <div class="container md:grid gap-10">
         <div class="useful-links">
             <div class="services">
-                <p class="yellow-text">NOS SERVICES</p>
+                <p class="yellow-text title">NOS SERVICES</p>
                 <ul>
                     <li><a routerLink="#">Développement d’applications JAVA</a></li>
                     <li><a routerLink="/app-nav.html">Développement d’applications pour navigateurs Web</a></li>
@@ -15,7 +15,7 @@
             </div>
 
             <div class="achievments">
-                <p class="yellow-text">NOS REALISATIONS</p>
+                <p class="yellow-text title">NOS REALISATIONS</p>
                 <ul>
                     <li><a routerLink="/signature-engine.html">Moteur de signature de document</a></li>
                     <li><a routerLink="/portad.html">Portail de suivi de demandes administratives</a></li>
@@ -28,7 +28,7 @@
             </div>
 
             <div class="articles">
-                <p class="yellow-text">DERNIERS ARTICLES</p>
+                <p class="yellow-text title">DERNIERS ARTICLES</p>
                 <ul>
                     <li><a routerLink="https://medium.com/swlh/grapql-from-theory-to-real-world-with-spring-boot-d6b46a28027b?source=friends_link&sk=265f0f4063dbea9780de4a55e8370b14"
                             target="_blank">GraphQL:
@@ -53,7 +53,7 @@
         <div class="useful-links">
 
             <div class="legal">
-                <p class="yellow-text">INFO. GÉNÉRALES</p>
+                <p class="yellow-text title">INFO. GÉNÉRALES</p>
                 <ul>
                     <li><a routerLink="/legal_notice.html">Mentions légales</a></li>
                     <li><a routerLink="/terms_of_use.html">Politique de confidentialité</a></li>
@@ -61,13 +61,15 @@
             </div>
 
             <div class="contact">
-                <p class="yellow-text">Nous contacter</p>
+                <p class="yellow-text title">Nous contacter</p>
                 <ul>
-                    <li>
-                        Tél: <a class="yellow-text text-base" routerLink="tel:+33 7 53 42 86 23">+33 7 53 42 86 23</a>
+                    <li class="text-base">
+                        <span class="text-base">Tél: </span> <a class="yellow-text text-base"
+                            routerLink="tel:+33 7 53 42 86 23">+33 7 53 42
+                            86 23</a>
                     </li>
                     <li>
-                        Email: <a class="yellow-text text-base"
+                        <span class="text-base">Email: </span> <a class="yellow-text text-base"
                             routerLink="mailto:info@zerofiltre.tech">info@zerofiltre.tech</a><br>
                     </li>
                 </ul>
@@ -77,14 +79,14 @@
 
 
         <div class="footer-end flex justify-between items-center border-t-[1px] border-gray-600 pt-4 mt-20">
-            <div>
+            <div class="font-light text-[15px]">
                 &copy; 2020
                 <span class="text-primary-500 font-bold">Zerofiltre.</span> Tous droits reservés.
             </div>
             <div class="social-links flex justify-between gap-2">
                 <a routerLink="https://github.com/zero-filtre" target="_blank">
                     <div class="flex">
-                        <svg class="fill-white rounded-md w-5" role="img" viewBox="0 0 24 24"
+                        <svg class="fill-white rounded-md w-5 hover:fill-primary-300" role="img" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
                             <title>GitHub</title>
                             <path
@@ -95,7 +97,7 @@
 
                 <a routerLink="https://www.linkedin.com/company/zerofiltre?_l=fr_FR" target="_blank">
                     <div class="flex">
-                        <svg class="fill-white rounded-md w-5" role="img" viewBox="0 0 24 24"
+                        <svg class="fill-white rounded-md w-5 hover:fill-primary-300" role="img" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
                             <title>LinkedIn</title>
                             <path

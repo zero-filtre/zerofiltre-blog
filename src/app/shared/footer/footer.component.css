@@ -2,14 +2,26 @@
   @apply text-center md:text-left md:grid grid-cols-3 gap-5;
 }
 
+.useful-links .title {
+  @apply pb-4 text-sm;
+}
+
+.useful-links li {
+  @apply text-xs mb-3;
+}
+
 .services,
 .achievments,
 .articles,
 .legal,
 .contact {
-  @apply mt-8 md:mt-0;
+  @apply mt-10 md:mt-0;
 }
 
 .yellow-text {
   @apply text-accent font-bold;
+}
+
+.contact li:first-child {
+  @apply mb-0;
 }
