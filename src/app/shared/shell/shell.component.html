@@ -5,7 +5,7 @@
     <mat-sidenav #drawer class="sidenav relative" position="end" fixedInViewport
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="false">
-        <!-- <mat-toolbar (click)="drawer.close()">Menu</mat-toolbar> -->
+
         <div class="absolute top-6 right-6 w-fit" (click)="drawer.close()">
             <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
                 *ngIf="isHandset$ | async">
@@ -71,7 +71,6 @@
                 </div>
             </a>
 
-            <span class="fill-space"></span>
 
             <div *ngIf="!(isHandset$ | async)" class="flex items-center text-secondary">
 
@@ -126,8 +125,11 @@
             </button>
         </mat-toolbar>
 
-        <!-- TRANSCLUSION -->
-        <ng-content></ng-content>
-
     </mat-sidenav-content>
+
 </mat-sidenav-container>
+
+<!-- TRANSCLUSION -->
+<ng-content></ng-content>
+
+<app-footer></app-footer>

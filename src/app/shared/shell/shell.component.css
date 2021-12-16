@@ -11,9 +11,7 @@
 }
 
 .sidenav {
-  width: 200px;
-  height: fit-content;
-  padding: 100px 0 40px 0;
+  @apply w-52 h-fit pt-24 pb-10;
 }
 
 .sidenav .sidenavLink div {
