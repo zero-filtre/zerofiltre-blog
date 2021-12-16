@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container bg-white shadow-md py-[6px]">
+<mat-sidenav-container class="sidenav-container">
 
     <!-- SIDENAV -->
 
@@ -60,11 +60,11 @@
         </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content class="container">
+    <mat-sidenav-content class="">
 
         <!-- TOP TOOLBAR-->
 
-        <mat-toolbar class="top-toolbar flex justify-between bg-white">
+        <mat-toolbar class="top-toolbar">
             <a class="logo-link" routerLink="/">
                 <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
                     <img class="max-w-full" src="../../../assets/logoblue.svg" alt="Zerofiltre.tech">
@@ -125,11 +125,12 @@
             </button>
         </mat-toolbar>
 
+
+        <!-- TRANSCLUSION -->
+        <ng-content></ng-content>
+
+        <app-footer></app-footer>
+
     </mat-sidenav-content>
 
 </mat-sidenav-container>
-
-<!-- TRANSCLUSION -->
-<ng-content></ng-content>
-
-<app-footer></app-footer>
