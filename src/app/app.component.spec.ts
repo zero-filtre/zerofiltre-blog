@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'zerofitre-blog'`, () => {
+  it(`should have as title 'zerofiltre-blog'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('zerofitre-blog');
+    expect(app.title).toEqual('zerofiltre-blog');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('zerofitre-blog app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('zerofiltre-blog app is running!');
   });
 });

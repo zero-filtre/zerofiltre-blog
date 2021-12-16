@@ -1,11 +1,11 @@
 {
-  "name": "zerofitre-blog",
+  "name": "zerofiltre-blog",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration dev",
     "test": "ng test"
   },
   "private": true,
@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "~12.0.3",
     "@angular/router": "~12.0.3",
     "@ngneat/tailwind": "^7.0.3",
+    "g": "^2.0.1",
+    "node": "^17.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"

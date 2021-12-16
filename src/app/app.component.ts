@@ -12,5 +12,5 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  title = 'zerofitre-blog';
+  title = 'zerofiltre-blog';
 }

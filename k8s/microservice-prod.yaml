@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: zerofiltretech-prod
+  name: zerofiltretech-blog-front-prod
+spec:
+  minReadySeconds: 30
+  progressDeadlineSeconds: 120
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zerofiltretech-blog-front-prod
+  template:
+    metadata:
+      labels:
+        app: zerofiltretech-blog-front-prod
+    spec:
+      containers:
+        - name: zerofiltretech-blog-front-prod
+          image: imzerofiltre/zerofiltretech-blog-front:0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: zerofiltretech-prod
+  name: zerofiltretech-blog-front-prod
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: zerofiltretech-blog-front-prod
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  namespace: zerofiltretech-prod
+  name: zerofiltretech-blog-front-prod
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # add an annotation indicating the issuer to use.
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  rules:
+    - host: "blog.zerofiltre.tech"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: zerofiltretech-blog-front-prod
+              servicePort: 80
+  tls: # < placing a host in the TLS config will indicate a certificate should be created
+    - hosts:
+        - "blog.zerofiltre.tech"
+      secretName: zerofiltre-ingress-cert # < cert-manager will store the created certificate in this secret.
