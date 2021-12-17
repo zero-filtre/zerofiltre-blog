@@ -57,4 +57,4 @@ spec:
   tls: # < placing a host in the TLS config will indicate a certificate should be created
     - hosts:
         - "blog.zerofiltre.tech"
-      secretName: zerofiltre-ingress-cert # < cert-manager will store the created certificate in this secret.
+      secretName: blog-front-zerofiltre-ingress-cert # < cert-manager will store the created certificate in this secret.
