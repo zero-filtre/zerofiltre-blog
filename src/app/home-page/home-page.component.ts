@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-
+  title = 'Zerofitre'
+  
   constructor() { }
 
   ngOnInit(): void {
