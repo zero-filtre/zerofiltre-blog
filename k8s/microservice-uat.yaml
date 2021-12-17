@@ -44,7 +44,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     # add an annotation indicating the issuer to use.
-    cert-manager.io/cluster-issuer: letsencrypt-uat
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   rules:
     - host: "blog-uat.zerofiltre.tech"

@@ -8,6 +8,7 @@ podTemplate(label: label, containers: [
         volumes: [
                 hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
         ]) {
+
     node(label) {
         stage('Checkout') {
             checkout scm
@@ -22,7 +23,7 @@ podTemplate(label: label, containers: [
                 buildAndTest()
             }
 
-            stage('Build and push API to docker registry') {
+            stage('Build and push to docker registry') {
                 withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     buildDockerImageAndPush(USERNAME, PASSWORD)
                 }
@@ -39,11 +40,11 @@ String getEnvName(String branchName) {
     if ( branchName == 'main' ) {
         return 'prod'
     }
-    return (branchName == 'develop') ? 'uat' : 'dev'
+    return (branchName == 'ready') ? 'uat' : 'dev'
 }
 
 String getTag(String buildNumber, String branchName) {
-    String tag = "imzerofiltre/zerofiltretech-blog:" + buildNumber;
+    String tag = "imzerofiltre/zerofiltretech-blog-front:" + buildNumber;
     if (branchName == 'main') {
         return tag + '-stable'
     }
