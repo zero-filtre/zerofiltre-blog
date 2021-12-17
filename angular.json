@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "zerofitre-blog": {
+    "zerofiltre-blog": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/zerofitre-blog",
+            "outputPath": "dist/zerofiltre-blog",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -33,7 +33,7 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "prod": {
               "budgets": [
                 {
                   "type": "initial",
@@ -54,7 +54,15 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "dev": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
+             "uat": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -63,24 +71,24 @@
               "namedChunks": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "dev"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "zerofitre-blog:build:production"
+              "browserTarget": "zerofiltre-blog:build:production"
             },
-            "development": {
-              "browserTarget": "zerofitre-blog:build:development"
+            "dev": {
+              "browserTarget": "zerofiltre-blog:build:dev"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "dev"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "zerofitre-blog:build"
+            "browserTarget": "zerofiltre-blog:build"
           }
         },
         "test": {
@@ -104,5 +112,5 @@
       }
     }
   },
-  "defaultProject": "zerofitre-blog"
+  "defaultProject": "zerofiltre-blog"
 }
