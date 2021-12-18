@@ -55,6 +55,12 @@
               "outputHashing": "all"
             },
             "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ],
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -62,7 +68,13 @@
               "sourceMap": true,
               "namedChunks": true
             },
-             "uat": {
+            "uat": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.uat.ts"
+                }
+              ],
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -76,8 +88,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "browserTarget": "zerofiltre-blog:build:production"
+            "prod": {
+              "browserTarget": "zerofiltre-blog:build:prod"
+            },
+            "uat": {
+              "browserTarget": "zerofiltre-blog:build:uat"
             },
             "dev": {
               "browserTarget": "zerofiltre-blog:build:dev"

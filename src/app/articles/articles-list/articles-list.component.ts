@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-articles-list',
@@ -11,9 +12,9 @@ import { ArticleService } from '../article.service';
 export class ArticlesListComponent implements OnInit {
   public  articles!: Article[];
 
-  constructor(private articleService: ArticleService) { 
-    // this.articles = []
-  }
+  name = environment.username;
+
+  constructor(private articleService: ArticleService) {}
 
   public getArticles(): void {
     this.articleService.getArticles().subscribe(

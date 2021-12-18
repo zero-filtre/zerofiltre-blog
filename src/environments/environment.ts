@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://blog-api-dev.zerofiltre.tech',
-  environment: 'development'
+  apiBaseUrl: 'http://localhost',
+  username: 'localUser',
+  envName: 'local'
 };
 
 /*
