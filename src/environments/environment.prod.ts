@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiBaseUrl: 'https://blog-api.zerofiltre.tech',
+  environment: 'production'
 };

@@ -27,6 +27,7 @@ export class ArticlesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getArticles()
   }
 
 }
