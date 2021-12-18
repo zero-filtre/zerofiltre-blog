@@ -1,6 +1,10 @@
 .top-toolbar {
+  @apply shadow-sm bg-white py-2;
+}
+
+.top-toolbar-container {
   max-width: 110rem;
-  @apply mx-auto px-[5%] flex justify-between bg-white py-10 shadow-sm;
+  @apply mx-auto px-[5%] flex justify-between bg-white;
 }
 
 .top-toolbar .navLink {
