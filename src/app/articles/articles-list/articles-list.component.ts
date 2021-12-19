@@ -26,7 +26,7 @@ export class ArticlesListComponent implements OnInit {
   }
 
   public sortBy(filterName: string): void {
-    this.articles = []
+    this.articles = [{ title: 'un article qui a ete filtre' }]
   }
 
   ngOnInit(): void {

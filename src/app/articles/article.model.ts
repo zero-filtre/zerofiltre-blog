@@ -5,9 +5,9 @@ export interface Article {
   content?: string;
   author?: Author
   publishedAt?: [];
-  reactions: [];
-  status: string;
-  tags: Tag[];
+  reactions?: [];
+  status?: string;
+  tags?: Tag[];
 }
 
 export interface Author {
@@ -16,7 +16,7 @@ export interface Author {
   firstName?: string;
   lastName?: string;
   registeredOn?: [];
-  profilePicture: string;
+  profilePicture?: string;
 }
 
 export interface Tag {
