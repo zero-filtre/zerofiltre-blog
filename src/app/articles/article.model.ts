@@ -1,6 +1,25 @@
 export interface Article {
-  id?: string;
+  id?: number;
   title?: string;
-  description?: string;
-  preview?: string;
+  thumbnail?: string;
+  content?: string;
+  author?: Author
+  publishedAt?: [];
+  reactions: [];
+  status: string;
+  tags: Tag[];
+}
+
+export interface Author {
+  id?: number;
+  pseudoName?: string;
+  firstName?: string;
+  lastName?: string;
+  registeredOn?: [];
+  profilePicture: string;
+}
+
+export interface Tag {
+  id?: number;
+  name?: string;
 }

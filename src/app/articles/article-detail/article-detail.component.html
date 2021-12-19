@@ -1,1 +1,15 @@
-<p>article-detail works!</p>
+<main class="articles-detail-container lg:grid grid-cols-12 gap-10 py-10">
+    <div class="col-span-3 h-96 grid place-items-center text-2xl font-bold text-white bg-secondary">
+        <div class="left-side-container sticky top-4">bloc 1</div>
+    </div>
+
+    <div class="col-span-6">
+        <div class="main-side-container">
+            <article class="prose blog-content" [innerHtml]="content"></article>
+        </div>
+    </div>
+
+    <div class="col-span-3 h-96 grid place-items-center text-2xl font-bold text-white bg-primary-300">
+        <div class="right-side-container sticky top-4">bloc 3</div>
+    </div>
+</main>
