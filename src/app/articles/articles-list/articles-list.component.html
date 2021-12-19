@@ -3,13 +3,15 @@
     <div class="col-span-3 h-96 grid place-items-center text-2xl font-bold text-white bg-secondary">
         <div class="left-side-container sticky top-4">bloc 1</div>
     </div>
-    <div class="col-span-6 h-screen grid place-items-center text-2xl font-bold text-white bg-primary-500">
+    <div class="col-span-6">
         <div class="main-side-container">
-            <h1>Bloc 2</h1>
             <div *ngFor="let article of articles">
                 <div>{{article.title}}</div>
             </div>
         </div>
+
+
+        <div class="prose-sm md:prose-lg prose-h1:font-extrabold max-w-none" [innerHtml]="content"></div>
 
         <div>{{name}}</div>
     </div>

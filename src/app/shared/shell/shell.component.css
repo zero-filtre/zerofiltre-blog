@@ -4,11 +4,11 @@
 
 .top-toolbar-container {
   max-width: 110rem;
-  @apply mx-auto px-[5%] flex justify-between bg-white;
+  @apply mx-auto px-5 xl:px-[5%] flex justify-between bg-white;
 }
 
 .top-toolbar .navLink {
-  @apply mx-4 hover:text-primary-500;
+  @apply mx-4 last:mr-0 hover:text-primary-500;
 }
 
 .top-toolbar .navLink div {
