@@ -36,16 +36,16 @@
                 </nav>
             </div>
 
-            <div class="articles-wrapper mt-12 space-y-5 sm:space-y-6 max-w-lg mx-auto lg:max-w-none">
+            <div class="articles-wrapper py-12 space-y-5 sm:space-y-6 max-w-lg mx-auto lg:max-w-none">
                 <div *ngFor="let article of articles">
-                    <div class="article-card lg:grid grid-cols-5 gap-2">
-                        <div class="col-span-2 aspect-w-3 aspect-h-2">
+                    <div class="article-card lg:grid grid-cols-3 gap-2">
+                        <div class="col-span-1 aspect-w-3 aspect-h-2">
                             <a href="#" class="cursor-pointer">
                                 <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75"
                                     src="{{article.thumbnail}}" alt="{{article.title}}">
                             </a>
                         </div>
-                        <div class="col-span-3 mt-4 lg:mt-0">{{article.title}}</div>
+                        <div class="col-span-2 mt-4 lg:mt-0">{{article.title}}</div>
                     </div>
                 </div>
             </div>
