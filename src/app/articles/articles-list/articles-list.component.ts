@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-articles-list',
