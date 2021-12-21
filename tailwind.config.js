@@ -29,6 +29,7 @@ module.exports = {
           inverted: "#111827",
           border: "#e5e7eb",
           card: "#fff",
+          cardMuted: "#f9fafb",
           borderBold: "#d1d5db",
         },
       },

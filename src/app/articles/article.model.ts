@@ -1,5 +1,5 @@
 export interface Article {
-  id?: number;
+  id?: string;
   title?: string;
   thumbnail?: string;
   content?: string;
@@ -11,15 +11,17 @@ export interface Article {
 }
 
 export interface Author {
-  id?: number;
+  id?: string;
   pseudoName?: string;
   firstName?: string;
   lastName?: string;
   registeredOn?: [];
   profilePicture?: string;
+  bio?: string;
+  socials?: []
 }
 
 export interface Tag {
-  id?: number;
+  id?: string;
   name?: string;
 }

@@ -16,11 +16,11 @@ export class ArticleService {
     return this.http.get<Article[]>(`${this.apiServerUrl}/article/list`);
   }
 
-  public getOneArticle(articleId: number): Observable<Article> {
+  public getOneArticle(articleId: string): Observable<Article> {
     return this.http.get<Article>(`${this.apiServerUrl}/article/${articleId}`);
   }
 
-   public addArticle(article: Article): Observable<Article> {
+  public addArticle(article: Article): Observable<Article> {
     return this.http.post<Article>(`${this.apiServerUrl}/article/add`, article);
   }
 
@@ -28,7 +28,7 @@ export class ArticleService {
     return this.http.put<Article>(`${this.apiServerUrl}/article/update`, article);
   }
 
-  public deleteArticle(articleId: number): Observable<void> {
+  public deleteArticle(articleId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/article/delete/${articleId}`);
   }
 }
