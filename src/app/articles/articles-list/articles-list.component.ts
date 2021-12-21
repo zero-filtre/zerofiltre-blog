@@ -24,8 +24,30 @@ export class ArticlesListComponent implements OnInit {
     );
   }
 
-  public sortBy(filterName: string): void {
+  public sortByTrend(trendName: string): void {
     this.articles = [{ title: 'un article qui a ete filtre' }]
+  }
+
+  public sortByTag(tagName: string): void {
+    this.articles = [{ title: 'un article qui a ete filtre' }]
+  }
+
+  public searchArticles(key: string): void {
+    const results: Article[] = []
+
+    for (const article of this.articles) {
+      if (
+        article.title?.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
+        article.tags?.some(tag => tag.name?.toLowerCase().indexOf(key.toLowerCase()) !== -1)
+      ) {
+        results.push(article)
+      }
+
+      this.articles = results
+      if (results.length === 0 || !key) {
+        this.getArticles()
+      }
+    }
   }
 
   ngOnInit(): void {

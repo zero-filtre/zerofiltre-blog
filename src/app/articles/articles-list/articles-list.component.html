@@ -1,34 +1,109 @@
-<main class="articles-list-container lg:grid grid-cols-12 gap-10 py-10">
-    <aside class="col-span-3 hidden lg:block">
-        <div class="left-side-container h-96 shadow-lg rounded-lg"></div>
+<main class="articles-list-container lg:grid grid-cols-10 gap-10 pt-14 pb-10 items-start">
+    <aside class="col-span-2 hidden lg:block">
+
+        <div class="left-side-container">
+
+            <div class="pb-8 space-y-1">
+                <button type="button" (click)="sortByTrend('recent')" aria-current="page"
+                    class="bg-skin-link text-skin-inverted group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md ">
+                    <svg class="text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path d="M15.596 15.696h-7.22M15.596 11.937h-7.22M11.131 8.177H8.376" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path clip-rule="evenodd"
+                            d="M3.61 12c0 6.937 2.098 9.25 8.391 9.25 6.294 0 8.391-2.313 8.391-9.25 0-6.937-2.097-9.25-8.391-9.25C5.708 2.75 3.61 5.063 3.61 12z"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span class="truncate">
+                        Récent
+                    </span>
+                </button>
+
+                <button type="button" (click)="sortByTrend('popular')" aria-current="false"
+                    class="text-skin-base group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md ">
+                    <svg class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path clip-rule="evenodd"
+                            d="M12 3C9.964 3 9.771 6.547 8.56 7.8c-1.213 1.253-4.982-.18-5.505 2.044-.523 2.225 2.867 2.98 3.285 4.89.42 1.909-1.65 4.59.12 5.926 1.77 1.334 3.674-1.685 5.54-1.685s3.77 3.019 5.54 1.685c1.77-1.335-.3-4.017.12-5.927.419-1.909 3.808-2.664 3.285-4.889-.522-2.224-4.292-.791-5.503-2.044C14.23 6.547 14.036 3 12 3z"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span class="truncate">
+                        Populaire
+                    </span>
+                </button>
+
+                <button type="button" (click)="sortByTrend('trending')" aria-current="false"
+                    class="text-skin-base group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md ">
+                    <svg class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        aria-hidden="true">
+                        <path
+                            d="M6.98 4.601V17.22M2.9 8.7s2.169-4.1 4.078-4.1c1.908 0 4.078 4.1 4.078 4.1M16.906 19.428V6.81M20.985 15.329s-2.17 4.1-4.078 4.1c-1.908 0-4.078-4.1-4.078-4.1"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span class="truncate">
+                        Tendance
+                    </span>
+                </button>
+            </div>
+
+            <div class="pt-8 border-t border-skin-border">
+                <span
+                    class="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
+                    <svg class="mr-1.5 h-2 w-2 text-skin-base" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3"></circle>
+                    </svg>
+                    Tous les tags
+                </span>
+
+                <div x-data="{ selectedTag: '' }" class="mt-4" aria-labelledby="posts-tags">
+                    <div *ngFor="let tag of articles[0].tags">
+                        <button (click)="sortByTag('tag')" type="button"
+                            class="mb-1.5 group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border  hover:bg-skin-card">
+
+                            <span class="text-skin-muted group-hover:hidden">#</span>
+
+                            <svg class="mr-1.5 h-2 w-2 fill-primary-500 brand-applications hidden group-hover:block"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+
+                            <span class="truncate lowercase font-semibold">{{tag.name}}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </aside>
 
     <div class="col-span-6">
         <div class="main-side-container">
-            <div class="pb-5 border-b border-skin-base">
+            <div class="pb-5 border-b border-skin-border">
                 <h1 class="text-3xl leading-8 font-extrabold tracking-tight">
                     Récentes publications
                 </h1>
-                <p class="mt-2 max-w-4xl text-sm leading-5">Tous les articles récemment
+                <p class="mt-2 max-w-4xl text-sm leading-5 text-skin-base">Tous les articles récemment
                     publiés.
                 </p>
             </div>
 
             <div class="mt-10 max-w-lg mx-auto bg-white lg:hidden">
                 <nav class="relative z-0 rounded-lg shadow flex divide-x divide-skin-base" aria-label="Tabs">
-                    <button type="button" (click)="sortBy('recent')" aria-current="page"
+                    <button type="button" (click)="sortByTag('recent')" aria-current="page"
                         class="w-full text-skin-inverted rounded-l-lg group relative min-w-0 flex-1 overflow-hidden bg-skin-card p-4 sm:px-6 text-sm font-medium text-center hover:bg-skin-card-muted focus:z-10">
                         <span>Récents</span>
                         <span aria-hidden="true" class="bg-skin-primary absolute inset-x-0 bottom-0 h-0.5"></span>
                     </button>
 
-                    <button type="button" (click)="sortBy('popular')" aria-current="false"
+                    <button type="button" (click)="sortByTag('popular')" aria-current="false"
                         class="w-full text-skin-base hover:text-skin-inverted group relative min-w-0 flex-1 overflow-hidden bg-skin-card p-4 sm:px-6 text-sm font-medium text-center hover:bg-skin-card-muted focus:z-10">
                         <span>Populaire</span>
                         <span aria-hidden="true" class="bg-transparent absolute inset-x-0 bottom-0 h-0.5"></span>
                     </button>
 
-                    <button type="button" (click)="sortBy('trending')" aria-current="false"
+                    <button type="button" (click)="sortByTag('trending')" aria-current="false"
                         class="w-full text-skin-base hover:text-skin-inverted rounded-r-lg group relative min-w-0 flex-1 overflow-hidden bg-skin-card p-4 sm:px-6 text-sm font-medium text-center hover:bg-skin-card-muted focus:z-10">
                         <span>Tendance</span>
                         <span aria-hidden="true" class="bg-transparent absolute inset-x-0 bottom-0 h-0.5"></span>
@@ -36,16 +111,71 @@
                 </nav>
             </div>
 
-            <div class="articles-wrapper py-12 space-y-5 sm:space-y-6 max-w-lg mx-auto lg:max-w-none">
+            <div class="articles-wrapper py-12 space-y-8 sm:space-y-10 max-w-lg mx-auto lg:max-w-none">
                 <div *ngFor="let article of articles">
-                    <div class="article-card lg:grid grid-cols-3 gap-4">
+                    <div class="article-card lg:grid grid-cols-3 gap-6 items-start">
                         <div class="col-span-1 aspect-w-3 aspect-h-2">
                             <a href="#" class="cursor-pointer">
                                 <img class="object-cover w-full h-full shadow-lg rounded-lg group-hover:opacity-75"
                                     src="{{article?.thumbnail}}" alt="{{article?.title}}">
                             </a>
                         </div>
-                        <div class="col-span-2 mt-4 lg:mt-0">{{article?.title}}</div>
+
+                        <div class="col-span-2 mt-4 lg:mt-0">
+
+                            <div class="flex items-center space-x-3">
+                                <div *ngFor="let tag of article?.tags" class="flex items-center space-x-2">
+                                    <span
+                                        class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-medium rounded-full border">
+                                        <svg class="mr-1.5 h-2 w-2 brand-laravel fill-accent" fill="" viewBox="0 0 8 8">
+                                            <circle cx="4" cy="4" r="3"></circle>
+                                        </svg>
+                                        {{tag.name}}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <a href="https://laravel.cm/articles/laravel-8-76-disponible" class="group">
+                                    <h4 class="text-xl leading-6 font-semibold group-hover:text-primary-500">
+                                        {{article?.title}}
+                                    </h4>
+                                </a>
+                                <p class="mt-2 text-sm font-normal text-skin-base leading-5">
+                                    <!-- [innerHtml]="article?.content"> -->
+                                    Des applications très évolutives alignées aux derniers standards.
+                                    De par sa nature stable et sécurisée, le langage de programmation JAVA est utilisé
+                                    par de...
+                                </p>
+
+                                <div class="mt-3 flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <a href="">
+                                            <!-- <span class="sr-only">{{article.author?.firstName}}
+                                                {{article.author?.lastName}}</span> -->
+                                            <img class="h-10 w-10 rounded-full" src="{{article.author?.profilePicture}}"
+                                                alt="{{article.author?.pseudoName}}">
+                                        </a>
+                                    </div>
+
+                                    <div class="ml-3">
+                                        <p class="text-[13px] font-semibold text-skin-inverted">
+                                            <a href="" class="hover:underline">
+                                                {{article?.author?.firstName}}
+                                                {{article?.author?.lastName}}
+                                            </a>
+                                        </p>
+                                        <div class="flex space-x-1 text-[13px] text-skin-muted">
+                                            <time datetime="2021-12-18">21 Dec, 2021</time>
+                                            <span aria-hidden="true">·</span>
+                                            <span>2 min de lecture</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -53,7 +183,7 @@
         </div>
     </div>
 
-    <aside class="col-span-3 hidden lg:block">
+    <aside class="col-span-2 hidden lg:block">
         <div class="right-side-container h-96 shadow-lg rounded-lg"></div>
     </aside>
 </main>
