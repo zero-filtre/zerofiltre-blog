@@ -7,7 +7,7 @@ export interface Article {
   publishedAt?: [];
   reactions?: [];
   status?: string;
-  tags?: Tag[];
+  tags: Tag[];
 }
 
 export interface Author {
