@@ -1,7 +1,7 @@
 <main class="articles-list-container lg:grid grid-cols-10 gap-10 pt-14 pb-10 items-start">
     <aside class="col-span-2 hidden lg:block">
 
-        <div class="left-side-container">
+        <div class="left-side-container sticky top-4">
 
             <div class="pb-8 space-y-1">
                 <button type="button" (click)="sortByTrend('recent')" aria-current="page"
@@ -115,7 +115,7 @@
                 <div *ngFor="let article of articles">
                     <div class="article-card lg:grid grid-cols-3 gap-6 items-start">
                         <div class="col-span-1 aspect-w-3 aspect-h-2">
-                            <a href="#" class="cursor-pointer group">
+                            <a [routerLink]="[article.id]" class="cursor-pointer group">
                                 <img class="object-cover w-full h-full shadow-lg rounded-lg group-hover:opacity-75"
                                     src="{{article?.thumbnail}}" alt="{{article?.title}}">
                             </a>
@@ -136,7 +136,7 @@
                             </div>
 
                             <div class="mt-2">
-                                <a href="#" class="group">
+                                <a [routerLink]="[article.id]" class="group">
                                     <h4 class="text-lg leading-6 font-semibold group-hover:text-primary-500">
                                         {{article?.title}}
                                     </h4>

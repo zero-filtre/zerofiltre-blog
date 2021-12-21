@@ -70,7 +70,9 @@ export class ArticlesListComponent implements OnInit {
     for (const article of this.articles) {
       if (
         article.title?.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-        article.tags?.some(tag => tag.name?.toLowerCase().indexOf(key.toLowerCase()) !== -1)
+        article.tags?.some(tag => tag.name?.toLowerCase().indexOf(key.toLowerCase()) !== -1) ||
+        article.author?.firstName?.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
+        article.author?.lastName?.toLowerCase().indexOf(key.toLowerCase()) !== -1
       ) {
         results.push(article)
       }
