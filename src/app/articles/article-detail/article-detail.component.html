@@ -1,4 +1,4 @@
-<main class="article-container  py-10">
+<main class="article-container py-10 min-h-screen">
 
     <article class="lg:grid grid-cols-10 gap-10 items-start">
 
@@ -129,18 +129,18 @@
                         </div>
                     </div>
                     <h1
-                        class="text-xl font-extrabold text-secondary tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3.5rem]">
+                        class="text-2xl font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3.5rem]">
                         {{article?.title}}
                     </h1>
 
-                    <a href="#" class="mt-3 flex-shrink-0 group block lg:hidden">
+                    <a href="#" class="flex-shrink-0 group block lg:hidden">
                         <div class="flex items-center">
                             <div>
                                 <img class="inline-block h-8 w-8 rounded-full" src="{{article?.author?.profilePicture}}"
                                     alt="{{article?.author?.pseudoName}} ">
                             </div>
                             <div class="ml-3">
-                                <p class="text-xs font-semibold -tracking-[1em] text-skin-base">
+                                <p class="text-xs font-semibold tracking-tighter text-skin-base">
                                     {{article?.author?.firstName}}
                                     {{article?.author?.lastName}}
                                 </p>
@@ -158,13 +158,13 @@
                 </div>
 
                 <div [innerHtml]="article?.content"
-                    class="article-content mt-10 text-skin-base font-normal mx-auto prose prose-cyan md:prose-lg prose-p:leading-9 prose-p:tracking-wide prose-h1:!text-base prose-headings:text-secondary">
+                    class="article-content mt-10 text-skin-base font-normal mx-auto prose prose-cyan md:prose-lg prose-p:leading-9 prose-p:tracking-wide prose-h1:!text-base prose-headings:text-skin-inverted">
                 </div>
 
-                <div class="article-socials py-6 w-fit mx-auto">
+                <div class="article-socials py-6 lg:w-fit mx-auto">
                     <p class="text-base text-skin-base font-light">Vous aimez cet article ? Faite le savoir en
                         partageant</p>
-                    <div class="mt-4 space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-2 gap-2">
+                    <div class="mt-4 space-y-4 flex items-end flex-wrap gap-2 sm:gap-0 sm:space-y-0 sm:space-x-4">
                         <a href="#"
                             class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500">
                             <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
