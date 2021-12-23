@@ -12,6 +12,8 @@ import { ArticleService } from '../article.service';
 export class ArticleDetailComponent implements OnInit {
   public article!: Article;
   public articleId!: string;
+  public previousArticle!: Article;
+  public nextArticle!: Article;
 
   constructor(private route: ActivatedRoute, private articleService: ArticleService) { }
 
@@ -27,9 +29,35 @@ export class ArticleDetailComponent implements OnInit {
     )
   }
 
+  public getPreviousArticle(articleId: string): void {
+    this.articleService.getOneArticle(articleId).subscribe(
+      (response: Article) => {
+        this.previousArticle = response;
+      },
+
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }
+
+  public getNextArticle(articleId: string): void {
+    this.articleService.getOneArticle(articleId).subscribe(
+      (response: Article) => {
+        this.nextArticle = response;
+      },
+
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }
+
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
+    this.getPreviousArticle((+this.articleId - 1).toString());
+    this.getNextArticle((+this.articleId + 1).toString());
   }
 
 }
