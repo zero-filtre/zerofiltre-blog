@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost',
+  blogUrl: 'https://blog-dev.zerofiltre.tech',
   username: 'localUser',
   envName: 'local'
 };

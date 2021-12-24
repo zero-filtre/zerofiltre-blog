@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
@@ -14,6 +15,7 @@ export class ArticleDetailComponent implements OnInit {
   public articleId!: string;
   public previousArticle!: Article;
   public nextArticle!: Article;
+  readonly blogUrl = environment.blogUrl;
 
   constructor(private route: ActivatedRoute, private articleService: ArticleService) { }
 
