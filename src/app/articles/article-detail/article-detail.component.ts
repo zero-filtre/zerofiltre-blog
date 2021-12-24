@@ -41,6 +41,11 @@ export class ArticleDetailComponent implements OnInit {
     )
   }
 
+  public setArticleData(): void {
+    this.article = this.nextArticle;
+    console.log("CALLED")
+  }
+
   public getNextArticle(articleId: string): void {
     this.articleService.getOneArticle(articleId).subscribe(
       (response: Article) => {

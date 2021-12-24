@@ -64,11 +64,11 @@
                     <div>
                         <h2 class="text-[10px] leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
                             suivant</h2>
-                        <a [routerLink]="[nextArticle?.id]" class="mt-3 flex items-start space-x-2">
+                        <a [routerLink]="" (click)="setArticleData()" class="mt-3 flex items-start space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{nextArticle?.thumbnail}}"
                                 alt="{{nextArticle?.title}} ">
                             <span
-                                class="text-xs font-semibold leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2">
+                                class="text-xs font-black leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2">
                                 {{nextArticle?.title}}
                             </span>
                         </a>
@@ -80,7 +80,7 @@
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{previousArticle?.thumbnail}} "
                                 alt="{{previousArticle?.title}}">
                             <span
-                                class="text-xs font-semibold leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2">
+                                class="text-xs font-black leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2">
                                 {{previousArticle?.title}}
                             </span>
                         </a>
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                     <h1
-                        class="text-2xl font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3.5rem]">
+                        class="text-2xl font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl xl:text-5xl xl:leading-[3.5rem]">
                         {{article?.title}}
                     </h1>
 
@@ -160,7 +160,7 @@
                 </div>
 
                 <div [innerHtml]="article?.content"
-                    class="article-content mt-10 text-skin-base font-normal mx-auto prose prose-cyan md:prose-lg prose-p:leading-9 prose-p:tracking-wide prose-h1:!text-base prose-headings:text-skin-inverted">
+                    class="article-content mt-10 text-skin-base font-normal max-w-none mx-auto prose prose-cyan md:prose-lg prose-p:leading-9 prose-h1:!text-base prose-headings:text-skin-inverted">
                 </div>
 
                 <div class="article-socials py-6 lg:w-fit mx-auto">
