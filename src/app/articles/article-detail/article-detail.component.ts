@@ -19,10 +19,19 @@ export class ArticleDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private articleService: ArticleService) { }
 
+  public calcReadingTime(article: Article): void {
+    const content = article?.content
+    const wpm = 225;
+    const words = content?.trim().split(/\s+/).length || 0;
+    const time = Math.ceil(words / wpm);
+    article.readingTime = time
+  }
+
   public getCurrentArticle(articleId: string): void {
     this.articleService.getOneArticle(articleId).subscribe(
       (response: Article) => {
         this.article = response;
+        this.calcReadingTime(response)
       },
 
       (error: HttpErrorResponse) => {

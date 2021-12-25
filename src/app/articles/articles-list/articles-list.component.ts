@@ -19,11 +19,23 @@ export class ArticlesListComponent implements OnInit {
       (response: Article[]) => {
         this.articles = response;
         this.tagList = response[0].tags
+        this.calcReadingTime(response);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
+  }
+
+  public calcReadingTime(articles: Article[]): void {
+    for (const article of articles) {
+      const content = article?.content
+
+      const wpm = 225;
+      const words = content?.trim().split(/\s+/).length || 0;
+      const time = Math.ceil(words / wpm);
+      article.readingTime = time
+    }
   }
 
   public sortByTrend(trendName: string): void {

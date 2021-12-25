@@ -8,6 +8,7 @@ export interface Article {
   reactions?: [];
   status?: string;
   tags: Tag[];
+  readingTime: number;
 }
 
 export interface Author {

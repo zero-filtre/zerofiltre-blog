@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Article } from './article.model';
+import { Article, Author, Tag } from './article.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +30,17 @@ export class ArticleService {
 
   public deleteArticle(articleId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/article/delete/${articleId}`);
+  }
+
+  public getListOfTags(): Observable<Tag[]> {
+    return this.http.get<Tag[]>(`${this.apiServerUrl}/article/tag-list`);
+  }
+
+  public getArticleTags(articleId: string): Observable<Tag[]> {
+    return this.http.get<Tag[]>(`${this.apiServerUrl}/article/${articleId}/tags`);
+  }
+
+  public getArticleAuthor(articleId: string): Observable<Author[]> {
+    return this.http.get<Author[]>(`${this.apiServerUrl}/article/${articleId}/author`);
   }
 }
