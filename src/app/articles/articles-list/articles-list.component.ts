@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { SeoService } from 'src/app/services/seo.service';
 import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
@@ -12,7 +13,7 @@ export class ArticlesListComponent implements OnInit {
   public articles!: Article[];
   public tagList!: Tag[];
 
-  constructor(private articleService: ArticleService) { }
+  constructor(private seo: SeoService, private articleService: ArticleService) { }
 
   public getArticles(): void {
     this.articleService.getArticles().subscribe(
@@ -101,6 +102,13 @@ export class ArticlesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.seo.generateTags({
+      title: 'Tous les articles | Zerofiltre.tech',
+      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      author: 'Zerofiltre.tech',
+      type: 'website',
+    });
+
     this.getArticles();
   }
 }

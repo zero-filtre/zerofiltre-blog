@@ -11,7 +11,7 @@ export class SeoService {
 
   constructor(private title: Title, private meta: Meta, private router: Router) { }
 
-  generateTags({ title = '', description = '', image = '', author = '' }) {
+  generateTags({ title = '', description = '', image = '', author = '', type = '' }) {
 
     this.title.setTitle(title);
     this.meta.addTags([
@@ -21,12 +21,13 @@ export class SeoService {
       { name: 'og:description', content: description },
       { name: 'og:image', content: image },
       { name: 'og:author', content: author },
+      { name: 'og:type', content: type },
       { name: 'og:locale', content: 'fr_FR' },
-      { name: 'og:type', content: 'article' },
       // Twitter Card
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:site', content: '@zerofiltre' },
       { name: 'twitter:creator', content: `@${author}` },
+      { name: 'twitter:author', content: `@${author}` },
       { name: 'twitter:title', content: title },
       { name: 'twitter:description', content: description },
       { name: 'twitter:image', content: image },

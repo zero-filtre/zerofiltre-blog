@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { tap } from 'rxjs/operators';
+import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
@@ -17,7 +19,7 @@ export class ArticleDetailComponent implements OnInit {
   public nextArticle!: Article;
   readonly blogUrl = environment.blogUrl;
 
-  constructor(private route: ActivatedRoute, private articleService: ArticleService) { }
+  constructor(private route: ActivatedRoute, private articleService: ArticleService, private seo: SeoService) { }
 
   public calcReadingTime(article: Article): void {
     const content = article?.content
@@ -28,16 +30,27 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   public getCurrentArticle(articleId: string): void {
-    this.articleService.getOneArticle(articleId).subscribe(
-      (response: Article) => {
-        this.article = response;
-        this.calcReadingTime(response)
-      },
+    this.articleService.getOneArticle(articleId)
+      .pipe(
+        tap(art => {
+          this.seo.generateTags({
+            title: art.title,
+            description: art.content,
+            image: art.thumbnail,
+            author: art.author?.pseudoName
+          })
+        })
+      )
+      .subscribe(
+        (response: Article) => {
+          this.article = response
+          this.calcReadingTime(response)
+        },
 
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    )
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      )
   }
 
   public getPreviousArticle(articleId: string): void {
