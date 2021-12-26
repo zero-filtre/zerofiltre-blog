@@ -35,7 +35,7 @@ export class ArticleDetailComponent implements OnInit {
         tap(art => {
           this.seo.generateTags({
             title: art.title,
-            description: art.content,
+            description: art.title,
             image: art.thumbnail,
             author: art.author?.pseudoName
           })
@@ -85,8 +85,8 @@ export class ArticleDetailComponent implements OnInit {
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
-    this.getPreviousArticle((+this.articleId - 1).toString());
-    this.getNextArticle((+this.articleId + 1).toString());
+    // this.getPreviousArticle((+this.articleId - 1).toString());
+    // this.getNextArticle((+this.articleId + 1).toString());
   }
 
 }
