@@ -15,8 +15,8 @@ export class ArticlesListComponent implements OnInit {
 
   constructor(private seo: SeoService, private articleService: ArticleService) { }
 
-  public getArticles(): void {
-    this.articleService.getArticles().subscribe(
+  public fetchArticles(): void {
+    this.articleService.getArticles(1, 5).subscribe(
       (response: Article[]) => {
         this.articles = response;
         this.tagList = response[0].tags
@@ -50,8 +50,8 @@ export class ArticlesListComponent implements OnInit {
       this.articles = results
 
       if (results.length === 0) {
-        this.getArticles()
-        console.log("GetArticles Called")
+        this.fetchArticles()
+        console.log("fetchArticles Called")
       }
     }
 
@@ -69,8 +69,8 @@ export class ArticlesListComponent implements OnInit {
       this.articles = results
 
       if (results.length === 0) {
-        this.getArticles()
-        console.log("GetArticles Called")
+        this.fetchArticles()
+        console.log("fetchArticles Called")
       }
     }
 
@@ -93,8 +93,8 @@ export class ArticlesListComponent implements OnInit {
       this.articles = results
 
       if (results.length === 0 || !key) {
-        this.getArticles()
-        console.log("GetArticles Called")
+        this.fetchArticles()
+        console.log("fetchArticles Called")
       }
     }
 
@@ -107,8 +107,9 @@ export class ArticlesListComponent implements OnInit {
       description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
       author: 'Zerofiltre.tech',
       type: 'website',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
 
-    this.getArticles();
+    this.fetchArticles();
   }
 }

@@ -16,7 +16,7 @@ export class SeoService {
     this.title.setTitle(title);
     this.meta.addTags([
       // Open Graph
-      { name: 'og:url', content: `https://${this.blogUrl}/${this.router.url}` },
+      { name: 'og:url', content: `${this.blogUrl}${this.router.url}` },
       { name: 'og:title', content: title },
       { name: 'og:description', content: description },
       { name: 'og:image', content: image },
@@ -25,7 +25,7 @@ export class SeoService {
       { name: 'og:locale', content: 'fr_FR' },
       // Twitter Card
       { name: 'twitter:card', content: 'summary' },
-      { name: 'twitter:site', content: '@zerofiltre' },
+      { name: 'twitter:site', content: '@zerofiltre.tech' },
       { name: 'twitter:creator', content: `@${author}` },
       { name: 'twitter:author', content: `@${author}` },
       { name: 'twitter:title', content: title },

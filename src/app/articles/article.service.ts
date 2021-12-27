@@ -12,8 +12,8 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
-  public getArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(`${this.apiServerUrl}/article/list`);
+  public getArticles(page: number, limit: number): Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.apiServerUrl}/article/list?pageNumber=${page}&pageSize=${limit}`);
   }
 
   public getOneArticle(articleId: string): Observable<Article> {

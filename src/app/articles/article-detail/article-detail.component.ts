@@ -37,7 +37,8 @@ export class ArticleDetailComponent implements OnInit {
             title: art.title,
             description: art.title,
             image: art.thumbnail,
-            author: art.author?.pseudoName
+            author: art.author?.pseudoName,
+            type: 'article'
           })
         })
       )
