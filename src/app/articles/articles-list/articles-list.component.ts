@@ -16,7 +16,7 @@ export class ArticlesListComponent implements OnInit {
   constructor(private seo: SeoService, private articleService: ArticleService) { }
 
   public fetchArticles(): void {
-    this.articleService.getArticles(1, 5).subscribe(
+    this.articleService.getArticles(0, 5).subscribe(
       (response: Article[]) => {
         this.articles = response;
         this.tagList = response[0].tags

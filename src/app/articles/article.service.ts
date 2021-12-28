@@ -16,7 +16,7 @@ export class ArticleService {
     return this.http.get<Article[]>(`${this.apiServerUrl}/article/list?pageNumber=${page}&pageSize=${limit}`);
   }
 
-  public getOneArticle(articleId: string): Observable<Article> {
+  public getOneArticle(articleId: number): Observable<Article> {
     return this.http.get<Article>(`${this.apiServerUrl}/article/${articleId}`);
   }
 

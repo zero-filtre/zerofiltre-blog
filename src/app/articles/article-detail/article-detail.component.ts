@@ -14,7 +14,7 @@ import { ArticleService } from '../article.service';
 })
 export class ArticleDetailComponent implements OnInit {
   public article!: Article;
-  public articleId!: string;
+  public articleId!: number;
   public previousArticle!: Article;
   public nextArticle!: Article;
   readonly blogUrl = environment.blogUrl;
@@ -29,7 +29,7 @@ export class ArticleDetailComponent implements OnInit {
     article.readingTime = time
   }
 
-  public getCurrentArticle(articleId: string): void {
+  public getCurrentArticle(articleId: number): void {
     this.articleService.getOneArticle(articleId)
       .pipe(
         tap(art => {
@@ -54,31 +54,35 @@ export class ArticleDetailComponent implements OnInit {
       )
   }
 
-  public getPreviousArticle(articleId: string): void {
+  public getPreviousArticle(articleId: number): void {
     this.articleService.getOneArticle(articleId).subscribe(
       (response: Article) => {
         this.previousArticle = response;
       },
 
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     )
   }
 
-  public setArticleData(): void {
-    this.article = this.nextArticle;
-    console.log("CALLED")
+  public setArticleData(state: string): void {
+    if (state === 'next') this.articleId = +this.articleId + 1
+    if (state === 'prev') this.articleId = +this.articleId - 1
+
+    this.getCurrentArticle(this.articleId)
+    this.getNextArticle(+this.articleId + 1)
+    if (this.articleId > 1) this.getPreviousArticle(+this.articleId - 1)
   }
 
-  public getNextArticle(articleId: string): void {
+  public getNextArticle(articleId: number): void {
     this.articleService.getOneArticle(articleId).subscribe(
       (response: Article) => {
         this.nextArticle = response;
       },
 
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     )
   }
@@ -86,8 +90,8 @@ export class ArticleDetailComponent implements OnInit {
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
-    // this.getPreviousArticle((+this.articleId - 1).toString());
-    // this.getNextArticle((+this.articleId + 1).toString());
+    if (this.articleId > 1) this.getPreviousArticle(+this.articleId - 1);
+    this.getNextArticle(+this.articleId + 1);
   }
 
 }
