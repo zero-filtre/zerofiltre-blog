@@ -20,10 +20,6 @@
     "@angular/platform-browser": "~12.0.3",
     "@angular/platform-browser-dynamic": "~12.0.3",
     "@angular/router": "~12.0.3",
-    "@ngneat/tailwind": "^7.0.3",
-    "@tailwindcss/line-clamp": "^0.3.0",
-    "g": "^2.0.1",
-    "node": "^17.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"
@@ -32,9 +28,6 @@
     "@angular-devkit/build-angular": "~12.0.3",
     "@angular/cli": "~12.0.3",
     "@angular/compiler-cli": "~12.0.3",
-    "@tailwindcss/aspect-ratio": "latest",
-    "@tailwindcss/forms": "latest",
-    "@tailwindcss/typography": "latest",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~3.7.0",
@@ -43,7 +36,6 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "tailwindcss": "latest",
     "typescript": "~4.2.3"
   }
 }
