@@ -64,7 +64,7 @@
                     <div *ngIf="nextArticle">
                         <h2 class="text-[10px] leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
                             suivant</h2>
-                        <a [routerLink]="" (click)="setArticleData('next')" class="mt-3 flex items-start space-x-2">
+                        <a [routerLink]="[]" (click)="setArticleData('next')" class="mt-3 flex items-start space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{nextArticle?.thumbnail}}"
                                 alt="{{nextArticle?.title}} ">
                             <span
@@ -76,7 +76,7 @@
                     <div *ngIf="previousArticle">
                         <h2 class="text-[10px] leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
                             précédent</h2>
-                        <a [routerLink]="" (click)="setArticleData('prev')" class="mt-3 flex items-start space-x-2">
+                        <a [routerLink]="[]" (click)="setArticleData('prev')" class="mt-3 flex items-start space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{previousArticle?.thumbnail}}"
                                 alt="{{previousArticle?.title}}">
                             <span
