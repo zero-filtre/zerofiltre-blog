@@ -16,15 +16,17 @@ export class SeoService {
     this.title.setTitle(title);
     this.meta.addTags([
       // Open Graph
-      { name: 'og:url', content: `${this.blogUrl}${this.router.url}` },
-      { name: 'og:title', content: title },
-      { name: 'og:description', content: description },
-      { name: 'og:image', content: image },
-      { name: 'og:author', content: author },
-      { name: 'og:type', content: type },
-      { name: 'og:locale', content: 'fr_FR' },
+      { property: 'og:url', content: `${this.blogUrl}${this.router.url}` },
+      { property: 'og:title', content: title },
+      { property: 'og:description', content: description },
+      { property: 'og:image', content: image },
+      { property: 'og:author', content: author },
+      { name: 'author', content: author },
+      { property: 'og:type', content: type },
+      { property: 'og:locale', content: 'fr_FR' },
+      { property: 'og:site_name', content: 'zerofiltre.tech' },
       // Twitter Card
-      { name: 'twitter:card', content: 'summary' },
+      { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:site', content: '@zerofiltre.tech' },
       { name: 'twitter:creator', content: `@${author}` },
       { name: 'twitter:author', content: `@${author}` },
