@@ -234,7 +234,7 @@
                     <p class="text-base text-skin-base font-light">Vous aimez cet article ? Faite le savoir en
                         partageant</p>
                     <div class="mt-4 space-y-4 flex items-end flex-wrap gap-2 sm:gap-0 sm:space-y-0 sm:space-x-4">
-                        <a href="https://twitter.com/intent/tweet?text='{{article?.title}}' par {{article?.author?.firstName}} {{article?.author?.lastName}} &url={{blogUrl}}/articles/{{article?.id}}"
+                        <a href="https://twitter.com/intent/tweet?text={{article?.title}} par @{{article?.author?.pseudoName}}&url={{blogUrl}}/articles/{{article?.id}}"
                             class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500">
                             <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
@@ -243,7 +243,7 @@
                             </svg>
                             Twitter
                         </a>
-                        <a href="https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F&redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer"
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{blogUrl}}/articles/{{article?.id}}"
                             class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500">
                             <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd"
