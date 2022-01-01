@@ -58,21 +58,27 @@
                     Tous les tags
                 </span>
 
-                <div x-data="{ selectedTag: '' }" class="mt-4" aria-labelledby="posts-tags">
-                    <div *ngFor="let tag of tagList">
-                        <button (click)="sortByTag(tag.name)" type="button"
-                            class="mb-1.5 group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border  hover:bg-skin-card">
+                <div class="mt-4" aria-labelledby="posts-tags">
+                    <ng-container *ngIf="tagList; then listOfTags else tagsSkeletonLoader"></ng-container>
+                    <ng-template #listOfTags>
+                        <div *ngFor="let tag of tagList">
+                            <button (click)="sortByTag(tag.name)" type="button"
+                                class="mb-1.5 group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border  hover:bg-skin-card">
 
-                            <span class="text-skin-muted group-hover:hidden transition-all duration-300">#</span>
+                                <span class="text-skin-muted group-hover:hidden transition-all duration-300">#</span>
 
-                            <svg class="mr-1.5 h-2 w-2 fill-primary-500 brand-applications hidden group-hover:block transition-all duration-300"
-                                viewBox="0 0 8 8">
-                                <circle cx="4" cy="4" r="3"></circle>
-                            </svg>
+                                <svg class="mr-1.5 h-2 w-2 fill-primary-500 brand-applications hidden group-hover:block transition-all duration-300"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
 
-                            <span class="truncate lowercase font-semibold">{{tag?.name}}</span>
-                        </button>
-                    </div>
+                                <span class="truncate lowercase font-semibold">{{tag?.name}}</span>
+                            </button>
+                        </div>
+                    </ng-template>
+                    <ng-template #tagsSkeletonLoader>
+                        <div>Loading...</div>
+                    </ng-template>
                 </div>
             </div>
 
@@ -114,68 +120,80 @@
             </div>
 
             <div class="articles-wrapper py-12 space-y-8 sm:space-y-10 max-w-lg mx-auto lg:max-w-none">
-                <div *ngFor="let article of articles">
-                    <div class="article-card lg:grid grid-cols-3 gap-6 items-start">
-                        <a [routerLink]="[article.id]" class="group">
-                            <div class="aspect-w-3 aspect-h-2">
-                                <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75 transition-all duration-300"
-                                    src="{{article?.thumbnail}}" alt="{{article?.title}}">
-                            </div>
-                        </a>
+                <ng-container *ngIf="articles; then articleList else articleSkeletonLoader"></ng-container>
 
-                        <div class="col-span-2 mt-4 lg:mt-0">
-
-                            <div class="flex items-center space-x-3">
-                                <div *ngFor="let tag of article?.tags" class="flex items-center space-x-2">
-                                    <span
-                                        class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                        <svg class="mr-1.5 h-2 w-2 brand-laravel fill-accent" fill="" viewBox="0 0 8 8">
-                                            <circle cx="4" cy="4" r="3"></circle>
-                                        </svg>
-                                        {{tag.name}}
-                                    </span>
+                <ng-template #articleList>
+                    <div *ngFor="let article of articles">
+                        <div class="article-card lg:grid grid-cols-3 gap-6 items-start">
+                            <a [routerLink]="[article.id]" class="group">
+                                <div class="aspect-w-3 aspect-h-2">
+                                    <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75 transition-all duration-300"
+                                        src="{{article?.thumbnail}}" alt="{{article?.title}}">
                                 </div>
-                            </div>
+                            </a>
 
-                            <div class="mt-2">
-                                <a [routerLink]="[article.id]" class="group">
-                                    <h4
-                                        class="text-lg leading-6 font-semibold text-skin-inverted group-hover:text-primary-500 transition-all duration-300">
-                                        {{article?.title}}
-                                    </h4>
-                                </a>
-                                <p class="mt-2 text-sm tracking-wide font-light text-skin-base leading-5 line-clamp-2"
-                                    [innerHtml]="article?.content">
-                                </p>
+                            <div class="col-span-2 mt-4 lg:mt-0">
 
-                                <div class="mt-3 flex items-center">
-                                    <div class="flex-shrink-0">
-                                        <a href="">
-                                            <img class="h-10 w-10 rounded-full" src="{{article.author?.profilePicture}}"
-                                                alt="{{article.author?.pseudoName}}">
-                                        </a>
+                                <div class="flex items-center space-x-3">
+                                    <div *ngFor="let tag of article?.tags" class="flex items-center space-x-2">
+                                        <span
+                                            class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
+                                            <svg class="mr-1.5 h-2 w-2 brand-laravel fill-accent" fill=""
+                                                viewBox="0 0 8 8">
+                                                <circle cx="4" cy="4" r="3"></circle>
+                                            </svg>
+                                            {{tag.name}}
+                                        </span>
                                     </div>
+                                </div>
 
-                                    <div class="ml-3">
-                                        <p class="text-[13px] font-semibold text-skin-inverted">
-                                            <a href="#" class="hover:underline">
-                                                {{article?.author?.firstName}}
-                                                {{article?.author?.lastName}}
+                                <div class="mt-2">
+                                    <a [routerLink]="[article.id]" class="group">
+                                        <h4
+                                            class="text-lg leading-6 font-semibold text-skin-inverted group-hover:text-primary-500 transition-all duration-300">
+                                            {{article?.title}}
+                                        </h4>
+                                    </a>
+                                    <p class="mt-2 text-sm tracking-wide font-light text-skin-base leading-5 line-clamp-2"
+                                        [innerHtml]="article?.content">
+                                    </p>
+
+                                    <div class="mt-3 flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <a href="">
+                                                <img class="h-10 w-10 rounded-full"
+                                                    src="{{article.author?.profilePicture}}"
+                                                    alt="{{article.author?.pseudoName}}">
                                             </a>
-                                        </p>
-                                        <div class="flex space-x-1 text-[13px] text-skin-muted">
-                                            <time datetime="2021-12-18">21 Dec, 2021</time>
-                                            <span aria-hidden="true">·</span>
-                                            <span>{{article?.readingTime}} min de lecture</span>
+                                        </div>
+
+                                        <div class="ml-3">
+                                            <p class="text-[13px] font-semibold text-skin-inverted">
+                                                <a href="#" class="hover:underline">
+                                                    {{article?.author?.firstName}}
+                                                    {{article?.author?.lastName}}
+                                                </a>
+                                            </p>
+                                            <div class="flex space-x-1 text-[13px] text-skin-muted">
+                                                <time datetime="2021-12-18">21 Dec, 2021</time>
+                                                <span aria-hidden="true">·</span>
+                                                <span>{{article?.readingTime}} min de lecture</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                         </div>
-
                     </div>
-                </div>
+                </ng-template>
+
+                <ng-template #articleSkeletonLoader>
+                    <div *ngFor="elt of [1, 2, 3, 4, 5]">
+                        <p>Loading article...</p>
+                    </div>
+                </ng-template>
             </div>
 
         </div>

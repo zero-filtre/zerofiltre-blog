@@ -12,11 +12,13 @@ import { ArticleService } from '../article.service';
 export class ArticlesListComponent implements OnInit {
   public articles!: Article[];
   public tagList!: Tag[];
+  public pageNumber: number = 0;
+  public pageItemsLimit: number = 5;
 
   constructor(private seo: SeoService, private articleService: ArticleService) { }
 
   public fetchArticles(): void {
-    this.articleService.getArticles(0, 5).subscribe(
+    this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe(
       (response: Article[]) => {
         this.articles = response;
         this.tagList = response[0].tags
