@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShellComponent } from './shell/shell.component';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 const components = [ShellComponent, FooterComponent];
 
@@ -34,7 +35,8 @@ const modules = [
   MatInputModule,
   MatSnackBarModule,
   RouterModule,
-  HttpClientModule
+  HttpClientModule,
+  NgxSkeletonLoaderModule
 ];
 
 @NgModule({

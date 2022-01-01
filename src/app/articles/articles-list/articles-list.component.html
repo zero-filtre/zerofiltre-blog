@@ -77,7 +77,12 @@
                         </div>
                     </ng-template>
                     <ng-template #tagsSkeletonLoader>
-                        <div>Loading...</div>
+                        <div class="skeleton-container">
+                            <ngx-skeleton-loader count="3" appearance="line" [theme]="{ 
+                                'border-radius': '5px'
+                                }">
+                            </ngx-skeleton-loader>
+                        </div>
                     </ng-template>
                 </div>
             </div>
@@ -191,7 +196,51 @@
 
                 <ng-template #articleSkeletonLoader>
                     <div *ngFor="elt of [1, 2, 3, 4, 5]">
-                        <p>Loading article...</p>
+                        <div class="skeleton-container lg:grid grid-cols-3 gap-6 items-start">
+                            <div class="aspect-w-3 aspect-h-2">
+                                <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                    'border-radius': '5px',
+                                     height: '170px',
+                                     width: '260px'
+                                    }">
+                                </ngx-skeleton-loader>
+                            </div>
+
+                            <div class="col-span-2 mt-4 lg:mt-0">
+                                <div class="tags-container flex space-x-3">
+                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                    'border-radius': '9999px',
+                                        height: '30px',
+                                        width: '120px'
+                                    }">
+                                    </ngx-skeleton-loader>
+                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                        'border-radius': '9999px',
+                                            height: '30px',
+                                            width: '120px'
+                                        }">
+                                    </ngx-skeleton-loader>
+                                </div>
+
+                                <div class="content-container mt-2">
+                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                    'border-radius': '5px',
+                                        height: '40px'
+                                    }">
+                                    </ngx-skeleton-loader>
+                                    <ngx-skeleton-loader count="2" appearance="line"></ngx-skeleton-loader>
+
+                                    <div class="flex gap-4">
+                                        <ngx-skeleton-loader count="1" appearance="circle"></ngx-skeleton-loader>
+                                        <ngx-skeleton-loader count="2" appearance="line" [theme]="{ 
+                                            'border-radius': '5px',
+                                                height: '20px'
+                                            }">
+                                        </ngx-skeleton-loader>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </ng-template>
             </div>
