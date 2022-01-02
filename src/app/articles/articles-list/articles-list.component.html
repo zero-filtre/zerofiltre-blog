@@ -59,27 +59,42 @@
                 </span>
 
                 <div class="mt-4" aria-labelledby="posts-tags">
-                    <ng-container *ngIf="tagList; then listOfTags else tagsSkeletonLoader"></ng-container>
+                    <ng-container *ngIf="tagList; then listOfTags else tagsListSkeletonLoader"></ng-container>
+
                     <ng-template #listOfTags>
-                        <div *ngFor="let tag of tagList">
-                            <button (click)="sortByTag(tag.name)" type="button"
-                                class="mb-1.5 group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border  hover:bg-skin-card">
+                        <div class="tagList-container space-y-2">
+                            <ng-container *ngFor="let tag of tagList">
+                                <button (click)="sortByTag(tag.name)" type="button"
+                                    class="group mr-2 px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card">
 
-                                <span class="text-skin-muted group-hover:hidden transition-all duration-300">#</span>
+                                    <span
+                                        class="text-skin-muted group-hover:hidden transition-all duration-300">#</span>
 
-                                <svg class="mr-1.5 h-2 w-2 fill-primary-500 brand-applications hidden group-hover:block transition-all duration-300"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
+                                    <svg class="mr-1.5 h-2 w-2 fill-primary-500 brand-applications hidden group-hover:block transition-all duration-300"
+                                        viewBox="0 0 8 8">
+                                        <circle cx="4" cy="4" r="3"></circle>
+                                    </svg>
 
-                                <span class="truncate lowercase font-semibold">{{tag?.name}}</span>
-                            </button>
+                                    <span class="truncate lowercase font-semibold">{{tag?.name}}</span>
+                                </button>
+                            </ng-container>
                         </div>
                     </ng-template>
-                    <ng-template #tagsSkeletonLoader>
-                        <div class="skeleton-container">
-                            <ngx-skeleton-loader count="3" appearance="line" [theme]="{ 
-                                'border-radius': '5px'
+
+                    <ng-template #tagsListSkeletonLoader>
+                        <div class="tags-skeleton-container">
+                            <ngx-skeleton-loader class="flex space-x-2" count="3" appearance="line" [theme]="{ 
+                                'border-radius': '9999px',
+                                 width: '100px',
+                                 height: '30px',
+                                 display: 'block'
+                                }">
+                            </ngx-skeleton-loader>
+                            <ngx-skeleton-loader class="flex space-x-2" count="2" appearance="line" [theme]="{ 
+                                'border-radius': '9999px',
+                                 width: '100px',
+                                 height: '30px',
+                                 display: 'block'
                                 }">
                             </ngx-skeleton-loader>
                         </div>
@@ -199,9 +214,9 @@
                         <div class="skeleton-container lg:grid grid-cols-3 gap-6 items-start">
                             <div class="aspect-w-3 aspect-h-2">
                                 <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                                    'border-radius': '5px',
-                                     height: '170px',
-                                     width: '260px'
+                                    'border-radius': '8px',
+                                     'height.%': 100,
+                                     'width.%': 100
                                     }">
                                 </ngx-skeleton-loader>
                             </div>
@@ -211,13 +226,15 @@
                                     <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
                                     'border-radius': '9999px',
                                         height: '30px',
-                                        width: '120px'
+                                        width: '100px',
+                                        display: 'block'
                                     }">
                                     </ngx-skeleton-loader>
                                     <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
                                         'border-radius': '9999px',
                                             height: '30px',
-                                            width: '120px'
+                                            width: '100px',
+                                            display: 'block'
                                         }">
                                     </ngx-skeleton-loader>
                                 </div>
@@ -225,18 +242,40 @@
                                 <div class="content-container mt-2">
                                     <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
                                     'border-radius': '5px',
-                                        height: '40px'
+                                        height: '40px',
+                                        display: 'block'
                                     }">
                                     </ngx-skeleton-loader>
-                                    <ngx-skeleton-loader count="2" appearance="line"></ngx-skeleton-loader>
-
-                                    <div class="flex gap-4">
-                                        <ngx-skeleton-loader count="1" appearance="circle"></ngx-skeleton-loader>
-                                        <ngx-skeleton-loader count="2" appearance="line" [theme]="{ 
+                                    <ngx-skeleton-loader count="2" appearance="line" [theme]="{ 
                                             'border-radius': '5px',
-                                                height: '20px'
+                                                height: '15px',
+                                                display: 'block'
                                             }">
-                                        </ngx-skeleton-loader>
+                                    </ngx-skeleton-loader>
+
+                                    <div class="flex items-center space-x-2">
+                                        <div class="">
+                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '9999px',
+                                                'width.px': 50,
+                                                'height.px': 50
+                                            }">
+                                            </ngx-skeleton-loader>
+                                        </div>
+                                        <div class="flex-1">
+                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '5px',
+                                                height: '10px',
+                                                display: 'block'
+                                            }">
+                                            </ngx-skeleton-loader>
+                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '5px',
+                                                height: '10px',
+                                                 display: 'block'
+                                            }">
+                                            </ngx-skeleton-loader>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
