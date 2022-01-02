@@ -1,4 +1,4 @@
-FROM node:16
+FROM node
 
 COPY dist/ /dist
 COPY .docker/entrypoint.sh entrypoint.sh
