@@ -25,7 +25,7 @@ export class ArticlesListComponent implements OnInit {
         this.calcReadingTime(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }
