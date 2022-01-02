@@ -58,9 +58,7 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              ]
             },
             "uat": {
               "fileReplacements": [
@@ -87,9 +85,7 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              ]
             },
             "dev": {
               "fileReplacements": [
@@ -116,9 +112,7 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              ]
             }
           },
           "defaultConfiguration": "prod"
