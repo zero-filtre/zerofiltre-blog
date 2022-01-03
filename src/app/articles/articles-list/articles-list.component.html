@@ -210,7 +210,7 @@
                 </ng-template>
 
                 <ng-template #articleSkeletonLoader>
-                    <div *ngFor="elt of [1, 2, 3, 4, 5]">
+                    <div *ngFor="elt of [].constructor(pageItemsLimit)">
                         <div class="skeleton-container lg:grid grid-cols-3 gap-6 items-start">
                             <div class="aspect-w-3 aspect-h-2">
                                 <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
