@@ -6,13 +6,15 @@ import { ArticleDetailComponent } from './article-detail/article-detail.componen
 import { ArticlesListComponent } from './articles-list/articles-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { ArticleEntryPopupComponent } from './article-entry-popup/article-entry-popup.component';
+import { ArticleEntryEditComponent } from './article-entry-edit/article-entry-edit.component';
 
 
 @NgModule({
   declarations: [
     ArticleDetailComponent,
     ArticlesListComponent,
-    ArticleEntryPopupComponent
+    ArticleEntryPopupComponent,
+    ArticleEntryEditComponent
   ],
   imports: [
     CommonModule,

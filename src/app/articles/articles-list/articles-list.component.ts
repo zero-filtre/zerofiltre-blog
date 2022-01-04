@@ -5,6 +5,7 @@ import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-articles-list',
@@ -16,23 +17,43 @@ export class ArticlesListComponent implements OnInit {
   public tagList!: Tag[];
   public pageNumber: number = 0;
   public pageItemsLimit: number = 5;
+  public newArticle!: Article;
 
-  constructor(private seo: SeoService, private articleService: ArticleService, private dialogRef: MatDialog) { }
+  constructor(
+    private seo: SeoService,
+    private articleService: ArticleService,
+    private dialogRef: MatDialog,
+    private router: Router
+  ) { }
+
+  navigateTo(value: any): void {
+    this.router.navigate(['../', value])
+  }
 
   openArticleEntryDialog(): void {
     const dialogRef = this.dialogRef.open(ArticleEntryPopupComponent, {
       width: '800px',
       // height: '500px',
       data: {
-        title: 'new article Title',
+        title: 'New Article Title',
         placeholder: 'Enter your title here'
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.articleService.createArticle(result);
-        alert('Sent a request to create an article')
+        this.articleService.createArticle(result).subscribe(
+          (response: Article) => {
+            this.newArticle = response;
+
+            this.router.navigateByUrl('article-entry-edit')
+            console.log('Successfully sent a request to create an article')
+            console.log('New ARticle', response)
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        )
       }
     });
   }

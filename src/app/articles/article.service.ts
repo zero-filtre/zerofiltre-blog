@@ -45,6 +45,6 @@ export class ArticleService {
   }
 
   public createArticle(title: string): Observable<Article> {
-    return this.http.post<Article>(`${this.apiServerUrl}/articles`, { title })
+    return this.http.post<Article>(`${this.apiServerUrl}/article?title=${title}`, {})
   }
 }
