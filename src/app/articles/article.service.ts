@@ -43,4 +43,8 @@ export class ArticleService {
   public getArticleAuthor(articleId: string): Observable<Author[]> {
     return this.http.get<Author[]>(`${this.apiServerUrl}/article/${articleId}/author`);
   }
+
+  public createArticle(title: string): Observable<Article> {
+    return this.http.post<Article>(`${this.apiServerUrl}/articles`, { title })
+  }
 }

@@ -19,13 +19,22 @@ export class ArticlesListComponent implements OnInit {
 
   constructor(private seo: SeoService, private articleService: ArticleService, private dialogRef: MatDialog) { }
 
-  openDiallog() {
-    this.dialogRef.open(ArticleEntryPopupComponent, {
+  openArticleEntryDialog(): void {
+    const dialogRef = this.dialogRef.open(ArticleEntryPopupComponent, {
+      width: '800px',
+      // height: '500px',
       data: {
         title: 'new article Title',
         placeholder: 'Enter your title here'
       }
-    })
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.articleService.createArticle(result);
+        alert('Sent a request to create an article')
+      }
+    });
   }
 
   public fetchArticles(): void {
