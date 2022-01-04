@@ -35,8 +35,7 @@ export class ArticlesListComponent implements OnInit {
       width: '800px',
       // height: '500px',
       data: {
-        title: 'New Article Title',
-        placeholder: 'Enter your title here'
+        // title: 'New Article Title',
       }
     });
 
@@ -55,6 +54,7 @@ export class ArticlesListComponent implements OnInit {
           }
         )
       }
+      console.log('RESULT', result)
     });
   }
 

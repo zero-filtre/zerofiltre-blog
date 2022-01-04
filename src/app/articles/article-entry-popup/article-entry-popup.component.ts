@@ -7,15 +7,15 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./article-entry-popup.component.css']
 })
 export class ArticleEntryPopupComponent implements OnInit {
-  public title!: string
+  // public title!: string
   public placeholder!: string
 
   constructor(
     public dialogRef: MatDialogRef<ArticleEntryPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.title = data.title
-    this.placeholder = data.placeholder
+    // this.title = data.title
+    this.placeholder = 'Enter Your Title here'
   }
 
   onNoClick(): void {
