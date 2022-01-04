@@ -20,7 +20,12 @@ export class ArticlesListComponent implements OnInit {
   constructor(private seo: SeoService, private articleService: ArticleService, private dialogRef: MatDialog) { }
 
   openDiallog() {
-    this.dialogRef.open(ArticleEntryPopupComponent)
+    this.dialogRef.open(ArticleEntryPopupComponent, {
+      data: {
+        title: 'new article Title',
+        placeholder: 'Enter your title here'
+      }
+    })
   }
 
   public fetchArticles(): void {
