@@ -47,14 +47,13 @@ export class ArticlesListComponent implements OnInit {
 
             this.router.navigateByUrl('article-entry-edit')
             console.log('Successfully sent a request to create an article')
-            console.log('New ARticle', response)
+            console.log('NEW ARTICLE', response)
           },
           (error: HttpErrorResponse) => {
             alert(error.message);
           }
         )
       }
-      console.log('RESULT', result)
     });
   }
 
