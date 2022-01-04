@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
+import { MatDialog } from '@angular/material/dialog'
+import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 
 @Component({
   selector: 'app-articles-list',
@@ -15,7 +17,11 @@ export class ArticlesListComponent implements OnInit {
   public pageNumber: number = 0;
   public pageItemsLimit: number = 5;
 
-  constructor(private seo: SeoService, private articleService: ArticleService) { }
+  constructor(private seo: SeoService, private articleService: ArticleService, private dialogRef: MatDialog) { }
+
+  openDiallog() {
+    this.dialogRef.open(ArticleEntryPopupComponent)
+  }
 
   public fetchArticles(): void {
     this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe(

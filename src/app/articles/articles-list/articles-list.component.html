@@ -62,7 +62,7 @@
                     <ng-container *ngIf="tagList; then listOfTags else tagsListSkeletonLoader"></ng-container>
 
                     <ng-template #listOfTags>
-                        <div class="tagList-container space-y-2">
+                        <div class="tagList-container space-y-1">
                             <ng-container *ngFor="let tag of tagList">
                                 <button (click)="sortByTag(tag.name)" type="button"
                                     class="group inline-flex items-center mr-1 px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card">
@@ -81,16 +81,21 @@
                         </div>
                     </ng-template>
 
+                    <button (click)="openDiallog()" type="button"
+                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card">New
+                        Article
+                    </button>
+
                     <ng-template #tagsListSkeletonLoader>
                         <div class="tags-skeleton-container">
-                            <ngx-skeleton-loader class="flex space-x-2" count="3" appearance="line" [theme]="{ 
+                            <ngx-skeleton-loader class="flex space-x-1" count="3" appearance="line" [theme]="{ 
                                 'border-radius': '9999px',
                                  width: '100px',
                                  height: '30px',
                                  display: 'block'
                                 }">
                             </ngx-skeleton-loader>
-                            <ngx-skeleton-loader class="flex space-x-2" count="2" appearance="line" [theme]="{ 
+                            <ngx-skeleton-loader class="flex space-x-1" count="2" appearance="line" [theme]="{ 
                                 'border-radius': '9999px',
                                  width: '100px',
                                  height: '30px',
