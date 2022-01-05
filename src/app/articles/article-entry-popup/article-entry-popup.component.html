@@ -8,7 +8,7 @@
         class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-skin-muted text-sm sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-sm sm:placeholder:text-2xl lg:placeholder:text-5xl focus:border-b-skin-borderBold"
         placeholder={{placeholder}} [(ngModel)]="title" #name="ngModel" />
 
-    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="">
+    <div *ngIf="name.invalid && name.dirty" class="">
         <div *ngIf="name.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
             Le titre est obligatoire.
         </div>
