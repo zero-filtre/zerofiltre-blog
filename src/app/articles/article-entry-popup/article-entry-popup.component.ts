@@ -15,7 +15,7 @@ export class ArticleEntryPopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     // this.title = data.title
-    this.placeholder = 'Enter Your Title here'
+    this.placeholder = 'Tout commence par un titre!'
   }
 
   onNoClick(): void {

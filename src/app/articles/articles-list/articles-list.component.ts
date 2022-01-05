@@ -33,7 +33,7 @@ export class ArticlesListComponent implements OnInit {
   openArticleEntryDialog(): void {
     const dialogRef = this.dialogRef.open(ArticleEntryPopupComponent, {
       width: '800px',
-      // height: '500px',
+      height: '500px',
       data: {
         // title: 'New Article Title',
       }
