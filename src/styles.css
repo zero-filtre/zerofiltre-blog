@@ -11,11 +11,12 @@
 }
 
 .cdk-overlay-pane {
-  /* border: 2px solid red; */
+  max-width: 90vw !important;
+  height: 400px;
 }
 
 .mat-dialog-container {
-  @apply !flex justify-center items-center bg-skin-cardMuted;
+  @apply !flex justify-center items-center bg-skin-cardMuted !p-4 sm:p-6;
 }
 
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing .sidenav-container {
