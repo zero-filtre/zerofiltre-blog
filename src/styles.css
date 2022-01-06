@@ -12,7 +12,7 @@
 
 .cdk-overlay-pane {
   max-width: 90vw !important;
-  height: 400px;
+  @apply !h-[400px] sm:!h-[500px];
 }
 
 .mat-dialog-container {
