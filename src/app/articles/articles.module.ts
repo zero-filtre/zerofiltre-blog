@@ -5,12 +5,16 @@ import { ArticlesRoutingModule } from './articles-routing.module';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { ArticlesListComponent } from './articles-list/articles-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { ArticleEntryPopupComponent } from './article-entry-popup/article-entry-popup.component';
+import { ArticleEntryEditComponent } from './article-entry-edit/article-entry-edit.component';
 
 
 @NgModule({
   declarations: [
     ArticleDetailComponent,
-    ArticlesListComponent
+    ArticlesListComponent,
+    ArticleEntryPopupComponent,
+    ArticleEntryEditComponent
   ],
   imports: [
     CommonModule,

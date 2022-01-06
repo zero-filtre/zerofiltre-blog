@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
+import { MatDialog } from '@angular/material/dialog'
+import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-articles-list',
@@ -14,8 +17,49 @@ export class ArticlesListComponent implements OnInit {
   public tagList!: Tag[];
   public pageNumber: number = 0;
   public pageItemsLimit: number = 5;
+  public newArticle!: Article;
 
-  constructor(private seo: SeoService, private articleService: ArticleService) { }
+  constructor(
+    private seo: SeoService,
+    private articleService: ArticleService,
+    private dialogRef: MatDialog,
+    private router: Router
+  ) { }
+
+  openArticleEntryDialog(): void {
+    const dialogRef = this.dialogRef.open(ArticleEntryPopupComponent, {
+      width: '800px',
+      height: '500px',
+      // backdropClass: 'custom-dialog-backdrop-class',
+      // panelClass: 'custom-dialog-panel-class',
+      data: {
+        // title: 'New Article Title',
+        onInitArticle: () => this.initAnArticle
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.initAnArticle(result);
+      }
+    });
+  }
+
+  public initAnArticle(title: string): void {
+    console.log('Init Article called')
+    this.articleService.createArticle(title).subscribe(
+      (response: Article) => {
+        this.newArticle = response;
+
+        this.router.navigateByUrl('article-entry-edit')
+        console.log('Successfully sent a request to create an article')
+        console.log('NEW ARTICLE', response)
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }
 
   public fetchArticles(): void {
     this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe(
