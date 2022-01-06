@@ -1,7 +1,4 @@
-FROM node
+FROM nginx:alpine
 
-COPY dist/ /dist
-COPY .docker/entrypoint.sh entrypoint.sh
-RUN chmod 755 entrypoint.sh
-ENTRYPOINT ["./entrypoint.sh"]
-EXPOSE 4000
+COPY dist/zerofiltre-blog /usr/share/nginx/html
+COPY .docker/nginx.conf /etc/nginx/nginx.conf

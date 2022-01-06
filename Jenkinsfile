@@ -56,7 +56,7 @@ def buildAndTest() {
         sh """
             npm i -g @angular/cli@12.0.3
             npm install
-            ng build --configuration=${env_name} && ng run zerofiltre-blog:server --configuration=${env_name}
+            ng build --configuration=${env_name}
         """
     }
 }
