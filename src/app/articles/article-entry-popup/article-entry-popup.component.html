@@ -20,21 +20,21 @@
 
     <div class=" flex space-x-1 sm:space-x-2 mt-4">
         <button
-            class="px-3 py-1 sm:px-4 sm:py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-xs sm:text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-300"
+            class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-300"
             (click)="onNoClick()">
             Annuler
         </button>
 
         <div *ngIf="name.invalid; else validBtn">
             <button
-                class="px-3 py-1 sm:px-4 sm:py-2 border border-primary-500 shadow-sm bg-primary-500 opacity-[0.15] rounded-full text-xs sm:text-sm text-white leading-5 font-semibold"
+                class="px-4 py-2 border border-primary-500 shadow-sm bg-primary-500 opacity-[0.15] rounded-full text-sm text-white leading-5 font-semibold"
                 type="submit" disabled>
                 Commencer
             </button>
         </div>
         <ng-template #validBtn>
             <button type="submit" [mat-dialog-close]="title"
-                class="px-3 py-1 sm:px-4 sm:py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-xs sm:text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-300">
+                class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-300">
                 Commencer
             </button>
         </ng-template>
