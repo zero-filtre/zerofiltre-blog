@@ -29,7 +29,7 @@ export class ArticlesListComponent implements OnInit {
   openArticleEntryDialog(): void {
     const dialogRef = this.dialogRef.open(ArticleEntryPopupComponent, {
       width: '800px',
-      height: '500px',
+      height: '350px',
       // backdropClass: 'custom-dialog-backdrop-class',
       // panelClass: 'custom-dialog-panel-class',
       data: {
