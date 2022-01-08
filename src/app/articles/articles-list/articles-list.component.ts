@@ -17,7 +17,6 @@ export class ArticlesListComponent implements OnInit {
   public tagList!: Tag[];
   public pageNumber: number = 0;
   public pageItemsLimit: number = 5;
-  public newArticle!: Article;
 
   constructor(
     private seo: SeoService,
@@ -27,38 +26,15 @@ export class ArticlesListComponent implements OnInit {
   ) { }
 
   openArticleEntryDialog(): void {
-    const dialogRef = this.dialogRef.open(ArticleEntryPopupComponent, {
+    this.dialogRef.open(ArticleEntryPopupComponent, {
       width: '800px',
       height: '350px',
       // backdropClass: 'custom-dialog-backdrop-class',
       // panelClass: 'custom-dialog-panel-class',
       data: {
-        // title: 'New Article Title',
-        onInitArticle: () => this.initAnArticle
+        router: this.router
       }
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.initAnArticle(result);
-      }
-    });
-  }
-
-  public initAnArticle(title: string): void {
-    console.log('Init Article called')
-    this.articleService.createArticle(title).subscribe(
-      (response: Article) => {
-        this.newArticle = response;
-
-        this.router.navigateByUrl('article-entry-edit')
-        console.log('Successfully sent a request to create an article')
-        console.log('NEW ARTICLE', response)
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    )
   }
 
   public fetchArticles(): void {
