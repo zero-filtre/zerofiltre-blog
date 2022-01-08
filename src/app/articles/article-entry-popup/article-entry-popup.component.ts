@@ -1,5 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Article } from '../article.model';
+import { ArticleService } from '../article.service';
 
 @Component({
   selector: 'app-article-entry-popup',
@@ -9,10 +12,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ArticleEntryPopupComponent implements OnInit {
   public title!: string;
   public placeholder!: string
+  public loading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ArticleEntryPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private articleService: ArticleService,
   ) {
     this.title = '';
     this.placeholder = 'Tout commence par un titre!'
@@ -23,8 +28,19 @@ export class ArticleEntryPopupComponent implements OnInit {
   }
 
   handleArticleInit(): void {
-    this.data.onInitArticle(this.title);
-    console.log('Commencer')
+    this.loading = true;
+
+    this.articleService.createArticle(this.title).subscribe(
+      (_response: Article) => {
+        this.data.router.navigateByUrl('article-entry-edit');
+        this.loading = false;
+        this.dialogRef.close();
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        console.log(error.message);
+      }
+    )
   }
 
   ngOnInit(): void {
