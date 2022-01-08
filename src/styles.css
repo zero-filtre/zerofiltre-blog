@@ -10,15 +10,18 @@
   @apply mx-auto px-5 xl:px-[5%];
 }
 
-.cdk-overlay-pane {
+.article-popup-panel {
   max-width: 90vw !important;
   @apply !h-[300px] sm:!h-[350px];
 }
 
-.mat-dialog-container {
+.article-popup-panel .mat-dialog-container {
   @apply !flex justify-center items-center bg-skin-cardMuted !p-4 sm:p-6;
 }
 
-.cdk-overlay-backdrop.cdk-overlay-backdrop-showing .sidenav-container {
-  filter: blur(5px);
+/* .article-popup-backdrop {
 }
+
+.article-popup-backdrop.cdk-overlay-backdrop-showing .sidenav-container {
+  filter: blur(5px);
+} */

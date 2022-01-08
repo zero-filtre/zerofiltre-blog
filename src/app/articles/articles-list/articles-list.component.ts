@@ -27,10 +27,10 @@ export class ArticlesListComponent implements OnInit {
 
   openArticleEntryDialog(): void {
     this.dialogRef.open(ArticleEntryPopupComponent, {
-      width: '800px',
+      width: '850px',
       height: '350px',
-      // backdropClass: 'custom-dialog-backdrop-class',
-      // panelClass: 'custom-dialog-panel-class',
+      panelClass: 'article-popup-panel',
+      // backdropClass: 'article-popup-backdrop',
       data: {
         router: this.router
       }
