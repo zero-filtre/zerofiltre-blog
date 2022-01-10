@@ -1,6 +1,15 @@
-.article-description {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+.button-active {
+  @apply bg-skin-link text-skin-inverted;
+}
+
+.button-inactive {
+  @apply text-skin-base;
+}
+
+.svg-active {
+  @apply text-skin-base;
+}
+
+.svg-inactive {
+  @apply text-skin-muted group-hover:text-skin-base;
 }

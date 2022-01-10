@@ -3,8 +3,9 @@ export interface Article {
   title?: string;
   thumbnail?: string;
   content?: string;
-  author?: Author
-  publishedAt?: [];
+  author?: Author;
+  createdAt?: string
+  publishedAt?: string;
   reactions?: [];
   status?: string;
   tags: Tag[];

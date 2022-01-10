@@ -4,9 +4,11 @@
         <div class="left-side-container sticky top-4">
 
             <div class="pb-8 space-y-1">
-                <button type="button" (click)="sortByTrend('recent')" aria-current="page"
-                    class="bg-skin-link text-skin-inverted group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md ">
-                    <svg class="text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-300"
+                <button type="button" (click)="sortBy('recent')" aria-current="page"
+                    [ngClass]="activePage == 'recent' ? 'button-active' : 'button-inactive'"
+                    class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+                    <svg [ngClass]="activePage == 'recent' ? 'svg-active' : 'svg-inactive'"
+                        class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-300"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                         aria-hidden="true">
                         <path d="M15.596 15.696h-7.22M15.596 11.937h-7.22M11.131 8.177H8.376" stroke-width="1.5"
@@ -20,11 +22,12 @@
                     </span>
                 </button>
 
-                <button type="button" (click)="sortByTrend('popular')" aria-current="false"
-                    class="text-skin-base group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md ">
-                    <svg class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-300"
-                        fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"
-                        aria-hidden="true">
+                <button type="button" (click)="sortBy('popular')" aria-current="false"
+                    [ngClass]="activePage == 'popular' ? 'button-active' : 'button-inactive'"
+                    class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+                    <svg [ngClass]="activePage == 'popular' ? 'svg-active' : 'svg-inactive'"
+                        class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-300" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path clip-rule="evenodd"
                             d="M12 3C9.964 3 9.771 6.547 8.56 7.8c-1.213 1.253-4.982-.18-5.505 2.044-.523 2.225 2.867 2.98 3.285 4.89.42 1.909-1.65 4.59.12 5.926 1.77 1.334 3.674-1.685 5.54-1.685s3.77 3.019 5.54 1.685c1.77-1.335-.3-4.017.12-5.927.419-1.909 3.808-2.664 3.285-4.889-.522-2.224-4.292-.791-5.503-2.044C14.23 6.547 14.036 3 12 3z"
                             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -34,9 +37,11 @@
                     </span>
                 </button>
 
-                <button type="button" (click)="sortByTrend('trending')" aria-current="false"
-                    class="text-skin-base group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md ">
-                    <svg class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-300"
+                <button type="button" (click)="sortBy('trending')" aria-current="false"
+                    [ngClass]="activePage == 'trending' ? 'button-active' : 'button-inactive'"
+                    class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+                    <svg [ngClass]="activePage == 'trending' ? 'svg-active' : 'svg-inactive'"
+                        class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-300"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                         aria-hidden="true">
                         <path
