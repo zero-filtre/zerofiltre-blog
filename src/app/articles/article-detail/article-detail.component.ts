@@ -23,7 +23,6 @@ export class ArticleDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private articleService: ArticleService,
     private seo: SeoService,
-    private router: Router
   ) { }
 
   public calcReadingTime(article: Article): void {
@@ -80,18 +79,6 @@ export class ArticleDetailComponent implements OnInit {
           console.log(error.message);
         }
       )
-    }
-  }
-
-
-  public goToArticle(position: string): void {
-    if (position === 'prev') {
-      // this.router.navigateByUrl(`articles/${this.previousArticle.id}`)
-      this.router.navigate(['', `/${this.previousArticle.id}`])
-    }
-
-    if (position === 'next') {
-      this.router.navigateByUrl(``)
     }
   }
 
