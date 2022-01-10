@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
@@ -19,7 +19,12 @@ export class ArticleDetailComponent implements OnInit {
   public nextArticle!: Article;
   readonly blogUrl = environment.blogUrl;
 
-  constructor(private route: ActivatedRoute, private articleService: ArticleService, private seo: SeoService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private articleService: ArticleService,
+    private seo: SeoService,
+    private router: Router
+  ) { }
 
   public calcReadingTime(article: Article): void {
     const content = article?.content
@@ -54,29 +59,8 @@ export class ArticleDetailComponent implements OnInit {
       )
   }
 
-  public getPreviousArticle(articleId: number): void {
-    this.articleService.getOneArticle(articleId).subscribe(
-      (response: Article) => {
-        this.previousArticle = response;
-      },
-
-      (error: HttpErrorResponse) => {
-        console.log(error.message);
-      }
-    )
-  }
-
-  public setArticleData(state: string): void {
-    if (state === 'next') this.articleId = +this.articleId + 1
-    if (state === 'prev') this.articleId = +this.articleId - 1
-
-    this.getCurrentArticle(this.articleId)
-    this.getNextArticle(+this.articleId + 1)
-    if (this.articleId > 1) this.getPreviousArticle(+this.articleId - 1)
-  }
-
-  public getNextArticle(articleId: number): void {
-    this.articleService.getOneArticle(articleId).subscribe(
+  public fetchSiblingArticles(prev: number, next: number): void {
+    this.articleService.getOneArticle(next).subscribe(
       (response: Article) => {
         this.nextArticle = response;
       },
@@ -85,13 +69,36 @@ export class ArticleDetailComponent implements OnInit {
         console.log(error.message);
       }
     )
+
+    if (prev !== 0) {
+      this.articleService.getOneArticle(prev).subscribe(
+        (response: Article) => {
+          this.previousArticle = response;
+        },
+
+        (error: HttpErrorResponse) => {
+          console.log(error.message);
+        }
+      )
+    }
+  }
+
+
+  public goToArticle(position: string): void {
+    if (position === 'prev') {
+      // this.router.navigateByUrl(`articles/${this.previousArticle.id}`)
+      this.router.navigate(['', `/${this.previousArticle.id}`])
+    }
+
+    if (position === 'next') {
+      this.router.navigateByUrl(``)
+    }
   }
 
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
-    if (this.articleId > 1) this.getPreviousArticle(+this.articleId - 1);
-    this.getNextArticle(+this.articleId + 1);
+    this.fetchSiblingArticles(+this.articleId - 1, +this.articleId + 1)
   }
 
 }

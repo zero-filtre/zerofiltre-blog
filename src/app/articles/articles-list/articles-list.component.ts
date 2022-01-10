@@ -6,6 +6,7 @@ import { ArticleService } from '../article.service';
 import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-articles-list',
@@ -17,12 +18,14 @@ export class ArticlesListComponent implements OnInit {
   public tagList!: Tag[];
   public pageNumber: number = 0;
   public pageItemsLimit: number = 5;
+  public activePage: string = 'recent'
 
   constructor(
     private seo: SeoService,
     private articleService: ArticleService,
     private dialogRef: MatDialog,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) { }
 
   openArticleEntryDialog(): void {
@@ -40,7 +43,8 @@ export class ArticlesListComponent implements OnInit {
   public fetchArticles(): void {
     this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe(
       (response: Article[]) => {
-        this.articles = response;
+        // this.articles = response
+        this.articles = this.sortByDate(response)
         this.tagList = response[0].tags
         this.calcReadingTime(response);
       },
@@ -61,23 +65,41 @@ export class ArticlesListComponent implements OnInit {
     }
   }
 
-  public sortByTrend(trendName: string): void {
-    const results: Article[] = []
+  public sortBy(trendName: string): void {
+    let results: Article[] = [];
 
-    for (const article of this.articles) {
-      if (article.reactions?.length !== 0) {
-        results.push(article)
-      }
-
-      this.articles = results
-
-      if (results.length === 0) {
-        this.fetchArticles()
-        console.log("fetchArticles Called")
-      }
+    if (trendName === 'recent') {
+      this.activePage = 'recent';
+      results = this.sortByDate(this.articles);
+      this.articles = results;
+      this.location.go(this.router.url)
     }
 
-    console.log("SortByTrend", results)
+    if (trendName === 'popular') {
+      this.activePage = 'popular'
+      results = this.sortByPopularity(this.articles);
+      this.articles = results;
+      this.location.go(`${this.router.url}?sortBy=${trendName}`)
+    }
+
+    if (trendName === 'trending') {
+      this.activePage = 'trending'
+      results = this.sortByTrend(this.articles);
+      this.articles = results;
+      this.location.go(`${this.router.url}?sortBy=${trendName}`)
+    }
+  }
+
+  private sortByDate(list: Article[]): Article[] {
+    return list.sort((a: any, b: any) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
+  }
+
+  private sortByPopularity(list: Article[]): Article[] {
+    return list.sort((a: any, b: any) => a.id - b.id)
+  }
+
+  private sortByTrend(list: Article[]): Article[] {
+    return list.sort((a: any, b: any) => a.id - b.id)
   }
 
   public sortByTag(tagName: any): void {
@@ -92,11 +114,10 @@ export class ArticlesListComponent implements OnInit {
 
       if (results.length === 0) {
         this.fetchArticles()
-        console.log("fetchArticles Called")
       }
     }
 
-    console.log("SortByTag", results)
+    this.location.go(`${this.router.url}?tag=${tagName}`)
   }
 
   public searchArticles(key: string): void {
@@ -116,11 +137,8 @@ export class ArticlesListComponent implements OnInit {
 
       if (results.length === 0 || !key) {
         this.fetchArticles()
-        console.log("fetchArticles Called")
       }
     }
-
-    console.log("searchArticles", results)
   }
 
   ngOnInit(): void {
