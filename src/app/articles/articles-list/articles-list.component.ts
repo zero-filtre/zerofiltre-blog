@@ -41,17 +41,17 @@ export class ArticlesListComponent implements OnInit {
   }
 
   public fetchArticles(): void {
-    this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe(
-      (response: Article[]) => {
+    this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
+      next: (response: Article[]) => {
         // this.articles = response
         this.articles = this.sortByDate(response)
         this.tagList = response[0].tags
         this.calcReadingTime(response);
       },
-      (error: HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
         console.log(error.message);
       }
-    );
+    });
   }
 
   public calcReadingTime(articles: Article[]): void {

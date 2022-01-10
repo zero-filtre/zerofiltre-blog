@@ -46,39 +46,37 @@ export class ArticleDetailComponent implements OnInit {
           })
         })
       )
-      .subscribe(
-        (response: Article) => {
+      .subscribe({
+        next: (response: Article) => {
           this.article = response
           this.calcReadingTime(response)
         },
 
-        (error: HttpErrorResponse) => {
+        error: (error: HttpErrorResponse) => {
           alert(error.message);
         }
-      )
+      })
   }
 
   public fetchSiblingArticles(prev: number, next: number): void {
-    this.articleService.getOneArticle(next).subscribe(
-      (response: Article) => {
+    this.articleService.getOneArticle(next).subscribe({
+      next: (response: Article) => {
         this.nextArticle = response;
       },
-
-      (error: HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
         console.log(error.message);
       }
-    )
+    })
 
     if (prev !== 0) {
-      this.articleService.getOneArticle(prev).subscribe(
-        (response: Article) => {
+      this.articleService.getOneArticle(prev).subscribe({
+        next: (response: Article) => {
           this.previousArticle = response;
         },
-
-        (error: HttpErrorResponse) => {
+        error: (error: HttpErrorResponse) => {
           console.log(error.message);
         }
-      )
+      })
     }
   }
 
