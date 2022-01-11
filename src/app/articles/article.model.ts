@@ -12,6 +12,12 @@ export interface Article {
   readingTime: number;
 }
 
+export interface File {
+  data?: any;
+  progress?: number;
+  inProgress?: boolean;
+}
+
 export interface Author {
   id?: string;
   pseudoName?: string;
