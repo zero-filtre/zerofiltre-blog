@@ -1,3 +1,113 @@
-<div class="grid place-items-center min-h-screen">
-    <p>Article Entry Edit</p>
+<div class="">
+    <nav class="top-nav sm:flex sm:items-center justify-between mt-5">
+        <div class="nav-links inline-flex space-x-3 font-semibold text-skin-base">
+            <a routerLink="/" class="group flex items-center space-x-1">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 group-hover:-translate-x-1 text-primary-500 transition-all duration-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                </svg>
+                <span class="text-primary-500">
+                    Tous les articles
+                </span>
+            </a>
+            <a routerLink="#dashboard" class="">
+                <span>
+                    Mes articles
+                </span>
+            </a>
+        </div>
+
+        <div class="action-buttons flex space-x-1 sm:space-x-2">
+            <button type="submit"
+                class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-300">
+                Publier
+            </button>
+            <button
+                class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-300">
+                Sauvergarder
+            </button>
+        </div>
+    </nav>
+
+    <div class="article-data-container lg:grid grid-cols-10 gap-10 items-start mt-20">
+        <aside class="col-span-2">
+            <div class="left-side-container">
+                <label for="cover_photo" class="block text-sm font-semibold leading-5 text-skin-base">
+                    Image de couverture
+                </label>
+
+                <div class="article-image-preview-wrapper mt-4">
+                    <div class="article-image-preview relative w-full overflow-hidden">
+                        <label for="file"
+                            class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
+                            <div class="text-center" wire:loading.remove="" wire:target="file">
+                                <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
+                                    viewBox="0 0 48 48">
+                                    <path
+                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                                <p class="mt-1 text-xs text-skin-base leading-6">
+                                    <span
+                                        class="font-semibold text-green-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                                        Upload a file
+                                    </span>
+                                    or drag and drop
+                                </p>
+                                <p class="mt-1 text-xs text-skin-muted">
+                                    PNG, JPG, GIF up to 1MB
+                                </p>
+                                <input class="preview-close-btn sr-only" type="file" id="file" wire:click="removeImage"
+                                    wire:model="file">
+                            </div>
+
+                            <div class="preview-loader w-full h-full hidden items-center justify-center"
+                                wire:loading.class.remove="hidden" wire:target="file">
+                                <!-- Add the flex class to the div if loading is true -->
+                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-primary-500"
+                                    wire:loading="wire:loading" wire:target="file" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                    </path>
+                                </svg>
+                            </div>
+
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="col-span-6">
+            <div class="main-side-container">
+                <div class="article-title mt-10 sm:mt-0">
+                    <input name="title" id="title" required minlength="4"
+                        class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
+                        placeholder='Entrez le titre de votre article...' autocomplete="off" />
+                </div>
+            </div>
+        </main>
+
+        <aside class="col-span-2">
+            <div class="rigth-side-container">
+                <div class="tag-list">
+                    <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
+                        Tags
+                    </label>
+                    <div class="choices mt-4">
+                        <select
+                            class="block w-full border border-skin-border bg-transparent placeholder-skin-muted text-skin-base rounded-md shadow-sm focus:outline-primary-500"
+                            wire:model="tags_selected" id="tags_selected" x-data="{}"
+                            x-init="function () { choices($el) }" multiple="multiple" hidden="" tabindex="-1"
+                            data-choice="active">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
 </div>

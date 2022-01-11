@@ -1,0 +1,8 @@
+.article-image-preview {
+  height: 14rem;
+}
+
+.preview-label {
+  border: 2px dashed #e5e7eb;
+  height: 100%;
+}

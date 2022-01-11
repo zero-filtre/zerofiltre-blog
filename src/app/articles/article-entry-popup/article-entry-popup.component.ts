@@ -30,17 +30,17 @@ export class ArticleEntryPopupComponent implements OnInit {
   handleArticleInit(): void {
     this.loading = true;
 
-    this.articleService.createArticle(this.title).subscribe(
-      (_response: Article) => {
+    this.articleService.createArticle(this.title).subscribe({
+      next: (_response: Article) => {
         this.data.router.navigateByUrl('article-entry-edit');
         this.loading = false;
         this.dialogRef.close();
       },
-      (error: HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
         this.loading = false;
         console.log(error.message);
       }
-    )
+    })
   }
 
   ngOnInit(): void {

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
@@ -51,14 +51,13 @@ export class ArticleDetailComponent implements OnInit {
           this.article = response
           this.calcReadingTime(response)
         },
-
         error: (error: HttpErrorResponse) => {
           alert(error.message);
         }
       })
   }
 
-  public fetchSiblingArticles(prev: number, next: number): void {
+  public fetchArticleSiblings(prev: number, next: number): void {
     this.articleService.getOneArticle(next).subscribe({
       next: (response: Article) => {
         this.nextArticle = response;
@@ -83,7 +82,7 @@ export class ArticleDetailComponent implements OnInit {
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
-    this.fetchSiblingArticles(+this.articleId - 1, +this.articleId + 1)
+    this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
   }
 
 }
