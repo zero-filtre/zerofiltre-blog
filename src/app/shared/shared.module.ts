@@ -40,7 +40,7 @@ const modules = [
   HttpClientModule,
   NgxSkeletonLoaderModule,
   MatDialogModule,
-  FormsModule
+  FormsModule,
 ];
 
 @NgModule({

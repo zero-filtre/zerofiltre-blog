@@ -6,3 +6,12 @@
   border: 2px dashed #e5e7eb;
   height: 100%;
 }
+
+.variable-textarea {
+  border: none !important;
+  outline: none !important;
+}
+
+.variable-textarea:focus {
+  outline: transparent !important;
+}

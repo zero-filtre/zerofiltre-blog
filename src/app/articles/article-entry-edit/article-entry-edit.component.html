@@ -103,6 +103,12 @@
                         class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
                         placeholder='Entrez le titre de votre article...' autocomplete="off" />
                 </div>
+
+                <div class="article-body mt-10">
+                    <div class="editor-header font-semibold"></div>
+                    <textarea class="variable-textarea bg-white min-h-screen w-full" [(ngModel)]="markdown"></textarea>
+                    <!-- <markdown class="variable-binding" [data]="markdown"></markdown> -->
+                </div>
             </div>
         </main>
 
