@@ -106,7 +106,7 @@
 
                 <div class="article-body !shadow-md mt-4 sm:mt-2">
                     <div
-                        class="editor-header font-semibold relative flex items-center justify-between w-full bg-skin-card">
+                        class="editor-header mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
 
                         <div class="flex items-center w-full">
                             <div (click)="setActiveTab('editor')" [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
@@ -153,15 +153,20 @@
                             </div> -->
                     </div>
 
-                    <textarea *ngIf="activeTab === 'editor'" class="editor-textarea bg-white min-h-screen w-full pt-4"
-                        [(ngModel)]="markdown"></textarea>
-                    <div *ngIf="activeTab === 'preview'"
-                        class="markdown-preview-container bg-white min-h-screen w-full pt-4 px-4">
-                        <!-- <markdown class="markdown-content text-skin-base max-w-none mx-auto prose prose-cyan md:prose-lg prose-p:leading-9 prose-a:font-semibold prose-a:no-underline prose-headings:text-skin-inverted" [data]="markdown"></markdown> -->
-                        Preview Content
-                    </div>
-                    <div *ngIf="activeTab === 'help'" class="help-container bg-white min-h-screen w-full pt-4 px-4">
-                        Help Content
+                    <div class="tabs-content-wrapper">
+                        <textarea *ngIf="activeTab === 'editor'"
+                            class="editor-textarea bg-white min-h-screen w-full p-4" [(ngModel)]="markdown"
+                            placeholder="Type your content"></textarea>
+                        <div *ngIf="activeTab === 'preview'"
+                            class="markdown-preview-container bg-white min-h-screen w-full p-4">
+                            <markdown
+                                class="markdown-content text-skin-base max-w-none mx-auto prose prose-cyan md:prose-lg prose-p:leading-9 prose-a:font-semibold prose-a:no-underline prose-headings:text-skin-inverted"
+                                [data]="markdown">
+                            </markdown>
+                        </div>
+                        <div *ngIf="activeTab === 'help'" class="help-container bg-white min-h-screen w-full p-4">
+                            Help Content
+                        </div>
                     </div>
                 </div>
             </div>

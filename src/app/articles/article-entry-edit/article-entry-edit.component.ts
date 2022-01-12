@@ -19,18 +19,29 @@ export class ArticleEntryEditComponent implements OnInit {
   ---
 
   ### Syntax highlight
-  \`\`\`typescript
+  \`\`\`ts
   const language = 'typescript';
   \`\`\`
 
-  ### Lists
-  1. Ordered list
+  ### Ordered Lists
+  1. bullet point
   2. Another bullet point
-    - Unordered list
-    - Another unordered bullet
+
+  ### Unordered list
+  - Unordered bullet
+  - Another unordered bullet
 
   ### Blockquote
-  > Blockquote to the max`;
+  > Blockquote to the max
+
+  \`\`\`js
+  const language = 'javascript';
+  \`\`\`
+
+  \`\`\`java
+  String language = "java";
+  \`\`\`
+  `;
 
   constructor(
     // private formuilder: FormBuilder,
