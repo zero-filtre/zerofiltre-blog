@@ -41,6 +41,67 @@ export class ArticleEntryEditComponent implements OnInit {
   \`\`\`java
   String language = "java";
   \`\`\`
+
+  ### Inline code
+ \`Hello\`
+
+  ### Links
+  [link_text](https://google.com)
+
+  ### Image
+  ![Screenshot from 2021-11-04 09-32-25.png](https://images.ctfassets.net/hrltx12pl8hq/7yQR5uJhwEkRfjwMFJ7bUK/dc52a0913e8ff8b5c276177890eb0129/offset_comp_772626-opt.jpg?fit=fill&w=800&h=300)
+
+  ### Embed Video
+  [![Alternate Text]({image-url})]({video-url} "Link Title")
+  [![Alternate Text](https://img.youtube.com/watch?v=J1BDEl9uS18.jpg)](https://www.youtube.com/watch?v=J1BDEl9uS18)
+
+  <figure class="video_container">
+  <video controls="true" allowfullscreen="true" poster="path/to/poster_image.png">
+    <source src="https://www.youtube.com/watch?v=J1BDEl9uS18" type="video/mp4">
+    <source src="https://www.youtube.com/watch?v=J1BDEl9uS18" type="video/ogg">
+    <source src="https://www.youtube.com/watch?v=J1BDEl9uS18" type="video/webm">
+  </video>
+  </figure>
+
+  ### Embed Iframe
+  
+  <figure class="video_container">
+  <iframe src="https://www.youtube.com/embed/J1BDEl9uS18" frameborder="0" allowfullscreen="true"></iframe>
+  </figure>
+
+  ### Divider
+  ---
+
+  ### Inline HTML
+  <dl>
+  <dt>Definition list</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
+  </dl>
+
+  This is a regular paragraph.
+
+  <table>
+  <tr>
+  <td>Foo</td>
+  </tr>
+  </table>
+
+  This is another regular paragraph.
+
+  ### Gipgy
+  {% giphy https://giphy.com/embed/pynZagVcYxVUk %}
+
+  ### Mention a person
+  @ericmbouwe
+
+  ### Embed CodePen
+  {% codepen https://codepen.io/mehraddev/pen/LYpwLVq %}
+
+  ### Embed CodeSandBox
+  {% codesandbox https://codesandbox.io/s/rough-wildflower-bfh4z?file=/src/components/App.js %}
   `;
 
   constructor(
