@@ -11,6 +11,7 @@ export class ArticleEntryEditComponent implements OnInit {
 
   // @ViewChild('fileUpload', { static: false })
   // fileUpload!: ElementRef;
+  public activeTab: string = 'editor';
 
   form!: FormGroup;
 
@@ -35,6 +36,12 @@ export class ArticleEntryEditComponent implements OnInit {
     // private formuilder: FormBuilder,
     // private articleService: ArticleService
   ) { }
+
+  public setActiveTab(tabName: string): void {
+    if (tabName === 'editor') this.activeTab = 'editor'
+    if (tabName === 'preview') this.activeTab = 'preview'
+    if (tabName === 'help') this.activeTab = 'help'
+  }
 
   ngOnInit(): void {
   }

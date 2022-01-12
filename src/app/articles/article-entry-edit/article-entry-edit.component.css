@@ -7,11 +7,24 @@
   height: 100%;
 }
 
-.variable-textarea {
-  border: none !important;
-  outline: none !important;
+.tags-select {
+  @apply focus:ring-0 focus:border-inherit;
 }
 
-.variable-textarea:focus {
-  outline: transparent !important;
+.editor-textarea {
+  border: none;
+  outline-color: transparent;
+  @apply focus:ring-0;
+}
+
+.markdown-preview-container {
+  /* @apply ; */
+}
+
+.active-tab {
+  @apply text-primary-500 border-b border-primary-500;
+}
+
+.tab {
+  @apply hover:bg-skin-link;
 }
