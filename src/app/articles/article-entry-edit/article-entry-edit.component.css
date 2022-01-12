@@ -8,13 +8,24 @@
 }
 
 .tags-select {
-  @apply focus:ring-0 focus:border-inherit;
+  @apply focus:ring-2 focus:border-inherit focus:ring-primary-500 focus:ring-offset-2;
 }
 
 .editor-textarea {
   border: none;
   outline-color: transparent;
   @apply focus:ring-0;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .markdown-preview-container {

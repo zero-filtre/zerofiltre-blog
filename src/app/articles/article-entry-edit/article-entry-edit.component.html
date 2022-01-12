@@ -84,11 +84,11 @@
                         Tags
                     </label>
                     <div class="choices mt-4">
-                        <select
-                            class="tags-select block w-full border border-skin-border bg-transparent placeholder-skin-muted text-skin-base rounded-md shadow-sm"
-                            wire:model="tags_selected" id="tags_selected" x-data="{}"
-                            x-init="function () { choices($el) }" multiple="multiple" hidden="" tabindex="-1"
-                            data-choice="active">
+                        <select id="tags_selected" multiple="multiple" hidden="" tabindex="-1" data-choice="active"
+                            class="tags-select block w-full border border-skin-border bg-transparent placeholder-skin-muted text-skin-base rounded-md shadow-sm">
+                            <!-- <option value="angular">angular</option>
+                            <option value="java">java</option>
+                            <option value="spring-boot">spring-boot</option> -->
                         </select>
                     </div>
                 </div>
@@ -155,15 +155,15 @@
 
                     <div class="tabs-content-wrapper">
                         <textarea *ngIf="activeTab === 'editor'"
-                            class="editor-textarea bg-white min-h-screen w-full p-4" [(ngModel)]="markdown"
-                            placeholder="Type your content"></textarea>
+                            class="editor-textarea bg-white font-normal text-skin-base min-h-screen w-full p-4"
+                            [(ngModel)]="markdown" placeholder="Type your content"></textarea>
                         <div *ngIf="activeTab === 'preview'"
                             class="markdown-preview-container bg-white min-h-screen w-full p-4">
-                            <markdown
-                                class="markdown-content text-skin-base max-w-none mx-auto prose prose-cyan md:prose-lg prose-p:leading-9 prose-a:font-semibold prose-a:no-underline prose-headings:text-skin-inverted"
-                                [data]="markdown">
+                            <markdown lineNumbers [data]="markdown">
+                                <!-- class="markdown-content text-skin-base max-w-none mx-auto prose prose-cyan md:prose-lg prose-code:p-1 prose-code:font-semibold prose-code:text-skin-card prose-code:rounded-md prose-code:bg-primary-300 prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline prose-headings:text-skin-inverted" -->
                             </markdown>
                         </div>
+
                         <div *ngIf="activeTab === 'help'" class="help-container bg-white min-h-screen w-full p-4">
                             Help Content
                         </div>
