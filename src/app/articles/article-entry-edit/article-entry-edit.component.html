@@ -159,8 +159,8 @@
                             [(ngModel)]="markdown" placeholder="Type your content"></textarea>
                         <div *ngIf="activeTab === 'preview'"
                             class="markdown-preview-container bg-white min-h-screen w-full p-4">
-                            <markdown lineNumbers [data]="markdown">
-                                <!-- class="markdown-content text-skin-base max-w-none mx-auto prose prose-cyan md:prose-lg prose-code:p-1 prose-code:font-semibold prose-code:text-skin-card prose-code:rounded-md prose-code:bg-primary-300 prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline prose-headings:text-skin-inverted" -->
+                            <markdown [data]="markdown"
+                                class="markdown-content text-skin-base max-w-none mx-auto prose prose-cyan md:prose-lg prose-code:p-1 prose-code:font-semibold prose-code:text-skin-card prose-code:rounded-md prose-code:bg-primary-300 prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline prose-headings:text-skin-inverted">
                             </markdown>
                         </div>
 
