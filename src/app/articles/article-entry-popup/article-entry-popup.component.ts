@@ -32,7 +32,7 @@ export class ArticleEntryPopupComponent implements OnInit {
 
     this.articleService.createArticle(this.title).subscribe({
       next: (_response: Article) => {
-        this.data.router.navigateByUrl('article-entry-edit');
+        this.data.router.navigateByUrl('articles/new');
         this.loading = false;
         this.dialogRef.close();
       },

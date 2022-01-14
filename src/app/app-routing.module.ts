@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ArticleEntryEditComponent } from './articles/article-entry-edit/article-entry-edit.component';
+import { ArticleEntryCreateComponent } from './articles/article-entry-create/article-entry-create.component';
+import { ArticlesListComponent } from './articles/articles-list/articles-list.component';
 import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [
@@ -12,8 +13,9 @@ const routes: Routes = [
       import('./articles/articles.module').then(m => m.ArticlesModule),
   },
   {
-    path: 'article-entry-edit', component: ArticleEntryEditComponent
-  }
+    path: 'article/new', component: ArticleEntryCreateComponent
+  },
+  { path: '**', component: ArticlesListComponent }
 ];
 
 @NgModule({

@@ -3,17 +3,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ArticleService } from '../article.service';
 
 @Component({
-  selector: 'app-article-entry-edit',
-  templateUrl: './article-entry-edit.component.html',
-  styleUrls: ['./article-entry-edit.component.css']
+  selector: 'app-article-entry-create',
+  templateUrl: './article-entry-create.component.html',
+  styleUrls: ['./article-entry-create.component.css']
 })
-export class ArticleEntryEditComponent implements OnInit {
+export class ArticleEntryCreateComponent implements OnInit {
 
   // @ViewChild('fileUpload', { static: false })
   // fileUpload!: ElementRef;
   // public markdown!: string;
   public activeTab: string = 'editor';
-
   public form!: FormGroup;
 
   markdown = `
@@ -58,10 +57,20 @@ export class ArticleEntryEditComponent implements OnInit {
     [![]({image-url})]({video-url} "Link Title")
 
     ### Embed Iframe
-
+    <div>
+    <iframe id="inlineFrameExample"
+    title="Inline Frame Example"
+    width="300"
+    height="200"
+    src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik">
+    </iframe>
+    </div>
 
     ### Divider
     ---
+
+  <iframe src="https://www.youtube.com/embed/yz8x71BiGXg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+  </iframe>
 
     ### Inline HTML
     <dl>

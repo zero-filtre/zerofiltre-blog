@@ -6,8 +6,8 @@ import { ArticleDetailComponent } from './article-detail/article-detail.componen
 import { ArticlesListComponent } from './articles-list/articles-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { ArticleEntryPopupComponent } from './article-entry-popup/article-entry-popup.component';
-import { ArticleEntryEditComponent } from './article-entry-edit/article-entry-edit.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { ArticleEntryCreateComponent } from './article-entry-create/article-entry-create.component';
 
 
 @NgModule({
@@ -15,7 +15,7 @@ import { MarkdownModule } from 'ngx-markdown';
     ArticleDetailComponent,
     ArticlesListComponent,
     ArticleEntryPopupComponent,
-    ArticleEntryEditComponent
+    ArticleEntryCreateComponent
   ],
   imports: [
     CommonModule,
