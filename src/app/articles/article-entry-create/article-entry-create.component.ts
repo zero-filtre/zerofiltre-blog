@@ -86,6 +86,7 @@ export class ArticleEntryCreateComponent implements OnInit {
         this.article = response
         this.articleTitle = response.title!
         this.form.controls['title'].setValue(this.articleTitle)
+        this.form.controls['id'].setValue(+this.articleId)
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
@@ -95,14 +96,24 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   public InitForm(): void {
     this.form = this.formuilder.group({
-      title: [null, [Validators.required]],
-      coverImage: [null, [Validators.required]],
-      content: [null, [Validators.required]],
+      id: [null],
+      title: ['', [Validators.required]],
+      thumbnail: ['https://www.ricoh-imaging.co.jp/english/products/q-s1/ex/img/ex-thumb-pic01.jpg', [Validators.required]],
+      content: ['', [Validators.required]],
+      tags: [null]
     })
   }
 
-  public postArticle() {
-    this.articleService.updateArticle(this.form.getRawValue()).pipe(
+  public saveArticle() {
+    console.log(this.form.value);
+    this.articleService.updateToSave(this.form.value).pipe(
+      tap(() => this.router.navigateByUrl('/'))
+    ).subscribe();
+  }
+
+  public publishArticle() {
+    console.log(this.form.value);
+    this.articleService.updateToPublish(this.form.value).pipe(
       tap(() => this.router.navigateByUrl('/'))
     ).subscribe();
   }

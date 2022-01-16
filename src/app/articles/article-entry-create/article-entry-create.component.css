@@ -1,5 +1,9 @@
-.article-image-preview {
+.article-image-preview-wrapper {
   height: 14rem;
+}
+
+.label-image-preview {
+  height: 100%;
 }
 
 .preview-label {
@@ -8,7 +12,7 @@
 }
 
 .tags-select {
-  @apply focus:ring-2 focus:border-inherit focus:ring-primary-500 focus:ring-offset-2;
+  @apply focus:ring-0 focus:ring-skin-muted;
 }
 
 .editor-textarea {

@@ -24,8 +24,12 @@ export class ArticleService {
     return this.http.post<Article>(`${this.apiServerUrl}/article/add`, article);
   }
 
-  public updateArticle(article: Article): Observable<Article> {
-    return this.http.put<Article>(`${this.apiServerUrl}/article/update`, article);
+  public updateToSave(article: Article): Observable<Article> {
+    return this.http.patch<Article>(`${this.apiServerUrl}/article`, article);
+  }
+
+  public updateToPublish(article: Article): Observable<Article> {
+    return this.http.patch<Article>(`${this.apiServerUrl}/article/publish`, article);
   }
 
   public deleteArticle(articleId: string): Observable<void> {

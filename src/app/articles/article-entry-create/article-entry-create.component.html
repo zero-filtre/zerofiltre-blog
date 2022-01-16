@@ -20,18 +20,18 @@
         </div>
 
         <div class="action-buttons hidden lg:block space-x-1 sm:space-x-2">
-            <button type="submit"
+            <button type="submit" (click)="publishArticle()"
                 class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:border-skin-border transition-all duration-300">
                 Publier
             </button>
-            <button
+            <button type="submit" (click)="saveArticle()"
                 class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-300">
                 Sauvergarder
             </button>
         </div>
     </nav>
 
-    <form [formGroup]="form" (ngSubmit)="postArticle()">
+    <form [formGroup]="form">
         <div class="article-data-container lg:grid grid-cols-10 gap-10 items-start mt-10 lg:mt-20">
             <aside class="col-span-2">
                 <div class="left-side-container">
@@ -40,7 +40,7 @@
                     </label>
     
                     <div class="article-image-preview-wrapper mt-4">
-                        <div class="article-image-preview relative w-full overflow-hidden">
+                        <div *ngIf="!form.get('thumbnail')?.value" class="label-image-preview relative w-full overflow-hidden">
                             <label for="file" (click)="onClickFileUpload()"
                                 class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
                                 <div class="text-center">
@@ -78,10 +78,10 @@
                                     </svg>
                                 </div>
                             </label>
-
-                            <img *ngIf="form.get('coverImage')?.value" src="http://localhost:4200/articles/images/{{form.get('coverImage')?.value}}">
-
                         </div>
+                        
+                        <!-- <img *ngIf="form.get('thumbnail')?.value" src="http://localhost:4200/articles/images/{{form.get('thumbnail')?.value}}"> -->
+                        <img *ngIf="form.get('thumbnail')?.value" class="preview-image object-cover h-full w-full" src="{{form.get('thumbnail')?.value}}">
                     </div>
     
                     <div class="tag-list mt-10">
@@ -186,15 +186,19 @@
         </div>
     
         <div class="action-buttons lg:hidden flex space-x-1 sm:space-x-2 mt-5">
-            <button type="submit"
+            <button type="submit" (click)="publishArticle()"
                 class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:border-skin-border transition-all duration-300">
                 Publier
             </button>
-            <button
+            <button (click)="saveArticle()"
                 class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-300">
                 Sauvergarder
             </button>
         </div>
     </form>
+
+    <pre>
+        {{form.value | json}}
+    </pre>
     
 </div>
