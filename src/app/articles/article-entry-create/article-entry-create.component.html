@@ -38,9 +38,10 @@
                     <label for="cover_photo" class="block text-sm font-semibold leading-5 text-skin-base">
                         Image de couverture
                     </label>
-    
+
                     <div class="article-image-preview-wrapper mt-4">
-                        <div *ngIf="!form.get('thumbnail')?.value" class="label-image-preview relative w-full overflow-hidden">
+                        <div *ngIf="!form.get('thumbnail')?.value"
+                            class="label-image-preview relative w-full overflow-hidden">
                             <label for="file" (click)="onClickFileUpload()"
                                 class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
                                 <div class="text-center">
@@ -62,9 +63,10 @@
                                     </p>
 
                                     <!-- <input class="preview-close-btn sr-only" type="file" id="file" name="fileUpload" #fileUpload accept="image/*"> -->
-                                    <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload accept="image/*">
+                                    <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
+                                        accept="image/*">
                                 </div>
-    
+
                                 <div class="preview-loader w-full h-full hidden items-center justify-center"
                                     wire:loading.class.remove="hidden" wire:target="file">
                                     <!-- Add the flex class to the div if loading is true -->
@@ -79,45 +81,58 @@
                                 </div>
                             </label>
                         </div>
-                        
+
                         <!-- <img *ngIf="form.get('thumbnail')?.value" src="http://localhost:4200/articles/images/{{form.get('thumbnail')?.value}}"> -->
-                        <img *ngIf="form.get('thumbnail')?.value" class="preview-image object-cover h-full w-full" src="{{form.get('thumbnail')?.value}}">
+                        <img *ngIf="form.get('thumbnail')?.value" class="preview-image object-cover h-full w-full"
+                            src="{{form.get('thumbnail')?.value}}">
                     </div>
-    
+
                     <div class="tag-list mt-10">
                         <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
                             Tags
                         </label>
-                        <div class="choices mt-4">
-                            <select id="tags_selected" multiple="multiple" hidden="" tabindex="-1" data-choice="active"
-                                class="tags-select block w-full border border-skin-border bg-transparent placeholder-skin-muted text-skin-base rounded-md shadow-sm">
-                                <!-- <option value="angular">angular</option>
-                                <option value="java">java</option>
-                                <option value="spring-boot">spring-boot</option> -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>Selectionez vos tags</mat-label>
+                            <select matNativeControl required formControlName="tags">
+                                <ng-container *ngFor="let tag of tagList">
+                                    <option value="{{tag}}">{{tag.name}}</option>
+                                </ng-container>
                             </select>
-                        </div>
+                            <mat-error *ngIf="form.get('tags')?.hasError('required')">
+                                This field is required
+                            </mat-error>
+                            <mat-hint>You can pick up your favorite car here</mat-hint>
+                        </mat-form-field>
+
+                        <!-- <mat-form-field>
+                            <mat-label>Toppings</mat-label>
+                            <mat-select formControlName="tags" multiple>
+                                <mat-option *ngFor="let tag of tagList" [value]="tag">{{tag.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
                     </div>
-    
                 </div>
             </aside>
-    
+
             <main class="col-span-6">
                 <div class="main-side-container">
                     <div class="article-title mt-10 sm:mt-0">
-                        <input name="title" id="title" required minlength="4" formControlName="title" 
+                        <input name="title" id="title" required minlength="4" formControlName="title"
                             class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
                             placeholder='Entrez le titre de votre article...' autocomplete="off" />
                     </div>
-    
+
                     <div class="article-body !shadow-md mt-4 sm:mt-2">
                         <div
                             class="editor-header mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
-    
+
                             <div class="flex items-center w-full">
-                                <div (click)="setActiveTab('editor')" [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
+                                <div (click)="setActiveTab('editor')"
+                                    [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
                                     class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer hover:bg-skin-muted sm:text-base">
-                                    <svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" aria-hidden="true">
+                                    <svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
                                         </path>
@@ -126,8 +141,8 @@
                                 <div (click)="setActiveTab('preview')"
                                     [ngClass]="activeTab == 'preview' ? 'active-tab' : ''"
                                     class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
-                                    <svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" aria-hidden="true">
+                                    <svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -137,8 +152,8 @@
                                 </div>
                                 <div (click)="setActiveTab('help')" [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
                                     class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
@@ -157,7 +172,7 @@
                                     </svg>
                                 </div> -->
                         </div>
-    
+
                         <div class="tabs-content-wrapper">
                             <div *ngIf="activeTab === 'editor'" class=" min-h-screen w-full">
                                 <textarea formControlName="content"
@@ -169,7 +184,7 @@
                                 <markdown [data]="form.get('content')?.value" class="markdown-content prose">
                                 </markdown>
                             </div>
-    
+
                             <div *ngIf="activeTab === 'help'" class="help-container bg-white min-h-screen w-full p-4">
                                 Help Content
                             </div>
@@ -177,14 +192,13 @@
                     </div>
                 </div>
             </main>
-    
+
             <aside class="col-span-2">
                 <div class="rigth-side-container">
-                   
                 </div>
             </aside>
         </div>
-    
+
         <div class="action-buttons lg:hidden flex space-x-1 sm:space-x-2 mt-5">
             <button type="submit" (click)="publishArticle()"
                 class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:border-skin-border transition-all duration-300">
@@ -197,8 +211,19 @@
         </div>
     </form>
 
+    Form Values
     <pre>
         {{form.value | json}}
     </pre>
-    
+
+    Tag List
+    <pre>
+        {{tagList | json}}
+    </pre>
+
+    Selected Tags
+    <pre>
+        {{selectedTags | json}}
+    </pre>
+
 </div>

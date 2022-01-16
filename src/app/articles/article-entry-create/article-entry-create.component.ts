@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs';
-import { Article } from '../article.model';
+import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
 @Component({
@@ -22,6 +22,8 @@ export class ArticleEntryCreateComponent implements OnInit {
   public article!: Article
   public articleId!: number
   public articleTitle!: string
+  public tagList!: Tag []
+  public selectedTags!: Tag []
 
   markdown = `
     ## Markdown __rulez__!
@@ -84,6 +86,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.articleService.getOneArticle(this.articleId).subscribe({
       next: (response: Article) => {
         this.article = response
+        this.tagList = response.tags
         this.articleTitle = response.title!
         this.form.controls['title'].setValue(this.articleTitle)
         this.form.controls['id'].setValue(+this.articleId)
