@@ -1,5 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { tap } from 'rxjs';
+import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
 @Component({
@@ -9,11 +13,15 @@ import { ArticleService } from '../article.service';
 })
 export class ArticleEntryCreateComponent implements OnInit {
 
-  // @ViewChild('fileUpload', { static: false })
-  // fileUpload!: ElementRef;
-  // public markdown!: string;
-  public activeTab: string = 'editor';
+  @ViewChild('fileUpload', { static: false })
+  fileUpload!: ElementRef;
+
   public form!: FormGroup;
+
+  public activeTab: string = 'editor';
+  public article!: Article
+  public articleId!: number
+  public articleTitle!: string
 
   markdown = `
     ## Markdown __rulez__!
@@ -60,8 +68,10 @@ export class ArticleEntryCreateComponent implements OnInit {
     `;
 
   constructor(
-    // private formuilder: FormBuilder,
-    // private articleService: ArticleService
+    private formuilder: FormBuilder,
+    private articleService: ArticleService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   public setActiveTab(tabName: string): void {
@@ -70,7 +80,53 @@ export class ArticleEntryCreateComponent implements OnInit {
     if (tabName === 'help') this.activeTab = 'help'
   }
 
+  public getArticle(): void{
+    this.articleService.getOneArticle(this.articleId).subscribe({
+      next: (response: Article) => {
+        this.article = response
+        this.articleTitle = response.title!
+        this.form.controls['title'].setValue(this.articleTitle)
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    })
+  }
+
+  public InitForm(): void {
+    this.form = this.formuilder.group({
+      title: [null, [Validators.required]],
+      coverImage: [null, [Validators.required]],
+      content: [null, [Validators.required]],
+    })
+  }
+
+  public postArticle() {
+    this.articleService.updateArticle(this.form.getRawValue()).pipe(
+      tap(() => this.router.navigateByUrl('/'))
+    ).subscribe();
+  }
+
+  public onClickFileUpload() {
+    const fileInput = this.fileUpload.nativeElement;
+    console.log('Clicked');
+    fileInput.click();
+
+    // fileInput.onchange = () => {
+    //   this.file = {
+    //     data: fileInput.files[0],
+    //     inProgress: false,
+    //     progress: 0
+    //   };
+    //   this.fileUpload.nativeElement.value = '';
+    //   this.uploadFile();
+    // };    
+  }
+
   ngOnInit(): void {
+    this.articleId = this.route.snapshot.params.id
+    this.getArticle()
+    this.InitForm()
   }
 
 }

@@ -31,161 +31,170 @@
         </div>
     </nav>
 
-    <div class="article-data-container lg:grid grid-cols-10 gap-10 items-start mt-10 lg:mt-20">
-        <aside class="col-span-2">
-            <div class="left-side-container">
-                <label for="cover_photo" class="block text-sm font-semibold leading-5 text-skin-base">
-                    Image de couverture
-                </label>
-
-                <div class="article-image-preview-wrapper mt-4">
-                    <div class="article-image-preview relative w-full overflow-hidden">
-                        <label for="file"
-                            class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
-                            <div class="text-center" wire:loading.remove="" wire:target="file">
-                                <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
-                                    viewBox="0 0 48 48">
-                                    <path
-                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                                <p class="mt-1 text-xs text-skin-base leading-6">
-                                    <span
-                                        class="font-semibold text-green-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                        Upload a file
-                                    </span>
-                                    or drag and drop
-                                </p>
-                                <p class="mt-1 text-xs text-skin-muted">
-                                    PNG, JPG, GIF up to 1MB
-                                </p>
-                                <input class="preview-close-btn sr-only" type="file" id="file" wire:click="removeImage"
-                                    wire:model="file">
-                            </div>
-
-                            <div class="preview-loader w-full h-full hidden items-center justify-center"
-                                wire:loading.class.remove="hidden" wire:target="file">
-                                <!-- Add the flex class to the div if loading is true -->
-                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-primary-500"
-                                    wire:loading="wire:loading" wire:target="file" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                                        stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor"
-                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                    </path>
-                                </svg>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="tag-list mt-10">
-                    <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
-                        Tags
+    <form [formGroup]="form" (ngSubmit)="postArticle()">
+        <div class="article-data-container lg:grid grid-cols-10 gap-10 items-start mt-10 lg:mt-20">
+            <aside class="col-span-2">
+                <div class="left-side-container">
+                    <label for="cover_photo" class="block text-sm font-semibold leading-5 text-skin-base">
+                        Image de couverture
                     </label>
-                    <div class="choices mt-4">
-                        <select id="tags_selected" multiple="multiple" hidden="" tabindex="-1" data-choice="active"
-                            class="tags-select block w-full border border-skin-border bg-transparent placeholder-skin-muted text-skin-base rounded-md shadow-sm">
-                            <!-- <option value="angular">angular</option>
-                            <option value="java">java</option>
-                            <option value="spring-boot">spring-boot</option> -->
-                        </select>
-                    </div>
-                </div>
+    
+                    <div class="article-image-preview-wrapper mt-4">
+                        <div class="article-image-preview relative w-full overflow-hidden">
+                            <label for="file" (click)="onClickFileUpload()"
+                                class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
+                                <div class="text-center">
+                                    <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
+                                        viewBox="0 0 48 48">
+                                        <path
+                                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <p class="mt-1 text-xs text-skin-base leading-6">
+                                        <span
+                                            class="font-semibold text-green-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                                            Upload a file
+                                        </span>
+                                        or drag and drop
+                                    </p>
+                                    <p class="mt-1 text-xs text-skin-muted">
+                                        PNG, JPG, GIF up to 1MB
+                                    </p>
 
-            </div>
-        </aside>
+                                    <!-- <input class="preview-close-btn sr-only" type="file" id="file" name="fileUpload" #fileUpload accept="image/*"> -->
+                                    <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload accept="image/*">
+                                </div>
+    
+                                <div class="preview-loader w-full h-full hidden items-center justify-center"
+                                    wire:loading.class.remove="hidden" wire:target="file">
+                                    <!-- Add the flex class to the div if loading is true -->
+                                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-primary-500"
+                                        wire:loading="wire:loading" wire:target="file" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                            stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                        </path>
+                                    </svg>
+                                </div>
+                            </label>
 
-        <main class="col-span-6">
-            <div class="main-side-container">
-                <div class="article-title mt-10 sm:mt-0">
-                    <input name="title" id="title" required minlength="4"
-                        class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
-                        placeholder='Entrez le titre de votre article...' autocomplete="off" />
-                </div>
+                            <img *ngIf="form.get('coverImage')?.value" src="http://localhost:4200/articles/images/{{form.get('coverImage')?.value}}">
 
-                <div class="article-body !shadow-md mt-4 sm:mt-2">
-                    <div
-                        class="editor-header mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
-
-                        <div class="flex items-center w-full">
-                            <div (click)="setActiveTab('editor')" [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
-                                class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer hover:bg-skin-muted sm:text-base">
-                                <svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
-                                    </path>
-                                </svg> <span>Saisi</span>
-                            </div>
-                            <div (click)="setActiveTab('preview')"
-                                [ngClass]="activeTab == 'preview' ? 'active-tab' : ''"
-                                class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
-                                <svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                    </path>
-                                </svg> <span>Preview</span>
-                            </div>
-                            <div (click)="setActiveTab('help')" [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
-                                class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>Aide</span>
-                            </div>
-                        </div>
-                        <!-- <div
-                                class="hidden relative sm:flex items-center h-full px-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
-                                <input type="file" x-on:change="upload(event, '')" x-ref="image" id="image-"
-                                    class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" tabindex="-1">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 cursor-pointer">
-                                    <path
-                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                        class="cursor-pointer"></path>
-                                </svg>
-                            </div> -->
-                    </div>
-
-                    <div class="tabs-content-wrapper">
-                        <textarea *ngIf="activeTab === 'editor'"
-                            class="editor-textarea bg-white font-normal text-skin-base min-h-screen w-full p-4"
-                            [(ngModel)]="markdown" placeholder="Type your content"></textarea>
-                        <div *ngIf="activeTab === 'preview'"
-                            class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
-                            <markdown [data]="markdown" class="markdown-content prose">
-                            </markdown>
-                        </div>
-
-                        <div *ngIf="activeTab === 'help'" class="help-container bg-white min-h-screen w-full p-4">
-                            Help Content
                         </div>
                     </div>
+    
+                    <div class="tag-list mt-10">
+                        <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
+                            Tags
+                        </label>
+                        <div class="choices mt-4">
+                            <select id="tags_selected" multiple="multiple" hidden="" tabindex="-1" data-choice="active"
+                                class="tags-select block w-full border border-skin-border bg-transparent placeholder-skin-muted text-skin-base rounded-md shadow-sm">
+                                <!-- <option value="angular">angular</option>
+                                <option value="java">java</option>
+                                <option value="spring-boot">spring-boot</option> -->
+                            </select>
+                        </div>
+                    </div>
+    
                 </div>
-            </div>
-        </main>
-
-        <aside class="col-span-2">
-            <div class="rigth-side-container">
-               
-            </div>
-        </aside>
-    </div>
-
-    <div class="action-buttons lg:hidden flex space-x-1 sm:space-x-2 mt-5">
-        <button type="submit"
-            class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:border-skin-border transition-all duration-300">
-            Publier
-        </button>
-        <button
-            class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-300">
-            Sauvergarder
-        </button>
-    </div>
+            </aside>
+    
+            <main class="col-span-6">
+                <div class="main-side-container">
+                    <div class="article-title mt-10 sm:mt-0">
+                        <input name="title" id="title" required minlength="4" formControlName="title" 
+                            class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
+                            placeholder='Entrez le titre de votre article...' autocomplete="off" />
+                    </div>
+    
+                    <div class="article-body !shadow-md mt-4 sm:mt-2">
+                        <div
+                            class="editor-header mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
+    
+                            <div class="flex items-center w-full">
+                                <div (click)="setActiveTab('editor')" [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
+                                    class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer hover:bg-skin-muted sm:text-base">
+                                    <svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                        </path>
+                                    </svg> <span>Saisi</span>
+                                </div>
+                                <div (click)="setActiveTab('preview')"
+                                    [ngClass]="activeTab == 'preview' ? 'active-tab' : ''"
+                                    class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
+                                    <svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                        </path>
+                                    </svg> <span>Preview</span>
+                                </div>
+                                <div (click)="setActiveTab('help')" [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
+                                    class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>Aide</span>
+                                </div>
+                            </div>
+                            <!-- <div
+                                    class="hidden relative sm:flex items-center h-full px-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
+                                    <input type="file" x-on:change="upload(event, '')" x-ref="image" id="image-"
+                                        class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" tabindex="-1">
+                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 cursor-pointer">
+                                        <path
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                            class="cursor-pointer"></path>
+                                    </svg>
+                                </div> -->
+                        </div>
+    
+                        <div class="tabs-content-wrapper">
+                            <div *ngIf="activeTab === 'editor'" class=" min-h-screen w-full">
+                                <textarea formControlName="content"
+                                    class="editor-textarea bg-white font-normal text-skin-base p-4 h-screen w-full"
+                                    placeholder="Type your content"></textarea>
+                            </div>
+                            <div *ngIf="activeTab === 'preview'"
+                                class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
+                                <markdown [data]="form.get('content')?.value" class="markdown-content prose">
+                                </markdown>
+                            </div>
+    
+                            <div *ngIf="activeTab === 'help'" class="help-container bg-white min-h-screen w-full p-4">
+                                Help Content
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+    
+            <aside class="col-span-2">
+                <div class="rigth-side-container">
+                   
+                </div>
+            </aside>
+        </div>
+    
+        <div class="action-buttons lg:hidden flex space-x-1 sm:space-x-2 mt-5">
+            <button type="submit"
+                class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:border-skin-border transition-all duration-300">
+                Publier
+            </button>
+            <button
+                class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-300">
+                Sauvergarder
+            </button>
+        </div>
+    </form>
+    
 </div>
