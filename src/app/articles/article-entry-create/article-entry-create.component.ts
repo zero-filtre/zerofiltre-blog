@@ -23,7 +23,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public articleId!: number
   public articleTitle!: string
   public tagList!: Tag []
-  public selectedTags!: Tag []
+  public selectedTags: Tag [] = []
 
   markdown = `
     ## Markdown __rulez__!
@@ -97,13 +97,22 @@ export class ArticleEntryCreateComponent implements OnInit {
     })
   }
 
+  public selectTag(): void {
+    console.log('SELECTTAG');
+    if (!this.selectedTags.includes(this.form.controls['tags'].value)) {
+      this.selectedTags.push(this.form.controls['tags'].value)
+    }
+
+    this.form.controls['tags'].setValue([...this.selectedTags])
+  }
+
   public InitForm(): void {
     this.form = this.formuilder.group({
       id: [null],
       title: ['', [Validators.required]],
       thumbnail: ['https://www.ricoh-imaging.co.jp/english/products/q-s1/ex/img/ex-thumb-pic01.jpg', [Validators.required]],
       content: ['', [Validators.required]],
-      tags: [null]
+      tags: [[]]
     })
   }
 

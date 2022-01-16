@@ -93,9 +93,9 @@
                         </label>
                         <mat-form-field appearance="fill">
                             <mat-label>Selectionez vos tags</mat-label>
-                            <select matNativeControl required formControlName="tags">
+                            <select matNativeControl required formControlName="tags" (change)="selectTag()">
                                 <ng-container *ngFor="let tag of tagList">
-                                    <option value="{{tag}}">{{tag.name}}</option>
+                                    <option value="{{tag.name}}">{{tag.name}}</option>
                                 </ng-container>
                             </select>
                             <mat-error *ngIf="form.get('tags')?.hasError('required')">
