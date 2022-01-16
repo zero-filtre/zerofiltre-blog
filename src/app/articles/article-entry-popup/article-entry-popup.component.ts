@@ -13,6 +13,7 @@ export class ArticleEntryPopupComponent implements OnInit {
   public title!: string;
   public placeholder!: string
   public loading: boolean = false;
+  public article!: Article
 
   constructor(
     public dialogRef: MatDialogRef<ArticleEntryPopupComponent>,
@@ -31,8 +32,9 @@ export class ArticleEntryPopupComponent implements OnInit {
     this.loading = true;
 
     this.articleService.createArticle(this.title).subscribe({
-      next: (_response: Article) => {
-        this.data.router.navigateByUrl('articles/new');
+      next: (response: Article) => {
+        this.article = response;
+        this.data.router.navigateByUrl(`articles/${this.article.id}/edit`);
         this.loading = false;
         this.dialogRef.close();
       },
