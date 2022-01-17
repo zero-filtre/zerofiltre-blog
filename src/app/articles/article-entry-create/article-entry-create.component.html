@@ -39,7 +39,7 @@
                         Image de couverture
                     </label>
 
-                    <div class="article-image-preview-wrapper mt-4">
+                    <div class="article-image-preview-wrapper relative mt-4">
                         <div *ngIf="!form.get('thumbnail')?.value"
                             class="label-image-preview relative w-full overflow-hidden">
                             <label for="file" (click)="onClickFileUpload()"
@@ -53,7 +53,7 @@
                                     </svg>
                                     <p class="mt-1 text-xs text-skin-base leading-6">
                                         <span
-                                            class="font-semibold text-green-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                                            class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
                                             Upload a file
                                         </span>
                                         or drag and drop
@@ -85,6 +85,10 @@
                         <!-- <img *ngIf="form.get('thumbnail')?.value" src="http://localhost:4200/articles/images/{{form.get('thumbnail')?.value}}"> -->
                         <img *ngIf="form.get('thumbnail')?.value" class="preview-image object-cover h-full w-full"
                             src="{{form.get('thumbnail')?.value}}">
+
+                        <div *ngIf="form.get('thumbnail')?.value"
+                            class="absolute top-0 right-0 z-20 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
+                            wire:click="$set('file', '')">×</div>
                     </div>
 
                     <div class="tag-list mt-10">
@@ -103,14 +107,6 @@
                             </mat-error>
                             <mat-hint>You can pick up your favorite car here</mat-hint>
                         </mat-form-field>
-
-                        <!-- <mat-form-field>
-                            <mat-label>Toppings</mat-label>
-                            <mat-select formControlName="tags" multiple>
-                                <mat-option *ngFor="let tag of tagList" [value]="tag">{{tag.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field> -->
                     </div>
                 </div>
             </aside>
@@ -123,7 +119,7 @@
                             placeholder='Entrez le titre de votre article...' autocomplete="off" />
                     </div>
 
-                    <div class="article-body !shadow-md mt-4 sm:mt-2">
+                    <div class="article-content !shadow-md mt-4 sm:mt-2">
                         <div
                             class="editor-header mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
 
@@ -176,7 +172,7 @@
                         <div class="tabs-content-wrapper">
                             <div *ngIf="activeTab === 'editor'" class=" min-h-screen w-full">
                                 <textarea formControlName="content"
-                                    class="editor-textarea bg-white font-normal text-skin-base p-4 h-screen w-full"
+                                    class="editor-textarea bg-white text-skin-base p-4 h-screen w-full"
                                     placeholder="Type your content"></textarea>
                             </div>
                             <div *ngIf="activeTab === 'preview'"
@@ -185,8 +181,71 @@
                                 </markdown>
                             </div>
 
-                            <div *ngIf="activeTab === 'help'" class="help-container bg-white min-h-screen w-full p-4">
-                                Help Content
+                            <div *ngIf="activeTab === 'help'"
+                                class="help-container h-full bg-skin-card min-h-screen p-4 relative z-30 prose md:prose-sm lg:prose-lg max-w-none">
+                                <h2>Markdown Basics</h2>
+                                <p>Below you will find some common used markdown syntax. For a deeper dive in
+                                    Markdown check out this <a class="text-primary-500 font-semibold no-underline"
+                                        href="https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet"
+                                        target="_blank">Cheat Sheet</a>
+                                </p>
+                                <hr>
+                                <h3>Bold &amp; Italic</h3>
+                                <p><span class="mr-2 italic">Italics</span> <span
+                                        class="p-1">*asterisks*</span><br><span class="mr-2 font-bold">Bold</span>
+                                    <span class="p-1">**double asterisks**</span>
+                                </p>
+                                <hr>
+                                <h3>Code</h3>
+                                <p><span class="mr-2">Inline Code</span><br><span
+                                        class="p-1 text-primary-500 bg-primary-100 rounded-md">`backtick`</span><span
+                                        class="block mt-2 mr-2">Code Block</span><span
+                                        class="block p-1  text-primary-500 bg-primary-100">```<br>Three back
+                                        ticks and then enter your code
+                                        blocks here.<br>```</span></p>
+                                <hr>
+                                <h3>Headers</h3>
+                                <p># This is a Heading 1<br>## This is a Heading 2<br>### This is a Heading 3<br>
+                                </p>
+                                <hr>
+                                <h3>Quotes</h3>
+                                <blockquote> &gt; type a greater than sign and start typing your quote.</blockquote>
+                                <hr>
+                                <h3>Links</h3>
+                                <p>You can add <a href="#_">links</a> by adding text inside of <span
+                                        class="p-1  text-primary-500 bg-primary-100">[]</span> and the link
+                                    inside of <span class="p-1  text-primary-500 bg-primary-100">()</span>,
+                                    like so:</p>
+                                <div class="p-1 font-semibold  text-primary-500 bg-primary-100">
+                                    [link_text](https://google.com)</div>
+                                <hr>
+                                <h3>Lists</h3>
+                                <p>To add a numbered list you can simply start with a number and a <span
+                                        class="p-1  text-primary-500 bg-primary-100">.</span>, like
+                                    so:<br><span class="block p-1 pl-5  text-primary-500 bg-primary-100"> 1.
+                                        The first item in my list</span></p>
+                                <p>For an unordered list, you can add a dash <span
+                                        class="p-1  text-primary-500 bg-primary-100">-</span>, like
+                                    so:<br><span class="block p-1 pl-5  text-primary-500 bg-primary-100"> - The
+                                        start of my list</span></p>
+                                <hr>
+                                <h3>Images</h3>
+                                <p>You can add images by selecting the image icon, which will upload and add an
+                                    image to the editor, or you can
+                                    manually add the image by adding an exclamation <span
+                                        class="p-1  text-primary-500 bg-primary-100">!</span>, followed by the
+                                    alt text inside of <span class="p-1  text-primary-500 bg-primary-100">[]</span>, and
+                                    the image
+                                    URL inside of <span class="p-1  text-primary-500 bg-primary-100">()</span>,
+                                    like so:</p>
+                                <div class="p-1 font-semibold  text-primary-500 bg-primary-100">![alt text for
+                                    image](url_to_image.png)</div>
+                                <hr>
+                                <h3>Dividers</h3>
+                                <p>To add a divider you can add three dashes or three asterisks:<br><span
+                                        class="block p-1 pl-5  text-primary-500 bg-primary-100">--- or
+                                        ***</span>
+                                </p>
                             </div>
                         </div>
                     </div>

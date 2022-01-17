@@ -132,7 +132,6 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   public onClickFileUpload() {
     const fileInput = this.fileUpload.nativeElement;
-    console.log('Clicked');
     fileInput.click();
 
     // fileInput.onchange = () => {
@@ -144,6 +143,10 @@ export class ArticleEntryCreateComponent implements OnInit {
     //   this.fileUpload.nativeElement.value = '';
     //   this.uploadFile();
     // };    
+  }
+
+  public uploadFile() {
+    
   }
 
   ngOnInit(): void {
