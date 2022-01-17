@@ -88,7 +88,7 @@
 
                         <div *ngIf="form.get('thumbnail')?.value"
                             class="absolute top-0 right-0 z-20 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
-                            wire:click="$set('file', '')">×</div>
+                            (click)="removeFile()">×</div>
                     </div>
 
                     <div class="tag-list mt-10">
@@ -102,10 +102,10 @@
                                     <option value="{{tag.name}}">{{tag.name}}</option>
                                 </ng-container>
                             </select>
-                            <mat-error *ngIf="form.get('tags')?.hasError('required')">
+                            <!-- <mat-error *ngIf="form.get('tags')?.hasError('required')">
                                 This field is required
                             </mat-error>
-                            <mat-hint>You can pick up your favorite car here</mat-hint>
+                            <mat-hint>You can pick up your favorite car here</mat-hint> -->
                         </mat-form-field>
                     </div>
                 </div>

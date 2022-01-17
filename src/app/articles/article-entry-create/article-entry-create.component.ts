@@ -149,6 +149,10 @@ export class ArticleEntryCreateComponent implements OnInit {
     
   }
 
+  public removeFile() {
+    if (this.form.controls['thumbnail'].value !== '')  this.form.controls['thumbnail'].setValue('')
+  }
+
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id
     this.getArticle()
