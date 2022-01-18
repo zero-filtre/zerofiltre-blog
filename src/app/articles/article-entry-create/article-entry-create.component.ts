@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-article-entry-create',
@@ -118,22 +117,13 @@ export class ArticleEntryCreateComponent implements OnInit {
     })
   }
 
-  public selectTag(): void {
-    console.log('SELECTTAG');
-    if (!this.selectedTags.includes(this.form.controls['tags'].value)) {
-      this.selectedTags.push(this.form.controls['tags'].value)
-    }
-
-    this.form.controls['tags'].setValue([...this.selectedTags])
-  }
-
   public InitForm(): void {
     this.form = this.formuilder.group({
       id: [null],
       title: ['', [Validators.required]],
       thumbnail: ['https://www.ricoh-imaging.co.jp/english/products/q-s1/ex/img/ex-thumb-pic01.jpg', [Validators.required]],
       content: ['', [Validators.required]],
-      tags: [[]]
+      tags: ['', [Validators.required]]
     })
   }
 
@@ -167,18 +157,54 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public uploadFile() {
+    // const formData = new FormData();
+    // formData.append('file', this.file.data);
+    // this.file.inProgress = true;
 
+    // this.blogService.uploadHeaderImage(formData).pipe(
+    //   map((event) => {
+    //     switch (event.type) {
+    //       case HttpEventType.UploadProgress:
+    //         this.file.progress = Math.round(event.loaded * 100 / event.total);
+    //         break;
+    //       case HttpEventType.Response:
+    //         return event;
+    //     }
+    //   }),
+    //   catchError((error: HttpErrorResponse) => {
+    //     this.file.inProgress = false;
+    //     return of('Upload failed');
+    //   })).subscribe((event: any) => {
+    //     if (typeof (event) === 'object') {
+    //       this.form.patchValue({ headerImage: event.body.filename });
+    //     }
+    //   })
   }
 
   public removeFile() {
     if (this.form.controls['thumbnail'].value !== '') this.form.controls['thumbnail'].setValue('')
   }
 
-  onItemSelect(item: any) {
-    console.log(item);
+  onItemSelect(_item: any) {
+    this.selectTag()
   }
+
   onSelectAll(items: any) {
-    console.log(items);
+    this.form.controls['tags'].setValue(items)
+    this.selectTag()
+  }
+
+  selectTag(): void {
+    this.selectedTags = this.getFullObjectsBySelectedTagsIds(this.getSelectedTagsIds())
+    this.form.controls['tags'].setValue(this.selectedTags)
+  }
+
+  getSelectedTagsIds() {
+    return this.form.value.tags.map((tag: Tag) => tag.id)
+  }
+
+  getFullObjectsBySelectedTagsIds(ids: any) {
+    return this.tagList.filter(item => ids.includes(item.id))
   }
 
   ngOnInit(): void {
@@ -188,8 +214,8 @@ export class ArticleEntryCreateComponent implements OnInit {
 
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
+      idField: 'id',
+      textField: 'name',
       selectAllText: 'Tout Sélectioner',
       unSelectAllText: 'Déselectioner tout',
       allowSearchFilter: true,

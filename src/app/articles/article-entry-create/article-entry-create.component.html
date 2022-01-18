@@ -39,7 +39,7 @@
                         Image de couverture
                     </label>
 
-                    <div class="article-image-preview-wrapper relative mt-4">
+                    <div class="article-image-preview-wrapper relative mt-5">
                         <div *ngIf="!form.get('thumbnail')?.value"
                             class="label-image-preview relative w-full overflow-hidden">
                             <label for="file" (click)="onClickFileUpload()"
@@ -98,9 +98,9 @@
                         </label>
 
                         <div class="mt-5">
-                            <ng-multiselect-dropdown [placeholder]="'Selectionez vos tags'"
-                                [settings]="dropdownSettings" [data]="tagListDrop" [(ngModel)]="selectedTagsDrop"
-                                (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                            <ng-multiselect-dropdown [placeholder]="'Selectionez vos tags'" formControlName="tags"
+                                [settings]="dropdownSettings" [data]="tagList" (onSelect)="onItemSelect($event)"
+                                (onSelectAll)="onSelectAll($event)">
                             </ng-multiselect-dropdown>
                         </div>
                     </div>
@@ -265,20 +265,5 @@
             </button>
         </div>
     </form>
-
-    Form Values
-    <pre>
-        {{form.value | json}}
-    </pre>
-
-    Tag List
-    <pre>
-        {{tagList | json}}
-    </pre>
-
-    Selected Tags
-    <pre>
-        {{selectedTags | json}}
-    </pre>
 
 </div>
