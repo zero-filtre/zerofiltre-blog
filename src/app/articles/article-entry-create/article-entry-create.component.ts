@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-article-entry-create',
@@ -22,52 +23,67 @@ export class ArticleEntryCreateComponent implements OnInit {
   public article!: Article
   public articleId!: number
   public articleTitle!: string
-  public tagList!: Tag []
-  public selectedTags: Tag [] = []
+  public tagList!: Tag[]
+  public selectedTags: Tag[] = []
 
-  markdown = `
-    ## Markdown __rulez__!
+  dropdownSettings = {};
 
-    ### Syntax highlight
-    \`\`\`ts
-      const language = 'typescript';
-    \`\`\`
+  public tagListDrop = [
+    { item_id: 1, item_text: 'Mumbai' },
+    { item_id: 2, item_text: 'Bangaluru' },
+    { item_id: 3, item_text: 'Pune' },
+    { item_id: 4, item_text: 'Navsari' },
+    { item_id: 5, item_text: 'New Delhi' }
+  ]
 
-    ### Ordered Lists
-    1. bullet point
-    2. Another bullet point
+  public selectedTagsDrop = [
+    // { item_id: 3, item_text: 'Pune' },
+    // { item_id: 4, item_text: 'Navsari' }
+  ]
 
-    ### Unordered list
-    - Unordered bullet
-    - Another unordered bullet
+  // markdown = `
+  //   ## Markdown __rulez__!
 
-    ### Blockquote
-    > Blockquote to the max
+  //   ### Syntax highlight
+  //   \`\`\`ts
+  //     const language = 'typescript';
+  //   \`\`\`
 
-    \`\`\`js
-      const language = 'javascript';
-    \`\`\`
+  //   ### Ordered Lists
+  //   1. bullet point
+  //   2. Another bullet point
 
-    \`\`\`java
-      String language = "java";
-    \`\`\`
+  //   ### Unordered list
+  //   - Unordered bullet
+  //   - Another unordered bullet
 
-    ### Inline code
-   \`Inline code\`
+  //   ### Blockquote
+  //   > Blockquote to the max
 
-    ### Links
-    [google-link](https://google.com)
+  //   \`\`\`js
+  //     const language = 'javascript';
+  //   \`\`\`
 
-    ### Image
-    ![Screenshot from 2021-11-04 09-32-25.png](https://images.ctfassets.net/hrltx12pl8hq/7yQR5uJhwEkRfjwMFJ7bUK/dc52a0913e8ff8b5c276177890eb0129/offset_comp_772626-opt.jpg?fit=fill&w=800&h=300)
+  //   \`\`\`java
+  //     String language = "java";
+  //   \`\`\`
 
-    ### Embed Iframe
-    <iframe src="https://www.youtube.com/embed/yz8x71BiGXg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-    </iframe>
+  //   ### Inline code
+  //  \`Inline code\`
 
-    ### Divider
-    ---
-    `;
+  //   ### Links
+  //   [google-link](https://google.com)
+
+  //   ### Image
+  //   ![Screenshot from 2021-11-04 09-32-25.png](https://images.ctfassets.net/hrltx12pl8hq/7yQR5uJhwEkRfjwMFJ7bUK/dc52a0913e8ff8b5c276177890eb0129/offset_comp_772626-opt.jpg?fit=fill&w=800&h=300)
+
+  //   ### Embed Iframe
+  //   <iframe src="https://www.youtube.com/embed/yz8x71BiGXg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+  //   </iframe>
+
+  //   ### Divider
+  //   ---
+  //   `;
 
   constructor(
     private formuilder: FormBuilder,
@@ -82,7 +98,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     if (tabName === 'help') this.activeTab = 'help'
   }
 
-  public getArticle(): void{
+  public getArticle(): void {
     this.articleService.getOneArticle(this.articleId).subscribe({
       next: (response: Article) => {
         this.article = response
@@ -146,17 +162,36 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public uploadFile() {
-    
+
   }
 
   public removeFile() {
-    if (this.form.controls['thumbnail'].value !== '')  this.form.controls['thumbnail'].setValue('')
+    if (this.form.controls['thumbnail'].value !== '') this.form.controls['thumbnail'].setValue('')
+  }
+
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
   }
 
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id
     this.getArticle()
     this.InitForm()
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Tout Sélectioner',
+      unSelectAllText: 'Déselectioner tout',
+      allowSearchFilter: true,
+      searchPlaceholderText: "Rechercher",
+      // itemsShowLimit: 3,
+      // limitSelection: 3
+    };
   }
 
 }

@@ -83,7 +83,8 @@
                         </div>
 
                         <!-- <img *ngIf="form.get('thumbnail')?.value" src="http://localhost:4200/articles/images/{{form.get('thumbnail')?.value}}"> -->
-                        <img *ngIf="form.get('thumbnail')?.value" class="preview-image object-cover h-full w-full"
+                        <img *ngIf="form.get('thumbnail')?.value"
+                            class="preview-image object-cover h-full w-full rounded-lg"
                             src="{{form.get('thumbnail')?.value}}">
 
                         <div *ngIf="form.get('thumbnail')?.value"
@@ -95,25 +96,20 @@
                         <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
                             Tags
                         </label>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Selectionez vos tags</mat-label>
-                            <select matNativeControl required formControlName="tags" (change)="selectTag()">
-                                <ng-container *ngFor="let tag of tagList">
-                                    <option value="{{tag.name}}">{{tag.name}}</option>
-                                </ng-container>
-                            </select>
-                            <!-- <mat-error *ngIf="form.get('tags')?.hasError('required')">
-                                This field is required
-                            </mat-error>
-                            <mat-hint>You can pick up your favorite car here</mat-hint> -->
-                        </mat-form-field>
+
+                        <div class="mt-5">
+                            <ng-multiselect-dropdown [placeholder]="'Selectionez vos tags'"
+                                [settings]="dropdownSettings" [data]="tagListDrop" [(ngModel)]="selectedTagsDrop"
+                                (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
                     </div>
                 </div>
             </aside>
 
             <main class="col-span-6">
                 <div class="main-side-container">
-                    <div class="article-title mt-10 sm:mt-0">
+                    <div class="article-title mt-10 lg:mt-0">
                         <input name="title" id="title" required minlength="4" formControlName="title"
                             class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
                             placeholder='Entrez le titre de votre article...' autocomplete="off" />
