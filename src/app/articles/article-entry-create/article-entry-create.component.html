@@ -20,14 +20,27 @@
         </div>
 
         <div class="action-buttons hidden lg:block space-x-1 sm:space-x-2">
-            <button type="submit" (click)="publishArticle()"
-                class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:border-skin-border transition-all duration-300">
-                Publier
-            </button>
-            <button type="submit" (click)="saveArticle()"
-                class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-300">
-                Sauvergarder
-            </button>
+            <div *ngIf="form.invalid; else validBtn" class="space-x-1 sm:space-x-2">
+                <button
+                    class="px-4 py-2 border border-primary-500 shadow-sm bg-primary-500 opacity-[0.15] rounded-full text-sm text-white leading-5 font-semibold"
+                    type="submit" disabled>
+                    Publier
+                </button>
+                <button type="submit" disabled
+                    class="px-4 py-2 border border-skin-border shadow-sm bg-skin-card opacity-[0.15] rounded-full text-sm text-skin-base leading-5 font-semibold">
+                    Sauvergarder
+                </button>
+            </div>
+            <ng-template #validBtn>
+                <button type="submit" (click)="publishArticle()"
+                    class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-300">
+                    publier
+                </button>
+                <button type="submit" (click)="saveArticle()"
+                    class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-300">
+                    Sauvergarder
+                </button>
+            </ng-template>
         </div>
     </nav>
 
@@ -110,9 +123,18 @@
             <main class="col-span-6">
                 <div class="main-side-container">
                     <div class="article-title mt-10 lg:mt-0">
-                        <input name="title" id="title" required minlength="4" formControlName="title"
+                        <input id="title" required minlength="4" formControlName="title"
                             class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
                             placeholder='Entrez le titre de votre article...' autocomplete="off" />
+
+                        <div *ngIf="title?.invalid && title?.dirty" class="">
+                            <div *ngIf="title?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
+                                Le titre est obligatoire.
+                            </div>
+                            <div *ngIf="title?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
+                                Le titre doit comporter au moins 4 caractères.
+                            </div>
+                        </div>
                     </div>
 
                     <div class="article-content !shadow-md mt-4 sm:mt-2">
@@ -166,8 +188,15 @@
                         </div>
 
                         <div class="tabs-content-wrapper">
+                            <div *ngIf="content?.invalid && content?.dirty" class="">
+                                <div *ngIf="content?.errors?.['required']"
+                                    class="p-4 bg-white text-xs sm:text-sm text-error italic">
+                                    Le contenu de l'article est obligatoire.
+                                </div>
+                            </div>
+
                             <div *ngIf="activeTab === 'editor'" class=" min-h-screen w-full">
-                                <textarea formControlName="content"
+                                <textarea formControlName="content" id="content" required
                                     class="editor-textarea bg-white text-skin-base p-4 h-screen w-full"
                                     placeholder="Type your content"></textarea>
                             </div>
@@ -256,14 +285,27 @@
         </div>
 
         <div class="action-buttons lg:hidden flex space-x-1 sm:space-x-2 mt-5">
-            <button type="submit" (click)="publishArticle()"
-                class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:border-skin-border transition-all duration-300">
-                Publier
-            </button>
-            <button (click)="saveArticle()"
-                class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-300">
-                Sauvergarder
-            </button>
+            <div *ngIf="form.invalid; else validBtn" class="space-x-1 sm:space-x-2">
+                <button
+                    class="px-4 py-2 border border-primary-500 shadow-sm bg-primary-500 opacity-[0.15] rounded-full text-sm text-white leading-5 font-semibold"
+                    type="submit" disabled>
+                    Publier
+                </button>
+                <button type="submit" disabled
+                    class="px-4 py-2 border border-skin-border shadow-sm bg-skin-card opacity-[0.15] rounded-full text-sm text-skin-base leading-5 font-semibold">
+                    Sauvergarder
+                </button>
+            </div>
+            <ng-template #validBtn>
+                <button type="submit" (click)="publishArticle()"
+                    class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-300">
+                    publier
+                </button>
+                <button type="submit" (click)="saveArticle()"
+                    class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-300">
+                    Sauvergarder
+                </button>
+            </ng-template>
         </div>
     </form>
 

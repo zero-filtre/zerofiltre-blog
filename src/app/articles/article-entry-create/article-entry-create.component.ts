@@ -120,7 +120,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       title: ['', [Validators.required]],
       thumbnail: ['https://www.ricoh-imaging.co.jp/english/products/q-s1/ex/img/ex-thumb-pic01.jpg', [Validators.required]],
       content: ['', [Validators.required]],
-      tags: [[], [Validators.required]]
+      tags: [[]]
     })
   }
 
@@ -178,14 +178,15 @@ export class ArticleEntryCreateComponent implements OnInit {
     //   })
   }
 
+  get title() { return this.form.get('title'); }
+  get content() { return this.form.get('content'); }
+
   public removeFile() {
     if (this.form.controls['thumbnail'].value !== '') this.form.controls['thumbnail'].setValue('')
   }
 
   onItemSelect(_item: any) {
     this.selectTag()
-    console.log(this.form.value.content);
-    console.log(this.form.value.tags);
   }
 
   onSelectAll(items: any) {
@@ -219,8 +220,9 @@ export class ArticleEntryCreateComponent implements OnInit {
       unSelectAllText: 'Déselectioner tout',
       allowSearchFilter: true,
       searchPlaceholderText: "Rechercher",
+      enableCheckAll: false
       // itemsShowLimit: 3,
-      // limitSelection: 3
+      // limitSelection: 3,
     };
   }
 
