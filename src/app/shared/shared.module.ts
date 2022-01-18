@@ -43,7 +43,7 @@ const modules = [
   MatDialogModule,
   FormsModule,
   ReactiveFormsModule,
-  MatOptionModule
+  MatOptionModule,
 ];
 
 @NgModule({

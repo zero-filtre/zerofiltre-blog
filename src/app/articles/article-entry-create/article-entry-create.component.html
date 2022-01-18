@@ -173,7 +173,8 @@
                             </div>
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
-                                <markdown [data]="form.get('content')?.value" class="markdown-content prose">
+                                <markdown [data]="form.get('content')?.value"
+                                    class="markdown-content prose text-skin-base font-normal max-w-none mx-auto prose-cyan md:prose-lg prose-code:p-1 prose-code:font-semibold prose-code:text-skin-card prose-code:rounded-md prose-code:bg-primary-300 prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
                                 </markdown>
                             </div>
 

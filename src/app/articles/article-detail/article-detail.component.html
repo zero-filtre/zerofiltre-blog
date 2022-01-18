@@ -67,7 +67,7 @@
                     <div *ngIf="nextArticle; else articleHistoryleftSideSkeletonLoader">
                         <h2 class="text-[10px] leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
                             suivant</h2>
-                        <a href="articles/{{nextArticle.id}}" class="mt-3 flex items-start space-x-2">
+                        <a href="articles/{{nextArticle.id}}" class="mt-3 flex items-center space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{nextArticle?.thumbnail}}"
                                 alt="{{nextArticle?.title}} ">
                             <span
@@ -79,7 +79,7 @@
                     <div *ngIf="previousArticle">
                         <h2 class="text-[10px] leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
                             précédent</h2>
-                        <a href="articles/{{previousArticle.id}}" class="mt-3 flex items-start space-x-2">
+                        <a href="articles/{{previousArticle.id}}" class="mt-3 flex items-center space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{previousArticle?.thumbnail}}"
                                 alt="{{previousArticle?.title}}">
                             <span
@@ -321,8 +321,13 @@
                     </div>
                 </ng-template>
 
-                <div *ngIf="article; else articleContentSkeletonLoader" [innerHtml]="article?.content" id="article"
+                <!-- <div *ngIf="article; else articleContentSkeletonLoader" [innerHtml]="article?.content" id="article"
                     class="article-content mt-10 text-skin-base font-normal max-w-none mx-auto prose prose-cyan md:prose-lg prose-code:p-1 prose-code:font-semibold prose-code:text-skin-card prose-code:rounded-md prose-code:bg-primary-300 prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline prose-h1:!text-base prose-headings:text-skin-inverted">
+                </div> -->
+
+                <div *ngIf="article; else articleContentSkeletonLoader"
+                    class="article-content mt-10 text-skin-base font-normal max-w-none mx-auto prose prose-cyan md:prose-lg prose-code:p-1 prose-code:font-semibold prose-code:text-skin-card prose-code:rounded-md prose-code:bg-primary-300 prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
+                    <markdown [data]="article?.content"></markdown>
                 </div>
 
                 <ng-template #articleContentSkeletonLoader>

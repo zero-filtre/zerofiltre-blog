@@ -10,7 +10,6 @@ import { MarkdownModule } from 'ngx-markdown';
 import { ArticleEntryCreateComponent } from './article-entry-create/article-entry-create.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
-
 @NgModule({
   declarations: [
     ArticleDetailComponent,
@@ -23,7 +22,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     SharedModule,
     ArticlesRoutingModule,
     MarkdownModule.forChild(),
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
   ]
 })
 export class ArticlesModule { }
