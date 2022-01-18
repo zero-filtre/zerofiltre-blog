@@ -22,27 +22,21 @@ export class ArticleEntryCreateComponent implements OnInit {
   public article!: Article
   public articleId!: number
   public articleTitle!: string
-  public tagList!: Tag[]
   public selectedTags: Tag[] = []
 
   dropdownSettings = {};
 
-  public tagListDrop = [
-    { item_id: 1, item_text: 'java' },
-    { item_id: 2, item_text: 'angular' },
-    { item_id: 3, item_text: 'spring-boot' },
-    { item_id: 4, item_text: 'html' },
-    { item_id: 5, item_text: 'react' },
-    { item_id: 6, item_text: 'sql' },
-    { item_id: 7, item_text: 'graphql' },
-    { item_id: 8, item_text: 'docker' },
-    { item_id: 9, item_text: 'api' },
-    { item_id: 10, item_text: 'rest' }
-  ]
-
-  public selectedTagsDrop = [
-    // { item_id: 3, item_text: 'Pune' },
-    // { item_id: 4, item_text: 'Navsari' }
+  public tagListDrop: Tag[] = [
+    { id: 1, name: 'java', colorCode: '#222' },
+    { id: 2, name: 'angular', colorCode: '#222' },
+    { id: 3, name: 'spring-boot', colorCode: '#222' },
+    { id: 4, name: 'html', colorCode: '#222' },
+    { id: 5, name: 'react', colorCode: '#222' },
+    { id: 6, name: 'sql', colorCode: '#222' },
+    { id: 7, name: 'graphql', colorCode: '#222' },
+    { id: 8, name: 'docker', colorCode: '#222' },
+    { id: 9, name: 'api', colorCode: '#222' },
+    { id: 10, name: 'rest', colorCode: '#222' }
   ]
 
   // markdown = `
@@ -106,10 +100,13 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.articleService.getOneArticle(this.articleId).subscribe({
       next: (response: Article) => {
         this.article = response
-        this.tagList = response.tags
         this.articleTitle = response.title!
-        this.form.controls['title'].setValue(this.articleTitle)
         this.form.controls['id'].setValue(+this.articleId)
+        this.form.controls['title'].setValue(this.articleTitle)
+        this.form.controls['thumbnail'].setValue(this.article.thumbnail)
+        this.form.controls['content'].setValue(this.article.content)
+        this.form.controls['tags'].setValue(this.article.tags)
+        this.selectedTags = this.article.tags
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
@@ -123,7 +120,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       title: ['', [Validators.required]],
       thumbnail: ['https://www.ricoh-imaging.co.jp/english/products/q-s1/ex/img/ex-thumb-pic01.jpg', [Validators.required]],
       content: ['', [Validators.required]],
-      tags: ['', [Validators.required]]
+      tags: [[], [Validators.required]]
     })
   }
 
@@ -187,6 +184,8 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   onItemSelect(_item: any) {
     this.selectTag()
+    console.log(this.form.value.content);
+    console.log(this.form.value.tags);
   }
 
   onSelectAll(items: any) {
@@ -204,7 +203,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   getFullObjectsBySelectedTagsIds(ids: any) {
-    return this.tagList.filter(item => ids.includes(item.id))
+    return this.tagListDrop.filter(item => ids.includes(item.id))
   }
 
   ngOnInit(): void {
