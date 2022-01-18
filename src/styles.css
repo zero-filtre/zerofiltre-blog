@@ -45,6 +45,10 @@
   /* @apply !rounded-sm !shadow-lg; */
 }
 
+.dropdown-list .filter-textbox {
+  @apply !border-b-skin-borderBold;
+}
+
 .dropdown-list .filter-textbox input {
   @apply !outline-none !ring-0;
 }

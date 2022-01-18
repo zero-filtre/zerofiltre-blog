@@ -29,11 +29,16 @@ export class ArticleEntryCreateComponent implements OnInit {
   dropdownSettings = {};
 
   public tagListDrop = [
-    { item_id: 1, item_text: 'Mumbai' },
-    { item_id: 2, item_text: 'Bangaluru' },
-    { item_id: 3, item_text: 'Pune' },
-    { item_id: 4, item_text: 'Navsari' },
-    { item_id: 5, item_text: 'New Delhi' }
+    { item_id: 1, item_text: 'java' },
+    { item_id: 2, item_text: 'angular' },
+    { item_id: 3, item_text: 'spring-boot' },
+    { item_id: 4, item_text: 'html' },
+    { item_id: 5, item_text: 'react' },
+    { item_id: 6, item_text: 'sql' },
+    { item_id: 7, item_text: 'graphql' },
+    { item_id: 8, item_text: 'docker' },
+    { item_id: 9, item_text: 'api' },
+    { item_id: 10, item_text: 'rest' }
   ]
 
   public selectedTagsDrop = [
