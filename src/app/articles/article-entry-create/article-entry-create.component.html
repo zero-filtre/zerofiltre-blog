@@ -102,7 +102,7 @@
 
                         <div *ngIf="form.get('thumbnail')?.value"
                             class="absolute top-0 right-0 z-20 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
-                            (click)="removeFile()">×</div>
+                            (click)="removeFile()">x</div>
                     </div>
 
                     <div class="tag-list mt-10">
@@ -143,18 +143,21 @@
 
                             <div class="flex items-center w-full">
                                 <div (click)="setActiveTab('editor')"
-                                    [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
-                                    class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer hover:bg-skin-muted sm:text-base">
+                                    class="relative tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer hover:bg-skin-muted sm:text-base">
                                     <svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
                                         </path>
-                                    </svg> <span>Saisi</span>
+                                    </svg>
+                                    <span>Saisi</span>
+                                    <div [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
+                                        class="green-border bg-primary-500 h-[3px] w-full absolute -left-1 -right-1 bottom-0 scale-0">
+                                    </div>
                                 </div>
+
                                 <div (click)="setActiveTab('preview')"
-                                    [ngClass]="activeTab == 'preview' ? 'active-tab' : ''"
-                                    class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
+                                    class="relative tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
                                     <svg class="w-2 h-2" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -162,16 +165,24 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
                                         </path>
-                                    </svg> <span>Preview</span>
+                                    </svg>
+                                    <span>Preview</span>
+                                    <div [ngClass]="activeTab == 'preview' ? 'active-tab' : ''"
+                                        class="green-border bg-primary-500 h-[3px] w-full absolute -left-1 -right-1 bottom-0 scale-0">
+                                    </div>
                                 </div>
-                                <div (click)="setActiveTab('help')" [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
-                                    class="tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
+
+                                <div (click)="setActiveTab('help')"
+                                    class="relative tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     <span>Aide</span>
+                                    <div [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
+                                        class="green-border bg-primary-500 h-[3px] w-full absolute -left-1 -right-1 bottom-0 scale-0">
+                                    </div>
                                 </div>
                             </div>
                             <!-- <div
@@ -202,7 +213,7 @@
                             </div>
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
-                                <markdown [data]="form.get('content')?.value"
+                                <markdown [data]="content?.value"
                                     class="markdown-content prose text-skin-base font-normal max-w-none mx-auto prose-cyan md:prose-lg prose-code:p-1 prose-code:font-semibold prose-code:text-skin-card prose-code:rounded-md prose-code:bg-primary-300 prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
                                 </markdown>
                             </div>

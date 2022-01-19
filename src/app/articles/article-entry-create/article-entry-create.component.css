@@ -37,7 +37,7 @@
 }
 
 .active-tab {
-  @apply text-primary-500 border-b border-primary-500;
+  @apply scale-100 transition-all duration-300;
 }
 
 .tab {
