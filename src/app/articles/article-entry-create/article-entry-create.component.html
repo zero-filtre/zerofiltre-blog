@@ -213,72 +213,75 @@
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
                                 <markdown [data]="content?.value"
-                                    class="markdown-content prose text-skin-base font-normal max-w-none mx-auto prose-cyan md:prose-lg prose-code:p-1 prose-code:font-semibold prose-code:text-skin-card prose-code:rounded-md prose-code:bg-primary-300 prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
+                                    class="markdown-content prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:rounded-md prose-code:bg-primary-100 prose-code:text-primary-500 prose-code:!text-lg prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
                                 </markdown>
                             </div>
 
                             <div *ngIf="activeTab === 'help'"
                                 class="help-container h-full bg-skin-card min-h-screen p-4 relative z-30 prose md:prose-sm lg:prose-lg max-w-none">
-                                <h2>Markdown Basics</h2>
-                                <p>Below you will find some common used markdown syntax. For a deeper dive in
-                                    Markdown check out this <a class="text-primary-500 font-semibold no-underline"
-                                        href="https://commonmark.org/help/" target="_blank">Cheat Sheet</a>
+                                <h2>Les bases du Markdown</h2>
+                                <p>Vous trouverez ci-dessous une syntaxe de démarquage couramment utilisée. Pour une
+                                    plongée plus profonde dans le
+                                    language Markdown, consultez cet <a
+                                        class="text-primary-500 font-semibold no-underline"
+                                        href="https://commonmark.org/help/" target="_blank">Aide-mémoire</a>
                                 </p>
                                 <hr>
-                                <h3>Bold &amp; Italic</h3>
-                                <p><span class="mr-2 italic">Italics</span> <span
-                                        class="p-1">*asterisks*</span><br><span class="mr-2 font-bold">Bold</span>
+                                <h3>Gras &amp; Italique</h3>
+                                <p><span class="mr-2 italic">Italique</span> <span
+                                        class="p-1">*asterisks*</span><br><span class="mr-2 font-bold">Gras</span>
                                     <span class="p-1">**double asterisks**</span>
                                 </p>
                                 <hr>
                                 <h3>Code</h3>
-                                <p><span class="mr-2">Inline Code</span><br><span
+                                <p><span class="mr-2">Code en ligne</span><br><span
                                         class="p-1 text-primary-500 bg-primary-100 rounded-md">`backtick`</span><span
-                                        class="block mt-2 mr-2">Code Block</span><span
-                                        class="block p-1  text-primary-500 bg-primary-100">```<br>Three back
-                                        ticks and then enter your code
-                                        blocks here.<br>```</span></p>
+                                        class="block mt-2 mr-2">Bloc de code</span><span
+                                        class="block p-1  text-primary-500 bg-primary-100">```<br>Trois backticks puis
+                                        entrez vos blocs de code ici.<br>```</span></p>
                                 <hr>
-                                <h3>Headers</h3>
-                                <p># This is a Heading 1<br>## This is a Heading 2<br>### This is a Heading 3<br>
+                                <h3>En-têtes</h3>
+                                <p># Ceci est un Heading 1<br>## Ceci est un Heading 2<br>### Ceci est un Heading 3<br>
                                 </p>
                                 <hr>
                                 <h3>Quotes</h3>
-                                <blockquote> &gt; type a greater than sign and start typing your quote.</blockquote>
+                                <blockquote> &gt; tapez un signe supérieur à et commencez à taper votre devis.
+                                </blockquote>
                                 <hr>
-                                <h3>Links</h3>
-                                <p>You can add <a href="#_">links</a> by adding text inside of <span
-                                        class="p-1  text-primary-500 bg-primary-100">[]</span> and the link
-                                    inside of <span class="p-1  text-primary-500 bg-primary-100">()</span>,
-                                    like so:</p>
+                                <h3>Liens</h3>
+                                <p>Vous pouvez ajouter <a href="#_">des liens</a> en ajoutant du texte à l'intérieur de
+                                    <span class="p-1  text-primary-500 bg-primary-100">[]</span> et le lien à
+                                    l'intérieur de <span class="p-1  text-primary-500 bg-primary-100">()</span>,
+                                    ainsi:
+                                </p>
                                 <div class="p-1 font-semibold  text-primary-500 bg-primary-100">
                                     [link_text](https://google.com)</div>
                                 <hr>
-                                <h3>Lists</h3>
-                                <p>To add a numbered list you can simply start with a number and a <span
-                                        class="p-1  text-primary-500 bg-primary-100">.</span>, like
-                                    so:<br><span class="block p-1 pl-5  text-primary-500 bg-primary-100"> 1.
-                                        The first item in my list</span></p>
-                                <p>For an unordered list, you can add a dash <span
-                                        class="p-1  text-primary-500 bg-primary-100">-</span>, like
-                                    so:<br><span class="block p-1 pl-5  text-primary-500 bg-primary-100"> - The
-                                        start of my list</span></p>
+                                <h3>Listes</h3>
+                                <p>Pour ajouter une liste numérotée, vous pouvez simplement commencer par un nombre et
+                                    un <span class="p-1  text-primary-500 bg-primary-100">.</span>, ainsi:<br><span
+                                        class="block p-1 pl-5  text-primary-500 bg-primary-100"> 1.
+                                        Le premier élément de ma liste</span></p>
+                                <p>Pour une liste non ordonnée, vous pouvez ajouter un tiret <span
+                                        class="p-1  text-primary-500 bg-primary-100">-</span>, ainsi:<br><span
+                                        class="block p-1 pl-5  text-primary-500 bg-primary-100"> - Le début de ma
+                                        liste</span></p>
                                 <hr>
                                 <h3>Images</h3>
-                                <p>You can add images by selecting the image icon, which will upload and add an
-                                    image to the editor, or you can
-                                    manually add the image by adding an exclamation <span
-                                        class="p-1  text-primary-500 bg-primary-100">!</span>, followed by the
-                                    alt text inside of <span class="p-1  text-primary-500 bg-primary-100">[]</span>, and
-                                    the image
-                                    URL inside of <span class="p-1  text-primary-500 bg-primary-100">()</span>,
-                                    like so:</p>
-                                <div class="p-1 font-semibold  text-primary-500 bg-primary-100">![alt text for
-                                    image](url_to_image.png)</div>
+                                <p>Vous pouvez ajouter des images en sélectionnant l'icône d'image, qui téléchargera et
+                                    ajoutera une image à l'éditeur, ou
+                                    vous pouvez ajouter manuellement l'image en ajoutant un point d'exclamation <span
+                                        class="p-1  text-primary-500 bg-primary-100">!</span>, suivi du texte alternatif
+                                    à l'intérieur de <span class="p-1  text-primary-500 bg-primary-100">[]</span>, et
+                                    l'URL de l'image à l'intérieur de <span
+                                        class="p-1  text-primary-500 bg-primary-100">()</span>,
+                                    ainsi:</p>
+                                <div class="p-1 font-semibold  text-primary-500 bg-primary-100">![texte alternatif pour
+                                    l'image](url_vers_image.png)</div>
                                 <hr>
-                                <h3>Dividers</h3>
-                                <p>To add a divider you can add three dashes or three asterisks:<br><span
-                                        class="block p-1 pl-5  text-primary-500 bg-primary-100">--- or
+                                <h3>Séparateur</h3>
+                                <p>Pour ajouter un séparateur, vous pouvez ajouter trois tirets ou trois
+                                    astérisques:<br><span class="block p-1 pl-5  text-primary-500 bg-primary-100">--- or
                                         ***</span>
                                 </p>
                             </div>

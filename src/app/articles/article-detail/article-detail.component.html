@@ -328,7 +328,7 @@
                 </ng-template>
 
                 <div *ngIf="article; else articleContentSkeletonLoader"
-                    class="article-content mt-10 text-skin-base font-normal max-w-none mx-auto prose prose-cyan md:prose-lg prose-code:p-1 prose-code:font-semibold prose-code:text-skin-card prose-code:rounded-md prose-code:bg-primary-300 prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
+                    class="markdown-content prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:rounded-md prose-code:bg-primary-100 prose-code:text-primary-500 prose-code:!text-lg prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
                     <markdown [data]="article?.content"></markdown>
                 </div>
 
