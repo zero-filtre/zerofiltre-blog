@@ -96,11 +96,10 @@
                         </div>
 
                         <!-- <img *ngIf="form.get('thumbnail')?.value" src="http://localhost:4200/articles/images/{{form.get('thumbnail')?.value}}"> -->
-                        <img *ngIf="form.get('thumbnail')?.value"
-                            class="preview-image object-cover h-full w-full rounded-lg"
-                            src="{{form.get('thumbnail')?.value}}">
+                        <img *ngIf="thumbnail?.value" class="preview-image object-cover h-full w-full rounded-lg border"
+                            src="{{thumbnail?.value}}">
 
-                        <div *ngIf="form.get('thumbnail')?.value"
+                        <div *ngIf="thumbnail?.value"
                             class="absolute top-0 right-0 z-20 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
                             (click)="removeFile()">x</div>
                     </div>

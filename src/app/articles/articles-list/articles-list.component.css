@@ -15,5 +15,5 @@
 }
 
 .active-tab {
-  @apply bg-primary-500 scale-100 transition-all duration-500;
+  @apply bg-primary-500 scale-100 transition-all duration-200;
 }
