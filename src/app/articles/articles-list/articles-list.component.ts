@@ -17,7 +17,7 @@ export class ArticlesListComponent implements OnInit {
   public articles!: Article[];
   public tagList!: Tag[];
   public pageNumber: number = 0;
-  public pageItemsLimit: number = 4;
+  public pageItemsLimit: number = 5;
   public activePage: string = 'recent'
 
   constructor(
@@ -44,7 +44,7 @@ export class ArticlesListComponent implements OnInit {
     this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
       next: (response: Article[]) => {
         // this.articles = response
-        this.articles = this.sortByDate(response)
+        this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.tagList = response[0].tags
         this.calcReadingTime(response);
       },
@@ -53,6 +53,20 @@ export class ArticlesListComponent implements OnInit {
       }
     });
   }
+
+  public getSavedArticles() {
+    this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
+      next: (response: Article[]) => {
+        this.articles = response.filter((item: Article) => item.status === 'DRAFT')
+        this.tagList = response[0].tags
+        this.calcReadingTime(response);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    });
+  }
+
 
   public calcReadingTime(articles: Article[]): void {
     for (const article of articles) {
@@ -91,15 +105,16 @@ export class ArticlesListComponent implements OnInit {
   }
 
   private sortByDate(list: Article[]): Article[] {
-    return list.sort((a: any, b: any) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
+    return list
+      .sort((a: any, b: any) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
   }
 
   private sortByPopularity(list: Article[]): Article[] {
-    return list.sort((a: any, b: any) => a.id - b.id)
+    return list
   }
 
   private sortByTrend(list: Article[]): Article[] {
-    return list.sort((a: any, b: any) => a.id - b.id)
+    return list
   }
 
   public sortByTag(tagName: any): void {

@@ -89,6 +89,15 @@
                         Article
                     </button>
 
+                    <button (click)="getSavedArticles()" type="button"
+                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">
+                        Articles sauvegardés
+                    </button>
+                    <button (click)="fetchArticles()" type="button"
+                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">
+                        Articles publiés
+                    </button>
+
                     <ng-template #tagsListSkeletonLoader>
                         <div class="tags-skeleton-container">
                             <ngx-skeleton-loader class="flex space-x-1" count="3" appearance="line" [theme]="{ 
@@ -174,7 +183,7 @@
                                     <div *ngFor="let tag of article?.tags" class="flex items-center space-x-2">
                                         <span
                                             class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                            <svg class="mr-1.5 h-2 w-2 brand-laravel fill-accent" fill=""
+                                            <svg class="mr-1.5 h-2 w-2" [ngClass]="{'fill-[`${tag.colorCode}`]': true}"
                                                 viewBox="0 0 8 8">
                                                 <circle cx="4" cy="4" r="3"></circle>
                                             </svg>

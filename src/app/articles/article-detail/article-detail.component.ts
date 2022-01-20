@@ -82,6 +82,14 @@ export class ArticleDetailComponent implements OnInit {
     }
   }
 
+  isSocialLinkPresent(platform: string): boolean {
+    return this.article?.author?.socialLinks.some((link: any) => link.platform === platform)
+  }
+
+  authorPlatformLink(platform: string): string {
+    return this.article?.author?.socialLinks.find((link: any) => link.platform === platform).link
+  }
+
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);

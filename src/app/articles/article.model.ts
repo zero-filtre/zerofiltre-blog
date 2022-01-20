@@ -6,7 +6,7 @@ export interface Article {
   author?: Author;
   createdAt?: string
   publishedAt?: string;
-  reactions?: [];
+  reactions?: any;
   status?: string;
   tags: Tag[];
   readingTime: number;
@@ -23,10 +23,11 @@ export interface Author {
   pseudoName?: string;
   firstName?: string;
   lastName?: string;
-  registeredOn?: [];
+  registeredOn?: Date;
   profilePicture?: string;
   bio?: string;
-  socials?: []
+  profession?: string;
+  socialLinks?: any
 }
 
 export interface Tag {
