@@ -102,7 +102,7 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   authorPlatformLink(platform: string): string {
-    return this.article?.author?.socialLinks.find((link: any) => link.platform === platform).link
+    return this.article?.author?.socialLinks.find((link: any) => link.platform === platform)?.link
   }
 
   ngOnInit(): void {

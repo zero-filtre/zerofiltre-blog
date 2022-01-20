@@ -136,7 +136,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     console.log(this.form.value);
 
     if (host === 'coverImage') this.form.patchValue({ thumbnail: this.fileUploadService.FakeUploadImage(fakeImages) });
-    if (host === 'editorImage') this.form.patchValue({ content: this.fileUploadService.FakeUploadImage(fakeImages) });
+    if (host === 'editorImage') console.log(this.fileUploadService.FakeUploadImage(fakeImages));
 
     // this.fileUploadService.uploadImage(formData).pipe(
     //   map((event) => {
