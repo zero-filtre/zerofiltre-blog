@@ -51,11 +51,4 @@ export class ArticleService {
   public createArticle(title: string): Observable<Article> {
     return this.http.post<Article>(`${this.apiServerUrl}/article?title=${title}`, {})
   }
-
-  public uploadPreviewImage(imgUrl: string): Observable<any> {
-    return this.http.post<string>(`${this.apiServerUrl}/image/upload`, imgUrl, {
-      reportProgress: true,
-      observe: 'events'
-    })
-  }
 }

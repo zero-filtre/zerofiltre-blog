@@ -1,9 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap } from 'rxjs';
-import { Article, Tag } from '../article.model';
+import { catchError, map, of, tap } from 'rxjs';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
 @Component({
@@ -15,6 +16,12 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   @ViewChild('fileUpload', { static: false })
   fileUpload!: ElementRef;
+
+  file: File = {
+    data: null,
+    inProgress: false,
+    progress: 0
+  };
 
   public form!: FormGroup;
 
@@ -43,7 +50,8 @@ export class ArticleEntryCreateComponent implements OnInit {
     private formuilder: FormBuilder,
     private articleService: ArticleService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fileUploadService: FileUploadService
   ) { }
 
   public setActiveTab(tabName: string): void {
@@ -74,7 +82,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.form = this.formuilder.group({
       id: [null],
       title: ['', [Validators.required]],
-      thumbnail: ['https://www.ricoh-imaging.co.jp/english/products/q-s1/ex/img/ex-thumb-pic01.jpg', [Validators.required]],
+      thumbnail: ['', [Validators.required]],
       content: ['', [Validators.required]],
       tags: [[]]
     })
@@ -94,27 +102,39 @@ export class ArticleEntryCreateComponent implements OnInit {
     ).subscribe();
   }
 
-  public onClickFileUpload() {
+  public onClickFileUpload(host: string) {
     const fileInput = this.fileUpload.nativeElement;
     fileInput.click();
 
-    // fileInput.onchange = () => {
-    //   this.file = {
-    //     data: fileInput.files[0],
-    //     inProgress: false,
-    //     progress: 0
-    //   };
-    //   this.fileUpload.nativeElement.value = '';
-    //   this.uploadFile();
-    // };    
+    fileInput.onchange = () => {
+      this.file = {
+        data: fileInput.files[0],
+        inProgress: false,
+        progress: 0
+      };
+      this.fileUpload.nativeElement.value = '';
+
+      this.uploadFile(host);
+    };
   }
 
-  public uploadFile() {
-    // const formData = new FormData();
-    // formData.append('file', this.file.data);
-    // this.file.inProgress = true;
+  public uploadFile(host: string) {
+    const fakeImages: any = [
+      'https://picsum.photos/1080/1920?grayscale',
+      'https://picsum.photos/1080/1920/?blur',
+      'https://picsum.photos/seed/picsum/1080/1920',
+    ]
+    const formData = new FormData();
+    formData.append('file', this.file.data);
+    this.file.inProgress = true;
 
-    // this.blogService.uploadHeaderImage(formData).pipe(
+    console.log(this.file);
+    console.log(this.form.value);
+
+    if (host === 'coverImage') this.form.patchValue({ thumbnail: this.fileUploadService.FakeUploadImage(fakeImages) });
+    if (host === 'editorImage') this.form.patchValue({ content: this.fileUploadService.FakeUploadImage(fakeImages) });
+
+    // this.fileUploadService.uploadImage(formData).pipe(
     //   map((event) => {
     //     switch (event.type) {
     //       case HttpEventType.UploadProgress:

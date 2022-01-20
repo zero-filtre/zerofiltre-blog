@@ -55,7 +55,7 @@
                     <div class="article-image-preview-wrapper relative mt-5">
                         <div *ngIf="!form.get('thumbnail')?.value"
                             class="label-image-preview relative w-full overflow-hidden">
-                            <label for="file" (click)="onClickFileUpload()"
+                            <label for="file" (click)="onClickFileUpload('coverImage')"
                                 class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
                                 <div class="text-center">
                                     <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
@@ -191,7 +191,7 @@
                             <div class="relative px-4 text-sm font-semibold text-skin-base sm:text-base cursor-pointer">
                                 <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
                                     accept="image/*">
-                                <svg (click)="onClickFileUpload()" fill="none" stroke="currentColor"
+                                <svg (click)="onClickFileUpload('editorImage')" fill="none" stroke="currentColor"
                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
                                     class="w-6 h-6 ">
                                     <path
