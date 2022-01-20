@@ -34,6 +34,21 @@ export class ArticleDetailComponent implements OnInit {
     article.readingTime = time
   }
 
+  private join(t: any, a: any, s: any) {
+    function format(m: any) {
+      let f = new Intl.DateTimeFormat('en', m);
+      return f.format(t);
+    }
+    return a.map(format).join(s);
+  }
+
+  public formatDate(article: Article) {
+    const date = article.lastPublishedAt!
+    const dateObj = new Date(date);
+    const a = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }];
+    return this.join(dateObj, a, '-');
+  }
+
   public getCurrentArticle(articleId: number): void {
     this.articleService.getOneArticle(articleId)
       .pipe(

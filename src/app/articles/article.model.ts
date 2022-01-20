@@ -6,6 +6,8 @@ export interface Article {
   author?: Author;
   createdAt?: string
   publishedAt?: string;
+  lastPublishedAt?: string;
+  lastSavedAt?: string;
   reactions?: any;
   status?: string;
   tags: Tag[];

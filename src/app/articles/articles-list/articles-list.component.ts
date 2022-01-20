@@ -57,7 +57,9 @@ export class ArticlesListComponent implements OnInit {
   public getSavedArticles() {
     this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
       next: (response: Article[]) => {
-        this.articles = response.filter((item: Article) => item.status === 'DRAFT')
+        this.articles = response
+          .filter((item: Article) => item.status === 'DRAFT')
+          .sort((a: any, b: any) => new Date(b.lastSavedAt).valueOf() - new Date(a.lastSavedAt).valueOf())
         this.tagList = response[0].tags
         this.calcReadingTime(response);
       },
@@ -106,7 +108,7 @@ export class ArticlesListComponent implements OnInit {
 
   private sortByDate(list: Article[]): Article[] {
     return list
-      .sort((a: any, b: any) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
+      .sort((a: any, b: any) => new Date(b.lastPublishedAt).valueOf() - new Date(a.lastPublishedAt).valueOf())
   }
 
   private sortByPopularity(list: Article[]): Article[] {
@@ -155,6 +157,22 @@ export class ArticlesListComponent implements OnInit {
       }
     }
   }
+
+  private join(t: any, a: any, s: any) {
+    function format(m: any) {
+      let f = new Intl.DateTimeFormat('en', m);
+      return f.format(t);
+    }
+    return a.map(format).join(s);
+  }
+
+  public formatDate(article: Article) {
+    const date = article.lastPublishedAt!
+    const dateObj = new Date(date);
+    const a = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }];
+    return this.join(dateObj, a, '-');
+  }
+
 
   ngOnInit(): void {
     this.seo.generateTags({
