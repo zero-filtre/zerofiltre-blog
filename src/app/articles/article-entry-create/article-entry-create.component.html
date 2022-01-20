@@ -218,7 +218,7 @@
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
                                 <markdown [data]="content?.value"
-                                    class="markdown-content prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:rounded-md prose-code:bg-primary-100 prose-code:text-primary-500 prose-code:!text-lg prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
+                                    class="markdown-content prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:rounded-md prose-code:border prose-code:!text-lg prose-code:before:hidden prose-code:after:hidden prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
                                 </markdown>
                             </div>
 
@@ -239,11 +239,36 @@
                                 </p>
                                 <hr>
                                 <h3>Code</h3>
-                                <p><span class="mr-2">Code en ligne</span><br><span
-                                        class="p-1 text-primary-500 bg-primary-100 rounded-md">`backtick`</span><span
-                                        class="block mt-2 mr-2">Bloc de code</span><span
-                                        class="block p-1  text-primary-500 bg-primary-100">```<br>Trois backticks puis
-                                        entrez vos blocs de code ici.<br>```</span></p>
+                                <p>
+                                    <span class="mr-2">Code en ligne</span>
+                                    <br>
+                                    <span class="p-1 text-primary-500 bg-primary-100 rounded-md">`backtick`</span>
+                                    <span class="block mt-2 mr-2">Bloc de code</span>
+                                    <span class="block p-1  text-primary-500 bg-primary-100">
+                                        ```ext<br>Trois backticks suivi de l'extension de votre langage de
+                                        programmation puis entrez vos blocs de code ici.<br>```
+                                        <br>
+                                        ```java<br>String lang = "java"<br>```
+                                        <br>
+                                        ```js<br>const lang = 'javascript'<br>```
+                                        <br>
+                                        ```ts<br>const lang: string = 'typescript'<br>```
+
+                                        <div class="p-2">
+                                            <markdown ngPreserveWhitespaces>
+                                                ```java
+                                                String lang = "java"
+                                                ```
+                                                ```js
+                                                const lang = 'javascript'
+                                                ```
+                                                ```ts
+                                                const lang: string = 'typescript'
+                                                ```
+                                            </markdown>
+                                        </div>
+                                    </span>
+                                </p>
                                 <hr>
                                 <h3>En-têtes</h3>
                                 <p># Ceci est un Heading 1<br>## Ceci est un Heading 2<br>### Ceci est un Heading 3<br>
