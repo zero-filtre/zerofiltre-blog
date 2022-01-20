@@ -1,14 +1,11 @@
 .article-image-preview-wrapper {
-  height: 14rem;
 }
 
 .label-image-preview {
-  height: 100%;
 }
 
 .preview-label {
   border: 2px dashed #e5e7eb;
-  height: 100%;
 }
 
 .tags-select {

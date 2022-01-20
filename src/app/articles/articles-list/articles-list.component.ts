@@ -17,7 +17,7 @@ export class ArticlesListComponent implements OnInit {
   public articles!: Article[];
   public tagList!: Tag[];
   public pageNumber: number = 0;
-  public pageItemsLimit: number = 100;
+  public pageItemsLimit: number = 4;
   public activePage: string = 'recent'
 
   constructor(

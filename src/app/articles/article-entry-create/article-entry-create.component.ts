@@ -82,7 +82,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.form = this.formuilder.group({
       id: [null],
       title: ['', [Validators.required]],
-      thumbnail: ['', [Validators.required]],
+      thumbnail: [''],
       content: ['', [Validators.required]],
       tags: [[]]
     })
@@ -91,14 +91,14 @@ export class ArticleEntryCreateComponent implements OnInit {
   public saveArticle() {
     console.log(this.form.value);
     this.articleService.updateToSave(this.form.value).pipe(
-      tap(() => this.router.navigateByUrl('/'))
+      tap(() => this.router.navigateByUrl(this.router.url))
     ).subscribe();
   }
 
   public publishArticle() {
     console.log(this.form.value);
     this.articleService.updateToPublish(this.form.value).pipe(
-      tap(() => this.router.navigateByUrl('/'))
+      tap(() => this.router.navigateByUrl(`articles/${this.articleId}`))
     ).subscribe();
   }
 
@@ -118,11 +118,15 @@ export class ArticleEntryCreateComponent implements OnInit {
     };
   }
 
+
   public uploadFile(host: string) {
     const fakeImages: any = [
-      'https://picsum.photos/1080/1920?grayscale',
-      'https://picsum.photos/1080/1920/?blur',
-      'https://picsum.photos/seed/picsum/1080/1920',
+      'https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY',
+      'https://i.picsum.photos/id/0/5616/3744.jpg?hmac=3GAAioiQziMGEtLbfrdbcoenXoWAW-zlyEAMkfEdBzQ',
+      'https://i.picsum.photos/id/1023/3955/2094.jpg?hmac=AW_7mARdoPWuI7sr6SG8t-2fScyyewuNscwMWtQRawU',
+      'https://i.picsum.photos/id/1019/5472/3648.jpg?hmac=2mFzeV1mPbDvR0WmuOWSiW61mf9DDEVPDL0RVvg1HPs',
+      'https://i.picsum.photos/id/1029/4887/2759.jpg?hmac=uMSExsgG8_PWwP9he9Y0LQ4bFDLlij7voa9lU9KMXDE',
+      'https://i.picsum.photos/id/1047/3264/2448.jpg?hmac=ksy0K4uGgm79hAV7-KvsfHY2ZuPA0Oq1Kii9hqkOCfU'
     ]
     const formData = new FormData();
     formData.append('file', this.file.data);

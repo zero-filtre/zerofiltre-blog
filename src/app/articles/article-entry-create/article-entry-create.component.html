@@ -48,13 +48,30 @@
         <div class="article-data-container lg:grid grid-cols-10 gap-10 items-start mt-10 lg:mt-20">
             <aside class="col-span-2">
                 <div class="left-side-container">
+                    <div class="tag-list mt-10 sm:mt-0">
+                        <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
+                            Tags
+                        </label>
+
+                        <div class="mt-5">
+                            <ng-multiselect-dropdown [placeholder]="'Selectionez vos tags'" formControlName="tags"
+                                [settings]="dropdownSettings" [data]="tagListDrop" (onSelect)="onItemSelect($event)"
+                                (onSelectAll)="onSelectAll($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="col-span-6">
+                <div class="main-side-container">
                     <label for="cover_photo" class="block text-sm font-semibold leading-5 text-skin-base">
                         Image de couverture
                     </label>
 
                     <div class="article-image-preview-wrapper relative mt-5">
-                        <div *ngIf="!form.get('thumbnail')?.value"
-                            class="label-image-preview relative w-full overflow-hidden">
+                        <div *ngIf="!thumbnail?.value"
+                            class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden">
                             <label for="file" (click)="onClickFileUpload('coverImage')"
                                 class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
                                 <div class="text-center">
@@ -75,7 +92,6 @@
                                         PNG, JPG, GIF up to 1MB
                                     </p>
 
-                                    <!-- <input class="preview-close-btn sr-only" type="file" id="file" name="fileUpload" #fileUpload accept="image/*"> -->
                                     <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
                                         accept="image/*">
                                 </div>
@@ -95,33 +111,17 @@
                             </label>
                         </div>
 
-                        <!-- <img *ngIf="form.get('thumbnail')?.value" src="http://localhost:4200/articles/images/{{form.get('thumbnail')?.value}}"> -->
-                        <img *ngIf="thumbnail?.value" class="preview-image object-cover h-full w-full rounded-lg border"
-                            src="{{thumbnail?.value}}">
+                        <div *ngIf="thumbnail?.value" class="image-wrapper aspect-w-4 aspect-h-2">
+                            <img class="preview-image object-cover shadow-lg rounded-lg" src="{{thumbnail?.value}}">
+                        </div>
 
                         <div *ngIf="thumbnail?.value"
-                            class="absolute top-0 right-0 z-20 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
-                            (click)="removeFile()">x</div>
-                    </div>
-
-                    <div class="tag-list mt-10">
-                        <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
-                            Tags
-                        </label>
-
-                        <div class="mt-5">
-                            <ng-multiselect-dropdown [placeholder]="'Selectionez vos tags'" formControlName="tags"
-                                [settings]="dropdownSettings" [data]="tagListDrop" (onSelect)="onItemSelect($event)"
-                                (onSelectAll)="onSelectAll($event)">
-                            </ng-multiselect-dropdown>
+                            class="cover-close-btn absolute top-0 right-0 z-20 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
+                            (click)="removeFile()">x
                         </div>
                     </div>
-                </div>
-            </aside>
 
-            <main class="col-span-6">
-                <div class="main-side-container">
-                    <div class="article-title mt-10 lg:mt-0">
+                    <div class="article-title mt-10">
                         <input id="title" required minlength="4" formControlName="title"
                             class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
                             placeholder='Entrez le titre de votre article...' autocomplete="off" />
@@ -139,7 +139,6 @@
                     <div class="article-content !shadow-md mt-4 sm:mt-2">
                         <div
                             class="editor-header mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
-
                             <div class="flex items-center w-full">
                                 <div (click)="setActiveTab('editor')"
                                     class="relative tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer hover:bg-skin-muted sm:text-base">
@@ -209,11 +208,13 @@
                                 </div>
                             </div>
 
-                            <div *ngIf="activeTab === 'editor'" class=" min-h-screen w-full">
+                            <div *ngIf="activeTab === 'editor'">
                                 <textarea formControlName="content" id="content" required
                                     class="editor-textarea bg-white text-skin-base p-4 h-screen w-full"
-                                    placeholder="Type your content"></textarea>
+                                    placeholder="Entrez votre texte">
+                                </textarea>
                             </div>
+
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
                                 <markdown [data]="content?.value"
@@ -224,7 +225,7 @@
                             <div *ngIf="activeTab === 'help'"
                                 class="help-container h-full bg-skin-card min-h-screen p-4 relative z-30 prose md:prose-sm lg:prose-lg max-w-none">
                                 <h2>Les bases du Markdown</h2>
-                                <p>Vous trouverez ci-dessous une syntaxe de démarquage couramment utilisée. Pour une
+                                <p>Vous trouverez ci-dessous une syntaxe de markdown couramment utilisée. Pour une
                                     plongée plus profonde dans le
                                     language Markdown, consultez cet <a
                                         class="text-primary-500 font-semibold no-underline"
