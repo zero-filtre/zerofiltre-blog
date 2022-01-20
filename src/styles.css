@@ -52,3 +52,16 @@
 .dropdown-list .filter-textbox input {
   @apply !outline-none !ring-0;
 }
+
+.green-snackbar {
+  @apply bg-green-400 text-white;
+}
+.green-snackbar button {
+  @apply text-white;
+}
+.red-snackbar {
+  @apply bg-red-400 text-white;
+}
+.red-snackbar button {
+  @apply text-white;
+}

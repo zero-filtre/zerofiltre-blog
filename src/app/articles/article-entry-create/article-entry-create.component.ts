@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, of, tap } from 'rxjs';
 import { FileUploadService } from 'src/app/services/file-upload.service';
@@ -51,13 +52,23 @@ export class ArticleEntryCreateComponent implements OnInit {
     private articleService: ArticleService,
     private router: Router,
     private route: ActivatedRoute,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private _snackBar: MatSnackBar
   ) { }
 
   public setActiveTab(tabName: string): void {
     if (tabName === 'editor') this.activeTab = 'editor'
     if (tabName === 'preview') this.activeTab = 'preview'
     if (tabName === 'help') this.activeTab = 'help'
+  }
+
+  openSnackBar(message: string, action: string, cssClass: string, name: string) {
+    this._snackBar.open(message, action, {
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      duration: 5 * 1000,
+      panelClass: [cssClass, name],
+    });
   }
 
   public getArticle(): void {
@@ -89,14 +100,15 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public saveArticle() {
-    console.log(this.form.value);
     this.articleService.updateToSave(this.form.value).pipe(
-      tap(() => this.router.navigateByUrl(this.router.url))
-    ).subscribe();
+      tap(() => this.openSnackBar('Article sauvegardé!', 'Fermer', 'green-snackbar', 'article-save-snackbar'))
+    ).subscribe({
+      next: (_response: Article) => this.openSnackBar('Article sauvegardé!', 'Fermer', 'green-snackbar', 'article-save-snackbar'),
+      error: (_error: HttpErrorResponse) => this.openSnackBar('La sauvegarde a echouée!', 'Ressayez', 'red-snackbar', 'article-save-snackbar')
+    })
   }
 
   public publishArticle() {
-    console.log(this.form.value);
     this.articleService.updateToPublish(this.form.value).pipe(
       tap(() => this.router.navigateByUrl(`articles/${this.articleId}`))
     ).subscribe();
