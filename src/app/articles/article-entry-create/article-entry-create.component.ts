@@ -66,7 +66,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this._snackBar.open(message, action, {
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
-      duration: 5 * 1000,
+      duration: null!,
       panelClass: [cssClass, name],
     });
   }
@@ -178,24 +178,22 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   onItemSelect(_item: any) {
-    this.selectTag()
+    this.setFormTagsValue()
   }
 
-  onSelectAll(items: any) {
-    this.form.controls['tags'].setValue(items)
-    this.selectTag()
-  }
-
-  selectTag(): void {
+  private setFormTagsValue(): void {
     this.selectedTags = this.getFullObjectsFromTagListBySelectedTagsIds(this.getSelectedTagsIds())
     this.form.controls['tags'].setValue(this.selectedTags)
   }
 
-  getSelectedTagsIds() {
+  private getSelectedTagsIds() {
     return this.form.value.tags.map((tag: Tag) => tag.id)
   }
 
-  getFullObjectsFromTagListBySelectedTagsIds(ids: any) {
+  /** The ngx-MultiSelection library doesn't return the full object selected by default, 
+  ** therefore we need a function to get the correct object value to send to the server
+  **/
+  private getFullObjectsFromTagListBySelectedTagsIds(ids: any) {
     return this.tagList.filter(item => ids.includes(item.id))
   }
 
