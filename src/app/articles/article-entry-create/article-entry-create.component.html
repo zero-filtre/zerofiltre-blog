@@ -241,7 +241,14 @@
                                 <p>
                                     <span class="mr-2">Code en ligne</span>
                                     <br>
-                                    <span class="p-1 text-primary-500 bg-primary-100 rounded-md">`backtick`</span>
+                                    <span class="flex items-center bg-primary-100 space-x-4">
+                                        <span class="bg-primary-100 p-1 text-primary-500 rounded-md">`backtick`</span>
+                                        <!-- <span class="font-mono border p-1 rounded-md">backtick</span> -->
+                                        <markdown ngPreserveWhitespaces
+                                            class="prose-code:p-1 prose-code:rounded-md prose-code:border prose-code:!text-lg prose-code:before:hidden prose-code:after:hidden">
+                                            `backtick`
+                                        </markdown>
+                                    </span>
                                     <span class="block mt-2 mr-2">Bloc de code</span>
                                     <span class="block p-1  text-primary-500 bg-primary-100">
                                         ```ext<br>Trois backticks suivi de l'extension de votre langage de

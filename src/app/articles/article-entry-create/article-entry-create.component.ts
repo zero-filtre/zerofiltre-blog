@@ -153,8 +153,6 @@ export class ArticleEntryCreateComponent implements OnInit {
       this.form.patchValue({ content: content?.value });
     }
 
-    console.log(this.content?.value);
-
     // this.fileUploadService.uploadImage(formData).pipe(
     //   map((event) => {
     //     switch (event.type) {
@@ -177,14 +175,13 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   private insertAtCursor(myField: any, myValue: string) {
     //IE support
-    // if (document.selection) {
-    //   myField.focus();
-    //   sel = document.selection.createRange();
-    //   sel.text = myValue;
-    // }
-
+    if ((document as any).selection) {
+      myField.focus();
+      const sel = (document as any).selection.createRange();
+      sel.text = myValue;
+    }
     // Microsoft Edge
-    if (window.navigator.userAgent.indexOf("Edge") > -1) {
+    else if (window.navigator.userAgent.indexOf("Edge") > -1) {
       var startPos = myField.selectionStart;
       var endPos = myField.selectionEnd;
 
