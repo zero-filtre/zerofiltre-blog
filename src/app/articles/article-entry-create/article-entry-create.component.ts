@@ -144,10 +144,16 @@ export class ArticleEntryCreateComponent implements OnInit {
     formData.append('file', this.file.data);
     this.file.inProgress = true;
 
-    const newValue = this.form.value.content + '\n' + '![alt](' + this.fileUploadService.FakeUploadImage(fakeImages) + ')'
+    const content = (<HTMLInputElement>document.getElementById('content'));
+    const imgSrcValue = '![alt](' + this.fileUploadService.FakeUploadImage(fakeImages) + ')'
 
     if (host === 'coverImage') this.form.patchValue({ thumbnail: this.fileUploadService.FakeUploadImage(fakeImages) });
-    if (host === 'editorImage') this.form.patchValue({ content: newValue });
+    if (host === 'editorImage') {
+      this.insertAtCursor(content, imgSrcValue);
+      this.form.patchValue({ content: content?.value });
+    }
+
+    console.log(this.content?.value);
 
     // this.fileUploadService.uploadImage(formData).pipe(
     //   map((event) => {
@@ -167,6 +173,38 @@ export class ArticleEntryCreateComponent implements OnInit {
     //       this.form.patchValue({ headerImage: event.body.filename });
     //     }
     //   })
+  }
+
+  private insertAtCursor(myField: any, myValue: string) {
+    //IE support
+    // if (document.selection) {
+    //   myField.focus();
+    //   sel = document.selection.createRange();
+    //   sel.text = myValue;
+    // }
+
+    // Microsoft Edge
+    if (window.navigator.userAgent.indexOf("Edge") > -1) {
+      var startPos = myField.selectionStart;
+      var endPos = myField.selectionEnd;
+
+      myField.value = myField.value.substring(0, startPos) + myValue
+        + myField.value.substring(endPos, myField.value.length);
+
+      var pos = startPos + myValue.length;
+      myField.focus();
+      myField.setSelectionRange(pos, pos);
+    }
+    //MOZILLA and others
+    else if (myField.selectionStart || myField.selectionStart == '0') {
+      var startPos = myField.selectionStart;
+      var endPos = myField.selectionEnd;
+      myField.value = myField.value.substring(0, startPos)
+        + myValue
+        + myField.value.substring(endPos, myField.value.length);
+    } else {
+      myField.value += myValue;
+    }
   }
 
   get title() { return this.form.get('title'); }
@@ -190,7 +228,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     return this.form.value.tags.map((tag: Tag) => tag.id)
   }
 
-  /** The ngx-MultiSelection library doesn't return the full object selected by default, 
+  /** The ng-multiselect-dropdown library doesn't return the full object selected by default,
   ** therefore we need a function to get the correct object value to send to the server
   **/
   private getFullObjectsFromTagListBySelectedTagsIds(ids: any) {
@@ -214,6 +252,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       // itemsShowLimit: 3,
       // limitSelection: 3,
     };
+
   }
 
 }
