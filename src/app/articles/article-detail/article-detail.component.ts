@@ -31,7 +31,9 @@ export class ArticleDetailComponent implements OnInit {
     const wpm = 225;
     const words = content?.trim().split(/\s+/).length || 0;
     const time = Math.ceil(words / wpm);
-    article.readingTime = time
+
+    if (time === 0) article.readingTime = 1;
+    article.readingTime = time;
   }
 
   private join(t: any, a: any, s: any) {
@@ -46,7 +48,7 @@ export class ArticleDetailComponent implements OnInit {
     const date = article.lastPublishedAt!
     const dateObj = new Date(date);
     const a = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }];
-    return this.join(dateObj, a, '-');
+    return this.join(dateObj, a, ' ');
   }
 
   public getCurrentArticle(articleId: number): void {

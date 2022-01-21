@@ -49,7 +49,7 @@ export class ArticlesListComponent implements OnInit {
         this.calcReadingTime(response);
       },
       error: (error: HttpErrorResponse) => {
-        console.log(error.message);
+        console.log('ERR', error.message);
       }
     });
   }
@@ -77,6 +77,8 @@ export class ArticlesListComponent implements OnInit {
       const wpm = 225;
       const words = content?.trim().split(/\s+/).length || 0;
       const time = Math.ceil(words / wpm);
+
+      if (time === 0) article.readingTime = 1
       article.readingTime = time
     }
   }
@@ -170,7 +172,7 @@ export class ArticlesListComponent implements OnInit {
     const date = article.lastPublishedAt!
     const dateObj = new Date(date);
     const a = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }];
-    return this.join(dateObj, a, '-');
+    return this.join(dateObj, a, ' ');
   }
 
 

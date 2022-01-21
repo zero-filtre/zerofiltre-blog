@@ -34,7 +34,7 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   dropdownSettings = {};
 
-  public tagListDrop: Tag[] = [
+  public tagList: Tag[] = [
     { id: 1, name: 'java', colorCode: '#222' },
     { id: 2, name: 'angular', colorCode: '#222' },
     { id: 3, name: 'spring-boot', colorCode: '#222' },
@@ -144,8 +144,10 @@ export class ArticleEntryCreateComponent implements OnInit {
     formData.append('file', this.file.data);
     this.file.inProgress = true;
 
+    const newValue = this.form.value.content + '\n' + '![alt](' + this.fileUploadService.FakeUploadImage(fakeImages) + ')'
+
     if (host === 'coverImage') this.form.patchValue({ thumbnail: this.fileUploadService.FakeUploadImage(fakeImages) });
-    if (host === 'editorImage') console.log(this.fileUploadService.FakeUploadImage(fakeImages));
+    if (host === 'editorImage') this.form.patchValue({ content: newValue });
 
     // this.fileUploadService.uploadImage(formData).pipe(
     //   map((event) => {
@@ -185,7 +187,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   selectTag(): void {
-    this.selectedTags = this.getFullObjectsBySelectedTagsIds(this.getSelectedTagsIds())
+    this.selectedTags = this.getFullObjectsFromTagListBySelectedTagsIds(this.getSelectedTagsIds())
     this.form.controls['tags'].setValue(this.selectedTags)
   }
 
@@ -193,8 +195,8 @@ export class ArticleEntryCreateComponent implements OnInit {
     return this.form.value.tags.map((tag: Tag) => tag.id)
   }
 
-  getFullObjectsBySelectedTagsIds(ids: any) {
-    return this.tagListDrop.filter(item => ids.includes(item.id))
+  getFullObjectsFromTagListBySelectedTagsIds(ids: any) {
+    return this.tagList.filter(item => ids.includes(item.id))
   }
 
   ngOnInit(): void {
