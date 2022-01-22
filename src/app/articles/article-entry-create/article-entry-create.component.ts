@@ -66,7 +66,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this._snackBar.open(message, action, {
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
-      duration: null!,
+      duration: 5000,
       panelClass: [cssClass, name],
     });
   }

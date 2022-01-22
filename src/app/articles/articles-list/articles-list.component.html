@@ -169,7 +169,7 @@
 
                 <ng-template #articleList>
                     <div *ngFor="let article of articles">
-                        <div class="article-card lg:grid grid-cols-3 gap-6 items-start">
+                        <div class="article-card lg:grid grid-cols-3 gap-6 xl:items-end items-start">
                             <a [routerLink]="[article.id]" class="group">
                                 <div class="aspect-w-3 aspect-h-2">
                                     <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75 transition-all duration-300"

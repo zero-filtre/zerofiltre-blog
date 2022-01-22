@@ -32,8 +32,11 @@ export class ArticleDetailComponent implements OnInit {
     const words = content?.trim().split(/\s+/).length || 0;
     const time = Math.ceil(words / wpm);
 
-    if (time === 0) article.readingTime = 1;
-    article.readingTime = time;
+    if (time === 0) {
+      article.readingTime = 1
+    } else {
+      article.readingTime = time;
+    }
   }
 
   private join(t: any, a: any, s: any) {
