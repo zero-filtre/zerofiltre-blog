@@ -17,6 +17,7 @@ export class ArticleDetailComponent implements OnInit {
   public articleId!: number;
   public previousArticle!: Article;
   public nextArticle!: Article;
+  public articleHasTags!: boolean;
   readonly blogUrl = environment.blogUrl;
 
   constructor(
@@ -26,11 +27,16 @@ export class ArticleDetailComponent implements OnInit {
     private router: Router
   ) { }
 
+
   public calcReadingTime(article: Article): void {
     const content = article?.content
     const wpm = 225;
     const words = content?.trim().split(/\s+/).length || 0;
     const time = Math.ceil(words / wpm);
+
+    console.log('TAGS', this.article?.tags);
+    console.log('TAGSLENGHT', this.article?.tags.length);
+    console.log('HASTAGS', this.articleHasTags);
 
     if (time === 0) {
       article.readingTime = 1
@@ -70,6 +76,7 @@ export class ArticleDetailComponent implements OnInit {
       .subscribe({
         next: (response: Article) => {
           this.article = response
+          this.articleHasTags = response.tags.length > 0
           this.calcReadingTime(response)
           this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
         },
