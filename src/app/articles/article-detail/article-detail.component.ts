@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
@@ -8,12 +8,19 @@ import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
+import "clipboard";
+import "prismjs/plugins/toolbar/prism-toolbar";
+import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
+import "prismjs/components/prism-markup";
+
+declare var Prism: any;
+
 @Component({
   selector: 'app-article-detail',
   templateUrl: './article-detail.component.html',
   styleUrls: ['./article-detail.component.css']
 })
-export class ArticleDetailComponent implements OnInit {
+export class ArticleDetailComponent implements OnInit, AfterViewChecked {
   public article!: Article;
   public articleId!: number;
   public previousArticle!: Article;
@@ -92,6 +99,10 @@ export class ArticleDetailComponent implements OnInit {
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
+  }
+
+  ngAfterViewChecked() {
+    Prism.highlightAll();
   }
 
 }
