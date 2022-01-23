@@ -1,10 +1,10 @@
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, of, tap } from 'rxjs';
 import { FileUploadService } from 'src/app/services/file-upload.service';
+import { MessageService } from 'src/app/services/message.service';
 import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
@@ -53,22 +53,13 @@ export class ArticleEntryCreateComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fileUploadService: FileUploadService,
-    private _snackBar: MatSnackBar
+    private messageService: MessageService
   ) { }
 
   public setActiveTab(tabName: string): void {
     if (tabName === 'editor') this.activeTab = 'editor'
     if (tabName === 'preview') this.activeTab = 'preview'
     if (tabName === 'help') this.activeTab = 'help'
-  }
-
-  openSnackBar(message: string, action: string, cssClass: string, name: string) {
-    this._snackBar.open(message, action, {
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-      duration: 5000,
-      panelClass: [cssClass, name],
-    });
   }
 
   public getArticle(): void {
@@ -100,11 +91,12 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public saveArticle() {
+    console.log('Called SAVE');
     this.articleService.updateToSave(this.form.value).pipe(
-      tap(() => this.openSnackBar('Article sauvegardé!', 'Fermer', 'green-snackbar', 'article-save-snackbar'))
+      tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', 'Fermez'))
     ).subscribe({
-      next: (_response: Article) => this.openSnackBar('Article sauvegardé!', 'Fermer', 'green-snackbar', 'article-save-snackbar'),
-      error: (_error: HttpErrorResponse) => this.openSnackBar('La sauvegarde a echouée!', 'Ressayez', 'red-snackbar', 'article-save-snackbar')
+      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article sauvegardé!', 'Fermez'),
+      error: (_error: HttpErrorResponse) => this.messageService.saveArticleError(this.form.value)
     })
   }
 
