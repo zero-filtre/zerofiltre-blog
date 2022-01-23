@@ -245,7 +245,7 @@
                             </div>
 
                             <div class="flex space-x-1 text-xs font-semibold text-skin-base">
-                                <time [dateTime]="formatDate(article)">{{formatDate(article)}}</time>
+                                <time [dateTime]="setDateFormat(article)">{{setDateFormat(article)}}</time>
                                 <span aria-hidden="true">·</span>
                                 <span>{{article?.readingTime}} min de lecture</span>
                             </div>

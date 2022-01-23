@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { calcReadingTime } from 'src/app/services/utilities.service';
+import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -154,19 +154,8 @@ export class ArticlesListComponent implements OnInit {
     }
   }
 
-  private join(t: any, a: any, s: any) {
-    function format(m: any) {
-      let f = new Intl.DateTimeFormat('en', m);
-      return f.format(t);
-    }
-    return a.map(format).join(s);
-  }
-
-  public formatDate(article: Article) {
-    const date = article.lastPublishedAt!
-    const dateObj = new Date(date);
-    const a = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }];
-    return this.join(dateObj, a, ' ');
+  public setDateFormat(article: Article) {
+    return formatDate(article)
   }
 
 

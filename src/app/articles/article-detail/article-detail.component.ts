@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
+import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
@@ -27,37 +28,8 @@ export class ArticleDetailComponent implements OnInit {
     private router: Router
   ) { }
 
-
-  public calcReadingTime(article: Article): void {
-    const content = article?.content
-    const wpm = 225;
-    const words = content?.trim().split(/\s+/).length || 0;
-    const time = Math.ceil(words / wpm);
-
-    console.log('TAGS', this.article?.tags);
-    console.log('TAGSLENGHT', this.article?.tags.length);
-    console.log('HASTAGS', this.articleHasTags);
-
-    if (time === 0) {
-      article.readingTime = 1
-    } else {
-      article.readingTime = time;
-    }
-  }
-
-  private join(t: any, a: any, s: any) {
-    function format(m: any) {
-      let f = new Intl.DateTimeFormat('en', m);
-      return f.format(t);
-    }
-    return a.map(format).join(s);
-  }
-
-  public formatDate(article: Article) {
-    const date = article.lastPublishedAt!
-    const dateObj = new Date(date);
-    const a = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }];
-    return this.join(dateObj, a, ' ');
+  public setDateFormat(article: Article) {
+    return formatDate(article);
   }
 
   public getCurrentArticle(articleId: number): void {
@@ -77,7 +49,7 @@ export class ArticleDetailComponent implements OnInit {
         next: (response: Article) => {
           this.article = response
           this.articleHasTags = response.tags.length > 0
-          this.calcReadingTime(response)
+          calcReadingTime(response);
           this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
         },
         error: (error: HttpErrorResponse) => {

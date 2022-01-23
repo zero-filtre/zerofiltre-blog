@@ -25,3 +25,18 @@ export function calcReadingTime(article: Article): void {
     article.readingTime = time;
   }
 }
+
+function join(t: any, a: any, s: any) {
+  function format(m: any) {
+    let f = new Intl.DateTimeFormat('en', m);
+    return f.format(t);
+  }
+  return a.map(format).join(s);
+}
+
+export function formatDate(article: Article) {
+  const date = article.lastPublishedAt!
+  const dateObj = new Date(date);
+  const a = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }];
+  return join(dateObj, a, ' ');
+}
