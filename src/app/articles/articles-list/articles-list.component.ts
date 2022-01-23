@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { calcReadingTime } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -46,7 +47,7 @@ export class ArticlesListComponent implements OnInit {
         // this.articles = response
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.tagList = response[0].tags
-        this.calcReadingTime(response);
+        this.setArticlesReadingTime(response);
       },
       error: (error: HttpErrorResponse) => {
         console.log('ERR', error.message);
@@ -61,7 +62,7 @@ export class ArticlesListComponent implements OnInit {
           .filter((item: Article) => item.status === 'DRAFT')
           .sort((a: any, b: any) => new Date(b.lastSavedAt).valueOf() - new Date(a.lastSavedAt).valueOf())
         this.tagList = response[0].tags
-        this.calcReadingTime(response);
+        this.setArticlesReadingTime(response);
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
@@ -70,19 +71,9 @@ export class ArticlesListComponent implements OnInit {
   }
 
 
-  public calcReadingTime(articles: Article[]): void {
+  public setArticlesReadingTime(articles: Article[]): void {
     for (const article of articles) {
-      const content = article?.content
-
-      const wpm = 225;
-      const words = content?.trim().split(/\s+/).length || 0;
-      const time = Math.ceil(words / wpm);
-
-      if (time === 0) {
-        article.readingTime = 1
-      } else {
-        article.readingTime = time;
-      }
+      calcReadingTime(article);
     }
   }
 
