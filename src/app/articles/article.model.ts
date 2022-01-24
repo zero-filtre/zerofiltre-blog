@@ -6,10 +6,18 @@ export interface Article {
   author?: Author;
   createdAt?: string
   publishedAt?: string;
-  reactions?: [];
+  lastPublishedAt?: string;
+  lastSavedAt?: string;
+  reactions?: any;
   status?: string;
   tags: Tag[];
   readingTime: number;
+}
+
+export interface File {
+  data?: any;
+  progress?: number;
+  inProgress?: boolean;
 }
 
 export interface Author {
@@ -17,13 +25,15 @@ export interface Author {
   pseudoName?: string;
   firstName?: string;
   lastName?: string;
-  registeredOn?: [];
+  registeredOn?: Date;
   profilePicture?: string;
   bio?: string;
-  socials?: []
+  profession?: string;
+  socialLinks?: any
 }
 
 export interface Tag {
-  id?: string;
+  id?: number;
   name?: string;
+  colorCode?: string;
 }

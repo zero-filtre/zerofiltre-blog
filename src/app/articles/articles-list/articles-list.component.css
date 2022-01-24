@@ -13,3 +13,7 @@
 .svg-inactive {
   @apply text-skin-muted group-hover:text-skin-base;
 }
+
+.active-tab {
+  @apply bg-primary-500 scale-100 transition-all duration-200;
+}

@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -18,14 +20,17 @@ export class ArticlesListComponent implements OnInit {
   public tagList!: Tag[];
   public pageNumber: number = 0;
   public pageItemsLimit: number = 5;
-  public activePage: string = 'recent'
+  public activePage: string = 'recent';
+  public loading: boolean = false;
+  public errorMessage: string = '';
 
   constructor(
     private seo: SeoService,
     private articleService: ArticleService,
     private dialogRef: MatDialog,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private messageService: MessageService
   ) { }
 
   openArticleEntryDialog(): void {
@@ -41,27 +46,43 @@ export class ArticlesListComponent implements OnInit {
   }
 
   public fetchArticles(): void {
+    this.loading = true;
     this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
       next: (response: Article[]) => {
-        // this.articles = response
-        this.articles = this.sortByDate(response)
+        this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.tagList = response[0].tags
-        this.calcReadingTime(response);
+        this.setArticlesReadingTime(response);
+        this.loading = false;
       },
       error: (error: HttpErrorResponse) => {
-        console.log(error.message);
+        this.loading = false;
+        this.errorMessage = 'Oups...!'
+        this.messageService.openSnackBarError(error?.error?.error?.message, 'ok');
       }
     });
   }
 
-  public calcReadingTime(articles: Article[]): void {
-    for (const article of articles) {
-      const content = article?.content
+  public getSavedArticles() {
+    this.loading = true;
+    this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
+      next: (response: Article[]) => {
+        this.articles = response
+          .filter((item: Article) => item.status === 'DRAFT')
+          .sort((a: any, b: any) => new Date(b.lastSavedAt).valueOf() - new Date(a.lastSavedAt).valueOf())
+        this.setArticlesReadingTime(response);
+        this.loading = false;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.loading = false;
+        this.messageService.openSnackBarError(error?.error?.error?.message, 'ok')
+      }
+    });
+  }
 
-      const wpm = 225;
-      const words = content?.trim().split(/\s+/).length || 0;
-      const time = Math.ceil(words / wpm);
-      article.readingTime = time
+
+  public setArticlesReadingTime(articles: Article[]): void {
+    for (const article of articles) {
+      calcReadingTime(article);
     }
   }
 
@@ -91,15 +112,16 @@ export class ArticlesListComponent implements OnInit {
   }
 
   private sortByDate(list: Article[]): Article[] {
-    return list.sort((a: any, b: any) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
+    return list
+      .sort((a: any, b: any) => new Date(b.lastPublishedAt).valueOf() - new Date(a.lastPublishedAt).valueOf())
   }
 
   private sortByPopularity(list: Article[]): Article[] {
-    return list.sort((a: any, b: any) => a.id - b.id)
+    return list
   }
 
   private sortByTrend(list: Article[]): Article[] {
-    return list.sort((a: any, b: any) => a.id - b.id)
+    return list
   }
 
   public sortByTag(tagName: any): void {
@@ -140,6 +162,11 @@ export class ArticlesListComponent implements OnInit {
       }
     }
   }
+
+  public setDateFormat(article: Article) {
+    return formatDate(article)
+  }
+
 
   ngOnInit(): void {
     this.seo.generateTags({

@@ -1,39 +1,49 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { tap, pluck, filter, switchMap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
+import { calcReadingTime, formatDate, objectExists } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
+
+import "clipboard";
+import "prismjs/plugins/toolbar/prism-toolbar";
+import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
+import "prismjs/components/prism-markup";
+import { MessageService } from 'src/app/services/message.service';
+
+declare var Prism: any;
 
 @Component({
   selector: 'app-article-detail',
   templateUrl: './article-detail.component.html',
   styleUrls: ['./article-detail.component.css']
 })
-export class ArticleDetailComponent implements OnInit {
+export class ArticleDetailComponent implements OnInit, AfterViewChecked {
   public article!: Article;
   public articleId!: number;
   public previousArticle!: Article;
   public nextArticle!: Article;
+  public articleHasTags!: boolean;
+  public loading: boolean = false;
   readonly blogUrl = environment.blogUrl;
 
   constructor(
     private route: ActivatedRoute,
     private articleService: ArticleService,
     private seo: SeoService,
+    private router: Router,
+    private messageService: MessageService
   ) { }
 
-  public calcReadingTime(article: Article): void {
-    const content = article?.content
-    const wpm = 225;
-    const words = content?.trim().split(/\s+/).length || 0;
-    const time = Math.ceil(words / wpm);
-    article.readingTime = time
+  public setDateFormat(article: Article) {
+    return formatDate(article);
   }
 
   public getCurrentArticle(articleId: number): void {
+    this.loading = true;
     this.articleService.getOneArticle(articleId)
       .pipe(
         tap(art => {
@@ -49,17 +59,23 @@ export class ArticleDetailComponent implements OnInit {
       .subscribe({
         next: (response: Article) => {
           this.article = response
-          this.calcReadingTime(response)
+          this.articleHasTags = response.tags.length > 0
+          calcReadingTime(response);
+          this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
+          this.loading = false;
         },
-
         error: (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.messageService.openSnackBarError(error?.error?.error?.message, 'ok')
+          this.loading = false;
+          // this.router.navigate(['/'])
         }
       })
   }
 
-  public fetchSiblingArticles(prev: number, next: number): void {
-    this.articleService.getOneArticle(next).subscribe({
+  public fetchArticleSiblings(prev: number, next: number): void {
+    this.articleService.getOneArticle(next).pipe(
+      filter(objectExists)
+    ).subscribe({
       next: (response: Article) => {
         this.nextArticle = response;
       },
@@ -69,7 +85,9 @@ export class ArticleDetailComponent implements OnInit {
     })
 
     if (prev !== 0) {
-      this.articleService.getOneArticle(prev).subscribe({
+      this.articleService.getOneArticle(prev).pipe(
+        filter(objectExists)
+      ).subscribe({
         next: (response: Article) => {
           this.previousArticle = response;
         },
@@ -80,10 +98,21 @@ export class ArticleDetailComponent implements OnInit {
     }
   }
 
+  isSocialLinkPresent(platform: string): boolean {
+    return this.article?.author?.socialLinks.some((link: any) => link.platform === platform)
+  }
+
+  authorPlatformLink(platform: string): string {
+    return this.article?.author?.socialLinks.find((link: any) => link.platform === platform)?.link
+  }
+
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
-    this.fetchSiblingArticles(+this.articleId - 1, +this.articleId + 1)
+  }
+
+  ngAfterViewChecked() {
+    Prism.highlightAll();
   }
 
 }

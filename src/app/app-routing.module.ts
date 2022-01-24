@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ArticleEntryEditComponent } from './articles/article-entry-edit/article-entry-edit.component';
+import { ArticlesListComponent } from './articles/articles-list/articles-list.component';
 import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [
@@ -11,9 +11,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./articles/articles.module').then(m => m.ArticlesModule),
   },
-  {
-    path: 'article-entry-edit', component: ArticleEntryEditComponent
-  }
+  { path: '**', component: ArticlesListComponent }
 ];
 
 @NgModule({

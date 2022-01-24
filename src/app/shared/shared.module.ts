@@ -18,7 +18,8 @@ import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatDialogModule } from '@angular/material/dialog'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatOptionModule } from '@angular/material/core';
 
 const components = [ShellComponent, FooterComponent];
 
@@ -40,7 +41,9 @@ const modules = [
   HttpClientModule,
   NgxSkeletonLoaderModule,
   MatDialogModule,
-  FormsModule
+  FormsModule,
+  ReactiveFormsModule,
+  MatOptionModule,
 ];
 
 @NgModule({

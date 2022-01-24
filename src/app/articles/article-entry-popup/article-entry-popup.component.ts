@@ -13,6 +13,7 @@ export class ArticleEntryPopupComponent implements OnInit {
   public title!: string;
   public placeholder!: string
   public loading: boolean = false;
+  public article!: Article
 
   constructor(
     public dialogRef: MatDialogRef<ArticleEntryPopupComponent>,
@@ -30,17 +31,18 @@ export class ArticleEntryPopupComponent implements OnInit {
   handleArticleInit(): void {
     this.loading = true;
 
-    this.articleService.createArticle(this.title).subscribe(
-      (_response: Article) => {
-        this.data.router.navigateByUrl('article-entry-edit');
+    this.articleService.createArticle(this.title).subscribe({
+      next: (response: Article) => {
+        this.article = response;
+        this.data.router.navigateByUrl(`articles/${this.article.id}/edit`);
         this.loading = false;
         this.dialogRef.close();
       },
-      (error: HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
         this.loading = false;
         console.log(error.message);
       }
-    )
+    })
   }
 
   ngOnInit(): void {

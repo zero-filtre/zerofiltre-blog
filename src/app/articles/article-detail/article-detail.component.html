@@ -29,11 +29,12 @@
                                 </div>
                             </div>
                         </a>
-                        <p class="text-[13px] text-skin-base leading-5 font-normal">Developeur Java - CEO
-                            Zerofiltre.tech
+                        <p class="text-[13px] text-skin-base leading-5 font-normal">
+                            {{article?.author?.profession}}
                         </p>
                         <div class="flex space-x-3">
-                            <a href="#" class="text-skin-muted hover:text-skin-base">
+                            <a *ngIf="isSocialLinkPresent('TWITTER')" href="{{authorPlatformLink('TWITTER')}}"
+                                class="text-skin-muted hover:text-skin-base">
                                 <span class="sr-only">Twitter</span>
                                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path
@@ -41,20 +42,36 @@
                                     </path>
                                 </svg>
                             </a>
-                            <a href="#" class="text-skin-muted hover:text-skin-base">
+                            <a *ngIf="isSocialLinkPresent('LINKEDIN')" href="{{authorPlatformLink('LINKEDIN')}}"
+                                class="text-skin-muted hover:text-skin-base">
                                 <span class="sr-only">LinkedIn</span>
-                                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <svg class="h-6 w-6 rounded-md" fill="currentColor" viewBox="0 0 24 24"
+                                    aria-hidden="true">
                                     <path
                                         d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8 19H5V8h3v11zM6.5 6.732c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476V19z">
                                     </path>
                                 </svg>
                             </a>
-                            <a href="#" class="text-skin-muted hover:text-skin-base">
+                            <a *ngIf="isSocialLinkPresent('GITHUB')" href="{{authorPlatformLink('GITHUB')}}"
+                                class="text-skin-muted hover:text-skin-base">
                                 <span class="sr-only">GitHub</span>
-                                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                                        clip-rule="evenodd"></path>
+                                <svg class="h-6 w-6" fill="currentColor" role="img" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <title>GitHub</title>
+                                    <path
+                                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                                </svg>
+                            </a>
+                            <a *ngIf="isSocialLinkPresent('STACKOVERFLOW')"
+                                href="{{authorPlatformLink('STACKOVERFLOW')}}"
+                                class="text-skin-muted hover:text-skin-base">
+                                <span class="sr-only">stackoverflow</span>
+                                <svg class="h-6 w-6 rounded-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                    <path d="M28.16 32H2.475V20.58H5.32v8.575h19.956V20.58h2.884z"
+                                        fill="currentColor" />
+                                    <path
+                                        d="M8.477 19.8l13.993 2.923.585-2.806-13.993-2.923zm1.832-6.704l12.94 6.04 1.208-2.572-12.94-6.08zm3.586-6.353l10.99 9.12 1.832-2.183-10.99-9.12zM20.99 0l-2.3 1.715 8.536 11.46 2.3-1.715zM8.166 26.27H22.43v-2.845H8.166v2.845z"
+                                        fill="currentColor" />
                                 </svg>
                             </a>
                         </div>
@@ -65,7 +82,7 @@
                     <div *ngIf="nextArticle; else articleHistoryleftSideSkeletonLoader">
                         <h2 class="text-[10px] leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
                             suivant</h2>
-                        <a href="articles/{{nextArticle.id}}" class="mt-3 flex items-start space-x-2">
+                        <a href="articles/{{nextArticle.id}}" class="mt-3 flex items-center space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{nextArticle?.thumbnail}}"
                                 alt="{{nextArticle?.title}} ">
                             <span
@@ -77,7 +94,7 @@
                     <div *ngIf="previousArticle">
                         <h2 class="text-[10px] leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
                             précédent</h2>
-                        <a href="articles/{{previousArticle.id}}" class="mt-3 flex items-start space-x-2">
+                        <a href="articles/{{previousArticle.id}}" class="mt-3 flex items-center space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{previousArticle?.thumbnail}}"
                                 alt="{{previousArticle?.title}}">
                             <span
@@ -140,9 +157,15 @@
                                 </svg>
 
                                 <span class="ml-3 text-sm font-semibold text-primary-500">2</span>
-                            </div>
+                                </ div>
                         </button>
                     </div>
+                    <div class="mt-10">
+                        <a href="articles/{{article?.id}}/edit"
+                            class="px-4 py-2 rounded-full border border-primary-500 text-primary-500 hover:bg-skin-card font-semibold transition-all duration-200">Editer
+                            l'article</a>
+                    </div>
+
                 </div>
 
             </div>
@@ -206,13 +229,14 @@
 
                 <header *ngIf="article; else articleHeaderSkeletonLoader" class="article-header space-y-4">
                     <div class="sm:flex sm:items-center sm:flex-row sm:justify-between sm:gap-5">
-                        <div class="flex flex-col">
-                            <div class="flex items-center space-x-3">
+                        <div class="flex flex-col space-y-4">
+                            <div *ngIf="articleHasTags" class="flex items-center space-x-3">
                                 <div *ngFor="let tag of article?.tags"
                                     class="flex items-center space-x-2 space-y-2 flex-wrap">
                                     <span
                                         class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                        <svg class="mr-1.5 h-2 w-2 brand-laravel fill-accent" fill="" viewBox="0 0 8 8">
+                                        <svg class="mr-1.5 h-2 w-2" [ngClass]="{'fill-[`${tag.colorCode}`]': true}"
+                                            viewBox="0 0 8 8">
                                             <circle cx="4" cy="4" r="3"></circle>
                                         </svg>
                                         {{tag.name}}
@@ -220,8 +244,8 @@
                                 </div>
                             </div>
 
-                            <div class="mt-2 flex space-x-1 text-xs font-semibold text-skin-base sm:mt-3 ml-1">
-                                <time datetime="2021-12-21">21 Dec, 2021</time>
+                            <div class="flex space-x-1 text-xs font-semibold text-skin-base">
+                                <time [dateTime]="setDateFormat(article)">{{setDateFormat(article)}}</time>
                                 <span aria-hidden="true">·</span>
                                 <span>{{article?.readingTime}} min de lecture</span>
                             </div>
@@ -243,10 +267,12 @@
                         </div>
                     </div>
 
-                    <h1
-                        class="text-2xl font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl xl:text-5xl xl:leading-[3.5rem]">
-                        {{article?.title}}
-                    </h1>
+                    <div class="!mt-10">
+                        <h1
+                            class="text-2xl font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl xl:text-5xl xl:leading-[3.5rem]">
+                            {{article?.title}}
+                        </h1>
+                    </div>
 
                     <a href="#" class="flex-shrink-0 group block lg:hidden">
                         <div class="flex items-center">
@@ -319,12 +345,13 @@
                     </div>
                 </ng-template>
 
-                <div *ngIf="article; else articleContentSkeletonLoader" [innerHtml]="article?.content" id="article"
-                    class="article-content mt-10 text-skin-base font-normal max-w-none mx-auto prose prose-cyan md:prose-lg prose-p:leading-9 prose-a:font-semibold prose-a:no-underline prose-h1:!text-base prose-headings:text-skin-inverted">
+                <div *ngIf="article; else articleContentSkeletonLoader"
+                    class="markdown-content mt-10 prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:text-slate-600 prose-code:bg-primary-100 prose-code:rounded-md prose-code:!text-lg prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
+                    <markdown [data]="article?.content"></markdown>
                 </div>
 
                 <ng-template #articleContentSkeletonLoader>
-                    <ngx-skeleton-loader count="30" appearance="line" [theme]="{ 
+                    <ngx-skeleton-loader count="10" appearance="line" [theme]="{ 
                         'border-radius': '5px',
                             'height.px': 20,
                             'width.%': 100
@@ -332,7 +359,7 @@
                     </ngx-skeleton-loader>
                 </ng-template>
 
-                <div class="article-socials py-6 lg:w-fit mx-auto">
+                <div class="article-socials pt-10 lg:w-fit mx-auto">
                     <p class="text-base text-skin-base font-light">Vous aimez cet article ? Faite le savoir en
                         partageant</p>
                     <div class="mt-4 space-y-4 flex items-end flex-wrap gap-2 sm:gap-0 sm:space-y-0 sm:space-x-4">

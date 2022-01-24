@@ -32,6 +32,7 @@ module.exports = {
           card: "#fff",
           cardMuted: "#f9fafb",
           borderBold: "#d1d5db",
+          bg: "#f9fafb"
         },
       },
     },
