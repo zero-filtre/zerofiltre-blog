@@ -64,9 +64,8 @@
                 </span>
 
                 <div class="mt-4" aria-labelledby="posts-tags">
-                    <ng-container *ngIf="tagList; then listOfTags else tagsListSkeletonLoader"></ng-container>
 
-                    <ng-template #listOfTags>
+                    <ng-template [ngIf]="articles">
                         <div class="tagList-container space-y-1">
                             <ng-container *ngFor="let tag of tagList">
                                 <button (click)="sortByTag(tag.name)" type="button"
@@ -84,21 +83,7 @@
                         </div>
                     </ng-template>
 
-                    <button (click)="openArticleEntryDialog()" type="button"
-                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">Nouvel
-                        Article
-                    </button>
-
-                    <button (click)="getSavedArticles()" type="button"
-                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">
-                        Articles sauvegardés
-                    </button>
-                    <button (click)="fetchArticles()" type="button"
-                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">
-                        Articles publiés
-                    </button>
-
-                    <ng-template #tagsListSkeletonLoader>
+                    <ng-template [ngIf]="loading">
                         <div class="tags-skeleton-container">
                             <ngx-skeleton-loader class="flex space-x-1" count="3" appearance="line" [theme]="{ 
                                 'border-radius': '9999px',
@@ -116,6 +101,21 @@
                             </ngx-skeleton-loader>
                         </div>
                     </ng-template>
+
+                    <button (click)="openArticleEntryDialog()" type="button"
+                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">Nouvel
+                        Article
+                    </button>
+
+                    <button (click)="getSavedArticles()" type="button"
+                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">
+                        Articles sauvegardés
+                    </button>
+                    <button (click)="fetchArticles()" type="button"
+                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">
+                        Articles publiés
+                    </button>
+
                 </div>
             </div>
 
@@ -165,12 +165,10 @@
             </div>
 
             <div class="articles-wrapper py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none">
-                <ng-container *ngIf="articles; then articleList else articleSkeletonLoader"></ng-container>
 
-                <ng-template #articleList>
+                <ng-template [ngIf]="articles">
                     <div *ngFor="let article of articles">
                         <div class="article-card lg:grid grid-cols-3 gap-6">
-                            <!-- xl:items-end items-start -->
                             <a [routerLink]="[article.id]" class="article-preview group">
                                 <div class="aspect-w-3 aspect-h-2">
                                     <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75 transition-all duration-300"
@@ -238,7 +236,7 @@
                     </div>
                 </ng-template>
 
-                <ng-template #articleSkeletonLoader>
+                <ng-template [ngIf]="loading">
                     <div *ngFor="let elt of [].constructor(pageItemsLimit)">
                         <div class="skeleton-container lg:grid grid-cols-3 gap-6 items-start">
                             <div class="aspect-w-3 aspect-h-2">
@@ -311,6 +309,13 @@
                         </div>
                     </div>
                 </ng-template>
+
+                <ng-template [ngIf]="errorMessage">
+                    <div class="flex justify-center items-center h-96 text-4xl font-semibold text-skin-base">
+                        {{errorMessage}}
+                    </div>
+                </ng-template>
+
             </div>
 
         </div>

@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { tap, pluck, filter, switchMap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
-import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
+import { calcReadingTime, formatDate, objectExists } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
@@ -12,6 +12,7 @@ import "clipboard";
 import "prismjs/plugins/toolbar/prism-toolbar";
 import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
 import "prismjs/components/prism-markup";
+import { Observable } from 'rxjs';
 
 declare var Prism: any;
 
@@ -67,7 +68,9 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
   }
 
   public fetchArticleSiblings(prev: number, next: number): void {
-    this.articleService.getOneArticle(next).subscribe({
+    this.articleService.getOneArticle(next).pipe(
+      filter(objectExists)
+    ).subscribe({
       next: (response: Article) => {
         this.nextArticle = response;
       },
@@ -77,7 +80,9 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
     })
 
     if (prev !== 0) {
-      this.articleService.getOneArticle(prev).subscribe({
+      this.articleService.getOneArticle(prev).pipe(
+        filter(objectExists)
+      ).subscribe({
         next: (response: Article) => {
           this.previousArticle = response;
         },

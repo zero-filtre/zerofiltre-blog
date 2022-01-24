@@ -8,6 +8,7 @@ import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -17,16 +18,19 @@ import { calcReadingTime, formatDate } from 'src/app/services/utilities.service'
 export class ArticlesListComponent implements OnInit {
   public articles!: Article[];
   public tagList!: Tag[];
-  public pageNumber: number = 0;
+  public pageNumber: number = -1;
   public pageItemsLimit: number = 5;
-  public activePage: string = 'recent'
+  public activePage: string = 'recent';
+  public loading: boolean = false;
+  public errorMessage: string = '';
 
   constructor(
     private seo: SeoService,
     private articleService: ArticleService,
     private dialogRef: MatDialog,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private messageService: MessageService
   ) { }
 
   openArticleEntryDialog(): void {
@@ -42,30 +46,35 @@ export class ArticlesListComponent implements OnInit {
   }
 
   public fetchArticles(): void {
+    this.loading = true;
     this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
       next: (response: Article[]) => {
-        // this.articles = response
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.tagList = response[0].tags
         this.setArticlesReadingTime(response);
+        this.loading = false;
       },
       error: (error: HttpErrorResponse) => {
-        console.log('ERR', error.message);
+        this.loading = false;
+        this.errorMessage = 'Oups...!'
+        this.messageService.openSnackBarError(error.error.error.message, 'ok');
       }
     });
   }
 
   public getSavedArticles() {
+    this.loading = true;
     this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
       next: (response: Article[]) => {
         this.articles = response
           .filter((item: Article) => item.status === 'DRAFT')
           .sort((a: any, b: any) => new Date(b.lastSavedAt).valueOf() - new Date(a.lastSavedAt).valueOf())
-        this.tagList = response[0].tags
         this.setArticlesReadingTime(response);
+        this.loading = false;
       },
       error: (error: HttpErrorResponse) => {
-        console.log(error.message);
+        this.loading = false;
+        this.messageService.openSnackBarError(error.error.error.message, 'ok')
       }
     });
   }

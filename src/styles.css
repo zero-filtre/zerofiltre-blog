@@ -54,15 +54,20 @@
 }
 
 .green-snackbar {
-  @apply bg-green-400 text-white;
+  @apply bg-primary-500 text-white;
 }
-.green-snackbar button {
-  @apply text-white;
-}
+
 .red-snackbar {
-  @apply bg-red-400 text-white;
+  @apply bg-error text-white;
 }
-.red-snackbar button {
+
+.warning-snackbar {
+  @apply bg-accent text-white;
+}
+
+.green-snackbar button,
+.red-snackbar button,
+.warning-snackbar button {
   @apply text-white;
 }
 
