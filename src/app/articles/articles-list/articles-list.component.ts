@@ -18,7 +18,7 @@ import { MessageService } from 'src/app/services/message.service';
 export class ArticlesListComponent implements OnInit {
   public articles!: Article[];
   public tagList!: Tag[];
-  public pageNumber: number = -1;
+  public pageNumber: number = 0;
   public pageItemsLimit: number = 5;
   public activePage: string = 'recent';
   public loading: boolean = false;
@@ -57,7 +57,7 @@ export class ArticlesListComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         this.loading = false;
         this.errorMessage = 'Oups...!'
-        this.messageService.openSnackBarError(error.error.error.message, 'ok');
+        this.messageService.openSnackBarError(error?.error?.error?.message, 'ok');
       }
     });
   }
@@ -74,7 +74,7 @@ export class ArticlesListComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.loading = false;
-        this.messageService.openSnackBarError(error.error.error.message, 'ok')
+        this.messageService.openSnackBarError(error?.error?.error?.message, 'ok')
       }
     });
   }

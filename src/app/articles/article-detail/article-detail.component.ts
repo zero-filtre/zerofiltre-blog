@@ -12,7 +12,7 @@ import "clipboard";
 import "prismjs/plugins/toolbar/prism-toolbar";
 import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
 import "prismjs/components/prism-markup";
-import { Observable } from 'rxjs';
+import { MessageService } from 'src/app/services/message.service';
 
 declare var Prism: any;
 
@@ -27,13 +27,15 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
   public previousArticle!: Article;
   public nextArticle!: Article;
   public articleHasTags!: boolean;
+  public loading: boolean = false;
   readonly blogUrl = environment.blogUrl;
 
   constructor(
     private route: ActivatedRoute,
     private articleService: ArticleService,
     private seo: SeoService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) { }
 
   public setDateFormat(article: Article) {
@@ -41,6 +43,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
   }
 
   public getCurrentArticle(articleId: number): void {
+    this.loading = true;
     this.articleService.getOneArticle(articleId)
       .pipe(
         tap(art => {
@@ -59,10 +62,12 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
           this.articleHasTags = response.tags.length > 0
           calcReadingTime(response);
           this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
+          this.loading = false;
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message);
-          this.router.navigateByUrl('/')
+          this.messageService.openSnackBarError(error?.error?.error?.message, 'ok')
+          this.loading = false;
+          // this.router.navigate(['/'])
         }
       })
   }
