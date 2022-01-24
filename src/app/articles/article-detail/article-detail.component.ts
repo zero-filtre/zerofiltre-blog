@@ -64,8 +64,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
           this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
           this.loading = false;
         },
-        error: (error: HttpErrorResponse) => {
-          this.messageService.openSnackBarError(error?.error?.error?.message, 'ok')
+        error: (_error: HttpErrorResponse) => {
           this.loading = false;
           // this.router.navigate(['/'])
         }

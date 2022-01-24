@@ -91,7 +91,6 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public saveArticle() {
-    console.log('Called SAVE');
     this.articleService.updateToSave(this.form.value).pipe(
       tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', 'Fermez'))
     ).subscribe({
@@ -103,7 +102,9 @@ export class ArticleEntryCreateComponent implements OnInit {
   public publishArticle() {
     this.articleService.updateToPublish(this.form.value).pipe(
       tap(() => this.router.navigateByUrl(`articles/${this.articleId}`))
-    ).subscribe();
+    ).subscribe({
+      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article pulié avec success!', 'Fermez'),
+    });
   }
 
   public onClickFileUpload(host: string) {

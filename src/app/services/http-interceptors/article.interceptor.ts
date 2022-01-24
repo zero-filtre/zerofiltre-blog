@@ -1,0 +1,52 @@
+import { Injectable } from '@angular/core';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HttpErrorResponse
+} from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
+import { MessageService } from '../message.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class HttpErrorInterceptor implements HttpInterceptor {
+
+  constructor(private messageService: MessageService) { }
+
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    return next.handle(request)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          const errorMessage = this.setError(error)
+          this.messageService.openSnackBarError(errorMessage, 'ok')
+          return throwError(() => errorMessage)
+        })
+      );
+  }
+
+  /***
+   * Set error and check if Client side or Server side Error
+   * When No response from the server or server is down => statusCode == 0 && statusText == 'Unknow Error' 
+   * When No response from the server and database is down => statusCode == 500 && statusText == 'Internal Server Error' 
+   * Ex: CORS block, Internet Failed
+   */
+  setError(error: HttpErrorResponse): string {
+    let errorMessage = 'Unknow Error';
+
+    if (error.error instanceof ErrorEvent) {
+      // Client side Error
+      errorMessage = error.error.message;
+    } else {
+      // Server side error
+      if (error.status !== 0) {
+        errorMessage = error.error.error.message || 'Internal Server Error'
+      }
+    }
+
+    return errorMessage;
+  }
+}
+
