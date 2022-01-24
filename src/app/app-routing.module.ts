@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ArticlesListComponent } from './articles/articles-list/articles-list.component';
-import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [
-  // { path: '', component: HomePageComponent },
   { path: '', redirectTo: 'articles', pathMatch: 'full' },
   {
-    path: 'articles',
-    loadChildren: () =>
-      import('./articles/articles.module').then(m => m.ArticlesModule),
+    path: 'login', loadChildren: () => import('./user/user.module').then(m => m.UserModule)
+  },
+  {
+    path: 'articles', loadChildren: () => import('./articles/articles.module').then(m => m.ArticlesModule)
   },
   { path: '**', component: ArticlesListComponent }
 ];
