@@ -219,8 +219,8 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   /** The ng-multiselect-dropdown library doesn't return the full object selected by default,
-  ** therefore we need a function to get the correct object value to send to the server
-  **/
+  * therefore we need a function to get the correct object value to send to the server
+  */
   private getFullObjectsFromTagListBySelectedTagsIds(ids: any) {
     return this.tagList.filter(item => ids.includes(item.id))
   }
