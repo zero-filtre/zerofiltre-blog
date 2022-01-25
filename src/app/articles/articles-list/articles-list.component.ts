@@ -53,7 +53,6 @@ export class ArticlesListComponent implements OnInit {
         this.tagList = response[0].tags
         this.setArticlesReadingTime(response);
         this.loading = false;
-        this.messageService.openSnackBarSuccess('Success', 'ok');
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;

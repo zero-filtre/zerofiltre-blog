@@ -21,7 +21,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           const errorMessage = this.setError(error)
-          this.messageService.openSnackBarError(errorMessage, 'ok')
+          this.messageService.openSnackBarError(errorMessage, '')
           return throwError(() => errorMessage)
         })
       );
@@ -34,7 +34,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * Ex: CORS block, Internet Failed
    */
   setError(error: HttpErrorResponse): string {
-    let errorMessage = 'Unknow Error';
+    let errorMessage = "Un problème est survenu, merci d'essayer de nouveau plus tard ou de contacter un administrateur de l'API";
 
     if (error.error instanceof ErrorEvent) {
       // Client side Error
@@ -42,7 +42,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     } else {
       // Server side error
       if (error.status !== 0) {
-        errorMessage = error.error.error.message || 'Internal Server Error'
+        errorMessage = error.error.error.message || errorMessage
       }
     }
 
