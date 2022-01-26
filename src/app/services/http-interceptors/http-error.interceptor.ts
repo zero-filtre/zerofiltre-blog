@@ -17,6 +17,18 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private messageService: MessageService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    /**
+     * Add the token if exist to every request from the client to the api
+     * 
+     * let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser && currentUser.authdata) {
+            request = request.clone({
+                setHeaders: { 
+                    Authorization: `Basic ${currentUser.authdata}`
+                }
+            });
+        }
+     */
 
     return next.handle(request)
       .pipe(
