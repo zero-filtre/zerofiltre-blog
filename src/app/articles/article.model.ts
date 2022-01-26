@@ -29,7 +29,8 @@ export interface Author {
   profilePicture?: string;
   bio?: string;
   profession?: string;
-  socialLinks?: any
+  socialLinks?: any;
+  website?: string;
 }
 
 export interface Tag {

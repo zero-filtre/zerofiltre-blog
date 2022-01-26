@@ -5,6 +5,23 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap");
 
+/* Extends forms plugin styles with our custom styles in one place */
+@layer base {
+  [type="text"],
+  [type="email"],
+  [type="password"],
+  [type="search"],
+  [multiple],
+  select {
+    @apply shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full placeholder-skin-muted focus:outline-none focus:placeholder-skin-muted font-normal text-skin-base sm:text-sm border-skin-border rounded-md;
+  }
+
+  [type="checkbox"],
+  [type="radio"] {
+    @apply h-4 w-4 text-primary-500 bg-skin-card focus:ring-primary-500 border-skin-border rounded;
+  }
+}
+
 .container {
   max-width: 110rem;
   @apply mx-auto px-5 xl:px-[5%];
