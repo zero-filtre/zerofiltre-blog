@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -37,9 +37,14 @@ export class LoginPageComponent implements OnInit {
   public login(): void {
     console.log('Login called');
     this.userService.login(this.form.value).subscribe({
-      next: (response: User) => {
-        console.log('LOGGED IN USER: ', response);
-        this.router.navigate(['/']);
+      next: (response: any) => {
+        const keys = response.headers.keys();
+        const headers = keys.map((key: any) =>
+          `${key}: ${response.headers.get(key)}`);
+
+        console.log('HEADERS', headers);
+
+        // this.router.navigate(['/']);
         this.form.reset();
         this.messageservice.openSnackBarSuccess('Connexion reussie!', '');
       },

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -13,7 +13,9 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public login(credentials: any): Observable<User> {
-    return this.http.post<User>(`${this.apiServerUrl}/auth`, credentials)
+  public login(credentials: any): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
+      observe: 'response'
+    })
   }
 }
