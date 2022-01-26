@@ -10,14 +10,14 @@
             <form [formGroup]="form" (ngSubmit)="login()" class="space-y-6">
                 <div class="rounded-md space-y-4">
                     <div>
-                        <label for="email-address" class="sr-only">Adresse E-mail</label>
+                        <label for="username" class="sr-only">Adresse E-mail</label>
                         <div class="">
                             <div class="relative ">
-                                <input name="email" type="email" id="email" required formControlName="email" class=""
-                                    autocomplete="email" required placeholder="Adresse E-mail">
+                                <input name="username" type="email" id="username" required formControlName="username"
+                                    class="" autocomplete="email" required placeholder="Adresse E-mail">
                             </div>
-                            <div *ngIf="email?.invalid && email?.dirty" class="">
-                                <div *ngIf="email?.errors?.['required']" class="mt-1 text-xs sm:text-sm text-error">
+                            <div *ngIf="username?.invalid && username?.dirty" class="">
+                                <div *ngIf="username?.errors?.['required']" class="mt-1 text-xs sm:text-sm text-error">
                                     L'email est obligatoire.
                                 </div>
                             </div>
@@ -27,7 +27,7 @@
                         <label for="password" class="sr-only">Mot de passe</label>
                         <div class="">
                             <div class="relative ">
-                                <input name="password" type="password" id="password" required required minlength="6"
+                                <input name="password" type="password" id="password" required minlength="6"
                                     formControlName="password" class="" autocomplete="current-password" required
                                     placeholder="Mot de passe">
                             </div>

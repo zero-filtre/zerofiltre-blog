@@ -8,7 +8,7 @@
 }
 
 .top-toolbar .navLink {
-  @apply mx-4 last:mr-0 hover:text-primary-500 transition-all duration-300;
+  @apply mx-4 last:mr-0 hover:text-primary-500 transition-all duration-200;
 }
 
 .top-toolbar .navLink div {

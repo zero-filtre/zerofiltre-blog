@@ -95,7 +95,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', ''))
     ).subscribe({
       next: (_response: Article) => this.messageService.openSnackBarSuccess('Article sauvegardé!', ''),
-      error: (_error: HttpErrorResponse) => this.messageService.saveArticleError(this.form.value)
+      // error: (_error: HttpErrorResponse) => this.messageService.saveArticleError(this.form.value)
     })
   }
 
