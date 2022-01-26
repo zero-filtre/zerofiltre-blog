@@ -38,6 +38,7 @@ export class LoginPageComponent implements OnInit {
       next: (response: any) => {
         console.log('LOGGED IN USER: ', response);
         this.router.navigate(['/']);
+        this.form.reset();
         this.messageservice.openSnackBarSuccess('Connexion reussie!!', '');
       },
       error: (_error: HttpErrorResponse) => this.messageservice.openSnackBarError('Connexion echouée!', '')
