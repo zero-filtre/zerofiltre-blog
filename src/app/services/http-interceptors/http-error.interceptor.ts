@@ -17,6 +17,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private messageService: MessageService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // request = request.clone({
+    //   withCredentials: true
+    // });
+
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -36,8 +40,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   setError(error: HttpErrorResponse): string {
     let errorMessage = "Un problème est survenu, merci d'essayer de nouveau plus tard ou de contacter un administrateur de l'API";
 
-    console.log('GLOBAL ERROR: ', error);
-
     if (error.error instanceof ErrorEvent) {
       console.log('ERROR LOG CLT:', error);
       // Client side Error
@@ -45,8 +47,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     } else {
       // Server side error
       if (error.status !== 0) {
-        console.log('ERROR LOG SERV:', error);
-        errorMessage ||= error.error.error.message
+        console.log('ERROR LOG SERV:', error.error.error);
+        let serverErrorExist = !!error.error.error   // if assigned obj is null or undefined => return false else => return true
+        if (serverErrorExist) {
+          errorMessage = error.error.error.message;
+        } else {
+          errorMessage = errorMessage;
+        }
       }
     }
 

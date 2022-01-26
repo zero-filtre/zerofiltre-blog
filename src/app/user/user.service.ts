@@ -14,8 +14,6 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   public login(credentials: any): Observable<User> {
-    return this.http.post<User>(`${this.apiServerUrl}/auth`, credentials, {
-      withCredentials: true
-    })
+    return this.http.post<User>(`${this.apiServerUrl}/auth`, credentials)
   }
 }
