@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs';
 import { Article } from '../articles/article.model';
 import { ArticleService } from '../articles/article.service';
-import { Router } from '@angular/router';
+import { Router, RouterStateSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class MessageService {
   }
 
   // For non authenticated requests
-  authError() {
+  authError(state: RouterStateSnapshot) {
     this.openSnackBarError('Veuillez Vous  connecter !', 'OK');
     this.router.navigate(['/login']);
 
@@ -41,7 +41,7 @@ export class MessageService {
       ?.onAction()
       .pipe(
         tap(_ =>
-          this.router.navigate(['/login'])
+          this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } })
         )
       )
       .subscribe();

@@ -13,13 +13,22 @@ import { AuthService } from '../auth.service';
 export class LoginPageComponent implements OnInit {
   public form!: FormGroup;
   public loading: boolean = false;
+  public GITHUB_CLIENT_ID: string = '';
+  public STACK_OVERFLOW_CLIENT_ID: string = '';
+  public gitHubRedirectURL: string = '';
+  public stackOverflowRedirectURL: string = '';
+  public path: string = '/';
 
   constructor(
     private formuilder: FormBuilder,
     private router: Router,
-    private AuthService: AuthService,
+    private authService: AuthService,
     private messageservice: MessageService
   ) { }
+
+  private redirectTo(): void {
+    if (this.authService.isLoggedIn$) this.router.navigate(['/']);
+  }
 
   public InitForm(): void {
     this.form = this.formuilder.group({
@@ -32,7 +41,7 @@ export class LoginPageComponent implements OnInit {
   get password() { return this.form.get('password'); }
 
   public login(): void {
-    this.AuthService.login(this.form.value).subscribe({
+    this.authService.login(this.form.value).subscribe({
       next: (_response: any) => {
         this.router.navigate(['/']);
         this.form.reset();
