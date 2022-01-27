@@ -41,12 +41,15 @@ export class LoginPageComponent implements OnInit {
   get password() { return this.form.get('password'); }
 
   public login(): void {
+    this.loading = true;
     this.authService.login(this.form.value).subscribe({
       next: (_response: any) => {
         this.router.navigate(['/']);
         this.form.reset();
+        this.loading = false;
       },
       error: (_error: HttpErrorResponse) => {
+        this.loading = false;
         this.messageservice.loginError()
       }
     })
