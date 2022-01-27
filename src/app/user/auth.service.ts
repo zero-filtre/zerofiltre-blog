@@ -1,47 +1,41 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, shareReplay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { MessageService } from '../services/message.service';
 import { User } from './user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  readonly apiServerUrl = environment.apiBaseUrl;
-
-  // private subject$ = new BehaviorSubject<User>(null!);
-  // public currentUser$: Observable<User> = this.subject.asObservable();
-
-  // public isLoggedIn!: Observable<boolean>;
-  // public isLoggedOut!: Observable<boolean>;
+  private readonly apiServerUrl = environment.apiBaseUrl;
 
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  public readonly TOKEN_NAME = 'user_profile';
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
+  public user!: User;
 
+  get token(): any {
+    return localStorage.getItem(this.TOKEN_NAME);
+  }
 
-  constructor(private http: HttpClient, private messageService: MessageService) {
-    // this.isLoggedIn = this.currentUser.pipe(map(user => !!user))
-    // this.isLoggedOut = this.isLoggedIn.pipe(map(loggedIn => !loggedIn))
-
-    const token = localStorage.getItem('user_profile')
+  constructor(
+    private http: HttpClient
+  ) {
     // TODO We may check the expiration date of this token before changing the state of _isLoggedIn$...
-    this._isLoggedIn$.next(!!token)
+    this._isLoggedIn$.next(!!this.token);
+    this.user = this.getUser(this.token);
   }
 
   public login(credentials: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
       observe: 'response'
     }).pipe(
-      catchError(error => {
-        // this.messageService.loginError();
-        return throwError(() => error);
-      }),
       tap((response: any) => {
         const token = response.headers.get('authorization').split(' ')[1]
-        localStorage.setItem('user_profile', token);
         this._isLoggedIn$.next(true) // Emit the token received as the new value of the currentUser observale with the tap side effect function
+        localStorage.setItem(this.TOKEN_NAME, token);
+        this.user = this.getUser(token);
       }),
       shareReplay()
     )
@@ -49,5 +43,12 @@ export class AuthService {
 
   public logout() {
     this._isLoggedIn$.next(false);
+  }
+
+  private getUser(token: string): User {
+    if (!token) {
+      return null!
+    }
+    return JSON.parse(atob(token.split('.')[1])) as User;
   }
 }

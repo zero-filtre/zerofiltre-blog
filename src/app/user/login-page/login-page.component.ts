@@ -34,11 +34,8 @@ export class LoginPageComponent implements OnInit {
   // Kem89dd$
 
   public login(): void {
-    console.log('Login called');
     this.AuthService.login(this.form.value).subscribe({
       next: (_response: any) => {
-        // const token = response.headers.get('authorization').split(' ')[1]
-        // console.log('Authorisation Header: ', token);
         this.router.navigate(['/']);
         this.form.reset();
         this.messageservice.openSnackBarSuccess('Connexion reussie!', '');

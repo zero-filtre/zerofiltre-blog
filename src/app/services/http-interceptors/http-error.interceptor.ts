@@ -8,27 +8,27 @@ import {
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { MessageService } from '../message.service';
+import { AuthService } from 'src/app/user/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor(private messageService: MessageService) { }
+  constructor(
+    private messageService: MessageService,
+    private authService: AuthService
+  ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     /**
      * Add the token if exist to every request from the client to the api
-     * 
-     * let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.authdata) {
-            request = request.clone({
-                setHeaders: { 
-                    Authorization: `Basic ${currentUser.authdata}`
-                }
-            });
-        }
      */
+    if (localStorage.getItem(this.authService.TOKEN_NAME)) {
+      request = request.clone({
+        headers: request.headers.set('authorization', `Bearer ${this.authService.token}`),
+      });
+    }
 
     return next.handle(request)
       .pipe(

@@ -34,7 +34,8 @@ export class MessageService {
 
   // For non authenticated requests
   authError() {
-    this.openSnackBarError('Vous devez etre connecté!', 'OK');
+    this.openSnackBarError('Veuillez Vous  connecter !', 'OK');
+    this.router.navigate(['/login']);
 
     return this.snackBar._openedSnackBarRef
       ?.onAction()
