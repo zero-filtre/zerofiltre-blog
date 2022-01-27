@@ -175,7 +175,7 @@ export class ArticlesListComponent implements OnInit {
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
 
-    this.location.go('/articles')
+    this.location.go('/articles');
     this.fetchArticles();
   }
 }

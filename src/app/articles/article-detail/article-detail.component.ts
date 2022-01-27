@@ -46,6 +46,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
     this.loading = true;
     this.articleService.getOneArticle(articleId)
       .pipe(
+        filter(objectExists),
         tap(art => {
           this.seo.generateTags({
             title: art.title,
@@ -66,7 +67,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
         },
         error: (_error: HttpErrorResponse) => {
           this.loading = false;
-          // this.router.navigate(['/'])
+          this.router.navigate(['/'])
         }
       })
   }

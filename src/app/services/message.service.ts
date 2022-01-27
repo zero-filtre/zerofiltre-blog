@@ -49,7 +49,7 @@ export class MessageService {
 
   // When logging In
   loginError() {
-    this.openSnackBarError('Email ou mot de passe incorrect!', 'Reessayez');
+    this.openSnackBarError('Email ou mot de passe incorrect !', '');
 
     return this.snackBar._openedSnackBarRef
       ?.onAction()

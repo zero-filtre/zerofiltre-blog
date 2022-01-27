@@ -17,7 +17,8 @@
                                     class="" autocomplete="email" required placeholder="Adresse E-mail">
                             </div>
                             <div *ngIf="username?.invalid && username?.dirty" class="">
-                                <div *ngIf="username?.errors?.['required']" class="mt-1 text-xs sm:text-sm text-error">
+                                <div *ngIf="username?.errors?.['required']"
+                                    class="mt-1 text-xs sm:text-sm text-error italic">
                                     L'email est obligatoire.
                                 </div>
                             </div>
@@ -32,12 +33,13 @@
                                     placeholder="Mot de passe">
                             </div>
                             <div *ngIf="password?.invalid && password?.dirty" class="">
-                                <div *ngIf="password?.errors?.['required']" class="mt-1 text-xs sm:text-sm text-error">
+                                <div *ngIf="password?.errors?.['required']"
+                                    class="mt-1 text-xs sm:text-sm text-error italic">
                                     Le mot de passe est obligatoire.
                                 </div>
                                 <div *ngIf="password?.errors?.['minlength']"
-                                    class="mt-2 text-xs sm:text-sm text-error italic">
-                                    Le titre doit comporter au moins 6 caractères.
+                                    class="mt-1 text-xs sm:text-sm text-error italic">
+                                    Le mot de passe doit comporter au moins 6 caractères.
                                 </div>
                             </div>
                         </div>
@@ -59,8 +61,8 @@
                 </div>
 
                 <div>
-                    <button *ngIf="!form.invalid" type="submit" [disabled]="loading"
-                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                    <button *ngIf="form.valid" type="submit" [disabled]="loading"
+                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
                         <span class="lock-btn absolute flex items-center pl-3">
                             <svg class="h-5 w-5 fill-primary-500 group-hover:fill-primary-300"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -100,7 +102,7 @@
                 <div class="mt-6 flex gap-2">
                     <div class="flex-1">
                         <a href="#"
-                            class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 w-full font-normal">
+                            class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
                             <span class="sr-only">Continuer avec Github</span>
                             <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -112,7 +114,7 @@
                     </div>
                     <div class="flex-1">
                         <a href="#"
-                            class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 w-full font-normal">
+                            class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
                             <span class="sr-only">Continuer avec StackOverflow</span>
                             <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
                                 width="64" height="64">

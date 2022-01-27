@@ -31,19 +31,15 @@ export class LoginPageComponent implements OnInit {
   get username() { return this.form.get('username'); }
   get password() { return this.form.get('password'); }
 
-  // Kem89dd$
-
   public login(): void {
     this.AuthService.login(this.form.value).subscribe({
       next: (_response: any) => {
         this.router.navigate(['/']);
         this.form.reset();
-        this.messageservice.openSnackBarSuccess('Connexion reussie!', '');
       },
-      // error: (error: HttpErrorResponse) => {
-      //   console.log('ERR: ', error);
-      //   this.messageservice.loginError()
-      // }
+      error: (_error: HttpErrorResponse) => {
+        this.messageservice.loginError()
+      }
     })
   }
 

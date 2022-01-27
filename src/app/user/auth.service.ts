@@ -43,6 +43,7 @@ export class AuthService {
 
   public logout() {
     this._isLoggedIn$.next(false);
+    localStorage.removeItem(this.TOKEN_NAME);
   }
 
   private getUser(token: string): User {
