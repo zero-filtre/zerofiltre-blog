@@ -21,15 +21,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    /**
-     * Add the token if exist to every request from the client to the api
-     */
-    if (localStorage.getItem(this.authService.TOKEN_NAME)) {
-      request = request.clone({
-        headers: request.headers.set('authorization', `Bearer ${this.authService.token}`),
-      });
-    }
-
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
