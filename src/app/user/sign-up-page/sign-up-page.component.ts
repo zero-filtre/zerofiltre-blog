@@ -29,17 +29,21 @@ export class SignUpPageComponent implements OnInit {
 
   public InitForm(): void {
     this.form = this.formuilder.group({
-      name: ['', [Validators.required]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       username: ['', [Validators.required, Validators.email]],
       pseudo: ['', [Validators.required]],
       password: ['', [Validators.required]],
+      matchingPassword: ['', [Validators.required]],
     })
   }
 
   get username() { return this.form.get('username'); }
   get password() { return this.form.get('password'); }
+  get matchingPassword() { return this.form.get('matchingPassword'); }
   get pseudo() { return this.form.get('pseudo'); }
-  get name() { return this.form.get('nom'); }
+  get firstName() { return this.form.get('firstName'); }
+  get lastName() { return this.form.get('lastName'); }
 
   public signup(): void {
     this.loading = true;

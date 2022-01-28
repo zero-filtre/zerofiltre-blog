@@ -10,16 +10,32 @@
             <form [formGroup]="form" (ngSubmit)="signup()" class="space-y-6">
                 <div class="rounded-md space-y-4">
                     <div>
-                        <label for="name" class="sr-only">Nom</label>
+                        <label for="firstName" class="sr-only">Nom</label>
                         <div class="">
                             <div class="relative ">
-                                <input name="name" type="text" id="name" required formControlName="name" class=""
-                                    required placeholder="Nom Complet">
+                                <input name="firstName" type="text" id="firstName" required formControlName="firstName"
+                                    class="" required placeholder="Prenom">
                             </div>
-                            <div *ngIf="name?.invalid && name?.dirty" class="">
-                                <div *ngIf="name?.errors?.['required']"
+                            <div *ngIf="firstName?.invalid && firstName?.dirty" class="">
+                                <div *ngIf="firstName?.errors?.['required']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Le Nom est obligatoire.
+                                    Le prenom est obligatoire.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="lastName" class="sr-only">Nom</label>
+                        <div class="">
+                            <div class="relative ">
+                                <input name="lastName" type="text" id="lastName" required formControlName="lastName"
+                                    class="" required placeholder="Nom">
+                            </div>
+                            <div *ngIf="lastName?.invalid && lastName?.dirty" class="">
+                                <div *ngIf="lastName?.errors?.['required']"
+                                    class="mt-1 text-xs sm:text-sm text-error italic">
+                                    Le nom est obligatoire.
                                 </div>
                             </div>
                         </div>
@@ -41,7 +57,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <!-- <div>
                         <label for="pseudo" class="sr-only">Pseudo</label>
                         <div class="">
                             <div class="relative ">
@@ -55,7 +71,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div>
                         <label for="password" class="sr-only">Mot de passe</label>
@@ -73,6 +89,23 @@
                                 <div *ngIf="password?.errors?.['minlength']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
                                     Le mot de passe doit comporter au moins 6 caractères.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="matchingPassword" class="sr-only">Confirmation mot de passe</label>
+                        <div class="">
+                            <div class="relative ">
+                                <input name="matchingPassword" type="password" id="matchingPassword" required
+                                    minlength="6" formControlName="matchingPassword" class=""
+                                    autocomplete="current-password" required placeholder="Confirmation mot de passe">
+                            </div>
+                            <div *ngIf="matchingPassword?.invalid && matchingPassword?.dirty" class="">
+                                <div *ngIf="password?.errors?.['required']"
+                                    class="mt-1 text-xs sm:text-sm text-error italic">
+                                    Pas de correspondance.
                                 </div>
                             </div>
                         </div>
