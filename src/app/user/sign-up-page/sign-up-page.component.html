@@ -99,8 +99,8 @@
                         <div class="">
                             <div class="relative ">
                                 <input name="matchingPassword" type="password" id="matchingPassword" required
-                                    minlength="6" formControlName="matchingPassword" class=""
-                                    autocomplete="current-password" required placeholder="Confirmation mot de passe">
+                                    formControlName="matchingPassword" class="" autocomplete="current-password" required
+                                    placeholder="Confirmation mot de passe">
                             </div>
                             <div *ngIf="matchingPassword?.invalid && matchingPassword?.dirty" class="">
                                 <div *ngIf="password?.errors?.['required']"

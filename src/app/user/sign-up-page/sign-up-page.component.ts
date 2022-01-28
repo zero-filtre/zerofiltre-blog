@@ -32,7 +32,7 @@ export class SignUpPageComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       username: ['', [Validators.required, Validators.email]],
-      pseudo: ['', [Validators.required]],
+      // pseudo: ['', [Validators.required]],
       password: ['', [Validators.required]],
       matchingPassword: ['', [Validators.required]],
     })
