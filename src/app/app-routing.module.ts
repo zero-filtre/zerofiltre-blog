@@ -2,12 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './user/auth.guard';
 import { LoginPageComponent } from './user/login-page/login-page.component';
+import { SignUpPageComponent } from './user/sign-up-page/sign-up-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'articles', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginPageComponent
+  },
+  {
+    path: 'register',
+    component: SignUpPageComponent
   },
   {
     path: 'user',

@@ -41,6 +41,20 @@ export class AuthService {
     )
   }
 
+  public signup(credentials: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/user`, credentials, {
+      observe: 'response'
+    }).pipe(
+      tap((response: any) => {
+        const token = response.headers.get('authorization').split(' ')[1]
+        this._isLoggedIn$.next(true) // Emit the token received as the new value of the currentUser observale with the tap side effect function
+        localStorage.setItem(this.TOKEN_NAME, token);
+        this.user = this.getUser(token);
+      }),
+      shareReplay()
+    )
+  }
+
   public logout() {
     this._isLoggedIn$.next(false);
     localStorage.removeItem(this.TOKEN_NAME);
