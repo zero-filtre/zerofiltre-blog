@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -13,8 +14,8 @@ import { AuthService } from '../auth.service';
 export class LoginPageComponent implements OnInit {
   public form!: FormGroup;
   public loading: boolean = false;
-  public GITHUB_CLIENT_ID: string = '';
-  public STACK_OVERFLOW_CLIENT_ID: string = '';
+  public readonly GITHUB_CLIENT_ID = environment.GITHUB_CLIENT_ID;
+  public readonly STACK_OVERFLOW_CLIENT_ID = environment.STACK_OVERFLOW_CLIENT_ID;
   public gitHubRedirectURL: string = '';
   public stackOverflowRedirectURL: string = '';
   public path: string = '/';
