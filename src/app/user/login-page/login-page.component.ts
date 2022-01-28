@@ -16,8 +16,8 @@ export class LoginPageComponent implements OnInit {
   public loading: boolean = false;
   public readonly GITHUB_CLIENT_ID = environment.GITHUB_CLIENT_ID;
   public readonly STACK_OVERFLOW_CLIENT_ID = environment.STACK_OVERFLOW_CLIENT_ID;
-  public gitHubRedirectURL: string = '';
-  public stackOverflowRedirectURL: string = '';
+  public readonly gitHubRedirectURL = environment.gitHubRedirectURL;
+  public readonly stackOverflowRedirectURL = environment.stackOverflowRedirectURL;
   public path: string = '/';
 
   constructor(
