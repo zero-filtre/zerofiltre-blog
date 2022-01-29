@@ -33,7 +33,7 @@ export class AuthService {
     }).pipe(
       tap((response: any) => {
         const token = response.headers.get('authorization').split(' ')[1]
-        this._isLoggedIn$.next(true) // Emit the token received as the new value of the currentUser observale with the tap side effect function
+        this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
         localStorage.setItem(this.TOKEN_NAME, token);
         this.user = this.getUser(token);
       }),
@@ -41,15 +41,15 @@ export class AuthService {
     )
   }
 
-  public signup(credentials: FormData): Observable<any> {
-    return this.http.post<any>(`${this.apiServerUrl}/user`, credentials, {
+  public signup(credentials: FormData): Observable<User> {
+    return this.http.post<User>(`${this.apiServerUrl}/user`, credentials, {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
         const token = response.headers.get('authorization').split(' ')[1]
-        this._isLoggedIn$.next(true) // Emit the token received as the new value of the currentUser observale with the tap side effect function
+        this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
         localStorage.setItem(this.TOKEN_NAME, token);
-        this.user = this.getUser(token);
+        this.user = response;
       }),
       shareReplay()
     )

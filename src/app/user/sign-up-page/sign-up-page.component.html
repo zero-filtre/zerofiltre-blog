@@ -42,16 +42,19 @@
                     </div>
 
                     <div>
-                        <label for="username" class="sr-only">Adresse E-mail</label>
+                        <label for="email" class="sr-only">Adresse E-mail</label>
                         <div class="">
                             <div class="relative ">
-                                <input name="username" type="email" id="username" required formControlName="username"
-                                    class="" autocomplete="email" required placeholder="Adresse E-mail">
+                                <input name="email" type="email" id="email" required formControlName="email" class=""
+                                    autocomplete="email" required placeholder="Adresse E-mail">
                             </div>
-                            <div *ngIf="username?.invalid && username?.dirty" class="">
-                                <div *ngIf="username?.errors?.['required']"
+                            <div *ngIf="email?.invalid && email?.dirty" class="">
+                                <div *ngIf="email?.errors?.['required']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
                                     L'email est obligatoire.
+                                </div>
+                                <div *ngIf="email?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
+                                    Vous devez entrer une adresse email valide
                                 </div>
                             </div>
                         </div>
@@ -78,7 +81,7 @@
                         <div class="">
                             <div class="relative ">
                                 <input name="password" type="password" id="password" required minlength="6"
-                                    formControlName="password" class="" autocomplete="current-password" required
+                                    formControlName="password" class="" autocomplete="current-password"
                                     placeholder="Mot de passe">
                             </div>
                             <div *ngIf="password?.invalid && password?.dirty" class="">
@@ -90,6 +93,9 @@
                                     class="mt-1 text-xs sm:text-sm text-error italic">
                                     Le mot de passe doit comporter au moins 6 caractères.
                                 </div>
+                                <div *ngIf="password?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
+                                    Le mot de passe n'est pas valide
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -98,15 +104,13 @@
                         <label for="matchingPassword" class="sr-only">Confirmation mot de passe</label>
                         <div class="">
                             <div class="relative ">
-                                <input name="matchingPassword" type="password" id="matchingPassword" required
-                                    formControlName="matchingPassword" class="" autocomplete="current-password" required
+                                <input name="matchingPassword" type="password" id="matchingPassword"
+                                    formControlName="matchingPassword" class="" autocomplete="off"
                                     placeholder="Confirmation mot de passe">
                             </div>
-                            <div *ngIf="matchingPassword?.invalid && matchingPassword?.dirty" class="">
-                                <div *ngIf="password?.errors?.['required']"
-                                    class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Pas de correspondance.
-                                </div>
+                            <div *ngIf="matchingPassword?.dirty && !passwordDoesMatch"
+                                class="mt-1 text-xs sm:text-sm text-error italic">
+                                Le mot de passe ne correspond pas
                             </div>
                         </div>
                     </div>

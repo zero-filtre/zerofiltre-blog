@@ -31,35 +31,39 @@ export class SignUpPageComponent implements OnInit {
     this.form = this.formuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      username: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern('[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)@[A-Za-z0-9-]+(\.[A-Za-z0-9]+).[A-Za-z]{2,}')]],
       // pseudo: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.pattern('((?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[@#$%]).{6,15})')]],
       matchingPassword: ['', [Validators.required]],
     })
   }
 
-  get username() { return this.form.get('username'); }
+  get email() { return this.form.get('email'); }
   get password() { return this.form.get('password'); }
   get matchingPassword() { return this.form.get('matchingPassword'); }
   get pseudo() { return this.form.get('pseudo'); }
   get firstName() { return this.form.get('firstName'); }
   get lastName() { return this.form.get('lastName'); }
 
+  get passwordDoesMatch() {
+    return this.password?.value === this.matchingPassword?.value;
+  }
+
   public signup(): void {
     this.loading = true;
-    setTimeout(() => this.loading = false, 2000)
-    console.log('Sign up started');
-    // this.authService.signup(this.form.value).subscribe({
-    //   next: (_response: any) => {
-    //     this.router.navigate(['/']);
-    //     this.form.reset();
-    //     this.loading = false;
-    //   },
-    //   error: (_error: HttpErrorResponse) => {
-    //     this.loading = false;
-    //     this.messageservice.loginError()
-    //   }
-    // })
+
+    this.authService.signup(this.form.value).subscribe({
+      next: (_response: any) => {
+        this.router.navigate(['/']);
+        this.form.reset();
+        this.loading = false;
+        this.messageservice.signUpSuccess();
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+        // this.messageservice.loginError()
+      }
+    })
   }
 
   ngOnInit(): void {
