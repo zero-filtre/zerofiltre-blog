@@ -94,7 +94,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.articleService.updateToSave(this.form.value).pipe(
       tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', ''))
     ).subscribe({
-      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article sauvegardé!', ''),
+      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article sauvegardé !', ''),
       // error: (_error: HttpErrorResponse) => this.messageService.saveArticleError(this.form.value)
     })
   }
@@ -103,7 +103,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.articleService.updateToPublish(this.form.value).pipe(
       tap(() => this.router.navigateByUrl(`articles/${this.articleId}`))
     ).subscribe({
-      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article pulié avec success!', ''),
+      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article pulié avec success !', ''),
     });
   }
 

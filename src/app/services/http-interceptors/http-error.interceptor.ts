@@ -39,6 +39,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    */
   setError(error: HttpErrorResponse): string {
     let errorMessage = "Un problème est survenu, merci d'essayer de nouveau plus tard ou de contacter un administrateur de l'API";
+    console.log('ERROR OCCURED: ', error);
 
     if (error.error instanceof ErrorEvent) {
       // Client side Error
@@ -46,7 +47,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     } else {
       // Server side error
       if (error.status !== 0) {
-        let serverErrorExist = !!error.error.error   // if assigned obj is null or undefined => return false else => return true
+        let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
         if (serverErrorExist) {
           errorMessage = error.error.error.message;
         } else {

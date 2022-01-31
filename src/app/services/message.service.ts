@@ -4,6 +4,7 @@ import { tap } from 'rxjs';
 import { Article } from '../articles/article.model';
 import { ArticleService } from '../articles/article.service';
 import { Router, RouterStateSnapshot } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class MessageService {
 
   // For non authenticated requests
   authError(state: RouterStateSnapshot) {
-    this.openSnackBarError('Veuillez Vous  connecter !', 'OK');
+    this.openSnackBarError('Veuillez Vous  connecter !', '');
     this.router.navigate(['/login']);
 
     return this.snackBar._openedSnackBarRef
@@ -50,7 +51,7 @@ export class MessageService {
 
   // When logging In
   loginError() {
-    this.openSnackBarError('Email ou mot de passe incorrect !', 'Ok');
+    this.openSnackBarError('Email ou mot de passe incorrect !', '');
 
     return this.snackBar._openedSnackBarRef
       ?.onAction()
@@ -68,7 +69,7 @@ export class MessageService {
   }
 
   saveArticleError(formValue: Article) {
-    this.openSnackBarError('La sauvegarde a echoué', 'Reessayer');
+    this.openSnackBarError('La sauvegarde a echoué !', 'Reessayer');
 
     return this.snackBar._openedSnackBarRef
       ?.onAction()
@@ -77,4 +78,28 @@ export class MessageService {
       )
       .subscribe();
   }
+
+  /**
+   * 
+    private setCustomErrorMessage(error: HttpErrorResponse, customErrorMessage: string): string {
+      let errorMessage = "Un problème est survenu, merci d'essayer de nouveau plus tard ou de contacter un administrateur de l'API";
+      console.log('ERROR: ', error);
+
+      if (error.error instanceof ErrorEvent) {
+        errorMessage = error.error.message;
+      } else {
+        if (error.status !== 0) {
+          let serverErrorExist = !!error?.error?.error
+
+          if (serverErrorExist) {
+            errorMessage = customErrorMessage;
+          } else {
+            errorMessage = errorMessage;
+          }
+        }
+      }
+
+      return errorMessage;
+    }
+  */
 }

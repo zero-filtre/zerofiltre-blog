@@ -27,10 +27,6 @@ export class LoginPageComponent implements OnInit {
     private messageservice: MessageService
   ) { }
 
-  private redirectTo(): void {
-    if (this.authService.isLoggedIn$) this.router.navigate(['/']);
-  }
-
   public InitForm(): void {
     this.form = this.formuilder.group({
       username: ['', [Validators.required, Validators.email]],
