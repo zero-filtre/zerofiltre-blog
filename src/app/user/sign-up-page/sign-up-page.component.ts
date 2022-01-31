@@ -57,7 +57,7 @@ export class SignUpPageComponent implements OnInit {
     this.authService.signup(this.form.value).subscribe({
       next: (response: User) => {
         console.log('USER: ', response);
-        this.router.navigate(['/']);
+        // this.router.navigate(['/']);
         this.form.reset();
         this.loading = false;
         this.messageservice.signUpSuccess();
