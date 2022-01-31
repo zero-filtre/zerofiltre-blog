@@ -91,19 +91,20 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public saveArticle() {
-    console.log('Called SAVE');
     this.articleService.updateToSave(this.form.value).pipe(
-      tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', 'Fermez'))
+      tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', ''))
     ).subscribe({
-      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article sauvegardé!', 'Fermez'),
-      error: (_error: HttpErrorResponse) => this.messageService.saveArticleError(this.form.value)
+      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article sauvegardé !', ''),
+      // error: (_error: HttpErrorResponse) => this.messageService.saveArticleError(this.form.value)
     })
   }
 
   public publishArticle() {
     this.articleService.updateToPublish(this.form.value).pipe(
       tap(() => this.router.navigateByUrl(`articles/${this.articleId}`))
-    ).subscribe();
+    ).subscribe({
+      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article pulié avec success !', ''),
+    });
   }
 
   public onClickFileUpload(host: string) {
@@ -218,8 +219,8 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   /** The ng-multiselect-dropdown library doesn't return the full object selected by default,
-  ** therefore we need a function to get the correct object value to send to the server
-  **/
+  * therefore we need a function to get the correct object value to send to the server
+  */
   private getFullObjectsFromTagListBySelectedTagsIds(ids: any) {
     return this.tagList.filter(item => ids.includes(item.id))
   }

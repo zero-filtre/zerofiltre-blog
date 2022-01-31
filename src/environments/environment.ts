@@ -6,6 +6,10 @@ export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost',
   blogUrl: 'https://blog-dev.zerofiltre.tech',
+  GITHUB_CLIENT_ID: '9b6bffa9841d19dfd8aa',
+  STACK_OVERFLOW_CLIENT_ID: '22742',
+  gitHubRedirectURL: 'http://localhost:4200/user/auth/github',
+  stackOverflowRedirectURL: 'http://localhost:4200/user/auth/stackOverflow',
   username: 'localUser',
   envName: 'local'
 };

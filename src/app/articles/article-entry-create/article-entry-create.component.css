@@ -34,7 +34,7 @@
 }
 
 .active-tab {
-  @apply scale-100 transition-all duration-300;
+  @apply scale-100 transition-all duration-200;
 }
 
 .tab {

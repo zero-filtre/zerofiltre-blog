@@ -46,6 +46,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
     this.loading = true;
     this.articleService.getOneArticle(articleId)
       .pipe(
+        filter(objectExists),
         tap(art => {
           this.seo.generateTags({
             title: art.title,
@@ -64,10 +65,9 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
           this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
           this.loading = false;
         },
-        error: (error: HttpErrorResponse) => {
-          this.messageService.openSnackBarError(error?.error?.error?.message, 'ok')
+        error: (_error: HttpErrorResponse) => {
           this.loading = false;
-          // this.router.navigate(['/'])
+          this.router.navigate(['/'])
         }
       })
   }

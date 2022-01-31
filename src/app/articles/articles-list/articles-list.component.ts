@@ -54,15 +54,14 @@ export class ArticlesListComponent implements OnInit {
         this.setArticlesReadingTime(response);
         this.loading = false;
       },
-      error: (error: HttpErrorResponse) => {
+      error: (_error: HttpErrorResponse) => {
         this.loading = false;
         this.errorMessage = 'Oups...!'
-        this.messageService.openSnackBarError(error?.error?.error?.message, 'ok');
       }
     });
   }
 
-  public getSavedArticles() {
+  public getSavedArticles(): void {
     this.loading = true;
     this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
       next: (response: Article[]) => {
@@ -72,9 +71,8 @@ export class ArticlesListComponent implements OnInit {
         this.setArticlesReadingTime(response);
         this.loading = false;
       },
-      error: (error: HttpErrorResponse) => {
+      error: (_error: HttpErrorResponse) => {
         this.loading = false;
-        this.messageService.openSnackBarError(error?.error?.error?.message, 'ok')
       }
     });
   }
@@ -113,7 +111,7 @@ export class ArticlesListComponent implements OnInit {
 
   private sortByDate(list: Article[]): Article[] {
     return list
-      .sort((a: any, b: any) => new Date(b.lastPublishedAt).valueOf() - new Date(a.lastPublishedAt).valueOf())
+      ?.sort((a: any, b: any) => new Date(b.lastPublishedAt).valueOf() - new Date(a.lastPublishedAt).valueOf())
   }
 
   private sortByPopularity(list: Article[]): Article[] {
@@ -177,6 +175,7 @@ export class ArticlesListComponent implements OnInit {
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
 
+    this.location.go('/articles');
     this.fetchArticles();
   }
 }

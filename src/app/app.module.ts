@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { httpInterceptorProviders } from './services/http-interceptors';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { MarkdownModule } from 'ngx-markdown';
     MarkdownModule.forRoot(),
     SharedModule,
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
