@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MessageService {
-  private durationLimit = 3;
+  private durationLimit = 2;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -37,7 +37,7 @@ export class MessageService {
   // For non authenticated requests
   authError(state: RouterStateSnapshot) {
     this.openSnackBarError('Veuillez Vous  connecter !', '');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
 
     return this.snackBar._openedSnackBarRef
       ?.onAction()

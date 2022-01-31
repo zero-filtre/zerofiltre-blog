@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, tap } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
@@ -25,8 +26,13 @@ export class SignUpPageComponent implements OnInit {
     private formuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private messageservice: MessageService
-  ) { }
+    private messageService: MessageService,
+    private state: ActivatedRoute
+  ) {
+    if (this.authService.isLoggedIn$) {
+      this.router.navigateByUrl('/articles');
+    }
+  }
 
   public InitForm(): void {
     this.form = this.formuilder.group({
@@ -58,11 +64,11 @@ export class SignUpPageComponent implements OnInit {
         this.router.navigate(['/']);
         this.form.reset();
         this.loading = false;
-        this.messageservice.signUpSuccess();
+        this.messageService.signUpSuccess();
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
-        // this.messageservice.loginError()
+        // this.messageService.loginError()
       }
     })
   }
