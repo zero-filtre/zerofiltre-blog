@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -33,7 +34,7 @@ export class SignUpPageComponent implements OnInit {
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern('[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)@[A-Za-z0-9-]+(\.[A-Za-z0-9]+).[A-Za-z]{2,}')]],
       // pseudo: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.pattern(/^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{6,15}$/)]],
+      password: ['', [Validators.required, Validators.pattern(/^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{6,}$/)]],
       // password: ['', [Validators.required, Validators.pattern('((?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[@#$%]).{6,15})')]],
       matchingPassword: ['', [Validators.required]],
     })
@@ -54,13 +55,15 @@ export class SignUpPageComponent implements OnInit {
     this.loading = true;
 
     this.authService.signup(this.form.value).subscribe({
-      next: (_response: any) => {
+      next: (response: User) => {
+        console.log('USER: ', response);
         this.router.navigate(['/']);
         this.form.reset();
         this.loading = false;
         this.messageservice.signUpSuccess();
       },
-      error: (_error: HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
+        console.log('ERROR SIGNUP: ', error);
         this.loading = false;
         // this.messageservice.loginError()
       }

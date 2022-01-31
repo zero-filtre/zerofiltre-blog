@@ -46,9 +46,9 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        const token = response.headers.get('authorization').split(' ')[1]
-        this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
-        localStorage.setItem(this.TOKEN_NAME, token);
+        // const token = response.headers.get('authorization').split(' ')[1]
+        // this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
+        // localStorage.setItem(this.TOKEN_NAME, token);
         this.user = response;
       }),
       shareReplay()
