@@ -61,6 +61,10 @@ export class AuthService {
     localStorage.removeItem(this.TOKEN_NAME);
   }
 
+  public requestPasswordReset(email: string): Observable<string> {
+    return this.http.get<string>(`${this.apiServerUrl}/user/resetPassword?email=${email}`)
+  }
+
   private getUser(token: string): User {
     if (!token) {
       return null!
