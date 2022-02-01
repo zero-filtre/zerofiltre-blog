@@ -31,6 +31,9 @@ export class ArticleEntryCreateComponent implements OnInit {
   public articleId!: number
   public articleTitle!: string
   public selectedTags: Tag[] = []
+  public loading = false;
+  public isSaving = false;
+  public isPublishing = false;
 
   dropdownSettings = {};
 
@@ -91,19 +94,38 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public saveArticle() {
+    this.isSaving = true;
+    this.loading = true;
     this.articleService.updateToSave(this.form.value).pipe(
       tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', ''))
     ).subscribe({
-      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article sauvegardé !', ''),
-      // error: (_error: HttpErrorResponse) => this.messageService.saveArticleError(this.form.value)
+      next: (_response: Article) => {
+        this.isSaving = false;
+        this.loading = false;
+        this.messageService.openSnackBarSuccess('Article sauvegardé !', '');
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.isSaving = false;
+        this.loading = false;
+      }
     })
   }
 
   public publishArticle() {
+    this.loading = true;
+    this.isPublishing = true;
     this.articleService.updateToPublish(this.form.value).pipe(
       tap(() => this.router.navigateByUrl(`articles/${this.articleId}`))
     ).subscribe({
-      next: (_response: Article) => this.messageService.openSnackBarSuccess('Article pulié avec success !', ''),
+      next: (_response: Article) => {
+        this.loading = false;
+        this.isPublishing = false;
+        this.messageService.openSnackBarSuccess('Article pulié avec success !', '');
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+        this.isPublishing = false;
+      }
     });
   }
 
