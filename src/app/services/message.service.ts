@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MessageService {
-  private durationLimit = 2;
+  private durationLimit = 4;
 
   constructor(
     private snackBar: MatSnackBar,

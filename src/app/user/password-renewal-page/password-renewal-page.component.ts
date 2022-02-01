@@ -15,6 +15,7 @@ export class PasswordRenewalPageComponent implements OnInit {
   public isTokenValid = false;
   public token!: string;
   public form!: FormGroup;
+  public successMessage!: string;
 
   constructor(
     private authService: AuthService,
@@ -43,6 +44,7 @@ export class PasswordRenewalPageComponent implements OnInit {
       next: (_response: any) => {
         this.loading = false;
         this.isTokenValid = true;
+        // this.successMessage = 'Bravo vous avez crée un mot de passe avec succes ! Veuillez retournez à la page de connexion.'
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
@@ -57,6 +59,7 @@ export class PasswordRenewalPageComponent implements OnInit {
       next: (response: any) => {
         this.loading = false;
         this.messageservice.openSnackBarSuccess(response, 'Ok', 0);
+        this.successMessage = 'Bravo vous avez crée un mot de passe avec succes ! Veuillez retournez à la page de connexion.'
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
