@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -18,33 +19,32 @@ export class PasswordRenewalPageComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageservice: MessageService
   ) { }
 
   public initForm(): void {
     this.form = this.formBuilder.group({
       password: ['', [Validators.required, Validators.pattern(/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})$/)]],
-      passwordConfirm: ['', [Validators.required]],
+      matchingPassword: ['', [Validators.required]],
     })
   }
 
   get password() { return this.form.get('password'); }
-  get passwordConfirm() { return this.form.get('passwordConfirm'); }
+  get matchingPassword() { return this.form.get('passwordConfirm'); }
 
   get passwordDoesMatch() {
-    return this.password?.value === this.passwordConfirm?.value;
+    return this.password?.value === this.matchingPassword?.value;
   }
 
   public verifyToken(): void {
     this.loading = true
     this.authService.verifyTokenForPasswordReset(this.token).subscribe({
-      next: (response: any) => {
-        console.log(response);
+      next: (_response: any) => {
         this.loading = false;
         this.isTokenValid = true;
       },
-      error: (error: HttpErrorResponse) => {
-        console.log(error);
+      error: (_error: HttpErrorResponse) => {
         this.loading = false;
         this.isTokenValid = false;
       }
@@ -52,13 +52,22 @@ export class PasswordRenewalPageComponent implements OnInit {
   }
 
   public savePassword(): void {
-
+    this.loading = true;
+    this.authService.savePasswordReset({ ...this.form.value, token: this.token }).subscribe({
+      next: (response: any) => {
+        this.loading = false;
+        this.messageservice.openSnackBarSuccess(response, 'Ok', 0);
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
   }
 
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token')!;
     this.verifyToken();
-    console.log(this.token);
+    this.initForm();
   }
 
 }

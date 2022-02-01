@@ -61,16 +61,20 @@ export class AuthService {
     localStorage.removeItem(this.TOKEN_NAME);
   }
 
-  public requestPasswordReset(email: string): Observable<string> {
-    return this.http.get<string>(`${this.apiServerUrl}/user/resetPassword?email=${email}`)
+  public requestPasswordReset(email: string): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/user/initPasswordReset?email=${email}`, {
+      responseType: 'text' as 'json'
+    })
   }
 
   public verifyTokenForPasswordReset(token: string): Observable<any> {
-    return this.http.get<any>(`${this.apiServerUrl}/verifyTokenForPasswordReset?token=${token}`)
+    return this.http.get<any>(`${this.apiServerUrl}/user/verifyTokenForPasswordReset?token=${token}`)
   }
 
   public savePasswordReset(values: FormData): Observable<any> {
-    return this.http.post<any>(`${this.apiServerUrl}/user/savePasswordReset`, values)
+    return this.http.post<any>(`${this.apiServerUrl}/user/savePasswordReset`, values, {
+      responseType: 'text' as 'json'
+    })
   }
 
   private getUser(token: string): User {
