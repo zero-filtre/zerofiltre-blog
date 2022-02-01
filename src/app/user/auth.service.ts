@@ -46,8 +46,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        // const token = response.headers.get('authorization').split(' ')[1]
-        const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMkBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjQzNjQ2MTMxLCJleHAiOjE2NDM2NDcwMzF9.S25v8ypByjDgF9bp6guHAXeeiBohO0b-hQeYkKoEzMPimI13Q-FbkEczN6fYcSm2UZonuLZhCB1wn98CoT9Ljg'
+        const token = response.headers.get('authorization').split(' ')[1]
         this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
         localStorage.setItem(this.TOKEN_NAME, token);
         this.user = response;
