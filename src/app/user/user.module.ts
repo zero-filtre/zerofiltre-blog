@@ -7,13 +7,15 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
 import { PasswordResetPageComponent } from './password-reset-page/password-reset-page.component';
+import { PasswordRenewalPageComponent } from './password-renewal-page/password-renewal-page.component';
 
 
 @NgModule({
   declarations: [
     LoginPageComponent,
     SignUpPageComponent,
-    PasswordResetPageComponent
+    PasswordResetPageComponent,
+    PasswordRenewalPageComponent
   ],
   imports: [
     CommonModule,

@@ -65,6 +65,14 @@ export class AuthService {
     return this.http.get<string>(`${this.apiServerUrl}/user/resetPassword?email=${email}`)
   }
 
+  public verifyTokenForPasswordReset(token: string): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/verifyTokenForPasswordReset?token=${token}`)
+  }
+
+  public savePasswordReset(values: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/user/savePasswordReset`, values)
+  }
+
   private getUser(token: string): User {
     if (!token) {
       return null!

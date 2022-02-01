@@ -21,7 +21,7 @@ export class LoginPageComponent implements OnInit {
   public path: string = '/';
 
   constructor(
-    private formuilder: FormBuilder,
+    private formbuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -29,7 +29,7 @@ export class LoginPageComponent implements OnInit {
   ) { }
 
   public InitForm(): void {
-    this.form = this.formuilder.group({
+    this.form = this.formbuilder.group({
       username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     })
