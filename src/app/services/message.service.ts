@@ -35,15 +35,15 @@ export class MessageService {
   }
 
   // For non authenticated requests
-  authError(state: RouterStateSnapshot) {
+  authError() {
     this.openSnackBarError('Veuillez Vous  connecter !', '');
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['/login']);
 
     return this.snackBar._openedSnackBarRef
       ?.onAction()
       .pipe(
         tap(_ =>
-          this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } })
+          this.router.navigate(['/login'])
         )
       )
       .subscribe();

@@ -6,7 +6,6 @@ import { PasswordResetPageComponent } from './user/password-reset-page/password-
 import { SignUpPageComponent } from './user/sign-up-page/sign-up-page.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'articles', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginPageComponent
@@ -33,7 +32,8 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: 'articles',
-  }
+  },
+  { path: '', redirectTo: 'articles', pathMatch: 'full' },
 ];
 
 @NgModule({

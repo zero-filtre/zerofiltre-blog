@@ -28,11 +28,7 @@ export class SignUpPageComponent implements OnInit {
     private authService: AuthService,
     private messageService: MessageService,
     private state: ActivatedRoute
-  ) {
-    if (this.authService.isLoggedIn$) {
-      this.router.navigateByUrl('/articles');
-    }
-  }
+  ) { }
 
   public InitForm(): void {
     this.form = this.formuilder.group({
