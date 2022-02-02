@@ -76,6 +76,18 @@ export class AuthService {
     })
   }
 
+  public registrationConfirm(token: string): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/user/registrationConfirm?token=${token}`, {
+      responseType: 'text' as 'json'
+    })
+  }
+
+  public resendUserConfirm(email: string): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/user/resendRegistrationConfirm?email=${email}`, {
+      responseType: 'text' as 'json'
+    })
+  }
+
   private getUser(token: string): User {
     if (!token) {
       return null!

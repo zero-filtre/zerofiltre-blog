@@ -1,1 +1,37 @@
-<p>account-confirmation-page works!</p>
+<main class="relative py-28 sm:py-36 max-w-7xl mx-auto">
+    <div *ngIf="loading && !isTokenValid" class="flex items-center justify-center min-h-full">
+        <svg class="w-20 h-20 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+            preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                style="animation-play-state:paused"></circle>
+        </svg>
+    </div>
+
+    <div *ngIf="token && !isTokenValid && !loading" class="max-w-3xl mx-auto">
+        <p class="md:text-2xl max-w-3xl mx-auto">Votre jeton n'est plus valide 😢. Veuillez demander un autre en
+            cliquant sur le bouton ci dessous !
+        </p>
+        <div class="text-sm mt-5">
+            <button (click)="resendUserConfirmation()" class="cursor-pointer"
+                class="font-semibold text-primary-500 hover:text-primary-300 underline transition-all">
+                Renvoyer le message de confirmation
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="successMessage" class="max-w-3xl mx-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-28 w-28 text-primary-500" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="sm:text-2xl mt-5">{{successMessage}}</p>
+        <div class="text-sm mt-5">
+            <a routerLink="/" class="font-semibold text-primary-500 hover:text-primary-300 underline transition-all">
+                Accueil
+            </a>
+        </div>
+    </div>
+</main>

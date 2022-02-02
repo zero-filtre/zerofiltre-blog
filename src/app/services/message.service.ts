@@ -37,6 +37,10 @@ export class MessageService {
     this.openSnackBar(message, action, 'warning-snackbar', 'error', duration)
   }
 
+  public cancel() {
+    this.snackBar.dismiss();
+  }
+
   // For non authenticated requests
   authError() {
     this.openSnackBarError('Veuillez Vous  connecter !', '');
