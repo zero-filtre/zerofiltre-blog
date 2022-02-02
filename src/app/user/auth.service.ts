@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, shareReplay, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
   private readonly apiServerUrl = environment.apiBaseUrl;
 
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  public readonly TOKEN_NAME = 'user_profile';
+  public readonly TOKEN_NAME = 'access_token';
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
   public user!: User;
 
@@ -19,11 +20,18 @@ export class AuthService {
     return localStorage.getItem(this.TOKEN_NAME);
   }
 
+  static get token(): any {
+    return localStorage.getItem('access_token');
+  }
+
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private jwtHelper: JwtHelperService
   ) {
-    // TODO We may check the expiration date of this token before changing the state of _isLoggedIn$...
-    this._isLoggedIn$.next(!!this.token);
+    const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
+    console.log('IS TOKEN EXPIRED: ', isTokenExpired);
+
+    this._isLoggedIn$.next(!isTokenExpired);
     this.user = this.getUser(this.token);
   }
 
