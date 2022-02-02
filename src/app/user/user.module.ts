@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
 import { PasswordResetPageComponent } from './password-reset-page/password-reset-page.component';
 import { PasswordRenewalPageComponent } from './password-renewal-page/password-renewal-page.component';
+import { AccountConfirmationPageComponent } from './account-confirmation-page/account-confirmation-page.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { PasswordRenewalPageComponent } from './password-renewal-page/password-r
     LoginPageComponent,
     SignUpPageComponent,
     PasswordResetPageComponent,
-    PasswordRenewalPageComponent
+    PasswordRenewalPageComponent,
+    AccountConfirmationPageComponent
   ],
   imports: [
     CommonModule,
