@@ -53,6 +53,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         } else {
           errorMessage = errorMessage;
         }
+
+        if (error.status === 401) {
+          this.authService.logout();
+          location.reload();
+        }
       }
     }
 

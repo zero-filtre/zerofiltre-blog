@@ -58,6 +58,7 @@ export class PasswordRenewalPageComponent implements OnInit {
     this.authService.savePasswordReset({ ...this.form.value, token: this.token }).subscribe({
       next: (response: any) => {
         this.loading = false;
+        this.authService.logout();
         this.messageservice.openSnackBarSuccess(response, 'Ok', 0);
         this.successMessage = 'Bravo vous avez crée un mot de passe avec succes ! Veuillez retournez à la page de connexion.'
       },
