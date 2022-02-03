@@ -7,28 +7,22 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class LoggedInAuthGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
     private router: Router
   ) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return this.authService.isLoggedIn$.pipe(
-      tap((isLoggedIn) => {
-        if (!isLoggedIn) {
-          this.messageService.authError();
-        }
-      })
-    );
+  canActivate(): boolean {
+    const isLoggegdIn = !!this.authService.token
+
+    if (isLoggegdIn) {
+      this.messageService.loggedInAuthError();
+      return false
+    } else {
+      return true
+    }
   }
 
 }

@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MessageService {
-  private durationLimit = 2;
+  private durationLimit = 4;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -28,25 +28,38 @@ export class MessageService {
   }
 
   public openSnackBarSuccess(message: string, action: string, duration = this.durationLimit) {
-    this.openSnackBar(message, action, 'green-snackbar', 'success', duration)
+    this.openSnackBar(message, action, 'success-snackbar', 'success', duration)
   }
   public openSnackBarError(message: string, action: string, duration = this.durationLimit) {
-    this.openSnackBar(message, action, 'red-snackbar', 'error', duration)
+    this.openSnackBar(message, action, 'error-snackbar', 'error', duration)
+  }
+  public openSnackBarWarning(message: string, action: string, duration = this.durationLimit) {
+    this.openSnackBar(message, action, 'warning-snackbar', 'error', duration)
+  }
+
+  public cancel() {
+    this.snackBar.dismiss();
   }
 
   // For non authenticated requests
-  authError(state: RouterStateSnapshot) {
+  authError() {
     this.openSnackBarError('Veuillez Vous  connecter !', '');
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['/login']);
 
     return this.snackBar._openedSnackBarRef
       ?.onAction()
       .pipe(
         tap(_ =>
-          this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } })
+          this.router.navigate(['/login'])
         )
       )
       .subscribe();
+  }
+
+  // When user is already logged In
+  loggedInAuthError() {
+    // this.openSnackBarWarning('Vous  etes déja connecté !', '');
+    this.router.navigate(['/']);
   }
 
   // When logging In

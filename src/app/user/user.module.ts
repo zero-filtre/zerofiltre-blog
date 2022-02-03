@@ -6,12 +6,18 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
+import { PasswordResetPageComponent } from './password-reset-page/password-reset-page.component';
+import { PasswordRenewalPageComponent } from './password-renewal-page/password-renewal-page.component';
+import { AccountConfirmationPageComponent } from './account-confirmation-page/account-confirmation-page.component';
 
 
 @NgModule({
   declarations: [
     LoginPageComponent,
-    SignUpPageComponent
+    SignUpPageComponent,
+    PasswordResetPageComponent,
+    PasswordRenewalPageComponent,
+    AccountConfirmationPageComponent
   ],
   imports: [
     CommonModule,

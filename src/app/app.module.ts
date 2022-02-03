@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { httpInterceptorProviders } from './services/http-interceptors';
+import { JwtModule } from "@auth0/angular-jwt";
+import { AuthService } from './user/auth.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,13 @@ import { httpInterceptorProviders } from './services/http-interceptors';
     BrowserAnimationsModule,
     MarkdownModule.forRoot(),
     SharedModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: AuthService.token,
+        // allowedDomains: ["example.com"],
+        // disallowedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    })
   ],
   providers: [
     httpInterceptorProviders

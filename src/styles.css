@@ -70,11 +70,11 @@
   @apply !outline-none !ring-0;
 }
 
-.green-snackbar {
+.success-snackbar {
   @apply bg-primary-500 text-white;
 }
 
-.red-snackbar {
+.error-snackbar {
   @apply bg-error text-white;
 }
 
@@ -82,8 +82,8 @@
   @apply bg-accent text-white;
 }
 
-.green-snackbar button,
-.red-snackbar button,
+.success-snackbar button,
+.error-snackbar button,
 .warning-snackbar button {
   @apply text-white;
 }

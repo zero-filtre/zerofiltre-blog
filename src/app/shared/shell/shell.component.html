@@ -117,6 +117,10 @@
                         </div>
                     </a>
 
+                    <button *ngIf="authService.isLoggedIn$ | async" class="navLink" (click)="logout()">
+                        <div class="!font-semibold">Deconnexion</div>
+                    </button>
+
                 </div>
 
                 <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"

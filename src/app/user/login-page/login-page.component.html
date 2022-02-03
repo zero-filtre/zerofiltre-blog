@@ -37,10 +37,6 @@
                                     class="mt-1 text-xs sm:text-sm text-error italic">
                                     Le mot de passe est obligatoire.
                                 </div>
-                                <div *ngIf="password?.errors?.['minlength']"
-                                    class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Le mot de passe doit comporter au moins 6 caractères.
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -54,7 +50,8 @@
                         </label>
                     </div>
                     <div class="text-sm">
-                        <a href="#" class="font-semibold text-primary-500 hover:text-primary-300 transition-all">
+                        <a routerLink="/resetPassword"
+                            class="font-semibold text-primary-500 hover:text-primary-300 transition-all">
                             Mot de passe oublié?
                         </a>
                     </div>
@@ -95,7 +92,16 @@
                         Se connecter
                     </button>
                 </div>
+
             </form>
+
+            <div class="">
+                <a routerLink="/register"
+                    class="inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
+                    <span class="sr-only">Creer mon compte</span>
+                    Créer mon compte
+                </a>
+            </div>
 
             <div>
                 <div class="relative mt-5">

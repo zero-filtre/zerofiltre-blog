@@ -28,11 +28,7 @@ export class SignUpPageComponent implements OnInit {
     private authService: AuthService,
     private messageService: MessageService,
     private state: ActivatedRoute
-  ) {
-    if (this.authService.isLoggedIn$) {
-      this.router.navigateByUrl('/articles');
-    }
-  }
+  ) { }
 
   public InitForm(): void {
     this.form = this.formuilder.group({
@@ -59,8 +55,7 @@ export class SignUpPageComponent implements OnInit {
     this.loading = true;
 
     this.authService.signup(this.form.value).subscribe({
-      next: (response: User) => {
-        console.log('USER: ', response);
+      next: (_response: User) => {
         this.router.navigate(['/']);
         this.form.reset();
         this.loading = false;
@@ -68,7 +63,6 @@ export class SignUpPageComponent implements OnInit {
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
-        // this.messageService.loginError()
       }
     })
   }

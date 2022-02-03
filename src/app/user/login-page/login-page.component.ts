@@ -19,22 +19,17 @@ export class LoginPageComponent implements OnInit {
   public readonly gitHubRedirectURL = environment.gitHubRedirectURL;
   public readonly stackOverflowRedirectURL = environment.stackOverflowRedirectURL;
   public path: string = '/';
-  public returnUrl!: string;
 
   constructor(
-    private formuilder: FormBuilder,
+    private formbuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
     private messageservice: MessageService
-  ) {
-    if (this.authService.isLoggedIn$) {
-      this.router.navigateByUrl('/articles');
-    }
-  }
+  ) { }
 
   public InitForm(): void {
-    this.form = this.formuilder.group({
+    this.form = this.formbuilder.group({
       username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     })
@@ -47,7 +42,7 @@ export class LoginPageComponent implements OnInit {
     this.loading = true;
     this.authService.login(this.form.value).subscribe({
       next: (_response: any) => {
-        this.router.navigateByUrl(this.returnUrl);
+        this.router.navigateByUrl('/');
         this.form.reset();
         this.loading = false;
       },
@@ -59,9 +54,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // get return url from route parameters or default to '/'
-    this.route.queryParams
-      .subscribe(params => this.returnUrl = params['returnUrl'] || '/articles');
     this.InitForm()
   }
 

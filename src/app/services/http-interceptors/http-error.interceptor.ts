@@ -25,8 +25,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           const errorMessage = this.setError(error)
-          this.messageService.openSnackBarError(errorMessage, '')
-          return throwError(() => errorMessage)
+          this.messageService.openSnackBarError(errorMessage, '');
+          return throwError(() => errorMessage);
         })
       );
   }
@@ -52,6 +52,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           errorMessage = error.error.error.message;
         } else {
           errorMessage = errorMessage;
+        }
+
+        if (error.status === 401) {
+          this.authService.logout();
         }
       }
     }

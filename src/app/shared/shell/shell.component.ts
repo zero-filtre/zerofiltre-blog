@@ -19,6 +19,10 @@ export class ShellComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, public authService: AuthService) { }
 
+  public logout() {
+    this.authService.logout();
+  }
+
   ngOnInit(): void {
   }
 

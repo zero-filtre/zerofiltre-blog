@@ -19,26 +19,42 @@
             </a>
         </div>
 
-        <div class="action-buttons hidden lg:block space-x-1 sm:space-x-2">
-            <div *ngIf="form.invalid; else validBtn" class="space-x-1 sm:space-x-2">
-                <button
-                    class="px-4 py-2 border border-primary-500 shadow-sm bg-primary-500 opacity-[0.15] rounded-full text-sm text-white leading-5 font-semibold"
-                    type="submit" disabled>
+        <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between">
+            <ng-container *ngIf="form.invalid; else validBtn" class="">
+                <button [disabled]="form.invalid || loading"
+                    class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
                     Publier
                 </button>
                 <button type="submit" disabled
-                    class="px-4 py-2 border border-skin-border shadow-sm bg-skin-card opacity-[0.15] rounded-full text-sm text-skin-base leading-5 font-semibold">
+                    class="px-4 py-2 border w-full border-skin-border shadow-sm bg-skin-card opacity-[0.15] rounded-full text-sm text-skin-base leading-5 font-semibold">
                     Sauvergarder
                 </button>
-            </div>
+            </ng-container>
+
             <ng-template #validBtn>
-                <button type="submit" (click)="publishArticle()"
-                    class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
-                    Publier
+                <button type="submit" (click)="publishArticle()" [disabled]="loading"
+                    [ngClass]="{'opacity-50': loading}"
+                    class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
+                    <span *ngIf="!isPublishing">Publier</span>
+                    <svg *ngIf="isPublishing" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
                 </button>
-                <button type="submit" (click)="saveArticle()"
-                    class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-200">
-                    Sauvergarder
+
+                <button type="submit" (click)="saveArticle()" [disabled]="loading" [ngClass]="{'opacity-50': loading}"
+                    class="px-4 py-2 border border-skin-border w-full rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-200">
+                    <span *ngIf="!isSaving">Sauvegarder</span>
+                    <svg *ngIf="isSaving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="#00c2cb" stroke-width="10" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
                 </button>
             </ng-template>
         </div>
@@ -345,7 +361,7 @@
             </aside>
         </div>
 
-        <div class="action-buttons lg:hidden flex space-x-1 sm:space-x-2 mt-5">
+        <!-- <div class="action-buttons lg:hidden flex space-x-1 sm:space-x-2 mt-5">
             <div *ngIf="form.invalid; else validBtn" class="space-x-1 sm:space-x-2">
                 <button
                     class="px-4 py-2 border border-primary-500 shadow-sm bg-primary-500 opacity-[0.15] rounded-full text-sm text-white leading-5 font-semibold"
@@ -367,7 +383,7 @@
                     Sauvergarder
                 </button>
             </ng-template>
-        </div>
+        </div> -->
     </form>
 
 </div>
