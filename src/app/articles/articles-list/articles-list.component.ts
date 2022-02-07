@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
@@ -9,13 +9,14 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { MessageService } from 'src/app/services/message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-articles-list',
   templateUrl: './articles-list.component.html',
   styleUrls: ['./articles-list.component.css'],
 })
-export class ArticlesListComponent implements OnInit {
+export class ArticlesListComponent implements OnInit, OnDestroy {
   public articles!: Article[];
   public tagList!: Tag[];
   public pageNumber: number = 0;
@@ -24,6 +25,8 @@ export class ArticlesListComponent implements OnInit {
   public loading: boolean = false;
   public errorMessage: string = '';
   public mainPage = true;
+
+  public articlesSub!: Subscription;
 
   constructor(
     private seo: SeoService,
@@ -47,7 +50,7 @@ export class ArticlesListComponent implements OnInit {
 
   public fetchArticles(): void {
     this.loading = true;
-    this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
+    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
       next: (response: Article[]) => {
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.tagList = response[0].tags
@@ -65,7 +68,7 @@ export class ArticlesListComponent implements OnInit {
     this.loading = true;
     this.mainPage = false;
 
-    this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
+    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
       next: (response: Article[]) => {
         this.articles = response
           .filter((item: Article) => item.status === 'DRAFT')
@@ -179,5 +182,11 @@ export class ArticlesListComponent implements OnInit {
 
     this.location.go('/articles');
     this.fetchArticles();
+  }
+
+  ngOnDestroy(): void {
+    if (this.articlesSub) {
+      this.articlesSub.unsubscribe();
+    }
   }
 }

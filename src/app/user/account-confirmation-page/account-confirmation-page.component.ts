@@ -38,14 +38,6 @@ export class AccountConfirmationPageComponent implements OnInit {
     });
   }
 
-  public resendUserConfirmation(): void {
-    this.authService.resendUserConfirm('ericmbouwe@gmail.com').subscribe({
-      next: (response: any) => {
-        this.messageService.openSnackBarSuccess(response, 'Ok');
-      }
-    });
-  }
-
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token')!;
     this.verifyToken();
