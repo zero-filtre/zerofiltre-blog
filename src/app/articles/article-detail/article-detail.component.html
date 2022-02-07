@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                         </a>
-                        <p class="text-[13px] text-skin-base leading-5 font-normal line-clamp-2">
+                        <p class="text-[13px] text-skin-base leading-5 font-normal line-clamp-3">
                             {{article?.author?.bio}}
                         </p>
                         <div class="flex space-x-3">
@@ -93,7 +93,7 @@
                 </div>
 
                 <div class="pt-6 mt-6 space-y-6 border-t border-skin-border">
-                    <div *ngIf="nextArticle; else articleHistoryleftSideSkeletonLoader">
+                    <div *ngIf="nextArticle">
                         <h2 class="text-[10px] leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
                             suivant</h2>
                         <a href="articles/{{nextArticle.id}}" class="mt-3 flex items-center space-x-2">
@@ -117,6 +117,16 @@
                             </span>
                         </a>
                     </div>
+
+                    <ng-container *ngIf="loading">
+                        <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                            'border-radius': '5px',
+                                height: '60px',
+                                'width.%': 100,
+                                display: 'block'
+                            }">
+                        </ngx-skeleton-loader>
+                    </ng-container>
                 </div>
 
                 <div class="pt-6 mt-6 border-t border-skin-border">
@@ -212,16 +222,6 @@
                 'border-radius': '9999px',
                     height: '30px',
                     width: '30px'
-                }">
-                </ngx-skeleton-loader>
-            </ng-template>
-
-            <ng-template #articleHistoryleftSideSkeletonLoader>
-                <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                'border-radius': '5px',
-                    height: '60px',
-                    'width.%': 100,
-                    display: 'block'
                 }">
                 </ngx-skeleton-loader>
             </ng-template>
