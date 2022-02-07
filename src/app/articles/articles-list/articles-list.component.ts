@@ -23,6 +23,7 @@ export class ArticlesListComponent implements OnInit {
   public activePage: string = 'recent';
   public loading: boolean = false;
   public errorMessage: string = '';
+  public mainPage = true;
 
   constructor(
     private seo: SeoService,
@@ -30,7 +31,6 @@ export class ArticlesListComponent implements OnInit {
     private dialogRef: MatDialog,
     private router: Router,
     private location: Location,
-    private messageService: MessageService
   ) { }
 
   openArticleEntryDialog(): void {
@@ -63,6 +63,8 @@ export class ArticlesListComponent implements OnInit {
 
   public getSavedArticles(): void {
     this.loading = true;
+    this.mainPage = false;
+
     this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
       next: (response: Article[]) => {
         this.articles = response
