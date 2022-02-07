@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../auth.service';
 
@@ -10,12 +11,14 @@ import { AuthService } from '../auth.service';
   templateUrl: './password-renewal-page.component.html',
   styleUrls: ['./password-renewal-page.component.css']
 })
-export class PasswordRenewalPageComponent implements OnInit {
+export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
   public loading = false;
   public isTokenValid = false;
   public token!: string;
   public form!: FormGroup;
   public successMessage!: string;
+  public tokenSub!: Subscription;
+  public savePasswordSub!: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -40,11 +43,10 @@ export class PasswordRenewalPageComponent implements OnInit {
 
   public verifyToken(): void {
     this.loading = true
-    this.authService.verifyTokenForPasswordReset(this.token).subscribe({
+    this.tokenSub = this.authService.verifyTokenForPasswordReset(this.token).subscribe({
       next: (_response: any) => {
         this.loading = false;
         this.isTokenValid = true;
-        // this.successMessage = 'Bravo vous avez crée un mot de passe avec succes ! Veuillez retournez à la page de connexion.'
       },
       error: (_error: HttpErrorResponse) => {
         if (!this.token) this.messageService.cancel();
@@ -56,12 +58,12 @@ export class PasswordRenewalPageComponent implements OnInit {
 
   public savePassword(): void {
     this.loading = true;
-    this.authService.savePasswordReset({ ...this.form.value, token: this.token }).subscribe({
+    this.savePasswordSub = this.authService.savePasswordReset({ ...this.form.value, token: this.token }).subscribe({
       next: (response: any) => {
         this.loading = false;
         this.authService.logout();
-        this.messageService.openSnackBarSuccess(response, 'Ok', 0);
-        this.successMessage = 'Bravo vous avez crée un mot de passe avec succes ! Veuillez retournez à la page de connexion.'
+        this.messageService.openSnackBarSuccess(response, 'Ok');
+        this.successMessage = 'Bravo vous avez crée un mot de passe avec succes! Veuillez retourner à la page de connexion.'
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
@@ -75,4 +77,13 @@ export class PasswordRenewalPageComponent implements OnInit {
     this.initForm();
   }
 
+  ngOnDestroy(): void {
+    if (this.tokenSub) {
+      this.tokenSub.unsubscribe();
+    }
+
+    if (this.savePasswordSub) {
+      this.savePasswordSub.unsubscribe();
+    }
+  }
 }
