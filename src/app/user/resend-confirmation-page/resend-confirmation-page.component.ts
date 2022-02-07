@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/services/message.service';
+import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class ResendConfirmationPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private seo: SeoService
   ) { }
 
   public InitForm(): void {
@@ -43,6 +45,14 @@ export class ResendConfirmationPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.InitForm();
+
+    this.seo.generateTags({
+      title: 'Renvoyer code de confirmation | Zerofiltre.tech',
+      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      author: 'Zerofiltre.tech',
+      type: 'website',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
   }
 
 }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
+import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
 import { User } from '../user.model';
@@ -27,7 +28,8 @@ export class SignUpPageComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private messageService: MessageService,
-    private state: ActivatedRoute
+    private state: ActivatedRoute,
+    private seo: SeoService
   ) { }
 
   public InitForm(): void {
@@ -68,7 +70,15 @@ export class SignUpPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.InitForm()
+    this.InitForm();
+
+    this.seo.generateTags({
+      title: "S'enregistrer | Zerofiltre.tech",
+      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      author: 'Zerofiltre.tech',
+      type: 'website',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
   }
 
 }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
+import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private seo: SeoService
   ) { }
 
   public initForm(): void {
@@ -75,6 +77,14 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
     this.token = this.route.snapshot.queryParamMap.get('token')!;
     this.verifyToken();
     this.initForm();
+
+    this.seo.generateTags({
+      title: 'Nouveau mot de passe | Zerofiltre.tech',
+      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      author: 'Zerofiltre.tech',
+      type: 'website',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
   }
 
   ngOnDestroy(): void {

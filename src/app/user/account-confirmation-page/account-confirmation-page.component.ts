@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
+import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class AccountConfirmationPageComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private seo: SeoService
   ) { }
 
   public verifyToken(): void {
@@ -41,6 +43,14 @@ export class AccountConfirmationPageComponent implements OnInit {
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token')!;
     this.verifyToken();
+
+    this.seo.generateTags({
+      title: 'Confirmation du compte | Zerofiltre.tech',
+      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      author: 'Zerofiltre.tech',
+      type: 'website',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
   }
 
 }
