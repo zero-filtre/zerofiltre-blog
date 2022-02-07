@@ -28,6 +28,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
   public nextArticle!: Article;
   public articleHasTags!: boolean;
   public loading: boolean = false;
+  public isPublished!: boolean;
   readonly blogUrl = environment.blogUrl;
 
   constructor(
@@ -38,8 +39,8 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService
   ) { }
 
-  public setDateFormat(article: Article) {
-    return formatDate(article);
+  public setDateFormat(date: any) {
+    return formatDate(date)
   }
 
   public getCurrentArticle(articleId: number): void {
@@ -55,6 +56,13 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
             author: art.author?.pseudoName,
             type: 'article'
           })
+          if (art.status === 'PUBLISHED') {
+            this.isPublished = true;
+            console.log('PUBLISHED');
+          } else {
+            this.isPublished = false;
+            console.log('NOT PUBLISHED');
+          }
         })
       )
       .subscribe({
@@ -79,8 +87,8 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
       next: (response: Article) => {
         this.nextArticle = response;
       },
-      error: (error: HttpErrorResponse) => {
-        console.log(error.message);
+      error: (_error: HttpErrorResponse) => {
+        this.messageService.cancel();
       }
     })
 
@@ -91,8 +99,8 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
         next: (response: Article) => {
           this.previousArticle = response;
         },
-        error: (error: HttpErrorResponse) => {
-          console.log(error.message);
+        error: (_error: HttpErrorResponse) => {
+          this.messageService.cancel();
         }
       })
     }

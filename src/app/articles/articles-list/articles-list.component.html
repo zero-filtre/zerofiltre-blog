@@ -221,11 +221,14 @@
                                                 </a>
                                             </p>
                                             <div class="flex space-x-1 text-[13px] text-skin-muted">
-                                                <time *ngIf="mainPage; else savePage"
-                                                    [dateTime]="setDateFormat(article)">{{article.lastPublishedAt |
+                                                <time *ngIf="mainPage; else savedPage"
+                                                    [dateTime]="setDateFormat(article?.lastPublishedAt)">{{article?.lastPublishedAt
+                                                    |
                                                     date }}</time>
-                                                <ng-template #savePage>
-                                                    <time [dateTime]="setDateFormat(article)">{{article.lastSavedAt |
+                                                <ng-template #savedPage>
+                                                    <time
+                                                        [dateTime]="setDateFormat(article?.lastSavedAt)">{{article?.lastSavedAt
+                                                        |
                                                         date }}</time>
                                                 </ng-template>
 

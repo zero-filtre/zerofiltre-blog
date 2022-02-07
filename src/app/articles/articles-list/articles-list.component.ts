@@ -163,8 +163,8 @@ export class ArticlesListComponent implements OnInit {
     }
   }
 
-  public setDateFormat(article: Article) {
-    return formatDate(article)
+  public setDateFormat(date: any) {
+    return formatDate(date)
   }
 
 
