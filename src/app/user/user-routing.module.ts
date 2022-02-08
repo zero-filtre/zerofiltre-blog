@@ -6,7 +6,8 @@ import { PasswordRenewalPageComponent } from './password-renewal-page/password-r
 const routes: Routes = [
   // { path: ':id', component: ProfileComponent }
   { path: 'passwordReset', component: PasswordRenewalPageComponent },
-  { path: 'accountConfirmation', component: AccountConfirmationPageComponent }
+  { path: 'accountConfirmation', component: AccountConfirmationPageComponent },
+  { path: 'social-auth', component: AccountConfirmationPageComponent }
 ];
 
 @NgModule({
