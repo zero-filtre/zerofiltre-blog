@@ -9,6 +9,7 @@ import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
 import { PasswordResetPageComponent } from './password-reset-page/password-reset-page.component';
 import { PasswordRenewalPageComponent } from './password-renewal-page/password-renewal-page.component';
 import { AccountConfirmationPageComponent } from './account-confirmation-page/account-confirmation-page.component';
+import { ResendConfirmationPageComponent } from './resend-confirmation-page/resend-confirmation-page.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AccountConfirmationPageComponent } from './account-confirmation-page/ac
     SignUpPageComponent,
     PasswordResetPageComponent,
     PasswordRenewalPageComponent,
-    AccountConfirmationPageComponent
+    AccountConfirmationPageComponent,
+    ResendConfirmationPageComponent
   ],
   imports: [
     CommonModule,

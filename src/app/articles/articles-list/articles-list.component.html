@@ -221,8 +221,17 @@
                                                 </a>
                                             </p>
                                             <div class="flex space-x-1 text-[13px] text-skin-muted">
-                                                <time
-                                                    [dateTime]="setDateFormat(article)">{{setDateFormat(article)}}</time>
+                                                <time *ngIf="mainPage; else savedPage"
+                                                    [dateTime]="setDateFormat(article?.lastPublishedAt)">{{article?.lastPublishedAt
+                                                    |
+                                                    date }}</time>
+                                                <ng-template #savedPage>
+                                                    <time
+                                                        [dateTime]="setDateFormat(article?.lastSavedAt)">{{article?.lastSavedAt
+                                                        |
+                                                        date }}</time>
+                                                </ng-template>
+
                                                 <span aria-hidden="true">·</span>
                                                 <span>{{article?.readingTime}} min de lecture</span>
                                             </div>

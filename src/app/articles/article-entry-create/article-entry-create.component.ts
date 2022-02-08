@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, of, tap } from 'rxjs';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { MessageService } from 'src/app/services/message.service';
+import { SeoService } from 'src/app/services/seo.service';
 import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
@@ -56,7 +57,8 @@ export class ArticleEntryCreateComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fileUploadService: FileUploadService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private seo: SeoService
   ) { }
 
   public setActiveTab(tabName: string): void {
@@ -264,6 +266,14 @@ export class ArticleEntryCreateComponent implements OnInit {
       // itemsShowLimit: 3,
       // limitSelection: 3,
     };
+
+    this.seo.generateTags({
+      title: "Editer l'aticle",
+      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      author: 'Zerofiltre.tech',
+      type: 'website',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
 
   }
 

@@ -4,6 +4,7 @@ import { AuthGuard } from './user/auth.guard';
 import { LoggedInAuthGuard } from './user/logged-in-auth.guard';
 import { LoginPageComponent } from './user/login-page/login-page.component';
 import { PasswordResetPageComponent } from './user/password-reset-page/password-reset-page.component';
+import { ResendConfirmationPageComponent } from './user/resend-confirmation-page/resend-confirmation-page.component';
 import { SignUpPageComponent } from './user/sign-up-page/sign-up-page.component';
 
 const routes: Routes = [
@@ -21,6 +22,11 @@ const routes: Routes = [
     path: 'resetPassword',
     component: PasswordResetPageComponent,
     canActivate: [LoggedInAuthGuard]
+  },
+  {
+    path: 'resendConfirmation',
+    component: ResendConfirmationPageComponent,
+    // canActivate: [LoggedInAuthGuard]
   },
   {
     path: 'user',

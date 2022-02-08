@@ -66,7 +66,6 @@ export class AuthService {
   public logout() {
     this._isLoggedIn$.next(false);
     localStorage.removeItem(this.TOKEN_NAME);
-    location.reload();
   }
 
   public requestPasswordReset(email: string): Observable<any> {

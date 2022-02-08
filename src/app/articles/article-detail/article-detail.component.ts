@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap, pluck, filter, switchMap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
@@ -13,6 +13,7 @@ import "prismjs/plugins/toolbar/prism-toolbar";
 import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
 import "prismjs/components/prism-markup";
 import { MessageService } from 'src/app/services/message.service';
+import { Subscription } from 'rxjs';
 
 declare var Prism: any;
 
@@ -21,14 +22,17 @@ declare var Prism: any;
   templateUrl: './article-detail.component.html',
   styleUrls: ['./article-detail.component.css']
 })
-export class ArticleDetailComponent implements OnInit, AfterViewChecked {
+export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestroy {
   public article!: Article;
   public articleId!: number;
   public previousArticle!: Article;
   public nextArticle!: Article;
   public articleHasTags!: boolean;
   public loading: boolean = false;
+  public isPublished!: boolean;
   readonly blogUrl = environment.blogUrl;
+
+  public articleSub!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,8 +42,8 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService
   ) { }
 
-  public setDateFormat(article: Article) {
-    return formatDate(article);
+  public setDateFormat(date: any) {
+    return formatDate(date)
   }
 
   public getCurrentArticle(articleId: number): void {
@@ -55,6 +59,13 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
             author: art.author?.pseudoName,
             type: 'article'
           })
+          if (art.status === 'PUBLISHED') {
+            this.isPublished = true;
+            console.log('PUBLISHED');
+          } else {
+            this.isPublished = false;
+            console.log('NOT PUBLISHED');
+          }
         })
       )
       .subscribe({
@@ -73,14 +84,15 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
   }
 
   public fetchArticleSiblings(prev: number, next: number): void {
-    this.articleService.getOneArticle(next).pipe(
+    this.articleSub = this.articleService.getOneArticle(next).pipe(
       filter(objectExists)
     ).subscribe({
       next: (response: Article) => {
         this.nextArticle = response;
       },
-      error: (error: HttpErrorResponse) => {
-        console.log(error.message);
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+        this.messageService.cancel();
       }
     })
 
@@ -91,8 +103,9 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
         next: (response: Article) => {
           this.previousArticle = response;
         },
-        error: (error: HttpErrorResponse) => {
-          console.log(error.message);
+        error: (_error: HttpErrorResponse) => {
+          this.loading = false;
+          this.messageService.cancel();
         }
       })
     }
@@ -113,6 +126,12 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     Prism.highlightAll();
+  }
+
+  ngOnDestroy(): void {
+    if (this.articleSub) {
+      this.articleSub.unsubscribe();
+    }
   }
 
 }

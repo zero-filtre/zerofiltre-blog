@@ -34,8 +34,7 @@ function join(t: any, a: any, s: any) {
   return a.map(format).join(s);
 }
 
-export function formatDate(article: Article) {
-  const date = article.lastPublishedAt!
+export function formatDate(date: any) {
   const dateObj = new Date(date);
   const a = [{ day: 'numeric' }, { month: 'short' }, { year: 'numeric' }];
   return join(dateObj, a, ' ');

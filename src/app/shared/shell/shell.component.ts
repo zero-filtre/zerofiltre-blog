@@ -21,6 +21,7 @@ export class ShellComponent implements OnInit {
 
   public logout() {
     this.authService.logout();
+    location.reload();
   }
 
   ngOnInit(): void {

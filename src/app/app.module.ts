@@ -9,6 +9,12 @@ import { MarkdownModule } from 'ngx-markdown';
 import { httpInterceptorProviders } from './services/http-interceptors';
 import { JwtModule } from "@auth0/angular-jwt";
 import { AuthService } from './user/auth.service';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import { LOCALE_ID } from '@angular/core';
+
+
+registerLocaleData(localeFr, 'fr');
 
 @NgModule({
   declarations: [
@@ -29,6 +35,7 @@ import { AuthService } from './user/auth.service';
     })
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: "fr-FR" },
     httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
