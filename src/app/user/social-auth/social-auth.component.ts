@@ -46,11 +46,35 @@ export class SocialAuthComponent implements OnInit {
     })
   }
 
+  getSOAccessToken(): void {
+    this.route.queryParamMap.subscribe(params => {
+      this.accessToken = params.get('access_token')!;
+
+      if (this.accessToken) {
+        console.log('ACCESS TOKEN: ', this.accessToken);
+        console.log('SO USER Connected');
+        localStorage.setItem(this.authService.TOKEN_NAME, this.accessToken);
+
+        this.authService.SOLogin();
+
+        // this.authService.getSOUser().subscribe({
+        //   next: (response: any) => {
+        //     this.authService.user = response;
+        //   }
+        // })
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.code = this.route.snapshot.queryParamMap.get('code')!;
-    this.accessToken = this.route.snapshot.queryParamMap.get('access_token')!;
 
-    this.getGHAccessToken();
+    if (this.code) {
+      this.getGHAccessToken();
+    } else {
+      this.getSOAccessToken();
+    }
+
   }
 
 }

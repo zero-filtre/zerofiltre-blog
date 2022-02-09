@@ -116,6 +116,15 @@ export class AuthService {
     return this.http.get<any>('https://api.github.com/user');
   }
 
+  public SOLogin() {
+    this.TOKEN_NAME = 'so_access_token';
+    this._isLoggedIn$.next(true);
+  }
+
+  public getSOUser(): Observable<any> {
+    return this.http.get<any>('https://api.stackexchange.com/me');
+  }
+
   private getUser(token: string): User {
     if (!token) {
       return null!
