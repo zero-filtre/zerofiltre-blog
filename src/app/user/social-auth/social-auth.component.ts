@@ -10,12 +10,12 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./social-auth.component.css']
 })
 export class SocialAuthComponent implements OnInit {
-  private code: string = '127f5897896d7197c551';
+  private code!: string;
   private accessToken!: string;
 
   public readonly GITHUB_CLIENT_ID = environment.GITHUB_CLIENT_ID;
   public readonly STACK_OVERFLOW_CLIENT_ID = environment.STACK_OVERFLOW_CLIENT_ID;
-  private readonly GITHUB_CLIENT_SECRET = '';
+  private readonly GITHUB_CLIENT_SECRET = '1e70ed907875eb633f6232235e4c4037888d0adb';
 
   constructor(
     private route: ActivatedRoute,
@@ -24,7 +24,6 @@ export class SocialAuthComponent implements OnInit {
   ) { }
 
   getGHAccessToken(): void {
-    // console.log('SECRET: ', this.GITHUB_CLIENT_SECRET);
     this.authService.getGithubAccessTokenFromCode(this.code, this.GITHUB_CLIENT_ID, this.GITHUB_CLIENT_SECRET).subscribe({
       next: (response: any) => {
         console.log('ACCESS TOKEN: ', response);

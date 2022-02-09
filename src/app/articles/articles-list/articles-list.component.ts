@@ -68,7 +68,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.mainPage = false;
 
-    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'saved').subscribe({
+    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'draft').subscribe({
       next: (response: Article[]) => {
         this.articles = response
           .filter((item: Article) => item.status === 'DRAFT')
