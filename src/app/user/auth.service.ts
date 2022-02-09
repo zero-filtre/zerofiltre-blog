@@ -17,11 +17,11 @@ export class AuthService {
   public user!: User;
 
   get token(): any {
-    return localStorage.getItem(this.TOKEN_NAME);
+    return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
   }
 
   static get token(): any {
-    return localStorage.getItem('jwt_access_token');
+    return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
   }
 
   constructor(
