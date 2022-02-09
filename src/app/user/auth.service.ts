@@ -12,7 +12,7 @@ export class AuthService {
   private readonly apiServerUrl = environment.apiBaseUrl;
 
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  public readonly TOKEN_NAME = 'access_token';
+  public TOKEN_NAME = 'jwt_access_token';
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
   public user!: User;
 
@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   static get token(): any {
-    return localStorage.getItem('access_token');
+    return localStorage.getItem('jwt_access_token');
   }
 
   constructor(
@@ -94,6 +94,23 @@ export class AuthService {
     return this.http.get<any>(`${this.apiServerUrl}/user/resendRegistrationConfirm?email=${email}`, {
       responseType: 'text' as 'json'
     })
+  }
+
+  public getGithubAccessTokenFromCode(code: string, client_id: string, client_secret: string): Observable<any> {
+    return this.http.post<any>(`https://github.com/login/oauth/access_token?code=${code}&client_id=${client_id}&client_secret=${client_secret}`, {
+      responseType: 'text' as 'json'
+    })
+      .pipe(
+        tap((_response: any) => {
+          this.TOKEN_NAME = 'gh_access_token';
+          this._isLoggedIn$.next(true);
+        }),
+        shareReplay()
+      )
+  }
+
+  public getGHUser(): Observable<any> {
+    return this.http.get<any>('https://api.github.com/user');
   }
 
   private getUser(token: string): User {

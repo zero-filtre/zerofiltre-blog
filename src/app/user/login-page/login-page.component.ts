@@ -47,6 +47,8 @@ export class LoginPageComponent implements OnInit {
         this.router.navigateByUrl('/');
         this.form.reset();
         this.loading = false;
+
+        console.log('USER: ', this.authService.user);
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;

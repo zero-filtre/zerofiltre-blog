@@ -50,7 +50,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchArticles(): void {
     this.loading = true;
-    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
+    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
       next: (response: Article[]) => {
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.tagList = response[0].tags
@@ -59,7 +59,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
-        this.errorMessage = 'Oups...!'
+        this.errorMessage = 'Oops...!'
       }
     });
   }
@@ -68,7 +68,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.mainPage = false;
 
-    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
+    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'saved').subscribe({
       next: (response: Article[]) => {
         this.articles = response
           .filter((item: Article) => item.status === 'DRAFT')
