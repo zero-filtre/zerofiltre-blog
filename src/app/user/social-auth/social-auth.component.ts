@@ -43,7 +43,7 @@ export class SocialAuthComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.code = this.route.snapshot.paramMap.get('code')!;
+    this.code = this.route.snapshot.paramMap.get('code')!;
     this.accessToken = this.route.snapshot.paramMap.get('access_token')!;
 
     this.getGHAccessToken();
