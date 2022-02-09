@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
 
@@ -24,6 +25,7 @@ export class SocialAuthComponent implements OnInit {
   ) { }
 
   getGHAccessToken(): void {
+    console.log('CODE: ', this.code);
     this.authService.getGithubAccessTokenFromCode(this.code, this.GITHUB_CLIENT_ID, this.GITHUB_CLIENT_SECRET).subscribe({
       next: (response: any) => {
         console.log('ACCESS TOKEN: ', response);
@@ -43,10 +45,16 @@ export class SocialAuthComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.code = this.route.snapshot.paramMap.get('code')!;
-    this.accessToken = this.route.snapshot.paramMap.get('access_token')!;
-
+    this.code = this.route.snapshot.queryParamMap.get('code')!;
+    this.accessToken = this.route.snapshot.queryParamMap.get('access_token')!;
     this.getGHAccessToken();
+
+    // this.route.queryParams.pipe(filter(params => params.code))
+    //   .subscribe(params => {
+    //     this.code = params.code;
+    //     this.getGHAccessToken();
+    //     }
+    //   )
   }
 
 }
