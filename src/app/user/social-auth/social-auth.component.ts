@@ -25,7 +25,8 @@ export class SocialAuthComponent implements OnInit {
   ) { }
 
   getGHAccessToken(): void {
-    console.log('CODE: ', this.code);
+    // InitRequestAccessTokenFromServer(code) => ServerRequestAccessToken(code, clt_id, secret_id)
+
     this.authService.getGithubAccessTokenFromCode(this.code, this.GITHUB_CLIENT_ID, this.GITHUB_CLIENT_SECRET).subscribe({
       next: (response: any) => {
         console.log('ACCESS TOKEN: ', response);
@@ -39,6 +40,7 @@ export class SocialAuthComponent implements OnInit {
         )
       },
       error: (_error: HttpErrorResponse) => {
+        console.log('ERR: ', _error);
         // this.router.navigateByUrl('/login');
       }
     })
@@ -47,14 +49,8 @@ export class SocialAuthComponent implements OnInit {
   ngOnInit(): void {
     this.code = this.route.snapshot.queryParamMap.get('code')!;
     this.accessToken = this.route.snapshot.queryParamMap.get('access_token')!;
-    this.getGHAccessToken();
 
-    // this.route.queryParams.pipe(filter(params => params.code))
-    //   .subscribe(params => {
-    //     this.code = params.code;
-    //     this.getGHAccessToken();
-    //     }
-    //   )
+    this.getGHAccessToken();
   }
 
 }

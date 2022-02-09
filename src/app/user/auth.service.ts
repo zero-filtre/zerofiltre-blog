@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, shareReplay, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -97,8 +97,11 @@ export class AuthService {
   }
 
   public getGithubAccessTokenFromCode(code: string, client_id: string, client_secret: string): Observable<any> {
-    return this.http.post<any>(`https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token?code=${code}&client_id=${client_id}&client_secret=${client_secret}`, {
-      responseType: 'text' as 'json',
+    // return this.http.post<any>(`https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token?code=${code}&client_id=${client_id}&client_secret=${client_secret}`, {
+    //   headers: new HttpHeaders({ 'Content-Type': 'application/text' })
+    // })
+    return this.http.post<any>(`https://github.com/login/oauth/access_token?code=${code}&client_id=${client_id}&client_secret=${client_secret}`, {
+      responseType: 'text' as 'json'
     })
       .pipe(
         tap((_response: any) => {

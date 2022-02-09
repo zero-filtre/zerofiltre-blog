@@ -51,7 +51,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       if (error.status !== 0) {
         let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
         console.log('SERVER ERROR');
-        console.log('ERROR 400: ', error.error);
 
         if (serverErrorExist) {
           errorMessage = error.error.error.message;
