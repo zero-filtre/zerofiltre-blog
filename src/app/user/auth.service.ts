@@ -12,7 +12,7 @@ export class AuthService {
   private readonly apiServerUrl = environment.apiBaseUrl;
 
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  public TOKEN_NAME = 'jwt_access_token';
+  public TOKEN_NAME!: string;
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
   public user!: User;
 
@@ -30,9 +30,11 @@ export class AuthService {
   ) {
     const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
     console.log('IS TOKEN EXPIRED: ', isTokenExpired);
+    console.log('TOKEN: ', this.token);
 
+    // this._isLoggedIn$.next(!!this.token);
     this._isLoggedIn$.next(!isTokenExpired);
-    this.user = this.getUser(this.token);
+    if (this.TOKEN_NAME === 'jwt_access_token') this.user = this.getUser(this.token);
   }
 
   public login(credentials: FormData): Observable<any> {
@@ -41,6 +43,7 @@ export class AuthService {
     }).pipe(
       tap((response: any) => {
         const token = response.headers.get('authorization').split(' ')[1]
+        this.TOKEN_NAME = 'jwt_access_token';
         this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
         localStorage.setItem(this.TOKEN_NAME, token);
         this.user = this.getUser(token);
@@ -55,6 +58,7 @@ export class AuthService {
     }).pipe(
       tap((response: any) => {
         const token = response.headers.get('authorization').split(' ')[1]
+        this.TOKEN_NAME = 'jwt_access_token';
         this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
         localStorage.setItem(this.TOKEN_NAME, token);
         this.user = response;
