@@ -99,18 +99,17 @@ export class AuthService {
   }
 
   public getGithubAccessTokenFromCode(code: string): Observable<any> {
-    return this.http.post<any>(`${this.apiServerUrl}/user/github/accessToken?code=${code}`, {
+    return this.http.post<any>(`${this.apiServerUrl}/user/github/accessToken?code=${code}`, {}, {
       observe: 'response'
-    })
-      .pipe(
-        tap((response: any) => {
-          const token = this.extractTokenFromHeaders(response)
-          this.TOKEN_NAME = 'gh_access_token';
-          this._isLoggedIn$.next(true);
-          localStorage.setItem(this.TOKEN_NAME, token);
-        }),
-        shareReplay()
-      )
+    }).pipe(
+      tap((response: any) => {
+        const token = this.extractTokenFromHeaders(response)
+        this.TOKEN_NAME = 'gh_access_token';
+        this._isLoggedIn$.next(true);
+        localStorage.setItem(this.TOKEN_NAME, token);
+      }),
+      shareReplay()
+    )
   }
 
   public getGHUser(): Observable<any> {

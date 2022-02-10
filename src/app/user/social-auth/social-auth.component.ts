@@ -25,8 +25,7 @@ export class SocialAuthComponent implements OnInit {
 
   getGHAccessToken(): void {
     this.authService.getGithubAccessTokenFromCode(this.code).subscribe({
-      next: (response: any) => {
-        console.log('ACCESS TOKEN: ', response);
+      next: (_response: any) => {
         console.log('GH USER Connected');
         this.router.navigateByUrl('/');
 
