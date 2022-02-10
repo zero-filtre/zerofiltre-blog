@@ -201,7 +201,10 @@
 
                                     <p
                                         class="article-description mt-2 text-sm tracking-wide font-light text-skin-base leading-5 line-clamp-2">
-                                        <markdown [data]="article?.content"></markdown>
+                                        <!-- <ng-container *ngIf="!article?.summary">
+                                            <markdown [data]="article?.content"></markdown>
+                                        </ng-container> -->
+                                        <ng-container *ngIf="article?.summary">{{article?.summary}}</ng-container>
                                     </p>
 
                                     <div class="article-author mt-3 flex items-center">
