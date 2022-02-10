@@ -39,6 +39,7 @@ export class SocialAuthComponent implements OnInit {
 
   getSOAccessToken(): void {
     if (this.accessToken) {
+      console.log('SO USER Connected');
       this.router.navigateByUrl('/');
       this.authService.SOLogin();
       localStorage.setItem(this.authService.TOKEN_NAME, this.accessToken);
