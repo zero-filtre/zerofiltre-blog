@@ -47,9 +47,6 @@ export class SocialAuthComponent implements OnInit {
   }
 
   getSOAccessToken(): void {
-    // this.route.queryParamMap.subscribe(_params => {
-    // this.accessToken = this.route.snapshot.fragment?.split('=')[1]!;
-
     if (this.accessToken) {
       console.log('ACCESS TOKEN: ', this.accessToken);
       console.log('SO USER Connected');
@@ -61,10 +58,10 @@ export class SocialAuthComponent implements OnInit {
       // this.authService.getSOUser().subscribe({
       //   next: (response: any) => {
       //     this.authService.user = response;
+      //     console.log('AUTHING USER: ', response); 
       //   }
       // })
     }
-    // });
   }
 
   ngOnInit(): void {

@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   static get token(): any {
-    return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
+    return localStorage.getItem('jwt_access_token');
   }
 
   constructor(
@@ -32,13 +32,15 @@ export class AuthService {
 
     if (this.TOKEN_NAME === 'jwt_access_token') {
       const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-      console.log('IS TOKEN EXPIRED: ', isTokenExpired);
+      console.log('IS JWT TOKEN EXPIRED: ', isTokenExpired);
 
       this._isLoggedIn$.next(!isTokenExpired);
       this.user = this.getUser(this.token);
     } else {
       this._isLoggedIn$.next(!!this.token);
     }
+
+    console.log('CTOR USER: ', this.user);
   }
 
   public login(credentials: FormData): Observable<any> {
@@ -46,11 +48,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        const token = response.headers.get('authorization').split(' ')[1]
-        this.TOKEN_NAME = 'jwt_access_token';
-        this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
-        localStorage.setItem(this.TOKEN_NAME, token);
-        this.user = this.getUser(token);
+        this.handleJWTauth(response);
       }),
       shareReplay()
     )
@@ -61,11 +59,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        const token = response.headers.get('authorization').split(' ')[1]
-        this.TOKEN_NAME = 'jwt_access_token';
-        this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
-        localStorage.setItem(this.TOKEN_NAME, token);
-        this.user = response;
+        this.handleJWTauth(response);
       }),
       shareReplay()
     )
@@ -128,6 +122,18 @@ export class AuthService {
 
   public getSOUser(): Observable<any> {
     return this.http.get<any>('https://api.stackexchange.com/me');
+  }
+
+  private handleJWTauth(response: any) {
+    const token = this.extractTokenFromHeaders(response)
+    this.TOKEN_NAME = 'jwt_access_token';
+    this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
+    localStorage.setItem(this.TOKEN_NAME, token);
+    this.user = response;
+  }
+
+  private extractTokenFromHeaders(response: any) {
+    return response.headers.get('authorization').split(' ')[1]
   }
 
   private getUser(token: string): User {
