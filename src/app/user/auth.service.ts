@@ -12,7 +12,7 @@ export class AuthService {
   private readonly apiServerUrl = environment.apiBaseUrl;
 
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  public TOKEN_NAME = 'jwt_access_token';
+  public TOKEN_NAME!: string;
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
   public user!: User;
 
@@ -28,15 +28,17 @@ export class AuthService {
     private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
-    // const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-    // console.log('IS TOKEN EXPIRED: ', isTokenExpired);
-    // this._isLoggedIn$.next(!isTokenExpired);
+    if (this.token) this.TOKEN_NAME = localStorage.key(0)!;
 
-    console.log('TOKEN: ', this.token);
-    console.log('TOKEN NAME: ', this.TOKEN_NAME);
+    if (this.TOKEN_NAME === 'jwt_access_token') {
+      const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
+      console.log('IS TOKEN EXPIRED: ', isTokenExpired);
 
-    this._isLoggedIn$.next(!!this.token);
-    if (this.TOKEN_NAME === 'jwt_access_token') this.user = this.getUser(this.token);
+      this._isLoggedIn$.next(!isTokenExpired);
+      this.user = this.getUser(this.token);
+    } else {
+      this._isLoggedIn$.next(!!this.token);
+    }
   }
 
   public login(credentials: FormData): Observable<any> {
@@ -103,10 +105,7 @@ export class AuthService {
   }
 
   public getGithubAccessTokenFromCode(code: string, client_id: string, client_secret: string): Observable<any> {
-    // return this.http.post<any>(`https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token?code=${code}&client_id=${client_id}&client_secret=${client_secret}`, {
-    //   headers: new HttpHeaders({ 'Content-Type': 'application/text' })
-    // })
-    return this.http.post<any>(`https://github.com/login/oauth/access_token?code=${code}&client_id=${client_id}&client_secret=${client_secret}`, {
+    return this.http.get<any>(`https://github.com/login/oauth/access_token?code=${code}&client_id=${client_id}&client_secret=${client_secret}`, {
       responseType: 'text' as 'json'
     })
       .pipe(
