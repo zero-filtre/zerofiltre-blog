@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { MessageService } from 'src/app/services/message.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -34,6 +35,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private router: Router,
     private location: Location,
+    private authService: AuthService
   ) { }
 
   openArticleEntryDialog(): void {
@@ -182,6 +184,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
     this.location.go('/articles');
     this.fetchArticles();
+
+    console.log('LIST CTOR USER: ', this.authService.user);
   }
 
   ngOnDestroy(): void {

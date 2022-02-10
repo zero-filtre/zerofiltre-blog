@@ -40,7 +40,7 @@ export class AuthService {
       this._isLoggedIn$.next(!!this.token);
     }
 
-    console.log('CTOR USER: ', this.user);
+    console.log('AUTH CTOR USER: ', this.user);
   }
 
   public login(credentials: FormData): Observable<any> {
@@ -48,7 +48,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        this.handleJWTauth(response);
+        this.handleJWTauth(response, 'jwt_access_token');
       }),
       shareReplay()
     )
@@ -59,7 +59,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        this.handleJWTauth(response);
+        this.handleJWTauth(response, 'jwt_access_token');
       }),
       shareReplay()
     )
@@ -103,10 +103,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        const token = this.extractTokenFromHeaders(response)
-        this.TOKEN_NAME = 'gh_access_token';
-        this._isLoggedIn$.next(true);
-        localStorage.setItem(this.TOKEN_NAME, token);
+        this.handleJWTauth(response, 'gh_access_token');
       }),
       shareReplay()
     )
@@ -125,12 +122,11 @@ export class AuthService {
     return this.http.get<any>('https://api.stackexchange.com/me');
   }
 
-  private handleJWTauth(response: any) {
+  private handleJWTauth(response: any, tokenName: string) {
     const token = this.extractTokenFromHeaders(response)
-    this.TOKEN_NAME = 'jwt_access_token';
+    this.TOKEN_NAME = tokenName;
     this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
     localStorage.setItem(this.TOKEN_NAME, token);
-    this.user = response;
   }
 
   private extractTokenFromHeaders(response: any) {

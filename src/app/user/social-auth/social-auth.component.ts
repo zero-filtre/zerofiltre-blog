@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -12,10 +11,6 @@ import { AuthService } from '../auth.service';
 export class SocialAuthComponent implements OnInit {
   private code!: string;
   private accessToken!: string;
-
-  public readonly GITHUB_CLIENT_ID = environment.GITHUB_CLIENT_ID;
-  public readonly STACK_OVERFLOW_CLIENT_ID = environment.STACK_OVERFLOW_CLIENT_ID;
-  private readonly GITHUB_CLIENT_SECRET = '1e70ed907875eb633f6232235e4c4037888d0adb';
 
   constructor(
     private route: ActivatedRoute,
@@ -37,8 +32,7 @@ export class SocialAuthComponent implements OnInit {
         })
       },
       error: (_error: HttpErrorResponse) => {
-        console.log('ERR: ', _error);
-        // this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/login');
       }
     })
   }
