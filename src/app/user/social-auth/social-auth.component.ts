@@ -28,7 +28,7 @@ export class SocialAuthComponent implements OnInit {
       next: (response: any) => {
         console.log('ACCESS TOKEN: ', response);
         console.log('GH USER Connected');
-        localStorage.setItem(this.authService.TOKEN_NAME, this.accessToken);
+        this.router.navigateByUrl('/');
 
         this.authService.getGHUser().subscribe({
           next: (response: any) => {

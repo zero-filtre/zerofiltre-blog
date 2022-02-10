@@ -103,9 +103,11 @@ export class AuthService {
       observe: 'response'
     })
       .pipe(
-        tap((_response: any) => {
+        tap((response: any) => {
+          const token = this.extractTokenFromHeaders(response)
           this.TOKEN_NAME = 'gh_access_token';
           this._isLoggedIn$.next(true);
+          localStorage.setItem(this.TOKEN_NAME, token);
         }),
         shareReplay()
       )
