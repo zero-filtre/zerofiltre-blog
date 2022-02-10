@@ -12,7 +12,7 @@ export class AuthService {
   private readonly apiServerUrl = environment.apiBaseUrl;
 
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  public TOKEN_NAME!: string;
+  public TOKEN_NAME = 'jwt_access_token';
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
   public user!: User;
 
@@ -28,12 +28,14 @@ export class AuthService {
     private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
-    const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-    console.log('IS TOKEN EXPIRED: ', isTokenExpired);
-    console.log('TOKEN: ', this.token);
+    // const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
+    // console.log('IS TOKEN EXPIRED: ', isTokenExpired);
+    // this._isLoggedIn$.next(!isTokenExpired);
 
-    // this._isLoggedIn$.next(!!this.token);
-    this._isLoggedIn$.next(!isTokenExpired);
+    console.log('TOKEN: ', this.token);
+    console.log('TOKEN NAME: ', this.TOKEN_NAME);
+
+    this._isLoggedIn$.next(!!this.token);
     if (this.TOKEN_NAME === 'jwt_access_token') this.user = this.getUser(this.token);
   }
 
