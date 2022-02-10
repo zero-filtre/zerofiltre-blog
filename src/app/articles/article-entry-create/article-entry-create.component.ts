@@ -74,6 +74,7 @@ export class ArticleEntryCreateComponent implements OnInit {
         this.articleTitle = response.title!
         this.form.controls['id'].setValue(+this.articleId)
         this.form.controls['title'].setValue(this.articleTitle)
+        this.form.controls['summary'].setValue(this.article.summary)
         this.form.controls['thumbnail'].setValue(this.article.thumbnail)
         this.form.controls['content'].setValue(this.article.content)
         this.form.controls['tags'].setValue(this.article.tags)
@@ -89,6 +90,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.form = this.formuilder.group({
       id: [null],
       title: ['', [Validators.required]],
+      summary: ['', [Validators.required]],
       thumbnail: [''],
       content: ['', [Validators.required]],
       tags: [[]]
@@ -222,6 +224,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   get title() { return this.form.get('title'); }
+  get summary() { return this.form.get('title'); }
   get content() { return this.form.get('content'); }
   get thumbnail() { return this.form.get('thumbnail'); }
 
@@ -229,7 +232,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     if (this.form.controls['thumbnail'].value !== '') this.form.controls['thumbnail'].setValue('')
   }
 
-  onItemSelect(_item: any) {
+  public onItemSelect(_item: any) {
     this.setFormTagsValue()
   }
 
