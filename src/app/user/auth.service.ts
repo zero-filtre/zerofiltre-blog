@@ -100,7 +100,7 @@ export class AuthService {
 
   public getGithubAccessTokenFromCode(code: string): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/user/github/accessToken?code=${code}`, {
-      responseType: 'text' as 'json'
+      observe: 'response'
     })
       .pipe(
         tap((_response: any) => {
