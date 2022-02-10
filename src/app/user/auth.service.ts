@@ -98,8 +98,8 @@ export class AuthService {
     })
   }
 
-  public getGithubAccessTokenFromCode(code: string, client_id: string, client_secret: string): Observable<any> {
-    return this.http.get<any>(`https://github.com/login/oauth/access_token?code=${code}&client_id=${client_id}&client_secret=${client_secret}`, {
+  public getGithubAccessTokenFromCode(code: string): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/user/github/accessToken?code=${code}`, {
       responseType: 'text' as 'json'
     })
       .pipe(
