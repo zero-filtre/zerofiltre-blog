@@ -73,11 +73,11 @@ export class ArticleEntryCreateComponent implements OnInit {
         this.article = response
         this.articleTitle = response.title!
         this.form.controls['id'].setValue(+this.articleId)
-        this.form.controls['title'].setValue(this.articleTitle)
-        this.form.controls['summary'].setValue(this.article.summary)
-        this.form.controls['thumbnail'].setValue(this.article.thumbnail)
-        this.form.controls['content'].setValue(this.article.content)
-        this.form.controls['tags'].setValue(this.article.tags)
+        this.title?.setValue(this.articleTitle)
+        this.summary?.setValue(this.article.summary)
+        this.thumbnail?.setValue(this.article.thumbnail)
+        this.content?.setValue(this.article.content)
+        this.tags?.setValue(this.article.tags)
         this.selectedTags = this.article.tags
       },
       error: (error: HttpErrorResponse) => {
@@ -96,6 +96,12 @@ export class ArticleEntryCreateComponent implements OnInit {
       tags: [[]]
     })
   }
+
+  get title() { return this.form.get('title'); }
+  get summary() { return this.form.get('summary'); }
+  get content() { return this.form.get('content'); }
+  get thumbnail() { return this.form.get('thumbnail'); }
+  get tags() { return this.form.get('tags'); }
 
   public saveArticle() {
     this.isSaving = true;
@@ -222,11 +228,6 @@ export class ArticleEntryCreateComponent implements OnInit {
       myField.value += myValue;
     }
   }
-
-  get title() { return this.form.get('title'); }
-  get summary() { return this.form.get('title'); }
-  get content() { return this.form.get('content'); }
-  get thumbnail() { return this.form.get('thumbnail'); }
 
   public removeFile() {
     if (this.form.controls['thumbnail'].value !== '') this.form.controls['thumbnail'].setValue('')
