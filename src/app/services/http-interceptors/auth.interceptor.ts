@@ -33,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
           break;
         case 'so_access_token':
           request = request.clone({
-            headers: request.headers.set('authorization', `Bearer ${this.authService.token}`),
+            headers: request.headers.set('authorization', `stack ${this.authService.token}`),
           });
           break;
         default:
