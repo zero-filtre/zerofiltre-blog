@@ -22,7 +22,6 @@ export class SocialAuthComponent implements OnInit {
   getGHAccessToken(): void {
     this.authService.getGithubAccessTokenFromCode(this.code).subscribe({
       next: (_response: any) => {
-        console.log('GH USER Connected');
         this.router.navigateByUrl('/');
 
         this.authService.getGHUser().subscribe({
@@ -40,7 +39,6 @@ export class SocialAuthComponent implements OnInit {
 
   getSOAccessToken(): void {
     if (this.accessToken) {
-      console.log('SO USER Connected');
       this.router.navigateByUrl('/');
       this.authService.SOLogin();
       localStorage.setItem(this.authService.TOKEN_NAME, this.accessToken);
