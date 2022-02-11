@@ -59,8 +59,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }
 
         if (this.authService.token && error.status === 401) {
-          this.authService.logout();
-          location.reload();
+          // this.authService.logout();
+          // location.reload();
         }
       }
     }
