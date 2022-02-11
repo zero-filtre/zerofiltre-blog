@@ -38,18 +38,7 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   dropdownSettings = {};
 
-  public tagList: Tag[] = [
-    { id: 1, name: 'java', colorCode: '#222' },
-    { id: 2, name: 'angular', colorCode: '#222' },
-    { id: 3, name: 'spring-boot', colorCode: '#222' },
-    { id: 4, name: 'html', colorCode: '#222' },
-    { id: 5, name: 'react', colorCode: '#222' },
-    { id: 6, name: 'sql', colorCode: '#222' },
-    { id: 7, name: 'graphql', colorCode: '#222' },
-    { id: 8, name: 'docker', colorCode: '#222' },
-    { id: 9, name: 'api', colorCode: '#222' },
-    { id: 10, name: 'rest', colorCode: '#222' }
-  ]
+  public tagList!: Tag[];
 
   constructor(
     private formuilder: FormBuilder,
@@ -65,6 +54,18 @@ export class ArticleEntryCreateComponent implements OnInit {
     if (tabName === 'editor') this.activeTab = 'editor'
     if (tabName === 'preview') this.activeTab = 'preview'
     if (tabName === 'help') this.activeTab = 'help'
+  }
+
+  public fetchListOfTags(): void {
+    this.loading = true;
+    this.articleService.getListOfTags().subscribe({
+      next: (response: Tag[]) => {
+        this.tagList = response
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
   }
 
   public getArticle(): void {
@@ -255,6 +256,7 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id
+    this.fetchListOfTags();
     this.getArticle()
     this.InitForm()
 

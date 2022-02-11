@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
 export class SocialAuthComponent implements OnInit {
   private code!: string;
   private accessToken!: string;
+  private soKey = 'ZAeo5W0MnZPxiEBgb99MvA((';
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +28,7 @@ export class SocialAuthComponent implements OnInit {
         this.authService.getGHUser().subscribe({
           next: (response: any) => {
             this.authService.user = response;
-            console.log('AUTHING USER: ', response);
+            console.log('AUTHING GH USER: ', response);
           }
         })
       },
@@ -44,12 +45,12 @@ export class SocialAuthComponent implements OnInit {
       this.authService.SOLogin();
       localStorage.setItem(this.authService.TOKEN_NAME, this.accessToken);
 
-      // this.authService.getSOUser().subscribe({
-      //   next: (response: any) => {
-      //     this.authService.user = response;
-      //     console.log('AUTHING USER: ', response); 
-      //   }
-      // })
+      this.authService.getSOUser(this.soKey, this.accessToken).subscribe({
+        next: (response: any) => {
+          this.authService.user = response;
+          console.log('AUTHING SO USER: ', response);
+        }
+      })
     }
   }
 

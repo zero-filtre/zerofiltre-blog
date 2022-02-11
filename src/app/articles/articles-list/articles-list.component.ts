@@ -35,7 +35,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private router: Router,
     private location: Location,
-    private authService: AuthService
   ) { }
 
   openArticleEntryDialog(): void {
@@ -50,12 +49,23 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     });
   }
 
+  public fetchListOfTags(): void {
+    this.loading = true;
+    this.articleService.getListOfTags().subscribe({
+      next: (response: Tag[]) => {
+        this.tagList = response
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
+  }
+
   public fetchArticles(): void {
     this.loading = true;
     this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
       next: (response: Article[]) => {
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
-        this.tagList = response[0].tags
         this.setArticlesReadingTime(response);
         this.loading = false;
       },
@@ -184,8 +194,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
     this.location.go('/articles');
     this.fetchArticles();
-
-    console.log('LIST CTOR USER: ', this.authService.user);
+    this.fetchListOfTags();
   }
 
   ngOnDestroy(): void {
