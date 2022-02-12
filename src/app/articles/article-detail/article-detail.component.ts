@@ -114,6 +114,10 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
     }
   }
 
+  isAuthor(user: any, article: Article): boolean {
+    return user.sub === article?.author?.email
+  }
+
   isSocialLinkPresent(platform: string): boolean {
     return this.article?.author?.socialLinks.some((link: any) => link.platform === platform)
   }

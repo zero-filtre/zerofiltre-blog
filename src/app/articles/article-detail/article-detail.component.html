@@ -24,7 +24,7 @@
                                         {{article?.author?.lastName}}
                                     </p>
                                     <p class="text-xs font-semibold text-skin-muted line-clamp-2">
-                                        {{article?.author?.profession}}
+                                        {{article?.author?.profession || 'Proféssion'}}
                                     </p>
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
             <div class="main-side-container">
 
                 <header *ngIf="article; else articleHeaderSkeletonLoader" class="article-header space-y-4">
-                    <div class="sm:flex sm:items-center sm:flex-row sm:justify-between sm:gap-5">
+                    <div class="flex items-center justify-between gap-5">
                         <div class="flex flex-col space-y-4">
                             <div *ngIf="articleHasTags" class="flex items-center space-x-3">
                                 <div *ngFor="let tag of article?.tags"
@@ -263,7 +263,7 @@
                             </div>
                         </div>
 
-                        <div class="hidden sm:block">
+                        <div class="">
                             <!-- <a routerLink="/" class="text-skin-base group flex w-full items-center space-x-1">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                     class="h-6 w-6 group-hover:-translate-x-1 group-hover:text-primary-500 transition-all duration-200"
@@ -279,7 +279,7 @@
 
                             <div *ngIf="authService.user$ | async as currentUser">
                                 <!-- {{currentUser | json}} -->
-                                <div *ngIf="currentUser.sub === article?.author?.email">
+                                <div *ngIf="isAuthor(currentUser, article)">
                                     <button mat-icon-button [matMenuTriggerFor]="menu" class="text-secondary"
                                         aria-label="Example icon-button with a menu">
                                         <mat-icon>more_vert</mat-icon>
@@ -291,7 +291,7 @@
 
                                             <span>Tous les articles</span>
                                         </a>
-                                        <a routerLink="/edit"
+                                        <a routerLink="edit"
                                             class="block px-4 py-2 hover:bg-skin-link hover:text-secondary text-xs font-montserat font-normal transition-all duration-200">
                                             <span>Editer l'article</span>
                                         </a>
@@ -325,7 +325,7 @@
                                     {{article?.author?.lastName}}
                                 </p>
                                 <p class="text-xs font-medium text-green-500 group-hover:text-skin-primary">
-                                    {{article?.author?.profession}
+                                    {{article?.author?.profession || 'Proféssion'}}
                                 </p>
                             </div>
                         </div>
