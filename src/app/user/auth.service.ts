@@ -75,7 +75,6 @@ export class AuthService {
     }).pipe(
       tap((response: any) => {
         this.handleJWTauth(response, 'jwt_access_token');
-        this.subject.next(response);
       }),
       shareReplay()
     )

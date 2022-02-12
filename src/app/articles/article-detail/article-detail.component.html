@@ -280,7 +280,6 @@
                             <div *ngIf="authService.user$ | async as currentUser">
                                 <!-- {{currentUser | json}} -->
                                 <div *ngIf="currentUser.sub === article?.author?.email">
-                                    YES
                                     <button mat-icon-button [matMenuTriggerFor]="menu" class="text-secondary"
                                         aria-label="Example icon-button with a menu">
                                         <mat-icon>more_vert</mat-icon>
