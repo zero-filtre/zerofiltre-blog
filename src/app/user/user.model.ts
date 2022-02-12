@@ -3,6 +3,7 @@ export interface User {
     pseudoName?: string;
     firstName?: string;
     lastName?: string;
+    email?: string;
     registeredOn?: Date;
     profilePicture?: string;
     bio?: string;

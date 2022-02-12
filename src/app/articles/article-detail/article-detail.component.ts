@@ -14,6 +14,7 @@ import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
 import "prismjs/components/prism-markup";
 import { MessageService } from 'src/app/services/message.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/user/auth.service';
 
 declare var Prism: any;
 
@@ -39,7 +40,8 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
     private articleService: ArticleService,
     private seo: SeoService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    public authService: AuthService
   ) { }
 
   public setDateFormat(date: any) {
@@ -62,6 +64,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
           if (art.status === 'PUBLISHED') {
             this.isPublished = true;
             console.log('PUBLISHED');
+            console.log('ARTICLE DETAILS: ', art);
           } else {
             this.isPublished = false;
             console.log('NOT PUBLISHED');
