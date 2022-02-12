@@ -14,8 +14,8 @@ export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
 
-  private subject = new BehaviorSubject<any>(null!);
-  public user$: Observable<any> = this.subject.asObservable();
+  private _user$ = new BehaviorSubject<any>(null);
+  public user$: Observable<any> = this._user$.asObservable();
 
   public TOKEN_NAME!: string;
   private SOAccessToken!: string;
@@ -43,17 +43,17 @@ export class AuthService {
       const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
       const usr = this.getJWTuser(this.token);
       this._isLoggedIn$.next(!isTokenExpired);
-      this.subject.next(usr);
+      this._user$.next(usr);
 
     } else if (this.TOKEN_NAME === 'gh_access_token') {
       this._isLoggedIn$.next(!!this.token);
       this.getGHUser().pipe(
-        tap(usr => this.subject.next(usr))
+        tap(usr => this._user$.next(usr))
       )
     } else {
       this._isLoggedIn$.next(!!this.token);
       this.getSOUser(this.SOKey, this.SOAccessToken).pipe(
-        tap(usr => this.subject.next(usr))
+        tap(usr => this._user$.next(usr))
       )
     }
   }
@@ -82,7 +82,7 @@ export class AuthService {
 
   public logout() {
     this._isLoggedIn$.next(false);
-    this.subject.next(null!);
+    this._user$.next(null);
     localStorage.removeItem(this.TOKEN_NAME);
   }
 
@@ -120,7 +120,6 @@ export class AuthService {
     }).pipe(
       tap((response: any) => {
         this.handleJWTauth(response, 'gh_access_token');
-        // this.subject.next(this.getGHUser());
       }),
       shareReplay()
     )
