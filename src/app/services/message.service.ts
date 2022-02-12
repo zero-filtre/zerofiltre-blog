@@ -76,6 +76,12 @@ export class MessageService {
       .subscribe();
   }
 
+  // If not the author
+  authorRoleError() {
+    this.openSnackBarError('Vous ne pouvez pas acceder à cette page!', '');
+    this.router.navigate(['/']);
+  }
+
   // Email notification on signup success
   signUpSuccess() {
     this.openSnackBarSuccess('Un email de validation de compte vous a été envoyé, veuillez consulter votre boite mail', 'Ok', 0);
@@ -91,28 +97,4 @@ export class MessageService {
       )
       .subscribe();
   }
-
-  /**
-   * 
-    private setCustomErrorMessage(error: HttpErrorResponse, customErrorMessage: string): string {
-      let errorMessage = "Un problème est survenu, merci d'essayer de nouveau plus tard ou de contacter un administrateur de l'API";
-      console.log('ERROR: ', error);
-
-      if (error.error instanceof ErrorEvent) {
-        errorMessage = error.error.message;
-      } else {
-        if (error.status !== 0) {
-          let serverErrorExist = !!error?.error?.error
-
-          if (serverErrorExist) {
-            errorMessage = customErrorMessage;
-          } else {
-            errorMessage = errorMessage;
-          }
-        }
-      }
-
-      return errorMessage;
-    }
-  */
 }

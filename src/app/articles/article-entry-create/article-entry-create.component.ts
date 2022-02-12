@@ -48,7 +48,9 @@ export class ArticleEntryCreateComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private messageService: MessageService,
     private seo: SeoService
-  ) { }
+  ) {
+
+  }
 
   public setActiveTab(tabName: string): void {
     if (tabName === 'editor') this.activeTab = 'editor'
@@ -57,14 +59,11 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public fetchListOfTags(): void {
-    this.loading = true;
     this.articleService.getListOfTags().subscribe({
       next: (response: Tag[]) => {
         this.tagList = response
       },
-      error: (_error: HttpErrorResponse) => {
-        this.loading = false;
-      }
+      error: (_error: HttpErrorResponse) => { }
     })
   }
 
@@ -105,19 +104,19 @@ export class ArticleEntryCreateComponent implements OnInit {
   get tags() { return this.form.get('tags'); }
 
   public saveArticle() {
-    this.isSaving = true;
     this.loading = true;
+    this.isSaving = true;
     this.articleService.updateToSave(this.form.value).pipe(
       tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', ''))
     ).subscribe({
       next: (_response: Article) => {
-        this.isSaving = false;
         this.loading = false;
+        this.isSaving = false;
         this.messageService.openSnackBarSuccess('Article sauvegardé !', '');
       },
       error: (_error: HttpErrorResponse) => {
-        this.isSaving = false;
         this.loading = false;
+        this.isSaving = false;
       }
     })
   }
@@ -256,9 +255,10 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id
-    this.fetchListOfTags();
     this.getArticle()
     this.InitForm()
+
+    this.fetchListOfTags();
 
     this.dropdownSettings = {
       singleSelection: false,

@@ -64,7 +64,6 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
           if (art.status === 'PUBLISHED') {
             this.isPublished = true;
             console.log('PUBLISHED');
-            console.log('ARTICLE DETAILS: ', art);
           } else {
             this.isPublished = false;
             console.log('NOT PUBLISHED');

@@ -11,11 +11,15 @@ export class ArticleService {
   readonly apiServerUrl = environment.apiBaseUrl;
   public loading = false;
 
-  private subject = new BehaviorSubject<Article[]>([]);
-  public articles: Observable<Article[]> = this.subject.asObservable();
+  private _articlesSubject$ = new BehaviorSubject<Article[]>([]);
+  public articles$: Observable<Article[]> = this._articlesSubject$.asObservable();
+
+  private _tagssSubject$ = new BehaviorSubject<Tag[]>([]);
+  public tags$: Observable<Tag[]> = this._tagssSubject$.asObservable();
 
   constructor(private http: HttpClient) {
     // this.loadAllArticles();
+    this.loadAllTags();
   }
 
   private loadAllArticles() {
@@ -29,7 +33,21 @@ export class ArticleService {
         }),
         tap(articles => {
           this.loading = false;
-          this.subject.next(articles)
+          this._articlesSubject$.next(articles)
+        })
+      )
+  }
+
+  private loadAllTags() {
+    console.log('LODTAGS');
+    this.http.get<Tag[]>(`${this.apiServerUrl}/tag`)
+      .pipe(
+        catchError(error => {
+          return throwError(() => error);
+        }),
+        tap(tags => {
+          this._tagssSubject$.next(tags)
+          console.log('TGAS: ', tags);
         })
       )
   }

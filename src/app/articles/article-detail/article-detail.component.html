@@ -280,12 +280,21 @@
                             <div *ngIf="authService.user$ | async as currentUser">
                                 <!-- {{currentUser | json}} -->
                                 <div *ngIf="isAuthor(currentUser, article)">
-                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="text-secondary"
-                                        aria-label="Example icon-button with a menu">
-                                        <mat-icon>more_vert</mat-icon>
+                                    <button [matMenuTriggerFor]="menu" class="text-secondary"
+                                        aria-label="icon-button with a menu">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                        </svg>
+                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                                        </svg> -->
                                     </button>
 
-                                    <mat-menu #menu="matMenu">
+                                    <mat-menu #menu="matMenu" class="mt-2">
                                         <a routerLink="/articles"
                                             class="block px-4 py-2 hover:bg-skin-link hover:text-secondary text-xs font-montserat font-normal transition-all duration-200">
 
@@ -324,7 +333,7 @@
                                     {{article?.author?.firstName}}
                                     {{article?.author?.lastName}}
                                 </p>
-                                <p class="text-xs font-medium text-green-500 group-hover:text-skin-primary">
+                                <p class="text-xs font-medium text-primary-500 group-hover:text-skin-primary">
                                     {{article?.author?.profession || 'Proféssion'}}
                                 </p>
                             </div>
