@@ -35,6 +35,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private router: Router,
     private location: Location,
+    public authService: AuthService
   ) { }
 
   openArticleEntryDialog(): void {

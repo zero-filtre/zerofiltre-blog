@@ -14,10 +14,20 @@ export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
 
-  private subject = new BehaviorSubject<User>(null!);
-  public user: Observable<User> = this.subject.asObservable();
+  private subject = new BehaviorSubject<any>(null!);
+  public user$: Observable<any> = this.subject.asObservable();
 
   public TOKEN_NAME!: string;
+  private SOAccessToken!: string;
+  private SOKey = 'ZAeo5W0MnZPxiEBgb99MvA(('
+
+  constructor(
+    private http: HttpClient,
+    private jwtHelper: JwtHelperService
+  ) {
+    if (this.token) this.TOKEN_NAME = localStorage.key(0)!;
+    this.loadCurrentUser()
+  }
 
   get token(): any {
     return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
@@ -28,21 +38,24 @@ export class AuthService {
     return localStorage.getItem('jwt_access_token');
   }
 
-  constructor(
-    private http: HttpClient,
-    private jwtHelper: JwtHelperService
-  ) {
-    if (this.token) this.TOKEN_NAME = localStorage.key(0)!;
-
+  private loadCurrentUser() {
     if (this.TOKEN_NAME === 'jwt_access_token') {
       const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-      console.log('IS JWT TOKEN EXPIRED: ', isTokenExpired);
+      const usr = this.getJWTuser(this.token);
       this._isLoggedIn$.next(!isTokenExpired);
+      this.subject.next(usr);
+
+    } else if (this.TOKEN_NAME === 'gh_access_token') {
+      this._isLoggedIn$.next(!!this.token);
+      this.getGHUser().pipe(
+        tap(usr => this.subject.next(usr))
+      )
     } else {
       this._isLoggedIn$.next(!!this.token);
+      this.getSOUser(this.SOKey, this.SOAccessToken).pipe(
+        tap(usr => this.subject.next(usr))
+      )
     }
-
-    console.log('AUTH CTOR USER: ', this.user);
   }
 
   public login(credentials: FormData): Observable<any> {
@@ -51,7 +64,6 @@ export class AuthService {
     }).pipe(
       tap((response: any) => {
         this.handleJWTauth(response, 'jwt_access_token');
-        this.subject.next(this.getJWTuser(this.token));
       }),
       shareReplay()
     );
@@ -119,10 +131,10 @@ export class AuthService {
     return this.http.get<any>('https://api.github.com/user');
   }
 
-  public SOLogin() {
+  public SOLogin(accessToken: string) {
     this.TOKEN_NAME = 'so_access_token';
     this._isLoggedIn$.next(true);
-    // this.subject.next(this.getSOUser());
+    this.SOAccessToken = accessToken;
   }
 
   public getSOUser(soKey: string, accessToken: string): Observable<any> {
@@ -147,3 +159,4 @@ export class AuthService {
     return JSON.parse(atob(token.split('.')[1])) as User;
   }
 }
+

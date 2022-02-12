@@ -11,7 +11,6 @@ import { AuthService } from '../auth.service';
 export class SocialAuthComponent implements OnInit {
   private code!: string;
   private accessToken!: string;
-  private soKey = 'ZAeo5W0MnZPxiEBgb99MvA((';
 
   constructor(
     private route: ActivatedRoute,
@@ -24,12 +23,12 @@ export class SocialAuthComponent implements OnInit {
       next: (_response: any) => {
         this.router.navigateByUrl('/');
 
-        this.authService.getGHUser().subscribe({
-          next: (response: any) => {
-            this.authService.user = response;
-            console.log('AUTHING GH USER: ', response);
-          }
-        })
+        // this.authService.getGHUser().subscribe({
+        //   next: (response: any) => {
+        //     this.authService.user = response;
+        //     console.log('AUTHING GH USER: ', response);
+        //   }
+        // })
       },
       error: (_error: HttpErrorResponse) => {
         this.router.navigateByUrl('/login');
@@ -40,15 +39,15 @@ export class SocialAuthComponent implements OnInit {
   getSOAccessToken(): void {
     if (this.accessToken) {
       this.router.navigateByUrl('/');
-      this.authService.SOLogin();
+      this.authService.SOLogin(this.accessToken);
       localStorage.setItem(this.authService.TOKEN_NAME, this.accessToken);
 
-      this.authService.getSOUser(this.soKey, this.accessToken).subscribe({
-        next: (response: any) => {
-          this.authService.user = response;
-          console.log('AUTHING SO USER: ', response);
-        }
-      })
+      // this.authService.getSOUser(this.soKey, this.accessToken).subscribe({
+      //   next: (response: any) => {
+      //     this.authService.user = response;
+      //     console.log('AUTHING SO USER: ', response);
+      //   }
+      // })
     }
   }
 
@@ -61,7 +60,6 @@ export class SocialAuthComponent implements OnInit {
     } else {
       this.getSOAccessToken();
     }
-
   }
 
 }
