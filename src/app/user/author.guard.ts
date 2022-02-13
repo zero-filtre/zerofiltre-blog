@@ -29,13 +29,15 @@ export class AuthorGuard implements CanActivate {
               this.authService.user$.subscribe({
                 next: (currUsr: any) => {
                   if (
-                    currUsr.sub !== response?.author?.email ||
-                    currUsr.email !== response?.author?.email ||
-                    currUsr.email !== response?.author?.email ||
-                    currUsr.id !== response?.author?.id ||
-                    currUsr.items[0].user_id !== response?.author?.id ||
-                    currUsr.items[0].account_id !== response?.author?.id
+                    currUsr?.sub !== response?.author?.email
+                    // || currUsr?.email !== response?.author?.email
+                    // || currUsr?.email !== response?.author?.email
+                    // || currUsr?.id !== response?.author?.id
+                    // || currUsr?.items[0].user_id !== response?.author?.id
+                    // || currUsr?.items[0].account_id !== response?.author?.id
                   ) {
+                    console.log('ROUTE CHECK CURR USER: ', currUsr);
+                    console.log('ROUTE CHECK CURR ARTICLE: ', response);
                     this.messageService.authorRoleError();
                   }
                 }

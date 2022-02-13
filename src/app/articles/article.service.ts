@@ -39,7 +39,6 @@ export class ArticleService {
   }
 
   private loadAllTags() {
-    console.log('LODTAGS');
     this.http.get<Tag[]>(`${this.apiServerUrl}/tag`)
       .pipe(
         catchError(error => {

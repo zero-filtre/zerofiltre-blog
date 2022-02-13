@@ -27,6 +27,8 @@ export class AuthService {
   ) {
     if (this.token) this.TOKEN_NAME = localStorage.key(0)!;
     this.loadCurrentUser()
+
+    console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
   }
 
   get token(): any {
