@@ -139,17 +139,19 @@
 
                     <button *ngIf="authService.isLoggedIn$ | async" [matMenuTriggerFor]="menu" class="ml-4"
                         aria-label="Example icon-button with a menu">
-                        <!-- <ng-container *ngIf="authService.user$ | async as user"> -->
-                        <!-- <img *ngIf="user.profilePicture" class="avatar" [src]="user.profilePicture"> -->
-                        <!-- <ng-container *ngIf="!user.profilePicture"> -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="h-10 w-10 border-2 border-primary-500 rounded-full p-1 text-primary-500 hover:text-primary-300 hover:border-primary-300 transition-all duration-200"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        <!-- </ng-container> -->
-                        <!-- </ng-container> -->
+                        <ng-container *ngIf="authService.user$ | async as user">
+                            <img *ngIf="user.profilePicture" class="avatar"
+                                [src]="user.profilePicture || user.avatar_url || user.items[0].profile_image">
+                            <ng-container
+                                *ngIf="!user.profilePicture || !user.avatar_url || !user.items[0].profile_image">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-10 w-10 border-2 border-primary-500 rounded-full p-1 text-primary-500 hover:text-primary-300 hover:border-primary-300 transition-all duration-200"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </ng-container>
+                        </ng-container>
                     </button>
 
                     <mat-menu #menu="matMenu" class="mt-2">
