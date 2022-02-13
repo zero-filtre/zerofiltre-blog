@@ -62,14 +62,14 @@ export class AuthService {
 
     } else if (this.TOKEN_NAME === 'gh_access_token') {
       this._isLoggedIn$.next(!!this.token);
-      this.getGHUser().subscribe(
-        tap(usr => this._user$.next(usr))
-      )
+      this.getGHUser().subscribe({
+        next: usr => this._user$.next(usr)
+      })
     } else {
       this._isLoggedIn$.next(!!this.token);
-      this.getSOUser(this.SOKey, this.SOAccessToken).subscribe(
-        tap(usr => this._user$.next(usr))
-      )
+      this.getSOUser(this.SOKey, this.SOAccessToken).subscribe({
+        next: usr => this._user$.next(usr)
+      })
     }
   }
 
