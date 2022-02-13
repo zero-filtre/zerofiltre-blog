@@ -25,8 +25,10 @@ export class AuthService {
     private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
-    if (this.token) this.TOKEN_NAME = localStorage.key(0)!;
-    this.loadCurrentUser()
+    if (this.token) {
+      this.TOKEN_NAME = this.getTokenName(this.token);
+      this.loadCurrentUser();
+    }
 
     console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
   }
@@ -38,6 +40,17 @@ export class AuthService {
   /** This one is to access the jwt by this class for the jwtHelper lib tokenGetter function in the app.module */
   static get token(): any {
     return localStorage.getItem('jwt_access_token');
+  }
+
+  private getTokenName(tokenValue: string): string {
+    let name = '';
+    for (var i = 0, len = localStorage.length; i < len; i++) {
+      const key = localStorage.key(i)!;
+      const value = localStorage[key];
+      if (value === tokenValue) name = key;
+    }
+
+    return name
   }
 
   private loadCurrentUser() {
