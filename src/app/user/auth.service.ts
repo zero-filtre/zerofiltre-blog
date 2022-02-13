@@ -30,7 +30,6 @@ export class AuthService {
       this.loadCurrentUser();
     }
 
-    console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
   }
 
   get token(): any {
@@ -49,7 +48,6 @@ export class AuthService {
       const value = localStorage[key];
       if (value === tokenValue) name = key;
     }
-
     return name
   }
 
@@ -59,6 +57,7 @@ export class AuthService {
       const usr = this.getJWTuser(this.token);
       this._isLoggedIn$.next(!isTokenExpired);
       this._user$.next(usr);
+      console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
 
     } else if (this.TOKEN_NAME === 'gh_access_token') {
       this._isLoggedIn$.next(!!this.token);
@@ -66,6 +65,7 @@ export class AuthService {
         tap(usr => {
           console.log('Fetching GH user...');
           this._user$.next(usr)
+          console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
         })
       )
     } else {
@@ -74,6 +74,7 @@ export class AuthService {
         tap(usr => {
           console.log('Fetching SO user...');
           this._user$.next(usr)
+          console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
         })
       )
     }
