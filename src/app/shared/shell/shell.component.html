@@ -140,9 +140,8 @@
                     <button *ngIf="authService.isLoggedIn$ | async" [matMenuTriggerFor]="menu" class="ml-4"
                         aria-label="Example icon-button with a menu">
                         <ng-container *ngIf="authService.user$ | async as user">
-                            <!-- user.profilePicture || user.avatar_url || user.items[0].profile_image -->
-                            <img *ngIf="user.avatar_url" class="avatar" [src]="user.avatar_url">
-                            <ng-container *ngIf="!user.avatar_url">
+                            <img *ngIf="user.profilePicture" class="avatar" [src]="user.profilePicture">
+                            <ng-container *ngIf="!user.profilePicture">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                     class="h-10 w-10 border-2 border-primary-500 rounded-full p-1 text-primary-500 hover:text-primary-300 hover:border-primary-300 transition-all duration-200"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">

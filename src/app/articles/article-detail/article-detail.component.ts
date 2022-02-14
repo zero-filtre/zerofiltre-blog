@@ -114,8 +114,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
   }
 
   isAuthor(user: any, article: Article): boolean {
-    // return user?.id === article?.author?.id
-    return user?.sub === article?.author?.email
+    return user?.id === article?.author?.id
   }
 
   isSocialLinkPresent(platform: string): boolean {
@@ -129,6 +128,8 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
+
+    console.log('AUTH USER: ', this.authService.user$);
   }
 
   ngAfterViewChecked() {

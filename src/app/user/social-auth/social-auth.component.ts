@@ -11,7 +11,6 @@ import { AuthService } from '../auth.service';
 export class SocialAuthComponent implements OnInit {
   private code!: string;
   private accessToken!: string;
-  private SOKey = 'ZAeo5W0MnZPxiEBgb99MvA(('
 
   constructor(
     private route: ActivatedRoute,
@@ -23,13 +22,6 @@ export class SocialAuthComponent implements OnInit {
     this.authService.getGithubAccessTokenFromCode(this.code).subscribe({
       next: (_response: any) => {
         this.router.navigateByUrl('/');
-
-        this.authService.getGHUser().subscribe({
-          next: (response: any) => {
-            this.authService.user$ = response;
-            console.log('AUTHING GH USER: ', response);
-          }
-        })
       },
       error: (_error: HttpErrorResponse) => {
         this.router.navigateByUrl('/login');
@@ -41,14 +33,6 @@ export class SocialAuthComponent implements OnInit {
     if (this.accessToken) {
       this.router.navigateByUrl('/');
       this.authService.SOLogin(this.accessToken);
-      localStorage.setItem(this.authService.TOKEN_NAME, this.accessToken);
-
-      this.authService.getSOUser(this.SOKey, this.accessToken).subscribe({
-        next: (response: any) => {
-          this.authService.user$ = response;
-          console.log('AUTHING SO USER: ', response);
-        }
-      })
     }
   }
 

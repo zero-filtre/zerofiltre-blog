@@ -25,7 +25,7 @@ export class ArticleService {
   private loadAllArticles() {
     this.loading = true;
 
-    this.http.get<Article[]>(`${this.apiServerUrl}/article/list`)
+    this.http.get<Article[]>(`${this.apiServerUrl}/article`)
       .pipe(
         catchError(error => {
           this.loading = false;
@@ -53,7 +53,7 @@ export class ArticleService {
 
 
   public getArticles(page: number, limit: number, status: string): Observable<Article[]> {
-    return this.http.get<Article[]>(`${this.apiServerUrl}/article/list?pageNumber=${page}&pageSize=${limit}&status=${status}`);
+    return this.http.get<Article[]>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=${status}`);
   }
 
   public getOneArticle(articleId: number): Observable<Article> {

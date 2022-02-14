@@ -28,10 +28,7 @@ export class AuthorGuard implements CanActivate {
             next: (response: Article) => {
               this.authService.user$.subscribe({
                 next: (currUsr: any) => {
-                  if (
-                    currUsr?.sub !== response?.author?.email
-                    // || currUsr?.id !== response?.author?.id
-                  ) {
+                  if (currUsr?.id !== response?.author?.id) {
                     console.log('ROUTE CHECK CURR USER: ', currUsr);
                     console.log('ROUTE CHECK CURR ARTICLE: ', response);
                     this.messageService.authorRoleError();

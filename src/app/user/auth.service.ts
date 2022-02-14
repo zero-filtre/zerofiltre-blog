@@ -18,8 +18,6 @@ export class AuthService {
   public user$: Observable<any> = this._user$.asObservable();
 
   public TOKEN_NAME!: string;
-  private SOAccessToken!: string;
-  private SOKey = 'ZAeo5W0MnZPxiEBgb99MvA(('
 
   constructor(
     private http: HttpClient,
@@ -52,12 +50,12 @@ export class AuthService {
   }
 
   private loadCurrentUser() {
-    // if (this.TOKEN_NAME === 'jwt_access_token') {
-    //   const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-    //   this._isLoggedIn$.next(!isTokenExpired);
-    // } else {
-    //   this._isLoggedIn$.next(true);
-    // }
+    if (this.TOKEN_NAME === 'jwt_access_token') {
+      const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
+      this._isLoggedIn$.next(!isTokenExpired);
+    } else {
+      this._isLoggedIn$.next(true);
+    }
 
     // this.getUser().pipe(
     //   catchError(error => {
@@ -69,32 +67,13 @@ export class AuthService {
     //   })
     // )
 
-    if (this.TOKEN_NAME === 'jwt_access_token') {
-      const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-      this._isLoggedIn$.next(!isTokenExpired);
-      const usr = this.getJWTuser(this.token);
-      this._user$.next(usr);
-      console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
-
-    } else if (this.TOKEN_NAME === 'gh_access_token') {
-      this._isLoggedIn$.next(!!this.token);
-      this.getGHUser().pipe(
-        tap(usr => {
-          console.log('Fetching GH user...');
-          this._user$.next(usr)
-          console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
-        })
-      )
-    } else {
-      this._isLoggedIn$.next(!!this.token);
-      this.getSOUser(this.SOKey, this.SOAccessToken).pipe(
-        tap(usr => {
-          console.log('Fetching SO user...');
-          this._user$.next(usr)
-          console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
-        })
-      )
-    }
+    // this.getUser()
+    //   .subscribe({
+    //     next: usr => {
+    //       this._user$.next(usr); // Pump the user value to the user subject when sign in
+    //       console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
+    //     }
+    //   })
   }
 
   public login(credentials: FormData): Observable<any> {
@@ -103,7 +82,6 @@ export class AuthService {
     }).pipe(
       tap((response: any) => {
         this.handleJWTauth(response, 'jwt_access_token');
-        this._user$.next(this.getJWTuser(this.token)); // Pump the user value to the user subject when sign in
       }),
       shareReplay()
     );
@@ -165,18 +143,17 @@ export class AuthService {
     )
   }
 
-  public getGHUser(): Observable<any> {
-    return this.http.get<any>('https://api.github.com/user');
-  }
-
-  public SOLogin(accessToken: string) {
+  public SOLogin(token: string) {
     this.TOKEN_NAME = 'so_access_token';
     this._isLoggedIn$.next(true);
-    this.SOAccessToken = accessToken;
-  }
+    localStorage.setItem(this.TOKEN_NAME, token);
 
-  public getSOUser(soKey: string, accessToken: string): Observable<any> {
-    return this.http.get<any>(`https://api.stackexchange.com/me?key=${soKey}&site=stackoverflow&order=desc&sort=reputation&access_token=${accessToken}&filter=default`);
+    this.getUser()
+      .subscribe({
+        next: usr => {
+          this._user$.next(usr);
+        }
+      })
   }
 
   private handleJWTauth(response: any, tokenName: string) {
@@ -184,21 +161,21 @@ export class AuthService {
     this.TOKEN_NAME = tokenName;
     this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
     localStorage.setItem(this.TOKEN_NAME, token);
+
+    this.getUser()
+      .subscribe({
+        next: usr => {
+          this._user$.next(usr);
+        }
+      })
   }
 
   private extractTokenFromHeaders(response: any) {
     return response.headers.get('authorization').split(' ')[1]
   }
 
-  private getJWTuser(token: string): User {
-    if (!token) {
-      return null!
-    }
-    return JSON.parse(atob(token.split('.')[1])) as User;
-  }
-
   private getUser(): Observable<User> {
-    return this.http.get<User>(`${this.apiServerUrl}/user`);
+    return this.http.get<User>(`${this.apiServerUrl}/user`)
   }
 }
 
