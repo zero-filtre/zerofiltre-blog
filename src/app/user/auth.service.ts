@@ -14,8 +14,8 @@ export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
 
-  private _user$ = new BehaviorSubject<any>(null);
-  public user$: Observable<any> = this._user$.asObservable();
+  private _user$: BehaviorSubject<User>;
+  public user$: Observable<User>;
 
   public TOKEN_NAME!: string;
 
@@ -23,11 +23,38 @@ export class AuthService {
     private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
+    this._user$ = new BehaviorSubject<User>(null!);
+    this.user$ = this._user$.asObservable();
+
     if (this.token) {
+      console.log("CALLEDDDDD");
       this.TOKEN_NAME = this.getTokenName(this.token);
       this.loadCurrentUser();
     }
 
+  }
+
+  private loadCurrentUser() {
+    if (this.TOKEN_NAME === 'jwt_access_token') {
+      const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
+      this._isLoggedIn$.next(!isTokenExpired);
+    } else {
+      this._isLoggedIn$.next(true);
+    }
+
+
+    this.http.get<User>(`${this.apiServerUrl}/user`)
+      .pipe(
+        catchError(error => {
+          return throwError(() => error);
+        }),
+        tap(usr => {
+          this._user$.next(usr);
+          console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
+        })
+      )
+
+    console.log('Subject', this._user$.value);
   }
 
   get token(): any {
@@ -47,33 +74,6 @@ export class AuthService {
       if (value === tokenValue) name = key;
     }
     return name
-  }
-
-  private loadCurrentUser() {
-    if (this.TOKEN_NAME === 'jwt_access_token') {
-      const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-      this._isLoggedIn$.next(!isTokenExpired);
-    } else {
-      this._isLoggedIn$.next(true);
-    }
-
-    // this.getUser().pipe(
-    //   catchError(error => {
-    //     return throwError(() => error);
-    //   }),
-    //   tap(usr => {
-    //     this._user$.next(usr);
-    //     console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
-    //   })
-    // )
-
-    // this.getUser()
-    //   .subscribe({
-    //     next: usr => {
-    //       this._user$.next(usr); // Pump the user value to the user subject when sign in
-    //       console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
-    //     }
-    //   })
   }
 
   public login(credentials: FormData): Observable<any> {
@@ -100,7 +100,7 @@ export class AuthService {
 
   public logout() {
     this._isLoggedIn$.next(false);
-    this._user$.next(null);
+    this._user$.next(null!);
     localStorage.removeItem(this.TOKEN_NAME);
   }
 
@@ -166,6 +166,7 @@ export class AuthService {
       .subscribe({
         next: usr => {
           this._user$.next(usr);
+          console.log('SIGNIN GET USER: ', this.user$);
         }
       })
   }
