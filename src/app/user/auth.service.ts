@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, shareReplay, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -52,10 +52,27 @@ export class AuthService {
   }
 
   private loadCurrentUser() {
+    // if (this.TOKEN_NAME === 'jwt_access_token') {
+    //   const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
+    //   this._isLoggedIn$.next(!isTokenExpired);
+    // } else {
+    //   this._isLoggedIn$.next(true);
+    // }
+
+    // this.getUser().pipe(
+    //   catchError(error => {
+    //     return throwError(() => error);
+    //   }),
+    //   tap(usr => {
+    //     this._user$.next(usr);
+    //     console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
+    //   })
+    // )
+
     if (this.TOKEN_NAME === 'jwt_access_token') {
       const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-      const usr = this.getJWTuser(this.token);
       this._isLoggedIn$.next(!isTokenExpired);
+      const usr = this.getJWTuser(this.token);
       this._user$.next(usr);
       console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
 
@@ -86,6 +103,7 @@ export class AuthService {
     }).pipe(
       tap((response: any) => {
         this.handleJWTauth(response, 'jwt_access_token');
+        this._user$.next(this.getJWTuser(this.token)); // Pump the user value to the user subject when sign in
       }),
       shareReplay()
     );
@@ -177,6 +195,10 @@ export class AuthService {
       return null!
     }
     return JSON.parse(atob(token.split('.')[1])) as User;
+  }
+
+  private getUser(): Observable<User> {
+    return this.http.get<User>(`${this.apiServerUrl}/user`);
   }
 }
 
