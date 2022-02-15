@@ -11,6 +11,7 @@ import { calcReadingTime, formatDate } from 'src/app/services/utilities.service'
 import { MessageService } from 'src/app/services/message.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-articles-list',
@@ -28,6 +29,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public mainPage = true;
 
   public articlesSub!: Subscription;
+  public currentUsr!: User;
 
   constructor(
     private seo: SeoService,
@@ -185,6 +187,13 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.authService.getUser()
+      .subscribe({
+        next: usr => {
+          this.currentUsr = usr;
+        }
+      })
+
     this.seo.generateTags({
       title: 'Tous les articles | Zerofiltre.tech',
       description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",

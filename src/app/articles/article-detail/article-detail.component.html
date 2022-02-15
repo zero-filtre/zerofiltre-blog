@@ -277,9 +277,9 @@
                                     articles</span>
                             </a> -->
 
-                            <div *ngIf="authService.user$ | async as currentUser">
+                            <div *ngIf="currentUsr">
                                 <!-- {{currentUser | json}} -->
-                                <div *ngIf="isAuthor(currentUser, article)">
+                                <div *ngIf="isAuthor(currentUsr, article)">
                                     <button [matMenuTriggerFor]="menu" class="text-secondary"
                                         aria-label="icon-button with a menu">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"

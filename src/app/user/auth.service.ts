@@ -27,7 +27,6 @@ export class AuthService {
     this.user$ = this._user$.asObservable();
 
     if (this.token) {
-      console.log("CALLEDDDDD");
       this.TOKEN_NAME = this.getTokenName(this.token);
       this.loadCurrentUser();
     }
@@ -53,8 +52,6 @@ export class AuthService {
           console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
         })
       )
-
-    console.log('Subject', this._user$.value);
   }
 
   get token(): any {
@@ -175,7 +172,7 @@ export class AuthService {
     return response.headers.get('authorization').split(' ')[1]
   }
 
-  private getUser(): Observable<User> {
+  public getUser(): Observable<User> {
     return this.http.get<User>(`${this.apiServerUrl}/user`)
   }
 }

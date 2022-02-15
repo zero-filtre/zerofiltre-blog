@@ -15,6 +15,7 @@ import "prismjs/components/prism-markup";
 import { MessageService } from 'src/app/services/message.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
+import { User } from 'src/app/user/user.model';
 
 declare var Prism: any;
 
@@ -34,6 +35,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
   readonly blogUrl = environment.blogUrl;
 
   public articleSub!: Subscription;
+  currentUsr!: User;
 
   constructor(
     private route: ActivatedRoute,
@@ -129,7 +131,14 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
 
-    console.log('AUTH USER: ', this.authService.user$);
+    this.authService.getUser()
+      .subscribe({
+        next: usr => {
+          this.currentUsr = usr;
+        }
+      })
+
+    console.log('AUTH USER: ', this.currentUsr);
   }
 
   ngAfterViewChecked() {

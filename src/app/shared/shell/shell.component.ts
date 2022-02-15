@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from 'src/app/user/auth.service';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-shell',
@@ -17,6 +18,8 @@ export class ShellComponent implements OnInit {
       shareReplay()
     );
 
+  public currentUsr!: User;
+
   constructor(private breakpointObserver: BreakpointObserver, public authService: AuthService) { }
 
   public logout() {
@@ -25,6 +28,12 @@ export class ShellComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.getUser()
+      .subscribe({
+        next: usr => {
+          this.currentUsr = usr;
+        }
+      })
   }
 
 }
