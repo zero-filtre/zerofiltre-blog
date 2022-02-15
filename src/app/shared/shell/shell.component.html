@@ -137,7 +137,7 @@
                         <div>S'enregistrer</div>
                     </a>
 
-                    <button *ngIf="authService.isLoggedIn$ | async" [matMenuTriggerFor]="menu" class="ml-4"
+                    <button *ngIf="currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
                         aria-label="Example icon-button with a menu">
                         <!-- <ng-container *ngIf="authService.user$ | async as user"> -->
                         <!-- <ng-container *ngIf="currentUsr"> -->
