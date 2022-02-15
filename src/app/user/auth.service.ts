@@ -41,16 +41,15 @@ export class AuthService {
       this._isLoggedIn$.next(true);
     }
 
-
-    this.http.get<User>(`${this.apiServerUrl}/user`)
-      .pipe(
-        catchError(error => {
-          return throwError(() => error);
-        }),
-        tap(usr => {
-          this._user$.next(usr);
-        })
-      )
+    // this.http.get<User>(`${this.apiServerUrl}/user`)
+    //   .pipe(
+    //     catchError(error => {
+    //       return throwError(() => error);
+    //     }),
+    //     tap(usr => {
+    //       this._user$.next(usr);
+    //     })
+    //   )
   }
 
   get token(): any {
@@ -97,7 +96,8 @@ export class AuthService {
   public logout() {
     this._isLoggedIn$.next(false);
     this._user$.next(null!);
-    localStorage.removeItem(this.TOKEN_NAME);
+    localStorage.clear();
+    // localStorage.removeItem(this.TOKEN_NAME);
   }
 
   public requestPasswordReset(email: string): Observable<any> {
@@ -144,12 +144,12 @@ export class AuthService {
     this._isLoggedIn$.next(true);
     localStorage.setItem(this.TOKEN_NAME, token);
 
-    this.getUser()
-      .subscribe({
-        next: usr => {
-          this._user$.next(usr);
-        }
-      })
+    // this.getUser()
+    //   .subscribe({
+    //     next: usr => {
+    //       this._user$.next(usr);
+    //     }
+    //   })
   }
 
   private handleJWTauth(response: any, tokenName: string) {
@@ -158,12 +158,12 @@ export class AuthService {
     this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
     localStorage.setItem(this.TOKEN_NAME, token);
 
-    this.getUser()
-      .subscribe({
-        next: usr => {
-          this._user$.next(usr);
-        }
-      })
+    // this.getUser()
+    //   .subscribe({
+    //     next: usr => {
+    //       this._user$.next(usr);
+    //     }
+    //   })
   }
 
   private extractTokenFromHeaders(response: any) {
