@@ -26,7 +26,7 @@ export class AuthorGuard implements CanActivate {
         tap(_loggedIn => {
           this.articleService.getOneArticle(route.params.id).subscribe({
             next: (response: Article) => {
-              this.authService.user$.subscribe({
+              this.authService.getUser().subscribe({
                 next: (currUsr: any) => {
                   if (currUsr?.id !== response?.author?.id) {
                     console.log('ROUTE CHECK CURR USER: ', currUsr);

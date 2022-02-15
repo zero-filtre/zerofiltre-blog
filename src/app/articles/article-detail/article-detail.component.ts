@@ -135,10 +135,10 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
       .subscribe({
         next: usr => {
           this.currentUsr = usr;
+          console.log('AUTH USER: ', this.currentUsr);
         }
       })
 
-    console.log('AUTH USER: ', this.currentUsr);
   }
 
   ngAfterViewChecked() {
