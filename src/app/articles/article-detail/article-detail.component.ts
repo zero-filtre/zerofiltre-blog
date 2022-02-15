@@ -131,13 +131,14 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
 
-    this.authService.getUser()
-      .subscribe({
-        next: usr => {
-          this.currentUsr = usr;
-          console.log('AUTH USER: ', this.currentUsr);
-        }
-      })
+    if (this.authService.token) {
+      this.authService.getUser()
+        .subscribe({
+          next: usr => {
+            this.currentUsr = usr;
+          }
+        })
+    }
 
   }
 

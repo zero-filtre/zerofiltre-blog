@@ -28,12 +28,14 @@ export class ShellComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.getUser()
-      .subscribe({
-        next: usr => {
-          this.currentUsr = usr;
-        }
-      })
+    if (this.authService.token) {
+      this.authService.getUser()
+        .subscribe({
+          next: usr => {
+            this.currentUsr = usr;
+          }
+        })
+    }
   }
 
 }

@@ -187,12 +187,14 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.authService.getUser()
-      .subscribe({
-        next: usr => {
-          this.currentUsr = usr;
-        }
-      })
+    if (this.authService.token) {
+      this.authService.getUser()
+        .subscribe({
+          next: usr => {
+            this.currentUsr = usr;
+          }
+        })
+    }
 
     this.seo.generateTags({
       title: 'Tous les articles | Zerofiltre.tech',
