@@ -18,8 +18,6 @@ export class ShellComponent implements OnInit {
       shareReplay()
     );
 
-  public currentUsr!: User;
-
   constructor(private breakpointObserver: BreakpointObserver, public authService: AuthService) { }
 
   public logout() {
@@ -32,7 +30,7 @@ export class ShellComponent implements OnInit {
       this.authService.getUser()
         .subscribe({
           next: usr => {
-            this.currentUsr = usr;
+            this.authService._user$.next(usr);
           }
         })
     }

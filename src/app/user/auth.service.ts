@@ -14,7 +14,7 @@ export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
 
-  private _user$: BehaviorSubject<User>;
+  public _user$: BehaviorSubject<User>;
   public user$: Observable<User>;
 
   public TOKEN_NAME!: string;
@@ -49,7 +49,6 @@ export class AuthService {
         }),
         tap(usr => {
           this._user$.next(usr);
-          console.log('AUTH CTOR CHECK CURR USER: ', this.user$);
         })
       )
   }
@@ -163,7 +162,6 @@ export class AuthService {
       .subscribe({
         next: usr => {
           this._user$.next(usr);
-          console.log('SIGNIN GET USER: ', this.user$);
         }
       })
   }

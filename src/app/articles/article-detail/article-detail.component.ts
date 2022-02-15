@@ -35,7 +35,6 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
   readonly blogUrl = environment.blogUrl;
 
   public articleSub!: Subscription;
-  currentUsr!: User;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,10 +64,8 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
           })
           if (art.status === 'PUBLISHED') {
             this.isPublished = true;
-            console.log('PUBLISHED');
           } else {
             this.isPublished = false;
-            console.log('NOT PUBLISHED');
           }
         })
       )
@@ -135,7 +132,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
       this.authService.getUser()
         .subscribe({
           next: usr => {
-            this.currentUsr = usr;
+            this.authService._user$.next(usr);
           }
         })
     }

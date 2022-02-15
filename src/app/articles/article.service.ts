@@ -46,7 +46,6 @@ export class ArticleService {
         }),
         tap(tags => {
           this._tagssSubject$.next(tags)
-          console.log('TGAS: ', tags);
         })
       )
   }

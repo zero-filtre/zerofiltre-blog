@@ -29,7 +29,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public mainPage = true;
 
   public articlesSub!: Subscription;
-  public currentUsr!: User;
 
   constructor(
     private seo: SeoService,
@@ -191,7 +190,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.authService.getUser()
         .subscribe({
           next: usr => {
-            this.currentUsr = usr;
+            this.authService._user$.next(usr);
           }
         })
     }

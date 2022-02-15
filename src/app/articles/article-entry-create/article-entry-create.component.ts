@@ -80,9 +80,7 @@ export class ArticleEntryCreateComponent implements OnInit {
         this.tags?.setValue(this.article.tags)
         this.selectedTags = this.article.tags
       },
-      error: (error: HttpErrorResponse) => {
-        console.log(error.message);
-      }
+      error: (_error: HttpErrorResponse) => { }
     })
   }
 
