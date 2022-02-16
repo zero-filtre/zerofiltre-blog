@@ -18,6 +18,7 @@ export class AuthService {
   public user$: Observable<User>;
 
   public TOKEN_NAME!: string;
+  public isTokenExpired!: boolean;
 
   constructor(
     private http: HttpClient,
@@ -35,8 +36,10 @@ export class AuthService {
 
   private loadCurrentUser() {
     if (this.TOKEN_NAME === 'jwt_access_token') {
-      const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-      this._isLoggedIn$.next(!isTokenExpired);
+      this.isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
+      const expiryDate = this.jwtHelper.getTokenExpirationDate(this.token);
+      console.log('DATE EXPIRY: ', expiryDate);
+      this._isLoggedIn$.next(!this.isTokenExpired);
     } else {
       this._isLoggedIn$.next(true);
     }
