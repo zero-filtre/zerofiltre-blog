@@ -405,7 +405,7 @@
                 </ng-template>
 
                 <div *ngIf="article; else articleContentSkeletonLoader"
-                    class="markdown-content mt-10 prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:text-slate-600 prose-code:bg-primary-100 prose-code:rounded-md prose-code:!text-lg prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
+                    class="markdown-content mt-10 prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:text-slate-600 prose-code:bg-primary-100 prose-code:rounded-md prose-code:!text-lg prose-code:whitespace-nowrap prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
                     <markdown [data]="article?.content"></markdown>
                 </div>
 
