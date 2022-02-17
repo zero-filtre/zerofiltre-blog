@@ -18,14 +18,14 @@ export class ArticleService {
   public tags$: Observable<Tag[]> = this._tagssSubject$.asObservable();
 
   constructor(private http: HttpClient) {
-    // this.loadAllArticles();
+    this.loadAllArticles();
     this.loadAllTags();
   }
 
   private loadAllArticles() {
     this.loading = true;
 
-    this.http.get<Article[]>(`${this.apiServerUrl}/article`)
+    this.articles$ = this.http.get<Article[]>(`${this.apiServerUrl}/article?pageNumber=0&pageSize=5&status=published`)
       .pipe(
         catchError(error => {
           this.loading = false;
@@ -34,6 +34,7 @@ export class ArticleService {
         tap(articles => {
           this.loading = false;
           this._articlesSubject$.next(articles)
+          console.log('ARTICLES LIST: ', this.articles$);
         })
       )
   }

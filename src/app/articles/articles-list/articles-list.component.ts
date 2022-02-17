@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { MessageService } from 'src/app/services/message.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
 

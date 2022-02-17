@@ -6,9 +6,9 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, retryWhen, throwError } from 'rxjs';
 import { MessageService } from '../message.service';
-import { AuthService } from 'src/app/user/auth.service';
+import { genericRetryPolicy } from '../utilities.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private messageService: MessageService,
-    private authService: AuthService
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request)
       .pipe(
+        retryWhen(genericRetryPolicy({
+          excludedStatusCodes: [500, 403, 401, 404]
+        })),
         catchError((error: HttpErrorResponse) => {
           const errorMessage = this.setError(error)
           this.messageService.openSnackBarError(errorMessage, '');
@@ -53,11 +55,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           errorMessage = error.error.error.message;
         } else {
           errorMessage = errorMessage;
-        }
-
-        if (this.authService.token && error.status === 401) {
-          // this.authService.logout();
-          // location.reload();
         }
       }
     }
