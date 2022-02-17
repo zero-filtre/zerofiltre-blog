@@ -76,6 +76,10 @@ export class AuthService {
     throw new Error('Method not implemented.');
   }
 
+  public refreshSocialsToken(): Observable<any> {
+    throw new Error('Method not implemented.');
+  }
+
   public login(credentials: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
       observe: 'response'

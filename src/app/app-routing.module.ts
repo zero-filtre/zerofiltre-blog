@@ -26,18 +26,15 @@ const routes: Routes = [
   {
     path: 'resendConfirmation',
     component: ResendConfirmationPageComponent,
-    // canActivate: [LoggedInAuthGuard]
   },
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then(m => m.UserModule),
-    // canActivate: [AuthGuard]
   },
   // { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   {
     path: 'articles',
     loadChildren: () => import('./articles/articles.module').then(m => m.ArticlesModule),
-    // canActivate: [AuthGuard]
   },
   {
     path: '**',

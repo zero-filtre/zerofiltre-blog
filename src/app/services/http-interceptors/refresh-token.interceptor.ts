@@ -24,7 +24,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
         .pipe(
           catchError((errorResponse: HttpErrorResponse) => {
             if (errorResponse.status === 401 && errorResponse.error.message === 'Expired JWT Token') {
-              // clear localStorage
+              localStorage.clear();
               return this.authService.refreshToken().pipe(mergeMap(() => {
                 return this.authInterceptor.intercept(request, next); // let the request continue its flow with the new valid token
               }));
@@ -38,8 +38,8 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
         .pipe(
           catchError((errorResponse: HttpErrorResponse) => {
             if (errorResponse.status === 401) {
-              // clear localStorage
-              return this.authService.refreshToken().pipe(mergeMap(() => {
+              localStorage.clear();
+              return this.authService.refreshSocialsToken().pipe(mergeMap(() => {
                 return this.authInterceptor.intercept(request, next); // let the request continue its flow with the new valid token
               }));
             }

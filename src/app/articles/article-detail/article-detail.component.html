@@ -255,7 +255,7 @@
                                     <span aria-hidden="true">·</span>
                                     <span>{{article?.readingTime}} min de lecture</span>
                                 </div>
-                                <div>
+                                <div *ngIf="article?.publishedAt !== article?.lastPublishedAt">
                                     <span class="sm:ml-3 mr-1">Dernière mise à jour le</span>
                                     <time class="text-primary-500"
                                         [dateTime]="article?.lastPublishedAt | date">{{article?.lastPublishedAt |
