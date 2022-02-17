@@ -76,8 +76,11 @@ export class AuthService {
     throw new Error('Method not implemented.');
   }
 
-  public refreshSocialsToken(): Observable<any> {
-    throw new Error('Method not implemented.');
+  public refreshSocialsToken(tokenName: string): Observable<any> {
+    if (tokenName === 'gh_access_token') {
+      return this.http.get<any>(`https://github.com/login/oauth/authorize?client_id=${environment.GITHUB_CLIENT_ID}&redirect_uri=${environment.gitHubRedirectURL}&scope=user:email`)
+    }
+    return this.http.get<any>(`https://stackoverflow.com/oauth/dialog?client_id=${environment.STACK_OVERFLOW_CLIENT_ID}&redirect_uri=${environment.stackOverflowRedirectURL}&scope=no_expiry`)
   }
 
   public login(credentials: FormData): Observable<any> {

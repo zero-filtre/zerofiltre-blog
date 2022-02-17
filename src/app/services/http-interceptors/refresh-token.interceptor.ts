@@ -33,13 +33,27 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
             return throwError(() => errorResponse);
           })
         );
-    } else if (this.authService.token && (this.authService.TOKEN_NAME === 'gh_access_token' || this.authService.TOKEN_NAME === 'so_access_token')) {
+    } else if (this.authService.token && (this.authService.TOKEN_NAME === 'gh_access_token')) {
       return next.handle(request)
         .pipe(
           catchError((errorResponse: HttpErrorResponse) => {
             if (errorResponse.status === 401) {
               localStorage.clear();
-              return this.authService.refreshSocialsToken().pipe(mergeMap(() => {
+              return this.authService.refreshSocialsToken('gh_access_token').pipe(mergeMap(() => {
+                return this.authInterceptor.intercept(request, next); // let the request continue its flow with the new valid token
+              }));
+            }
+
+            return throwError(() => errorResponse);
+          })
+        );
+    } else if (this.authService.token && (this.authService.TOKEN_NAME === 'so_access_token')) {
+      return next.handle(request)
+        .pipe(
+          catchError((errorResponse: HttpErrorResponse) => {
+            if (errorResponse.status === 401) {
+              localStorage.clear();
+              return this.authService.refreshSocialsToken('so_access_token').pipe(mergeMap(() => {
                 return this.authInterceptor.intercept(request, next); // let the request continue its flow with the new valid token
               }));
             }
