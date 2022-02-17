@@ -7,12 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { httpInterceptorProviders } from './services/http-interceptors';
-import { JwtInterceptor, JwtModule } from "@auth0/angular-jwt";
+import { JwtModule } from "@auth0/angular-jwt";
 import { AuthService } from './user/auth.service';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { LOCALE_ID } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { AuthInterceptor } from './services/http-interceptors/auth.interceptor';
 
 
 registerLocaleData(localeFr, 'fr');
@@ -37,7 +38,7 @@ registerLocaleData(localeFr, 'fr');
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "fr-FR" },
-    JwtInterceptor,
+    AuthInterceptor,
     httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
