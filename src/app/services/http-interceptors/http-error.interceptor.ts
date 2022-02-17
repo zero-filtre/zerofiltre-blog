@@ -23,7 +23,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         retryWhen(genericRetryPolicy({
-          excludedStatusCodes: [500, 403, 401, 404]
+          excludedStatusCodes: [403, 401, 404, 500]
         })),
         catchError((error: HttpErrorResponse) => {
           const errorMessage = this.setError(error)

@@ -130,7 +130,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   private sortByDate(list: Article[]): Article[] {
     return list
-      ?.sort((a: any, b: any) => new Date(b.lastPublishedAt).valueOf() - new Date(a.lastPublishedAt).valueOf())
+      ?.sort((a: any, b: any) => new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf())
   }
 
   private sortByPopularity(list: Article[]): Article[] {

@@ -54,23 +54,18 @@ export const genericRetryPolicy = ({
   scalingDuration = 2000,
   excludedStatusCodes = []
 }: iRetryPolicy = {}) => (attempts: Observable<any>) => {
+
   return attempts.pipe(
     delay(scalingDuration),  // Start retries after 2s from the initial req fail.
     mergeMap((error, i) => {
       const retryAttempt = i + 1;
       // if maximum number of retries have been met
       // or response is a status code we don't wish to retry, throw error
-      if (
-        retryAttempt > maxRetryAttempts ||
-        excludedStatusCodes.find(e => e === error.status)
-      ) {
+      if (retryAttempt > maxRetryAttempts || excludedStatusCodes.find(e => e === error.status)) {
         return throwError(() => error);
       }
 
-      console.log(
-        `Attempt ${retryAttempt}: retrying in ${retryAttempt *
-        scalingDuration}ms`
-      );
+      console.log(`Attempt ${retryAttempt}: retrying in ${retryAttempt * scalingDuration}ms`);
       // retry after 2s, 4s, 6s
       return timer(retryAttempt * scalingDuration);
     }),
