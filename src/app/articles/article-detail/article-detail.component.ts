@@ -14,6 +14,8 @@ import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
 import "prismjs/components/prism-markup";
 import { MessageService } from 'src/app/services/message.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/user/auth.service';
+import { User } from 'src/app/user/user.model';
 
 declare var Prism: any;
 
@@ -39,7 +41,8 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
     private articleService: ArticleService,
     private seo: SeoService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    public authService: AuthService
   ) { }
 
   public setDateFormat(date: any) {
@@ -61,10 +64,8 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
           })
           if (art.status === 'PUBLISHED') {
             this.isPublished = true;
-            console.log('PUBLISHED');
           } else {
             this.isPublished = false;
-            console.log('NOT PUBLISHED');
           }
         })
       )
@@ -111,6 +112,10 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
     }
   }
 
+  isAuthor(user: any, article: Article): boolean {
+    return user?.id === article?.author?.id
+  }
+
   isSocialLinkPresent(platform: string): boolean {
     return this.article?.author?.socialLinks.some((link: any) => link.platform === platform)
   }
@@ -122,6 +127,16 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
+
+    if (this.authService.token) {
+      this.authService.getUser()
+        .subscribe({
+          next: usr => {
+            this.authService._user$.next(usr);
+          }
+        })
+    }
+
   }
 
   ngAfterViewChecked() {

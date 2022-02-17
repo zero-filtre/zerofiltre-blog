@@ -20,9 +20,25 @@ export class AuthInterceptor implements HttpInterceptor {
     * Add the token if exist to every request from the client to the api
     */
     if (localStorage.getItem(this.authService.TOKEN_NAME)) {
-      request = request.clone({
-        headers: request.headers.set('authorization', `Bearer ${this.authService.token}`),
-      });
+      switch (this.authService.TOKEN_NAME) {
+        case 'jwt_access_token':
+          request = request.clone({
+            headers: request.headers.set('authorization', `Bearer ${this.authService.token}`),
+          });
+          break;
+        case 'gh_access_token':
+          request = request.clone({
+            headers: request.headers.set('authorization', `token ${this.authService.token}`),
+          });
+          break;
+        case 'so_access_token':
+          request = request.clone({
+            headers: request.headers.set('authorization', `stack ${this.authService.token}`),
+          });
+          break;
+        default:
+          break;
+      }
     }
     return next.handle(request);
   }

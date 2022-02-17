@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { MessageService } from 'src/app/services/message.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/user/auth.service';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-articles-list',
@@ -34,6 +36,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private router: Router,
     private location: Location,
+    public authService: AuthService
   ) { }
 
   openArticleEntryDialog(): void {
@@ -48,18 +51,29 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     });
   }
 
+  public fetchListOfTags(): void {
+    this.loading = true;
+    this.articleService.getListOfTags().subscribe({
+      next: (response: Tag[]) => {
+        this.tagList = response
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
+  }
+
   public fetchArticles(): void {
     this.loading = true;
-    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
+    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
       next: (response: Article[]) => {
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
-        this.tagList = response[0].tags
         this.setArticlesReadingTime(response);
         this.loading = false;
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
-        this.errorMessage = 'Oups...!'
+        this.errorMessage = 'Oops...!'
       }
     });
   }
@@ -68,7 +82,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.mainPage = false;
 
-    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit).subscribe({
+    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'draft').subscribe({
       next: (response: Article[]) => {
         this.articles = response
           .filter((item: Article) => item.status === 'DRAFT')
@@ -116,7 +130,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   private sortByDate(list: Article[]): Article[] {
     return list
-      ?.sort((a: any, b: any) => new Date(b.lastPublishedAt).valueOf() - new Date(a.lastPublishedAt).valueOf())
+      ?.sort((a: any, b: any) => new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf())
   }
 
   private sortByPopularity(list: Article[]): Article[] {
@@ -172,6 +186,15 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    if (this.authService.token) {
+      this.authService.getUser()
+        .subscribe({
+          next: usr => {
+            this.authService._user$.next(usr);
+          }
+        })
+    }
+
     this.seo.generateTags({
       title: 'Tous les articles | Zerofiltre.tech',
       description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
@@ -182,6 +205,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
     this.location.go('/articles');
     this.fetchArticles();
+    this.fetchListOfTags();
   }
 
   ngOnDestroy(): void {

@@ -6,9 +6,9 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, retryWhen, throwError } from 'rxjs';
 import { MessageService } from '../message.service';
-import { AuthService } from 'src/app/user/auth.service';
+import { genericRetryPolicy } from '../utilities.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private messageService: MessageService,
-    private authService: AuthService
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request)
       .pipe(
+        retryWhen(genericRetryPolicy({
+          excludedStatusCodes: [403, 401, 404, 500]
+        })),
         catchError((error: HttpErrorResponse) => {
           const errorMessage = this.setError(error)
           this.messageService.openSnackBarError(errorMessage, '');
@@ -44,24 +46,15 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     if (error.error instanceof ErrorEvent) {
       // Client side Error
       errorMessage = error.error.message;
-      console.log('CLIENT ERROR');
-
     } else {
       // Server side error
       if (error.status !== 0) {
         let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
-        console.log('SERVER ERROR');
-        console.log('ERROR 400: ', error.error);
 
         if (serverErrorExist) {
           errorMessage = error.error.error.message;
         } else {
           errorMessage = errorMessage;
-        }
-
-        if (error.status === 401) {
-          this.authService.logout();
-          location.reload();
         }
       }
     }

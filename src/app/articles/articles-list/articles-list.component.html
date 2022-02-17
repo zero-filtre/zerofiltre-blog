@@ -72,8 +72,7 @@
                                     class="group inline-flex items-center mr-1 px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card">
                                     <span
                                         class="text-skin-muted group-hover:hidden transition-all duration-200">#</span>
-
-                                    <svg class="mr-1.5 h-2 w-2 fill-primary-500 brand-applications hidden group-hover:block transition-all duration-200"
+                                    <svg class="mr-1 h-2 w-2 fill-[{{tag.colorCode}}] hidden group-hover:block transition-all duration-200"
                                         viewBox="0 0 8 8">
                                         <circle cx="4" cy="4" r="3"></circle>
                                     </svg>
@@ -101,21 +100,6 @@
                             </ngx-skeleton-loader>
                         </div>
                     </ng-template>
-
-                    <button (click)="openArticleEntryDialog()" type="button"
-                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">Nouvel
-                        Article
-                    </button>
-
-                    <button (click)="getSavedArticles()" type="button"
-                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">
-                        Articles sauvegardés
-                    </button>
-                    <button (click)="fetchArticles()" type="button"
-                        class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">
-                        Articles publiés
-                    </button>
-
                 </div>
             </div>
 
@@ -125,13 +109,27 @@
 
     <main class="col-span-6">
         <div class="main-side-container">
-            <div class="pb-5 border-b border-skin-border">
-                <h1 class="text-3xl leading-8 font-extrabold tracking-tight text-skin-inverted">
-                    Récentes publications
-                </h1>
-                <p class="mt-2 max-w-4xl text-sm leading-5 text-skin-base">Tous les articles récemment
-                    publiés.
-                </p>
+            <div class="pb-5 border-b border-skin-border flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl leading-8 font-extrabold tracking-tight text-skin-inverted">
+                        Récentes publications
+                    </h1>
+                    <p class="mt-2 max-w-4xl text-sm leading-5 text-skin-base">Tous les articles récemment
+                        publiés.
+                    </p>
+                </div>
+
+                <div *ngIf="authService.isLoggedIn$ | async">
+                    <button (click)="openArticleEntryDialog()" type="button"
+                        class="text-primary-500 hover:text-primary-300 transition-all duration-200">
+                        <span class="sr-only">Nouvel article</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"
+                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <div class="mt-10 max-w-lg mx-auto lg:hidden">
@@ -157,11 +155,6 @@
                             class="bg-transparent absolute inset-x-0 bottom-0 h-0.5 scale-0"></span>
                     </button>
                 </nav>
-
-                <button (click)="openArticleEntryDialog()" type="button"
-                    class="mt-10 font-semibold px-3 py-1 text-sm text-primary-500 rounded-full border border-primary-500 hover:bg-skin-card transition-all">Nouvel
-                    Article
-                </button>
             </div>
 
             <div class="articles-wrapper py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none">
@@ -182,8 +175,7 @@
                                     <div *ngFor="let tag of article?.tags" class="flex items-center space-x-2">
                                         <span
                                             class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                            <svg class="mr-1.5 h-2 w-2" [ngClass]="{'fill-[`${tag.colorCode}`]': true}"
-                                                viewBox="0 0 8 8">
+                                            <svg class="mr-1.5 h-2 w-2 fill-[{{tag.colorCode}}]" viewBox="0 0 8 8">
                                                 <circle cx="4" cy="4" r="3"></circle>
                                             </svg>
                                             {{tag.name}}
@@ -201,7 +193,7 @@
 
                                     <p
                                         class="article-description mt-2 text-sm tracking-wide font-light text-skin-base leading-5 line-clamp-2">
-                                        <markdown [data]="article?.content"></markdown>
+                                        <ng-container *ngIf="article?.summary">{{article?.summary}}</ng-container>
                                     </p>
 
                                     <div class="article-author mt-3 flex items-center">
@@ -221,17 +213,8 @@
                                                 </a>
                                             </p>
                                             <div class="flex space-x-1 text-[13px] text-skin-muted">
-                                                <time *ngIf="mainPage; else savedPage"
-                                                    [dateTime]="setDateFormat(article?.lastPublishedAt)">{{article?.lastPublishedAt
-                                                    |
-                                                    date }}</time>
-                                                <ng-template #savedPage>
-                                                    <time
-                                                        [dateTime]="setDateFormat(article?.lastSavedAt)">{{article?.lastSavedAt
-                                                        |
-                                                        date }}</time>
-                                                </ng-template>
-
+                                                <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
+                                                    date}}</time>
                                                 <span aria-hidden="true">·</span>
                                                 <span>{{article?.readingTime}} min de lecture</span>
                                             </div>

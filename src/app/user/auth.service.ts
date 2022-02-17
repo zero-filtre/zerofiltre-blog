@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, shareReplay, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -12,27 +12,75 @@ export class AuthService {
   private readonly apiServerUrl = environment.apiBaseUrl;
 
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  public readonly TOKEN_NAME = 'access_token';
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
-  public user!: User;
 
-  get token(): any {
-    return localStorage.getItem(this.TOKEN_NAME);
-  }
+  public _user$: BehaviorSubject<User>;
+  public user$: Observable<User>;
 
-  static get token(): any {
-    return localStorage.getItem('access_token');
-  }
+  public TOKEN_NAME!: string;
+  public isTokenExpired!: boolean;
 
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
-    const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-    console.log('IS TOKEN EXPIRED: ', isTokenExpired);
+    this._user$ = new BehaviorSubject<User>(null!);
+    this.user$ = this._user$.asObservable();
 
-    this._isLoggedIn$.next(!isTokenExpired);
-    this.user = this.getUser(this.token);
+    if (this.token) {
+      this.TOKEN_NAME = this.getTokenName(this.token);
+      this.loadCurrentUser();
+    }
+
+  }
+
+  private loadCurrentUser() {
+    if (this.TOKEN_NAME === 'jwt_access_token') {
+      this.isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
+      this._isLoggedIn$.next(!this.isTokenExpired);
+    } else {
+      this._isLoggedIn$.next(true);
+    }
+
+    // this.http.get<User>(`${this.apiServerUrl}/user`)
+    //   .pipe(
+    //     catchError(error => {
+    //       return throwError(() => error);
+    //     }),
+    //     tap(usr => {
+    //       this._user$.next(usr);
+    //     })
+    //   )
+  }
+
+  get token(): any {
+    return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
+  }
+
+  /** This one is to access the jwt by this class for the jwtHelper lib tokenGetter function in the app.module */
+  static get token(): any {
+    return localStorage.getItem('jwt_access_token');
+  }
+
+  private getTokenName(tokenValue: string): string {
+    let name = '';
+    for (var i = 0, len = localStorage.length; i < len; i++) {
+      const key = localStorage.key(i)!;
+      const value = localStorage[key];
+      if (value === tokenValue) name = key;
+    }
+    return name
+  }
+
+  public refreshToken(): Observable<any> {
+    throw new Error('Method not implemented.');
+  }
+
+  public refreshSocialsToken(tokenName: string): Observable<any> {
+    if (tokenName === 'gh_access_token') {
+      return this.http.get<any>(`https://github.com/login/oauth/authorize?client_id=${environment.GITHUB_CLIENT_ID}&redirect_uri=${environment.gitHubRedirectURL}&scope=user:email`)
+    }
+    return this.http.get<any>(`https://stackoverflow.com/oauth/dialog?client_id=${environment.STACK_OVERFLOW_CLIENT_ID}&redirect_uri=${environment.stackOverflowRedirectURL}&scope=no_expiry`)
   }
 
   public login(credentials: FormData): Observable<any> {
@@ -40,13 +88,10 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        const token = response.headers.get('authorization').split(' ')[1]
-        this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
-        localStorage.setItem(this.TOKEN_NAME, token);
-        this.user = this.getUser(token);
+        this.handleJWTauth(response, 'jwt_access_token');
       }),
       shareReplay()
-    )
+    );
   }
 
   public signup(credentials: FormData): Observable<User> {
@@ -54,10 +99,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        const token = response.headers.get('authorization').split(' ')[1]
-        this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
-        localStorage.setItem(this.TOKEN_NAME, token);
-        this.user = response;
+        this.handleJWTauth(response, 'jwt_access_token');
       }),
       shareReplay()
     )
@@ -65,7 +107,9 @@ export class AuthService {
 
   public logout() {
     this._isLoggedIn$.next(false);
-    localStorage.removeItem(this.TOKEN_NAME);
+    this._user$.next(null!);
+    localStorage.clear();
+    // localStorage.removeItem(this.TOKEN_NAME);
   }
 
   public requestPasswordReset(email: string): Observable<any> {
@@ -96,10 +140,50 @@ export class AuthService {
     })
   }
 
-  private getUser(token: string): User {
-    if (!token) {
-      return null!
-    }
-    return JSON.parse(atob(token.split('.')[1])) as User;
+  public getGithubAccessTokenFromCode(code: string): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/user/github/accessToken?code=${code}`, {}, {
+      observe: 'response'
+    }).pipe(
+      tap((response: any) => {
+        this.handleJWTauth(response, 'gh_access_token');
+      }),
+      shareReplay()
+    )
+  }
+
+  public SOLogin(token: string) {
+    this.TOKEN_NAME = 'so_access_token';
+    this._isLoggedIn$.next(true);
+    localStorage.setItem(this.TOKEN_NAME, token);
+
+    // this.getUser()
+    //   .subscribe({
+    //     next: usr => {
+    //       this._user$.next(usr);
+    //     }
+    //   })
+  }
+
+  private handleJWTauth(response: any, tokenName: string) {
+    const token = this.extractTokenFromHeaders(response)
+    this.TOKEN_NAME = tokenName;
+    this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
+    localStorage.setItem(this.TOKEN_NAME, token);
+
+    // this.getUser()
+    //   .subscribe({
+    //     next: usr => {
+    //       this._user$.next(usr);
+    //     }
+    //   })
+  }
+
+  private extractTokenFromHeaders(response: any) {
+    return response.headers.get('authorization').split(' ')[1]
+  }
+
+  public getUser(): Observable<User> {
+    return this.http.get<User>(`${this.apiServerUrl}/user`)
   }
 }
+

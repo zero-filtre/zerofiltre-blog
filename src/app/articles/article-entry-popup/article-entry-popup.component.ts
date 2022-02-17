@@ -40,7 +40,6 @@ export class ArticleEntryPopupComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.loading = false;
-        console.log(error.message);
       }
     })
   }

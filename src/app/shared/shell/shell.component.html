@@ -7,9 +7,11 @@
         [opened]="false">
 
         <div class="absolute top-6 right-6 w-fit" (click)="drawer.close()">
-            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
-                *ngIf="isHandset$ | async">
-                <mat-icon aria-label="Side nav toggle icon">close</mat-icon>
+            <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+                <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
             </button>
         </div>
 
@@ -56,6 +58,16 @@
                     </svg>
                 </div>
             </a>
+
+            <a *ngIf="!(authService.isLoggedIn$ | async)" mat-list-item (click)="drawer.close()" class="sidenavLink"
+                routerLink="/login">
+                <div>Se connecter</div>
+            </a>
+
+            <a *ngIf="!(authService.isLoggedIn$ | async)" mat-list-item (click)="drawer.close()" class="sidenavLink"
+                routerLink="/register">
+                <div>S'enregistrer</div>
+            </a>
         </mat-nav-list>
     </mat-sidenav>
 
@@ -66,7 +78,7 @@
         <div class="top-toolbar">
 
             <mat-toolbar class="top-toolbar-container">
-                <a class="logo-link" href="/articles">
+                <a class="logo-link" routerLink="/">
                     <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
                         <img class="max-w-full" src="../../../assets/logoblue.svg" alt="Zerofiltre.tech">
                     </div>
@@ -96,10 +108,10 @@
                         </div>
                     </a>
 
-                    <a class="navLink" routerLink="/github">
+                    <a class="navLink group" routerLink="/github">
                         <div class="flex">
-                            <svg class="fill-primary-500 rounded-md w-5 h-5" role="img" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
+                            <svg class="fill-primary-500 group-hover:fill-primary-300 rounded-md w-5 h-5 transition-all duration-200"
+                                role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <title>GitHub</title>
                                 <path
                                     d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
@@ -107,9 +119,10 @@
                         </div>
                     </a>
 
-                    <a class="navLink" routerLink="/linkedin">
+                    <a class="navLink group" routerLink="/linkedin">
                         <div class="flex">
-                            <svg class="h-5 w-5 fill-primary-500 rounded-md" viewBox="0 0 24 24" aria-hidden="true">
+                            <svg class="h-5 w-5 fill-primary-500 group-hover:fill-primary-300 rounded-md transition-all duration-200"
+                                viewBox="0 0 24 24" aria-hidden="true">
                                 <path
                                     d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8 19H5V8h3v11zM6.5 6.732c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476V19z">
                                 </path>
@@ -117,15 +130,52 @@
                         </div>
                     </a>
 
-                    <button *ngIf="authService.isLoggedIn$ | async" class="navLink" (click)="logout()">
-                        <div class="!font-semibold">Deconnexion</div>
+                    <a *ngIf="!(authService.isLoggedIn$ | async)" class="navLink" routerLink="/login">
+                        <div>Se connecter</div>
+                    </a>
+                    <a *ngIf="!(authService.isLoggedIn$ | async)" class="navLink" routerLink="/register">
+                        <div>S'enregistrer</div>
+                    </a>
+
+                    <button *ngIf="authService.user$ | async as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
+                        aria-label="Example icon-button with a menu">
+                        <!-- <ng-container *ngIf="authService.user$ | async as user"> -->
+                        <!-- <ng-container *ngIf="currentUsr"> -->
+                        <img *ngIf="currentUsr?.profilePicture" class="h-10 w-10 rounded-full"
+                            [src]="currentUsr?.profilePicture">
+                        <ng-container *ngIf="!currentUsr?.profilePicture">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-10 w-10 border-2 border-primary-500 rounded-full p-1 text-primary-500 hover:text-primary-300 hover:border-primary-300 transition-all duration-200"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </ng-container>
+                        <!-- </ng-container> -->
                     </button>
 
+                    <mat-menu #menu="matMenu" class="mt-2">
+                        <a routerLink="#"
+                            class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                            <span>Mon profil</span>
+                        </a>
+                        <a routerLink="#"
+                            class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                            <span>Dashboard</span>
+                        </a>
+                        <button (click)="logout()"
+                            class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                            <span>Se deconnecter</span>
+                        </button>
+                    </mat-menu>
                 </div>
 
-                <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
-                    *ngIf="isHandset$ | async">
-                    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+                <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
                 </button>
             </mat-toolbar>
 
@@ -136,7 +186,6 @@
             <ng-content></ng-content>
         </div>
 
-        <!-- <app-footer *ngIf="authService.isLoggedIn$ | async"></app-footer> -->
         <app-footer></app-footer>
 
     </mat-sidenav-content>

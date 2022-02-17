@@ -1,9 +1,3 @@
-.article-image-preview-wrapper {
-}
-
-.label-image-preview {
-}
-
 .preview-label {
   border: 2px dashed #e5e7eb;
 }
@@ -27,10 +21,6 @@
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-
-.markdown-preview-container {
-  /* @apply ; */
 }
 
 .active-tab {

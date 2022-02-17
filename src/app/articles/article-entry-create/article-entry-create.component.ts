@@ -38,18 +38,7 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   dropdownSettings = {};
 
-  public tagList: Tag[] = [
-    { id: 1, name: 'java', colorCode: '#222' },
-    { id: 2, name: 'angular', colorCode: '#222' },
-    { id: 3, name: 'spring-boot', colorCode: '#222' },
-    { id: 4, name: 'html', colorCode: '#222' },
-    { id: 5, name: 'react', colorCode: '#222' },
-    { id: 6, name: 'sql', colorCode: '#222' },
-    { id: 7, name: 'graphql', colorCode: '#222' },
-    { id: 8, name: 'docker', colorCode: '#222' },
-    { id: 9, name: 'api', colorCode: '#222' },
-    { id: 10, name: 'rest', colorCode: '#222' }
-  ]
+  public tagList!: Tag[];
 
   constructor(
     private formuilder: FormBuilder,
@@ -59,12 +48,23 @@ export class ArticleEntryCreateComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private messageService: MessageService,
     private seo: SeoService
-  ) { }
+  ) {
+
+  }
 
   public setActiveTab(tabName: string): void {
     if (tabName === 'editor') this.activeTab = 'editor'
     if (tabName === 'preview') this.activeTab = 'preview'
     if (tabName === 'help') this.activeTab = 'help'
+  }
+
+  public fetchListOfTags(): void {
+    this.articleService.getListOfTags().subscribe({
+      next: (response: Tag[]) => {
+        this.tagList = response
+      },
+      error: (_error: HttpErrorResponse) => { }
+    })
   }
 
   public getArticle(): void {
@@ -73,15 +73,14 @@ export class ArticleEntryCreateComponent implements OnInit {
         this.article = response
         this.articleTitle = response.title!
         this.form.controls['id'].setValue(+this.articleId)
-        this.form.controls['title'].setValue(this.articleTitle)
-        this.form.controls['thumbnail'].setValue(this.article.thumbnail)
-        this.form.controls['content'].setValue(this.article.content)
-        this.form.controls['tags'].setValue(this.article.tags)
+        this.title?.setValue(this.articleTitle)
+        this.summary?.setValue(this.article.summary)
+        this.thumbnail?.setValue(this.article.thumbnail)
+        this.content?.setValue(this.article.content)
+        this.tags?.setValue(this.article.tags)
         this.selectedTags = this.article.tags
       },
-      error: (error: HttpErrorResponse) => {
-        console.log(error.message);
-      }
+      error: (_error: HttpErrorResponse) => { }
     })
   }
 
@@ -89,26 +88,33 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.form = this.formuilder.group({
       id: [null],
       title: ['', [Validators.required]],
+      summary: ['', [Validators.required]],
       thumbnail: [''],
       content: ['', [Validators.required]],
       tags: [[]]
     })
   }
 
+  get title() { return this.form.get('title'); }
+  get summary() { return this.form.get('summary'); }
+  get content() { return this.form.get('content'); }
+  get thumbnail() { return this.form.get('thumbnail'); }
+  get tags() { return this.form.get('tags'); }
+
   public saveArticle() {
-    this.isSaving = true;
     this.loading = true;
+    this.isSaving = true;
     this.articleService.updateToSave(this.form.value).pipe(
       tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', ''))
     ).subscribe({
       next: (_response: Article) => {
-        this.isSaving = false;
         this.loading = false;
+        this.isSaving = false;
         this.messageService.openSnackBarSuccess('Article sauvegardé !', '');
       },
       error: (_error: HttpErrorResponse) => {
-        this.isSaving = false;
         this.loading = false;
+        this.isSaving = false;
       }
     })
   }
@@ -221,15 +227,11 @@ export class ArticleEntryCreateComponent implements OnInit {
     }
   }
 
-  get title() { return this.form.get('title'); }
-  get content() { return this.form.get('content'); }
-  get thumbnail() { return this.form.get('thumbnail'); }
-
   public removeFile() {
     if (this.form.controls['thumbnail'].value !== '') this.form.controls['thumbnail'].setValue('')
   }
 
-  onItemSelect(_item: any) {
+  public onItemSelect(_item: any) {
     this.setFormTagsValue()
   }
 
@@ -253,6 +255,8 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.articleId = this.route.snapshot.params.id
     this.getArticle()
     this.InitForm()
+
+    this.fetchListOfTags();
 
     this.dropdownSettings = {
       singleSelection: false,

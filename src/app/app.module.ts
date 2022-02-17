@@ -12,6 +12,8 @@ import { AuthService } from './user/auth.service';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { LOCALE_ID } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { AuthInterceptor } from './services/http-interceptors/auth.interceptor';
 
 
 registerLocaleData(localeFr, 'fr');
@@ -29,13 +31,14 @@ registerLocaleData(localeFr, 'fr');
     JwtModule.forRoot({
       config: {
         tokenGetter: AuthService.token,
+        disallowedRoutes: [`${environment.apiBaseUrl}/auth`, `${environment.apiBaseUrl}/user`],
         // allowedDomains: ["example.com"],
-        // disallowedRoutes: ["http://example.com/examplebadroute/"],
       },
     })
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "fr-FR" },
+    AuthInterceptor,
     httpInterceptorProviders
   ],
   bootstrap: [AppComponent]

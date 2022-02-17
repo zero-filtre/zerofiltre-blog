@@ -1,6 +1,7 @@
 export interface Article {
   id?: number;
   title?: string;
+  summary?: string;
   thumbnail?: string;
   content?: string;
   author?: Author;
@@ -25,6 +26,7 @@ export interface Author {
   pseudoName?: string;
   firstName?: string;
   lastName?: string;
+  email?: string;
   registeredOn?: Date;
   profilePicture?: string;
   bio?: string;

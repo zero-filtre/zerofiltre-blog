@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Article, Author, Tag } from './article.model';
 
@@ -9,11 +9,51 @@ import { Article, Author, Tag } from './article.model';
 })
 export class ArticleService {
   readonly apiServerUrl = environment.apiBaseUrl;
+  public loading = false;
 
-  constructor(private http: HttpClient) { }
+  private _articlesSubject$ = new BehaviorSubject<Article[]>([]);
+  public articles$: Observable<Article[]> = this._articlesSubject$.asObservable();
 
-  public getArticles(page: number, limit: number): Observable<Article[]> {
-    return this.http.get<Article[]>(`${this.apiServerUrl}/article/list?pageNumber=${page}&pageSize=${limit}`);
+  private _tagssSubject$ = new BehaviorSubject<Tag[]>([]);
+  public tags$: Observable<Tag[]> = this._tagssSubject$.asObservable();
+
+  constructor(private http: HttpClient) {
+    this.loadAllArticles();
+    this.loadAllTags();
+  }
+
+  private loadAllArticles() {
+    this.loading = true;
+
+    this.articles$ = this.http.get<Article[]>(`${this.apiServerUrl}/article?pageNumber=0&pageSize=5&status=published`)
+      .pipe(
+        catchError(error => {
+          this.loading = false;
+          return throwError(() => error);
+        }),
+        tap(articles => {
+          this.loading = false;
+          this._articlesSubject$.next(articles)
+          console.log('ARTICLES LIST: ', this.articles$);
+        })
+      )
+  }
+
+  private loadAllTags() {
+    this.http.get<Tag[]>(`${this.apiServerUrl}/tag`)
+      .pipe(
+        catchError(error => {
+          return throwError(() => error);
+        }),
+        tap(tags => {
+          this._tagssSubject$.next(tags)
+        })
+      )
+  }
+
+
+  public getArticles(page: number, limit: number, status: string): Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=${status}`);
   }
 
   public getOneArticle(articleId: number): Observable<Article> {
@@ -37,7 +77,7 @@ export class ArticleService {
   }
 
   public getListOfTags(): Observable<Tag[]> {
-    return this.http.get<Tag[]>(`${this.apiServerUrl}/article/tag-list`);
+    return this.http.get<Tag[]>(`${this.apiServerUrl}/tag`);
   }
 
   public getArticleTags(articleId: string): Observable<Tag[]> {

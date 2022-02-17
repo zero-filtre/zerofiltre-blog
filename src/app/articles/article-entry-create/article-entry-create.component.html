@@ -20,7 +20,7 @@
         </div>
 
         <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between">
-            <ng-container *ngIf="form.invalid; else validBtn" class="">
+            <ng-container *ngIf="form.invalid; else validBtn">
                 <button [disabled]="form.invalid || loading"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
                     Publier
@@ -64,12 +64,40 @@
         <div class="article-data-container lg:grid grid-cols-10 gap-10 items-start mt-10 lg:mt-20">
             <aside class="col-span-2">
                 <div class="left-side-container">
-                    <div class="tag-list mt-10 sm:mt-0">
+                    <div class="article-summary mt-10 sm:mt-0">
+                        <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
+                            Description
+                        </label>
+                        <div class="mt-5">
+                            <textarea
+                                class="editor-textarea shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
+                                rows="5" cols="33"
+                                placeholder="Decrivez votre article en quelques mots... (Entre 50 et 250 caractères)"
+                                id="summary" formControlName="summary" required minlength="50" maxlength="250">
+                            </textarea>
+                            <div *ngIf="summary?.invalid && summary?.dirty" class="">
+                                <div *ngIf="summary?.errors?.['required']"
+                                    class="mt-2 text-xs sm:text-sm text-error italic">
+                                    La description est obligatoire.
+                                </div>
+                                <div *ngIf="summary?.errors?.['minlength']"
+                                    class="mt-2 text-xs sm:text-sm text-error italic">
+                                    La description doit comporter au moins 50 caractères.
+                                </div>
+                                <div *ngIf="summary?.errors?.['maxlength']"
+                                    class="mt-2 text-xs sm:text-sm text-error italic">
+                                    La description doit comporter au plus 250 caractères.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tag-list mt-10">
                         <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
                             Tags
                         </label>
 
-                        <div class="mt-5">
+                        <div class="mt-5 shadow-sm">
                             <ng-multiselect-dropdown [placeholder]="'Selectionez vos tags'" formControlName="tags"
                                 [settings]="dropdownSettings" [data]="tagList" (onSelect)="onItemSelect($event)">
                             </ng-multiselect-dropdown>
