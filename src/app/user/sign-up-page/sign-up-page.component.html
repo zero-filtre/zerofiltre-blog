@@ -10,32 +10,16 @@
             <form [formGroup]="form" (ngSubmit)="signup()" class="space-y-6">
                 <div class="rounded-md space-y-4">
                     <div>
-                        <label for="firstName" class="sr-only">Nom</label>
+                        <label for="fullName" class="sr-only">Nom</label>
                         <div class="">
                             <div class="relative ">
-                                <input name="firstName" type="text" id="firstName" required formControlName="firstName"
-                                    class="" required placeholder="Prenom">
+                                <input name="fullName" type="text" id="fullName" required formControlName="fullName"
+                                    class="" required placeholder="Nom complet">
                             </div>
-                            <div *ngIf="firstName?.invalid && firstName?.dirty" class="">
-                                <div *ngIf="firstName?.errors?.['required']"
+                            <div *ngIf="fullName?.invalid && fullName?.dirty" class="">
+                                <div *ngIf="fullName?.errors?.['required']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Le prenom est obligatoire.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="lastName" class="sr-only">Nom</label>
-                        <div class="">
-                            <div class="relative ">
-                                <input name="lastName" type="text" id="lastName" required formControlName="lastName"
-                                    class="" required placeholder="Nom">
-                            </div>
-                            <div *ngIf="lastName?.invalid && lastName?.dirty" class="">
-                                <div *ngIf="lastName?.errors?.['required']"
-                                    class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Le nom est obligatoire.
+                                    Votre nom est obligatoire.
                                 </div>
                             </div>
                         </div>
@@ -59,22 +43,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div>
-                        <label for="pseudo" class="sr-only">Pseudo</label>
-                        <div class="">
-                            <div class="relative ">
-                                <input name="pseudo" type="text" id="pseudo" required formControlName="pseudo" class=""
-                                    required placeholder="Pseudo">
-                            </div>
-                            <div *ngIf="pseudo?.invalid && pseudo?.dirty" class="">
-                                <div *ngIf="pseudo?.errors?.['required']"
-                                    class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Le pseudo est obligatoire.
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
 
                     <div>
                         <label for="password" class="sr-only">Mot de passe</label>

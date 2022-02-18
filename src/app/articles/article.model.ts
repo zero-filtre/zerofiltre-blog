@@ -24,8 +24,7 @@ export interface File {
 export interface Author {
   id?: string;
   pseudoName?: string;
-  firstName?: string;
-  lastName?: string;
+  fullName?: string;
   email?: string;
   registeredOn?: Date;
   profilePicture?: string;

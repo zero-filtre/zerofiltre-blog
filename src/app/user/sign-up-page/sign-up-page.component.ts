@@ -34,8 +34,7 @@ export class SignUpPageComponent implements OnInit {
 
   public InitForm(): void {
     this.form = this.formuilder.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
+      fullName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern('[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)@[A-Za-z0-9-]+(\.[A-Za-z0-9]+).[A-Za-z]{2,}')]],
       password: ['', [Validators.required, Validators.pattern(/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})$/)]],
       matchingPassword: ['', [Validators.required]],
@@ -46,8 +45,7 @@ export class SignUpPageComponent implements OnInit {
   get password() { return this.form.get('password'); }
   get matchingPassword() { return this.form.get('matchingPassword'); }
   get pseudo() { return this.form.get('pseudo'); }
-  get firstName() { return this.form.get('firstName'); }
-  get lastName() { return this.form.get('lastName'); }
+  get fullName() { return this.form.get('fullName'); }
 
   get passwordDoesMatch() {
     return this.password?.value === this.matchingPassword?.value;

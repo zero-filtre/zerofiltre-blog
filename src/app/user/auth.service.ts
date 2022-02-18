@@ -14,24 +14,21 @@ export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
 
-  public _user$: BehaviorSubject<User>;
-  public user$: Observable<User>;
+  private _user$ = new BehaviorSubject<User>(null!);
+  public user$ = this._user$.asObservable();
 
   public TOKEN_NAME!: string;
+  public REFRESH_TOKEN_NAME: string = 'refresh_token';
   public isTokenExpired!: boolean;
 
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
-    this._user$ = new BehaviorSubject<User>(null!);
-    this.user$ = this._user$.asObservable();
-
-    if (this.token) {
+    if (this.token && this.token !== undefined) {
       this.TOKEN_NAME = this.getTokenName(this.token);
       this.loadCurrentUser();
     }
-
   }
 
   private loadCurrentUser() {
@@ -42,12 +39,13 @@ export class AuthService {
       this._isLoggedIn$.next(true);
     }
 
-    // this.http.get<User>(`${this.apiServerUrl}/user`)
+    // this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
     //   .pipe(
     //     catchError(error => {
     //       return throwError(() => error);
     //     }),
     //     tap(usr => {
+    //       console.log('ME');
     //       this._user$.next(usr);
     //     })
     //   )
@@ -57,9 +55,21 @@ export class AuthService {
     return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
   }
 
+  get refreshToken(): any {
+    return localStorage.getItem(this.REFRESH_TOKEN_NAME);
+  }
+
+  get userData(): any {
+    return localStorage.getItem('user_data');
+  }
+
   /** This one is to access the jwt by this class for the jwtHelper lib tokenGetter function in the app.module */
   static get token(): any {
     return localStorage.getItem('jwt_access_token');
+  }
+
+  get currentUsr() {
+    return JSON.parse(this.userData);
   }
 
   private getTokenName(tokenValue: string): string {
@@ -72,7 +82,7 @@ export class AuthService {
     return name
   }
 
-  public refreshToken(): Observable<any> {
+  public sendRefreshToken(): Observable<any> {
     throw new Error('Method not implemented.');
   }
 
@@ -109,7 +119,6 @@ export class AuthService {
     this._isLoggedIn$.next(false);
     this._user$.next(null!);
     localStorage.clear();
-    // localStorage.removeItem(this.TOKEN_NAME);
   }
 
   public requestPasswordReset(email: string): Observable<any> {
@@ -156,26 +165,31 @@ export class AuthService {
     this._isLoggedIn$.next(true);
     localStorage.setItem(this.TOKEN_NAME, token);
 
-    // this.getUser()
-    //   .subscribe({
-    //     next: usr => {
-    //       this._user$.next(usr);
-    //     }
-    //   })
+    this.getUser()
+      .subscribe({
+        next: usr => {
+          this._user$.next(usr);
+          localStorage.setItem('user_data', JSON.stringify(usr));
+        }
+      })
   }
 
   private handleJWTauth(response: any, tokenName: string) {
-    const token = this.extractTokenFromHeaders(response)
+    const { refreshToken, accessToken } = response.body
     this.TOKEN_NAME = tokenName;
     this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
-    localStorage.setItem(this.TOKEN_NAME, token);
+    localStorage.setItem(this.TOKEN_NAME, accessToken);
+    localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
 
-    // this.getUser()
-    //   .subscribe({
-    //     next: usr => {
-    //       this._user$.next(usr);
-    //     }
-    //   })
+    console.log('SIGN IN RESPONSE: ', response);
+
+    this.getUser()
+      .subscribe({
+        next: usr => {
+          this._user$.next(usr);
+          localStorage.setItem('user_data', JSON.stringify(usr));
+        }
+      })
   }
 
   private extractTokenFromHeaders(response: any) {

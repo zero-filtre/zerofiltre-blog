@@ -127,16 +127,6 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
   ngOnInit(): void {
     this.articleId = this.route.snapshot.params.id;
     this.getCurrentArticle(this.articleId);
-
-    if (this.authService.token) {
-      this.authService.getUser()
-        .subscribe({
-          next: usr => {
-            this.authService._user$.next(usr);
-          }
-        })
-    }
-
   }
 
   ngAfterViewChecked() {

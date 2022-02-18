@@ -20,8 +20,7 @@
                                 </div>
                                 <div class="">
                                     <p class="text-sm font-semibold text-skin-inverted ">
-                                        {{article?.author?.firstName}}
-                                        {{article?.author?.lastName}}
+                                        {{article?.author?.fullName}}
                                     </p>
                                     <p class="text-xs font-semibold text-skin-muted line-clamp-2">
                                         {{article?.author?.profession || 'Proféssion'}}
@@ -281,7 +280,9 @@
                                 </a>
                             </div>
 
-                            <div *ngIf="authService.user$ | async as currentUsr">
+                            <div *ngIf="authService.currentUsr as currentUsr">
+                                <!-- *ngIf="authService.user$ | async as currentUsr" -->
+
                                 <div *ngIf="isAuthor(currentUsr, article)">
                                     <button [matMenuTriggerFor]="menu" class="text-secondary"
                                         aria-label="icon-button with a menu">
@@ -343,8 +344,7 @@
                             </div>
                             <div class="ml-3">
                                 <p class="text-xs font-semibold tracking-tighter text-skin-base">
-                                    {{article?.author?.firstName}}
-                                    {{article?.author?.lastName}}
+                                    {{article?.author?.fullName}}
                                 </p>
                                 <p class="text-xs font-medium text-primary-500 group-hover:text-skin-primary">
                                     {{article?.author?.profession || 'Proféssion'}}
