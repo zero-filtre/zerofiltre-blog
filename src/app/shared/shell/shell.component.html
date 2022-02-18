@@ -72,7 +72,7 @@
             <div *ngIf="authService.user$ | async as currentUsr" class="border-t pt-3"
                 aria-label="Example icon-button with a menu">
 
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-2 px-4">
                     <div>
                         <img *ngIf="currentUsr?.profilePicture" class="h-10 w-10 rounded-full"
                             [src]="currentUsr?.profilePicture">
@@ -86,11 +86,11 @@
                         </ng-container>
                     </div>
                     <div>
-                        <div class="space-x-1">
+                        <div class="space-x-1 text-sm">
                             <span>{{currentUsr.firstName}}</span>
                             <span>{{currentUsr.lastName}}</span>
                         </div>
-                        <div class="text-sm font-semibold text-skin-muted">{{currentUsr.email}}</div>
+                        <div class="text-xs font-semibold text-skin-muted">{{currentUsr.email}}</div>
                     </div>
                 </div>
 
