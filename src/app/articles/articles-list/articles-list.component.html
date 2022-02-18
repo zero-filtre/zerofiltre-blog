@@ -119,7 +119,7 @@
                     </p>
                 </div>
 
-                <div *ngIf="authService.isLoggedIn$ | async">
+                <div *ngIf="authService.currentUsr">
                     <button (click)="openArticleEntryDialog()" type="button"
                         class="text-primary-500 hover:text-primary-300 transition-all duration-200">
                         <span class="sr-only">Nouvel article</span>
