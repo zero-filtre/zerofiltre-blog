@@ -184,7 +184,9 @@
                     <button *ngIf="authService.userData as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
                         aria-label="Example icon-button with a menu">
                         <!-- *ngIf="authService.user$ | async as currentUsr" -->
-                        <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
+                        Me 1: {{currentUsr.profilePicture}}
+
+                        <div *ngIf="currentUsr.profilePicture" class="flex items-center text-sm space-x-2">
                             <img class="h-10 w-10 rounded-full" [src]="currentUsr?.profilePicture">
                             <span>Me: {{currentUsr?.profilePicture}}</span>
                         </div>
