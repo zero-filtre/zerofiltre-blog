@@ -68,6 +68,10 @@ export class AuthService {
     return localStorage.getItem('jwt_access_token');
   }
 
+  get currentUsr() {
+    return JSON.parse(this.userData);
+  }
+
   private getTokenName(tokenValue: string): string {
     let name = '';
     for (var i = 0, len = localStorage.length; i < len; i++) {

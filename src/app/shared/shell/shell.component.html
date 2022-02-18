@@ -69,7 +69,7 @@
                 <div>S'enregistrer</div>
             </a>
 
-            <div *ngIf="authService.userData as currentUsr" class="border-t pt-3"
+            <div *ngIf="authService.currentUsr as currentUsr" class="border-t pt-3"
                 aria-label="Example icon-button with a menu">
                 <!-- *ngIf="authService.user$ | async as currentUsr" -->
 
@@ -181,12 +181,11 @@
                         <div>S'enregistrer</div>
                     </a>
 
-                    <button *ngIf="authService.userData as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
+                    <button *ngIf="authService.currentUsr as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
                         aria-label="Example icon-button with a menu">
                         <!-- *ngIf="authService.user$ | async as currentUsr" -->
-                        Me 1: {{currentUsr}}
 
-                        <div *ngIf="currentUsr.profilePicture" class="flex items-center text-sm space-x-2">
+                        <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
                             <img class="h-10 w-10 rounded-full" [src]="currentUsr?.profilePicture">
                             <span>Me: {{currentUsr?.profilePicture}}</span>
                         </div>
@@ -198,7 +197,6 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
-                            <span>Not Me</span>
                         </div>
                     </button>
 
