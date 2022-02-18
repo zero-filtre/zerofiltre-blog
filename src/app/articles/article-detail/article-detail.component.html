@@ -20,8 +20,7 @@
                                 </div>
                                 <div class="">
                                     <p class="text-sm font-semibold text-skin-inverted ">
-                                        {{article?.author?.firstName}}
-                                        {{article?.author?.lastName}}
+                                        {{article?.author?.fullName}}
                                     </p>
                                     <p class="text-xs font-semibold text-skin-muted line-clamp-2">
                                         {{article?.author?.profession || 'Proféssion'}}
@@ -345,8 +344,7 @@
                             </div>
                             <div class="ml-3">
                                 <p class="text-xs font-semibold tracking-tighter text-skin-base">
-                                    {{article?.author?.firstName}}
-                                    {{article?.author?.lastName}}
+                                    {{article?.author?.fullName}}
                                 </p>
                                 <p class="text-xs font-medium text-primary-500 group-hover:text-skin-primary">
                                     {{article?.author?.profession || 'Proféssion'}}

@@ -1,8 +1,7 @@
 export interface User {
     id?: string;
     pseudoName?: string;
-    firstName?: string;
-    lastName?: string;
+    fullName?: string;
     email?: string;
     registeredOn?: Date;
     profilePicture?: string;

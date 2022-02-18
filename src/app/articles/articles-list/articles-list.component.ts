@@ -166,8 +166,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       if (
         article.title?.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
         article.tags?.some(tag => tag.name?.toLowerCase().indexOf(key.toLowerCase()) !== -1) ||
-        article.author?.firstName?.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-        article.author?.lastName?.toLowerCase().indexOf(key.toLowerCase()) !== -1
+        article.author?.fullName?.toLowerCase().indexOf(key.toLowerCase()) !== -1
       ) {
         results.push(article)
       }
