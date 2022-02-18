@@ -186,15 +186,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    if (this.authService.token) {
-      this.authService.getUser()
-        .subscribe({
-          next: usr => {
-            this.authService._user$.next(usr);
-          }
-        })
-    }
-
     this.seo.generateTags({
       title: 'Tous les articles | Zerofiltre.tech',
       description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",

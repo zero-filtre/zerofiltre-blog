@@ -69,8 +69,9 @@
                 <div>S'enregistrer</div>
             </a>
 
-            <div *ngIf="authService.user$ | async as currentUsr" class="border-t pt-3"
+            <div *ngIf="authService.userData as currentUsr" class="border-t pt-3"
                 aria-label="Example icon-button with a menu">
+                <!-- *ngIf="authService.user$ | async as currentUsr" -->
 
                 <div class="flex items-center space-x-2 px-4">
                     <div>
@@ -180,8 +181,9 @@
                         <div>S'enregistrer</div>
                     </a>
 
-                    <button *ngIf="authService.user$ | async as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
+                    <button *ngIf="authService.userData as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
                         aria-label="Example icon-button with a menu">
+                        <!-- *ngIf="authService.user$ | async as currentUsr" -->
                         <img *ngIf="currentUsr?.profilePicture" class="h-10 w-10 rounded-full"
                             [src]="currentUsr?.profilePicture">
                         <ng-container *ngIf="!currentUsr?.profilePicture">

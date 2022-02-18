@@ -25,7 +25,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
           catchError((errorResponse: HttpErrorResponse) => {
             if (errorResponse.status === 401 && errorResponse.error.message === 'Expired JWT Token') {
               localStorage.clear();
-              return this.authService.refreshToken().pipe(mergeMap(() => {
+              return this.authService.sendRefreshToken().pipe(mergeMap(() => {
                 return this.authInterceptor.intercept(request, next); // let the request continue its flow with the new valid token
               }));
             }
