@@ -68,6 +68,42 @@
                 routerLink="/register">
                 <div>S'enregistrer</div>
             </a>
+
+            <div *ngIf="authService.user$ | async as currentUsr" class="flex items-center space-x-2 border-t pt-3"
+                aria-label="Example icon-button with a menu">
+                <div>
+                    <img *ngIf="currentUsr?.profilePicture" class="h-10 w-10 rounded-full"
+                        [src]="currentUsr?.profilePicture">
+                    <ng-container *ngIf="!currentUsr?.profilePicture">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-10 w-10 border-2 border-primary-500 rounded-full p-1 text-primary-500 hover:text-primary-300 hover:border-primary-300 transition-all duration-200"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </ng-container>
+                </div>
+                <div>
+                    <span>{{currentUsr.firstName}}</span>
+                    <span>{{currentUsr.lastName}}</span>
+                    <span class="block text-skin-muted">{{currentUsr.email}}</span>
+                </div>
+            </div>
+
+            <div class="mt-2">
+                <a routerLink="#"
+                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                    <span>Mon profil</span>
+                </a>
+                <a routerLink="#"
+                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                    <span>Dashboard</span>
+                </a>
+                <button (click)="logout()"
+                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                    <span>Se déconnecter</span>
+                </button>
+            </div>
         </mat-nav-list>
     </mat-sidenav>
 
@@ -139,8 +175,6 @@
 
                     <button *ngIf="authService.user$ | async as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
                         aria-label="Example icon-button with a menu">
-                        <!-- <ng-container *ngIf="authService.user$ | async as user"> -->
-                        <!-- <ng-container *ngIf="currentUsr"> -->
                         <img *ngIf="currentUsr?.profilePicture" class="h-10 w-10 rounded-full"
                             [src]="currentUsr?.profilePicture">
                         <ng-container *ngIf="!currentUsr?.profilePicture">
@@ -151,7 +185,6 @@
                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
                         </ng-container>
-                        <!-- </ng-container> -->
                     </button>
 
                     <mat-menu #menu="matMenu" class="mt-2">
@@ -165,7 +198,7 @@
                         </a>
                         <button (click)="logout()"
                             class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
-                            <span>Se deconnecter</span>
+                            <span>Se déconnecter</span>
                         </button>
                     </mat-menu>
                 </div>
