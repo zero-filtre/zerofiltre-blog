@@ -11,11 +11,11 @@ export class ArticleService {
   readonly apiServerUrl = environment.apiBaseUrl;
   public loading = false;
 
-  private _articlesSubject$ = new BehaviorSubject<Article[]>([]);
-  public articles$: Observable<Article[]> = this._articlesSubject$.asObservable();
+  private articleSubject$ = new BehaviorSubject<Article[]>([]);
+  public articles$: Observable<Article[]> = this.articleSubject$.asObservable();
 
-  private _tagssSubject$ = new BehaviorSubject<Tag[]>([]);
-  public tags$: Observable<Tag[]> = this._tagssSubject$.asObservable();
+  private tagSubject$ = new BehaviorSubject<Tag[]>([]);
+  public tags$: Observable<Tag[]> = this.tagSubject$.asObservable();
 
   constructor(private http: HttpClient) {
     // this.loadAllArticles();
@@ -33,7 +33,7 @@ export class ArticleService {
         }),
         tap(articles => {
           this.loading = false;
-          this._articlesSubject$.next(articles)
+          this.articleSubject$.next(articles)
           console.log('ARTICLES LIST: ', this.articles$);
         })
       )
@@ -47,10 +47,27 @@ export class ArticleService {
         }),
         tap(tags => {
           console.log('TAGS');
-          this._tagssSubject$.next(tags)
+          this.tagSubject$.next(tags)
         })
       )
   }
+
+  // private loadAllTags() {
+  //   const loadTags$ = this.http.get<Tag[]>(`${this.apiServerUrl}/tag`)
+  //     .pipe(
+  //       catchError(error => {
+  //         const messagge = 'Impossible de recupérer la liste de tags'
+  //         this.messageService.openSnackBarError(messagge, 'Ok', 0);
+  //         return throwError(() => error);
+  //       }),
+  //       tap(tags => {
+  //         console.log('TAGS');
+  //         this.tagSubject$.next(tags)
+  //       })
+  //     )
+
+  //   loadTags$.subscribe();
+  // }
 
 
   public getArticles(page: number, limit: number, status: string): Observable<Article[]> {
