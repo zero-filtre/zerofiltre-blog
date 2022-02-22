@@ -27,7 +27,7 @@
 
             <a mat-list-item (click)="drawer.close()" class="sidenavLink" routerLink="/whatsapp">
                 <div class="flex items-center gap-2">
-                    <svg class="fill-primary-500 rounded-md w-5" role="img" viewBox="0 0 24 24"
+                    <svg class="fill-primary-500 w-5 h-5" role="img" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <title>WhatsApp</title>
 
@@ -40,7 +40,7 @@
 
             <a mat-list-item (click)="drawer.close()" class="sidenavLink" routerLink="/github">
                 <div class="flex">
-                    <svg class="fill-primary-500 rounded-md w-5" role="img" viewBox="0 0 24 24"
+                    <svg class="fill-primary-500 rounded-md w-5 h-5" role="img" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <title>GitHub</title>
                         <path
@@ -69,7 +69,7 @@
                 <div>S'enregistrer</div>
             </a>
 
-            <div *ngIf="authService.currentUsr as currentUsr" class="border p-4">
+            <div *ngIf="authService.currentUsr as currentUsr" class="border p-4 mt-5">
                 <!-- *ngIf="authService.user$ | async as currentUsr" -->
 
                 <div class="flex items-center space-x-2">
@@ -78,7 +78,7 @@
                             [src]="currentUsr?.profilePicture">
                         <ng-container *ngIf="!currentUsr?.profilePicture">
                             <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-10 w-10 border-2 border-primary-500 rounded-full p-1 text-primary-500 hover:text-primary-300 hover:border-primary-300 transition-all duration-200"
+                                class="h-10 w-10 p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white rounded-full"
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
