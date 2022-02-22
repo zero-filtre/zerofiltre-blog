@@ -232,12 +232,12 @@
                 <header *ngIf="article; else articleHeaderSkeletonLoader" class="article-header space-y-4">
                     <div class="flex items-center justify-between gap-5">
                         <div class="flex flex-col space-y-4">
-                            <div *ngIf="articleHasTags" class="flex items-center space-x-3">
+                            <div *ngIf="articleHasTags" class="flex items-center space-x-2">
                                 <div *ngFor="let tag of article?.tags"
                                     class="flex items-center space-x-2 space-y-2 flex-wrap">
                                     <span
                                         class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                        <svg class="mr-1.5 h-2 w-2" [ngClass]="{'fill-[`${tag.colorCode}`]': true}"
+                                        <svg class="mr-1 h-2 w-2 text-[{{tag.colorCode}}]" fill="currentColor"
                                             viewBox="0 0 8 8">
                                             <circle cx="4" cy="4" r="3"></circle>
                                         </svg>
@@ -265,7 +265,7 @@
                         </div>
 
                         <div class="">
-                            <div *ngIf="!(authService.isLoggedIn$ | async)">
+                            <div *ngIf="!authService.currentUsr">
                                 <a routerLink="/" class="text-skin-base group flex w-full items-center space-x-1">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         class="h-6 w-6 group-hover:text-primary-500 transition-all duration-200"

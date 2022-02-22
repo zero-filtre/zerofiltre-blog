@@ -69,14 +69,13 @@
                         <div class="tagList-container space-y-1">
                             <ng-container *ngFor="let tag of tagList">
                                 <button (click)="sortByTag(tag.name)" type="button"
-                                    class="group inline-flex items-center mr-1 px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card">
-                                    <span
-                                        class="text-skin-muted group-hover:hidden transition-all duration-200">#</span>
-                                    <svg class="mr-1 h-2 w-2 fill-[{{tag.colorCode}}] hidden group-hover:block transition-all duration-200"
+                                    class="group inline-flex items-center mr-1 px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                    <svg class="mr-1 h-2 w-2 text-[{{tag.colorCode}}]" fill="currentColor"
                                         viewBox="0 0 8 8">
                                         <circle cx="4" cy="4" r="3"></circle>
                                     </svg>
-                                    <span class="truncate lowercase font-semibold">{{tag?.name}}</span>
+                                    <span
+                                        class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
                                 </button>
                             </ng-container>
                         </div>
@@ -171,11 +170,12 @@
 
                             <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
 
-                                <div class="article-tags flex items-center space-x-3">
+                                <div class="article-tags flex items-center space-x-2">
                                     <div *ngFor="let tag of article?.tags" class="flex items-center space-x-2">
                                         <span
                                             class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                            <svg class="mr-1.5 h-2 w-2 fill-[{{tag.colorCode}}]" viewBox="0 0 8 8">
+                                            <svg class="mr-1 h-2 w-2 text-[{{tag.colorCode}}]" fill="currentColor"
+                                                viewBox="0 0 8 8">
                                                 <circle cx="4" cy="4" r="3"></circle>
                                             </svg>
                                             {{tag.name}}
