@@ -26,7 +26,7 @@ declare var Prism: any;
 })
 export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestroy {
   public article!: Article;
-  public articleId!: number;
+  public articleId!: string;
   public previousArticle!: Article;
   public nextArticle!: Article;
   public articleHasTags!: boolean;
@@ -93,6 +93,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
+        this.nextArticle = null!;
         this.messageService.cancel();
       }
     })
@@ -106,6 +107,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
         },
         error: (_error: HttpErrorResponse) => {
           this.loading = false;
+          this.previousArticle = null!;
           this.messageService.cancel();
         }
       })
@@ -125,8 +127,12 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
   }
 
   ngOnInit(): void {
-    this.articleId = this.route.snapshot.params.id;
-    this.getCurrentArticle(this.articleId);
+    this.route.paramMap.subscribe(
+      params => {
+        this.articleId = params.get('id')!;
+        this.getCurrentArticle(+this.articleId);
+      }
+    );
   }
 
   ngAfterViewChecked() {

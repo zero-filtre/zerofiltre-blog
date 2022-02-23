@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +22,6 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private jwtHelper: JwtHelperService
   ) {
     if (this.token && this.token !== undefined) {
       this.TOKEN_NAME = this.getTokenName(this.token);
@@ -32,23 +30,16 @@ export class AuthService {
   }
 
   private loadCurrentUser() {
-    if (this.TOKEN_NAME === 'jwt_access_token') {
-      this.isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
-      this._isLoggedIn$.next(!this.isTokenExpired);
-    } else {
-      this._isLoggedIn$.next(true);
-    }
-
-    // this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
-    //   .pipe(
-    //     catchError(error => {
-    //       return throwError(() => error);
-    //     }),
-    //     tap(usr => {
-    //       console.log('ME');
-    //       this._user$.next(usr);
-    //     })
-    //   )
+    this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
+      .pipe(
+        catchError(error => {
+          return throwError(() => error);
+        }),
+        tap(usr => {
+          console.log('ME');
+          this._user$.next(usr);
+        })
+      )
   }
 
   get token(): any {
@@ -180,8 +171,6 @@ export class AuthService {
     this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
     localStorage.setItem(this.TOKEN_NAME, accessToken);
     localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
-
-    console.log('SIGN IN RESPONSE: ', response);
 
     this.getUser()
       .subscribe({

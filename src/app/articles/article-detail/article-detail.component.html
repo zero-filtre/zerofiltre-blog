@@ -90,7 +90,7 @@
                     <div *ngIf="nextArticle">
                         <h2 class="text-[10px] leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
                             suivant</h2>
-                        <a href="articles/{{nextArticle.id}}" class="mt-3 flex items-center space-x-2">
+                        <a routerLink="/articles/{{nextArticle.id}}" class="mt-3 flex items-center space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{nextArticle?.thumbnail}}"
                                 alt="{{nextArticle?.title}} ">
                             <span
@@ -102,7 +102,7 @@
                     <div *ngIf="previousArticle">
                         <h2 class="text-[10px] leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
                             précédent</h2>
-                        <a href="articles/{{previousArticle.id}}" class="mt-3 flex items-center space-x-2">
+                        <a routerLink="/articles/{{previousArticle.id}}" class="mt-3 flex items-center space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{previousArticle?.thumbnail}}"
                                 alt="{{previousArticle?.title}}">
                             <span
@@ -111,16 +111,6 @@
                             </span>
                         </a>
                     </div>
-
-                    <ng-container *ngIf="loading">
-                        <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                            'border-radius': '5px',
-                                height: '60px',
-                                'width.%': 100,
-                                display: 'block'
-                            }">
-                        </ngx-skeleton-loader>
-                    </ng-container>
                 </div>
 
                 <div class="pt-6 mt-6 border-t border-skin-border">
