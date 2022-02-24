@@ -238,18 +238,21 @@
 
                             <div
                                 class="flex flex-col space-y-1 sm:space-y-0 sm:flex-row text-xs font-semibold text-skin-base">
-                                <div class="space-x-1">
+                                <div *ngIf="article?.publishedAt === article?.lastPublishedAt" class="space-x-1">
                                     <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
-                                        date}}</time>
+                                        date}}
+                                    </time>
                                     <span aria-hidden="true">·</span>
                                     <span>{{article?.readingTime}} min de lecture</span>
                                 </div>
-                                <div *ngIf="article?.publishedAt !== article?.lastPublishedAt">
-                                    <span class="sm:ml-3 mr-1">Dernière mise à jour le</span>
+                                <div *ngIf="article?.publishedAt !== article?.lastPublishedAt" class="space-x-1">
+                                    <span class="">Mis à jour le</span>
                                     <time class="text-primary-500"
                                         [dateTime]="article?.lastPublishedAt | date">{{article?.lastPublishedAt |
                                         date}}
                                     </time>
+                                    <span aria-hidden="true">·</span>
+                                    <span>{{article?.readingTime}} min de lecture</span>
                                 </div>
                             </div>
                         </div>

@@ -1,30 +1,27 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap, pluck, filter, switchMap } from 'rxjs/operators';
+import { tap, filter } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
 import { calcReadingTime, formatDate, objectExists } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
-import "clipboard";
 import "prismjs/plugins/toolbar/prism-toolbar";
 import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
 import "prismjs/components/prism-markup";
+
 import { MessageService } from 'src/app/services/message.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
-import { User } from 'src/app/user/user.model';
-
-declare var Prism: any;
 
 @Component({
   selector: 'app-article-detail',
   templateUrl: './article-detail.component.html',
   styleUrls: ['./article-detail.component.css']
 })
-export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class ArticleDetailComponent implements OnInit, OnDestroy {
   public article!: Article;
   public articleId!: string;
   public previousArticle!: Article;
@@ -133,10 +130,6 @@ export class ArticleDetailComponent implements OnInit, AfterViewChecked, OnDestr
         this.getCurrentArticle(+this.articleId);
       }
     );
-  }
-
-  ngAfterViewChecked() {
-    Prism.highlightAll();
   }
 
   ngOnDestroy(): void {
