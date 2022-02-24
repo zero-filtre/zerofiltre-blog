@@ -65,11 +65,15 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchArticles(): void {
     this.loading = true;
-    this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
+    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
       next: (response: Article[]) => {
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.setArticlesReadingTime(response);
         this.loading = false;
+
+        if (response.length === 0) {
+          this.errorMessage = "Pas d'articles trouvés pour le moment"
+        }
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
@@ -78,23 +82,23 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     })
   }
 
-  public getSavedArticles(): void {
-    this.loading = true;
-    this.mainPage = false;
+  // public getSavedArticles(): void {
+  //   this.loading = true;
+  //   this.mainPage = false;
 
-    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'draft').subscribe({
-      next: (response: Article[]) => {
-        this.articles = response
-          .filter((item: Article) => item.status === 'DRAFT')
-          .sort((a: any, b: any) => new Date(b.lastSavedAt).valueOf() - new Date(a.lastSavedAt).valueOf())
-        this.setArticlesReadingTime(response);
-        this.loading = false;
-      },
-      error: (_error: HttpErrorResponse) => {
-        this.loading = false;
-      }
-    });
-  }
+  //   this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'draft').subscribe({
+  //     next: (response: Article[]) => {
+  //       this.articles = response
+  //         .filter((item: Article) => item.status === 'DRAFT')
+  //         .sort((a: any, b: any) => new Date(b.lastSavedAt).valueOf() - new Date(a.lastSavedAt).valueOf())
+  //       this.setArticlesReadingTime(response);
+  //       this.loading = false;
+  //     },
+  //     error: (_error: HttpErrorResponse) => {
+  //       this.loading = false;
+  //     }
+  //   });
+  // }
 
 
   public setArticlesReadingTime(articles: Article[]): void {
