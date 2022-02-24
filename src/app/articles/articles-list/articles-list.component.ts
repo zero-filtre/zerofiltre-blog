@@ -70,6 +70,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.setArticlesReadingTime(response);
         this.loading = false;
+
+        if (response.length === 0) {
+          this.errorMessage = "Pas d'articles trouvés pour le moment"
+        }
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
