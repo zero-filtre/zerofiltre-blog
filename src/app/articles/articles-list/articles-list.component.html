@@ -65,7 +65,7 @@
 
                 <div class="mt-4" aria-labelledby="posts-tags">
 
-                    <ng-template [ngIf]="articles">
+                    <ng-template [ngIf]="tagList">
                         <div class="tagList-container space-y-1">
                             <ng-container *ngFor="let tag of tagList">
                                 <button (click)="sortByTag(tag.name)" type="button"
@@ -81,7 +81,7 @@
                         </div>
                     </ng-template>
 
-                    <ng-template [ngIf]="loading">
+                    <ng-template [ngIf]="loading && !tagList">
                         <div class="tags-skeleton-container">
                             <ngx-skeleton-loader class="flex space-x-1" count="3" appearance="line" [theme]="{ 
                                 'border-radius': '9999px',
