@@ -25,25 +25,16 @@ const components = [ShellComponent, FooterComponent];
 
 const modules = [
   CommonModule,
-  MatButtonModule,
   MatToolbarModule,
-  MatIconModule,
-  LayoutModule,
   MatSidenavModule,
-  MatListModule,
   MatMenuModule,
-  MatIconModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatInputModule,
   MatSnackBarModule,
+  MatDialogModule,
   RouterModule,
   HttpClientModule,
   NgxSkeletonLoaderModule,
-  MatDialogModule,
   FormsModule,
   ReactiveFormsModule,
-  MatOptionModule,
 ];
 
 @NgModule({

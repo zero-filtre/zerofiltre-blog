@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { MessageService } from 'src/app/services/message.service';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
 
@@ -65,7 +65,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchArticles(): void {
     this.loading = true;
-    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
+    this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
       next: (response: Article[]) => {
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.setArticlesReadingTime(response);
@@ -75,7 +75,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.loading = false;
         this.errorMessage = 'Oops...!'
       }
-    });
+    })
   }
 
   public getSavedArticles(): void {

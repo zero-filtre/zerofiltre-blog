@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Article, Author, Tag } from './article.model';
 
@@ -71,7 +71,10 @@ export class ArticleService {
 
 
   public getArticles(page: number, limit: number, status: string): Observable<Article[]> {
-    return this.http.get<Article[]>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=${status}`);
+    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=${status}`)
+      .pipe(
+        map(({ content }) => content)
+      );
   }
 
   public getOneArticle(articleId: number): Observable<Article> {

@@ -16,16 +16,16 @@
         </div>
 
 
-        <mat-nav-list>
-            <a mat-list-item (click)="drawer.close()" class="sidenavLink" routerLink="/a-propos">
+        <ul>
+            <a (click)="drawer.close()" class="sidenavLink" routerLink="/a-propos">
                 <div>A propos</div>
             </a>
 
-            <a mat-list-item (click)="drawer.close()" class="sidenavLink" routerLink="/articles">
+            <a (click)="drawer.close()" class="sidenavLink" routerLink="/articles">
                 <div>Articles</div>
             </a>
 
-            <a mat-list-item (click)="drawer.close()" class="sidenavLink" routerLink="/whatsapp">
+            <a (click)="drawer.close()" class="sidenavLink" routerLink="/whatsapp">
                 <div class="flex items-center gap-2">
                     <svg class="fill-primary-500 w-5 h-5" role="img" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +38,7 @@
                 </div>
             </a>
 
-            <a mat-list-item (click)="drawer.close()" class="sidenavLink" routerLink="/github">
+            <a (click)="drawer.close()" class="sidenavLink" routerLink="/github">
                 <div class="flex">
                     <svg class="fill-primary-500 rounded-md w-5 h-5" role="img" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@
                 </div>
             </a>
 
-            <a mat-list-item (click)="drawer.close()" class="sidenavLink" routerLink="/linkedin">
+            <a (click)="drawer.close()" class="sidenavLink" routerLink="/linkedin">
                 <div class="flex">
                     <svg class="h-5 w-5 fill-primary-500 rounded-md" viewBox="0 0 24 24" aria-hidden="true">
                         <path
@@ -59,13 +59,11 @@
                 </div>
             </a>
 
-            <a *ngIf="!(authService.currentUsr)" mat-list-item (click)="drawer.close()" class="sidenavLink"
-                routerLink="/login">
+            <a *ngIf="!(authService.currentUsr)" (click)="drawer.close()" class="sidenavLink" routerLink="/login">
                 <div>Se connecter</div>
             </a>
 
-            <a *ngIf="!(authService.currentUsr)" mat-list-item (click)="drawer.close()" class="sidenavLink"
-                routerLink="/register">
+            <a *ngIf="!(authService.currentUsr)" (click)="drawer.close()" class="sidenavLink" routerLink="/register">
                 <div>S'enregistrer</div>
             </a>
 
@@ -109,7 +107,7 @@
                 </div>
             </div>
 
-        </mat-nav-list>
+        </ul>
     </mat-sidenav>
 
     <mat-sidenav-content class="">
