@@ -8,10 +8,6 @@ import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
-import "prismjs/plugins/toolbar/prism-toolbar";
-import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
-import "prismjs/components/prism-markup";
-
 import { MessageService } from 'src/app/services/message.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
