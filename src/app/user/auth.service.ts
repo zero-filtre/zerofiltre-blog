@@ -27,7 +27,7 @@ export class AuthService {
   ) {
     if (this.token && this.token !== undefined) {
       this.TOKEN_NAME = this.getTokenName(this.token);
-      // this.loadCurrentUser();
+      this.loadCurrentUser();
     }
   }
 
