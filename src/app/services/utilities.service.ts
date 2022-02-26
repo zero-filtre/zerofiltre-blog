@@ -19,7 +19,7 @@ export function calcReadingTime(article: Article): void {
   const content = article?.content
 
   const wpm = 225;
-  const words = content?.trim().split(/\s+/).length!;
+  const words = content?.trim().split(/\s+/).length || 0;
   const time = Math.ceil(words / wpm);
 
   if (time === 0) {
