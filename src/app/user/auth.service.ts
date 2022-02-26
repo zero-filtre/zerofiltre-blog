@@ -1,4 +1,5 @@
 // import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
@@ -22,7 +23,7 @@ export class AuthService {
   public isTokenExpired!: boolean;
 
   constructor(
-    // @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private http: HttpClient,
   ) {
     if (this.token && this.token !== undefined) {
@@ -45,27 +46,37 @@ export class AuthService {
   }
 
   get token(): any {
-    return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
+    }
   }
 
   get refreshToken(): any {
-    return localStorage.getItem(this.REFRESH_TOKEN_NAME);
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem(this.REFRESH_TOKEN_NAME);
+    }
   }
 
   get userData(): any {
-    return localStorage.getItem('user_data');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('user_data');
+    }
   }
 
   get currentUsr() {
-    return JSON.parse(this.userData);
+    if (isPlatformBrowser(this.platformId)) {
+      return JSON.parse(this.userData);
+    }
   }
 
   private getTokenName(tokenValue: string): string {
     let name = '';
-    for (var i = 0, len = localStorage.length; i < len; i++) {
-      const key = localStorage.key(i)!;
-      const value = localStorage[key];
-      if (value === tokenValue) name = key;
+    if (isPlatformBrowser(this.platformId)) {
+      for (var i = 0, len = localStorage.length; i < len; i++) {
+        const key = localStorage.key(i)!;
+        const value = localStorage[key];
+        if (value === tokenValue) name = key;
+      }
     }
     return name
   }
