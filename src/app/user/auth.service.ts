@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+// import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
@@ -22,12 +22,12 @@ export class AuthService {
   public isTokenExpired!: boolean;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    // @Inject(PLATFORM_ID) private platformId: Object,
     private http: HttpClient,
   ) {
     if (this.token && this.token !== undefined) {
       this.TOKEN_NAME = this.getTokenName(this.token);
-      // this.loadCurrentUser();
+      this.loadCurrentUser();
     }
   }
 
@@ -45,37 +45,27 @@ export class AuthService {
   }
 
   get token(): any {
-    if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
-    }
+    return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
   }
 
   get refreshToken(): any {
-    if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem(this.REFRESH_TOKEN_NAME);
-    }
+    return localStorage.getItem(this.REFRESH_TOKEN_NAME);
   }
 
   get userData(): any {
-    if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('user_data');
-    }
+    return localStorage.getItem('user_data');
   }
 
   get currentUsr() {
-    if (isPlatformBrowser(this.platformId)) {
-      return JSON.parse(this.userData);
-    }
+    return JSON.parse(this.userData);
   }
 
   private getTokenName(tokenValue: string): string {
     let name = '';
-    if (isPlatformBrowser(this.platformId)) {
-      for (var i = 0, len = localStorage.length; i < len; i++) {
-        const key = localStorage.key(i)!;
-        const value = localStorage[key];
-        if (value === tokenValue) name = key;
-      }
+    for (var i = 0, len = localStorage.length; i < len; i++) {
+      const key = localStorage.key(i)!;
+      const value = localStorage[key];
+      if (value === tokenValue) name = key;
     }
     return name
   }

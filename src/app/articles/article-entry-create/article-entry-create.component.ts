@@ -1,6 +1,5 @@
-import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, of, tap } from 'rxjs';
@@ -42,7 +41,6 @@ export class ArticleEntryCreateComponent implements OnInit {
   public tagList!: Tag[];
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
     private formuilder: FormBuilder,
     private articleService: ArticleService,
     private router: Router,
@@ -199,35 +197,33 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   private insertAtCursor(myField: any, myValue: string) {
-    if (isPlatformBrowser(this.platformId)) {
-      //IE support
-      if ((document as any).selection) {
-        myField.focus();
-        const sel = (document as any).selection.createRange();
-        sel.text = myValue;
-      }
-      // Microsoft Edge
-      else if (window.navigator.userAgent.indexOf("Edge") > -1) {
-        var startPos = myField.selectionStart;
-        var endPos = myField.selectionEnd;
+    //IE support
+    if ((document as any).selection) {
+      myField.focus();
+      const sel = (document as any).selection.createRange();
+      sel.text = myValue;
+    }
+    // Microsoft Edge
+    else if (window.navigator.userAgent.indexOf("Edge") > -1) {
+      var startPos = myField.selectionStart;
+      var endPos = myField.selectionEnd;
 
-        myField.value = myField.value.substring(0, startPos) + myValue
-          + myField.value.substring(endPos, myField.value.length);
+      myField.value = myField.value.substring(0, startPos) + myValue
+        + myField.value.substring(endPos, myField.value.length);
 
-        var pos = startPos + myValue.length;
-        myField.focus();
-        myField.setSelectionRange(pos, pos);
-      }
-      //MOZILLA and others
-      else if (myField.selectionStart || myField.selectionStart == '0') {
-        var startPos = myField.selectionStart;
-        var endPos = myField.selectionEnd;
-        myField.value = myField.value.substring(0, startPos)
-          + myValue
-          + myField.value.substring(endPos, myField.value.length);
-      } else {
-        myField.value += myValue;
-      }
+      var pos = startPos + myValue.length;
+      myField.focus();
+      myField.setSelectionRange(pos, pos);
+    }
+    //MOZILLA and others
+    else if (myField.selectionStart || myField.selectionStart == '0') {
+      var startPos = myField.selectionStart;
+      var endPos = myField.selectionEnd;
+      myField.value = myField.value.substring(0, startPos)
+        + myValue
+        + myField.value.substring(endPos, myField.value.length);
+    } else {
+      myField.value += myValue;
     }
   }
 
