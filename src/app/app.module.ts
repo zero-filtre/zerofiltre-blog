@@ -23,7 +23,7 @@ registerLocaleData(localeFr, 'fr');
   ],
   imports: [
     AppRoutingModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     MarkdownModule.forRoot(),
     SharedModule,
