@@ -187,21 +187,25 @@
               "extractLicenses": false
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "prod"
         },
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
           "configurations": {
-            "development": {
-              "browserTarget": "zerofiltre-blog:build:development",
-              "serverTarget": "zerofiltre-blog:server:development"
+            "dev": {
+              "browserTarget": "zerofiltre-blog:build:dev",
+              "serverTarget": "zerofiltre-blog:server:dev"
             },
-            "production": {
-              "browserTarget": "zerofiltre-blog:build:production",
-              "serverTarget": "zerofiltre-blog:server:production"
+            "uat": {
+              "browserTarget": "zerofiltre-blog:build:uat",
+              "serverTarget": "zerofiltre-blog:server:uat"
+            },
+            "prod": {
+              "browserTarget": "zerofiltre-blog:build:prod",
+              "serverTarget": "zerofiltre-blog:server:prod"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "dev"
         },
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
