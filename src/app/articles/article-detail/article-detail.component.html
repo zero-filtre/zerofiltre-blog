@@ -227,7 +227,7 @@
                                     class="flex items-center space-x-2 space-y-2 flex-wrap">
                                     <span
                                         class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                        <svg class="mr-1 h-2 w-2 text-[{{tag.colorCode}}]" fill="currentColor"
+                                        <svg class="mr-1 h-2 w-2 text-[{{tag?.colorCode}}]" fill="currentColor"
                                             viewBox="0 0 8 8">
                                             <circle cx="4" cy="4" r="3"></circle>
                                         </svg>
@@ -417,7 +417,7 @@
                     <p class="text-base text-skin-base font-light">Vous aimez cet article ? Faite le savoir en
                         partageant</p>
                     <div class="mt-4 space-y-4 flex items-end flex-wrap gap-2 sm:gap-0 sm:space-y-0 sm:space-x-4">
-                        <a href="https://twitter.com/intent/tweet?text={{article?.title}} par @{{article?.author?.pseudoName}}&url={{blogUrl}}/articles/{{article?.id}}"
+                        <a href="https://twitter.com/intent/tweet?text={{article?.title}} par @{{article?.author?.fullName}}&url={{blogUrl}}/articles/{{article?.id}}"
                             target="_blank"
                             class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500">
                             <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
