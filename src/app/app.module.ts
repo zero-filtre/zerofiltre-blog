@@ -12,6 +12,8 @@ import { MarkdownModule } from 'ngx-markdown';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { LOCALE_ID } from '@angular/core';
+import { AppShellRenderDirective } from './directives/app-shell-render.directive';
+import { AppShellNoRenderDirective } from './directives/app-shell-no-render.directive';
 
 // import { httpInterceptorProviders } from './services/http-interceptors';
 
@@ -20,7 +22,9 @@ registerLocaleData(localeFr, 'fr');
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent
+    HomePageComponent,
+    AppShellRenderDirective,
+    AppShellNoRenderDirective,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
