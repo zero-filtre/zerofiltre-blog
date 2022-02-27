@@ -13,7 +13,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { LOCALE_ID } from '@angular/core';
 
-import { httpInterceptorProviders } from './services/http-interceptors';
+// import { httpInterceptorProviders } from './services/http-interceptors';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -24,9 +24,9 @@ registerLocaleData(localeFr, 'fr');
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    SharedModule,
     BrowserAnimationsModule,
     MarkdownModule.forRoot(),
+    SharedModule,
     AppRoutingModule,
   ],
   providers: [
