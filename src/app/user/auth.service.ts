@@ -168,12 +168,12 @@ export class AuthService {
   }
 
   public SOLogin(token: string) {
-    this.TOKEN_NAME = 'so_access_token';
 
     this.getUser(token, 'stack')
       .subscribe({
         next: usr => {
           this.subject.next(usr);
+          this.TOKEN_NAME = 'so_access_token';
           localStorage.setItem(this.TOKEN_NAME, token);
           localStorage.setItem('user_data', JSON.stringify(usr));
         }
@@ -182,12 +182,12 @@ export class AuthService {
 
   private handleJWTauth(response: any, tokenName: string, tokenType: string) {
     const { refreshToken, accessToken } = response.body
-    this.TOKEN_NAME = tokenName;
 
     this.getUser(accessToken, tokenType)
       .subscribe({
         next: usr => {
           this.subject.next(usr);
+          this.TOKEN_NAME = tokenName;
           localStorage.setItem(this.TOKEN_NAME, accessToken);
           localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
           localStorage.setItem('user_data', JSON.stringify(usr));
