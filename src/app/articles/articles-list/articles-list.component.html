@@ -66,7 +66,7 @@
                 <div class="mt-4" aria-labelledby="posts-tags">
 
                     <ng-template [ngIf]="tagList">
-                        <div class="tagList-container space-y-1">
+                        <div class="tagList-container space-y-1" *appShellNoRender>
                             <ng-container *ngFor="let tag of tagList">
                                 <button (click)="sortByTag(tag.name)" type="button"
                                     class="group inline-flex items-center mr-1 px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
@@ -85,7 +85,7 @@
                         <div class="tags-skeleton-container">
                             <ngx-skeleton-loader class="flex space-x-1" count="3" appearance="line" [theme]="{ 
                                 'border-radius': '9999px',
-                                 width: '100px',
+                                 width: '80px',
                                  height: '30px',
                                  display: 'block'
                                 }">
@@ -156,9 +156,18 @@
                 </nav>
             </div>
 
-            <div class="articles-wrapper py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none">
+            <div class="articles-wrapper min-h-screen py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none">
+                <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
+                    <svg class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="10" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                </div>
 
-                <ng-template [ngIf]="articles">
+                <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles">
                         <div class="article-card lg:grid grid-cols-3 gap-6">
                             <a [routerLink]="[article.id]" class="article-preview group">

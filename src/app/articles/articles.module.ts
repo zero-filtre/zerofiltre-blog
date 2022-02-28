@@ -15,7 +15,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     ArticleDetailComponent,
     ArticlesListComponent,
     ArticleEntryPopupComponent,
-    ArticleEntryCreateComponent
+    ArticleEntryCreateComponent,
   ],
   imports: [
     CommonModule,

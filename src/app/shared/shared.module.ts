@@ -11,8 +11,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatDialogModule } from '@angular/material/dialog'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppShellRenderDirective } from '../directives/app-shell-render.directive';
+import { AppShellNoRenderDirective } from '../directives/app-shell-no-render.directive';
 
-const components = [FooterComponent];
+const components = [
+  AppShellRenderDirective,
+  AppShellNoRenderDirective,
+  FooterComponent
+];
 
 const modules = [
   CommonModule,
