@@ -56,6 +56,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         } else {
           errorMessage = errorMessage;
         }
+
+        if (error.status === 401) {
+          localStorage.clear();
+        }
       }
     }
 
