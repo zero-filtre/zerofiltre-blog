@@ -50,9 +50,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         tap(art => {
           this.seo.generateTags({
             title: art.title,
-            description: art.title,
+            description: art.summary,
             image: art.thumbnail,
-            author: art.author?.pseudoName,
+            author: art.author?.fullName,
             type: 'article'
           })
           if (art.status === 'PUBLISHED') {

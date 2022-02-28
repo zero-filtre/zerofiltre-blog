@@ -7,7 +7,7 @@ import { Directive, Inject, PLATFORM_ID, TemplateRef, ViewContainerRef } from '@
 export class AppShellRenderDirective {
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: any,
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef
   ) { }
