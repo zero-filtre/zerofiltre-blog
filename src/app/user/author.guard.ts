@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { Observable, pipe, tap } from 'rxjs';
 import { Article } from '../articles/article.model';
 import { ArticleService } from '../articles/article.service';
 import { MessageService } from '../services/message.service';
@@ -26,13 +26,14 @@ export class AuthorGuard implements CanActivate {
         tap(_loggedIn => {
           this.articleService.getOneArticle(route.params.id).subscribe({
             next: (response: Article) => {
-              // this.authService.getUser().subscribe({
-              //   next: (currUsr: any) => {
-              //     if (currUsr?.id !== response?.author?.id) {
-              //       this.messageService.authorRoleError();
-              //     }
-              //   }
-              // })
+              // this.authService.user$
+              //   .pipe(
+              //     tap(usr => {
+              //       if (usr?.id !== response?.author?.id) {
+              //         this.messageService.authorRoleError();
+              //       }
+              //     })
+              //   )
               if (this.authService.currentUsr.id !== response?.author?.id) {
                 this.messageService.authorRoleError();
               }
@@ -40,8 +41,6 @@ export class AuthorGuard implements CanActivate {
           })
         }),
       )
-
-    // return this.permissions.canActivate(this.authService, route.params.id);
   }
 
 }
