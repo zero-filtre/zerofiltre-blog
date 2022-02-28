@@ -23,7 +23,7 @@ export class AuthService {
   public isTokenExpired!: boolean;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
   ) {
     if (this.token && this.token !== undefined) {
