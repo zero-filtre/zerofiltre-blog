@@ -2,7 +2,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, shareReplay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
 
@@ -33,6 +33,7 @@ export class AuthService {
     @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
   ) {
+    // this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
     this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
