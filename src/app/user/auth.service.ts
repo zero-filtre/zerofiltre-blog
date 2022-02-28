@@ -2,7 +2,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
 
@@ -12,11 +12,11 @@ import { User } from './user.model';
 export class AuthService {
   private readonly apiServerUrl = environment.apiBaseUrl;
 
-  private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  public isLoggedIn$ = this._isLoggedIn$.asObservable();
+  private subject = new BehaviorSubject<User>(null!);
+  public user$ = this.subject.asObservable();
 
-  private _user$ = new BehaviorSubject<User>(null!);
-  public user$ = this._user$.asObservable();
+  private isLoggedIn$!: Observable<boolean>;
+  private isLoggedOut$!: Observable<boolean>;
 
   public TOKEN_NAME!: string;
   public REFRESH_TOKEN_NAME: string = 'refresh_token';
@@ -26,6 +26,9 @@ export class AuthService {
     @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
   ) {
+    this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
+    this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
+
     if (this.token && this.token !== undefined) {
       this.TOKEN_NAME = this.getTokenName(this.token);
       this.loadCurrentUser();
@@ -40,7 +43,7 @@ export class AuthService {
         }),
         tap(usr => {
           console.log('ME');
-          this._user$.next(usr);
+          this.subject.next(usr);
         })
       )
   }
@@ -115,8 +118,7 @@ export class AuthService {
   }
 
   public logout() {
-    this._isLoggedIn$.next(false);
-    this._user$.next(null!);
+    this.subject.next(null!);
     localStorage.clear();
   }
 
@@ -161,13 +163,12 @@ export class AuthService {
 
   public SOLogin(token: string) {
     this.TOKEN_NAME = 'so_access_token';
-    this._isLoggedIn$.next(true);
     localStorage.setItem(this.TOKEN_NAME, token);
 
     this.getUser()
       .subscribe({
         next: usr => {
-          this._user$.next(usr);
+          this.subject.next(usr);
           localStorage.setItem('user_data', JSON.stringify(usr));
         }
       })
@@ -176,14 +177,13 @@ export class AuthService {
   private handleJWTauth(response: any, tokenName: string) {
     const { refreshToken, accessToken } = response.body
     this.TOKEN_NAME = tokenName;
-    this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
     localStorage.setItem(this.TOKEN_NAME, accessToken);
     localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
 
     this.getUser()
       .subscribe({
         next: usr => {
-          this._user$.next(usr);
+          this.subject.next(usr);
           localStorage.setItem('user_data', JSON.stringify(usr));
         }
       })
