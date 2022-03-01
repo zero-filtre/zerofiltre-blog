@@ -42,6 +42,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return formatDate(date)
   }
 
+  public trimAuthorName(name: string | any) {
+    return name?.replace(/ /g, '');
+  }
+
   public getCurrentArticle(articleId: number): void {
     this.loading = true;
     this.articleService.getOneArticle(articleId)

@@ -58,7 +58,6 @@ export class MessageService {
 
   // When user is already logged In
   loggedInAuthError() {
-    // this.openSnackBarWarning('Vous  etes déja connecté !', '');
     this.router.navigate(['/']);
   }
 
