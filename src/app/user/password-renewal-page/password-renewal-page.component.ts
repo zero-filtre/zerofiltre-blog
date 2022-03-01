@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -26,7 +27,8 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private seo: SeoService
+    private seo: SeoService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
   public initForm(): void {
@@ -75,7 +77,11 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token')!;
-    this.verifyToken();
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.verifyToken();
+    }
+
     this.initForm();
 
     this.seo.generateTags({

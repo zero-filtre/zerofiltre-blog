@@ -190,7 +190,7 @@ export class AuthService {
           this.subject.next(usr);
           this.TOKEN_NAME = tokenName;
           localStorage.setItem(this.TOKEN_NAME, accessToken);
-          localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
+          if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
           localStorage.setItem('user_data', JSON.stringify(usr));
         }
       })

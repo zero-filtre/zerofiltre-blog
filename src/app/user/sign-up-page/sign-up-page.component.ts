@@ -52,6 +52,7 @@ export class SignUpPageComponent implements OnInit {
   }
 
   public signup(): void {
+    console.log('SIGNUP JWT CALLED');
     this.loading = true;
 
     this.authService.signup(this.form.value).subscribe({
