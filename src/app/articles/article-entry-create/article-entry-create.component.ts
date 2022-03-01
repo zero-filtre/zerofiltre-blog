@@ -29,8 +29,8 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   public activeTab: string = 'editor';
   public article!: Article
-  public articleId!: number
-  public articleTitle!: string
+  public articleId!: string;
+  public articleTitle!: string;
   public selectedTags: Tag[] = []
   public loading = false;
   public isSaving = false;
@@ -68,7 +68,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public getArticle(): void {
-    this.articleService.getOneArticle(this.articleId).subscribe({
+    this.articleService.findArticleById(this.articleId).subscribe({
       next: (response: Article) => {
         this.article = response
         this.articleTitle = response.title!
@@ -253,7 +253,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.articleId = this.route.snapshot.params.id
+    this.articleId = this.route.snapshot.paramMap.get('id')!;
     this.getArticle()
     this.InitForm()
 

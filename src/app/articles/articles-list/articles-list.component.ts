@@ -1,12 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { MessageService } from 'src/app/services/message.service';
 import { map, Observable, Subscription } from 'rxjs';
@@ -21,11 +21,14 @@ import { User } from 'src/app/user/user.model';
 export class ArticlesListComponent implements OnInit, OnDestroy {
   public articles!: Article[];
   public tagList!: Tag[];
+
   public pageNumber: number = 0;
   public pageItemsLimit: number = 5;
-  public activePage: string = 'recent';
+
   public loading: boolean = false;
   public errorMessage: string = '';
+
+  public activePage: string = 'recent';
   public mainPage = true;
 
   public articlesSub!: Subscription;
@@ -36,7 +39,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private router: Router,
     private location: Location,
-    public authService: AuthService
+    public authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
   openArticleEntryDialog(): void {
@@ -52,6 +56,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public fetchListOfTags(): void {
+    console.log('TAGS CALLED');
     this.loading = true;
     this.articleService.getListOfTags().subscribe({
       next: (response: Tag[]) => {
@@ -64,8 +69,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public fetchArticles(): void {
+    console.log('LIST CALLED');
     this.loading = true;
-    this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
+    this.articlesSub = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
       next: (response: Article[]) => {
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.setArticlesReadingTime(response);
@@ -81,25 +87,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       }
     })
   }
-
-  // public getSavedArticles(): void {
-  //   this.loading = true;
-  //   this.mainPage = false;
-
-  //   this.articlesSub = this.articleService.getArticles(this.pageNumber, this.pageItemsLimit, 'draft').subscribe({
-  //     next: (response: Article[]) => {
-  //       this.articles = response
-  //         .filter((item: Article) => item.status === 'DRAFT')
-  //         .sort((a: any, b: any) => new Date(b.lastSavedAt).valueOf() - new Date(a.lastSavedAt).valueOf())
-  //       this.setArticlesReadingTime(response);
-  //       this.loading = false;
-  //     },
-  //     error: (_error: HttpErrorResponse) => {
-  //       this.loading = false;
-  //     }
-  //   });
-  // }
-
 
   public setArticlesReadingTime(articles: Article[]): void {
     for (const article of articles) {
@@ -198,8 +185,13 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     });
 
     this.location.go('/articles');
-    this.fetchArticles();
-    this.fetchListOfTags();
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.fetchArticles();
+      this.fetchListOfTags();
+    } else {
+      console.log('LIST SERVER LOAD');
+    }
   }
 
   ngOnDestroy(): void {

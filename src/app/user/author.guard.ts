@@ -24,7 +24,7 @@ export class AuthorGuard implements CanActivate {
     return this.authService.isLoggedIn$
       .pipe(
         tap(_loggedIn => {
-          this.articleService.getOneArticle(route.params.id).subscribe({
+          this.articleService.findArticleById(route.params.id).subscribe({
             next: (article: Article) => {
               // this.authService.user$
               //   .subscribe(

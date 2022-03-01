@@ -46,9 +46,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return name?.replace(/ /g, '');
   }
 
-  public getCurrentArticle(articleId: number): void {
+  public getCurrentArticle(articleId: string): void {
+    console.log('ARTICLE DETAIL CALLED');
     this.loading = true;
-    this.articleService.getOneArticle(articleId)
+    this.articleService.findArticleById(articleId)
       .pipe(
         filter(objectExists),
         tap(art => {
@@ -76,13 +77,13 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         },
         error: (_error: HttpErrorResponse) => {
           this.loading = false;
-          this.router.navigate(['/'])
+          this.router.navigateByUrl('/');
         }
       })
   }
 
   public fetchArticleSiblings(prev: number, next: number): void {
-    this.articleSub = this.articleService.getOneArticle(next).pipe(
+    this.articleSub = this.articleService.findArticleById(next.toString()).pipe(
       filter(objectExists)
     ).subscribe({
       next: (response: Article) => {
@@ -96,7 +97,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     })
 
     if (prev !== 0) {
-      this.articleService.getOneArticle(prev).pipe(
+      this.articleService.findArticleById(prev.toString()).pipe(
         filter(objectExists)
       ).subscribe({
         next: (response: Article) => {
@@ -127,7 +128,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe(
       params => {
         this.articleId = params.get('id')!;
-        this.getCurrentArticle(+this.articleId);
+        this.getCurrentArticle(this.articleId);
       }
     );
   }
