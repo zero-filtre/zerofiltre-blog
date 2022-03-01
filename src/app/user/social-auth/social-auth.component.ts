@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
@@ -15,7 +16,8 @@ export class SocialAuthComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
   getGHAccessToken(): void {
@@ -40,10 +42,12 @@ export class SocialAuthComponent implements OnInit {
     this.code = this.route.snapshot.queryParamMap.get('code')!;
     this.accessToken = this.route.snapshot.fragment?.split('=')[1]!;
 
-    if (this.code) {
-      this.getGHAccessToken();
-    } else {
-      this.getSOAccessToken();
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.code) {
+        this.getGHAccessToken();
+      } else {
+        this.getSOAccessToken();
+      }
     }
   }
 

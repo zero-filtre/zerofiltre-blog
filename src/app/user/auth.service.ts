@@ -202,7 +202,9 @@ export class AuthService {
 
   public getUser(accessToken: string, tokenType: string): Observable<User> {
     httpOptions.headers = httpOptions.headers.set('Authorization', `${tokenType} ${accessToken}`);
-    return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions);
+    return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions).pipe(
+      shareReplay()
+    )
   }
 }
 

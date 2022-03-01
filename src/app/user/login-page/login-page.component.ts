@@ -41,6 +41,8 @@ export class LoginPageComponent implements OnInit {
   get password() { return this.form.get('password'); }
 
   public login(): void {
+    console.log('LOGIN JWT CALLED');
+
     this.loading = true;
     this.authService.login(this.form.value).subscribe({
       next: (_response: any) => {
