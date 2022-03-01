@@ -45,9 +45,13 @@ export class SocialAuthComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       if (this.code) {
         this.getGHAccessToken();
+        console.log('SOCIAL AUTH GH CLIENT')
       } else {
         this.getSOAccessToken();
+        console.log('SOCIAL AUTH SO CLIENT')
       }
+    } else {
+      console.log('SOCIAL AUTH SERVER');
     }
   }
 
