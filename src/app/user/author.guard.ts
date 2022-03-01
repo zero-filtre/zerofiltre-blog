@@ -26,17 +26,17 @@ export class AuthorGuard implements CanActivate {
         tap(_loggedIn => {
           this.articleService.getOneArticle(route.params.id).subscribe({
             next: (article: Article) => {
-              this.authService.user$
-                .pipe(
-                  tap(usr => {
-                    if (usr?.id !== article?.author?.id) {
-                      this.messageService.authorRoleError();
-                    }
-                  })
-                )
-              // if (this.authService.currentUsr.id !== response?.author?.id) {
-              //   this.messageService.authorRoleError();
-              // }
+              // this.authService.user$
+              //   .subscribe(
+              //     usr => {
+              //       if (usr?.id !== article?.author?.id) {
+              //         this.messageService.authorRoleError();
+              //       }
+              //     }
+              //   )
+              if (this.authService.currentUsr.id !== article?.author?.id) {
+                this.messageService.authorRoleError();
+              }
             }
           })
         }),

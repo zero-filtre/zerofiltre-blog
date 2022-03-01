@@ -33,8 +33,8 @@ export class AuthService {
     @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
   ) {
-    this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
-    // this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
+    // this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
+    this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.loadCurrentUser();
@@ -49,7 +49,7 @@ export class AuthService {
           return throwError(() => error);
         }),
         tap(usr => {
-          console.log('ME');
+          console.log('ME: ', usr);
           this.subject.next(usr);
         })
       )

@@ -44,41 +44,23 @@ export class MessageService {
   // For non authenticated requests
   authError() {
     this.openSnackBarError('Veuillez Vous  connecter !', '');
-    this.router.navigate(['/login']);
-
-    return this.snackBar._openedSnackBarRef
-      ?.onAction()
-      .pipe(
-        tap(_ =>
-          this.router.navigate(['/login'])
-        )
-      )
-      .subscribe();
+    this.router.navigateByUrl('/login');
   }
 
   // When user is already logged In
   loggedInAuthError() {
-    this.router.navigate(['/']);
+    this.router.navigateByUrl('/');
   }
 
   // When logging In
   loginError() {
     this.openSnackBarError('Email ou mot de passe incorrect !', '');
-
-    return this.snackBar._openedSnackBarRef
-      ?.onAction()
-      .pipe(
-        tap(_ =>
-          this.router.navigate(['/login'])
-        )
-      )
-      .subscribe();
   }
 
   // If not the author
   authorRoleError() {
     this.openSnackBarError('Vous ne pouvez pas acceder à cette page!', '');
-    this.router.navigate(['/']);
+    this.router.navigateByUrl('/');
   }
 
   // Email notification on signup success
@@ -86,14 +68,7 @@ export class MessageService {
     this.openSnackBarSuccess('Un email de validation de compte vous a été envoyé, veuillez consulter votre boite mail', 'Ok', 0);
   }
 
-  saveArticleError(formValue: Article) {
-    this.openSnackBarError('La sauvegarde a echoué !', 'Reessayer');
-
-    return this.snackBar._openedSnackBarRef
-      ?.onAction()
-      .pipe(
-        tap(_ => this.articleService.updateToSave(formValue))
-      )
-      .subscribe();
+  saveArticleError() {
+    this.openSnackBarError('La sauvegarde a echoué !', '');
   }
 }
