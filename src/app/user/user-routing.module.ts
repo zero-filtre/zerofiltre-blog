@@ -7,7 +7,6 @@ import { PasswordRenewalPageComponent } from './password-renewal-page/password-r
 import { SocialAuthComponent } from './social-auth/social-auth.component';
 
 const routes: Routes = [
-  // { path: ':id', component: ProfileComponent }
   { path: 'passwordReset', component: PasswordRenewalPageComponent, canActivate: [LoggedInAuthGuard] },
   { path: 'accountConfirmation', component: AccountConfirmationPageComponent },
   { path: 'social-auth', component: SocialAuthComponent, canActivate: [LoggedInAuthGuard] }

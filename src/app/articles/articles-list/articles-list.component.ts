@@ -18,7 +18,7 @@ import { User } from 'src/app/user/user.model';
   templateUrl: './articles-list.component.html',
   styleUrls: ['./articles-list.component.css'],
 })
-export class ArticlesListComponent implements OnInit, OnDestroy {
+export class ArticlesListComponent implements OnInit {
   public articles!: Article[];
   public tagList!: Tag[];
 
@@ -30,8 +30,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public activePage: string = 'recent';
   public mainPage = true;
-
-  public articlesSub!: Subscription;
 
   constructor(
     private seo: SeoService,
@@ -56,7 +54,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public fetchListOfTags(): void {
-    console.log('TAGS CALLED');
     this.loading = true;
     this.articleService.getListOfTags().subscribe({
       next: (response: Tag[]) => {
@@ -69,9 +66,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public fetchArticles(): void {
-    console.log('LIST CALLED');
     this.loading = true;
-    this.articlesSub = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
+    this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
       next: (response: Article[]) => {
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.setArticlesReadingTime(response);
@@ -189,14 +185,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.fetchArticles();
       this.fetchListOfTags();
-    } else {
-      console.log('LIST SERVER LOAD');
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.articlesSub) {
-      this.articlesSub.unsubscribe();
     }
   }
 }

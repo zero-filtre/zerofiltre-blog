@@ -47,7 +47,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   }
 
   public getCurrentArticle(articleId: string): void {
-    console.log('ARTICLE DETAIL CALLED');
     this.loading = true;
     this.articleService.findArticleById(articleId)
       .pipe(
