@@ -14,7 +14,7 @@ import { AuthInterceptor } from './auth.interceptor';
 export class RefreshTokenInterceptor implements HttpInterceptor {
   constructor(
     private authService: AuthService,
-    private authInterceptor: AuthInterceptor
+    private authInterceptor: AuthInterceptor,
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -24,21 +24,18 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
       .pipe(
         catchError((errorResponse: HttpErrorResponse) => {
           if (errorResponse.status === 401 && userOrigin === null) {
-            localStorage.clear();
             return this.authService.sendRefreshToken().pipe(mergeMap(() => {
               return this.authInterceptor.intercept(request, next);
             }));
           }
 
           if (errorResponse.status === 401 && userOrigin === 'GITHUB') {
-            localStorage.clear();
             return this.authService.refreshSocialsToken('GITHUB').pipe(mergeMap(() => {
               return this.authInterceptor.intercept(request, next);
             }));
           }
 
           if (errorResponse.status === 401 && userOrigin === 'STACKOVERFLOW') {
-            localStorage.clear();
             return this.authService.refreshSocialsToken('STACKOVERFLOW').pipe(mergeMap(() => {
               return this.authInterceptor.intercept(request, next);
             }));

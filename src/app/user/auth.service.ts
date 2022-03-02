@@ -93,6 +93,7 @@ export class AuthService {
     // send the refresh token to the api
     // Get back the new access token and the new refresh token from the api
     // If success ==> Store those new values in the LS by calling loadLoggedInUser()
+    console.log('REFRESHING TOKEN');
     throw new Error('Method not implemented.');
   }
 
