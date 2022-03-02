@@ -132,29 +132,30 @@ export class AuthService {
   public requestPasswordReset(email: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/initPasswordReset?email=${email}`, {
       responseType: 'text' as 'json'
-    })
+    }).pipe(shareReplay())
   }
 
   public verifyTokenForPasswordReset(token: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/verifyTokenForPasswordReset?token=${token}`)
+      .pipe(shareReplay())
   }
 
   public savePasswordReset(values: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/user/savePasswordReset`, values, {
       responseType: 'text' as 'json'
-    })
+    }).pipe(shareReplay())
   }
 
   public registrationConfirm(token: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/registrationConfirm?token=${token}`, {
       responseType: 'text' as 'json'
-    })
+    }).pipe(shareReplay())
   }
 
   public resendUserConfirm(email: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/resendRegistrationConfirm?email=${email}`, {
       responseType: 'text' as 'json'
-    })
+    }).pipe(shareReplay())
   }
 
   public getGithubAccessTokenFromCode(code: string): Observable<any> {
