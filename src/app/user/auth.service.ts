@@ -83,28 +83,22 @@ export class AuthService {
     }
   }
 
-  private getTokenName(tokenValue: string): string {
-    let name = '';
-    if (isPlatformBrowser(this.platformId)) {
-      for (var i = 0, len = localStorage.length; i < len; i++) {
-        const key = localStorage.key(i)!;
-        const value = localStorage[key];
-        if (value === tokenValue) name = key;
-      }
-    }
-    return name
-  }
 
+  /**
+   * AUTH REFRESH TOKEN METHODS
+   */
   public sendRefreshToken(): Observable<any> {
     throw new Error('Method not implemented.');
   }
 
-  public refreshSocialsToken(tokenName: string): Observable<any> {
-    if (tokenName === 'gh_access_token') {
+  public refreshSocialsToken(usrOrigin: string): Observable<any> {
+    if (usrOrigin === 'GITHUB') {
       return this.http.get<any>(`https://github.com/login/oauth/authorize?client_id=${environment.GITHUB_CLIENT_ID}&redirect_uri=${environment.gitHubRedirectURL}&scope=user:email`)
-    }
-    return this.http.get<any>(`https://stackoverflow.com/oauth/dialog?client_id=${environment.STACK_OVERFLOW_CLIENT_ID}&redirect_uri=${environment.stackOverflowRedirectURL}&scope=no_expiry`)
+    } else
+      return this.http.get<any>(`https://stackoverflow.com/oauth/dialog?client_id=${environment.STACK_OVERFLOW_CLIENT_ID}&redirect_uri=${environment.stackOverflowRedirectURL}&scope=no_expiry`)
   }
+  /** */
+
 
   public login(credentials: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
@@ -211,16 +205,28 @@ export class AuthService {
       })
   }
 
-  private extractTokenFromHeaders(response: any) {
-    return response.headers.get('authorization').split(' ')[1]
-  }
-
   private getUser(accessToken: string, tokenType: string): Observable<User> {
     httpOptions.headers = httpOptions.headers.set('Authorization', `${tokenType} ${accessToken}`);
 
     return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions).pipe(
       shareReplay()
     )
+  }
+
+  private extractTokenFromHeaders(response: any) {
+    return response.headers.get('authorization').split(' ')[1]
+  }
+
+  private getTokenName(tokenValue: string): string {
+    let name = '';
+    if (isPlatformBrowser(this.platformId)) {
+      for (var i = 0, len = localStorage.length; i < len; i++) {
+        const key = localStorage.key(i)!;
+        const value = localStorage[key];
+        if (value === tokenValue) name = key;
+      }
+    }
+    return name
   }
 }
 

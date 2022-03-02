@@ -20,10 +20,9 @@ export class SocialAuthComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
-  getGHAccessToken(): void {
+  loginWithGithub(): void {
     this.authService.getGithubAccessTokenFromCode(this.code).subscribe({
       next: (_response: any) => {
-        this.router.navigateByUrl('/');
       },
       error: (_error: HttpErrorResponse) => {
         this.router.navigateByUrl('/login');
@@ -31,9 +30,8 @@ export class SocialAuthComponent implements OnInit {
     })
   }
 
-  getSOAccessToken(): void {
+  loginWithStackOverflow(): void {
     if (this.accessToken) {
-      this.router.navigateByUrl('/');
       this.authService.SOLogin(this.accessToken);
     }
   }
@@ -44,14 +42,10 @@ export class SocialAuthComponent implements OnInit {
 
     if (isPlatformBrowser(this.platformId)) {
       if (this.code) {
-        this.getGHAccessToken();
-        console.log('SOCIAL AUTH GH CLIENT')
+        this.loginWithGithub();
       } else {
-        this.getSOAccessToken();
-        console.log('SOCIAL AUTH SO CLIENT')
+        this.loginWithStackOverflow();
       }
-    } else {
-      console.log('SOCIAL AUTH SERVER');
     }
   }
 

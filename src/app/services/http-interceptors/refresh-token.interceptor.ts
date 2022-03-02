@@ -39,7 +39,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
           catchError((errorResponse: HttpErrorResponse) => {
             if (errorResponse.status === 401) {
               localStorage.clear();
-              return this.authService.refreshSocialsToken('gh_access_token').pipe(mergeMap(() => {
+              return this.authService.refreshSocialsToken('GITHUB').pipe(mergeMap(() => {
                 return this.authInterceptor.intercept(request, next); // let the request continue its flow with the new valid token
               }));
             }
@@ -53,7 +53,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
           catchError((errorResponse: HttpErrorResponse) => {
             if (errorResponse.status === 401) {
               localStorage.clear();
-              return this.authService.refreshSocialsToken('so_access_token').pipe(mergeMap(() => {
+              return this.authService.refreshSocialsToken('STACKOVERFLOW').pipe(mergeMap(() => {
                 return this.authInterceptor.intercept(request, next); // let the request continue its flow with the new valid token
               }));
             }
