@@ -1,7 +1,7 @@
-// import { isPlatformBrowser } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
@@ -26,23 +26,27 @@ export class AuthService {
   public isLoggedIn$!: Observable<boolean>;
   public isLoggedOut$!: Observable<boolean>;
 
-  public TOKEN_NAME!: string;
+  public TOKEN_NAME: string = 'access_token';
   public REFRESH_TOKEN_NAME: string = 'refresh_token';
+
+  private redirectURL: string;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     // this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
     this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
+    this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
+
     this.loadCurrentUser();
   }
 
   private loadCurrentUser() {
-    this.TOKEN_NAME = this.getTokenName(this.token);
-
     this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
       .pipe(
         catchError(error => {
@@ -57,7 +61,7 @@ export class AuthService {
 
   get token(): any {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
+      return localStorage.getItem(this.TOKEN_NAME);;
     }
   }
 
@@ -107,7 +111,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        this.handleJWTauth(response, 'jwt_access_token', 'Bearer');
+        this.handleJWTauth(response, 'Bearer');
       }),
       shareReplay()
     );
@@ -118,7 +122,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        this.handleJWTauth(response, 'jwt_access_token', 'Bearer');
+        this.handleJWTauth(response, 'Bearer');
       }),
       shareReplay()
     )
@@ -162,36 +166,47 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        this.handleJWTauth(response, 'gh_access_token', 'token');
+        this.handleJWTauth(response, 'token');
       }),
       shareReplay()
     )
   }
 
   public SOLogin(token: string) {
-
     this.getUser(token, 'stack')
       .subscribe({
         next: usr => {
           this.subject.next(usr);
-          this.TOKEN_NAME = 'so_access_token';
           localStorage.setItem(this.TOKEN_NAME, token);
           localStorage.setItem('user_data', JSON.stringify(usr));
+
+          if (this.redirectURL) {
+            this.router.navigateByUrl(this.redirectURL,)
+              .catch(() => this.router.navigate(['/']))
+          } else {
+            this.router.navigate(['/'])
+          }
         }
       })
   }
 
-  private handleJWTauth(response: any, tokenName: string, tokenType: string) {
+  private handleJWTauth(response: any, tokenType: string) {
     const { refreshToken, accessToken } = response.body
 
     this.getUser(accessToken, tokenType)
       .subscribe({
         next: usr => {
           this.subject.next(usr);
-          this.TOKEN_NAME = tokenName;
           localStorage.setItem(this.TOKEN_NAME, accessToken);
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
           localStorage.setItem('user_data', JSON.stringify(usr));
+
+          if (this.redirectURL) {
+            this.router.navigateByUrl(this.redirectURL,)
+              .catch(() => this.router.navigate(['/']))
+          } else {
+            this.router.navigate(['/'])
+          }
         }
       })
   }
@@ -200,8 +215,9 @@ export class AuthService {
     return response.headers.get('authorization').split(' ')[1]
   }
 
-  public getUser(accessToken: string, tokenType: string): Observable<User> {
+  private getUser(accessToken: string, tokenType: string): Observable<User> {
     httpOptions.headers = httpOptions.headers.set('Authorization', `${tokenType} ${accessToken}`);
+
     return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions).pipe(
       shareReplay()
     )

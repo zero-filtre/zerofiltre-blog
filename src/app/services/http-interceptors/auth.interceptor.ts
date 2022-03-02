@@ -21,15 +21,16 @@ export class AuthInterceptor implements HttpInterceptor {
     */
 
     const authToken = this.authService.token;
+    const userOrigin = this.authService.currentUsr?.loginFrom;
 
-    switch (this.authService.TOKEN_NAME) {
-      case 'jwt_access_token':
+    switch (userOrigin) {
+      case null:
         request = request.clone({ setHeaders: { Authorization: `Bearer ${authToken}` } });
         break;
-      case 'gh_access_token':
+      case 'GITHUB':
         request = request.clone({ setHeaders: { Authorization: `token ${authToken}` } });
         break;
-      case 'so_access_token':
+      case 'STACKOVERFLOW':
         request = request.clone({ setHeaders: { Authorization: `stack ${authToken}` } });
         break;
       default:

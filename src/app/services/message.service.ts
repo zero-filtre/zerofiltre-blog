@@ -42,9 +42,9 @@ export class MessageService {
   }
 
   // For non authenticated requests
-  authError() {
+  authError(state: any) {
     this.openSnackBarError('Veuillez Vous  connecter !', '');
-    this.router.navigateByUrl('/login');
+    this.router.navigate(['/login'], { queryParams: { 'redirectURL': state.url } });
   }
 
   // When user is already logged In

@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
@@ -12,7 +11,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, OnDestroy {
   public form!: FormGroup;
   public loading: boolean = false;
   public readonly GITHUB_CLIENT_ID = environment.GITHUB_CLIENT_ID;
@@ -23,8 +22,6 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private formbuilder: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
     private authService: AuthService,
     private messageservice: MessageService,
     private seo: SeoService
@@ -41,19 +38,14 @@ export class LoginPageComponent implements OnInit {
   get password() { return this.form.get('password'); }
 
   public login(): void {
-    console.log('LOGIN JWT CALLED');
-
     this.loading = true;
     this.authService.login(this.form.value).subscribe({
       next: (_response: any) => {
-        this.router.navigateByUrl('/');
-        this.form.reset();
-        this.loading = false;
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
         this.messageservice.loginError();
-      }
+      },
     })
   }
 
@@ -67,6 +59,11 @@ export class LoginPageComponent implements OnInit {
       type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
+  }
+
+  ngOnDestroy(): void {
+    this.form.reset();
+    this.loading = false;
   }
 
 }
