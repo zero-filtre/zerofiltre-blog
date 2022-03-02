@@ -8,10 +8,10 @@ import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry
 import { Router } from '@angular/router';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
-import { MessageService } from 'src/app/services/message.service';
-import { map, Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
-import { User } from 'src/app/user/user.model';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
+
+const STATE_KEY_ARTICLES = makeStateKey('articles');
 
 @Component({
   selector: 'app-articles-list',
@@ -38,6 +38,7 @@ export class ArticlesListComponent implements OnInit {
     private router: Router,
     private location: Location,
     public authService: AuthService,
+    private state: TransferState,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -66,22 +67,32 @@ export class ArticlesListComponent implements OnInit {
   }
 
   public fetchArticles(): void {
-    this.loading = true;
-    this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
-      next: (response: Article[]) => {
-        this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
-        this.setArticlesReadingTime(response);
-        this.loading = false;
+    this.articles = this.state.get(STATE_KEY_ARTICLES, <any>[]);
+    console.log('ARTICLES LIST: ', this.articles);
 
-        if (response.length === 0) {
-          this.errorMessage = "Pas d'articles trouvés pour le moment"
+    if (this.articles.length === 0) {
+      this.loading = true;
+      this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
+        next: (response: Article[]) => {
+          const platform = isPlatformBrowser(this.platformId) ?
+            'in the browser' : 'on the server';
+          console.log(`findAllArticles : Running ${platform}`);
+
+          this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
+          this.setArticlesReadingTime(response);
+          this.loading = false;
+          this.state.set(STATE_KEY_ARTICLES, <any>response);
+
+          if (response.length === 0) {
+            this.errorMessage = "Pas d'articles trouvés pour le moment"
+          }
+        },
+        error: (_error: HttpErrorResponse) => {
+          this.loading = false;
+          this.errorMessage = 'Oops...!'
         }
-      },
-      error: (_error: HttpErrorResponse) => {
-        this.loading = false;
-        this.errorMessage = 'Oops...!'
-      }
-    })
+      })
+    }
   }
 
   public setArticlesReadingTime(articles: Article[]): void {
@@ -182,9 +193,10 @@ export class ArticlesListComponent implements OnInit {
 
     this.location.go('/articles');
 
-    if (isPlatformBrowser(this.platformId)) {
-      this.fetchArticles();
-      this.fetchListOfTags();
-    }
+    this.fetchArticles();
+    this.fetchListOfTags();
+
+    // if (isPlatformBrowser(this.platformId)) {
+    // }
   }
 }
