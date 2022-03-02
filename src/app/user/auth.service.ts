@@ -45,7 +45,7 @@ export class AuthService {
 
     this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
 
-    this.loadCurrentUser();
+    // this.loadCurrentUser();
   }
 
   private loadCurrentUser() {
