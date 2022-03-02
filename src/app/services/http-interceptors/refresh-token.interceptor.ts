@@ -12,57 +12,40 @@ import { AuthInterceptor } from './auth.interceptor';
 
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
-
   constructor(
     private authService: AuthService,
     private authInterceptor: AuthInterceptor
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (this.authService.token && this.authService.TOKEN_NAME === 'jwt_access_token') {
-      return next.handle(request)
-        .pipe(
-          catchError((errorResponse: HttpErrorResponse) => {
-            if (errorResponse.status === 401 && errorResponse.error.message === 'Expired JWT Token') {
-              localStorage.clear();
-              return this.authService.sendRefreshToken().pipe(mergeMap(() => {
-                return this.authInterceptor.intercept(request, next);
-              }));
-            }
+    const userOrigin = this.authService.currentUsr?.loginFrom;
 
-            return throwError(() => errorResponse);
-          })
-        );
-    } else if (this.authService.token && (this.authService.TOKEN_NAME === 'gh_access_token')) {
-      return next.handle(request)
-        .pipe(
-          catchError((errorResponse: HttpErrorResponse) => {
-            if (errorResponse.status === 401) {
-              localStorage.clear();
-              return this.authService.refreshSocialsToken('GITHUB').pipe(mergeMap(() => {
-                return this.authInterceptor.intercept(request, next);
-              }));
-            }
+    return next.handle(request)
+      .pipe(
+        catchError((errorResponse: HttpErrorResponse) => {
+          if (errorResponse.status === 401 && userOrigin === null) {
+            localStorage.clear();
+            return this.authService.sendRefreshToken().pipe(mergeMap(() => {
+              return this.authInterceptor.intercept(request, next);
+            }));
+          }
 
-            return throwError(() => errorResponse);
-          })
-        );
-    } else if (this.authService.token && (this.authService.TOKEN_NAME === 'so_access_token')) {
-      return next.handle(request)
-        .pipe(
-          catchError((errorResponse: HttpErrorResponse) => {
-            if (errorResponse.status === 401) {
-              localStorage.clear();
-              return this.authService.refreshSocialsToken('STACKOVERFLOW').pipe(mergeMap(() => {
-                return this.authInterceptor.intercept(request, next); // let the request continue its flow with the new valid token
-              }));
-            }
+          if (errorResponse.status === 401 && userOrigin === 'GITHUB') {
+            localStorage.clear();
+            return this.authService.refreshSocialsToken('GITHUB').pipe(mergeMap(() => {
+              return this.authInterceptor.intercept(request, next);
+            }));
+          }
 
-            return throwError(() => errorResponse);
-          })
-        );
-    } else {
-      return next.handle(request);
-    }
+          if (errorResponse.status === 401 && userOrigin === 'STACKOVERFLOW') {
+            localStorage.clear();
+            return this.authService.refreshSocialsToken('STACKOVERFLOW').pipe(mergeMap(() => {
+              return this.authInterceptor.intercept(request, next);
+            }));
+          }
+
+          return throwError(() => errorResponse);
+        })
+      );
   }
 }

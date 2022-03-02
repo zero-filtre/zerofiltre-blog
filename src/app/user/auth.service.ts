@@ -90,6 +90,9 @@ export class AuthService {
    * AUTH REFRESH TOKEN METHODS
    */
   public sendRefreshToken(): Observable<any> {
+    // send the refresh token to the api
+    // Get back the new access token and the new refresh token from the api
+    // If success ==> Store those new values in the LS by calling loadLoggedInUser()
     throw new Error('Method not implemented.');
   }
 
