@@ -53,7 +53,9 @@ export class ArticleService {
 
   public getListOfTags(): Observable<Tag[]> {
     return this.http.get<Tag[]>(`${this.apiServerUrl}/tag`)
-      .pipe(shareReplay());
+      .pipe(
+        shareReplay()
+      );
   }
 
   public getArticleTags(articleId: string): Observable<Tag[]> {

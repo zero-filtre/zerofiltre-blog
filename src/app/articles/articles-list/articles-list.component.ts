@@ -10,15 +10,17 @@ import { isPlatformBrowser, Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 
 const STATE_KEY_ARTICLES = makeStateKey('articles');
+const STATE_KEY_TAGS = makeStateKey('tags');
 
 @Component({
   selector: 'app-articles-list',
   templateUrl: './articles-list.component.html',
   styleUrls: ['./articles-list.component.css'],
 })
-export class ArticlesListComponent implements OnInit {
+export class ArticlesListComponent implements OnInit, OnDestroy {
   public articles!: Article[];
   public tagList!: Tag[];
 
@@ -30,6 +32,9 @@ export class ArticlesListComponent implements OnInit {
 
   public activePage: string = 'recent';
   public mainPage = true;
+
+  subscription1$!: Subscription;
+  subscription2$!: Subscription;
 
   constructor(
     private seo: SeoService,
@@ -56,23 +61,36 @@ export class ArticlesListComponent implements OnInit {
 
   public fetchListOfTags(): void {
     this.loading = true;
-    this.articleService.getListOfTags().subscribe({
-      next: (response: Tag[]) => {
-        this.tagList = response
-      },
-      error: (_error: HttpErrorResponse) => {
-        this.loading = false;
-      }
-    })
+    this.tagList = this.state.get(STATE_KEY_TAGS, <any>[]);
+    console.log('TAG LIST: ', this.tagList);
+
+    if (this.tagList.length === 0) {
+      this.subscription1$ = this.articleService.getListOfTags().subscribe({
+        next: (response: Tag[]) => {
+          const platform = isPlatformBrowser(this.platformId) ?
+            'in the browser' : 'on the server';
+          console.log(`getListOfTags : Running ${platform}`);
+
+          this.tagList = response
+          this.state.set(STATE_KEY_TAGS, <any>response);
+          this.loading = false;
+        },
+        error: (_error: HttpErrorResponse) => {
+          this.loading = false;
+        }
+      })
+    } else {
+      this.loading = false;
+    }
   }
 
   public fetchArticles(): void {
+    this.loading = true;
     this.articles = this.state.get(STATE_KEY_ARTICLES, <any>[]);
     console.log('ARTICLES LIST: ', this.articles);
 
     if (this.articles.length === 0) {
-      this.loading = true;
-      this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
+      this.subscription2$ = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
         next: (response: Article[]) => {
           const platform = isPlatformBrowser(this.platformId) ?
             'in the browser' : 'on the server';
@@ -80,8 +98,8 @@ export class ArticlesListComponent implements OnInit {
 
           this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
           this.setArticlesReadingTime(response);
-          this.loading = false;
           this.state.set(STATE_KEY_ARTICLES, <any>response);
+          this.loading = false;
 
           if (response.length === 0) {
             this.errorMessage = "Pas d'articles trouvés pour le moment"
@@ -92,6 +110,8 @@ export class ArticlesListComponent implements OnInit {
           this.errorMessage = 'Oops...!'
         }
       })
+    } else {
+      this.loading = false;
     }
   }
 
@@ -150,7 +170,7 @@ export class ArticlesListComponent implements OnInit {
       this.articles = results
 
       if (results.length === 0) {
-        this.fetchArticles()
+        this.fetchArticles();
       }
     }
 
@@ -172,7 +192,7 @@ export class ArticlesListComponent implements OnInit {
       this.articles = results
 
       if (results.length === 0 || !key) {
-        this.fetchArticles()
+        this.fetchArticles();
       }
     }
   }
@@ -195,8 +215,10 @@ export class ArticlesListComponent implements OnInit {
 
     this.fetchArticles();
     this.fetchListOfTags();
+  }
 
-    // if (isPlatformBrowser(this.platformId)) {
-    // }
+  ngOnDestroy(): void {
+    this.subscription1$.unsubscribe()
+    this.subscription2$.unsubscribe()
   }
 }
