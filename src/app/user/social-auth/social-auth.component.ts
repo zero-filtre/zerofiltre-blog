@@ -32,7 +32,7 @@ export class SocialAuthComponent implements OnInit {
 
   loginWithStackOverflow(): void {
     if (this.accessToken) {
-      this.authService.SOLogin(this.accessToken);
+      this.authService.InitSOLoginWithAccessToken(this.accessToken);
     }
   }
 

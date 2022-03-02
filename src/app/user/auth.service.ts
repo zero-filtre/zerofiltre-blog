@@ -1,9 +1,10 @@
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { MessageService } from '../services/message.service';
 import { User } from './user.model';
 
 const httpOptions = {
@@ -35,7 +36,8 @@ export class AuthService {
     @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     // this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
     this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
@@ -166,27 +168,24 @@ export class AuthService {
     )
   }
 
-  public SOLogin(token: string) {
-    this.getUser(token, 'stack')
-      .subscribe({
-        next: usr => {
-          this.subject.next(usr);
-          localStorage.setItem(this.TOKEN_NAME, token);
-          localStorage.setItem('user_data', JSON.stringify(usr));
-
-          if (this.redirectURL) {
-            this.router.navigateByUrl(this.redirectURL,)
-              .catch(() => this.router.navigate(['/']))
-          } else {
-            this.router.navigate(['/'])
-          }
-        }
-      })
+  public InitSOLoginWithAccessToken(accessToken: string) {
+    this.loadLoggedInUser(accessToken, 'stack');
   }
 
   private handleJWTauth(response: any, tokenType: string) {
     const { refreshToken, accessToken } = response.body
+    this.loadLoggedInUser(accessToken, tokenType, refreshToken);
+  }
 
+  private getUser(accessToken: string, tokenType: string): Observable<User> {
+    httpOptions.headers = httpOptions.headers.set('Authorization', `${tokenType} ${accessToken}`);
+
+    return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions).pipe(
+      shareReplay()
+    )
+  }
+
+  private loadLoggedInUser(accessToken: string, tokenType: string, refreshToken = '') {
     this.getUser(accessToken, tokenType)
       .subscribe({
         next: usr => {
@@ -201,16 +200,11 @@ export class AuthService {
           } else {
             this.router.navigate(['/'])
           }
+        },
+        error: (_err: HttpErrorResponse) => {
+          this.messageService.openSnackBarError('Impossible de recupérer vos données', '');
         }
       })
-  }
-
-  private getUser(accessToken: string, tokenType: string): Observable<User> {
-    httpOptions.headers = httpOptions.headers.set('Authorization', `${tokenType} ${accessToken}`);
-
-    return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions).pipe(
-      shareReplay()
-    )
   }
 
   private extractTokenFromHeaders(response: any) {
