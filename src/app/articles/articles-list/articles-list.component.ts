@@ -12,8 +12,8 @@ import { AuthService } from 'src/app/user/auth.service';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 
-const STATE_KEY_ARTICLES = makeStateKey('articles');
-const STATE_KEY_TAGS = makeStateKey('tags');
+// const STATE_KEY_ARTICLES = makeStateKey('articles');
+// const STATE_KEY_TAGS = makeStateKey('tags');
 
 @Component({
   selector: 'app-articles-list',
@@ -43,7 +43,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private router: Router,
     private location: Location,
     public authService: AuthService,
-    private state: TransferState,
+    // private state: TransferState,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -61,58 +61,58 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchListOfTags(): void {
     this.loading = true;
-    this.tagList = this.state.get(STATE_KEY_TAGS, <any>[]);
-    console.log('TAG LIST: ', this.tagList);
+    // this.tagList = this.state.get(STATE_KEY_TAGS, <any>[]);
+    // console.log('TAG LIST: ', this.tagList);
 
-    if (this.tagList.length === 0) {
-      this.subscription1$ = this.articleService.getListOfTags().subscribe({
-        next: (response: Tag[]) => {
-          const platform = isPlatformBrowser(this.platformId) ?
-            'in the browser' : 'on the server';
-          console.log(`getListOfTags : Running ${platform}`);
+    // if (this.tagList.length === 0) {
+    this.subscription1$ = this.articleService.getListOfTags().subscribe({
+      next: (response: Tag[]) => {
+        const platform = isPlatformBrowser(this.platformId) ?
+          'in the browser' : 'on the server';
+        console.log(`getListOfTags : Running ${platform}`);
 
-          this.tagList = response
-          this.state.set(STATE_KEY_TAGS, <any>response);
-          this.loading = false;
-        },
-        error: (_error: HttpErrorResponse) => {
-          this.loading = false;
-        }
-      })
-    } else {
-      this.loading = false;
-    }
+        this.tagList = response
+        // this.state.set(STATE_KEY_TAGS, <any>response);
+        this.loading = false;
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
+    // } else {
+    //   this.loading = false;
+    // }
   }
 
   public fetchArticles(): void {
     this.loading = true;
-    this.articles = this.state.get(STATE_KEY_ARTICLES, <any>[]);
-    console.log('ARTICLES LIST: ', this.articles);
+    // this.articles = this.state.get(STATE_KEY_ARTICLES, <any>[]);
+    // console.log('ARTICLES LIST: ', this.articles);
 
-    if (this.articles.length === 0) {
-      this.subscription2$ = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
-        next: (response: Article[]) => {
-          const platform = isPlatformBrowser(this.platformId) ?
-            'in the browser' : 'on the server';
-          console.log(`findAllArticles : Running ${platform}`);
+    // if (this.articles.length === 0) {
+    this.subscription2$ = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
+      next: (response: Article[]) => {
+        const platform = isPlatformBrowser(this.platformId) ?
+          'in the browser' : 'on the server';
+        console.log(`findAllArticles : Running ${platform}`);
 
-          this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
-          this.setArticlesReadingTime(response);
-          this.state.set(STATE_KEY_ARTICLES, <any>response);
-          this.loading = false;
+        this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
+        this.setArticlesReadingTime(response);
+        // this.state.set(STATE_KEY_ARTICLES, <any>response);
+        this.loading = false;
 
-          if (response.length === 0) {
-            this.errorMessage = "Pas d'articles trouvés pour le moment"
-          }
-        },
-        error: (_error: HttpErrorResponse) => {
-          this.loading = false;
-          this.errorMessage = 'Oops...!'
+        if (response.length === 0) {
+          this.errorMessage = "Pas d'articles trouvés pour le moment"
         }
-      })
-    } else {
-      this.loading = false;
-    }
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+        this.errorMessage = 'Oops...!'
+      }
+    })
+    // } else {
+    //   this.loading = false;
+    // }
   }
 
   public setArticlesReadingTime(articles: Article[]): void {
@@ -213,12 +213,18 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
     this.location.go('/articles');
 
-    this.fetchArticles();
-    this.fetchListOfTags();
+    if (isPlatformBrowser(this.platformId)) {
+      this.fetchArticles();
+      this.fetchListOfTags()
+    }
+
+    console.log('RENDERING LIST COMPONENT');
   }
 
   ngOnDestroy(): void {
-    this.subscription1$.unsubscribe()
-    this.subscription2$.unsubscribe()
+    if (isPlatformBrowser(this.platformId)) {
+      this.subscription1$.unsubscribe()
+      this.subscription2$.unsubscribe()
+    }
   }
 }

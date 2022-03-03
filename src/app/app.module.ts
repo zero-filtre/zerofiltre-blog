@@ -25,10 +25,10 @@ registerLocaleData(localeFr, 'fr');
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
-    BrowserTransferStateModule,
     MarkdownModule.forRoot(),
     SharedModule,
     AppRoutingModule,
+    // BrowserTransferStateModule,
   ],
   providers: [
     httpInterceptorProviders,

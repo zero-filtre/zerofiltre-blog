@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
   imports: [
     AppModule,
     ServerModule,
-    ServerTransferStateModule
+    // ServerTransferStateModule
   ],
   bootstrap: [AppComponent],
 })
