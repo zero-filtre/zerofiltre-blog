@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap, filter } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
@@ -11,6 +11,7 @@ import { ArticleService } from '../article.service';
 import { MessageService } from 'src/app/services/message.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-article-detail',
@@ -35,7 +36,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private seo: SeoService,
     private router: Router,
     private messageService: MessageService,
-    public authService: AuthService
+    public authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
   public setDateFormat(date: any) {
@@ -68,6 +70,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response: Article) => {
+          const platform = isPlatformBrowser(this.platformId) ?
+            'in the browser' : 'on the server';
+          console.log(`findArticleById : Running ${platform}`);
+
           this.article = response
           this.articleHasTags = response.tags.length > 0
           calcReadingTime(response);
@@ -127,7 +133,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe(
       params => {
         this.articleId = params.get('id')!;
-        this.getCurrentArticle(this.articleId);
+
+        if (isPlatformBrowser(this.platformId)) {
+          this.getCurrentArticle(this.articleId);
+        }
       }
     );
   }
