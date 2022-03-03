@@ -2,9 +2,10 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, catchError, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, retryWhen, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MessageService } from '../services/message.service';
+import { genericRetryPolicy } from '../services/utilities.service';
 import { User } from './user.model';
 
 const httpOptions = {
@@ -186,6 +187,9 @@ export class AuthService {
     httpOptions.headers = httpOptions.headers.set('Authorization', `${tokenType} ${accessToken}`);
 
     return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions).pipe(
+      retryWhen(genericRetryPolicy({
+        scalingDuration: 1000,
+      })),
       shareReplay()
     )
   }
@@ -207,7 +211,8 @@ export class AuthService {
           }
         },
         error: (_err: HttpErrorResponse) => {
-          this.messageService.openSnackBarError('Impossible de recupérer vos données', '');
+          this.messageService.openSnackBarError('Impossible de recupérer vos données. Veuillez reessayer!', '');
+          this.router.navigateByUrl('/login');
         }
       })
   }
