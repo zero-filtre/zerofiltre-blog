@@ -52,11 +52,14 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     })
   }
 
+  public setRedirectURL() {
+    this.authService.redirectURL = this.redirectURL;
+  }
+
   ngOnInit(): void {
     this.InitForm();
 
     this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
-    console.log('REDIRECT URL: ', this.redirectURL);
 
     this.seo.generateTags({
       title: 'Se connecter | Zerofiltre.tech',

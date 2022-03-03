@@ -31,7 +31,7 @@ export class AuthService {
   public TOKEN_NAME: string = 'access_token';
   public REFRESH_TOKEN_NAME: string = 'refresh_token';
 
-  private redirectURL: string;
+  public redirectURL: string;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
