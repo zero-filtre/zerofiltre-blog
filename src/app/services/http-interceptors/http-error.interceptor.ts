@@ -9,6 +9,7 @@ import {
 import { catchError, Observable, retryWhen, throwError } from 'rxjs';
 import { MessageService } from '../message.service';
 import { genericRetryPolicy } from '../utilities.service';
+import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private messageService: MessageService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -59,6 +62,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
         if (error.status === 401) {
           localStorage.clear();
+          this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
         }
       }
     }

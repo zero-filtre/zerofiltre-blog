@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: ':id/edit',
     component: ArticleEntryCreateComponent,
-    canActivate: [AuthGuard, AuthorGuard]
+    // canActivate: [AuthGuard, AuthorGuard]
   },
 ];
 

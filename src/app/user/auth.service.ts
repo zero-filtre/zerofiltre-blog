@@ -45,8 +45,6 @@ export class AuthService {
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
-
-    // this.loadCurrentUser();
   }
 
   private loadCurrentUser() {
@@ -97,22 +95,15 @@ export class AuthService {
     console.log('REFRESHING TOKEN');
     throw new Error('Method not implemented.');
   }
-
-  public refreshSocialsToken(usrOrigin: string): Observable<any> {
-    if (usrOrigin === 'GITHUB') {
-      return this.http.get<any>(`https://github.com/login/oauth/authorize?client_id=${environment.GITHUB_CLIENT_ID}&redirect_uri=${environment.gitHubRedirectURL}&scope=user:email`)
-    } else
-      return this.http.get<any>(`https://stackoverflow.com/oauth/dialog?client_id=${environment.STACK_OVERFLOW_CLIENT_ID}&redirect_uri=${environment.stackOverflowRedirectURL}&scope=no_expiry`)
-  }
   /** */
 
 
-  public login(credentials: FormData): Observable<any> {
+  public login(credentials: FormData, redirectURL: any): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        this.handleJWTauth(response, 'Bearer');
+        this.handleJWTauth(response, 'Bearer', redirectURL);
       }),
       shareReplay()
     );
@@ -178,8 +169,9 @@ export class AuthService {
     this.loadLoggedInUser(accessToken, 'stack');
   }
 
-  private handleJWTauth(response: any, tokenType: string) {
+  private handleJWTauth(response: any, tokenType: string, redirectURL = '') {
     const { refreshToken, accessToken } = response.body
+    this.redirectURL = redirectURL;
     this.loadLoggedInUser(accessToken, tokenType, refreshToken);
   }
 
@@ -203,8 +195,10 @@ export class AuthService {
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
           localStorage.setItem('user_data', JSON.stringify(usr));
 
+          console.log('SERVICE URL: ', this.redirectURL);
+
           if (this.redirectURL) {
-            this.router.navigateByUrl(this.redirectURL,)
+            this.router.navigateByUrl(this.redirectURL)
               .catch(() => this.router.navigate(['/']))
           } else {
             this.router.navigate(['/'])

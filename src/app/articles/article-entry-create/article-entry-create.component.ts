@@ -115,7 +115,6 @@ export class ArticleEntryCreateComponent implements OnInit {
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
         this.isSaving = false;
-        this.messageService.saveArticleError();
       }
     })
   }

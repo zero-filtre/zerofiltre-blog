@@ -29,18 +29,6 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
             }));
           }
 
-          if (errorResponse.status === 401 && userOrigin === 'GITHUB') {
-            return this.authService.refreshSocialsToken('GITHUB').pipe(mergeMap(() => {
-              return this.authInterceptor.intercept(request, next);
-            }));
-          }
-
-          if (errorResponse.status === 401 && userOrigin === 'STACKOVERFLOW') {
-            return this.authService.refreshSocialsToken('STACKOVERFLOW').pipe(mergeMap(() => {
-              return this.authInterceptor.intercept(request, next);
-            }));
-          }
-
           return throwError(() => errorResponse);
         })
       );

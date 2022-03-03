@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
@@ -18,13 +19,15 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   public readonly STACK_OVERFLOW_CLIENT_ID = environment.STACK_OVERFLOW_CLIENT_ID;
   public readonly gitHubRedirectURL = environment.gitHubRedirectURL;
   public readonly stackOverflowRedirectURL = environment.stackOverflowRedirectURL;
-  public path: string = '/';
+  redirectURL: any;
 
   constructor(
     private formbuilder: FormBuilder,
     private authService: AuthService,
     private messageservice: MessageService,
-    private seo: SeoService
+    private seo: SeoService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   public InitForm(): void {
@@ -39,7 +42,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   public login(): void {
     this.loading = true;
-    this.authService.login(this.form.value).subscribe({
+    this.authService.login(this.form.value, this.redirectURL).subscribe({
       next: (_response: any) => {
       },
       error: (_error: HttpErrorResponse) => {
@@ -51,6 +54,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.InitForm();
+
+    this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
+    console.log('REDIRECT URL: ', this.redirectURL);
 
     this.seo.generateTags({
       title: 'Se connecter | Zerofiltre.tech',
