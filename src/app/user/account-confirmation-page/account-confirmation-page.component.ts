@@ -43,7 +43,9 @@ export class AccountConfirmationPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.token = this.route.snapshot.queryParamMap.get('token')!;
+
     if (isPlatformBrowser(this.platformId)) {
       this.verifyToken();
     }
