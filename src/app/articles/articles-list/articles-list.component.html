@@ -66,11 +66,11 @@
                 <div class="mt-4" aria-labelledby="posts-tags">
 
                     <ng-template [ngIf]="tagList">
-                        <div class="tagList-container space-y-1">
+                        <div class="tagList-container space-y-1" *appShellNoRender>
                             <ng-container *ngFor="let tag of tagList">
                                 <button (click)="sortByTag(tag.name)" type="button"
                                     class="group inline-flex items-center mr-1 px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                    <svg class="mr-1 h-2 w-2 text-[{{tag.colorCode}}]" fill="currentColor"
+                                    <svg class="mr-1 h-2 w-2 text-[{{tag?.colorCode}}]" fill="currentColor"
                                         viewBox="0 0 8 8">
                                         <circle cx="4" cy="4" r="3"></circle>
                                     </svg>
@@ -85,7 +85,7 @@
                         <div class="tags-skeleton-container">
                             <ngx-skeleton-loader class="flex space-x-1" count="3" appearance="line" [theme]="{ 
                                 'border-radius': '9999px',
-                                 width: '100px',
+                                 width: '80px',
                                  height: '30px',
                                  display: 'block'
                                 }">
@@ -156,9 +156,18 @@
                 </nav>
             </div>
 
-            <div class="articles-wrapper py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none">
+            <div class="articles-wrapper min-h-screen py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none">
+                <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
+                    <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="10" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                </div>
 
-                <ng-template [ngIf]="articles">
+                <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles">
                         <div class="article-card lg:grid grid-cols-3 gap-6">
                             <a [routerLink]="[article.id]" class="article-preview group">
@@ -174,7 +183,7 @@
                                     <div *ngFor="let tag of article?.tags" class="flex items-center space-x-2">
                                         <span
                                             class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                            <svg class="mr-1 h-2 w-2 text-[{{tag.colorCode}}]" fill="currentColor"
+                                            <svg class="mr-1 h-2 w-2 text-[{{tag?.colorCode}}]" fill="currentColor"
                                                 viewBox="0 0 8 8">
                                                 <circle cx="4" cy="4" r="3"></circle>
                                             </svg>
@@ -302,8 +311,13 @@
                 </ng-template>
 
                 <ng-template [ngIf]="errorMessage">
-                    <div class="flex justify-center items-center h-96 text-4xl font-semibold text-skin-base">
-                        {{errorMessage}}
+                    <div class="flex flex-col justify-center items-center min-h-screen space-y-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-primary-500" fill="currentColor"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
+                        </svg>
+                        <div class="text-sm font-semibold text-skin-base">{{errorMessage}}</div>
                     </div>
                 </ng-template>
 

@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
@@ -20,7 +21,8 @@ export class AccountConfirmationPageComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private seo: SeoService
+    private seo: SeoService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
   public verifyToken(): void {
@@ -41,8 +43,12 @@ export class AccountConfirmationPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.token = this.route.snapshot.queryParamMap.get('token')!;
-    this.verifyToken();
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.verifyToken();
+    }
 
     this.seo.generateTags({
       title: 'Confirmation du compte | Zerofiltre.tech',

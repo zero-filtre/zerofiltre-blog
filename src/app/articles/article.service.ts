@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Article, Author, Tag } from './article.model';
 
@@ -9,7 +9,6 @@ import { Article, Author, Tag } from './article.model';
 })
 export class ArticleService {
   readonly apiServerUrl = environment.apiBaseUrl;
-  public loading = false;
 
   private articleSubject$ = new BehaviorSubject<Article[]>([]);
   public articles$: Observable<Article[]> = this.articleSubject$.asObservable();
@@ -17,99 +16,60 @@ export class ArticleService {
   private tagSubject$ = new BehaviorSubject<Tag[]>([]);
   public tags$: Observable<Tag[]> = this.tagSubject$.asObservable();
 
-  constructor(private http: HttpClient) {
-    // this.loadAllArticles();
-    this.loadAllTags();
-  }
+  constructor(private http: HttpClient) { }
 
-  private loadAllArticles() {
-    this.loading = true;
-
-    this.articles$ = this.http.get<Article[]>(`${this.apiServerUrl}/article?pageNumber=0&pageSize=5&status=published`)
-      .pipe(
-        catchError(error => {
-          this.loading = false;
-          return throwError(() => error);
-        }),
-        tap(articles => {
-          this.loading = false;
-          this.articleSubject$.next(articles)
-          console.log('ARTICLES LIST: ', this.articles$);
-        })
-      )
-  }
-
-  private loadAllTags() {
-    this.tags$ = this.http.get<Tag[]>(`${this.apiServerUrl}/tag`)
-      .pipe(
-        catchError(error => {
-          return throwError(() => error);
-        }),
-        tap(tags => {
-          console.log('TAGS');
-          this.tagSubject$.next(tags)
-        })
-      )
-  }
-
-  // private loadAllTags() {
-  //   const loadTags$ = this.http.get<Tag[]>(`${this.apiServerUrl}/tag`)
-  //     .pipe(
-  //       catchError(error => {
-  //         const messagge = 'Impossible de recupérer la liste de tags'
-  //         this.messageService.openSnackBarError(messagge, 'Ok', 0);
-  //         return throwError(() => error);
-  //       }),
-  //       tap(tags => {
-  //         console.log('TAGS');
-  //         this.tagSubject$.next(tags)
-  //       })
-  //     )
-
-  //   loadTags$.subscribe();
-  // }
-
-
-  public getArticles(page: number, limit: number, status: string): Observable<Article[]> {
+  public findAllArticles(page: number, limit: number, status: string): Observable<Article[]> {
     return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=${status}`)
       .pipe(
-        map(({ content }) => content)
+        map(({ content }) => content),
+        shareReplay()
       );
   }
 
-  public getOneArticle(articleId: number): Observable<Article> {
-    return this.http.get<Article>(`${this.apiServerUrl}/article/${articleId}`);
+  public findArticleById(articleId: string): Observable<Article> {
+    return this.http.get<Article>(`${this.apiServerUrl}/article/${articleId}`)
+      .pipe(shareReplay());
   }
 
   public addArticle(article: Article): Observable<Article> {
-    return this.http.post<Article>(`${this.apiServerUrl}/article/add`, article);
+    return this.http.post<Article>(`${this.apiServerUrl}/article/add`, article)
+      .pipe(shareReplay());
   }
 
   public updateToSave(article: Article): Observable<Article> {
-    return this.http.patch<Article>(`${this.apiServerUrl}/article`, article);
+    return this.http.patch<Article>(`${this.apiServerUrl}/article`, article)
+      .pipe(shareReplay());
   }
 
   public updateToPublish(article: Article): Observable<Article> {
-    return this.http.patch<Article>(`${this.apiServerUrl}/article/publish`, article);
+    return this.http.patch<Article>(`${this.apiServerUrl}/article/publish`, article)
+      .pipe(shareReplay());
   }
 
   public deleteArticle(articleId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/article/delete/${articleId}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/article/delete/${articleId}`)
+      .pipe(shareReplay());
   }
 
   public getListOfTags(): Observable<Tag[]> {
-    return this.http.get<Tag[]>(`${this.apiServerUrl}/tag`);
+    return this.http.get<Tag[]>(`${this.apiServerUrl}/tag`)
+      .pipe(
+        shareReplay()
+      );
   }
 
   public getArticleTags(articleId: string): Observable<Tag[]> {
-    return this.http.get<Tag[]>(`${this.apiServerUrl}/article/${articleId}/tags`);
+    return this.http.get<Tag[]>(`${this.apiServerUrl}/article/${articleId}/tags`)
+      .pipe(shareReplay());
   }
 
   public getArticleAuthor(articleId: string): Observable<Author[]> {
-    return this.http.get<Author[]>(`${this.apiServerUrl}/article/${articleId}/author`);
+    return this.http.get<Author[]>(`${this.apiServerUrl}/article/${articleId}/author`)
+      .pipe(shareReplay());
   }
 
   public createArticle(title: string): Observable<Article> {
     return this.http.post<Article>(`${this.apiServerUrl}/article?title=${title}`, {})
+      .pipe(shareReplay());
   }
 }

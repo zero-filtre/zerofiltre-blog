@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
@@ -15,13 +16,13 @@ export class SocialAuthComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
-  getGHAccessToken(): void {
+  loginWithGithub(): void {
     this.authService.getGithubAccessTokenFromCode(this.code).subscribe({
       next: (_response: any) => {
-        this.router.navigateByUrl('/');
       },
       error: (_error: HttpErrorResponse) => {
         this.router.navigateByUrl('/login');
@@ -29,10 +30,9 @@ export class SocialAuthComponent implements OnInit {
     })
   }
 
-  getSOAccessToken(): void {
+  loginWithStackOverflow(): void {
     if (this.accessToken) {
-      this.router.navigateByUrl('/');
-      this.authService.SOLogin(this.accessToken);
+      this.authService.InitSOLoginWithAccessToken(this.accessToken);
     }
   }
 
@@ -40,10 +40,18 @@ export class SocialAuthComponent implements OnInit {
     this.code = this.route.snapshot.queryParamMap.get('code')!;
     this.accessToken = this.route.snapshot.fragment?.split('=')[1]!;
 
-    if (this.code) {
-      this.getGHAccessToken();
-    } else {
-      this.getSOAccessToken();
+    const platform = isPlatformBrowser(this.platformId) ?
+      'in the browser' : 'on the server';
+    console.log(`Page currently : Running ${platform}`);
+
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.code) {
+        this.loginWithGithub();
+        console.log(`loginWithGithub : Running ${platform}`);
+      } else {
+        this.loginWithStackOverflow();
+        console.log(`loginWithStackOverflow : Running ${platform}`);
+      }
     }
   }
 

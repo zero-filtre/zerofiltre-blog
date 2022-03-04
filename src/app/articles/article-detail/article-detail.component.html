@@ -1,4 +1,13 @@
-<main class="article-container py-10 min-h-screen">
+<div class="flex justify-center items-center min-h-[90vh]" *appShellRender>
+    <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="10" r="35"
+            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+            style="animation-play-state:paused"></circle>
+    </svg>
+</div>
+
+<main class="article-container py-10 min-h-screen" *appShellNoRender>
 
     <article class="lg:grid grid-cols-10 gap-10 items-start">
 
@@ -227,7 +236,7 @@
                                     class="flex items-center space-x-2 space-y-2 flex-wrap">
                                     <span
                                         class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                        <svg class="mr-1 h-2 w-2 text-[{{tag.colorCode}}]" fill="currentColor"
+                                        <svg class="mr-1 h-2 w-2 text-[{{tag?.colorCode}}]" fill="currentColor"
                                             viewBox="0 0 8 8">
                                             <circle cx="4" cy="4" r="3"></circle>
                                         </svg>
@@ -238,19 +247,27 @@
 
                             <div
                                 class="flex flex-col space-y-1 sm:space-y-0 sm:flex-row text-xs font-semibold text-skin-base">
-                                <div *ngIf="article?.publishedAt === article?.lastPublishedAt" class="space-x-1">
-                                    <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
-                                        date}}
-                                    </time>
-                                    <span aria-hidden="true">·</span>
-                                    <span>{{article?.readingTime}} min de lecture</span>
-                                </div>
-                                <div *ngIf="article?.publishedAt !== article?.lastPublishedAt" class="space-x-1">
-                                    <span class="">Mis à jour le</span>
-                                    <time class="text-primary-500"
-                                        [dateTime]="article?.lastPublishedAt | date">{{article?.lastPublishedAt |
-                                        date}}
-                                    </time>
+                                <div class="space-x-1">
+                                    <ng-container *ngIf="article?.publishedAt === article?.lastPublishedAt">
+                                        <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
+                                            date}}
+                                        </time>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="article?.publishedAt !== article?.lastPublishedAt">
+                                        <span class="">Mis à jour le</span>
+                                        <time class="text-primary-500"
+                                            [dateTime]="article?.lastPublishedAt | date">{{article?.lastPublishedAt |
+                                            date}}
+                                        </time>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="!article?.publishedAt && !article?.lastPublishedAt">
+                                        <time [dateTime]="article?.createdAt | date">{{article?.createdAt |
+                                            date}}
+                                        </time>
+                                    </ng-container>
+
                                     <span aria-hidden="true">·</span>
                                     <span>{{article?.readingTime}} min de lecture</span>
                                 </div>
@@ -417,7 +434,7 @@
                     <p class="text-base text-skin-base font-light">Vous aimez cet article ? Faite le savoir en
                         partageant</p>
                     <div class="mt-4 space-y-4 flex items-end flex-wrap gap-2 sm:gap-0 sm:space-y-0 sm:space-x-4">
-                        <a href="https://twitter.com/intent/tweet?text={{article?.title}} par @{{article?.author?.pseudoName}}&url={{blogUrl}}/articles/{{article?.id}}"
+                        <a href="https://twitter.com/intent/tweet?text={{article?.title}} par @{{trimAuthorName(article?.author?.fullName)}}&url={{blogUrl}}/articles/{{article?.id}}"
                             target="_blank"
                             class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500">
                             <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

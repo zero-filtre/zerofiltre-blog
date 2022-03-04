@@ -31,7 +31,6 @@ const routes: Routes = [
     path: 'user',
     loadChildren: () => import('./user/user.module').then(m => m.UserModule),
   },
-  // { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   {
     path: 'articles',
     loadChildren: () => import('./articles/articles.module').then(m => m.ArticlesModule),

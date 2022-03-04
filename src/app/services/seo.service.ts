@@ -11,9 +11,10 @@ export class SeoService {
 
   constructor(private title: Title, private meta: Meta, private router: Router) { }
 
-  generateTags({ title = '', description = '', image = '', author = '', type = '' }) {
+  generateTags({ title = '', description = '', image = '', author = '', type = '', keywords = '' }) {
 
     this.title.setTitle(title);
+    this.meta.updateTag({ property: 'description', content: description });
     this.meta.addTags([
       // Open Graph
       { property: 'og:url', content: `${this.blogUrl}${this.router.url}` },
@@ -25,6 +26,7 @@ export class SeoService {
       { property: 'og:type', content: type },
       { property: 'og:locale', content: 'fr_FR' },
       { property: 'og:site_name', content: 'zerofiltre.tech' },
+      { property: 'keywords', content: keywords },
       // Twitter Card
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:site', content: '@zerofiltre.tech' },

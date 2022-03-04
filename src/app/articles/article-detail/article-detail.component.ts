@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap, filter } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
@@ -11,6 +11,7 @@ import { ArticleService } from '../article.service';
 import { MessageService } from 'src/app/services/message.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-article-detail',
@@ -35,24 +36,29 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private seo: SeoService,
     private router: Router,
     private messageService: MessageService,
-    public authService: AuthService
+    public authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
   public setDateFormat(date: any) {
     return formatDate(date)
   }
 
-  public getCurrentArticle(articleId: number): void {
+  public trimAuthorName(name: string | any) {
+    return name?.replace(/ /g, '');
+  }
+
+  public getCurrentArticle(articleId: string): void {
     this.loading = true;
-    this.articleService.getOneArticle(articleId)
+    this.articleService.findArticleById(articleId)
       .pipe(
         filter(objectExists),
         tap(art => {
           this.seo.generateTags({
             title: art.title,
-            description: art.title,
+            description: art.summary,
             image: art.thumbnail,
-            author: art.author?.pseudoName,
+            author: art.author?.fullName,
             type: 'article'
           })
           if (art.status === 'PUBLISHED') {
@@ -64,6 +70,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response: Article) => {
+          const platform = isPlatformBrowser(this.platformId) ?
+            'in the browser' : 'on the server';
+          console.log(`findArticleById : Running ${platform}`);
+
           this.article = response
           this.articleHasTags = response.tags.length > 0
           calcReadingTime(response);
@@ -72,13 +82,13 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         },
         error: (_error: HttpErrorResponse) => {
           this.loading = false;
-          this.router.navigate(['/'])
+          this.router.navigateByUrl('/');
         }
       })
   }
 
   public fetchArticleSiblings(prev: number, next: number): void {
-    this.articleSub = this.articleService.getOneArticle(next).pipe(
+    this.articleSub = this.articleService.findArticleById(next.toString()).pipe(
       filter(objectExists)
     ).subscribe({
       next: (response: Article) => {
@@ -92,7 +102,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     })
 
     if (prev !== 0) {
-      this.articleService.getOneArticle(prev).pipe(
+      this.articleService.findArticleById(prev.toString()).pipe(
         filter(objectExists)
       ).subscribe({
         next: (response: Article) => {
@@ -123,7 +133,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe(
       params => {
         this.articleId = params.get('id')!;
-        this.getCurrentArticle(+this.articleId);
+
+        if (isPlatformBrowser(this.platformId)) {
+          this.getCurrentArticle(this.articleId);
+        }
       }
     );
   }

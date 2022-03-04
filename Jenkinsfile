@@ -54,9 +54,9 @@ String getTag(String buildNumber, String branchName) {
 def buildAndTest() {
     container('node') {
         sh """
-            npm i -g @angular/cli@12.0.3
+            npm install -g @angular/cli
             npm install
-            ng build --configuration=${env_name}
+            ng build --configuration=${env_name} && ng run zerofiltre-blog:server --configuration=${env_name}
         """
     }
 }

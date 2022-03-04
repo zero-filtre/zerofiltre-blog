@@ -1,0 +1,24 @@
+.top-toolbar {
+  @apply shadow-sm bg-white py-2;
+}
+
+.top-toolbar-container {
+  max-width: 110rem;
+  @apply mx-auto px-5 xl:px-[5%] flex justify-between bg-white;
+}
+
+.top-toolbar .navLink {
+  @apply mx-4 last:mr-0 hover:text-primary-500 transition-all duration-200;
+}
+
+.top-toolbar .navLink div {
+  @apply text-sm font-montserat font-normal;
+}
+
+.sidenav {
+  @apply w-52 h-fit pt-24 pb-10;
+}
+
+.sidenav .sidenavLink div {
+  @apply text-sm font-montserat font-normal;
+}

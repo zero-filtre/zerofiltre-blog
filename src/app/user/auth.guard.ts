@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate {
       .pipe(
         tap((isLoggedIn) => {
           if (!isLoggedIn) {
-            this.messageService.authError();
+            this.messageService.authError(state);
           }
         })
       );

@@ -19,16 +19,14 @@
             </a>
         </div>
 
-        <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between">
+        <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between fixed top-24 right-16">
             <ng-container *ngIf="form.invalid; else validBtn">
                 <button [disabled]="form.invalid || loading"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
                     Publier
                 </button>
-                <button type="submit" disabled
-                    class="px-4 py-2 border w-full border-skin-border shadow-sm bg-skin-card opacity-[0.15] rounded-full text-sm text-skin-base leading-5 font-semibold">
-                    Sauvergarder
-                </button>
+
+                <button class="text-xs text-skin-muted min-w-max">{{savingMessage}}</button>
             </ng-container>
 
             <ng-template #validBtn>
@@ -45,17 +43,8 @@
                     </svg>
                 </button>
 
-                <button type="submit" (click)="saveArticle()" [disabled]="loading" [ngClass]="{'opacity-50': loading}"
-                    class="px-4 py-2 border border-skin-border w-full rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-200">
-                    <span *ngIf="!isSaving">Sauvegarder</span>
-                    <svg *ngIf="isSaving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
-                        preserveAspectRatio="xMidYMid">
-                        <circle cx="50" cy="50" fill="none" stroke="#00c2cb" stroke-width="10" r="35"
-                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                            style="animation-play-state:paused"></circle>
-                    </svg>
-                </button>
+
+                <button class="text-xs text-skin-muted min-w-max">{{savingMessage}}</button>
             </ng-template>
         </div>
     </nav>
@@ -112,6 +101,7 @@
                         Image de couverture
                     </label>
 
+                    <!-- START -->
                     <div class="article-image-preview-wrapper relative mt-5">
                         <div *ngIf="!thumbnail?.value"
                             class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden">
@@ -138,19 +128,6 @@
                                     <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
                                         accept="image/*">
                                 </div>
-
-                                <div class="preview-loader w-full h-full hidden items-center justify-center"
-                                    wire:loading.class.remove="hidden" wire:target="file">
-                                    <!-- Add the flex class to the div if loading is true -->
-                                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-primary-500"
-                                        wire:loading="wire:loading" wire:target="file" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                                            stroke-width="4"></circle>
-                                        <path class="opacity-75" fill="currentColor"
-                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                        </path>
-                                    </svg>
-                                </div>
                             </label>
                         </div>
 
@@ -163,6 +140,7 @@
                             (click)="removeFile()">x
                         </div>
                     </div>
+                    <!-- END -->
 
                     <div class="article-title mt-10">
                         <input id="title" required minlength="4" formControlName="title"
@@ -252,7 +230,8 @@
                             </div>
 
                             <div *ngIf="activeTab === 'editor'">
-                                <textarea formControlName="content" id="content" required
+                                <textarea (keyup)="typeInEditor(getValue($event))" formControlName="content"
+                                    id="content" required
                                     class="editor-textarea bg-white text-skin-base p-4 h-screen w-full"
                                     placeholder="Entrez votre texte ici...">
                                 </textarea>
@@ -388,30 +367,6 @@
                 </div>
             </aside>
         </div>
-
-        <!-- <div class="action-buttons lg:hidden flex space-x-1 sm:space-x-2 mt-5">
-            <div *ngIf="form.invalid; else validBtn" class="space-x-1 sm:space-x-2">
-                <button
-                    class="px-4 py-2 border border-primary-500 shadow-sm bg-primary-500 opacity-[0.15] rounded-full text-sm text-white leading-5 font-semibold"
-                    type="submit" disabled>
-                    Publier
-                </button>
-                <button type="submit" disabled
-                    class="px-4 py-2 border border-skin-border shadow-sm bg-skin-card opacity-[0.15] rounded-full text-sm text-skin-base leading-5 font-semibold">
-                    Sauvergarder
-                </button>
-            </div>
-            <ng-template #validBtn>
-                <button type="submit" (click)="publishArticle()"
-                    class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
-                    Publier
-                </button>
-                <button type="submit" (click)="saveArticle()"
-                    class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-200">
-                    Sauvergarder
-                </button>
-            </ng-template>
-        </div> -->
     </form>
 
 </div>

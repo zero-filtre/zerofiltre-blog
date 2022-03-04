@@ -1,8 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
@@ -14,7 +12,7 @@ import { User } from '../user.model';
   templateUrl: './sign-up-page.component.html',
   styleUrls: ['./sign-up-page.component.css']
 })
-export class SignUpPageComponent implements OnInit {
+export class SignUpPageComponent implements OnInit, OnDestroy {
   public form!: FormGroup;
   public loading: boolean = false;
   public readonly GITHUB_CLIENT_ID = environment.GITHUB_CLIENT_ID;
@@ -25,10 +23,8 @@ export class SignUpPageComponent implements OnInit {
 
   constructor(
     private formuilder: FormBuilder,
-    private router: Router,
     private authService: AuthService,
     private messageService: MessageService,
-    private state: ActivatedRoute,
     private seo: SeoService
   ) { }
 
@@ -55,10 +51,7 @@ export class SignUpPageComponent implements OnInit {
     this.loading = true;
 
     this.authService.signup(this.form.value).subscribe({
-      next: (_response: User) => {
-        this.router.navigate(['/']);
-        this.form.reset();
-        this.loading = false;
+      next: (_response: any) => {
         this.messageService.signUpSuccess();
       },
       error: (_error: HttpErrorResponse) => {
@@ -77,6 +70,11 @@ export class SignUpPageComponent implements OnInit {
       type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
+  }
+
+  ngOnDestroy(): void {
+    this.form.reset();
+    this.loading = false;
   }
 
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { Observable, pipe, tap } from 'rxjs';
 import { Article } from '../articles/article.model';
 import { ArticleService } from '../articles/article.service';
 import { MessageService } from '../services/message.service';
@@ -10,6 +10,9 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class AuthorGuard implements CanActivate {
+
+  currentUsrId!: string;
+  currentArticleAuthorId!: string;
 
   constructor(
     private authService: AuthService,
@@ -21,27 +24,17 @@ export class AuthorGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    return this.authService.isLoggedIn$
-      .pipe(
-        tap(_loggedIn => {
-          this.articleService.getOneArticle(route.params.id).subscribe({
-            next: (response: Article) => {
-              // this.authService.getUser().subscribe({
-              //   next: (currUsr: any) => {
-              //     if (currUsr?.id !== response?.author?.id) {
-              //       this.messageService.authorRoleError();
-              //     }
-              //   }
-              // })
-              if (this.authService.currentUsr.id !== response?.author?.id) {
-                this.messageService.authorRoleError();
-              }
-            }
-          })
-        }),
-      )
+    this.currentUsrId = this.authService?.currentUsr?.id
+    this.articleService.findArticleById(route.params.id).subscribe({
+      next: (article: Article) => this.currentArticleAuthorId = article?.author?.id!
+    })
 
-    // return this.permissions.canActivate(this.authService, route.params.id);
+    if (this.currentUsrId === this.currentArticleAuthorId) {
+      return true;
+    } else {
+      this.messageService.authorRoleError();
+      return false;
+    }
   }
 
 }

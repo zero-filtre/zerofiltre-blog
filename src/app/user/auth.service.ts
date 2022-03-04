@@ -1,9 +1,19 @@
-// import { isPlatformBrowser } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, catchError, map, Observable, of, retryWhen, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { MessageService } from '../services/message.service';
+import { genericRetryPolicy } from '../services/utilities.service';
 import { User } from './user.model';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: 'my-auth-token'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -11,24 +21,35 @@ import { User } from './user.model';
 export class AuthService {
   private readonly apiServerUrl = environment.apiBaseUrl;
 
-  private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  public isLoggedIn$ = this._isLoggedIn$.asObservable();
 
-  private _user$ = new BehaviorSubject<User>(null!);
-  public user$ = this._user$.asObservable();
+  private subject = new BehaviorSubject<User>(null!);
+  public user$ = this.subject.asObservable();
 
-  public TOKEN_NAME!: string;
+  public isLoggedIn$!: Observable<boolean>;
+  public isLoggedOut$!: Observable<boolean>;
+
+  public TOKEN_NAME: string = 'access_token';
   public REFRESH_TOKEN_NAME: string = 'refresh_token';
-  public isTokenExpired!: boolean;
+
+  private redirectURL: string;
 
   constructor(
-    // @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router,
+    private messageService: MessageService
   ) {
-    if (this.token && this.token !== undefined) {
-      this.TOKEN_NAME = this.getTokenName(this.token);
-      this.loadCurrentUser();
-    }
+    // this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
+    this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
+    this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
+
+    this.redirectURL = '';
+  }
+
+  // set the redirectUrl value outside of this service
+  public set _redirectURL(url: string) {
+    this.redirectURL = url;
   }
 
   private loadCurrentUser() {
@@ -38,55 +59,76 @@ export class AuthService {
           return throwError(() => error);
         }),
         tap(usr => {
-          console.log('ME');
-          this._user$.next(usr);
+          console.log('ME: ', usr);
+          this.subject.next(usr);
         })
       )
   }
 
   get token(): any {
-    return localStorage.getItem('jwt_access_token') || localStorage.getItem('gh_access_token') || localStorage.getItem('so_access_token');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem(this.TOKEN_NAME);;
+    }
   }
 
   get refreshToken(): any {
-    return localStorage.getItem(this.REFRESH_TOKEN_NAME);
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem(this.REFRESH_TOKEN_NAME);
+    }
   }
 
   get userData(): any {
-    return localStorage.getItem('user_data');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('user_data');
+    }
   }
 
   get currentUsr() {
-    return JSON.parse(this.userData);
-  }
-
-  private getTokenName(tokenValue: string): string {
-    let name = '';
-    for (var i = 0, len = localStorage.length; i < len; i++) {
-      const key = localStorage.key(i)!;
-      const value = localStorage[key];
-      if (value === tokenValue) name = key;
+    if (isPlatformBrowser(this.platformId)) {
+      return JSON.parse(this.userData);
     }
-    return name
   }
 
+
+  /**
+   * AUTH REFRESH TOKEN METHODS
+   */
   public sendRefreshToken(): Observable<any> {
-    throw new Error('Method not implemented.');
-  }
+    // send the refresh token to the api
+    // Get back the new access token and the new refresh token from the api
+    // If success ==> Store those new values in the LS by calling loadLoggedInUser()
+    console.log('REFRESHING TOKEN...');
 
-  public refreshSocialsToken(tokenName: string): Observable<any> {
-    if (tokenName === 'gh_access_token') {
-      return this.http.get<any>(`https://github.com/login/oauth/authorize?client_id=${environment.GITHUB_CLIENT_ID}&redirect_uri=${environment.gitHubRedirectURL}&scope=user:email`)
-    }
-    return this.http.get<any>(`https://stackoverflow.com/oauth/dialog?client_id=${environment.STACK_OVERFLOW_CLIENT_ID}&redirect_uri=${environment.stackOverflowRedirectURL}&scope=no_expiry`)
+    return this.http.get<any>(`${this.apiServerUrl}/user/jwt/refreshToken?refreshToken=${this.refreshToken}`)
+      .pipe(
+        tap(({ accessToken, refreshToken, tokenType }) => {
+          this.getUser(accessToken, tokenType)
+            .subscribe({
+              next: usr => {
+                this.subject.next(usr);
+                localStorage.setItem(this.TOKEN_NAME, accessToken);
+                localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
+                localStorage.setItem('user_data', JSON.stringify(usr));
+                console.log('REFRESHING TOKEN COMPLETED!');
+              },
+              error: (_err: HttpErrorResponse) => {
+                this.messageService.openSnackBarError('Impossible de recupérer vos données. Veuillez reessayer!', '');
+                localStorage.clear();
+                this.router.navigateByUrl('/login');
+              }
+            })
+        })
+      )
   }
+  /** */
 
-  public login(credentials: FormData): Observable<any> {
+
+  public login(credentials: FormData, redirectURL: any): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        this.handleJWTauth(response, 'jwt_access_token');
+        this.handleJWTauth(response, 'Bearer', redirectURL);
       }),
       shareReplay()
     );
@@ -97,44 +139,44 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        this.handleJWTauth(response, 'jwt_access_token');
+        this.handleJWTauth(response, 'Bearer');
       }),
       shareReplay()
     )
   }
 
   public logout() {
-    this._isLoggedIn$.next(false);
-    this._user$.next(null!);
+    this.subject.next(null!);
     localStorage.clear();
   }
 
   public requestPasswordReset(email: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/initPasswordReset?email=${email}`, {
       responseType: 'text' as 'json'
-    })
+    }).pipe(shareReplay())
   }
 
   public verifyTokenForPasswordReset(token: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/verifyTokenForPasswordReset?token=${token}`)
+      .pipe(shareReplay())
   }
 
   public savePasswordReset(values: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/user/savePasswordReset`, values, {
       responseType: 'text' as 'json'
-    })
+    }).pipe(shareReplay())
   }
 
   public registrationConfirm(token: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/registrationConfirm?token=${token}`, {
       responseType: 'text' as 'json'
-    })
+    }).pipe(shareReplay())
   }
 
   public resendUserConfirm(email: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/resendRegistrationConfirm?email=${email}`, {
       responseType: 'text' as 'json'
-    })
+    }).pipe(shareReplay())
   }
 
   public getGithubAccessTokenFromCode(code: string): Observable<any> {
@@ -142,38 +184,52 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
-        this.handleJWTauth(response, 'gh_access_token');
+        this.handleJWTauth(response, 'token');
       }),
       shareReplay()
     )
   }
 
-  public SOLogin(token: string) {
-    this.TOKEN_NAME = 'so_access_token';
-    this._isLoggedIn$.next(true);
-    localStorage.setItem(this.TOKEN_NAME, token);
-
-    this.getUser()
-      .subscribe({
-        next: usr => {
-          this._user$.next(usr);
-          localStorage.setItem('user_data', JSON.stringify(usr));
-        }
-      })
+  public InitSOLoginWithAccessToken(accessToken: string) {
+    this.loadLoggedInUser(accessToken, 'stack');
   }
 
-  private handleJWTauth(response: any, tokenName: string) {
+  private handleJWTauth(response: any, tokenType: string, redirectURL = '') {
     const { refreshToken, accessToken } = response.body
-    this.TOKEN_NAME = tokenName;
-    this._isLoggedIn$.next(true) // Emit the token received as the new value of the _isLoggedIn observale with the tap side effect function
-    localStorage.setItem(this.TOKEN_NAME, accessToken);
-    localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
+    this.redirectURL = redirectURL;
+    this.loadLoggedInUser(accessToken, tokenType, refreshToken);
+  }
 
-    this.getUser()
+  private getUser(accessToken: string, tokenType: string): Observable<User> {
+    httpOptions.headers = httpOptions.headers.set('Authorization', `${tokenType} ${accessToken}`);
+
+    return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions).pipe(
+      retryWhen(genericRetryPolicy({
+        scalingDuration: 1000,
+      })),
+      shareReplay()
+    )
+  }
+
+  private loadLoggedInUser(accessToken: string, tokenType: string, refreshToken = '') {
+    this.getUser(accessToken, tokenType)
       .subscribe({
         next: usr => {
-          this._user$.next(usr);
+          this.subject.next(usr);
+          localStorage.setItem(this.TOKEN_NAME, accessToken);
+          if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
           localStorage.setItem('user_data', JSON.stringify(usr));
+
+          if (this.redirectURL) {
+            this.router.navigateByUrl(this.redirectURL)
+              .catch(() => this.router.navigate(['/']))
+          } else {
+            this.router.navigate(['/'])
+          }
+        },
+        error: (_err: HttpErrorResponse) => {
+          this.messageService.openSnackBarError('Impossible de recupérer vos données. Veuillez reessayer!', '');
+          this.router.navigateByUrl('/login');
         }
       })
   }
@@ -182,8 +238,16 @@ export class AuthService {
     return response.headers.get('authorization').split(' ')[1]
   }
 
-  public getUser(): Observable<User> {
-    return this.http.get<User>(`${this.apiServerUrl}/user`)
+  private getTokenName(tokenValue: string): string {
+    let name = '';
+    if (isPlatformBrowser(this.platformId)) {
+      for (var i = 0, len = localStorage.length; i < len; i++) {
+        const key = localStorage.key(i)!;
+        const value = localStorage[key];
+        if (value === tokenValue) name = key;
+      }
+    }
+    return name
   }
 }
 

@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, map, of, tap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap, tap, throwError } from 'rxjs';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
@@ -29,16 +29,20 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   public activeTab: string = 'editor';
   public article!: Article
-  public articleId!: number
-  public articleTitle!: string
+  public articleId!: string;
+  public articleTitle!: string;
   public selectedTags: Tag[] = []
   public loading = false;
   public isSaving = false;
   public isPublishing = false;
 
+  private EditorText$ = new Subject<string>();
+  savedArticle$!: Observable<Article>;
+
   dropdownSettings = {};
 
   public tagList!: Tag[];
+  savingMessage!: string;
 
   constructor(
     private formuilder: FormBuilder,
@@ -68,7 +72,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public getArticle(): void {
-    this.articleService.getOneArticle(this.articleId).subscribe({
+    this.articleService.findArticleById(this.articleId).subscribe({
       next: (response: Article) => {
         this.article = response
         this.articleTitle = response.title!
@@ -89,7 +93,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       id: [null],
       title: ['', [Validators.required]],
       summary: ['', [Validators.required]],
-      thumbnail: [''],
+      thumbnail: ['', [Validators.required]],
       content: ['', [Validators.required]],
       tags: [[]]
     })
@@ -100,6 +104,14 @@ export class ArticleEntryCreateComponent implements OnInit {
   get content() { return this.form.get('content'); }
   get thumbnail() { return this.form.get('thumbnail'); }
   get tags() { return this.form.get('tags'); }
+
+  public getValue(event: Event): string {
+    return (event.target as HTMLInputElement).value;
+  }
+
+  public typeInEditor(content: string) {
+    this.EditorText$.next(content);
+  }
 
   public saveArticle() {
     this.loading = true;
@@ -252,7 +264,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.articleId = this.route.snapshot.params.id
+    this.articleId = this.route.snapshot.paramMap.get('id')!;
     this.getArticle()
     this.InitForm()
 
@@ -279,6 +291,22 @@ export class ArticleEntryCreateComponent implements OnInit {
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
 
+    this.EditorText$.pipe(
+      debounceTime(2000),
+      distinctUntilChanged(),
+      tap(() => this.savingMessage = 'Sauvegarde en cours...'),
+      switchMap(_content => this.articleService.updateToSave(this.form.value)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.savingMessage = 'Oops erreur!'
+            return throwError(() => error);
+          }),
+          tap(() => {
+            this.savingMessage = 'Sauvegardé!'
+            this.messageService.openSnackBarSuccess('Article sauvegardé!', '')
+          })
+        ))
+    ).subscribe()
   }
 
 }

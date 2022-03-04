@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
@@ -12,22 +12,22 @@ import { AuthService } from '../auth.service';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, OnDestroy {
   public form!: FormGroup;
   public loading: boolean = false;
   public readonly GITHUB_CLIENT_ID = environment.GITHUB_CLIENT_ID;
   public readonly STACK_OVERFLOW_CLIENT_ID = environment.STACK_OVERFLOW_CLIENT_ID;
   public readonly gitHubRedirectURL = environment.gitHubRedirectURL;
   public readonly stackOverflowRedirectURL = environment.stackOverflowRedirectURL;
-  public path: string = '/';
+  redirectURL: any;
 
   constructor(
     private formbuilder: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
     private authService: AuthService,
     private messageservice: MessageService,
-    private seo: SeoService
+    private seo: SeoService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   public InitForm(): void {
@@ -42,21 +42,25 @@ export class LoginPageComponent implements OnInit {
 
   public login(): void {
     this.loading = true;
-    this.authService.login(this.form.value).subscribe({
+    this.authService.login(this.form.value, this.redirectURL).subscribe({
       next: (_response: any) => {
-        this.router.navigateByUrl('/');
-        this.form.reset();
-        this.loading = false;
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
         this.messageservice.loginError();
-      }
+      },
     })
+  }
+
+  public setRedirectURL() {
+    this.authService._redirectURL = this.redirectURL;
+    console.log('NEW URL SERVICE: ', this.authService._redirectURL);
   }
 
   ngOnInit(): void {
     this.InitForm();
+
+    this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
 
     this.seo.generateTags({
       title: 'Se connecter | Zerofiltre.tech',
@@ -65,6 +69,11 @@ export class LoginPageComponent implements OnInit {
       type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
+  }
+
+  ngOnDestroy(): void {
+    this.form.reset();
+    this.loading = false;
   }
 
 }
