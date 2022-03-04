@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap, tap, throwError } from 'rxjs';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
@@ -297,6 +297,10 @@ export class ArticleEntryCreateComponent implements OnInit {
       tap(() => this.savingMessage = 'Sauvegarde en cours...'),
       switchMap(_content => this.articleService.updateToSave(this.form.value)
         .pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.savingMessage = 'Oops erreur!'
+            return throwError(() => error);
+          }),
           tap(() => {
             this.savingMessage = 'Sauvegardé!'
             this.messageService.openSnackBarSuccess('Article sauvegardé!', '')
