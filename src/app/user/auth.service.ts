@@ -31,7 +31,7 @@ export class AuthService {
   public TOKEN_NAME: string = 'access_token';
   public REFRESH_TOKEN_NAME: string = 'refresh_token';
 
-  public redirectURL: string;
+  private redirectURL: string;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -44,7 +44,12 @@ export class AuthService {
     this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
-    this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
+    this.redirectURL = '';
+  }
+
+  // set the redirectUrl value outside of this service
+  public set _redirectURL(url: string) {
+    this.redirectURL = url;
   }
 
   private loadCurrentUser() {
@@ -92,8 +97,28 @@ export class AuthService {
     // send the refresh token to the api
     // Get back the new access token and the new refresh token from the api
     // If success ==> Store those new values in the LS by calling loadLoggedInUser()
-    console.log('REFRESHING TOKEN');
-    throw new Error('Method not implemented.');
+    console.log('REFRESHING TOKEN...');
+
+    return this.http.get<any>(`${this.apiServerUrl}/user/jwt/refreshToken?refreshToken=${this.refreshToken}`)
+      .pipe(
+        tap(({ accessToken, refreshToken, tokenType }) => {
+          this.getUser(accessToken, tokenType)
+            .subscribe({
+              next: usr => {
+                this.subject.next(usr);
+                localStorage.setItem(this.TOKEN_NAME, accessToken);
+                localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
+                localStorage.setItem('user_data', JSON.stringify(usr));
+                console.log('REFRESHING TOKEN COMPLETED!');
+              },
+              error: (_err: HttpErrorResponse) => {
+                this.messageService.openSnackBarError('Impossible de recupérer vos données. Veuillez reessayer!', '');
+                localStorage.clear();
+                this.router.navigateByUrl('/login');
+              }
+            })
+        })
+      )
   }
   /** */
 
@@ -194,8 +219,6 @@ export class AuthService {
           localStorage.setItem(this.TOKEN_NAME, accessToken);
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
           localStorage.setItem('user_data', JSON.stringify(usr));
-
-          console.log('SERVICE URL: ', this.redirectURL);
 
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)

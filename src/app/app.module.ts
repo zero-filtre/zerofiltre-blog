@@ -15,7 +15,20 @@ import { LOCALE_ID } from '@angular/core';
 
 import { httpInterceptorProviders } from './services/http-interceptors';
 
+import { JWT_OPTIONS, JwtInterceptor, JwtModule } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
+import { AuthService } from './user/auth.service';
+
 registerLocaleData(localeFr, 'fr');
+
+function jwtOptionsFactory(authService: AuthService) {
+  return {
+    tokenGetter: () => {
+      return authService.token
+    },
+    blacklistedRoutes: [`${environment.apiBaseUrl}/auth`]
+  };
+}
 
 @NgModule({
   declarations: [
@@ -29,9 +42,18 @@ registerLocaleData(localeFr, 'fr');
     SharedModule,
     AppRoutingModule,
     // BrowserTransferStateModule,
+
+    JwtModule.forRoot({
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [AuthService]
+      }
+    })
   ],
   providers: [
     httpInterceptorProviders,
+    JwtInterceptor,
     { provide: LOCALE_ID, useValue: "fr-FR" },
   ],
   bootstrap: [AppComponent]

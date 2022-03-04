@@ -38,6 +38,7 @@
     "@angular-devkit/build-angular": "~13.2.4",
     "@angular/cli": "~13.2.4",
     "@angular/compiler-cli": "~13.2.0",
+    "@auth0/angular-jwt": "^5.0.2",
     "@nguniversal/builders": "^13.0.2",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.4.0",

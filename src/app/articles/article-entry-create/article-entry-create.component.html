@@ -25,10 +25,11 @@
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
                     Publier
                 </button>
-                <button type="submit" disabled
+                <!-- <button type="submit" disabled
                     class="px-4 py-2 border w-full border-skin-border shadow-sm bg-skin-card opacity-[0.15] rounded-full text-sm text-skin-base leading-5 font-semibold">
                     Sauvergarder
-                </button>
+                </button> -->
+                <button class="text-xs text-skin-muted min-w-max">{{savingMessage}}</button>
             </ng-container>
 
             <ng-template #validBtn>
@@ -45,7 +46,7 @@
                     </svg>
                 </button>
 
-                <button type="submit" (click)="saveArticle()" [disabled]="loading" [ngClass]="{'opacity-50': loading}"
+                <!-- <button type="submit" (click)="saveArticle()" [disabled]="loading" [ngClass]="{'opacity-50': loading}"
                     class="px-4 py-2 border border-skin-border w-full rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none transition-all duration-200">
                     <span *ngIf="!isSaving">Sauvegarder</span>
                     <svg *ngIf="isSaving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +56,8 @@
                             stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
                             style="animation-play-state:paused"></circle>
                     </svg>
-                </button>
+                </button> -->
+                <button class="text-xs text-skin-muted min-w-max">{{savingMessage}}</button>
             </ng-template>
         </div>
     </nav>
@@ -252,7 +254,8 @@
                             </div>
 
                             <div *ngIf="activeTab === 'editor'">
-                                <textarea formControlName="content" id="content" required
+                                <textarea (keyup)="typeInEditor(getValue($event))" formControlName="content"
+                                    id="content" required
                                     class="editor-textarea bg-white text-skin-base p-4 h-screen w-full"
                                     placeholder="Entrez votre texte ici...">
                                 </textarea>
