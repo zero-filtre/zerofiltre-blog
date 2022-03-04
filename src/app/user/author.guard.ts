@@ -11,6 +11,9 @@ import { AuthService } from './auth.service';
 })
 export class AuthorGuard implements CanActivate {
 
+  currentUsrId!: string;
+  currentArticleAuthorId!: string;
+
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
@@ -21,26 +24,17 @@ export class AuthorGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    return this.authService.isLoggedIn$
-      .pipe(
-        tap(_loggedIn => {
-          this.articleService.findArticleById(route.params.id).subscribe({
-            next: (article: Article) => {
-              // this.authService.user$
-              //   .subscribe(
-              //     usr => {
-              //       if (usr?.id !== article?.author?.id) {
-              //         this.messageService.authorRoleError();
-              //       }
-              //     }
-              //   )
-              if (this.authService.currentUsr.id !== article?.author?.id) {
-                this.messageService.authorRoleError();
-              }
-            }
-          })
-        }),
-      )
+    this.currentUsrId = this.authService?.currentUsr?.id
+    this.articleService.findArticleById(route.params.id).subscribe({
+      next: (article: Article) => this.currentArticleAuthorId = article?.author?.id!
+    })
+
+    if (this.currentUsrId === this.currentArticleAuthorId) {
+      return true;
+    } else {
+      this.messageService.authorRoleError();
+      return false;
+    }
   }
 
 }

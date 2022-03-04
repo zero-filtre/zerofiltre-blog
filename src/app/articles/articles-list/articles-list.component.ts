@@ -9,11 +9,7 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
-
-// const STATE_KEY_ARTICLES = makeStateKey('articles');
-// const STATE_KEY_TAGS = makeStateKey('tags');
 
 @Component({
   selector: 'app-articles-list',
@@ -43,7 +39,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private router: Router,
     private location: Location,
     public authService: AuthService,
-    // private state: TransferState,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -61,10 +56,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchListOfTags(): void {
     this.loading = true;
-    // this.tagList = this.state.get(STATE_KEY_TAGS, <any>[]);
-    // console.log('TAG LIST: ', this.tagList);
 
-    // if (this.tagList.length === 0) {
     this.subscription1$ = this.articleService.getListOfTags().subscribe({
       next: (response: Tag[]) => {
         const platform = isPlatformBrowser(this.platformId) ?
@@ -72,24 +64,17 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         console.log(`getListOfTags : Running ${platform}`);
 
         this.tagList = response
-        // this.state.set(STATE_KEY_TAGS, <any>response);
         this.loading = false;
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
       }
     })
-    // } else {
-    //   this.loading = false;
-    // }
   }
 
   public fetchArticles(): void {
     this.loading = true;
-    // this.articles = this.state.get(STATE_KEY_ARTICLES, <any>[]);
-    // console.log('ARTICLES LIST: ', this.articles);
 
-    // if (this.articles.length === 0) {
     this.subscription2$ = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
       next: (response: Article[]) => {
         const platform = isPlatformBrowser(this.platformId) ?
@@ -98,11 +83,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
         this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
         this.setArticlesReadingTime(response);
-        // this.state.set(STATE_KEY_ARTICLES, <any>response);
         this.loading = false;
 
         if (response.length === 0) {
-          this.errorMessage = "Pas d'articles trouvés pour le moment"
+          this.errorMessage = "Aucun article à lire pour le moment"
         }
       },
       error: (_error: HttpErrorResponse) => {
@@ -110,9 +94,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.errorMessage = 'Oops...!'
       }
     })
-    // } else {
-    //   this.loading = false;
-    // }
   }
 
   public setArticlesReadingTime(articles: Article[]): void {

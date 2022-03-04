@@ -93,7 +93,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       id: [null],
       title: ['', [Validators.required]],
       summary: ['', [Validators.required]],
-      thumbnail: [''],
+      thumbnail: ['', [Validators.required]],
       content: ['', [Validators.required]],
       tags: [[]]
     })
