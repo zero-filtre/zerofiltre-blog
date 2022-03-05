@@ -37,6 +37,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public isPublishing = false;
 
   private EditorText$ = new Subject<string>();
+  private TitleText$ = new Subject<string>();
   savedArticle$!: Observable<Article>;
 
   dropdownSettings = {};
@@ -93,7 +94,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       id: [null],
       title: ['', [Validators.required]],
       summary: ['', [Validators.required]],
-      thumbnail: ['', [Validators.required]],
+      thumbnail: ['', [Validators.required]], // required just for publish
       content: ['', [Validators.required]],
       tags: [[]]
     })
@@ -111,6 +112,10 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   public typeInEditor(content: string) {
     this.EditorText$.next(content);
+  }
+
+  public typeInTitle(content: string) {
+    this.TitleText$.next(content);
   }
 
   public saveArticle() {
@@ -307,6 +312,34 @@ export class ArticleEntryCreateComponent implements OnInit {
           })
         ))
     ).subscribe()
+
+    this.TitleText$.pipe(
+      debounceTime(2000),
+      distinctUntilChanged(),
+      tap(() => this.savingMessage = 'Sauvegarde en cours...'),
+      switchMap(_content => this.articleService.updateToSave(this.form.value)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.savingMessage = 'Oops erreur!'
+            return throwError(() => error);
+          }),
+          tap(() => {
+            this.savingMessage = 'Sauvegardé!'
+            this.messageService.openSnackBarSuccess('Article sauvegardé!', '')
+          })
+        ))
+    ).subscribe()
+
+    /**
+     * auto save listening all fields
+     * if title input is empty save with the fetched articleTitle value
+     * if summary is empty save with an empty value
+     * if tags are empty save with empty array value
+     * if thumnail is empty save empty value
+     * it content is empty save with an empty space added into
+     * 
+     * save the form values (especially the content and the title) in the LS to avoid data lost if disconnected
+     */
   }
 
 }

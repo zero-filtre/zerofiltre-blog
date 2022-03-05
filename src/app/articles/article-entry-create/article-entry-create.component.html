@@ -143,7 +143,8 @@
                     <!-- END -->
 
                     <div class="article-title mt-10">
-                        <input id="title" required minlength="4" formControlName="title"
+                        <input (keyup)="typeInTitle(getValue($event))" id="title" required minlength="4"
+                            formControlName="title"
                             class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
                             placeholder='Entrez le titre de votre article...' autocomplete="off" />
 
