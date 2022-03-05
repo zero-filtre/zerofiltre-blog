@@ -55,10 +55,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         filter(objectExists),
         tap(art => {
           this.seo.generateTags({
-            title: art.title,
-            description: art.summary,
-            image: art.thumbnail,
-            author: art.author?.fullName,
+            title: art?.title,
+            description: art?.summary,
+            image: art?.thumbnail,
+            author: art?.author?.fullName,
             type: 'article'
           })
           if (art.status === 'PUBLISHED') {
@@ -75,7 +75,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           console.log(`findArticleById : Running ${platform}`);
 
           this.article = response
-          this.articleHasTags = response.tags.length > 0
+          this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
           this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
           this.loading = false;
@@ -121,7 +121,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return user?.id === article?.author?.id
   }
 
-  isSocialLinkPresent(platform: string): boolean {
+  authorHasSocialLinkFor(platform: string): boolean {
     return this.article?.author?.socialLinks.some((link: any) => link.platform === platform)
   }
 
