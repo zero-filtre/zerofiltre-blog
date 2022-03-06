@@ -40,6 +40,7 @@ export class ArticleEntryPopupComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.loading = false;
+        this.dialogRef.close();
       }
     })
   }
