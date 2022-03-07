@@ -47,10 +47,6 @@ export class AuthService {
     this.redirectURL = '';
   }
 
-  // set the redirectUrl value outside of this service
-  public set _redirectURL(url: string) {
-    this.redirectURL = url;
-  }
 
   private loadCurrentUser() {
     this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
@@ -87,6 +83,10 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       return JSON.parse(this.userData);
     }
+  }
+
+  public setRedirectUrlValue(redirectURL: string) {
+    this.redirectURL = redirectURL;
   }
 
 

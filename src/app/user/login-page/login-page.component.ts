@@ -53,8 +53,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   }
 
   public setRedirectURL() {
-    this.authService._redirectURL = this.redirectURL;
-    console.log('NEW URL SERVICE: ', this.authService._redirectURL);
+    this.authService.setRedirectUrlValue(this.redirectURL);
   }
 
   ngOnInit(): void {
