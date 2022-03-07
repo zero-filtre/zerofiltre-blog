@@ -310,12 +310,17 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.EditorText$.pipe(
       debounceTime(2000),
       distinctUntilChanged(),
-      tap(() => this.isSaving = true),
+      tap(() => {
+        this.isSaving = true
+        localStorage.setItem('form', JSON.stringify(this.form.value));
+      }),
       switchMap(_content => this.articleService.updateToSave(this.form.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
+            const saved = localStorage.getItem('form')!;
+            const { content } = JSON.parse(saved);
             this.savingMessage = 'Oops erreur!'
-            location.reload();
+            this.form.patchValue({ content: content });
             return throwError(() => error);
           }),
           tap(() => {
@@ -333,7 +338,6 @@ export class ArticleEntryCreateComponent implements OnInit {
         .pipe(
           catchError((error: HttpErrorResponse) => {
             this.savingMessage = 'Oops erreur!'
-            location.reload();
             return throwError(() => error);
           }),
           tap(() => {
@@ -351,7 +355,6 @@ export class ArticleEntryCreateComponent implements OnInit {
         .pipe(
           catchError((error: HttpErrorResponse) => {
             this.savingMessage = 'Oops erreur!'
-            location.reload();
             return throwError(() => error);
           }),
           tap(() => {
@@ -369,7 +372,6 @@ export class ArticleEntryCreateComponent implements OnInit {
         .pipe(
           catchError((error: HttpErrorResponse) => {
             this.savingMessage = 'Oops erreur!'
-            location.reload();
             return throwError(() => error);
           }),
           tap(() => {
