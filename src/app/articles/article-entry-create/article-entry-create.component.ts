@@ -56,7 +56,8 @@ export class ArticleEntryCreateComponent implements OnInit {
     private route: ActivatedRoute,
     private fileUploadService: FileUploadService,
     private messageService: MessageService,
-    private seo: SeoService
+    private seo: SeoService,
+    private location: Location
   ) {
 
   }
@@ -315,6 +316,7 @@ export class ArticleEntryCreateComponent implements OnInit {
         .pipe(
           catchError((error: HttpErrorResponse) => {
             this.savingMessage = 'Oops erreur!'
+            this.location.reload();
             return throwError(() => error);
           }),
           tap(() => {
@@ -332,6 +334,7 @@ export class ArticleEntryCreateComponent implements OnInit {
         .pipe(
           catchError((error: HttpErrorResponse) => {
             this.savingMessage = 'Oops erreur!'
+            this.location.reload();
             return throwError(() => error);
           }),
           tap(() => {
@@ -349,6 +352,7 @@ export class ArticleEntryCreateComponent implements OnInit {
         .pipe(
           catchError((error: HttpErrorResponse) => {
             this.savingMessage = 'Oops erreur!'
+            this.location.reload();
             return throwError(() => error);
           }),
           tap(() => {
@@ -366,6 +370,7 @@ export class ArticleEntryCreateComponent implements OnInit {
         .pipe(
           catchError((error: HttpErrorResponse) => {
             this.savingMessage = 'Oops erreur!'
+            this.location.reload();
             return throwError(() => error);
           }),
           tap(() => {
