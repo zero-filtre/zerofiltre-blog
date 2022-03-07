@@ -41,6 +41,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   private TitleText$ = new Subject<string>();
   private SummaryText$ = new Subject<string>();
   private TagsText$ = new Subject<Tag[]>();
+  private ThumbnailText$ = new Subject<string>();
 
   savedArticle$!: Observable<Article>;
   dropdownSettings = {};
@@ -201,7 +202,10 @@ export class ArticleEntryCreateComponent implements OnInit {
     const content = (<HTMLInputElement>document.getElementById('content'));
     const imgSrcValue = '![alt](' + this.fileUploadService.FakeUploadImage(fakeImages) + ')'
 
-    if (host === 'coverImage') this.form.patchValue({ thumbnail: this.fileUploadService.FakeUploadImage(fakeImages) });
+    if (host === 'coverImage') {
+      this.form.patchValue({ thumbnail: this.fileUploadService.FakeUploadImage(fakeImages) });
+      this.ThumbnailText$.next(this.thumbnail?.value);
+    }
     if (host === 'editorImage') {
       this.insertAtCursor(content, imgSrcValue);
       this.form.patchValue({ content: content?.value });
@@ -259,7 +263,10 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public removeFile() {
-    if (this.form.controls['thumbnail'].value !== '') this.form.controls['thumbnail'].setValue('')
+    if (this.thumbnail?.value !== '') {
+      this.thumbnail?.setValue('');
+      this.ThumbnailText$.next('');
+    }
   }
 
   public onItemSelect(item: any) {
@@ -346,15 +353,15 @@ export class ArticleEntryCreateComponent implements OnInit {
       this.TitleText$,
       this.EditorText$,
       this.SummaryText$,
-      // this.thumbnail?.valueChanges!
+      this.ThumbnailText$
     ]
 
-    // fields.forEach((el: Observable<any>) => {
-    //   this.onChanges(el);
-    // })
+    fields.forEach((el: Observable<any>) => {
+      this.onChanges(el);
+    })
 
-    if (isPlatformBrowser(this.platformId)) {
-      this.onChanges(this.form.valueChanges);
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.onChanges(this.form.valueChanges);
+    // }
   }
 }
