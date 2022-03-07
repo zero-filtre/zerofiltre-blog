@@ -46,6 +46,7 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   public tagList!: Tag[];
   public savingMessage!: string;
+  public isSaved!: boolean;
 
 
   constructor(
@@ -309,7 +310,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.EditorText$.pipe(
       debounceTime(2000),
       distinctUntilChanged(),
-      tap(() => this.savingMessage = 'Sauvegarde en cours...'),
+      tap(() => this.isSaving = true),
       switchMap(_content => this.articleService.updateToSave(this.form.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
@@ -317,7 +318,8 @@ export class ArticleEntryCreateComponent implements OnInit {
             return throwError(() => error);
           }),
           tap(() => {
-            this.savingMessage = 'Sauvegardé!'
+            this.isSaving = false;
+            this.isSaved = true;
           })
         ))
     ).subscribe()
@@ -325,7 +327,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.TitleText$.pipe(
       debounceTime(2000),
       distinctUntilChanged(),
-      tap(() => this.savingMessage = 'Sauvegarde en cours...'),
+      tap(() => this.isSaving = true),
       switchMap(_content => this.articleService.updateToSave(this.form.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
@@ -333,7 +335,8 @@ export class ArticleEntryCreateComponent implements OnInit {
             return throwError(() => error);
           }),
           tap(() => {
-            this.savingMessage = 'Sauvegardé!'
+            this.isSaving = false;
+            this.isSaved = true;
           })
         ))
     ).subscribe()
@@ -341,7 +344,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.SummaryText$.pipe(
       debounceTime(2000),
       distinctUntilChanged(),
-      tap(() => this.savingMessage = 'Sauvegarde en cours...'),
+      tap(() => this.isSaving = true),
       switchMap(_content => this.articleService.updateToSave(this.form.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
@@ -349,7 +352,8 @@ export class ArticleEntryCreateComponent implements OnInit {
             return throwError(() => error);
           }),
           tap(() => {
-            this.savingMessage = 'Sauvegardé!'
+            this.isSaving = false;
+            this.isSaved = true;
           })
         ))
     ).subscribe()
@@ -357,7 +361,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.TagsText$.pipe(
       debounceTime(2000),
       distinctUntilChanged(),
-      tap(() => this.savingMessage = 'Sauvegarde en cours...'),
+      tap(() => this.isSaving = true),
       switchMap(_content => this.articleService.updateToSave(this.form.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
@@ -365,7 +369,8 @@ export class ArticleEntryCreateComponent implements OnInit {
             return throwError(() => error);
           }),
           tap(() => {
-            this.savingMessage = 'Sauvegardé!'
+            this.isSaving = false;
+            this.isSaved = true;
           })
         ))
     ).subscribe()
