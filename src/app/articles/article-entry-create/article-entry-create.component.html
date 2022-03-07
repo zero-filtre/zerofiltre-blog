@@ -2,17 +2,11 @@
     <nav class="top-nav sm:flex sm:items-center justify-between mt-6">
         <div class="nav-links inline-flex items-center space-x-3 font-semibold text-skin-base">
             <a routerLink="/" class="group flex align-baseline space-x-1">
-                <!-- <svg xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 group-hover:-translate-x-1 text-primary-500 transition-all duration-200" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                </svg> -->
-
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-5 text-primary-500" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M6.707 4.879A3 3 0 018.828 4H15a3 3 0 013 3v6a3 3 0 01-3 3H8.828a3 3 0 01-2.12-.879l-4.415-4.414a1 1 0 010-1.414l4.414-4.414zm4 2.414a1 1 0 00-1.414 1.414L10.586 10l-1.293 1.293a1 1 0 101.414 1.414L12 11.414l1.293 1.293a1 1 0 001.414-1.414L13.414 10l1.293-1.293a1 1 0 00-1.414-1.414L12 8.586l-1.293-1.293z"
+                        clip-rule="evenodd" />
                 </svg>
                 <span class="text-primary-500">
                     Tous les articles
@@ -25,14 +19,14 @@
             </a>
         </div>
 
-        <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between fixed top-24 right-16">
+        <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between top-24 fixed right-20 z-10">
             <ng-container *ngIf="form.invalid; else validBtn">
                 <button [disabled]="form.invalid || loading"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
                     Publier
                 </button>
 
-                <button *ngIf="isSaving" class="text-xs text-skin-muted min-w-max">
+                <button *ngIf="isSaving" class="relative group">
                     <svg class="w-6 h-6 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
                         preserveAspectRatio="xMidYMid">
@@ -40,14 +34,31 @@
                             stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
                             style="animation-play-state:paused"></circle>
                     </svg>
+                    <span class="save-tooltip group-hover:scale-100">
+                        Sauvegarde en cours...
+                    </span>
                 </button>
 
-                <button *ngIf="isSaved && !isSaving">
+                <button *ngIf="isSaved && !isSaving" class="relative group">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
+                    <span class="save-tooltip group-hover:scale-100">
+                        Sauvegardé !
+                    </span>
+                </button>
+
+                <button *ngIf="saveFailed && !isSaving" class="relative group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-error" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+                    <span class="save-tooltip group-hover:scale-100">
+                        Echec de la sauvegarde !
+                    </span>
                 </button>
             </ng-container>
 
@@ -66,7 +77,7 @@
                 </button>
 
 
-                <button *ngIf="isSaving" class="text-xs text-skin-muted min-w-max">
+                <button *ngIf="isSaving" class="relative group">
                     <svg class="w-6 h-6 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
                         preserveAspectRatio="xMidYMid">
@@ -74,14 +85,31 @@
                             stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
                             style="animation-play-state:paused"></circle>
                     </svg>
+                    <span class="save-tooltip group-hover:scale-100">
+                        Sauvegarde en cours...
+                    </span>
                 </button>
 
-                <button *ngIf="isSaved && !isSaving">
+                <button *ngIf="isSaved && !isSaving" class="relative group">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
+                    <span class="save-tooltip group-hover:scale-100">
+                        Sauvegardé !
+                    </span>
+                </button>
+
+                <button *ngIf="saveFailed && !isSaving" class="relative group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-error" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+                    <span class="save-tooltip group-hover:scale-100">
+                        Echec de la sauvegarde !
+                    </span>
                 </button>
             </ng-template>
         </div>

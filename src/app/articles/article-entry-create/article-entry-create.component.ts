@@ -39,7 +39,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   private EditorText$ = new Subject<string>();
   private TitleText$ = new Subject<string>();
   private SummaryText$ = new Subject<string>();
-  TagsText$ = new Subject<Tag[]>();
+  private TagsText$ = new Subject<Tag[]>();
 
   savedArticle$!: Observable<Article>;
   dropdownSettings = {};
@@ -47,6 +47,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public tagList!: Tag[];
   public savingMessage!: string;
   public isSaved!: boolean;
+  public saveFailed!: boolean;
 
 
   constructor(
@@ -317,10 +318,14 @@ export class ArticleEntryCreateComponent implements OnInit {
       switchMap(_content => this.articleService.updateToSave(this.form.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
-            const saved = localStorage.getItem('form')!;
-            const { content } = JSON.parse(saved);
+            // const saved = localStorage.getItem('form')!;
+            // const { content } = JSON.parse(saved);
+            // this.form.patchValue({ content: content });
+
+            this.isSaving = false;
+            this.isSaved = false;
             this.savingMessage = 'Oops erreur!'
-            this.form.patchValue({ content: content });
+            this.saveFailed = true;
             return throwError(() => error);
           }),
           tap(() => {
@@ -337,6 +342,9 @@ export class ArticleEntryCreateComponent implements OnInit {
       switchMap(_content => this.articleService.updateToSave(this.form.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
+            this.isSaving = false;
+            this.isSaved = false;
+            this.saveFailed = true;
             this.savingMessage = 'Oops erreur!'
             return throwError(() => error);
           }),
@@ -354,6 +362,9 @@ export class ArticleEntryCreateComponent implements OnInit {
       switchMap(_content => this.articleService.updateToSave(this.form.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
+            this.isSaving = false;
+            this.isSaved = false;
+            this.saveFailed = true;
             this.savingMessage = 'Oops erreur!'
             return throwError(() => error);
           }),
@@ -371,6 +382,9 @@ export class ArticleEntryCreateComponent implements OnInit {
       switchMap(_content => this.articleService.updateToSave(this.form.value)
         .pipe(
           catchError((error: HttpErrorResponse) => {
+            this.isSaving = false;
+            this.isSaved = false;
+            this.saveFailed = true;
             this.savingMessage = 'Oops erreur!'
             return throwError(() => error);
           }),
