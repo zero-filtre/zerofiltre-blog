@@ -58,7 +58,7 @@
                             Description
                         </label>
                         <div class="mt-5">
-                            <textarea
+                            <textarea (keyup)="typeInSummary(getValue($event))"
                                 class="editor-textarea shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
                                 rows="5" cols="33"
                                 placeholder="Decrivez votre article en quelques mots... (Entre 50 et 250 caractères)"

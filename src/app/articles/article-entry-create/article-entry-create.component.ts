@@ -38,12 +38,15 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   private EditorText$ = new Subject<string>();
   private TitleText$ = new Subject<string>();
-  savedArticle$!: Observable<Article>;
+  private SummaryText$ = new Subject<string>();
+  TagsText$ = new Subject<Tag[]>();
 
+  savedArticle$!: Observable<Article>;
   dropdownSettings = {};
 
   public tagList!: Tag[];
-  savingMessage!: string;
+  public savingMessage!: string;
+
 
   constructor(
     private formuilder: FormBuilder,
@@ -118,11 +121,17 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.TitleText$.next(content);
   }
 
+  public typeInTags(content: any) {
+    this.TagsText$.next(content);
+  }
+  public typeInSummary(content: string) {
+    this.SummaryText$.next(content);
+  }
+
   public saveArticle() {
     this.loading = true;
     this.isSaving = true;
     this.articleService.updateToSave(this.form.value).pipe(
-      tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', ''))
     ).subscribe({
       next: (_response: Article) => {
         this.loading = false;
@@ -248,8 +257,9 @@ export class ArticleEntryCreateComponent implements OnInit {
     if (this.form.controls['thumbnail'].value !== '') this.form.controls['thumbnail'].setValue('')
   }
 
-  public onItemSelect(_item: any) {
-    this.setFormTagsValue()
+  public onItemSelect(item: any) {
+    this.setFormTagsValue();
+    this.typeInTags(item);
   }
 
   private setFormTagsValue(): void {
@@ -308,7 +318,6 @@ export class ArticleEntryCreateComponent implements OnInit {
           }),
           tap(() => {
             this.savingMessage = 'Sauvegardé!'
-            this.messageService.openSnackBarSuccess('Article sauvegardé!', '')
           })
         ))
     ).subscribe()
@@ -325,7 +334,38 @@ export class ArticleEntryCreateComponent implements OnInit {
           }),
           tap(() => {
             this.savingMessage = 'Sauvegardé!'
-            this.messageService.openSnackBarSuccess('Article sauvegardé!', '')
+          })
+        ))
+    ).subscribe()
+
+    this.SummaryText$.pipe(
+      debounceTime(2000),
+      distinctUntilChanged(),
+      tap(() => this.savingMessage = 'Sauvegarde en cours...'),
+      switchMap(_content => this.articleService.updateToSave(this.form.value)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.savingMessage = 'Oops erreur!'
+            return throwError(() => error);
+          }),
+          tap(() => {
+            this.savingMessage = 'Sauvegardé!'
+          })
+        ))
+    ).subscribe()
+
+    this.TagsText$.pipe(
+      debounceTime(2000),
+      distinctUntilChanged(),
+      tap(() => this.savingMessage = 'Sauvegarde en cours...'),
+      switchMap(_content => this.articleService.updateToSave(this.form.value)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.savingMessage = 'Oops erreur!'
+            return throwError(() => error);
+          }),
+          tap(() => {
+            this.savingMessage = 'Sauvegardé!'
           })
         ))
     ).subscribe()
