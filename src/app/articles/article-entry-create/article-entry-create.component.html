@@ -127,8 +127,8 @@
                             <textarea (keyup)="typeInSummary(getValue($event))"
                                 class="editor-textarea shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
                                 rows="5" cols="33"
-                                placeholder="Decrivez votre article en quelques mots... (Entre 50 et 250 caractères)"
-                                id="summary" formControlName="summary" required minlength="50" maxlength="250">
+                                placeholder="Decrivez votre article en quelques mots... (Entre 20 et 250 caractères)"
+                                id="summary" formControlName="summary" required minlength="20" maxlength="250">
                             </textarea>
                             <div *ngIf="summary?.invalid && summary?.dirty" class="">
                                 <div *ngIf="summary?.errors?.['required']"
@@ -137,11 +137,7 @@
                                 </div>
                                 <div *ngIf="summary?.errors?.['minlength']"
                                     class="mt-2 text-xs sm:text-sm text-error italic">
-                                    La description doit comporter au moins 50 caractères.
-                                </div>
-                                <div *ngIf="summary?.errors?.['maxlength']"
-                                    class="mt-2 text-xs sm:text-sm text-error italic">
-                                    La description doit comporter au plus 250 caractères.
+                                    La description doit comporter au moins 20 caractères.
                                 </div>
                             </div>
                         </div>

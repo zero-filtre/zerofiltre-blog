@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap, tap, throwError } from 'rxjs';
@@ -48,6 +49,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public savingMessage!: string;
   public isSaved!: boolean;
   public saveFailed!: boolean;
+  public alertMessage: string = 'Hello Bao, surtout veille à renseigner tous les champs obligatoires pour assurer la sauvegarde automatique de ton article';
 
 
   constructor(
@@ -58,6 +60,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private messageService: MessageService,
     private seo: SeoService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {
 
   }
@@ -99,7 +102,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       id: [null],
       title: ['', [Validators.required]],
       summary: ['', [Validators.required]],
-      thumbnail: ['', [Validators.required]], // required just for publish
+      thumbnail: [''],
       content: ['', [Validators.required]],
       tags: [[]]
     })
@@ -280,6 +283,36 @@ export class ArticleEntryCreateComponent implements OnInit {
     return this.tagList.filter(item => ids.includes(item.id))
   }
 
+  public onChanges(element: Observable<any>): void {
+    element.pipe(
+      debounceTime(2000),
+      distinctUntilChanged(),
+      tap(() => {
+        if (this.form.valid) {
+          this.messageService.cancel();
+          this.isSaving = true;
+
+          this.articleService.updateToSave(this.form.value)
+            .pipe(
+              catchError((error: HttpErrorResponse) => {
+                this.isSaving = false;
+                this.isSaved = false;
+                this.savingMessage = 'Oops erreur!'
+                this.saveFailed = true;
+                return throwError(() => error);
+              }),
+              tap(() => {
+                this.isSaving = false;
+                this.isSaved = true;
+              })
+            ).subscribe();
+        } else {
+          this.messageService.openSnackBarWarning(this.alertMessage, "C'est noté !", 0);
+        }
+      }),
+    ).subscribe()
+  }
+
   ngOnInit(): void {
     this.articleId = this.route.snapshot.paramMap.get('id')!;
     this.getArticle()
@@ -308,103 +341,20 @@ export class ArticleEntryCreateComponent implements OnInit {
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
 
-    this.EditorText$.pipe(
-      debounceTime(2000),
-      distinctUntilChanged(),
-      tap(() => {
-        this.isSaving = true
-        localStorage.setItem('form', JSON.stringify(this.form.value));
-      }),
-      switchMap(_content => this.articleService.updateToSave(this.form.value)
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            // const saved = localStorage.getItem('form')!;
-            // const { content } = JSON.parse(saved);
-            // this.form.patchValue({ content: content });
+    const fields = [
+      this.TagsText$,
+      this.TitleText$,
+      this.EditorText$,
+      this.SummaryText$,
+      // this.thumbnail?.valueChanges!
+    ]
 
-            this.isSaving = false;
-            this.isSaved = false;
-            this.savingMessage = 'Oops erreur!'
-            this.saveFailed = true;
-            return throwError(() => error);
-          }),
-          tap(() => {
-            this.isSaving = false;
-            this.isSaved = true;
-          })
-        ))
-    ).subscribe()
+    // fields.forEach((el: Observable<any>) => {
+    //   this.onChanges(el);
+    // })
 
-    this.TitleText$.pipe(
-      debounceTime(2000),
-      distinctUntilChanged(),
-      tap(() => this.isSaving = true),
-      switchMap(_content => this.articleService.updateToSave(this.form.value)
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            this.isSaving = false;
-            this.isSaved = false;
-            this.saveFailed = true;
-            this.savingMessage = 'Oops erreur!'
-            return throwError(() => error);
-          }),
-          tap(() => {
-            this.isSaving = false;
-            this.isSaved = true;
-          })
-        ))
-    ).subscribe()
-
-    this.SummaryText$.pipe(
-      debounceTime(2000),
-      distinctUntilChanged(),
-      tap(() => this.isSaving = true),
-      switchMap(_content => this.articleService.updateToSave(this.form.value)
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            this.isSaving = false;
-            this.isSaved = false;
-            this.saveFailed = true;
-            this.savingMessage = 'Oops erreur!'
-            return throwError(() => error);
-          }),
-          tap(() => {
-            this.isSaving = false;
-            this.isSaved = true;
-          })
-        ))
-    ).subscribe()
-
-    this.TagsText$.pipe(
-      debounceTime(2000),
-      distinctUntilChanged(),
-      tap(() => this.isSaving = true),
-      switchMap(_content => this.articleService.updateToSave(this.form.value)
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            this.isSaving = false;
-            this.isSaved = false;
-            this.saveFailed = true;
-            this.savingMessage = 'Oops erreur!'
-            return throwError(() => error);
-          }),
-          tap(() => {
-            this.isSaving = false;
-            this.isSaved = true;
-          })
-        ))
-    ).subscribe()
-
-    /**
-     * auto save listening all fields
-     * if title input is empty save with the fetched articleTitle value
-     * if summary is empty save with an empty value
-     * if tags are empty save with empty array value
-     * if thumnail is empty save empty value
-     * it content is empty save with an empty space added into
-     * 
-     * save the form values (especially the content and the title) in the LS to avoid data lost if disconnected
-     */
+    if (isPlatformBrowser(this.platformId)) {
+      this.onChanges(this.form.valueChanges);
+    }
   }
-
 }
