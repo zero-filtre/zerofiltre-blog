@@ -63,9 +63,15 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }
 
         if (error.status === 401) {
-          this.authService.sendRefreshToken();
-          // localStorage.clear();
-          // this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
+          // this.authService.sendRefreshToken().subscribe({
+          //   next: () => console.log('SUCCESS'),
+          //   error: () => {
+          //     localStorage.clear();
+          //     this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
+          //   }
+          // })
+          localStorage.clear();
+          this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
         }
       }
     }
