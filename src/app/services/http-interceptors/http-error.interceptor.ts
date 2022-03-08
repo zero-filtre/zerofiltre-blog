@@ -6,11 +6,13 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { catchError, Observable, retryWhen, throwError } from 'rxjs';
+import { catchError, Observable, retryWhen, switchMap, throwError } from 'rxjs';
 import { MessageService } from '../message.service';
 import { genericRetryPolicy } from '../utilities.service';
-import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/user/auth.service';
+import { AuthInterceptor } from './auth.interceptor';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,23 +22,46 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(
     private messageService: MessageService,
     private router: Router,
-    private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private authInterceptor: AuthInterceptor
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    const authToken = this.authService.token;
+    const userOrigin = this.authService.currentUsr?.loginFrom;
+
     return next.handle(request)
       .pipe(
         retryWhen(genericRetryPolicy({
           excludedStatusCodes: [400, 401, 403, 404, 500]
         })),
         catchError((error: HttpErrorResponse) => {
+          if (error.status === 401 && authToken && userOrigin === null) {
+            return this.handleRefrehToken(request, next);
+          }
+
           const errorMessage = this.setError(error)
           this.messageService.openSnackBarError(errorMessage, '');
           return throwError(() => errorMessage);
         })
       );
   }
+
+
+  handleRefrehToken(request: HttpRequest<unknown>, next: HttpHandler) {
+    return this.authService.sendRefreshToken()
+      .pipe(
+        switchMap((_data: any) => {
+          return this.authInterceptor.intercept(request, next);
+        }),
+        catchError(errodata => {
+          localStorage.clear();
+          this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
+          return throwError(() => errodata)
+        })
+      );
+  }
+
 
   /***
    * Set error and check if Client side or Server side Error
@@ -63,13 +88,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }
 
         if (error.status === 401) {
-          // this.authService.sendRefreshToken().subscribe({
-          //   next: () => console.log('SUCCESS'),
-          //   error: () => {
-          //     localStorage.clear();
-          //     this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
-          //   }
-          // })
           localStorage.clear();
           this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
         }

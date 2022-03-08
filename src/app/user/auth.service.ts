@@ -94,29 +94,11 @@ export class AuthService {
    * AUTH REFRESH TOKEN METHODS
    */
   public sendRefreshToken(): Observable<any> {
-    // send the refresh token to the api
-    // Get back the new access token and the new refresh token from the api
-    // If success ==> Store those new values in the LS by calling loadLoggedInUser()
-    console.log('REFRESHING TOKEN...');
-
     return this.http.get<any>(`${this.apiServerUrl}/user/jwt/refreshToken?refreshToken=${this.refreshToken}`)
       .pipe(
-        tap(({ accessToken, refreshToken, tokenType }) => {
-          this.getUser(accessToken, tokenType)
-            .subscribe({
-              next: usr => {
-                this.subject.next(usr);
-                localStorage.setItem(this.TOKEN_NAME, accessToken);
-                localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
-                localStorage.setItem('user_data', JSON.stringify(usr));
-                console.log('REFRESHING TOKEN COMPLETED!');
-              },
-              error: (_err: HttpErrorResponse) => {
-                this.messageService.openSnackBarError('Impossible de recupérer vos données. Veuillez reessayer!', '');
-                localStorage.clear();
-                this.router.navigateByUrl('/login');
-              }
-            })
+        tap(({ accessToken, refreshToken }) => {
+          localStorage.setItem(this.TOKEN_NAME, accessToken);
+          localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
         })
       )
   }
