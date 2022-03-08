@@ -133,7 +133,15 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return this.article?.author?.socialLinks.find((link: any) => link.platform === platform)?.link
   }
 
-  addReaction() {
+  userHasAlreadyLikedArticle(): boolean {
+    const artileReactions = this.article?.reactions;
+    const currentUsr = this.authService.currentUsr;
+    return artileReactions.some((reaction: any) => reaction.authorId === currentUsr.id)
+  }
+
+  addReaction(): void {
+    if (this.userHasAlreadyLikedArticle()) return;
+
     this.articleService.addReactionToAnArticle(this.articleId).subscribe({
       next: (response) => this.nberOfReactions.next(response.length)
     });
