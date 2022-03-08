@@ -9,7 +9,7 @@ import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
 import { MessageService } from 'src/app/services/message.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -27,6 +27,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public isPublished!: boolean;
   readonly blogUrl = environment.blogUrl;
+
+  private nberOfReactions = new BehaviorSubject<number>(0);
+  public nberOfReactions$ = this.nberOfReactions.asObservable();
 
   public articleSub!: Subscription;
 
@@ -75,6 +78,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           console.log(`findArticleById : Running ${platform}`);
 
           this.article = response
+          this.nberOfReactions.next(response.reactions?.length);
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
           this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
@@ -127,6 +131,12 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   authorPlatformLink(platform: string): string {
     return this.article?.author?.socialLinks.find((link: any) => link.platform === platform)?.link
+  }
+
+  addReaction() {
+    this.articleService.addReactionToAnArticle(this.articleId).subscribe({
+      next: (response) => this.nberOfReactions.next(response.length)
+    });
   }
 
   ngOnInit(): void {

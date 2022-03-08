@@ -125,6 +125,7 @@
                 <div class="pt-6 mt-6 border-t border-skin-border">
                     <div class="relative">
                         <button *ngIf="article; else articleReactionButtonLeftSideSkeletonLoader"
+                            (click)="addReaction()"
                             class="flex relative justify-between items-center cursor-pointer h-8 py-2 px-3 rounded-md bg-skin-card hover:bg-skin-cardMuted shadow transition-all duration-200">
                             <div class="flex items-center justify-center space-x-2">
                                 <!-- Clap icon -->
@@ -173,7 +174,8 @@
                                     </g>
                                 </svg>
 
-                                <span class="ml-3 text-sm font-semibold text-primary-500">2</span>
+                                <span class="ml-3 text-sm font-semibold text-primary-500">{{nberOfReactions$ |
+                                    async}}</span>
                                 </ div>
                         </button>
                     </div>
