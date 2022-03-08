@@ -17,10 +17,7 @@ import { ArticleService } from '../article.service';
 })
 export class ArticleEntryCreateComponent implements OnInit {
 
-  @ViewChild('fileUpload', { static: false })
-  fileUpload!: ElementRef;
-
-  file: File = {
+  public file: File = {
     data: null,
     inProgress: false,
     progress: 0
@@ -169,67 +166,57 @@ export class ArticleEntryCreateComponent implements OnInit {
     });
   }
 
-  public onClickFileUpload(host: string) {
-    const fileInput = this.fileUpload.nativeElement;
-    fileInput.click();
 
-    fileInput.onchange = () => {
-      this.file = {
-        data: fileInput.files[0],
-        inProgress: false,
-        progress: 0
-      };
-      this.fileUpload.nativeElement.value = '';
-
-      this.uploadFile(host);
+  public onFileSelected(event: any, host: string) {
+    this.file = {
+      data: <File>event.target.files[0],
+      inProgress: false,
+      progress: 0
     };
+
+    this.uploadFile(host);
   }
 
 
   public uploadFile(host: string) {
-    const fakeImages: any = [
-      'https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY',
-      'https://i.picsum.photos/id/0/5616/3744.jpg?hmac=3GAAioiQziMGEtLbfrdbcoenXoWAW-zlyEAMkfEdBzQ',
-      'https://i.picsum.photos/id/1023/3955/2094.jpg?hmac=AW_7mARdoPWuI7sr6SG8t-2fScyyewuNscwMWtQRawU',
-      'https://i.picsum.photos/id/1019/5472/3648.jpg?hmac=2mFzeV1mPbDvR0WmuOWSiW61mf9DDEVPDL0RVvg1HPs',
-      'https://i.picsum.photos/id/1029/4887/2759.jpg?hmac=uMSExsgG8_PWwP9he9Y0LQ4bFDLlij7voa9lU9KMXDE',
-      'https://i.picsum.photos/id/1047/3264/2448.jpg?hmac=ksy0K4uGgm79hAV7-KvsfHY2ZuPA0Oq1Kii9hqkOCfU'
-    ]
+
     const formData = new FormData();
-    formData.append('file', this.file.data);
+    const fileName = this.file.data.name
+
+    formData.append('image', this.file.data, fileName);
     this.file.inProgress = true;
 
-    const content = (<HTMLInputElement>document.getElementById('content'));
-    const imgSrcValue = '![alt](' + this.fileUploadService.FakeUploadImage(fakeImages) + ')'
+    this.fileUploadService.uploadImage(formData, fileName, this.file.data).pipe(
+      map((event) => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            this.file.progress = Math.round(event.loaded * 100 / event.total);
+            break;
+          case HttpEventType.Response:
+            return event;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.log('IMAGE OBJECT ERROR: ', error);
+        this.file.inProgress = false;
+        return of('Upload failed');
+      })).subscribe((event: any) => {
+        if (typeof (event) === 'object') {
+          console.log('IMAGE OBJECT: ', event);
 
-    if (host === 'coverImage') {
-      this.form.patchValue({ thumbnail: this.fileUploadService.FakeUploadImage(fakeImages) });
-      this.ThumbnailText$.next(this.thumbnail?.value);
-    }
-    if (host === 'editorImage') {
-      this.insertAtCursor(content, imgSrcValue);
-      this.form.patchValue({ content: content?.value });
-      this.EditorText$.next(content?.value);
-    }
+          if (host === 'coverImage') {
+            this.form.patchValue({ thumbnail: event.body.filename });
+            this.ThumbnailText$.next(this.thumbnail?.value);
+          } else {
+            const editorContent = (<HTMLInputElement>document.getElementById('content'));
+            const editorContentImgSrcValue = '![alt](' + event.body.filename + ')'
 
-    // this.fileUploadService.uploadImage(formData).pipe(
-    //   map((event) => {
-    //     switch (event.type) {
-    //       case HttpEventType.UploadProgress:
-    //         this.file.progress = Math.round(event.loaded * 100 / event.total);
-    //         break;
-    //       case HttpEventType.Response:
-    //         return event;
-    //     }
-    //   }),
-    //   catchError((error: HttpErrorResponse) => {
-    //     this.file.inProgress = false;
-    //     return of('Upload failed');
-    //   })).subscribe((event: any) => {
-    //     if (typeof (event) === 'object') {
-    //       this.form.patchValue({ headerImage: event.body.filename });
-    //     }
-    //   })
+            this.insertAtCursor(editorContent, editorContentImgSrcValue);
+            this.form.patchValue({ content: editorContent?.value });
+            this.EditorText$.next(editorContent?.value);
+          }
+        }
+      })
   }
 
   private insertAtCursor(myField: any, myValue: string) {

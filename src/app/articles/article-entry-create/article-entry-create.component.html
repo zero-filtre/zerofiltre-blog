@@ -165,7 +165,7 @@
                     <div class="article-image-preview-wrapper relative mt-5">
                         <div *ngIf="!thumbnail?.value"
                             class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden">
-                            <label for="file" (click)="onClickFileUpload('coverImage')"
+                            <label for="file" (click)="fileUpload.click()"
                                 class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
                                 <div class="text-center">
                                     <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
@@ -186,7 +186,7 @@
                                     </p>
 
                                     <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
-                                        accept="image/*">
+                                        (change)="onFileSelected($event, 'coverImage')" accept="image/*">
                                 </div>
                             </label>
                         </div>
@@ -270,9 +270,9 @@
                             </div>
 
                             <div class="relative px-4 text-sm font-semibold text-skin-base sm:text-base cursor-pointer">
-                                <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
-                                    accept="image/*">
-                                <svg (click)="onClickFileUpload('editorImage')" fill="none" stroke="currentColor"
+                                <input class="sr-only" (change)="onFileSelected($event, 'editorImage')" type="file"
+                                    id="editorFileUpload" name="editorFileUpload" #editorFileUpload accept="image/*">
+                                <svg (click)="editorFileUpload.click()" fill="none" stroke="currentColor"
                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
                                     class="w-6 h-6 ">
                                     <path
