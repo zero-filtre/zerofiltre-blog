@@ -360,9 +360,5 @@ export class ArticleEntryCreateComponent implements OnInit {
     fields.forEach((el: Observable<any>) => {
       this.onChanges(el);
     })
-
-    // if (isPlatformBrowser(this.platformId)) {
-    //   this.onChanges(this.form.valueChanges);
-    // }
   }
 }
