@@ -209,7 +209,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     if (host === 'editorImage') {
       this.insertAtCursor(content, imgSrcValue);
       this.form.patchValue({ content: content?.value });
-      this.EditorText$.next(this.content?.value);
+      this.EditorText$.next(content?.value);
     }
 
     // this.fileUploadService.uploadImage(formData).pipe(
