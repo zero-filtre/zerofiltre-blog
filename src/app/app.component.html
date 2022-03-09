@@ -68,7 +68,7 @@
       <div *ngIf="authService.currentUsr as currentUsr" class="border border-primary-500 rounded-lg p-4 mt-5">
         <!-- *ngIf="authService.user$ | async as currentUsr" -->
 
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center">
           <div>
             <img *ngIf="currentUsr?.profilePicture" class="h-10 w-10 rounded-full" [src]="currentUsr?.profilePicture">
             <ng-container *ngIf="!currentUsr?.profilePicture">
@@ -80,22 +80,22 @@
               </svg>
             </ng-container>
           </div>
-          <div class="flex flex-wrap text-sm space-y-1">
+          <div class="flex flex-wrap text-sm ml-2 text-primary-500 font-semibold">
             <span>{{currentUsr.fullName}}</span>
           </div>
         </div>
 
         <div class="mt-2">
           <a routerLink="#"
-            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="block py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Mon profil</span>
           </a>
           <a routerLink="#"
-            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="block py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Dashboard</span>
           </a>
           <button (click)="logout()"
-            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="block w-full text-left py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Se déconnecter</span>
           </button>
         </div>

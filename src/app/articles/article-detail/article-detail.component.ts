@@ -148,7 +148,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     if (!currentUsr) {
       if (!this.loginToAddReactionMessage) return this.loginToAddReactionMessage = 'Vous devez vous connectez pour réagir sur cet article'
       return this.loginToAddReactionMessage = '';
-      // return this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } })
     }
 
     this.articleService.addReactionToAnArticle(this.articleId).subscribe({
