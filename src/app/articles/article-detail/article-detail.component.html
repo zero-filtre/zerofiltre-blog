@@ -124,7 +124,6 @@
 
                 <div class="pt-6 mt-6 border-t border-skin-border">
                     <div class="relative">
-                        <!-- (click)="addReaction()" -->
                         <button *ngIf="article; else articleReactionButtonLeftSideSkeletonLoader"
                             class="flex relative justify-between items-center cursor-pointer h-8 py-2 px-3 rounded-md bg-skin-card hover:bg-skin-cardMuted shadow transition-all duration-200">
                             <div class="flex items-end justify-center space-x-2">
@@ -136,9 +135,9 @@
                         </button>
 
                         <div
-                            class="mt-4 flex flex-wrap justify-center space-x-4 space-y-1 bg-skin-link rounded-lg px-4 py-2 shadow-xl">
+                            class="mt-4 flex flex-wrap w-fit space-x-4 space-y-1 bg-skin-link rounded-lg px-4 py-2 shadow-xl">
                             <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction)">
-                                <div class="flex items-end justify-center space-x-2">
+                                <div class="flex items-center space-x-2">
                                     <ng-container *ngIf="reaction === 'clap'">
                                         <span>👏</span>
                                         <span class="text-sm font-semibold text-primary-500">{{clapReactions$ |
