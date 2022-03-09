@@ -32,6 +32,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public nberOfReactions$ = this.nberOfReactions.asObservable();
 
   public articleSub!: Subscription;
+  public loginToAddReactionMessage!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -91,6 +92,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       })
   }
 
+  // TODO: implementer une liste d'articles similaires(limit: 5) (collectés par tags) a la place des siblings
   public fetchArticleSiblings(prev: number, next: number): void {
     this.articleSub = this.articleService.findArticleById(next.toString()).pipe(
       filter(objectExists)
@@ -135,12 +137,19 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   userHasAlreadyLikedArticle(): boolean {
     const artileReactions = this.article?.reactions;
-    const currentUsr = this.authService.currentUsr;
-    return artileReactions.some((reaction: any) => reaction.authorId === currentUsr.id)
+    const currentUsr = this.authService?.currentUsr;
+    return artileReactions.some((reaction: any) => reaction?.authorId === currentUsr?.id)
   }
 
-  addReaction(): void {
+  addReaction(): any {
+    const currentUsr = this.authService?.currentUsr;
     if (this.userHasAlreadyLikedArticle()) return;
+
+    if (!currentUsr) {
+      if (!this.loginToAddReactionMessage) return this.loginToAddReactionMessage = 'Vous devez vous connectez pour réagir sur cet article'
+      return this.loginToAddReactionMessage = '';
+      // return this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } })
+    }
 
     this.articleService.addReactionToAnArticle(this.articleId).subscribe({
       next: (response) => this.nberOfReactions.next(response.length)
