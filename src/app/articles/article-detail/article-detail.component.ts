@@ -30,6 +30,14 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   private nberOfReactions = new BehaviorSubject<number>(0);
   public nberOfReactions$ = this.nberOfReactions.asObservable();
+  public typesOfReactions = ['clap', 'fire', 'love'];
+
+  private fireReactions = new BehaviorSubject<number>(0);
+  public fireReactions$ = this.fireReactions.asObservable();
+  private clapReactions = new BehaviorSubject<number>(0);
+  public clapReactions$ = this.clapReactions.asObservable();
+  private loveReactions = new BehaviorSubject<number>(0);
+  public loveReactions$ = this.loveReactions.asObservable();
 
   public articleSub!: Subscription;
   public loginToAddReactionMessage!: string;
@@ -79,7 +87,11 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           console.log(`findArticleById : Running ${platform}`);
 
           this.article = response
-          this.nberOfReactions.next(response.reactions?.length);
+          this.nberOfReactions.next(response?.reactions?.length);
+          this.fireReactions.next(this.findTotalReactionByAction('FIRE', response?.reactions));
+          this.clapReactions.next(this.findTotalReactionByAction('CLAP', response?.reactions));
+          this.loveReactions.next(this.findTotalReactionByAction('LOVE', response?.reactions));
+
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
           this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
@@ -141,17 +153,26 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return artileReactions.some((reaction: any) => reaction?.authorId === currentUsr?.id)
   }
 
-  addReaction(): any {
+  findTotalReactionByAction(action: string, reactions: []): number {
+    return reactions.filter((reaction: any) => reaction.action === action).length;
+  }
+
+  addReaction(action: string): any {
     const currentUsr = this.authService?.currentUsr;
-    if (this.userHasAlreadyLikedArticle()) return;
+    // if (this.userHasAlreadyLikedArticle()) return;
 
     if (!currentUsr) {
-      if (!this.loginToAddReactionMessage) return this.loginToAddReactionMessage = 'Vous devez vous connectez pour réagir sur cet article'
+      if (!this.loginToAddReactionMessage) return this.loginToAddReactionMessage = 'Vous devez vous connecter pour réagir sur cet article'
       return this.loginToAddReactionMessage = '';
     }
 
-    this.articleService.addReactionToAnArticle(this.articleId).subscribe({
-      next: (response) => this.nberOfReactions.next(response.length)
+    this.articleService.addReactionToAnArticle(this.articleId, action).subscribe({
+      next: (response) => {
+        this.nberOfReactions.next(response.length);
+        this.fireReactions.next(this.findTotalReactionByAction('FIRE', response));
+        this.clapReactions.next(this.findTotalReactionByAction('CLAP', response));
+        this.loveReactions.next(this.findTotalReactionByAction('LOVE', response));
+      }
     });
   }
 

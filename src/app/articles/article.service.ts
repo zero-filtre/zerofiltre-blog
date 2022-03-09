@@ -73,8 +73,8 @@ export class ArticleService {
       .pipe(shareReplay());
   }
 
-  public addReactionToAnArticle(articleId: string): Observable<any> {
-    return this.http.post<string>(`${this.apiServerUrl}/reaction?articleId=${articleId}&action=clap`, {})
+  public addReactionToAnArticle(articleId: string, action: string): Observable<any> {
+    return this.http.post<string>(`${this.apiServerUrl}/reaction?articleId=${articleId}&action=${action}`, {})
       .pipe(shareReplay());
   }
 }

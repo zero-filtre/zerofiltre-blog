@@ -124,23 +124,46 @@
 
                 <div class="pt-6 mt-6 border-t border-skin-border">
                     <div class="relative">
+                        <!-- (click)="addReaction()" -->
                         <button *ngIf="article; else articleReactionButtonLeftSideSkeletonLoader"
-                            (click)="addReaction()"
                             class="flex relative justify-between items-center cursor-pointer h-8 py-2 px-3 rounded-md bg-skin-card hover:bg-skin-cardMuted shadow transition-all duration-200">
                             <div class="flex items-end justify-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500"
-                                    viewBox="0 0 20 20" fill="currentColor">
-                                    <path
-                                        d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                                </svg>
+                                <span>😎</span>
                                 <span class="text-sm font-semibold text-primary-500">{{nberOfReactions$ |
                                     async}}
                                 </span>
                             </div>
                         </button>
+
+                        <div
+                            class="mt-4 flex flex-wrap justify-center space-x-4 space-y-1 bg-skin-link rounded-lg px-4 py-2 shadow-xl">
+                            <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction)">
+                                <div class="flex items-end justify-center space-x-2">
+                                    <ng-container *ngIf="reaction === 'clap'">
+                                        <span>👏</span>
+                                        <span class="text-sm font-semibold text-primary-500">{{clapReactions$ |
+                                            async}}
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="reaction === 'fire'">
+                                        <span>🔥</span>
+                                        <span class="text-sm font-semibold text-primary-500">{{fireReactions$ |
+                                            async}}
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="reaction === 'love'">
+                                        <span>💖</span>
+                                        <span class="text-sm font-semibold text-primary-500">{{loveReactions$ |
+                                            async}}
+                                        </span>
+                                    </ng-container>
+                                </div>
+                            </button>
+                        </div>
+
                         <div *ngIf="loginToAddReactionMessage"
-                            class="mt-2 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
-                            {{loginToAddReactionMessage}}
+                            class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
+                            🚨 {{loginToAddReactionMessage}}
                         </div>
                     </div>
                 </div>
