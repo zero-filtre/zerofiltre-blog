@@ -68,7 +68,7 @@
       <div *ngIf="authService.currentUsr as currentUsr" class="border border-primary-500 rounded-lg p-4 mt-5">
         <!-- *ngIf="authService.user$ | async as currentUsr" -->
 
-        <div class="flex items-center">
+        <div class="flex items-center gap-2">
           <div>
             <img *ngIf="currentUsr?.profilePicture" class="h-10 w-10 rounded-full" [src]="currentUsr?.profilePicture">
             <ng-container *ngIf="!currentUsr?.profilePicture">
@@ -80,7 +80,7 @@
               </svg>
             </ng-container>
           </div>
-          <div class="flex flex-wrap text-sm ml-2 text-primary-500 font-semibold">
+          <div class="flex flex-wrap flex-1 text-sm text-primary-500 font-semibold">
             <span>{{currentUsr.fullName}}</span>
           </div>
         </div>
