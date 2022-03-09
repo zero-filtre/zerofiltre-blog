@@ -58,7 +58,7 @@
       </a>
 
       <a *ngIf="!(authService.currentUsr)" (click)="drawer.close()" class="sidenavLink" routerLink="/login">
-        <div>Se connecter</div>
+        <div class="!font-medium text-primary-500">Se connecter</div>
       </a>
 
       <a *ngIf="!(authService.currentUsr)" (click)="drawer.close()" class="sidenavLink" routerLink="/register">
@@ -87,15 +87,15 @@
 
         <div class="mt-2">
           <a routerLink="#"
-            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Mon profil</span>
           </a>
           <a routerLink="#"
-            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Dashboard</span>
           </a>
           <button (click)="logout()"
-            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Se déconnecter</span>
           </button>
         </div>
@@ -165,7 +165,7 @@
 
           <ng-container class="navbar-links-hidden-on-server-rendering" *appShellNoRender>
             <a *ngIf="!(authService.currentUsr)" class="navLink" routerLink="/login">
-              <div>Se connecter</div>
+              <div class="!font-medium text-primary-500">Se connecter</div>
             </a>
             <a *ngIf="!(authService.currentUsr)" class="navLink" routerLink="/register">
               <div>S'enregistrer</div>
@@ -191,15 +191,15 @@
 
             <mat-menu #menu="matMenu" class="mt-2">
               <a routerLink="#"
-                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>Mon profil</span>
               </a>
               <a routerLink="#"
-                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>Dashboard</span>
               </a>
               <button (click)="logout()"
-                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>Se déconnecter</span>
               </button>
             </mat-menu>
