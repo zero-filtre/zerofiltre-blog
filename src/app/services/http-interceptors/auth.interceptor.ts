@@ -7,12 +7,14 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
+import { FileUploadService } from '../file-upload.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private fileUploadService: FileUploadService
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -21,6 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
     */
 
     const authToken = this.authService.token;
+    const xToken = this.fileUploadService.xTokenObj?.xToken;
     const userOrigin = this.authService.currentUsr?.loginFrom;
 
     switch (userOrigin) {

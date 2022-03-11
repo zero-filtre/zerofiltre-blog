@@ -4,6 +4,14 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'X-Container-Meta-Access-Control-Allow-Origin': '*'
+  }),
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -46,6 +54,7 @@ export class FileUploadService {
     }
 
     this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
+      ...httpOptions,
       observe: 'response'
     })
       .pipe(
@@ -72,20 +81,29 @@ export class FileUploadService {
     return response.headers.get('X-Subject-Token');
   }
 
-  get xToken(): any {
+  get xTokenObj(): any {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem(this.XTOKEN_NAME);;
+      return JSON.parse(localStorage.getItem(this.XTOKEN_NAME)!);
     }
   }
 
   public uploadImage(formData: FormData, fileName: string, file: File): Observable<any> {
+    httpOptions.headers = httpOptions.headers
+      .set('Content-Type', 'image/png')
+      .set('X-Auth-Token', 'my-x-token-new')
+
     return this.http.put<string>(`${this.ovhServerUrl}/${fileName}`, formData, {
+      ...httpOptions,
       reportProgress: true,
       observe: 'events'
     })
   }
 
   public RemoveImage(fileName: string): Observable<any> {
+    httpOptions.headers = httpOptions.headers
+      .set('Content-Type', 'image/png')
+      .set('X-Auth-Token', 'my-x-token-new')
+
     return this.http.delete<string>(`${this.ovhServerUrl}/${fileName}`)
   }
 
