@@ -125,8 +125,9 @@
                 <div class="pt-6 mt-6 border-t border-skin-border">
                     <div class="relative">
                         <div
-                            class="mt-4 grid grid-flow-col-dense gap-x-3 gap-y-1 w-fit bg-skin-link rounded-lg px-4 py-2 shadow-xl">
-                            <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction)">
+                            class="mt-4 flex flex-wrap max-w-fit space-y-1 bg-skin-link rounded-lg px-4 py-2 shadow-xl">
+                            <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction)"
+                                class="first-of-type:ml-0 last-of-type:mr-0 mr-3">
                                 <div class="flex items-center space-x-2">
                                     <ng-container *ngIf="reaction === 'clap'">
                                         <div>👏</div>
