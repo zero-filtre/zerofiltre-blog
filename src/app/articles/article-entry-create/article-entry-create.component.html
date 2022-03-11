@@ -423,7 +423,8 @@
             </main>
 
             <aside class="col-span-2">
-                <div class="rigth-side-container">
+                <div class="rigth-side-container" *ngIf="fileUploadService.xToken$ | async">
+
                 </div>
             </aside>
         </div>

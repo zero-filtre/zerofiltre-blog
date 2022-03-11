@@ -1,5 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
@@ -10,6 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class FileUploadService {
   readonly apiServerUrl = environment.apiBaseUrl;
   readonly ovhServerUrl = environment.ovhServerUrl;
+  readonly ovhTokenUrl = environment.ovhTokenUrl;
   private XTOKEN_NAME = 'xToken';
 
   private subject = new BehaviorSubject<any>(null!);
@@ -24,17 +25,51 @@ export class FileUploadService {
 
   private loadxToken() {
     console.log('FILE SERVICE STARTED');
-    this.xToken$ = this.http.get<any>(`${this.ovhServerUrl}/user`)
+
+    const body = {
+      "auth": {
+        "identity": {
+          "methods": [
+            "password"
+          ],
+          "password": {
+            "user": {
+              "name": "user-kBB6rJAw6Vgt",
+              "domain": {
+                "id": "default"
+              },
+              "password": "SgKaxtFtpNCy9uXJAAyhJzHjrPxYG6pd"
+            }
+          }
+        }
+      }
+    }
+
+    this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
+      observe: 'response'
+    })
       .pipe(
         catchError(error => {
           return throwError(() => error);
         }),
-        tap(xToken => {
-          console.log('ME: ', xToken);
-          this.subject.next(xToken);
-          localStorage.setItem(this.XTOKEN_NAME, xToken);
-        })
+        tap(response => {
+          const xToken = this.extractTokenFromHeaders(response);
+          const expireAt = response.body.token.expires_at;
+          const tokenObj = {
+            xToken,
+            expireAt
+          }
+          console.log('X-TOKEN: ', tokenObj);
+
+          this.subject.next(tokenObj);
+          if (isPlatformBrowser(this.platformId)) localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(tokenObj));
+        }),
+        shareReplay()
       )
+  }
+
+  private extractTokenFromHeaders(response: any) {
+    return response.headers.get('X-Subject-Token');
   }
 
   get xToken(): any {

@@ -55,7 +55,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     private articleService: ArticleService,
     private router: Router,
     private route: ActivatedRoute,
-    private fileUploadService: FileUploadService,
+    public fileUploadService: FileUploadService,
     private messageService: MessageService,
     private seo: SeoService,
     @Inject(PLATFORM_ID) private platformId: any
