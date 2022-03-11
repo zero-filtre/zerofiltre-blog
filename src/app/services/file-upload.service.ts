@@ -1,28 +1,49 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'image/png',
-    'X-Auth-Token': 'my-X-auth-token'
-  })
-};
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileUploadService {
   readonly apiServerUrl = environment.apiBaseUrl;
-  readonly ovhServerUrl = 'https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container';
-  readonly XAuthToken = 'gAAAAABiDLRqcvV41hkyqzegG9Y2OtOIlLF__bqDrcnZrskNayaSjOF6QOb9WiFqdQT8coOCP3mAq31iBhdSvWKY7_mq9t4R_9oF0H5ZVALyEglHoa0Cbfvg9fX0jvBYKhPrP_0PFTQn9agP69r1l4t3KwG06tes5uU115Mco_b3Ike_wf3BzM4';
+  readonly ovhServerUrl = environment.ovhServerUrl;
+  private XTOKEN_NAME = 'xToken';
 
-  constructor(private http: HttpClient) { }
+  private subject = new BehaviorSubject<any>(null!);
+  public xToken$ = this.subject.asObservable();
+
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: any
+  ) {
+    this.loadxToken();
+  }
+
+  private loadxToken() {
+    console.log('FILE SERVICE STARTED');
+    this.xToken$ = this.http.get<any>(`${this.ovhServerUrl}/user`)
+      .pipe(
+        catchError(error => {
+          return throwError(() => error);
+        }),
+        tap(xToken => {
+          console.log('ME: ', xToken);
+          this.subject.next(xToken);
+          localStorage.setItem(this.XTOKEN_NAME, xToken);
+        })
+      )
+  }
+
+  get xToken(): any {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem(this.XTOKEN_NAME);;
+    }
+  }
 
   public uploadImage(formData: FormData, fileName: string, file: File): Observable<any> {
-    httpOptions.headers = httpOptions.headers.set('X-Auth-Token', `${this.XAuthToken}`);
-
     return this.http.put<string>(`${this.ovhServerUrl}/${fileName}`, formData, {
       reportProgress: true,
       observe: 'events'

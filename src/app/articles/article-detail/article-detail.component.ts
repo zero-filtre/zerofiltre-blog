@@ -30,7 +30,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   private nberOfReactions = new BehaviorSubject<number>(0);
   public nberOfReactions$ = this.nberOfReactions.asObservable();
-  public typesOfReactions = ['clap', 'fire', 'love'];
+  public typesOfReactions = ['clap', 'fire', 'love', 'like'];
 
   private fireReactions = new BehaviorSubject<number>(0);
   public fireReactions$ = this.fireReactions.asObservable();
@@ -38,6 +38,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public clapReactions$ = this.clapReactions.asObservable();
   private loveReactions = new BehaviorSubject<number>(0);
   public loveReactions$ = this.loveReactions.asObservable();
+  private likeReactions = new BehaviorSubject<number>(0);
+  public likeReactions$ = this.likeReactions.asObservable();
 
   public articleSub!: Subscription;
   public loginToAddReactionMessage!: string;
@@ -91,6 +93,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           this.fireReactions.next(this.findTotalReactionByAction('FIRE', response?.reactions));
           this.clapReactions.next(this.findTotalReactionByAction('CLAP', response?.reactions));
           this.loveReactions.next(this.findTotalReactionByAction('LOVE', response?.reactions));
+          this.likeReactions.next(this.findTotalReactionByAction('LIKE', response?.reactions));
 
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
@@ -147,10 +150,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return this.article?.author?.socialLinks.find((link: any) => link.platform === platform)?.link
   }
 
-  userHasAlreadyLikedArticle(): boolean {
+  userHasAlreadyReactOnArticleFiftyTimes(): boolean {
     const artileReactions = this.article?.reactions;
     const currentUsr = this.authService?.currentUsr;
-    return artileReactions.some((reaction: any) => reaction?.authorId === currentUsr?.id)
+    return artileReactions.filter((reaction: any) => reaction?.authorId === currentUsr?.id).length === 50;
   }
 
   findTotalReactionByAction(action: string, reactions: []): number {
@@ -159,7 +162,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   addReaction(action: string): any {
     const currentUsr = this.authService?.currentUsr;
-    // if (this.userHasAlreadyLikedArticle()) return;
+
+    if (this.userHasAlreadyReactOnArticleFiftyTimes()) {
+      return this.loginToAddReactionMessage = 'Tu as déja atteint le max de reactions sur cet article 😁'
+    };
 
     if (!currentUsr) {
       if (!this.loginToAddReactionMessage) return this.loginToAddReactionMessage = 'Vous devez vous connecter pour réagir sur cet article'
@@ -172,6 +178,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         this.fireReactions.next(this.findTotalReactionByAction('FIRE', response));
         this.clapReactions.next(this.findTotalReactionByAction('CLAP', response));
         this.loveReactions.next(this.findTotalReactionByAction('LOVE', response));
+        this.likeReactions.next(this.findTotalReactionByAction('LIKE', response));
       }
     });
   }

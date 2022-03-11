@@ -124,37 +124,33 @@
 
                 <div class="pt-6 mt-6 border-t border-skin-border">
                     <div class="relative">
-                        <button *ngIf="article; else articleReactionButtonLeftSideSkeletonLoader"
-                            class="flex relative justify-between items-center cursor-pointer h-8 py-2 px-3 rounded-md bg-skin-card hover:bg-skin-cardMuted shadow transition-all duration-200">
-                            <div class="flex items-end justify-center space-x-2">
-                                <span>😎</span>
-                                <span class="text-sm font-semibold text-primary-500">{{nberOfReactions$ |
-                                    async}}
-                                </span>
-                            </div>
-                        </button>
-
                         <div
-                            class="mt-4 flex flex-wrap w-fit space-x-4 space-y-1 bg-skin-link rounded-lg px-4 py-2 shadow-xl">
+                            class="mt-4 grid grid-flow-col-dense gap-x-3 gap-y-1 w-fit bg-skin-link rounded-lg px-4 py-2 shadow-xl">
                             <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction)">
                                 <div class="flex items-center space-x-2">
                                     <ng-container *ngIf="reaction === 'clap'">
-                                        <span>👏</span>
-                                        <span class="text-sm font-semibold text-primary-500">{{clapReactions$ |
+                                        <div>👏</div>
+                                        <div class="text-sm font-semibold text-primary-500">{{clapReactions$ |
                                             async}}
-                                        </span>
+                                        </div>
                                     </ng-container>
                                     <ng-container *ngIf="reaction === 'fire'">
-                                        <span>🔥</span>
-                                        <span class="text-sm font-semibold text-primary-500">{{fireReactions$ |
+                                        <div>🔥</div>
+                                        <div class="text-sm font-semibold text-primary-500">{{fireReactions$ |
                                             async}}
-                                        </span>
+                                        </div>
                                     </ng-container>
                                     <ng-container *ngIf="reaction === 'love'">
-                                        <span>💖</span>
-                                        <span class="text-sm font-semibold text-primary-500">{{loveReactions$ |
+                                        <div>💖</div>
+                                        <div class="text-sm font-semibold text-primary-500">{{loveReactions$ |
                                             async}}
-                                        </span>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="reaction === 'like'">
+                                        <div>👍</div>
+                                        <div class="text-sm font-semibold text-primary-500">{{likeReactions$ |
+                                            async}}
+                                        </div>
                                     </ng-container>
                                 </div>
                             </button>
