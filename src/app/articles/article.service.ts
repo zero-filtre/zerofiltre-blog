@@ -18,10 +18,39 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
+  private sortByDate(list: Article[]): Article[] {
+    return list
+      ?.sort((a: any, b: any) => new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf())
+  }
+
   public findAllArticles(page: number, limit: number, status: string): Observable<Article[]> {
     return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=${status}`)
       .pipe(
         map(({ content }) => content),
+        shareReplay()
+      );
+  }
+
+  public findAllRecentArticles(page: number, limit: number): Observable<Article[]> {
+    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`)
+      .pipe(
+        map(({ content }) => this.sortByDate(content)),
+        shareReplay()
+      );
+  }
+
+  public findAllArticlesByPopularity(page: number, limit: number): Observable<Article[]> {
+    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published&byPopularity=true`)
+      .pipe(
+        map(({ content }) => content),
+        shareReplay()
+      );
+  }
+
+  public findAllArticlesByTag(page: number, limit: number, tagName: string): Observable<Article[]> {
+    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published&tag=${tagName}`)
+      .pipe(
+        map(({ content }) => this.sortByDate(content)),
         shareReplay()
       );
   }

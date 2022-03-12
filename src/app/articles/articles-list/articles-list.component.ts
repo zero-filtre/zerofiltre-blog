@@ -72,21 +72,69 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     })
   }
 
-  public fetchArticles(): void {
+  public fetchRecentArticles(): void {
     this.loading = true;
 
-    this.subscription2$ = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, 'published').subscribe({
+    this.subscription2$ = this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit).subscribe({
       next: (response: Article[]) => {
         const platform = isPlatformBrowser(this.platformId) ?
           'in the browser' : 'on the server';
-        console.log(`findAllArticles : Running ${platform}`);
+        console.log(`fetchRecentArticles : Running ${platform}`);
 
-        this.articles = this.sortByDate(response).filter((item: Article) => item.status === 'PUBLISHED')
+        this.articles = response;
         this.setArticlesReadingTime(response);
         this.loading = false;
 
         if (response.length === 0) {
-          this.errorMessage = "Aucun article à lire pour le moment"
+          this.errorMessage = "Aucun article à lire pour le moment !"
+        }
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+        this.errorMessage = 'Oops...!'
+      }
+    })
+  }
+
+  public fetchPopularArticles(): void {
+    this.loading = true;
+
+    this.subscription2$ = this.articleService.findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit).subscribe({
+      next: (response: Article[]) => {
+        const platform = isPlatformBrowser(this.platformId) ?
+          'in the browser' : 'on the server';
+        console.log(`fetchPopularArticles : Running ${platform}`);
+
+        this.articles = response;
+        this.setArticlesReadingTime(response);
+        this.loading = false;
+
+        if (response.length === 0) {
+          this.errorMessage = "Aucun article à lire pour le moment !"
+        }
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+        this.errorMessage = 'Oops...!'
+      }
+    })
+  }
+
+  public fetchArticlesByTag(tagName: string): void {
+    this.loading = true;
+
+    this.subscription2$ = this.articleService.findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName).subscribe({
+      next: (response: Article[]) => {
+        const platform = isPlatformBrowser(this.platformId) ?
+          'in the browser' : 'on the server';
+        console.log(`fetchArticlesByTag : Running ${platform}`);
+
+        this.articles = response;
+        this.setArticlesReadingTime(response);
+        this.loading = false;
+
+        if (response.length === 0) {
+          this.errorMessage = "Aucun article à lire pour le moment !"
         }
       },
       error: (_error: HttpErrorResponse) => {
@@ -103,59 +151,29 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public sortBy(trendName: string): void {
-    let results: Article[] = [];
 
     if (trendName === 'recent') {
       this.activePage = 'recent';
-      results = this.sortByDate(this.articles);
-      this.articles = results;
+      this.fetchRecentArticles();
       this.location.go(this.router.url)
     }
 
     if (trendName === 'popular') {
       this.activePage = 'popular'
-      results = this.sortByPopularity(this.articles);
-      this.articles = results;
+      this.fetchPopularArticles();
       this.location.go(`${this.router.url}?sortBy=${trendName}`)
     }
 
     if (trendName === 'trending') {
       this.activePage = 'trending'
-      results = this.sortByTrend(this.articles);
-      this.articles = results;
       this.location.go(`${this.router.url}?sortBy=${trendName}`)
     }
   }
 
-  private sortByDate(list: Article[]): Article[] {
-    return list
-      ?.sort((a: any, b: any) => new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf())
-  }
-
-  private sortByPopularity(list: Article[]): Article[] {
-    return list
-  }
-
-  private sortByTrend(list: Article[]): Article[] {
-    return list
-  }
 
   public sortByTag(tagName: any): void {
-    const results: Article[] = []
-
-    for (const article of this.articles) {
-      if (article.tags?.some(tag => tag.name?.toLowerCase().indexOf(tagName.toLowerCase()) !== -1)) {
-        results.push(article)
-      }
-
-      this.articles = results
-
-      if (results.length === 0) {
-        this.fetchArticles();
-      }
-    }
-
-    this.location.go(`${this.router.url}?tag=${tagName}`)
+    this.fetchArticlesByTag(tagName);
+    // this.location.go(`${this.router.url}?tag=${tagName}`)
   }
 
   public searchArticles(key: string): void {
@@ -173,13 +191,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.articles = results
 
       if (results.length === 0 || !key) {
-        this.fetchArticles();
+        this.fetchRecentArticles();
       }
     }
-  }
-
-  public setDateFormat(date: any) {
-    return formatDate(date)
   }
 
 
@@ -195,7 +209,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.location.go('/articles');
 
     if (isPlatformBrowser(this.platformId)) {
-      this.fetchArticles();
+      this.fetchRecentArticles();
       this.fetchListOfTags()
     }
 
