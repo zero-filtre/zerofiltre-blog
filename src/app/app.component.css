@@ -8,17 +8,17 @@
 }
 
 .top-toolbar .navLink {
-  @apply mx-4 last:mr-0 hover:text-primary-500 transition-all duration-200;
+  @apply hidden lg:block mx-4 last:mr-0 hover:text-primary-500 transition-all duration-200;
 }
 
 .top-toolbar .navLink div {
-  @apply text-sm font-montserat font-normal;
+  @apply text-sm font-normal;
 }
 
 .sidenav {
-  @apply w-52 h-fit pt-24 pb-10;
+  @apply w-60 h-fit pt-24 pb-10 px-6;
 }
 
 .sidenav .sidenavLink div {
-  @apply text-sm font-montserat font-normal;
+  @apply text-sm py-2 font-normal;
 }

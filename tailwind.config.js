@@ -4,6 +4,8 @@ module.exports = {
     extend: {
       fontFamily: {
         montserat: "'Montserrat', sans-serif",
+        raleway: "'Raleway', sans-serif",
+        ubuntu: "'Ubuntu', sans-serif"
       },
       colors: {
         primary: {

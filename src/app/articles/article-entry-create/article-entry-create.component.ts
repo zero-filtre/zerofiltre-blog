@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap, tap, throwError } from 'rxjs';
@@ -16,10 +17,7 @@ import { ArticleService } from '../article.service';
 })
 export class ArticleEntryCreateComponent implements OnInit {
 
-  @ViewChild('fileUpload', { static: false })
-  fileUpload!: ElementRef;
-
-  file: File = {
+  public file: File = {
     data: null,
     inProgress: false,
     progress: 0
@@ -37,21 +35,30 @@ export class ArticleEntryCreateComponent implements OnInit {
   public isPublishing = false;
 
   private EditorText$ = new Subject<string>();
-  savedArticle$!: Observable<Article>;
+  private TitleText$ = new Subject<string>();
+  private SummaryText$ = new Subject<string>();
+  private TagsText$ = new Subject<Tag[]>();
+  private ThumbnailText$ = new Subject<string>();
 
+  savedArticle$!: Observable<Article>;
   dropdownSettings = {};
 
   public tagList!: Tag[];
-  savingMessage!: string;
+  public savingMessage!: string;
+  public isSaved!: boolean;
+  public saveFailed!: boolean;
+  public alertMessage: string = 'Hello Bao, surtout veille à renseigner tous les champs obligatoires pour assurer la sauvegarde automatique de ton article';
+
 
   constructor(
     private formuilder: FormBuilder,
     private articleService: ArticleService,
     private router: Router,
     private route: ActivatedRoute,
-    private fileUploadService: FileUploadService,
+    public fileUploadService: FileUploadService,
     private messageService: MessageService,
-    private seo: SeoService
+    private seo: SeoService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {
 
   }
@@ -93,7 +100,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       id: [null],
       title: ['', [Validators.required]],
       summary: ['', [Validators.required]],
-      thumbnail: ['', [Validators.required]],
+      thumbnail: [''],
       content: ['', [Validators.required]],
       tags: [[]]
     })
@@ -113,11 +120,21 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.EditorText$.next(content);
   }
 
+  public typeInTitle(content: string) {
+    this.TitleText$.next(content);
+  }
+
+  public typeInTags(content: any) {
+    this.TagsText$.next(content);
+  }
+  public typeInSummary(content: string) {
+    this.SummaryText$.next(content);
+  }
+
   public saveArticle() {
     this.loading = true;
     this.isSaving = true;
     this.articleService.updateToSave(this.form.value).pipe(
-      tap(() => this.messageService.openSnackBarSuccess('Article sauvegardé!', ''))
     ).subscribe({
       next: (_response: Article) => {
         this.loading = false;
@@ -149,63 +166,57 @@ export class ArticleEntryCreateComponent implements OnInit {
     });
   }
 
-  public onClickFileUpload(host: string) {
-    const fileInput = this.fileUpload.nativeElement;
-    fileInput.click();
 
-    fileInput.onchange = () => {
-      this.file = {
-        data: fileInput.files[0],
-        inProgress: false,
-        progress: 0
-      };
-      this.fileUpload.nativeElement.value = '';
-
-      this.uploadFile(host);
+  public onFileSelected(event: any, host: string) {
+    this.file = {
+      data: <File>event.target.files[0],
+      inProgress: false,
+      progress: 0
     };
+
+    this.uploadFile(host);
   }
 
 
   public uploadFile(host: string) {
-    const fakeImages: any = [
-      'https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY',
-      'https://i.picsum.photos/id/0/5616/3744.jpg?hmac=3GAAioiQziMGEtLbfrdbcoenXoWAW-zlyEAMkfEdBzQ',
-      'https://i.picsum.photos/id/1023/3955/2094.jpg?hmac=AW_7mARdoPWuI7sr6SG8t-2fScyyewuNscwMWtQRawU',
-      'https://i.picsum.photos/id/1019/5472/3648.jpg?hmac=2mFzeV1mPbDvR0WmuOWSiW61mf9DDEVPDL0RVvg1HPs',
-      'https://i.picsum.photos/id/1029/4887/2759.jpg?hmac=uMSExsgG8_PWwP9he9Y0LQ4bFDLlij7voa9lU9KMXDE',
-      'https://i.picsum.photos/id/1047/3264/2448.jpg?hmac=ksy0K4uGgm79hAV7-KvsfHY2ZuPA0Oq1Kii9hqkOCfU'
-    ]
+
     const formData = new FormData();
-    formData.append('file', this.file.data);
+    const fileName = this.file.data.name
+
+    formData.append('image', this.file.data, fileName);
     this.file.inProgress = true;
 
-    const content = (<HTMLInputElement>document.getElementById('content'));
-    const imgSrcValue = '![alt](' + this.fileUploadService.FakeUploadImage(fakeImages) + ')'
+    this.fileUploadService.uploadImage(fileName, this.file.data).pipe(
+      map((event) => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            this.file.progress = Math.round(event.loaded * 100 / event.total);
+            break;
+          case HttpEventType.Response:
+            return event;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.log('IMAGE OBJECT ERROR: ', error);
+        this.file.inProgress = false;
+        return of('Upload failed');
+      })).subscribe((event: any) => {
+        if (typeof (event) === 'object') {
+          console.log('IMAGE OBJECT: ', event);
 
-    if (host === 'coverImage') this.form.patchValue({ thumbnail: this.fileUploadService.FakeUploadImage(fakeImages) });
-    if (host === 'editorImage') {
-      this.insertAtCursor(content, imgSrcValue);
-      this.form.patchValue({ content: content?.value });
-    }
+          if (host === 'coverImage') {
+            this.form.patchValue({ thumbnail: event.url });
+            this.ThumbnailText$.next(this.thumbnail?.value);
+          } else {
+            const editorContent = (<HTMLInputElement>document.getElementById('content'));
+            const editorContentImgSrcValue = '![alt](' + event.url + ')'
 
-    // this.fileUploadService.uploadImage(formData).pipe(
-    //   map((event) => {
-    //     switch (event.type) {
-    //       case HttpEventType.UploadProgress:
-    //         this.file.progress = Math.round(event.loaded * 100 / event.total);
-    //         break;
-    //       case HttpEventType.Response:
-    //         return event;
-    //     }
-    //   }),
-    //   catchError((error: HttpErrorResponse) => {
-    //     this.file.inProgress = false;
-    //     return of('Upload failed');
-    //   })).subscribe((event: any) => {
-    //     if (typeof (event) === 'object') {
-    //       this.form.patchValue({ headerImage: event.body.filename });
-    //     }
-    //   })
+            this.insertAtCursor(editorContent, editorContentImgSrcValue);
+            this.form.patchValue({ content: editorContent?.value });
+            this.EditorText$.next(editorContent?.value);
+          }
+        }
+      })
   }
 
   private insertAtCursor(myField: any, myValue: string) {
@@ -240,11 +251,15 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public removeFile() {
-    if (this.form.controls['thumbnail'].value !== '') this.form.controls['thumbnail'].setValue('')
+    if (this.thumbnail?.value !== '') {
+      this.thumbnail?.setValue('');
+      this.ThumbnailText$.next('');
+    }
   }
 
-  public onItemSelect(_item: any) {
-    this.setFormTagsValue()
+  public onItemSelect(item: any) {
+    this.setFormTagsValue();
+    this.typeInTags(item);
   }
 
   private setFormTagsValue(): void {
@@ -261,6 +276,36 @@ export class ArticleEntryCreateComponent implements OnInit {
   */
   private getFullObjectsFromTagListBySelectedTagsIds(ids: any) {
     return this.tagList.filter(item => ids.includes(item.id))
+  }
+
+  public onChanges(element: Observable<any>): void {
+    element.pipe(
+      debounceTime(2000),
+      distinctUntilChanged(),
+      tap(() => {
+        if (this.form.valid) {
+          this.messageService.cancel();
+          this.isSaving = true;
+
+          this.articleService.updateToSave(this.form.value)
+            .pipe(
+              catchError((error: HttpErrorResponse) => {
+                this.isSaving = false;
+                this.isSaved = false;
+                this.savingMessage = 'Oops erreur!'
+                this.saveFailed = true;
+                return throwError(() => error);
+              }),
+              tap(() => {
+                this.isSaving = false;
+                this.isSaved = true;
+              })
+            ).subscribe();
+        } else {
+          this.messageService.openSnackBarWarning(this.alertMessage, "C'est noté !", 0);
+        }
+      }),
+    ).subscribe()
   }
 
   ngOnInit(): void {
@@ -291,22 +336,16 @@ export class ArticleEntryCreateComponent implements OnInit {
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
 
-    this.EditorText$.pipe(
-      debounceTime(2000),
-      distinctUntilChanged(),
-      tap(() => this.savingMessage = 'Sauvegarde en cours...'),
-      switchMap(_content => this.articleService.updateToSave(this.form.value)
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            this.savingMessage = 'Oops erreur!'
-            return throwError(() => error);
-          }),
-          tap(() => {
-            this.savingMessage = 'Sauvegardé!'
-            this.messageService.openSnackBarSuccess('Article sauvegardé!', '')
-          })
-        ))
-    ).subscribe()
-  }
+    const fields = [
+      this.TagsText$,
+      this.TitleText$,
+      this.EditorText$,
+      this.SummaryText$,
+      this.ThumbnailText$
+    ]
 
+    fields.forEach((el: Observable<any>) => {
+      this.onChanges(el);
+    })
+  }
 }

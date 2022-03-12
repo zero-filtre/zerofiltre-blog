@@ -9,7 +9,7 @@ import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
 import { MessageService } from 'src/app/services/message.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -28,7 +28,21 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public isPublished!: boolean;
   readonly blogUrl = environment.blogUrl;
 
+  private nberOfReactions = new BehaviorSubject<number>(0);
+  public nberOfReactions$ = this.nberOfReactions.asObservable();
+  public typesOfReactions = ['clap', 'fire', 'love', 'like'];
+
+  private fireReactions = new BehaviorSubject<number>(0);
+  public fireReactions$ = this.fireReactions.asObservable();
+  private clapReactions = new BehaviorSubject<number>(0);
+  public clapReactions$ = this.clapReactions.asObservable();
+  private loveReactions = new BehaviorSubject<number>(0);
+  public loveReactions$ = this.loveReactions.asObservable();
+  private likeReactions = new BehaviorSubject<number>(0);
+  public likeReactions$ = this.likeReactions.asObservable();
+
   public articleSub!: Subscription;
+  public loginToAddReactionMessage!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,10 +69,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         filter(objectExists),
         tap(art => {
           this.seo.generateTags({
-            title: art.title,
-            description: art.summary,
-            image: art.thumbnail,
-            author: art.author?.fullName,
+            title: art?.title,
+            description: art?.summary,
+            image: art?.thumbnail,
+            author: art?.author?.fullName,
             type: 'article'
           })
           if (art.status === 'PUBLISHED') {
@@ -75,7 +89,13 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           console.log(`findArticleById : Running ${platform}`);
 
           this.article = response
-          this.articleHasTags = response.tags.length > 0
+          this.nberOfReactions.next(response?.reactions?.length);
+          this.fireReactions.next(this.findTotalReactionByAction('FIRE', response?.reactions));
+          this.clapReactions.next(this.findTotalReactionByAction('CLAP', response?.reactions));
+          this.loveReactions.next(this.findTotalReactionByAction('LOVE', response?.reactions));
+          this.likeReactions.next(this.findTotalReactionByAction('LIKE', response?.reactions));
+
+          this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
           this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
           this.loading = false;
@@ -87,6 +107,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       })
   }
 
+  // TODO: implementer une liste d'articles similaires(limit: 5) (collectés par tags) a la place des siblings
   public fetchArticleSiblings(prev: number, next: number): void {
     this.articleSub = this.articleService.findArticleById(next.toString()).pipe(
       filter(objectExists)
@@ -121,12 +142,45 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return user?.id === article?.author?.id
   }
 
-  isSocialLinkPresent(platform: string): boolean {
+  authorHasSocialLinkFor(platform: string): boolean {
     return this.article?.author?.socialLinks.some((link: any) => link.platform === platform)
   }
 
   authorPlatformLink(platform: string): string {
     return this.article?.author?.socialLinks.find((link: any) => link.platform === platform)?.link
+  }
+
+  userHasAlreadyReactOnArticleFiftyTimes(): boolean {
+    const artileReactions = this.article?.reactions;
+    const currentUsr = this.authService?.currentUsr;
+    return artileReactions.filter((reaction: any) => reaction?.authorId === currentUsr?.id).length === 50;
+  }
+
+  findTotalReactionByAction(action: string, reactions: []): number {
+    return reactions.filter((reaction: any) => reaction.action === action).length;
+  }
+
+  addReaction(action: string): any {
+    const currentUsr = this.authService?.currentUsr;
+
+    if (this.userHasAlreadyReactOnArticleFiftyTimes()) {
+      return this.loginToAddReactionMessage = 'Tu as déja atteint le max de reactions sur cet article 😁'
+    };
+
+    if (!currentUsr) {
+      if (!this.loginToAddReactionMessage) return this.loginToAddReactionMessage = 'Vous devez vous connecter pour réagir sur cet article'
+      return this.loginToAddReactionMessage = '';
+    }
+
+    this.articleService.addReactionToAnArticle(this.articleId, action).subscribe({
+      next: (response) => {
+        this.nberOfReactions.next(response.length);
+        this.fireReactions.next(this.findTotalReactionByAction('FIRE', response));
+        this.clapReactions.next(this.findTotalReactionByAction('CLAP', response));
+        this.loveReactions.next(this.findTotalReactionByAction('LOVE', response));
+        this.likeReactions.next(this.findTotalReactionByAction('LIKE', response));
+      }
+    });
   }
 
   ngOnInit(): void {

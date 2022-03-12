@@ -1,14 +1,12 @@
 <div class="pb-5">
     <nav class="top-nav sm:flex sm:items-center justify-between mt-6">
-        <div class="nav-links inline-flex space-x-3 font-semibold text-skin-base">
-            <a routerLink="/" class="group flex items-center space-x-1">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 group-hover:-translate-x-1 text-primary-500 transition-all duration-200" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+        <div class="nav-links inline-flex items-center space-x-4 font-semibold text-skin-base">
+            <a routerLink="/" class="group flex align-center">
+                <svg class="h-6 w-6 text-primary-500 mr-1 -mt-[1px]" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
                 </svg>
-                <span class="text-primary-500">
+                <span class="text-primary-500 hover:text-primary-300">
                     Tous les articles
                 </span>
             </a>
@@ -19,14 +17,47 @@
             </a>
         </div>
 
-        <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between fixed top-24 right-16">
+        <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between lg:fixed top-24 right-20 z-10">
             <ng-container *ngIf="form.invalid; else validBtn">
                 <button [disabled]="form.invalid || loading"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
                     Publier
                 </button>
 
-                <button class="text-xs text-skin-muted min-w-max">{{savingMessage}}</button>
+                <button *ngIf="isSaving" class="relative group">
+                    <svg class="w-6 h-6 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                    <span class="save-tooltip group-hover:scale-100">
+                        Sauvegarde en cours...
+                    </span>
+                </button>
+
+                <button *ngIf="isSaved && !isSaving" class="relative group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="save-tooltip group-hover:scale-100">
+                        Sauvegardé !
+                    </span>
+                </button>
+
+                <button *ngIf="saveFailed && !isSaving" class="relative group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-error" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+                    <span class="save-tooltip !bg-error group-hover:scale-100">
+                        Echec de la sauvegarde !
+                    </span>
+                </button>
             </ng-container>
 
             <ng-template #validBtn>
@@ -44,7 +75,40 @@
                 </button>
 
 
-                <button class="text-xs text-skin-muted min-w-max">{{savingMessage}}</button>
+                <button *ngIf="isSaving" class="relative group">
+                    <svg class="w-6 h-6 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                    <span class="save-tooltip group-hover:scale-100">
+                        Sauvegarde en cours...
+                    </span>
+                </button>
+
+                <button *ngIf="isSaved && !isSaving" class="relative group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="save-tooltip group-hover:scale-100">
+                        Sauvegardé !
+                    </span>
+                </button>
+
+                <button *ngIf="saveFailed && !isSaving" class="relative group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-error" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+                    <span class="save-tooltip !bg-error group-hover:scale-100">
+                        Echec de la sauvegarde !
+                    </span>
+                </button>
             </ng-template>
         </div>
     </nav>
@@ -58,11 +122,11 @@
                             Description
                         </label>
                         <div class="mt-5">
-                            <textarea
+                            <textarea (keyup)="typeInSummary(getValue($event))"
                                 class="editor-textarea shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
                                 rows="5" cols="33"
-                                placeholder="Decrivez votre article en quelques mots... (Entre 50 et 250 caractères)"
-                                id="summary" formControlName="summary" required minlength="50" maxlength="250">
+                                placeholder="Decrivez votre article en quelques mots... (Entre 20 et 250 caractères)"
+                                id="summary" formControlName="summary" required minlength="20" maxlength="250">
                             </textarea>
                             <div *ngIf="summary?.invalid && summary?.dirty" class="">
                                 <div *ngIf="summary?.errors?.['required']"
@@ -71,11 +135,7 @@
                                 </div>
                                 <div *ngIf="summary?.errors?.['minlength']"
                                     class="mt-2 text-xs sm:text-sm text-error italic">
-                                    La description doit comporter au moins 50 caractères.
-                                </div>
-                                <div *ngIf="summary?.errors?.['maxlength']"
-                                    class="mt-2 text-xs sm:text-sm text-error italic">
-                                    La description doit comporter au plus 250 caractères.
+                                    La description doit comporter au moins 20 caractères.
                                 </div>
                             </div>
                         </div>
@@ -105,7 +165,7 @@
                     <div class="article-image-preview-wrapper relative mt-5">
                         <div *ngIf="!thumbnail?.value"
                             class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden">
-                            <label for="file" (click)="onClickFileUpload('coverImage')"
+                            <label for="file" (click)="fileUpload.click()"
                                 class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
                                 <div class="text-center">
                                     <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
@@ -126,7 +186,7 @@
                                     </p>
 
                                     <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
-                                        accept="image/*">
+                                        (change)="onFileSelected($event, 'coverImage')" accept="image/*">
                                 </div>
                             </label>
                         </div>
@@ -143,7 +203,8 @@
                     <!-- END -->
 
                     <div class="article-title mt-10">
-                        <input id="title" required minlength="4" formControlName="title"
+                        <input (keyup)="typeInTitle(getValue($event))" id="title" required minlength="4"
+                            formControlName="title"
                             class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
                             placeholder='Entrez le titre de votre article...' autocomplete="off" />
 
@@ -209,9 +270,9 @@
                             </div>
 
                             <div class="relative px-4 text-sm font-semibold text-skin-base sm:text-base cursor-pointer">
-                                <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
-                                    accept="image/*">
-                                <svg (click)="onClickFileUpload('editorImage')" fill="none" stroke="currentColor"
+                                <input class="sr-only" (change)="onFileSelected($event, 'editorImage')" type="file"
+                                    id="editorFileUpload" name="editorFileUpload" #editorFileUpload accept="image/*">
+                                <svg (click)="editorFileUpload.click()" fill="none" stroke="currentColor"
                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
                                     class="w-6 h-6 ">
                                     <path
@@ -266,7 +327,6 @@
                                     <br>
                                     <span class="flex items-center bg-primary-100 space-x-4">
                                         <span class="bg-primary-100 p-1 text-primary-500 rounded-md">`backtick`</span>
-                                        <!-- <span class="font-mono border p-1 rounded-md">backtick</span> -->
                                         <markdown ngPreserveWhitespaces
                                             class="prose-code:p-1 prose-code:text-slate-600 prose-code:bg-primary-100 prose-code:rounded-md prose-code:!text-lg prose-img:rounded-md">
                                             `backtick`
@@ -363,7 +423,8 @@
             </main>
 
             <aside class="col-span-2">
-                <div class="rigth-side-container">
+                <div class="rigth-side-container" *ngIf="fileUploadService.xToken$ | async">
+
                 </div>
             </aside>
         </div>

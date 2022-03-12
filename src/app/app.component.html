@@ -2,14 +2,13 @@
 
   <!-- APP MOBILE SIDENAV -->
 
-  <mat-sidenav #drawer class="sidenav relative" position="end" fixedInViewport
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="false">
+  <mat-sidenav #drawer class="sidenav relative rounded-bl-lg" position="end" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'over'" [opened]="false">
 
     <div class="absolute top-6 right-6 w-fit" (click)="drawer.close()">
-      <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" *ngIf="isHandset$ | async">
-        <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
-          viewBox="0 0 24 24" stroke="currentColor">
+      <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()">
+        <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6 text-primary-500"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
@@ -59,17 +58,17 @@
       </a>
 
       <a *ngIf="!(authService.currentUsr)" (click)="drawer.close()" class="sidenavLink" routerLink="/login">
-        <div>Se connecter</div>
+        <div class="!font-medium text-primary-500">Se connecter</div>
       </a>
 
       <a *ngIf="!(authService.currentUsr)" (click)="drawer.close()" class="sidenavLink" routerLink="/register">
         <div>S'enregistrer</div>
       </a>
 
-      <div *ngIf="authService.currentUsr as currentUsr" class="border p-4 mt-5">
+      <div *ngIf="authService.currentUsr as currentUsr" class="border border-primary-500 rounded-lg p-4 mt-5">
         <!-- *ngIf="authService.user$ | async as currentUsr" -->
 
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center gap-2">
           <div>
             <img *ngIf="currentUsr?.profilePicture" class="h-10 w-10 rounded-full" [src]="currentUsr?.profilePicture">
             <ng-container *ngIf="!currentUsr?.profilePicture">
@@ -81,24 +80,22 @@
               </svg>
             </ng-container>
           </div>
-          <div>
-            <div class="space-x-1 text-sm">
-              <span>{{currentUsr.fullName}}</span>
-            </div>
+          <div class="flex flex-wrap flex-1 text-sm text-primary-500 font-semibold">
+            <span>{{currentUsr.fullName}}</span>
           </div>
         </div>
 
         <div class="mt-2">
           <a routerLink="#"
-            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+            class="block py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Mon profil</span>
           </a>
           <a routerLink="#"
-            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+            class="block py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Dashboard</span>
           </a>
           <button (click)="logout()"
-            class="block py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+            class="block w-full text-left py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Se déconnecter</span>
           </button>
         </div>
@@ -124,7 +121,7 @@
           </div>
         </a>
 
-        <div *ngIf="!(isHandset$ | async)" class="flex items-center text-secondary">
+        <div class="hidden lg:flex items-center text-secondary">
           <a class="navLink" routerLink="/a-propos">
             <div>A propos</div>
           </a>
@@ -168,7 +165,7 @@
 
           <ng-container class="navbar-links-hidden-on-server-rendering" *appShellNoRender>
             <a *ngIf="!(authService.currentUsr)" class="navLink" routerLink="/login">
-              <div>Se connecter</div>
+              <div class="!font-medium text-primary-500">Se connecter</div>
             </a>
             <a *ngIf="!(authService.currentUsr)" class="navLink" routerLink="/register">
               <div>S'enregistrer</div>
@@ -194,15 +191,15 @@
 
             <mat-menu #menu="matMenu" class="mt-2">
               <a routerLink="#"
-                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>Mon profil</span>
               </a>
               <a routerLink="#"
-                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>Dashboard</span>
               </a>
               <button (click)="logout()"
-                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs font-montserat font-normal transition-all duration-200">
+                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>Se déconnecter</span>
               </button>
             </mat-menu>
@@ -210,7 +207,7 @@
 
         </div>
 
-        <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+        <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" class="lg:hidden">
           <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
             viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
