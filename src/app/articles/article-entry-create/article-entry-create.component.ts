@@ -186,7 +186,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     formData.append('image', this.file.data, fileName);
     this.file.inProgress = true;
 
-    this.fileUploadService.uploadImage(formData, fileName, this.file.data).pipe(
+    this.fileUploadService.uploadImage(fileName, this.file.data).pipe(
       map((event) => {
         switch (event.type) {
           case HttpEventType.UploadProgress:
@@ -205,15 +205,15 @@ export class ArticleEntryCreateComponent implements OnInit {
           console.log('IMAGE OBJECT: ', event);
 
           if (host === 'coverImage') {
-            this.form.patchValue({ thumbnail: event.body.filename });
-            this.ThumbnailText$.next(this.thumbnail?.value);
+            this.form.patchValue({ thumbnail: event.url });
+            // this.ThumbnailText$.next(this.thumbnail?.value);
           } else {
             const editorContent = (<HTMLInputElement>document.getElementById('content'));
-            const editorContentImgSrcValue = '![alt](' + event.body.filename + ')'
+            const editorContentImgSrcValue = '![alt](' + event.url + ')'
 
             this.insertAtCursor(editorContent, editorContentImgSrcValue);
             this.form.patchValue({ content: editorContent?.value });
-            this.EditorText$.next(editorContent?.value);
+            // this.EditorText$.next(editorContent?.value);
           }
         }
       })

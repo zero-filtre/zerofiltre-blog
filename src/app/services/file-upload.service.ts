@@ -32,7 +32,6 @@ export class FileUploadService {
   }
 
   private loadxToken() {
-    console.log('FILE SERVICE STARTED');
 
     const body = {
       "auth": {
@@ -75,24 +74,46 @@ export class FileUploadService {
         }),
         shareReplay()
       )
+
+    // this.xToken$ = this.http.get<any>(`${this.ovhServerUrl}`, {
+    //   ...httpOptions,
+    //   observe: 'response'
+    // })
+    //   .pipe(
+    //     catchError(error => {
+    //       return throwError(() => error);
+    //     }),
+    //     tap(response => {
+    //       console.log('RESPONSE: ', response);
+    //     }),
+    //     shareReplay()
+    //   )
   }
 
   private extractTokenFromHeaders(response: any) {
     return response.headers.get('X-Subject-Token');
   }
 
-  get xTokenObj(): any {
+  get xTokenData(): any {
     if (isPlatformBrowser(this.platformId)) {
-      return JSON.parse(localStorage.getItem(this.XTOKEN_NAME)!);
+      return localStorage.getItem(this.XTOKEN_NAME);
     }
   }
 
-  public uploadImage(formData: FormData, fileName: string, file: File): Observable<any> {
+  get xTokenObj(): any {
+    if (isPlatformBrowser(this.platformId)) {
+      return JSON.parse(this.xTokenData);
+    }
+  }
+
+  public uploadImage(fileName: string, file: File): Observable<any> {
+    const xToken = 'gAAAAABiLIiBQPeGE6UlUNpK6vjPdujTKVOSC5un-i7eaNRQygX2KM8Dvin9pvZdeTS0Cv31BC4LGm8OoZSrJLrZeWlyAIZijhRuoWAIczvB-60sEm6Ve6gBc2VeCo2glEiEJGxzVvI69egGc-Q6pBUkUJo3wz9oQjHPW80e7yJlfXy8AmN5nHk'
+
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
-      .set('X-Auth-Token', 'my-x-token-new')
+      .set('X-Auth-Token', xToken)
 
-    return this.http.put<string>(`${this.ovhServerUrl}/${fileName}`, formData, {
+    return this.http.put<string>(`${this.ovhServerUrl}/${fileName}`, file, {
       ...httpOptions,
       reportProgress: true,
       observe: 'events'
@@ -100,11 +121,13 @@ export class FileUploadService {
   }
 
   public RemoveImage(fileName: string): Observable<any> {
+    const xToken = this.xTokenObj?.xToken || 'my-x-token'
+
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
-      .set('X-Auth-Token', 'my-x-token-new')
+      .set('X-Auth-Token', xToken)
 
-    return this.http.delete<string>(`${this.ovhServerUrl}/${fileName}`)
+    return this.http.delete<string>(`${this.ovhServerUrl}/${fileName}`, httpOptions)
   }
 
   public FakeUploadImage() {
