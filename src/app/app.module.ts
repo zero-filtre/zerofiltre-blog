@@ -24,7 +24,7 @@ registerLocaleData(localeFr, 'fr');
     HomePageComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule,
     BrowserAnimationsModule,
     MarkdownModule.forRoot(),
     SharedModule,

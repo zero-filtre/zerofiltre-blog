@@ -3,6 +3,7 @@ import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError }
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
 
 
 const httpOptions = {
@@ -11,6 +12,8 @@ const httpOptions = {
     'X-Container-Meta-Access-Control-Allow-Origin': '*'
   }),
 };
+
+const STATE_KEY_X_TOKEN = makeStateKey('x-token-value');
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +27,10 @@ export class FileUploadService {
   private subject = new BehaviorSubject<any>(null!);
   public xToken$ = this.subject.asObservable();
 
+  public xTokenServerValue!: any;
+
   constructor(
+    private state: TransferState,
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
@@ -52,28 +58,38 @@ export class FileUploadService {
       }
     }
 
-    this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
-      ...httpOptions,
-      observe: 'response'
-    })
-      .pipe(
-        catchError(error => {
-          return throwError(() => error);
-        }),
-        tap(response => {
-          const xToken = this.extractTokenFromHeaders(response);
-          const expireAt = response.body.token.expires_at;
-          const tokenObj = {
-            xToken,
-            expireAt
-          }
-          console.log('X-TOKEN: ', tokenObj);
+    this.xTokenServerValue = this.state.get(STATE_KEY_X_TOKEN, <any>null);
 
-          this.subject.next(tokenObj);
-          if (isPlatformBrowser(this.platformId)) localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(tokenObj));
-        }),
-        shareReplay()
-      )
+    if (this.xTokenServerValue && isPlatformBrowser(this.platformId)) {
+      console.log('SERVER TOKEN VALUE: ', this.xTokenServerValue);
+
+      this.subject.next(this.xTokenServerValue);
+      localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(this.xTokenServerValue));
+    }
+
+    if (!this.xTokenServerValue) {
+      this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
+        ...httpOptions,
+        observe: 'response'
+      })
+        .pipe(
+          catchError(error => {
+            return throwError(() => error);
+          }),
+          tap(response => {
+            const xToken = this.extractTokenFromHeaders(response);
+            const expireAt = response.body.token.expires_at;
+            const tokenObj = {
+              xToken,
+              expireAt
+            }
+            console.log('X-TOKEN: ', tokenObj);
+            this.state.set(STATE_KEY_X_TOKEN, <any>tokenObj);
+            this.subject.next(tokenObj);
+          }),
+          shareReplay()
+        )
+    }
 
     // this.xToken$ = this.http.get<any>(`${this.ovhServerUrl}`, {
     //   ...httpOptions,
