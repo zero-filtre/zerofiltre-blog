@@ -32,9 +32,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     return next.handle(request)
       .pipe(
-        // retryWhen(genericRetryPolicy({
-        //   excludedStatusCodes: [400, 401, 403, 404, 500]
-        // })),
+        retryWhen(genericRetryPolicy({
+          excludedStatusCodes: [400, 401, 403, 404, 500]
+        })),
         catchError((error: HttpErrorResponse) => {
           if (error.status === 401 && authToken && userOrigin === null) {
             return this.handleRefrehToken(request, next);
@@ -60,6 +60,16 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           return throwError(() => errodata)
         })
       );
+  }
+
+  private clearLSwithout(itemValue: string) {
+    for (var i = 0, len = localStorage.length; i < len; i++) {
+      const key = localStorage.key(i)!;
+      const value = localStorage[key];
+      if (value !== itemValue) {
+        localStorage.removeItem(value);
+      }
+    }
   }
 
 

@@ -206,14 +206,14 @@ export class ArticleEntryCreateComponent implements OnInit {
 
           if (host === 'coverImage') {
             this.form.patchValue({ thumbnail: event.url });
-            // this.ThumbnailText$.next(this.thumbnail?.value);
+            this.ThumbnailText$.next(this.thumbnail?.value);
           } else {
             const editorContent = (<HTMLInputElement>document.getElementById('content'));
             const editorContentImgSrcValue = '![alt](' + event.url + ')'
 
             this.insertAtCursor(editorContent, editorContentImgSrcValue);
             this.form.patchValue({ content: editorContent?.value });
-            // this.EditorText$.next(editorContent?.value);
+            this.EditorText$.next(editorContent?.value);
           }
         }
       })

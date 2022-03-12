@@ -123,7 +123,7 @@ export class FileUploadService {
   }
 
   public uploadImage(fileName: string, file: File): Observable<any> {
-    const xToken = 'gAAAAABiLIiBQPeGE6UlUNpK6vjPdujTKVOSC5un-i7eaNRQygX2KM8Dvin9pvZdeTS0Cv31BC4LGm8OoZSrJLrZeWlyAIZijhRuoWAIczvB-60sEm6Ve6gBc2VeCo2glEiEJGxzVvI69egGc-Q6pBUkUJo3wz9oQjHPW80e7yJlfXy8AmN5nHk'
+    const xToken = this.xTokenObj?.xToken || 'my-x-token';
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
@@ -137,7 +137,7 @@ export class FileUploadService {
   }
 
   public RemoveImage(fileName: string): Observable<any> {
-    const xToken = this.xTokenObj?.xToken || 'my-x-token'
+    const xToken = this.xTokenObj?.xToken || 'my-x-token';
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
