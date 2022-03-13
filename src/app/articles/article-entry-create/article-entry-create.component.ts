@@ -253,6 +253,12 @@ export class ArticleEntryCreateComponent implements OnInit {
   public removeFile() {
     const fileName = this.thumbnail?.value.split('/')[6];
 
+    if (!fileName) {
+      this.thumbnail?.setValue('');
+      this.ThumbnailText$.next('');
+      return;
+    }
+
     this.fileUploadService.RemoveImage(fileName).subscribe({
       next: () => {
         this.thumbnail?.setValue('');
