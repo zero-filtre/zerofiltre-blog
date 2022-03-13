@@ -151,10 +151,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return this.article?.author?.socialLinks.find((link: any) => link.platform === platform)?.link
   }
 
-  userHasAlreadyReactOnArticleFiftyTimes(): boolean {
+  userHasAlreadyReactOnArticleFiftyTimes(): any {
     const artileReactions = this.article?.reactions;
     const currentUsr = this.authService?.currentUsr;
-    return artileReactions.filter((reaction: any) => reaction?.authorId === currentUsr?.id).length === 50;
+    return artileReactions.filter((reaction: any) => reaction?.authorId === currentUsr?.id).length === 49;
   }
 
   findTotalReactionByAction(action: string, reactions: []): number {
@@ -165,7 +165,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     const currentUsr = this.authService?.currentUsr;
 
     if (this.userHasAlreadyReactOnArticleFiftyTimes()) {
-      return this.loginToAddReactionMessage = 'Tu as déja atteint le max de reactions sur cet article 😁'
+      if (!this.loginToAddReactionMessage) return this.loginToAddReactionMessage = 'Tu as déja atteint le max de reactions sur cet article 😁'
+      return this.loginToAddReactionMessage = '';
     };
 
     if (!currentUsr) {
