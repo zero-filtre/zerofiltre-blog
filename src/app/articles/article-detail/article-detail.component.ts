@@ -25,7 +25,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public nextArticle!: Article;
   public articleHasTags!: boolean;
   public loading: boolean = false;
-  public isPublished!: boolean;
+  private isPublished = new BehaviorSubject<any>(null);
+  public isPublished$ = this.isPublished.asObservable();
   readonly blogUrl = environment.blogUrl;
 
   private nberOfReactions = new BehaviorSubject<number>(0);
@@ -76,9 +77,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
             type: 'article'
           })
           if (art.status === 'PUBLISHED') {
-            this.isPublished = true;
+            this.isPublished.next(true);
           } else {
-            this.isPublished = false;
+            this.isPublished.next(false);
           }
         })
       )
