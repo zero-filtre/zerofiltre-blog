@@ -315,6 +315,13 @@ export class ArticleEntryCreateComponent implements OnInit {
 
     this.fetchListOfTags();
 
+    if (isPlatformBrowser(this.platformId) && !this.fileUploadService.xTokenObj) {
+      location.reload()
+    } else {
+      this.fileUploadService.xToken$.subscribe();
+    }
+
+
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
