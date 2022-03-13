@@ -252,8 +252,9 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   public removeFile() {
     const fileName = this.thumbnail?.value.split('/')[6];
+    const fileNameUrl = this.thumbnail?.value.split('/')[2];
 
-    if (!fileName) {
+    if (fileNameUrl !== 'storage.gra.cloud.ovh.net') {
       this.thumbnail?.setValue('');
       this.ThumbnailText$.next('');
       return;
