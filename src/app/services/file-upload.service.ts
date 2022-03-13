@@ -143,7 +143,7 @@ export class FileUploadService {
       .set('Content-Type', 'image/png')
       .set('X-Auth-Token', xToken)
 
-    return this.http.delete<string>(`${this.ovhServerUrl}/${fileName}`, httpOptions)
+    return this.http.delete<any>(`${this.ovhServerUrl}/${fileName}`, httpOptions)
   }
 
   public FakeUploadImage() {
