@@ -127,8 +127,9 @@
                         <div *ngIf="isPublished$ | async"
                             class="mt-4 flex flex-wrap max-w-fit space-y-1 bg-skin-link rounded-lg px-4 py-2 shadow-xl">
                             <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction)"
-                                class="first-of-type:ml-0 last-of-type:mr-0 mr-3">
-                                <div class="flex items-center space-x-2">
+                                class="first-of-type:ml-0 last-of-type:mr-0 mr-1.5 focus:animate-bounce">
+                                <div
+                                    class="flex items-center space-x-1 py-0.5 px-1 border border-transparent bg-skin-cardMuted hover:bg-skin-card hover:border-skin-borderBold rounded-2xl">
                                     <ng-container *ngIf="reaction === 'clap'">
                                         <div>👏</div>
                                         <div class="text-sm font-semibold text-primary-500">{{clapReactions$ |
