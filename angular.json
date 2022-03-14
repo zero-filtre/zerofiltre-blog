@@ -33,6 +33,7 @@
             ],
             "scripts": [
               "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/plugins/toolbar/prism-toolbar.js",
               "node_modules/prismjs/components/prism-typescript.min.js",
               "node_modules/prismjs/components/prism-csharp.min.js",
               "node_modules/prismjs/components/prism-java.min.js",

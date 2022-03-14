@@ -94,5 +94,5 @@
 }
 
 .toolbar {
-  @apply absolute top-3 right-3 text-sm border border-x-skin-base px-2 py-1 rounded-full shadow-md hover:text-skin-muted;
+  @apply absolute top-2 right-1 text-sm px-2 py-1 rounded-full shadow-md hover:text-skin-muted;
 }
