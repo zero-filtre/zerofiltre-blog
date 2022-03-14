@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { map, Observable, shareReplay } from 'rxjs';
+import { MessageService } from './services/message.service';
 import { AuthService } from './user/auth.service';
 
 // import * as Prism from 'prismjs';
@@ -19,15 +20,24 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, public authService: AuthService) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private messageService: MessageService,
+    public authService: AuthService
+  ) { }
 
   public logout() {
     this.authService.logout();
     location.reload();
   }
 
+  alertCopy() {
+    console.log('COPY DONE');
+    this.messageService.openSnackBarWarning('Code Copied', '');
+  }
+
   ngOnInit(): void {
-    Prism.plugins.toolbar.registerButton('select-code', function (env: any) {
+    Prism.plugins.toolbar.registerButton('select-code', function (_env: any) {
       const button = document.createElement('button');
 
       button.innerHTML = `
@@ -35,21 +45,10 @@ export class AppComponent implements OnInit {
       <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
       </svg>`;
 
-      button.addEventListener('click', function () {
-        if ((document as any).body.createTextRange) { // ms
-          const range = (document as any).body.createTextRange();
-          range.moveToElementText(env.element);
-          range.select();
-        } else if (window.getSelection) { // moz, opera, webkit
-          const selection = window.getSelection()!;
-          const range = (document as any).createRange();
-          range.selectNodeContents(env.element);
-          selection.removeAllRanges();
-          selection.addRange(range);
-        }
-      });
-
       return button;
     });
+
+    // const copyBtn = (document as any).querySelector('.copy-to-clipboard-button');
+    // copyBtn.onclick = this.alertCopy();
   }
 }
