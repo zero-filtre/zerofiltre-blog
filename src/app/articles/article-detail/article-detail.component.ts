@@ -5,7 +5,7 @@ import { tap, filter } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
 import { calcReadingTime, formatDate, objectExists } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
-import { Article } from '../article.model';
+import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
 import { MessageService } from 'src/app/services/message.service';
@@ -159,6 +159,13 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   findTotalReactionByAction(action: string, reactions: []): number {
     return reactions.filter((reaction: any) => reaction.action === action).length;
+  }
+
+  areRelated(a: Article, b: Article): boolean {
+    const tagsA = a.tags;
+    const tagsB = b.tags;
+
+    return tagsA.some((tag: Tag) => tagsB.some((item: Tag) => item.name === tag.name));
   }
 
   addReaction(action: string): any {
