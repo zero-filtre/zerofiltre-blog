@@ -67,15 +67,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.articleService.findArticleById(articleId)
       .pipe(
-        filter(objectExists),
         tap(art => {
-          this.seo.generateTags({
-            title: art?.title,
-            description: art?.summary,
-            image: art?.thumbnail,
-            author: art?.author?.fullName,
-            type: 'article'
-          })
           if (art.status === 'PUBLISHED') {
             this.isPublished.next(true);
           } else {
@@ -90,6 +82,15 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           console.log(`findArticleById : Running ${platform}`);
 
           this.article = response
+
+          this.seo.generateTags({
+            title: this.article?.title,
+            description: this.article?.summary,
+            image: this.article?.thumbnail,
+            author: this.article?.author?.fullName,
+            type: 'article'
+          })
+
           this.nberOfReactions.next(response?.reactions?.length);
           this.fireReactions.next(this.findTotalReactionByAction('FIRE', response?.reactions));
           this.clapReactions.next(this.findTotalReactionByAction('CLAP', response?.reactions));
@@ -197,8 +198,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       params => {
         this.articleId = params.get('id')!;
 
+        this.getCurrentArticle(this.articleId);
         if (isPlatformBrowser(this.platformId)) {
-          this.getCurrentArticle(this.articleId);
+          // TODO: add server APi transfert state to prevent double request
         }
       }
     );

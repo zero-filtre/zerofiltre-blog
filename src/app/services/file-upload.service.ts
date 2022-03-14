@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { AuthService } from '../user/auth.service';
 
 
 const httpOptions = {
@@ -22,7 +23,7 @@ export class FileUploadService {
   readonly apiServerUrl = environment.apiBaseUrl;
   readonly ovhServerUrl = environment.ovhServerUrl;
   readonly ovhTokenUrl = environment.ovhTokenUrl;
-  private XTOKEN_NAME = 'xToken';
+  private XTOKEN_NAME = 'x_token';
 
   private subject = new BehaviorSubject<any>(null!);
   public xToken$ = this.subject.asObservable();
@@ -32,6 +33,7 @@ export class FileUploadService {
   constructor(
     private state: TransferState,
     private http: HttpClient,
+    private authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
     this.loadxToken();
