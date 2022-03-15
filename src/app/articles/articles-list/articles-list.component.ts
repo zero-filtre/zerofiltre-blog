@@ -20,13 +20,18 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public articles!: Article[];
   public tagList!: Tag[];
 
+  public notEmptyArticles = true;
+  public notScrolly = true;
+  public lastPage!: number;
+  public loadingMore = false;
+
   public pageNumber: number = 0;
   public pageItemsLimit: number = 5;
 
-  public loading: boolean = false;
-  public errorMessage: string = '';
+  public loading = false;
+  public errorMessage = '';
 
-  public activePage: string = 'recent';
+  public activePage = 'recent';
   public mainPage = true;
 
   subscription1$!: Subscription;
@@ -76,17 +81,18 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.subscription2$ = this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit).subscribe({
-      next: (response: Article[]) => {
+      next: ({ totalNumberOfPages, content }: any) => {
         const platform = isPlatformBrowser(this.platformId) ?
           'in the browser' : 'on the server';
         console.log(`fetchRecentArticles : Running ${platform}`);
 
-        this.articles = response;
-        this.setArticlesReadingTime(response);
+        this.articles = content;
+        this.setArticlesReadingTime(this.articles);
         this.loading = false;
+        this.lastPage = totalNumberOfPages - 1;
 
-        if (response.length === 0) {
-          this.errorMessage = "Aucun article à lire pour le moment !"
+        if (this.articles.length === 0) {
+          this.errorMessage = "Aucun article à lire pour le moment 😊!"
         }
       },
       error: (_error: HttpErrorResponse) => {
@@ -110,7 +116,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.loading = false;
 
         if (response.length === 0) {
-          this.errorMessage = "Aucun article à lire pour le moment !"
+          this.errorMessage = "Aucun article à lire pour le moment 😊!"
         }
       },
       error: (_error: HttpErrorResponse) => {
@@ -134,7 +140,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.loading = false;
 
         if (response.length === 0) {
-          this.errorMessage = "Aucun article à lire pour le moment !"
+          this.errorMessage = "Aucun article à lire pour le moment 😊!"
         }
       },
       error: (_error: HttpErrorResponse) => {
@@ -194,6 +200,46 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.fetchRecentArticles();
       }
     }
+  }
+
+  public onScroll() {
+    if (this.notScrolly && this.notEmptyArticles) {
+      console.log('scrolled!!');
+      this.loadingMore = true;
+      this.notScrolly = false;
+      this.fetchMoreArticles();
+    }
+  }
+
+  public fetchMoreArticles() {
+    console.log('fetching...');
+
+    // Check if end of the list
+    if (this.lastPage === this.pageNumber) {
+      console.log('END OF THE LIST !');
+
+      this.loadingMore = false;
+      this.notEmptyArticles = false;
+      return
+    }
+
+    // send the next pageNumber value in the request
+    this.pageNumber += 1;
+
+    // call http request
+    this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
+      .subscribe(({ content }: any) => {
+        const newArticles = content;
+        this.loadingMore = false;
+
+        if (newArticles.length === 0) {
+          this.notEmptyArticles = false;
+        }
+
+        // add newly fetched articles to the existing list
+        this.articles = this.articles.concat(newArticles);
+        this.notScrolly = true;
+      });
   }
 
 

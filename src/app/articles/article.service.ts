@@ -34,7 +34,7 @@ export class ArticleService {
   public findAllRecentArticles(page: number, limit: number): Observable<Article[]> {
     return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`)
       .pipe(
-        map(({ content }) => this.sortByDate(content)),
+        // map(({ content }) => this.sortByDate(content)),
         shareReplay()
       );
   }

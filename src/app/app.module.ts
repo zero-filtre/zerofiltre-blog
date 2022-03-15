@@ -16,8 +16,6 @@ import { LOCALE_ID } from '@angular/core';
 import { httpInterceptorProviders } from './services/http-interceptors';
 import { AuthInterceptor } from './services/http-interceptors/auth.interceptor';
 
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
@@ -31,7 +29,6 @@ registerLocaleData(localeFr, 'fr');
     MarkdownModule.forRoot(),
     SharedModule,
     AppRoutingModule,
-    InfiniteScrollModule
   ],
   providers: [
     httpInterceptorProviders,

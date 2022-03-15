@@ -1,4 +1,4 @@
-<main class="articles-list-container lg:grid grid-cols-10 gap-10 py-10 items-start min-h-screen">
+<main class="articles-list-container lg:grid grid-cols-10 gap-10 py-10 items-start">
     <aside class="col-span-2 hidden lg:block">
 
         <div class="left-side-container">
@@ -156,7 +156,11 @@
                 </nav>
             </div>
 
-            <div class="articles-wrapper min-h-screen py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none">
+            <div class="articles-wrapper articles-scrollable-list-panel h-screen overflow-y-scroll py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none"
+                infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" [scrollWindow]="false"
+                (scrolled)="onScroll()">
+                <!-- no-scrollbar -->
+
                 <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
                     <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
@@ -321,6 +325,23 @@
                     </div>
                 </ng-template>
 
+                <!-- loadingMorespinner -->
+                <div *ngIf="loadingMore" class="flex justify-center py-5">
+                    <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                </div>
+
+                <!-- Alert no more Articles -->
+                <div *ngIf="!notEmptyArticles" class="py-5">
+                    <div class="flex justify-center">
+                        <div class="text-skin-base text-sm font-bold">Plus aucun articles 😏!</div>
+                    </div>
+                </div>
             </div>
 
         </div>
