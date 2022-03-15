@@ -54,10 +54,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         switchMap((_data: any) => {
           return this.authInterceptor.intercept(request, next);
         }),
-        catchError(errodata => {
+        catchError(errordata => {
           localStorage.clear();
           this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
-          return throwError(() => errodata)
+          return throwError(() => errordata)
         })
       );
   }

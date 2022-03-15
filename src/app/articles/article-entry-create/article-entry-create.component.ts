@@ -264,15 +264,18 @@ export class ArticleEntryCreateComponent implements OnInit {
       return;
     }
 
-    this.fileUploadService.RemoveImage(fileName).subscribe({
-      next: () => {
-        this.thumbnail?.setValue('');
-        this.ThumbnailText$.next('');
-      },
-      error: (err: HttpErrorResponse) => {
-        console.log('REMOVEFILEERROR: ', err);
-      }
-    })
+    this.fileUploadService.RemoveImage(fileName)
+      .subscribe({
+        next: () => {
+          this.thumbnail?.setValue('');
+          this.ThumbnailText$.next('');
+        },
+        error: (_err: HttpErrorResponse) => {
+          this.messageService.cancel();
+          this.thumbnail?.setValue('');
+          this.ThumbnailText$.next('');
+        }
+      })
   }
 
   public onItemSelect(item: any) {

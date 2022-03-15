@@ -1,10 +1,10 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
-import { AuthService } from '../user/auth.service';
+import { MessageService } from './message.service';
 
 
 const httpOptions = {
@@ -33,7 +33,7 @@ export class FileUploadService {
   constructor(
     private state: TransferState,
     private http: HttpClient,
-    private authService: AuthService,
+    private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
     this.loadxToken();
@@ -146,6 +146,15 @@ export class FileUploadService {
       .set('X-Auth-Token', xToken)
 
     return this.http.delete<any>(`${this.ovhServerUrl}/${fileName}`, httpOptions)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            console.log('404 ERR');
+            this.messageService.cancel();
+          }
+          return throwError(() => error)
+        })
+      )
   }
 
   public FakeUploadImage() {
