@@ -174,11 +174,14 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.activePage = 'trending'
       this.location.go(`${this.router.url}?sortBy=${trendName}`)
     }
+
+    this.notEmptyArticles = true;
   }
 
 
   public sortByTag(tagName: any): void {
     this.fetchArticlesByTag(tagName);
+    this.notEmptyArticles = true;
     // this.location.go(`${this.router.url}?tag=${tagName}`)
   }
 
