@@ -165,7 +165,7 @@
                     <div class="article-image-preview-wrapper relative mt-5">
                         <div *ngIf="!thumbnail?.value"
                             class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden">
-                            <label for="file" (click)="fileUpload.click()"
+                            <label *ngIf="!uploading" for="file" (click)="fileUpload.click()"
                                 class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
                                 <div class="text-center">
                                     <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
@@ -189,7 +189,18 @@
                                         (change)="onFileSelected($event, 'coverImage')" accept="image/*">
                                 </div>
                             </label>
+
+                            <div *ngIf="uploading" class="flex items-center justify-center shadow-lg rounded-lg border">
+                                <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
+                                    viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                    <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                                        stroke-dasharray="164.93361431346415 56.97787143782138"
+                                        transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused"></circle>
+                                </svg>
+                            </div>
                         </div>
+
 
                         <div *ngIf="thumbnail?.value" class="image-wrapper aspect-w-4 aspect-h-2">
                             <img class="preview-image object-cover shadow-lg rounded-lg" src="{{thumbnail?.value}}">
@@ -301,7 +312,7 @@
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
                                 <markdown [data]="content?.value"
-                                    class="markdown-content prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:text-slate-600 prose-code:bg-primary-100 prose-code:rounded-md prose-code:!text-lg prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
+                                    class="markdown-content prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:text-slate-600 prose-code:bg-primary-100 prose-code:rounded-md prose-code:!text-base prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
                                 </markdown>
                             </div>
 

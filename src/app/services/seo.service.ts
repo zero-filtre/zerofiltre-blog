@@ -28,7 +28,7 @@ export class SeoService {
       { property: 'og:site_name', content: 'zerofiltre.tech' },
       { property: 'keywords', content: keywords },
       // Twitter Card
-      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:site', content: '@zerofiltre.tech' },
       { name: 'twitter:creator', content: `@${author}` },
       { name: 'twitter:author', content: `@${author}` },

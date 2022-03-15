@@ -23,6 +23,8 @@ export class ArticleEntryCreateComponent implements OnInit {
     progress: 0
   };
 
+  public uploading = false;
+
   public form!: FormGroup;
 
   public activeTab: string = 'editor';
@@ -185,6 +187,7 @@ export class ArticleEntryCreateComponent implements OnInit {
 
     formData.append('image', this.file.data, fileName);
     this.file.inProgress = true;
+    this.uploading = true;
 
     this.fileUploadService.uploadImage(fileName, this.file.data).pipe(
       map((event) => {
@@ -197,12 +200,13 @@ export class ArticleEntryCreateComponent implements OnInit {
         }
       }),
       catchError((error: HttpErrorResponse) => {
-        console.log('IMAGE OBJECT ERROR: ', error);
         this.file.inProgress = false;
+        this.uploading = false;
+
         return of('Upload failed');
       })).subscribe((event: any) => {
         if (typeof (event) === 'object') {
-          console.log('IMAGE OBJECT: ', event);
+          this.uploading = false;
 
           if (host === 'coverImage') {
             this.form.patchValue({ thumbnail: event.url });
@@ -260,15 +264,18 @@ export class ArticleEntryCreateComponent implements OnInit {
       return;
     }
 
-    this.fileUploadService.RemoveImage(fileName).subscribe({
-      next: () => {
-        this.thumbnail?.setValue('');
-        this.ThumbnailText$.next('');
-      },
-      error: (err: HttpErrorResponse) => {
-        console.log('REMOVEFILEERROR: ', err);
-      }
-    })
+    this.fileUploadService.RemoveImage(fileName)
+      .subscribe({
+        next: () => {
+          this.thumbnail?.setValue('');
+          this.ThumbnailText$.next('');
+        },
+        error: (_err: HttpErrorResponse) => {
+          this.messageService.cancel();
+          this.thumbnail?.setValue('');
+          this.ThumbnailText$.next('');
+        }
+      })
   }
 
   public onItemSelect(item: any) {

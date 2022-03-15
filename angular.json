@@ -29,10 +29,12 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
-               "node_modules/prismjs/themes/prism-coy.css"
+               "node_modules/prismjs/themes/prism-okaidia.css"
             ],
             "scripts": [
               "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/plugins/toolbar/prism-toolbar.js",
+              "node_modules/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.js",
               "node_modules/prismjs/components/prism-typescript.min.js",
               "node_modules/prismjs/components/prism-csharp.min.js",
               "node_modules/prismjs/components/prism-java.min.js",

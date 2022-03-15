@@ -90,9 +90,13 @@
 }
 
 .code-toolbar {
-  @apply relative;
+  @apply relative z-20;
 }
 
 .toolbar {
-  @apply absolute top-3 right-3 text-sm border border-x-skin-base px-2 py-1 rounded-full shadow-md hover:text-skin-muted;
+  @apply flex absolute top-2.5 right-2.5 overflow-hidden text-sm shadow-md hover:text-skin-muted;
+}
+
+.toolbar-item {
+  @apply first-of-type:absolute first-of-type:opacity-0;
 }
