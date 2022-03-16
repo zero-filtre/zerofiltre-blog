@@ -139,6 +139,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public onScroll() {
+    // Remove this.hasnext to enable end of list message
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
       console.log('scrolled!!');
 
@@ -154,8 +155,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       console.log('END OF THE LIST !');
 
       this.loadingMore = false;
-      this.notEmptyArticles = false;
       this.notScrolly = true;
+      this.notEmptyArticles = false;
       return
     }
 
