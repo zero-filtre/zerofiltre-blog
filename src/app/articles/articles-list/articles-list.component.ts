@@ -187,8 +187,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public sortByTag(tagName: any): void {
     this.fetchArticlesByTag(tagName);
-    this.notEmptyArticles = true;
     this.router.navigateByUrl(`?tag=${tagName}`)
+
+    this.notEmptyArticles = true;
   }
 
   // public searchArticles(key: string): void {
@@ -214,6 +215,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public onScroll() {
     if (this.notScrolly && this.notEmptyArticles) {
       console.log('scrolled!!');
+
       this.loadingMore = true;
       this.notScrolly = false;
       this.fetchMoreArticles();
@@ -221,13 +223,13 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public fetchMoreArticles() {
-    console.log('fetching...');
 
     if (!this.hasNext) {
       console.log('END OF THE LIST !');
 
       this.loadingMore = false;
       this.notEmptyArticles = false;
+      this.notScrolly = true;
       return
     }
 
@@ -236,60 +238,40 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
     const queryParamTwo = this.route.snapshot.queryParamMap.get('tag')!;
 
-    console.log('QUERY 1: ', queryParamOne);
-    console.log('QUERY 2: ', queryParamTwo);
-
     if (queryParamOne === 'popular') {
       console.log('FETCHING BY POPULAR');
+      console.log('fetching...');
       this.articleService.findAllArticlesByPopularity(this.scrollyPageNumber, this.pageItemsLimit)
-        .subscribe(({ content, hasNext }: any) => {
-          const newArticles = content;
-          this.loadingMore = false;
-          this.hasNext = hasNext;
-
-          if (newArticles.length === 0) {
-            this.notEmptyArticles = false;
-          }
-
-          this.articles = this.articles.concat(newArticles);
-          this.notScrolly = true;
-        });
+        .subscribe((response: any) => this.handleNewFetchedArticles(response));
       return
     }
 
     if (queryParamTwo) {
       console.log('FETCHING BY TAGS');
+      console.log('fetching...');
       this.articleService.findAllArticlesByTag(this.scrollyPageNumber, this.pageItemsLimit, queryParamTwo)
-        .subscribe(({ content, hasNext }: any) => {
-          const newArticles = content;
-          this.loadingMore = false;
-          this.hasNext = hasNext;
-
-          if (newArticles.length === 0) {
-            this.notEmptyArticles = false;
-          }
-
-          this.articles = this.articles.concat(newArticles);
-          this.notScrolly = true;
-        });
+        .subscribe((response: any) => this.handleNewFetchedArticles(response));
       return
     }
 
     console.log('FETCHING BY DEFAULT (RECENT)');
+    console.log('fetching...');
     this.articleService.findAllRecentArticles(this.scrollyPageNumber, this.pageItemsLimit)
-      .subscribe(({ content, hasNext }: any) => {
-        const newArticles = content;
-        this.loadingMore = false;
-        this.hasNext = hasNext;
+      .subscribe((response: any) => this.handleNewFetchedArticles(response));
 
-        if (newArticles.length === 0) {
-          this.notEmptyArticles = false;
-        }
+  }
 
-        this.articles = this.articles.concat(newArticles);
-        this.notScrolly = true;
-      });
+  private handleNewFetchedArticles({ content, hasNext }: any) {
+    const newArticles = content;
+    this.loadingMore = false;
+    this.hasNext = hasNext;
 
+    if (newArticles.length === 0) {
+      this.notEmptyArticles = false;
+    }
+
+    this.articles = this.articles.concat(newArticles);
+    this.notScrolly = true;
   }
 
 
