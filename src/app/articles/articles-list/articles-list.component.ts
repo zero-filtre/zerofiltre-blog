@@ -5,7 +5,7 @@ import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
@@ -24,6 +24,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public notScrolly = true;
   public lastPage!: number;
   public loadingMore = false;
+  public hasNext!: boolean;
+  public scrollyPageNumber = 0;
 
   public pageNumber: number = 0;
   public pageItemsLimit: number = 5;
@@ -42,6 +44,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private articleService: ArticleService,
     private dialogRef: MatDialog,
     private router: Router,
+    private route: ActivatedRoute,
     private location: Location,
     public authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: any
@@ -81,7 +84,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.subscription2$ = this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit).subscribe({
-      next: ({ totalNumberOfPages, content }: any) => {
+      next: ({ totalNumberOfPages, content, hasNext }: any) => {
         const platform = isPlatformBrowser(this.platformId) ?
           'in the browser' : 'on the server';
         console.log(`fetchRecentArticles : Running ${platform}`);
@@ -90,6 +93,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
         this.setArticlesReadingTime(this.articles);
         this.loading = false;
         this.lastPage = totalNumberOfPages - 1;
+        this.hasNext = hasNext;
 
         if (this.articles.length === 0) {
           this.errorMessage = "Aucun article à lire pour le moment 😊!"
@@ -106,16 +110,17 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.subscription2$ = this.articleService.findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit).subscribe({
-      next: (response: Article[]) => {
+      next: ({ content, hasNext }: any) => {
         const platform = isPlatformBrowser(this.platformId) ?
           'in the browser' : 'on the server';
         console.log(`fetchPopularArticles : Running ${platform}`);
 
-        this.articles = response;
-        this.setArticlesReadingTime(response);
+        this.articles = content;
+        this.setArticlesReadingTime(this.articles);
         this.loading = false;
+        this.hasNext = hasNext;
 
-        if (response.length === 0) {
+        if (this.articles.length === 0) {
           this.errorMessage = "Aucun article à lire pour le moment 😊!"
         }
       },
@@ -130,16 +135,17 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.subscription2$ = this.articleService.findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName).subscribe({
-      next: (response: Article[]) => {
+      next: ({ content, hasNext }: any) => {
         const platform = isPlatformBrowser(this.platformId) ?
           'in the browser' : 'on the server';
         console.log(`fetchArticlesByTag : Running ${platform}`);
 
-        this.articles = response;
-        this.setArticlesReadingTime(response);
+        this.articles = content;
+        this.setArticlesReadingTime(this.articles);
         this.loading = false;
+        this.hasNext = hasNext;
 
-        if (response.length === 0) {
+        if (this.articles.length === 0) {
           this.errorMessage = "Aucun article à lire pour le moment 😊!"
         }
       },
@@ -161,18 +167,18 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     if (trendName === 'recent') {
       this.activePage = 'recent';
       this.fetchRecentArticles();
-      this.location.go(this.router.url)
+      this.router.navigateByUrl('/articles');
     }
 
     if (trendName === 'popular') {
       this.activePage = 'popular'
       this.fetchPopularArticles();
-      this.location.go(`${this.router.url}?sortBy=${trendName}`)
+      this.router.navigateByUrl(`?sortBy=${trendName}`);
     }
 
     if (trendName === 'trending') {
       this.activePage = 'trending'
-      this.location.go(`${this.router.url}?sortBy=${trendName}`)
+      this.router.navigateByUrl(`?sortBy=${trendName}`);
     }
 
     this.notEmptyArticles = true;
@@ -182,28 +188,28 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public sortByTag(tagName: any): void {
     this.fetchArticlesByTag(tagName);
     this.notEmptyArticles = true;
-    // this.location.go(`${this.router.url}?tag=${tagName}`)
+    this.router.navigateByUrl(`?tag=${tagName}`)
   }
 
-  public searchArticles(key: string): void {
-    const results: Article[] = []
+  // public searchArticles(key: string): void {
+  //   const results: Article[] = []
 
-    for (const article of this.articles) {
-      if (
-        article.title?.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-        article.tags?.some(tag => tag.name?.toLowerCase().indexOf(key.toLowerCase()) !== -1) ||
-        article.author?.fullName?.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      ) {
-        results.push(article)
-      }
+  //   for (const article of this.articles) {
+  //     if (
+  //       article.title?.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
+  //       article.tags?.some(tag => tag.name?.toLowerCase().indexOf(key.toLowerCase()) !== -1) ||
+  //       article.author?.fullName?.toLowerCase().indexOf(key.toLowerCase()) !== -1
+  //     ) {
+  //       results.push(article)
+  //     }
 
-      this.articles = results
+  //     this.articles = results
 
-      if (results.length === 0 || !key) {
-        this.fetchRecentArticles();
-      }
-    }
-  }
+  //     if (results.length === 0 || !key) {
+  //       this.fetchRecentArticles();
+  //     }
+  //   }
+  // }
 
   public onScroll() {
     if (this.notScrolly && this.notEmptyArticles) {
@@ -217,8 +223,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public fetchMoreArticles() {
     console.log('fetching...');
 
-    // Check if end of the list
-    if (this.lastPage === this.pageNumber) {
+    if (!this.hasNext) {
       console.log('END OF THE LIST !');
 
       this.loadingMore = false;
@@ -226,23 +231,65 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       return
     }
 
-    // send the next pageNumber value in the request
-    this.pageNumber += 1;
+    this.scrollyPageNumber += 1;
 
-    // call http request
-    this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
-      .subscribe(({ content }: any) => {
+    const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
+    const queryParamTwo = this.route.snapshot.queryParamMap.get('tag')!;
+
+    console.log('QUERY 1: ', queryParamOne);
+    console.log('QUERY 2: ', queryParamTwo);
+
+    if (queryParamOne === 'popular') {
+      console.log('FETCHING BY POPULAR');
+      this.articleService.findAllArticlesByPopularity(this.scrollyPageNumber, this.pageItemsLimit)
+        .subscribe(({ content, hasNext }: any) => {
+          const newArticles = content;
+          this.loadingMore = false;
+          this.hasNext = hasNext;
+
+          if (newArticles.length === 0) {
+            this.notEmptyArticles = false;
+          }
+
+          this.articles = this.articles.concat(newArticles);
+          this.notScrolly = true;
+        });
+      return
+    }
+
+    if (queryParamTwo) {
+      console.log('FETCHING BY TAGS');
+      this.articleService.findAllArticlesByTag(this.scrollyPageNumber, this.pageItemsLimit, queryParamTwo)
+        .subscribe(({ content, hasNext }: any) => {
+          const newArticles = content;
+          this.loadingMore = false;
+          this.hasNext = hasNext;
+
+          if (newArticles.length === 0) {
+            this.notEmptyArticles = false;
+          }
+
+          this.articles = this.articles.concat(newArticles);
+          this.notScrolly = true;
+        });
+      return
+    }
+
+    console.log('FETCHING BY DEFAULT (RECENT)');
+    this.articleService.findAllRecentArticles(this.scrollyPageNumber, this.pageItemsLimit)
+      .subscribe(({ content, hasNext }: any) => {
         const newArticles = content;
         this.loadingMore = false;
+        this.hasNext = hasNext;
 
         if (newArticles.length === 0) {
           this.notEmptyArticles = false;
         }
 
-        // add newly fetched articles to the existing list
         this.articles = this.articles.concat(newArticles);
         this.notScrolly = true;
       });
+
   }
 
 

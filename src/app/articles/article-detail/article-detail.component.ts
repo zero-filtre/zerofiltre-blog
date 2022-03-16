@@ -199,9 +199,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         this.articleId = params.get('id')!;
 
         this.getCurrentArticle(this.articleId);
-        if (isPlatformBrowser(this.platformId)) {
-          // TODO: add server APi transfert state to prevent double request
-        }
+
+        // TODO: add server APi transfert state to prevent double request
+        // if (isPlatformBrowser(this.platformId)) {
+        // }
       }
     );
   }
