@@ -1,5 +1,5 @@
-<div class="pb-5">
-    <nav class="top-nav sm:flex sm:items-center justify-between mt-6">
+<main class="pb-5 mt-28">
+    <nav class="top-nav sm:flex sm:items-center justify-between">
         <div class="nav-links inline-flex items-center space-x-4 font-semibold text-skin-base">
             <a routerLink="/" class="group flex align-center">
                 <svg class="h-6 w-6 text-primary-500 mr-1 -mt-[1px]" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -17,7 +17,7 @@
             </a>
         </div>
 
-        <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between lg:fixed top-24 right-20 z-10">
+        <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between lg:fixed top-28 right-20 z-10">
             <ng-container *ngIf="form.invalid; else validBtn">
                 <button [disabled]="form.invalid || loading"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
@@ -123,7 +123,7 @@
                         </label>
                         <div class="mt-5">
                             <textarea (keyup)="typeInSummary(getValue($event))"
-                                class="editor-textarea shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
+                                class="editor-textarea rounded-md shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
                                 rows="5" cols="33"
                                 placeholder="Decrivez votre article en quelques mots... (Entre 20 et 250 caractères)"
                                 id="summary" formControlName="summary" required minlength="20" maxlength="250">
@@ -207,7 +207,7 @@
                         </div>
 
                         <div *ngIf="thumbnail?.value"
-                            class="cover-close-btn absolute top-0 right-0 z-20 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
+                            class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
                             (click)="removeFile()">x
                         </div>
                     </div>
@@ -441,4 +441,4 @@
         </div>
     </form>
 
-</div>
+</main>

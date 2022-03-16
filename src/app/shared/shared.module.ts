@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppShellRenderDirective } from '../directives/app-shell-render.directive';
 import { AppShellNoRenderDirective } from '../directives/app-shell-no-render.directive';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const components = [
   AppShellRenderDirective,
@@ -32,6 +33,7 @@ const modules = [
   NgxSkeletonLoaderModule,
   FormsModule,
   ReactiveFormsModule,
+  InfiniteScrollModule
 ];
 
 @NgModule({

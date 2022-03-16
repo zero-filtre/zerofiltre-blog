@@ -34,7 +34,7 @@ export class ArticleService {
   public findAllRecentArticles(page: number, limit: number): Observable<Article[]> {
     return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`)
       .pipe(
-        map(({ content }) => this.sortByDate(content)),
+        // map(({ content }) => this.sortByDate(content)),
         shareReplay()
       );
   }
@@ -42,7 +42,7 @@ export class ArticleService {
   public findAllArticlesByPopularity(page: number, limit: number): Observable<Article[]> {
     return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published&byPopularity=true`)
       .pipe(
-        map(({ content }) => content),
+        // map(({ content }) => content),
         shareReplay()
       );
   }
@@ -50,7 +50,7 @@ export class ArticleService {
   public findAllArticlesByTag(page: number, limit: number, tagName: string): Observable<Article[]> {
     return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published&tag=${tagName}`)
       .pipe(
-        map(({ content }) => this.sortByDate(content)),
+        // map(({ content }) => this.sortByDate(content)),
         shareReplay()
       );
   }
