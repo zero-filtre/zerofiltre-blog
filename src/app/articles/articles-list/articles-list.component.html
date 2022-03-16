@@ -1,4 +1,4 @@
-<main class="articles-list-container lg:grid grid-cols-10 gap-10 py-10 items-start">
+<main class="articles-list-container lg:grid grid-cols-10 gap-10 py-10 items-start !mt-20">
     <aside class="col-span-2 hidden lg:block">
 
         <div class="left-side-container">
@@ -156,10 +156,11 @@
                 </nav>
             </div>
 
-            <div class="articles-wrapper articles-scrollable-list-panel no-scrollbar h-screen overflow-y-scroll py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none"
-                infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" [scrollWindow]="false"
-                (scrolled)="onScroll()">
+            <div class="articles-wrapper articles-scrollable-list-panel no-scrollbar min-h-[80vh] h-full py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none"
+                infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
                 <!-- no-scrollbar -->
+                <!-- [scrollWindow]="false" -->
+                <!-- h-screen overflow-y-scroll -->
 
                 <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
                     <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg"
