@@ -79,7 +79,7 @@ def runApp() {
             sh """
                   echo "Branch:" ${env.BRANCH_NAME}
                   echo "env:" ${env_name}
-                  kubectl apply -f microservice-${env_name}.yaml
+                  envsubst < microservices.yaml | kubectl apply -f
                """
         }
         sh """

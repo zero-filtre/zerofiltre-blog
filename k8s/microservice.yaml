@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: zerofiltretech-${env_name}
+  name: zerofiltretech-blog-${env_name}
+spec:
+  minReadySeconds: 30
+  progressDeadlineSeconds: 120
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zerofiltretech-blog-${env_name}
+  template:
+    metadata:
+      labels:
+        app: zerofiltretech-blog-${env_name}
+    spec:
+      containers:
+        - name: zerofiltretech-blog-${env_name}
+          image: imzerofiltre/zerofiltretech-blog-front:0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4000
+          env:
+            - name: GITHUB_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: zerofiltre-blog-api
+                  key: github_client_secret
+
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-api
+                  key: logging_level_org_springframework
+
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-api
+                  key: spring_datasource_url
+
+            - name: ZEROFILTRE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-api
+                  key: zerofiltre_env
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: zerofiltretech-${env_name}
+  name: zerofiltretech-blog-${env_name}
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4000
+  selector:
+    app: zerofiltretech-blog-${env_name}
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  namespace: zerofiltretech-${env_name}
+  name: zerofiltretech-blog-${env_name}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # add an annotation indicating the issuer to use.
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  rules:
+    - host: "blog-${env_name}.zerofiltre.tech"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: zerofiltretech-blog-${env_name}
+              servicePort: 80
+  tls: # < placing a host in the TLS config will indicate a certificate should be created
+    - hosts:
+        - "blog-${env_name}.zerofiltre.tech"
+      secretName: blog-front-zerofiltre-ingress-cert # < cert-manager will store the created certificate in this secret.
