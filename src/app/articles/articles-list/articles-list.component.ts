@@ -10,6 +10,7 @@ import { isPlatformBrowser, Location } from '@angular/common';
 import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-articles-list',
@@ -219,8 +220,12 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     }
   }
 
+  // githuId = environment.GITHUB_CLIENT_ID
+
 
   ngOnInit(): void {
+    // console.log('SHOW: ', this.githuId);
+
     this.seo.generateTags({
       title: 'Tous les articles | Zerofiltre.tech',
       description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
@@ -229,7 +234,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
 
-    this.location.go('/articles');
+    this.router.navigateByUrl('/articles');
 
     if (isPlatformBrowser(this.platformId)) {
       this.fetchRecentArticles();

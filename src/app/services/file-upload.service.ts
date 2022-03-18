@@ -49,11 +49,11 @@ export class FileUploadService {
           ],
           "password": {
             "user": {
-              "name": "user-kBB6rJAw6Vgt",
+              "name": environment.ovhAuthName,
               "domain": {
                 "id": "default"
               },
-              "password": "SgKaxtFtpNCy9uXJAAyhJzHjrPxYG6pd"
+              "password": environment.ovhAuthPassword
             }
           }
         }

@@ -1,7 +1,18 @@
-FROM node
+FROM node:latest
+WORKDIR /app
+COPY . .
 
-COPY dist/ /dist
-COPY .docker/entrypoint.sh entrypoint.sh
+RUN apt-get update 
+RUN apt-get -y install gettext-base
+RUN apt-get clean
+RUN npm install -g @angular/cli
+RUN npm install
+
+ADD .docker/entrypoint.sh entrypoint-dos.sh 
+
+RUN sed -e 's/\r$//' entrypoint-dos.sh > entrypoint.sh
 RUN chmod 755 entrypoint.sh
-ENTRYPOINT ["./entrypoint.sh"]
+
 EXPOSE 4000
+
+ENTRYPOINT ["./entrypoint.sh"]
