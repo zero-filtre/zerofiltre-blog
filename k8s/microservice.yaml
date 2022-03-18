@@ -22,29 +22,65 @@ spec:
           ports:
             - containerPort: 4000
           env:
-            - name: GITHUB_CLIENT_SECRET
+            - name: OVH_AUTH_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: zerofiltre-blog-api
-                  key: github_client_secret
+                name: zerofiltre-blog-api
+                key: ovh_auth_password
 
-            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK
+            - name: GITHUB_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
                   name: zerofiltre-blog-api
-                  key: logging_level_org_springframework
+                  key: github_client_id
 
-            - name: SPRING_DATASOURCE_URL
+            - name: API_BASE_URL
               valueFrom:
                 configMapKeyRef:
                   name: zerofiltre-blog-api
-                  key: spring_datasource_url
+                  key: api_base_url
 
-            - name: ZEROFILTRE_ENV
+            - name: BLOG_URL
               valueFrom:
                 configMapKeyRef:
                   name: zerofiltre-blog-api
-                  key: zerofiltre_env
+                  key: blog_url
+
+            - name: OVH_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-api
+                  key: ovh_server_url
+
+            - name: OVH_AUTH_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-api
+                  key: ovh_auth_url
+
+            - name: OVH_AUTH_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-api
+                  key: ovh_auth_name
+
+            - name: STACK_OVERFLOW_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-api
+                  key: stack_overflow_client_id
+
+            - name: STACK_OVERFLOW_REDIRECT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-api
+                  key: stack_overflow_redirect_url
+
+            - name: GITHUB_REDIRECT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-api
+                  key: github_redirect_url
 
 ---
 apiVersion: v1

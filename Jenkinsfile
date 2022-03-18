@@ -19,9 +19,9 @@ podTemplate(label: label, containers: [
 
         ]) {
 
-            stage('Build with test') {
-                buildAndTest()
-            }
+            // stage('Build with test') {
+            //     buildAndTest()
+            // }
 
             stage('Build and push to docker registry') {
                 withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -56,6 +56,7 @@ def buildAndTest() {
         sh """
             npm install -g @angular/cli
             npm install
+            envsubst < /environment.template.js > / env.js
             ng build --configuration=${env_name} && ng run zerofiltre-blog:server --configuration=${env_name}
         """
     }
