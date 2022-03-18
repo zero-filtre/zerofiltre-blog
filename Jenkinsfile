@@ -51,16 +51,15 @@ String getTag(String buildNumber, String branchName) {
     return tag + '-unstable'
 }
 
-def buildAndTest() {
-    container('node') {
-        sh """
-            npm install -g @angular/cli
-            npm install
-            envsubst < /environment.template.js > / env.js
-            ng build --configuration=${env_name} && ng run zerofiltre-blog:server --configuration=${env_name}
-        """
-    }
-}
+// def buildAndTest() {
+//     container('node') {
+//         sh """
+//             npm install -g @angular/cli
+//             npm install
+//             ng build --configuration=${env_name} && ng run zerofiltre-blog:server --configuration=${env_name}
+//         """
+//     }
+// }
 
 def buildDockerImageAndPush(dockerUser, dockerPassword) {
     container('docker') {
@@ -78,13 +77,15 @@ def runApp() {
     container('kubectl') {
         dir('k8s') {
             sh """
+                  ls -la
                   echo "Branch:" ${env.BRANCH_NAME}
                   echo "env:" ${env_name}
-                  envsubst < microservices.yaml | kubectl apply -f
+                  envsubst < microservices.yaml | kubectl apply -f -
                """
         }
         sh """
                 kubectl set image deployment/zerofiltretech-blog-front-${env_name} zerofiltretech-blog-front-${env_name}=${api_image_tag} -n zerofiltretech-${env_name}
+                kubectl get deploy zerofiltretech-blog-front-${env_name} -o yaml -n zerofiltretech-${env_name}
                 if ! kubectl rollout status -w deployment/zerofiltretech-blog-front-${env_name} -n zerofiltretech-${env_name}; then
                     kubectl rollout undo deployment.v1.apps/zerofiltretech-blog-front-${env_name} -n zerofiltretech-${env_name}
                     kubectl rollout status deployment/zerofiltretech-blog-front-${env_name} -n zerofiltretech-${env_name}
