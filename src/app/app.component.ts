@@ -21,8 +21,10 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
 
+  lang = (window.navigator as any).language
+
   constructor(
-    translate: TranslateService,
+    private translate: TranslateService,
     private breakpointObserver: BreakpointObserver,
     private messageService: MessageService,
     public authService: AuthService
@@ -30,8 +32,10 @@ export class AppComponent implements OnInit {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('fr');
 
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-    translate.use('fr');
+    // the language to use, if the lang isn't available, it will use the current loader to get them
+    translate.use(this.lang);
+
+    console.log('LOCALE: ', this.lang);
   }
 
   public logout() {
@@ -39,7 +43,12 @@ export class AppComponent implements OnInit {
     location.reload();
   }
 
-  alertCopy() {
+  // Use to set the language on a btn click for example
+  public useLanguage(language: string) {
+    this.translate.use(language);
+  }
+
+  public alertCopy() {
     console.log('COPY DONE');
     this.messageService.openSnackBarWarning('Code Copied', '');
   }
