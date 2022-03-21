@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
 
-  browserLanguage = 'en';
+  browserLanguage!: string;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -40,8 +40,8 @@ export class AppComponent implements OnInit {
     }
 
     this.translate.setDefaultLang('fr');
-    this.translate.use(this.browserLanguage);
-    console.log('LOCALE: ', this.browserLanguage);
+    this.translate.use('fr');
+    console.log('LOCALE LANGUAGE: ', this.browserLanguage);
   }
 
   public logout() {
