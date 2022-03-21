@@ -83,7 +83,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     let errorMessage = "Un problème est survenu, merci d'essayer de nouveau plus tard ou de contacter un administrateur de l'API";
     console.log('ERROR OCCURED: ', error);
 
-    if (error.error instanceof ErrorEvent) {
+    if (error.status === 0) {
       // Client side Error
       errorMessage = error.error.message;
     } else {

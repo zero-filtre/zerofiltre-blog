@@ -26,6 +26,8 @@
     "@angular/platform-server": "~13.2.0",
     "@angular/router": "~13.2.0",
     "@nguniversal/express-engine": "^13.0.2",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "express": "^4.15.2",
     "ng-multiselect-dropdown": "^0.3.7",
     "ngx-markdown": "^13.0.0",

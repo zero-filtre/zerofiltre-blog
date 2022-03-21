@@ -12,6 +12,7 @@ export const environment = {
   STACK_OVERFLOW_CLIENT_ID: '22742',
   gitHubRedirectURL: 'https://blog-dev.zerofiltre.tech/user/social-auth',
   stackOverflowRedirectURL: 'https://blog-dev.zerofiltre.tech/user/social-auth',
+  ovhAuthPassword: '', //Remove before github push
   ovhAuthName: 'user-kBB6rJAw6Vgt',
 };
 
