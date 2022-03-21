@@ -8,6 +8,6 @@ export const environment = {
     STACK_OVERFLOW_CLIENT_ID: '${STACK_OVERFLOW_CLIENT_ID}',
     gitHubRedirectURL: '${GITHUB_REDIRECT_URL}',
     stackOverflowRedirectURL: '${STACK_OVERFLOW_REDIRECT_URL}',
-    ovhAuthPassword: '${OVH_AUTH_PASSWORD}', //Remove before github push
+    ovhAuthPassword: '${OVH_AUTH_PASSWORD}',
     ovhAuthName: '${OVH_AUTH_NAME}',
 };
