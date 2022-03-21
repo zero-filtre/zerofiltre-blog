@@ -282,7 +282,6 @@
                             </div>
 
                             <div *ngIf="authService.currentUsr as currentUsr">
-                                <!-- *ngIf="authService.user$ | async as currentUsr" -->
 
                                 <div *ngIf="isAuthor(currentUsr, article)">
                                     <button [matMenuTriggerFor]="menu" class="text-secondary"

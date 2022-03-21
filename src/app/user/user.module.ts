@@ -10,6 +10,7 @@ import { PasswordRenewalPageComponent } from './password-renewal-page/password-r
 import { AccountConfirmationPageComponent } from './account-confirmation-page/account-confirmation-page.component';
 import { ResendConfirmationPageComponent } from './resend-confirmation-page/resend-confirmation-page.component';
 import { SocialAuthComponent } from './social-auth/social-auth.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SocialAuthComponent } from './social-auth/social-auth.component';
     PasswordRenewalPageComponent,
     AccountConfirmationPageComponent,
     ResendConfirmationPageComponent,
-    SocialAuthComponent
+    SocialAuthComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
