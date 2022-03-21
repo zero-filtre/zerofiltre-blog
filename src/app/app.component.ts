@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
 
-  browserLanguage = 'fr';
+  browserLanguage = 'en';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,

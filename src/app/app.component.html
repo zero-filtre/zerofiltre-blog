@@ -66,7 +66,6 @@
       </a>
 
       <div *ngIf="authService.currentUsr as currentUsr" class="border border-primary-500 rounded-lg p-4 mt-5">
-        <!-- *ngIf="authService.user$ | async as currentUsr" -->
 
         <div class="flex items-center gap-2">
           <div>
@@ -114,7 +113,7 @@
     <div class="top-toolbar fixed top-0 left-0 right-0 z-50">
 
       <mat-toolbar class="top-toolbar-container">
-        <a class="logo-link" routerLink="/">
+        <a class="logo-link" href="/">
           <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
             <img class="max-w-full" src="../../../assets/logoblue.svg" alt="Zerofiltre.tech">
           </div>
@@ -122,11 +121,11 @@
 
         <div class="hidden lg:flex items-center text-secondary">
           <a class="navLink" routerLink="/a-propos">
-            <div>A propos</div>
+            <div>{{'navbar.about' | translate}}</div>
           </a>
 
           <a class="navLink" routerLink="/articles">
-            <div>Articles</div>
+            <div>{{'navbar.articles' | translate}}</div>
           </a>
 
           <a class="navLink" routerLink="/whatsapp">
@@ -164,10 +163,10 @@
 
           <ng-container class="navbar-links-hidden-on-server-rendering" *appShellNoRender>
             <a *ngIf="!(authService.currentUsr)" class="navLink" routerLink="/login">
-              <div class="!font-medium text-primary-500">Se connecter</div>
+              <div class="!font-medium text-primary-500">{{'navbar.login' | translate}}</div>
             </a>
             <a *ngIf="!(authService.currentUsr)" class="navLink" routerLink="/register">
-              <div>S'enregistrer</div>
+              <div>{{'navbar.register' | translate}}</div>
             </a>
 
             <button *ngIf="authService.currentUsr as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
