@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
 
+  browserLanguage = 'fr';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -30,17 +31,17 @@ export class AppComponent implements OnInit {
     private messageService: MessageService,
     public authService: AuthService,
   ) {
-    this.translate.setDefaultLang('fr');
     this.setBrowserTranslationConfigs();
   }
 
   setBrowserTranslationConfigs() {
     if (isPlatformBrowser(this.platformId)) {
-      const browserLanguage = (window.navigator as any).language
-
-      this.translate.use(browserLanguage);
-      console.log('LOCALE: ', browserLanguage);
+      this.browserLanguage = (window.navigator as any).language
     }
+
+    this.translate.setDefaultLang('fr');
+    this.translate.use(this.browserLanguage);
+    console.log('LOCALE: ', this.browserLanguage);
   }
 
   public logout() {
