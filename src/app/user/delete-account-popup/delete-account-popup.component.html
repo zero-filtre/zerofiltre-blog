@@ -1,0 +1,45 @@
+<div *ngIf="loading; else popupContent">
+    <svg class="w-20 h-20 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid">
+        <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+            style="animation-play-state:paused"></circle>
+    </svg>
+</div>
+
+<ng-template #popupContent>
+    <div class="delete-account-content-wrapper max-w-md flex flex-col items-center justify-center">
+        <div class="alert-message border-t-4 border-red-500 rounded-b text-skin-base px-4 py-3" role="alert">
+            <div class="flex">
+                <div class="py-1"><svg class="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+                    </svg></div>
+                <div>
+                    <p class="font-bold text-xl">Attention !</p>
+                    <p class="text-base">En supprimant votre compte, si vous n'avez pas d'articles rédigés, ce dernier
+                        sera supprimé y compris toute
+                        votre
+                        activité sur la plateforme (Ex: Vos réactions). Cependant, si vous possédez des articles en
+                        cours, votre
+                        compte sera
+                        uniquement désactivé.
+                        Vous pourrez le réactiver à tout moment en contactant l'équipe Zerofiltre.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons mt-6 flex space-x-2">
+            <button (click)="handleAccountDelete()"
+                class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-red-500 hover:bg-red-700 focus:outline-none">
+                <span>Supprimer mon compte</span>
+            </button>
+            <button (click)="onNoClick()"
+                class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-200">
+                <span>Annuler</span>
+            </button>
+        </div>
+    </div>
+</ng-template>

@@ -6,11 +6,10 @@ import { ArticleService } from '../article.service';
 import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { isPlatformBrowser, Location } from '@angular/common';
-import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
+import { isPlatformBrowser } from '@angular/common';
+import { calcReadingTime } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-articles-list',
@@ -46,7 +45,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
     public authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }

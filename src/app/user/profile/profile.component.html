@@ -124,7 +124,7 @@
                         <label class="text-skin-muted">Mot de passe</label>
                         <div class="text-skin-base font-bold">..........</div>
                     </div>
-                    <button
+                    <button (click)="openPasswordEntryDialog()"
                         class="px-4 py-2 shadow-md text-white font-semibold text-xs rounded-full bg-primary-300 hover:bg-primary-500 transition-all duration-200">Changer</button>
                 </div>
             </div>
@@ -137,7 +137,7 @@
             </div>
 
             <div class="action-btns flex justify-end  mt-12">
-                <button
+                <button (click)="openAccountDeleteDialog()"
                     class="px-4 py-2 shadow-lg text-white font-semibold text-xs rounded-full bg-red-500 hover:bg-red-700 transition-all duration-200">Supprimer
                     mon compte
                 </button>

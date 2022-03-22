@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { DeleteAccountPopupComponent } from '../delete-account-popup/delete-account-popup.component';
+import { PasswordUpdatePopupComponent } from '../password-update-popup/password-update-popup.component';
 
 @Component({
   selector: 'app-profile',
@@ -9,8 +12,27 @@ import { Router } from '@angular/router';
 export class ProfileComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private dialogRef: MatDialog,
   ) { }
+
+  public openPasswordEntryDialog(): void {
+    this.dialogRef.open(PasswordUpdatePopupComponent, {
+      // width: '850px',
+      // height: '350px',
+      panelClass: 'password-popup-panel',
+      // backdropClass: 'article-popup-backdrop',
+    });
+  }
+
+  public openAccountDeleteDialog(): void {
+    this.dialogRef.open(DeleteAccountPopupComponent, {
+      // width: '850px',
+      // height: '350px',
+      panelClass: 'delete-account-popup-panel',
+      // backdropClass: 'article-popup-backdrop',
+    });
+  }
 
   ngOnInit(): void {
     console.log('URL: ', this.router.url);

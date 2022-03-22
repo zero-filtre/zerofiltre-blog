@@ -235,8 +235,38 @@
   <mat-sidenav
     class="profile-sidebar !hidden lg:!block bg-skin-bgMuted shadow-md border-0 rounded-none !fixed !top-20 w-full max-w-xs"
     mode="side" [opened]="checkRouteUrl('profile')">
-    <div class="profile-sidebar-container p-10 text-skin-base">
-      la sidebar
+
+    <div class="profile-sidebar-container p-10 pl-20 text-skin-base">
+
+      <div class="flex flex-col space-y-1">
+        <a routerLink="/user/profile" class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+          <svg class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path d="M15.596 15.696h-7.22M15.596 11.937h-7.22M11.131 8.177H8.376" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"></path>
+            <path clip-rule="evenodd"
+              d="M3.61 12c0 6.937 2.098 9.25 8.391 9.25 6.294 0 8.391-2.313 8.391-9.25 0-6.937-2.097-9.25-8.391-9.25C5.708 2.75 3.61 5.063 3.61 12z"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span class="truncate">
+            Mes infos
+          </span>
+        </a>
+
+        <a routerLink="/user/dashboard"
+          class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+          <svg class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200" fill="none"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path clip-rule="evenodd"
+              d="M12 3C9.964 3 9.771 6.547 8.56 7.8c-1.213 1.253-4.982-.18-5.505 2.044-.523 2.225 2.867 2.98 3.285 4.89.42 1.909-1.65 4.59.12 5.926 1.77 1.334 3.674-1.685 5.54-1.685s3.77 3.019 5.54 1.685c1.77-1.335-.3-4.017.12-5.927.419-1.909 3.808-2.664 3.285-4.889-.522-2.224-4.292-.791-5.503-2.044C14.23 6.547 14.036 3 12 3z"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span class="truncate">
+            Mes articles
+          </span>
+        </a>
+      </div>
+
     </div>
   </mat-sidenav>
 

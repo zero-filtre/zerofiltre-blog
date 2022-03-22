@@ -11,6 +11,8 @@ import { AccountConfirmationPageComponent } from './account-confirmation-page/ac
 import { ResendConfirmationPageComponent } from './resend-confirmation-page/resend-confirmation-page.component';
 import { SocialAuthComponent } from './social-auth/social-auth.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PasswordUpdatePopupComponent } from './password-update-popup/password-update-popup.component';
+import { DeleteAccountPopupComponent } from './delete-account-popup/delete-account-popup.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { ProfileComponent } from './profile/profile.component';
     AccountConfirmationPageComponent,
     ResendConfirmationPageComponent,
     SocialAuthComponent,
-    ProfileComponent
+    ProfileComponent,
+    PasswordUpdatePopupComponent,
+    DeleteAccountPopupComponent
   ],
   imports: [
     CommonModule,

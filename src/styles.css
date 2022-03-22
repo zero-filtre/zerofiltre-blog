@@ -48,6 +48,13 @@
   @apply !flex justify-center items-center bg-skin-cardMuted !p-4 sm:p-6;
 }
 
+.password-popup-panel .mat-dialog-container {
+  @apply !rounded-xl;
+}
+
+.delete-account-popup-panel .mat-dialog-container {
+  @apply !rounded-xl;
+}
 /* .article-popup-backdrop {
 }
 
