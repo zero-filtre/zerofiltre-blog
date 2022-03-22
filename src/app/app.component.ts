@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, shareReplay } from 'rxjs';
 import { MessageService } from './services/message.service';
@@ -29,12 +30,21 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private breakpointObserver: BreakpointObserver,
     private messageService: MessageService,
+    private router: Router,
     public authService: AuthService,
   ) {
     this.setBrowserTranslationConfigs();
   }
 
-  setBrowserTranslationConfigs() {
+  public checkRouteUrl(componentPrefix: string): boolean {
+    const currentUrlElements = this.router.url.split('/');
+    const len = currentUrlElements.length;
+    const currentUrlSuffix = currentUrlElements[len - 1];
+
+    return componentPrefix === currentUrlSuffix;
+  }
+
+  public setBrowserTranslationConfigs() {
     if (isPlatformBrowser(this.platformId)) {
       this.browserLanguage = (window.navigator as any).language
     }
