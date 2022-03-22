@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -199,7 +199,7 @@ export class ArticleEntryCreateComponent implements OnInit {
             return event;
         }
       }),
-      catchError((error: HttpErrorResponse) => {
+      catchError((_error: HttpErrorResponse) => {
         this.file.inProgress = false;
         this.uploading = false;
 
@@ -271,9 +271,6 @@ export class ArticleEntryCreateComponent implements OnInit {
           this.ThumbnailText$.next('');
         },
         error: (_err: HttpErrorResponse) => {
-          this.messageService.cancel();
-          this.thumbnail?.setValue('');
-          this.ThumbnailText$.next('');
         }
       })
   }
@@ -336,9 +333,7 @@ export class ArticleEntryCreateComponent implements OnInit {
 
     this.fetchListOfTags();
 
-    if (isPlatformBrowser(this.platformId) && !this.fileUploadService.xTokenObj) {
-      location.reload()
-    } else {
+    if (isPlatformServer(this.platformId)) {
       this.fileUploadService.xToken$.subscribe();
     }
 
