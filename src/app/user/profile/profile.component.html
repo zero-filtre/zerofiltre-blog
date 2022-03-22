@@ -1,18 +1,26 @@
 <main class="mt-28 sm:pt-5 pb-20">
-    <nav class="profile-top-nav flex items-center justify-between max-w-xl mx-auto">
-        <div class="nav-title inline-flex items-center space-x-2 font-semibold text-skin-base">
-            <svg class="h-6 w-6 text-primary-500 -mt-[1px]" xmlns="http://www.w3.org/2000/svg" fill="none"
+    <nav class="profile-top-nav flex items-center justify-between sm:justify-start sm:gap-24 max-w-xl mx-auto">
+        <div class="nav-title hidden sm:inline-flex items-center space-x-1 font-semibold text-skin-base">
+            <svg class="h-5 w-5 text-primary-500 -mt-[1px]" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
             </svg>
+            <a routerLink="/articles">
+                <span class="text-skin-muted text-sm">
+                    Tous les articles
+                </span>
+            </a>
+        </div>
+
+        <div class="nav-title font-semibold">
             <span class="text-primary-500 text-xl sm:text-2xl">
-                Mon compte
+                Mes infos
             </span>
         </div>
 
-        <div class="profile-menu sm:mt-0">
+        <div class="profile-menu flex items-center sm:hidden">
             <button [matMenuTriggerFor]="menu" class="text-secondary" aria-label="icon-button with a menu">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
@@ -20,9 +28,9 @@
             </button>
 
             <mat-menu #menu="matMenu" class="mt-2 text-skin-base font-semibold">
-                <a routerLink="/user/profile"
+                <a routerLink="/articles"
                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                    <span>Mes Infos</span>
+                    <span>Tous les articles</span>
                 </a>
                 <a routerLink="/user/dashboard"
                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
@@ -37,44 +45,65 @@
     </nav>
 
     <div class="profile-container max-w-xl mx-auto mt-10 sm:mt-20">
-        <div class="profile-header flex items-center gap-3">
-            <div class="image-wrapper relative border rounded-full h-20 w-20 shadow-lg">
-                <!-- <img *ngIf="currentUsr?.profilePicture" class="w-full rounded-full"
+        <div class="profile-header flex items-center justify-between">
+            <div class="header-infos flex items-center gap-3">
+                <div class="image-wrapper relative border rounded-full h-20 w-20 shadow-lg">
+                    <!-- <img *ngIf="currentUsr?.profilePicture" class="w-full rounded-full"
                     [src]="currentUsr?.profilePicture"> -->
-                <ng-container>
-                    <!-- *ngIf="!currentUsr?.profilePicture" -->
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="w-full rounded-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </ng-container>
-
-                <div class="absolute top-1 right-0 border-2 rounded-full w-5 h-5 bg-skin-card">
-                    <button>
+                    <ng-container>
+                        <!-- *ngIf="!currentUsr?.profilePicture" -->
                         <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-full p-0.5 -mx-[1px] text-primary-500 hover:fill-primary-500 transition-all duration-200"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                            class="w-full rounded-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                    </button>
-                </div>
-            </div>
+                    </ng-container>
 
-            <div class="flex flex-col space-y-1 flex-1">
-                <span class="text-xl sm:text-2xl font-bold text-skin-base">Current user</span>
-                <div class="account-verification-badge flex space-x-1 items-center">
-                    <span
-                        class="max-w-fit font-semibold px-2 py-0.5 text-xs text-skin-muted border-2 border-primary-500 rounded-lg">Email
-                        verifié !</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none"
+                    <div class="absolute top-1 right-0 border-2 rounded-full w-5 h-5 bg-skin-card">
+                        <button>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-full p-0.5 -mx-[1px] text-primary-500 hover:fill-primary-500 transition-all duration-200"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="user-text-wrapper flex flex-col space-y-1 flex-1">
+                    <span class="text-xl sm:text-2xl font-bold text-skin-base">Current user</span>
+                    <div class="account-verification-badge flex space-x-1 items-center">
+                        <span
+                            class="inline-block font-semibold px-2 py-0.5 text-xs text-skin-muted border-2 border-primary-500 rounded-lg">Email
+                            verifié !</span>
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
+                    </svg> -->
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
                 </div>
+            </div>
+
+            <div class="edit-action-btn px-4 hidden sm:block">
+                <button
+                    class="group flex space-x-1 shadow-md rounded-full px-4 py-2 text-skin-base bg-skin-link hover:bg-slate-100 transition-all duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:fill-slate-300" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                    <span class="text-sm font-semibold">Editer</span>
+                </button>
             </div>
         </div>
 
@@ -96,7 +125,7 @@
                         <div class="text-skin-base font-bold">..........</div>
                     </div>
                     <button
-                        class="px-4 py-2 shadow-lg text-white font-semibold text-xs rounded-full bg-primary-300 hover:bg-primary-500 transition-all duration-200">Changer</button>
+                        class="px-4 py-2 shadow-md text-white font-semibold text-xs rounded-full bg-primary-300 hover:bg-primary-500 transition-all duration-200">Changer</button>
                 </div>
             </div>
 
