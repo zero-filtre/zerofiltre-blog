@@ -14,6 +14,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { PasswordUpdatePopupComponent } from './password-update-popup/password-update-popup.component';
 import { DeleteAccountPopupComponent } from './delete-account-popup/delete-account-popup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileEntryEditComponent } from './profile-entry-edit/profile-entry-edit.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ProfileComponent,
     PasswordUpdatePopupComponent,
     DeleteAccountPopupComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProfileEntryEditComponent
   ],
   imports: [
     CommonModule,

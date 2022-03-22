@@ -18,8 +18,6 @@ export class ProfileComponent implements OnInit {
 
   public openPasswordEntryDialog(): void {
     this.dialogRef.open(PasswordUpdatePopupComponent, {
-      // width: '850px',
-      // height: '350px',
       panelClass: 'password-popup-panel',
       // backdropClass: 'article-popup-backdrop',
     });
@@ -27,15 +25,12 @@ export class ProfileComponent implements OnInit {
 
   public openAccountDeleteDialog(): void {
     this.dialogRef.open(DeleteAccountPopupComponent, {
-      // width: '850px',
-      // height: '350px',
       panelClass: 'delete-account-popup-panel',
       // backdropClass: 'article-popup-backdrop',
     });
   }
 
   ngOnInit(): void {
-    console.log('URL: ', this.router.url);
   }
 
 }

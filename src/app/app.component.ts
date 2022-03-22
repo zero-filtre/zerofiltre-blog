@@ -36,12 +36,18 @@ export class AppComponent implements OnInit {
     this.setBrowserTranslationConfigs();
   }
 
-  public checkRouteUrl(componentsPrefix: any): boolean {
-    const currentUrlElements = this.router.url.split('/');
-    const len = currentUrlElements.length;
-    const currentUrlSuffix = currentUrlElements[len - 1];
+  public checkRouteUrl(): boolean {
+    // const currentUrlElements = this.router.url.split('/');
+    // const len = currentUrlElements.length;
+    // const currentUrlSuffix = currentUrlElements[len - 1];
 
-    return componentsPrefix.some((route: string) => route === currentUrlSuffix);
+    const componentsPrefix = [
+      '/user/profile',
+      '/user/profile/edit',
+      '/user/dashboard'
+    ]
+    const currentUrl = this.router.url;
+    return componentsPrefix.some((route: string) => route === currentUrl);
   }
 
   public setBrowserTranslationConfigs() {

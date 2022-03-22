@@ -5,6 +5,7 @@ import { AuthGuard } from './auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoggedInAuthGuard } from './logged-in-auth.guard';
 import { PasswordRenewalPageComponent } from './password-renewal-page/password-renewal-page.component';
+import { ProfileEntryEditComponent } from './profile-entry-edit/profile-entry-edit.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SocialAuthComponent } from './social-auth/social-auth.component';
 
@@ -16,6 +17,11 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
+    // canActivate: [AuthGuard] 
+  },
+  {
+    path: 'profile/edit',
+    component: ProfileEntryEditComponent,
     // canActivate: [AuthGuard] 
   },
   {
