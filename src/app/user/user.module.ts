@@ -13,6 +13,7 @@ import { SocialAuthComponent } from './social-auth/social-auth.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PasswordUpdatePopupComponent } from './password-update-popup/password-update-popup.component';
 import { DeleteAccountPopupComponent } from './delete-account-popup/delete-account-popup.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { DeleteAccountPopupComponent } from './delete-account-popup/delete-accou
     SocialAuthComponent,
     ProfileComponent,
     PasswordUpdatePopupComponent,
-    DeleteAccountPopupComponent
+    DeleteAccountPopupComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,

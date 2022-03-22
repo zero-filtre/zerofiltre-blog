@@ -36,12 +36,12 @@ export class AppComponent implements OnInit {
     this.setBrowserTranslationConfigs();
   }
 
-  public checkRouteUrl(componentPrefix: string): boolean {
+  public checkRouteUrl(componentsPrefix: any): boolean {
     const currentUrlElements = this.router.url.split('/');
     const len = currentUrlElements.length;
     const currentUrlSuffix = currentUrlElements[len - 1];
 
-    return componentPrefix === currentUrlSuffix;
+    return componentsPrefix.some((route: string) => route === currentUrlSuffix);
   }
 
   public setBrowserTranslationConfigs() {
