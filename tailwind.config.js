@@ -26,7 +26,8 @@ module.exports = {
           card: "#fff",
           cardMuted: "#f9fafb",
           borderBold: "#d1d5db",
-          bg: "#f9fafb"
+          bg: "#f9fafb",
+          bgMuted: "#f3f4f6"
         },
       },
     },

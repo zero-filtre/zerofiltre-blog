@@ -12,12 +12,14 @@ import { genericRetryPolicy } from '../utilities.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/user/auth.service';
 import { AuthInterceptor } from './auth.interceptor';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpErrorInterceptor implements HttpInterceptor {
+  readonly apiServerUrl = environment.apiBaseUrl;
 
   constructor(
     private messageService: MessageService,
@@ -30,21 +32,25 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     const authToken = this.authService.token;
     const userOrigin = this.authService.currentUsr?.loginFrom;
 
-    return next.handle(request)
-      .pipe(
-        retryWhen(genericRetryPolicy({
-          excludedStatusCodes: [400, 401, 403, 404, 500]
-        })),
-        catchError((error: HttpErrorResponse) => {
-          if (error.status === 401 && authToken && userOrigin === null) {
-            return this.handleRefrehToken(request, next);
-          }
+    if (request.url.indexOf(this.apiServerUrl) === 0) {
+      return next.handle(request)
+        .pipe(
+          retryWhen(genericRetryPolicy({
+            excludedStatusCodes: [400, 401, 403, 404, 500]
+          })),
+          catchError((error: HttpErrorResponse) => {
+            if (error.status === 401 && authToken && userOrigin === null) {
+              return this.handleRefrehToken(request, next);
+            }
 
-          const errorMessage = this.setError(error)
-          this.messageService.openSnackBarError(errorMessage, '');
-          return throwError(() => errorMessage);
-        })
-      );
+            const errorMessage = this.setError(error)
+            this.messageService.openSnackBarError(errorMessage, '');
+            return throwError(() => errorMessage);
+          })
+        );
+    }
+
+    return next.handle(request);
   }
 
 

@@ -92,20 +92,6 @@ export class FileUploadService {
           shareReplay()
         )
     }
-
-    // this.xToken$ = this.http.get<any>(`${this.ovhServerUrl}`, {
-    //   ...httpOptions,
-    //   observe: 'response'
-    // })
-    //   .pipe(
-    //     catchError(error => {
-    //       return throwError(() => error);
-    //     }),
-    //     tap(response => {
-    //       console.log('RESPONSE: ', response);
-    //     }),
-    //     shareReplay()
-    //   )
   }
 
   private extractTokenFromHeaders(response: any) {
@@ -155,17 +141,5 @@ export class FileUploadService {
           return throwError(() => error)
         })
       )
-  }
-
-  public FakeUploadImage() {
-    const randomImages = [
-      'https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY',
-      'https://i.picsum.photos/id/0/5616/3744.jpg?hmac=3GAAioiQziMGEtLbfrdbcoenXoWAW-zlyEAMkfEdBzQ',
-      'https://i.picsum.photos/id/1023/3955/2094.jpg?hmac=AW_7mARdoPWuI7sr6SG8t-2fScyyewuNscwMWtQRawU',
-      'https://i.picsum.photos/id/1019/5472/3648.jpg?hmac=2mFzeV1mPbDvR0WmuOWSiW61mf9DDEVPDL0RVvg1HPs',
-      'https://i.picsum.photos/id/1029/4887/2759.jpg?hmac=uMSExsgG8_PWwP9he9Y0LQ4bFDLlij7voa9lU9KMXDE',
-      'https://i.picsum.photos/id/1047/3264/2448.jpg?hmac=ksy0K4uGgm79hAV7-KvsfHY2ZuPA0Oq1Kii9hqkOCfU'
-    ]
-    return randomImages[Math.floor(Math.random() * randomImages.length)];
   }
 }

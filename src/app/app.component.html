@@ -85,14 +85,11 @@
         </div>
 
         <div class="mt-2">
-          <a routerLink="#"
+          <a routerLink="/user/profile"
             class="block py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Mon profil</span>
           </a>
-          <a routerLink="#"
-            class="block py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-            <span>Dashboard</span>
-          </a>
+
           <button (click)="logout()"
             class="block w-full text-left py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>Se déconnecter</span>
@@ -188,14 +185,11 @@
             </button>
 
             <mat-menu #menu="matMenu" class="mt-2">
-              <a routerLink="#"
+              <a routerLink="/user/profile"
                 class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>Mon profil</span>
               </a>
-              <a routerLink="#"
-                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                <span>Dashboard</span>
-              </a>
+
               <button (click)="logout()"
                 class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>Se déconnecter</span>

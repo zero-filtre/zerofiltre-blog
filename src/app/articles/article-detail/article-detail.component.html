@@ -282,7 +282,6 @@
                             </div>
 
                             <div *ngIf="authService.currentUsr as currentUsr">
-                                <!-- *ngIf="authService.user$ | async as currentUsr" -->
 
                                 <div *ngIf="isAuthor(currentUsr, article)">
                                     <button [matMenuTriggerFor]="menu" class="text-secondary"
@@ -300,7 +299,7 @@
 
                                             <span>Tous les articles</span>
                                         </a>
-                                        <a routerLink="edit"
+                                        <a href="articles/{{article?.id}}/edit"
                                             class="block px-4 py-2 hover:bg-skin-link hover:text-secondary text-xs font-montserat font-normal transition-all duration-200">
                                             <span>Editer l'article</span>
                                         </a>
