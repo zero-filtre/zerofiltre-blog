@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   public loading = false;
   public errorMessage = '';
 
-  public activePage = 'recent';
+  public activePage = 'published';
   public mainPage = true;
 
   subscription2$!: Subscription;
@@ -72,32 +72,28 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  public sortBy(trendName: string): void {
-    if (trendName === 'recent') {
-      this.activePage = 'recent';
+  public sortBy(tab: string): void {
+    if (tab === 'published') {
+      this.activePage = 'published';
       this.fetchRecentArticles();
-      this.router.navigateByUrl('/articles');
+      this.router.navigateByUrl('/user/dashboard');
     }
 
-    if (trendName === 'popular') {
-      this.activePage = 'popular'
+    if (tab === 'draft') {
+      this.activePage = 'draft'
       this.fetchPopularArticles();
-      this.router.navigateByUrl(`?sortBy=${trendName}`);
+      this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
     }
 
-    if (trendName === 'trending') {
-      this.activePage = 'trending'
-      this.router.navigateByUrl(`?sortBy=${trendName}`);
+    if (tab === 'in-review') {
+      this.activePage = 'in-review'
+      this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
     }
 
-    this.scrollyPageNumber = 0;
-    this.notEmptyArticles = true;
-  }
-
-
-  public sortByTag(tagName: any): void {
-    this.fetchArticlesByTag(tagName);
-    this.router.navigateByUrl(`?tag=${tagName}`)
+    if (tab === 'all') {
+      this.activePage = 'all'
+      this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
+    }
 
     this.scrollyPageNumber = 0;
     this.notEmptyArticles = true;
@@ -186,6 +182,9 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log('URL: ', this.router.url);
+
+    this.router.navigateByUrl('/user/dashboard');
 
     this.seo.generateTags({
       title: 'Mes les articles | Zerofiltre.tech'

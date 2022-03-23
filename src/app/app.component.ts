@@ -37,17 +37,13 @@ export class AppComponent implements OnInit {
   }
 
   public checkRouteUrl(): boolean {
-    // const currentUrlElements = this.router.url.split('/');
-    // const len = currentUrlElements.length;
-    // const currentUrlSuffix = currentUrlElements[len - 1];
-
     const componentsPrefix = [
       '/user/profile',
       '/user/profile/edit',
       '/user/dashboard'
     ]
     const currentUrl = this.router.url;
-    return componentsPrefix.some((route: string) => route === currentUrl);
+    return componentsPrefix.some((route: string) => currentUrl.includes(route));
   }
 
   public setBrowserTranslationConfigs() {
