@@ -5,7 +5,6 @@ import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
-import { User } from '../user.model';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -40,7 +39,6 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
   get email() { return this.form.get('email'); }
   get password() { return this.form.get('password'); }
   get matchingPassword() { return this.form.get('matchingPassword'); }
-  get pseudo() { return this.form.get('pseudo'); }
   get fullName() { return this.form.get('fullName'); }
 
   get passwordDoesMatch() {

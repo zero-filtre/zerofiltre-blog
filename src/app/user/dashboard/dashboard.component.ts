@@ -33,6 +33,8 @@ export class DashboardComponent implements OnInit {
   public activePage = 'published';
   public mainPage = true;
 
+  public isAdmin!: boolean;
+
   subscription2$!: Subscription;
 
   constructor(
@@ -44,50 +46,53 @@ export class DashboardComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
-
-  public fetchRecentArticles(): void {
-    this.loading = true;
-
-    this.subscription2$ = this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
-      .subscribe(this.handleFetchedArticles)
-  }
-
-  public fetchPopularArticles(): void {
-    this.loading = true;
-
-    this.subscription2$ = this.articleService.findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
-      .subscribe(this.handleFetchedArticles)
-  }
-
-  public fetchArticlesByTag(tagName: string): void {
-    this.loading = true;
-
-    this.subscription2$ = this.articleService.findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName)
-      .subscribe(this.handleFetchedArticles)
-  }
-
   public setArticlesReadingTime(articles: Article[]): void {
     for (const article of articles) {
       calcReadingTime(article);
     }
   }
 
+  public fetchMyArticlesByStatus(status: string) {
+    this.loading = true;
+    this.subscription2$ = this.articleService.findAllMyArticles(this.pageNumber, this.pageItemsLimit, status)
+      .subscribe(this.handleFetchedArticles)
+  }
+
+  public fetchAllArticlesAsAdmin(status: string) {
+    this.loading = true;
+    this.subscription2$ = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, status)
+      .subscribe(this.handleFetchedArticles)
+  }
+
   public sortBy(tab: string): void {
     if (tab === 'published') {
       this.activePage = 'published';
-      this.fetchRecentArticles();
       this.router.navigateByUrl('/user/dashboard');
+      if (this.isAdmin) {
+        this.fetchAllArticlesAsAdmin('published')
+      } else {
+        this.fetchMyArticlesByStatus('published');
+      }
     }
 
     if (tab === 'draft') {
       this.activePage = 'draft'
-      this.fetchPopularArticles();
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
+      if (this.isAdmin) {
+        this.fetchAllArticlesAsAdmin('draft')
+      } else {
+        this.fetchMyArticlesByStatus('draft');
+      }
     }
 
     if (tab === 'in-review') {
       this.activePage = 'in-review'
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
+      if (this.isAdmin) {
+        this.fetchAllArticlesAsAdmin('in-review')
+      } else {
+        this.fetchMyArticlesByStatus('in-review');
+      }
     }
 
     if (tab === 'all') {
@@ -100,7 +105,6 @@ export class DashboardComponent implements OnInit {
   }
 
   public onScroll() {
-    // Remove this.hasnext to enable end of list message
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
       console.log('scrolled!!');
 
@@ -111,7 +115,6 @@ export class DashboardComponent implements OnInit {
   }
 
   public fetchMoreArticles() {
-
     if (!this.hasNext) {
       console.log('END OF THE LIST !');
 
@@ -122,30 +125,46 @@ export class DashboardComponent implements OnInit {
     }
 
     this.scrollyPageNumber += 1;
-    console.log('PAGE NUMBER: ', this.scrollyPageNumber);
 
     const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
-    const queryParamTwo = this.route.snapshot.queryParamMap.get('tag')!;
 
-    if (queryParamOne === 'popular') {
-      console.log('FETCHING BY POPULAR');
+    if (queryParamOne === 'draft') {
+      console.log('FETCHING BY DRAFT');
       console.log('fetching...');
-      this.articleService.findAllArticlesByPopularity(this.scrollyPageNumber, this.pageItemsLimit)
+
+      if (this.isAdmin) {
+        this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, 'draft')
+        return
+      }
+
+      this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, 'draft')
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
       return
     }
 
-    if (queryParamTwo) {
-      console.log('FETCHING BY TAGS');
+    if (queryParamOne === 'in-review') {
+      console.log('FETCHING BY IN-REVIEW');
       console.log('fetching...');
-      this.articleService.findAllArticlesByTag(this.scrollyPageNumber, this.pageItemsLimit, queryParamTwo)
+
+      if (this.isAdmin) {
+        this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, 'in-review')
+        return
+      }
+
+      this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, 'in-review')
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
       return
     }
 
-    console.log('FETCHING BY DEFAULT (RECENT)');
+    console.log('FETCHING BY DEFAULT (PUBLISHED)');
     console.log('fetching...');
-    this.articleService.findAllRecentArticles(this.scrollyPageNumber, this.pageItemsLimit)
+
+    if (this.isAdmin) {
+      this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, 'published')
+      return
+    }
+
+    this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, 'published')
       .subscribe((response: any) => this.handleNewFetchedArticles(response));
 
   }
@@ -176,22 +195,28 @@ export class DashboardComponent implements OnInit {
     },
     error: (_error: HttpErrorResponse) => {
       this.loading = false;
+      this.articles = [];
       this.errorMessage = 'Oops...!'
     }
   }
 
 
   ngOnInit(): void {
-    console.log('URL: ', this.router.url);
-
     this.router.navigateByUrl('/user/dashboard');
 
+    this.isAdmin = this.authService.currentUsr?.roles.some((role: string) => role === 'ROLE_ADMIN');
+    console.log('IS ADMIN? : ', this.isAdmin);
+
     this.seo.generateTags({
-      title: 'Mes les articles | Zerofiltre.tech'
+      title: 'Mes articles | Zerofiltre.tech'
     });
 
     if (isPlatformBrowser(this.platformId)) {
-      this.fetchRecentArticles();
+      if (this.isAdmin) {
+        this.fetchAllArticlesAsAdmin('published')
+      } else {
+        this.fetchMyArticlesByStatus('published');
+      }
     }
   }
 

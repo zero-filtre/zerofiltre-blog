@@ -1,5 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'src/app/services/message.service';
+import { SeoService } from 'src/app/services/seo.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-profile-entry-edit',
@@ -7,12 +12,56 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile-entry-edit.component.css']
 })
 export class ProfileEntryEditComponent implements OnInit {
+  public form!: FormGroup;
+  public loading: boolean = false;
 
   constructor(
     private router: Router,
+    private formuilder: FormBuilder,
+    private authService: AuthService,
+    private messageService: MessageService,
+    private seo: SeoService
   ) { }
 
+  public InitForm(): void {
+    this.form = this.formuilder.group({
+      fullName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.pattern('[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)@[A-Za-z0-9-]+(\.[A-Za-z0-9]+).[A-Za-z]{2,}')]],
+    })
+  }
+
+  get email() { return this.form.get('email'); }
+  get pseudo() { return this.form.get('pseudo'); }
+  get fullName() { return this.form.get('fullName'); }
+
+  public updateUserInfos(): void {
+    this.loading = true;
+
+    return
+    this.authService.signup(this.form.value).subscribe({
+      next: (_response: any) => {
+        this.messageService.signUpSuccess();
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
+  }
+
   ngOnInit(): void {
+    this.InitForm();
+
+    this.seo.generateTags({
+      title: "Modifier son profil | Zerofiltre.tech",
+      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      author: 'Zerofiltre.tech',
+      type: 'website',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.loading = false;
   }
 
 }
