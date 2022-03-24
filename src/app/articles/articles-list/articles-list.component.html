@@ -4,10 +4,10 @@
         <div class="left-side-container">
 
             <div class="pb-8 space-y-1">
-                <button type="button" (click)="sortBy('recent')" aria-current="page"
-                    [ngClass]="activePage == 'recent' ? 'button-active' : 'button-inactive'"
+                <button type="button" (click)="sortBy(RECENT)" aria-current="page"
+                    [ngClass]="activePage === RECENT ? 'button-active' : 'button-inactive'"
                     class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
-                    <svg [ngClass]="activePage == 'recent' ? 'svg-active' : 'svg-inactive'"
+                    <svg [ngClass]="activePage === RECENT ? 'svg-active' : 'svg-inactive'"
                         class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                         aria-hidden="true">
@@ -22,10 +22,10 @@
                     </span>
                 </button>
 
-                <button type="button" (click)="sortBy('popular')" aria-current="false"
-                    [ngClass]="activePage == 'popular' ? 'button-active' : 'button-inactive'"
+                <button type="button" (click)="sortBy(POPULAR)" aria-current="false"
+                    [ngClass]="activePage === POPULAR ? 'button-active' : 'button-inactive'"
                     class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
-                    <svg [ngClass]="activePage == 'popular' ? 'svg-active' : 'svg-inactive'"
+                    <svg [ngClass]="activePage === POPULAR ? 'svg-active' : 'svg-inactive'"
                         class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200" fill="none"
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path clip-rule="evenodd"
@@ -37,10 +37,10 @@
                     </span>
                 </button>
 
-                <button type="button" (click)="sortBy('trending')" aria-current="false"
-                    [ngClass]="activePage == 'trending' ? 'button-active' : 'button-inactive'"
+                <button type="button" (click)="sortBy(TRENDING)" aria-current="false"
+                    [ngClass]="activePage === TRENDING ? 'button-active' : 'button-inactive'"
                     class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
-                    <svg [ngClass]="activePage == 'trending' ? 'svg-active' : 'svg-inactive'"
+                    <svg [ngClass]="activePage === TRENDING ? 'svg-active' : 'svg-inactive'"
                         class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                         aria-hidden="true">

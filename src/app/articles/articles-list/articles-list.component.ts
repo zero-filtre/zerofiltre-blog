@@ -20,6 +20,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public articles!: Article[];
   public tagList!: Tag[];
 
+  RECENT = 'recent';
+  POPULAR = 'popular';
+  TRENDING = 'trending';
+
   public notEmptyArticles = true;
   public notScrolly = true;
   public lastPage!: number;
@@ -33,7 +37,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public loading = false;
   public errorMessage = '';
 
-  public activePage = 'recent';
+  public activePage: string = this.RECENT;
   public mainPage = true;
 
   subscription1$!: Subscription;
@@ -81,21 +85,18 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchRecentArticles(): void {
     this.loading = true;
-
     this.subscription2$ = this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchPopularArticles(): void {
     this.loading = true;
-
     this.subscription2$ = this.articleService.findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchArticlesByTag(tagName: string): void {
     this.loading = true;
-
     this.subscription2$ = this.articleService.findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName)
       .subscribe(this.handleFetchedArticles)
   }
@@ -107,20 +108,22 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public sortBy(trendName: string): void {
-    if (trendName === 'recent') {
-      this.activePage = 'recent';
+    this.articles = [];
+
+    if (trendName === this.RECENT) {
+      this.activePage = this.RECENT;
       this.fetchRecentArticles();
       this.router.navigateByUrl('/articles');
     }
 
-    if (trendName === 'popular') {
-      this.activePage = 'popular'
+    if (trendName === this.POPULAR) {
+      this.activePage = this.POPULAR
       this.fetchPopularArticles();
       this.router.navigateByUrl(`?sortBy=${trendName}`);
     }
 
-    if (trendName === 'trending') {
-      this.activePage = 'trending'
+    if (trendName === this.TRENDING) {
+      this.activePage = this.TRENDING
       this.router.navigateByUrl(`?sortBy=${trendName}`);
     }
 
@@ -130,6 +133,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
 
   public sortByTag(tagName: any): void {
+    this.articles = [];
+
     this.fetchArticlesByTag(tagName);
     this.router.navigateByUrl(`?tag=${tagName}`)
 
@@ -165,7 +170,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
     const queryParamTwo = this.route.snapshot.queryParamMap.get('tag')!;
 
-    if (queryParamOne === 'popular') {
+    if (queryParamOne === this.POPULAR) {
       console.log('FETCHING BY POPULAR');
       console.log('fetching...');
       this.articleService.findAllArticlesByPopularity(this.scrollyPageNumber, this.pageItemsLimit)
@@ -192,6 +197,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     const newArticles = content;
     this.loadingMore = false;
     this.hasNext = hasNext;
+    this.setArticlesReadingTime(newArticles);
 
     if (newArticles.length === 0) {
       this.notEmptyArticles = false;
@@ -213,17 +219,14 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       }
     },
     error: (_error: HttpErrorResponse) => {
+      this.articles = [];
       this.loading = false;
       this.errorMessage = 'Oops...!'
     }
   }
 
-  // githuId = environment.GITHUB_CLIENT_ID
-
 
   ngOnInit(): void {
-    // console.log('SHOW: ', this.githuId);
-
     this.seo.generateTags({
       title: 'Tous les articles | Zerofiltre.tech',
       description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",

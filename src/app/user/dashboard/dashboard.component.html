@@ -15,27 +15,27 @@
             </div>
 
             <div class="tabs-wrapper mt-8 border-b border-skin-border">
-                <nav class="relative z-0 flex space-x-8 -mb-[2px]" aria-label="Tabs">
-                    <button type="button" aria-current="page" (click)="sortBy('published')"
-                        [ngClass]="activePage == 'published' ? 'active-tab' : ''"
+                <nav class="relative flex space-x-8 -mb-[2px]" aria-label="Tabs">
+                    <button type="button" aria-current="page" (click)="sortBy(PUBLISHED)"
+                        [ngClass]="activePage === PUBLISHED ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>Publiés</span>
                     </button>
 
-                    <button type=" button" aria-current="false" (click)="sortBy('draft')"
-                        [ngClass]="activePage == 'draft' ? 'active-tab' : ''"
+                    <button type=" button" aria-current="false" (click)="sortBy(DRAFT)"
+                        [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>Brouillons</span>
                     </button>
 
-                    <button type="button" aria-current="false" (click)="sortBy('in-review')"
-                        [ngClass]="activePage == 'in-review' ? 'active-tab' : ''"
+                    <button type="button" aria-current="false" (click)="sortBy(IN_REVIEW)"
+                        [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>En attente</span>
                     </button>
 
-                    <button type="button" aria-current="false" (click)="sortBy('all')"
-                        [ngClass]="activePage == 'all' ? 'active-tab' : ''"
+                    <button type="button" aria-current="false" (click)="sortBy(ALL)"
+                        [ngClass]="activePage === ALL ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>Tous</span>
                     </button>

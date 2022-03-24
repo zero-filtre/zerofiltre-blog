@@ -33,6 +33,8 @@ export class AuthService {
 
   private redirectURL: string;
 
+  public isAdmin!: boolean;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
@@ -45,6 +47,7 @@ export class AuthService {
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.redirectURL = '';
+    this.isAdmin = this.currentUsr?.roles.some((role: string) => role === 'ROLE_ADMIN');
   }
 
 

@@ -17,6 +17,11 @@ import { AuthService } from '../auth.service';
 export class DashboardComponent implements OnInit {
   public articles!: Article[];
 
+  PUBLISHED = 'published';
+  DRAFT = 'draft';
+  IN_REVIEW = 'in_review';
+  ALL = 'all';
+
   public notEmptyArticles = true;
   public notScrolly = true;
   public lastPage!: number;
@@ -30,10 +35,10 @@ export class DashboardComponent implements OnInit {
   public loading = false;
   public errorMessage = '';
 
-  public activePage = 'published';
+  public activePage: string = this.PUBLISHED;
   public mainPage = true;
 
-  public isAdmin!: boolean;
+  public isAdminUser!: boolean;
 
   subscription2$!: Subscription;
 
@@ -65,38 +70,40 @@ export class DashboardComponent implements OnInit {
   }
 
   public sortBy(tab: string): void {
-    if (tab === 'published') {
-      this.activePage = 'published';
+    this.articles = [];
+
+    if (tab === this.PUBLISHED) {
+      this.activePage = this.PUBLISHED;
       this.router.navigateByUrl('/user/dashboard');
-      if (this.isAdmin) {
-        this.fetchAllArticlesAsAdmin('published')
+      if (this.isAdminUser) {
+        this.fetchAllArticlesAsAdmin(this.PUBLISHED)
       } else {
-        this.fetchMyArticlesByStatus('published');
+        this.fetchMyArticlesByStatus(this.PUBLISHED);
       }
     }
 
-    if (tab === 'draft') {
-      this.activePage = 'draft'
+    if (tab === this.DRAFT) {
+      this.activePage = this.DRAFT
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
-      if (this.isAdmin) {
-        this.fetchAllArticlesAsAdmin('draft')
+      if (this.isAdminUser) {
+        this.fetchAllArticlesAsAdmin(this.DRAFT)
       } else {
-        this.fetchMyArticlesByStatus('draft');
+        this.fetchMyArticlesByStatus(this.DRAFT);
       }
     }
 
-    if (tab === 'in-review') {
-      this.activePage = 'in-review'
+    if (tab === this.IN_REVIEW) {
+      this.activePage = this.IN_REVIEW
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
-      if (this.isAdmin) {
-        this.fetchAllArticlesAsAdmin('in-review')
+      if (this.isAdminUser) {
+        this.fetchAllArticlesAsAdmin(this.IN_REVIEW)
       } else {
-        this.fetchMyArticlesByStatus('in-review');
+        this.fetchMyArticlesByStatus(this.IN_REVIEW);
       }
     }
 
-    if (tab === 'all') {
-      this.activePage = 'all'
+    if (tab === this.ALL) {
+      this.activePage = this.ALL
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
     }
 
@@ -128,16 +135,16 @@ export class DashboardComponent implements OnInit {
 
     const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
 
-    if (queryParamOne === 'draft') {
+    if (queryParamOne === this.DRAFT) {
       console.log('FETCHING BY DRAFT');
       console.log('fetching...');
 
-      if (this.isAdmin) {
-        this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, 'draft')
+      if (this.isAdminUser) {
+        this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, this.DRAFT)
         return
       }
 
-      this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, 'draft')
+      this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.DRAFT)
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
       return
     }
@@ -146,12 +153,12 @@ export class DashboardComponent implements OnInit {
       console.log('FETCHING BY IN-REVIEW');
       console.log('fetching...');
 
-      if (this.isAdmin) {
-        this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, 'in-review')
+      if (this.isAdminUser) {
+        this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, this.IN_REVIEW)
         return
       }
 
-      this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, 'in-review')
+      this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.IN_REVIEW)
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
       return
     }
@@ -159,12 +166,12 @@ export class DashboardComponent implements OnInit {
     console.log('FETCHING BY DEFAULT (PUBLISHED)');
     console.log('fetching...');
 
-    if (this.isAdmin) {
-      this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, 'published')
+    if (this.isAdminUser) {
+      this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, this.PUBLISHED)
       return
     }
 
-    this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, 'published')
+    this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.PUBLISHED)
       .subscribe((response: any) => this.handleNewFetchedArticles(response));
 
   }
@@ -173,6 +180,7 @@ export class DashboardComponent implements OnInit {
     const newArticles = content;
     this.loadingMore = false;
     this.hasNext = hasNext;
+    this.setArticlesReadingTime(newArticles);
 
     if (newArticles.length === 0) {
       this.notEmptyArticles = false;
@@ -190,7 +198,7 @@ export class DashboardComponent implements OnInit {
       this.hasNext = hasNext;
 
       if (this.articles.length === 0) {
-        this.errorMessage = "Aucun article à lire pour le moment 😊!"
+        this.errorMessage = "Aucun article trouvé 😊!"
       }
     },
     error: (_error: HttpErrorResponse) => {
@@ -204,18 +212,18 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.router.navigateByUrl('/user/dashboard');
 
-    this.isAdmin = this.authService.currentUsr?.roles.some((role: string) => role === 'ROLE_ADMIN');
-    console.log('IS ADMIN? : ', this.isAdmin);
+    this.isAdminUser = this.authService.isAdmin;
+    console.log('IS ADMIN? : ', this.isAdminUser);
 
     this.seo.generateTags({
       title: 'Mes articles | Zerofiltre.tech'
     });
 
     if (isPlatformBrowser(this.platformId)) {
-      if (this.isAdmin) {
-        this.fetchAllArticlesAsAdmin('published')
+      if (this.isAdminUser) {
+        this.fetchAllArticlesAsAdmin(this.PUBLISHED)
       } else {
-        this.fetchMyArticlesByStatus('published');
+        this.fetchMyArticlesByStatus(this.PUBLISHED);
       }
     }
   }
