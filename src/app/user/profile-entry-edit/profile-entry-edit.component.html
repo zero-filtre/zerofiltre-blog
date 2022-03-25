@@ -1,6 +1,6 @@
 <main class="relative py-10 max-w-7xl mx-auto mt-20">
-    <div class="user-update-content-wrapper flex items-center justify-center min-h-full">
-        <div class="max-w-md w-full space-y-8">
+    <div class="user-update-content min-h-full">
+        <div class="user-update-content-container max-w-xl mx-auto w-full">
             <div class="profile-navigation-btns lg:hidden">
                 <a routerLink="/user/profile" class="flex items-center space-x-1 font-semibold">
                     <svg class="h-5 w-5 text-primary-500" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -13,17 +13,18 @@
                     </span>
                 </a>
             </div>
+
             <div>
-                <h2 class="text-center text-xl lg:text-2xl font-extrabold text-skin-inverted">
+                <h2 class="text-center text-xl lg:text-2xl font-extrabold text-primary-500 mt-9">
                     Modifier mes infos
                 </h2>
             </div>
 
-            <form [formGroup]="form" (ngSubmit)="updateUserInfos()"
-                class="space-y-6 bg-skin-bgMuted p-4 lg:px-6 rounded-md">
-                <div class="space-y-4">
+            <form [formGroup]="form" (ngSubmit)="updateUserInfos()" class="profile-edit-form mt-10">
+                <div
+                    class="profile-edit-content flex flex-col space-y-4 px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md">
                     <div>
-                        <label for="fullName" class="block text-sm font-semibold leading-5 text-skin-inverted">
+                        <label for="fullName" class="block text-sm font-semibold leading-5 text-skin-muted">
                             Nom complet
                         </label>
                         <div class="mt-2">
@@ -41,64 +42,115 @@
                     </div>
 
                     <div>
-                        <label for="email" class="block text-sm font-semibold leading-5 text-skin-inverted">
-                            Adresse E-mail
+                        <label for="pseudo" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Pseudo
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
-                                <input name="email" type="email" id="email" required formControlName="email" class=""
-                                    autocomplete="email" required placeholder="Adresse E-mail">
+                                <input name="pseudo" type="text" id="pseudo" required formControlName="pseudo" class=""
+                                    required placeholder="Pseudo">
                             </div>
-                            <div *ngIf="email?.invalid && email?.dirty" class="">
-                                <div *ngIf="email?.errors?.['required']"
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="profession" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Profession
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="profession" type="text" id="profession" required
+                                    formControlName="profession" class="" autocomplete="profession" required
+                                    placeholder="Profession">
+                            </div>
+                            <!-- <div *ngIf="profession?.invalid && profession?.dirty" class="">
+                                <div *ngIf="profession?.errors?.['required']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
-                                    L'email est obligatoire.
+                                    profession est obligatoire.
                                 </div>
-                                <div *ngIf="email?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Vous devez entrer une adresse email valide
+                                <div *ngIf="profession?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
+                                    Vous devez entrer une adresse profession valide
                                 </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="website" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Site web
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="website" type="text" id="website" required formControlName="website"
+                                    class="" required placeholder="Votre site web">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="reseaux sociaux" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Réseaux sociaux
+                        </label>
+                        <div class="mt-2 flex flex-col space-y-1">
+                            <div class="relative flex">
+                                <span
+                                    class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
+                                    twitter.com/
+                                </span>
+                                <input name="twitter-link" type="text" id="twitter-link" value=""
+                                    placeholder="Lien vers votre compte" class="flex-1 rounded-none rounded-r-md"
+                                    aria-label="Link Account Twitter" leading-addon="twitter.com/">
+                            </div>
+
+                            <div class="relative flex">
+                                <span
+                                    class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
+                                    github.com/
+                                </span>
+                                <input name="github-link" type="text" id="github-link" value=""
+                                    placeholder="Lien vers votre compte" class="flex-1 rounded-none rounded-r-md"
+                                    aria-label="Link Account Github" leading-addon="github.com/">
+                            </div>
+
+                            <div class="relative flex">
+                                <span
+                                    class="inline-flex items-center px-3 rounded-l-md border border-r-0 bg-skin-card text-skin-base sm:text-sm">
+                                    stackoverflow.com/users/
+                                </span>
+                                <input name="linkedin-link" type="text" id="linkedin-link" value=""
+                                    placeholder="Lien vers votre compte" class="flex-1 rounded-none rounded-r-md"
+                                    aria-label="Link Account LinkedIn" leading-addon="stackoverflow.com/users/">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="bio" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Bio
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <textarea name="fullName" type="text" id="bio" required formControlName="bio" class=""
+                                    required placeholder="Votre bio">
+                                </textarea>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div>
+                <div class="action-btns-edit-profil mt-10">
                     <button *ngIf="form.valid" type="submit" [disabled]="loading" [ngClass]="{'opacity-50': loading}"
-                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
-                        <span class="lock-btn absolute left-0 flex items-center pl-3">
-                            <svg class="h-5 w-5 fill-primary-500 group-hover:fill-primary-300"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </span>
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
                         <span *ngIf="!loading">Enregistrer</span>
-                        <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
-                            viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                            <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10" r="35"
-                                stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                                style="animation-play-state:paused"></circle>
-                        </svg>
                     </button>
 
                     <button *ngIf="form.invalid" [disabled]="form.invalid || loading"
-                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
-                        <span class="lock-btn absolute left-0 flex items-center pl-3">
-                            <svg class="h-5 w-5 fill-primary-500 opacity-20" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </span>
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
                         Enregistrer
                     </button>
                 </div>
             </form>
-
         </div>
 
     </div>

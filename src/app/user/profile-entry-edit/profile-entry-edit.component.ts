@@ -26,13 +26,18 @@ export class ProfileEntryEditComponent implements OnInit {
   public InitForm(): void {
     this.form = this.formuilder.group({
       fullName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.pattern('[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)@[A-Za-z0-9-]+(\.[A-Za-z0-9]+).[A-Za-z]{2,}')]],
+      profession: ['', []],
+      bio: ['', []],
+      website: ['', []],
+      pseudo: ['', []],
     })
   }
 
-  get email() { return this.form.get('email'); }
+  get profession() { return this.form.get('profession'); }
   get pseudo() { return this.form.get('pseudo'); }
   get fullName() { return this.form.get('fullName'); }
+  get bio() { return this.form.get('bio'); }
+  get website() { return this.form.get('website'); }
 
   public updateUserInfos(): void {
     this.loading = true;

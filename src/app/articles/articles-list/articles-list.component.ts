@@ -124,8 +124,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
     if (trendName === this.TRENDING) {
       this.activePage = this.TRENDING
-      this.router.navigateByUrl(`?sortBy=${trendName}`);
-      this.hasNext = false;
+      this.fetchRecentArticles();
+      this.router.navigateByUrl('/articles');
     }
 
     this.scrollyPageNumber = 0;
