@@ -71,6 +71,22 @@ export class AppComponent implements OnInit {
     this.messageService.openSnackBarWarning('Code Copied', '');
   }
 
+  public fetchAllArticlesAsAdmin() {
+    console.log('FECTH ALL AS ADMIN');
+    // set isUserAdmin = authService.currentUser.isAdmin
+    // if isUserAdmin ==> fetchAll(PUBLISHED)
+    // On click on Mes articless ==> component mount ==> ng onit ==> set isUserAdmin = false
+    // On page refresh set default to Mes articles ==> btn styles and initial feth ng onit
+  }
+
+  public fetchAllArticlesAsUser() {
+    console.log('FECTH ALL AS USER');
+    // set isUserAdmin = authService.currentUser.isAdmin
+    // if isUserAdmin ==> fetchAll(PUBLISHED)
+    // On click on Mes articless ==> component mount ==> ng onit ==> set isUserAdmin = false
+    // On page refresh set default to Mes articles ==> btn styles and initial feth ng onit
+  }
+
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       Prism.plugins.toolbar.registerButton('select-code', function (_env: any) {
