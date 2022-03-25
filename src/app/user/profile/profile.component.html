@@ -37,7 +37,7 @@
                     <span>Mes articles</span>
                 </a>
                 <a routerLink="edit"
-                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    class="hidden px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>Editer mes infos</span>
                 </a>
             </mat-menu>
@@ -94,15 +94,16 @@
                 </div>
             </div>
 
-            <div class="edit-action-btn px-4 hidden sm:block">
+            <div class="edit-action-btn px-4">
                 <a routerLink="edit"
-                    class="group inline-flex items-center space-x-1 shadow-md rounded-full px-4 py-2 text-skin-base bg-skin-link hover:bg-slate-100 transition-all duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:fill-slate-300" fill="none"
+                    class="inline-flex group items-center justify-center h-10 w-10 sm:h-auto sm:w-auto p-1 sm:px-4 sm:py-2 shadow-md rounded-full border text-skin-muted hover:bg-skin-bgMuted transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 sm:h-4 sm:w-4 text-skin-muted group-hover:fill-skin-border" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
-                    <span class="text-sm font-semibold">Editer</span>
+                    <span class=" hidden sm:block text-sm font-semibold">Editer</span>
                 </a>
             </div>
         </div>
