@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from '../auth.service';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-profile-image-popup',
@@ -8,7 +9,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./profile-image-popup.component.css']
 })
 export class ProfileImagePopupComponent implements OnInit {
-
+  user!: User;
   public loading: boolean = false;
 
   constructor(
@@ -39,7 +40,7 @@ export class ProfileImagePopupComponent implements OnInit {
 
     /**upload image to ovh and start loading
      * => if ok get the returned url and patch the user 
-     * => if ok fetch the updatd user
+     * => if ok fetch the updated user (authService.getuser)
      * => if ok stop loading and assign the updated user to the previous user
      * => if ok, After popup close update the main page profile image with the updated user
      */
@@ -63,5 +64,6 @@ export class ProfileImagePopupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.authService?.currentUsr
   }
 }
