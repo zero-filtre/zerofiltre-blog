@@ -10,8 +10,8 @@
     </nav>
 
     <div
-        class="profile-image-wrapper flex items-center justify-center w-[250px] h-[250px] sm:h-64 sm:w-64 mx-auto overflow-hidden rounded-full shadow-sm my-10">
-        <img *ngIf="user?.profilePicture" class="w-full object-cover shadow-lg" [src]="user?.profilePicture"
+        class="profile-image-wrapper flex items-center justify-center w-[250px] h-[250px] sm:h-64 sm:w-64 mx-auto overflow-hidden rounded-full shadow-lg my-10">
+        <img *ngIf="user?.profilePicture" class="w-full h-full object-cover" [src]="user?.profilePicture"
             alt="user?.fullName">
         <ng-container *ngIf="!user?.profilePicture && !loading">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -29,13 +29,15 @@
                     style="animation-play-state:paused"></circle>
             </svg>
         </ng-container>
+        <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
+            (change)="onFileSelected($event)" accept="image/*">
     </div>
 
     <hr class="border border-primary-500 rounded" />
 
     <div class="action-buttons mt-6 flex justify-center space-x-2">
-        <button (click)="uploadProfileImage()"
-            class="group font-semibold flex justify-center items-center space-x-1 py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
+        <button (click)="fileUpload.click()" class=" group font-semibold flex justify-center items-center space-x-1 py-2 px-4 border border-transparent
+            text-sm rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round"

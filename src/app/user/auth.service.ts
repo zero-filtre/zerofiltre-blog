@@ -188,6 +188,12 @@ export class AuthService {
     return this.http.post<string>(`${this.apiServerUrl}/user/updatePassword`, passwords)
   }
 
+  public updateUserProfile(profile: FormData): Observable<User> {
+    return this.http.patch<User>(`${this.apiServerUrl}`, profile).pipe(
+      shareReplay()
+    )
+  }
+
   // HELPER SERVICES
 
   private handleJWTauth(response: any, tokenType: string, redirectURL = '') {
