@@ -51,6 +51,8 @@ export class AuthService {
   }
 
 
+  // AUTH SERVICES
+
   private loadCurrentUser() {
     this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
       .pipe(
@@ -178,6 +180,13 @@ export class AuthService {
   public InitSOLoginWithAccessToken(accessToken: string) {
     this.loadLoggedInUser(accessToken, 'stack');
   }
+
+
+  // USER PROFILE SERVICES
+
+
+
+  // HELPER SERVICES
 
   private handleJWTauth(response: any, tokenType: string, redirectURL = '') {
     const { refreshToken, accessToken } = response.body

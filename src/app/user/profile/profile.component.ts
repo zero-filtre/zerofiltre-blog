@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 import { DeleteAccountPopupComponent } from '../delete-account-popup/delete-account-popup.component';
 import { PasswordUpdatePopupComponent } from '../password-update-popup/password-update-popup.component';
 import { ProfileImagePopupComponent } from '../profile-image-popup/profile-image-popup.component';
@@ -15,6 +16,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private dialogRef: MatDialog,
+    public authService: AuthService
   ) { }
 
   public openPasswordEntryDialog(): void {

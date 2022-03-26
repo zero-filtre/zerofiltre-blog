@@ -7,8 +7,6 @@ import { map, Observable, shareReplay } from 'rxjs';
 import { MessageService } from './services/message.service';
 import { AuthService } from './user/auth.service';
 
-// import * as Prism from 'prismjs';
-
 declare var Prism: any;
 
 @Component({
@@ -100,8 +98,5 @@ export class AppComponent implements OnInit {
         return button;
       });
     }
-
-    // const copyBtn = (document as any).querySelector('.copy-to-clipboard-button');
-    // copyBtn.onclick = this.alertCopy();
   }
 }

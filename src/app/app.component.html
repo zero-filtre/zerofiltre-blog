@@ -66,7 +66,6 @@
       </a>
 
       <div *ngIf="authService.currentUsr as currentUsr" class="border border-primary-500 rounded-lg p-4 mt-5">
-
         <div class="flex items-center gap-2">
           <div>
             <img *ngIf="currentUsr?.profilePicture" class="h-10 w-10 rounded-full" [src]="currentUsr?.profilePicture">
