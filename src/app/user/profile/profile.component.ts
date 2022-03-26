@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DeleteAccountPopupComponent } from '../delete-account-popup/delete-account-popup.component';
 import { PasswordUpdatePopupComponent } from '../password-update-popup/password-update-popup.component';
+import { ProfileImagePopupComponent } from '../profile-image-popup/profile-image-popup.component';
 
 @Component({
   selector: 'app-profile',
@@ -19,14 +20,21 @@ export class ProfileComponent implements OnInit {
   public openPasswordEntryDialog(): void {
     this.dialogRef.open(PasswordUpdatePopupComponent, {
       panelClass: 'password-popup-panel',
-      // backdropClass: 'article-popup-backdrop',
+      // backdropClass: 'password-popup-backdrop',
     });
   }
 
   public openAccountDeleteDialog(): void {
     this.dialogRef.open(DeleteAccountPopupComponent, {
       panelClass: 'delete-account-popup-panel',
-      // backdropClass: 'article-popup-backdrop',
+      // backdropClass: 'delete-account-popup-backdrop',
+    });
+  }
+
+  public openProfileImageDeleteDialog(): void {
+    this.dialogRef.open(ProfileImagePopupComponent, {
+      panelClass: 'profile-image-popup-panel',
+      // backdropClass: 'profile-image-popup-backdrop',
     });
   }
 

@@ -21,7 +21,7 @@ export class DeleteAccountPopupComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  handleAccountDelete(): void {
+  handleDeleteAccount(): void {
     this.loading = true;
 
     // this.authService.createArticle(this.title).subscribe({

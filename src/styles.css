@@ -55,6 +55,10 @@
 .delete-account-popup-panel .mat-dialog-container {
   @apply !rounded-xl;
 }
+
+.profile-image-popup-panel .mat-dialog-container {
+  @apply !rounded-xl;
+}
 /* .article-popup-backdrop {
 }
 
