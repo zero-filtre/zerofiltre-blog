@@ -189,7 +189,7 @@ export class AuthService {
   }
 
   public updateUserProfile(profile: FormData): Observable<User> {
-    return this.http.patch<User>(`${this.apiServerUrl}`, profile).pipe(
+    return this.http.patch<User>(`${this.apiServerUrl}/user`, profile).pipe(
       shareReplay()
     )
   }
