@@ -27,7 +27,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private messageservice: MessageService,
     private seo: SeoService,
     private route: ActivatedRoute,
-    private router: Router,
   ) { }
 
   public InitForm(): void {

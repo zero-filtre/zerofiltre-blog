@@ -10,8 +10,9 @@
     </nav>
 
     <div
-        class="profile-image-wrapper flex items-center justify-center w-[250px] h-[250px] sm:h-64 sm:w-64 mx-auto overflow-hidden border rounded-full my-10">
-        <img *ngIf="user?.profilePicture" class="w-full object-cover" [src]="user?.profilePicture" alt="user?.fullName">
+        class="profile-image-wrapper flex items-center justify-center w-[250px] h-[250px] sm:h-64 sm:w-64 mx-auto overflow-hidden rounded-full shadow-sm my-10">
+        <img *ngIf="user?.profilePicture" class="w-full object-cover shadow-lg" [src]="user?.profilePicture"
+            alt="user?.fullName">
         <ng-container *ngIf="!user?.profilePicture && !loading">
             <svg xmlns="http://www.w3.org/2000/svg"
                 class="w-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white" fill="none"

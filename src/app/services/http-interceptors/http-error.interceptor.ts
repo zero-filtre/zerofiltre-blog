@@ -94,19 +94,17 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       errorMessage = error.error.message;
     } else {
       // Server side error
-      if (error.status !== 0) {
-        let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
+      let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
 
-        if (serverErrorExist) {
-          errorMessage = error.error.error.message;
-        } else {
-          errorMessage = errorMessage;
-        }
+      if (serverErrorExist) {
+        errorMessage = error.error.error.message;
+      } else {
+        errorMessage = errorMessage;
+      }
 
-        if (error.status === 401) {
-          localStorage.clear();
-          this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
-        }
+      if (error.status === 401) {
+        localStorage.clear();
+        this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
       }
     }
 

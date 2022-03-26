@@ -184,7 +184,9 @@ export class AuthService {
 
   // USER PROFILE SERVICES
 
-
+  public updateUserPassword(passwords: FormData): Observable<any> {
+    return this.http.post<string>(`${this.apiServerUrl}/user/updatePassword`, passwords)
+  }
 
   // HELPER SERVICES
 
