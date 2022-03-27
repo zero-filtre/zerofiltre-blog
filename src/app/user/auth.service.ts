@@ -85,6 +85,12 @@ export class AuthService {
     }
   }
 
+  setUserData(user: User) {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('user_data', JSON.stringify(user));
+    }
+  }
+
   get currentUsr() {
     if (isPlatformBrowser(this.platformId)) {
       return JSON.parse(this.userData);

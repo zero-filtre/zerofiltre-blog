@@ -48,7 +48,8 @@
         <div class="profile-header flex items-center justify-between">
             <div class="header-infos flex items-center gap-3">
                 <div class="image-wrapper relative border rounded-full h-20 w-20 shadow-lg">
-                    <img *ngIf="user?.profilePicture" class="w-full rounded-full" [src]="user?.profilePicture">
+                    <img *ngIf="user?.profilePicture" class="w-full h-full object-cover rounded-full"
+                        [src]="user?.profilePicture">
                     <ng-container *ngIf="!user?.profilePicture">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="w-full rounded-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white"
@@ -85,11 +86,11 @@
                                 clip-rule="evenodd" />
                         </svg>
 
-                        <span *ngIf="!user?.active"
+                        <span *ngIf="user && !user?.active"
                             class="inline-block font-semibold px-2 py-0.5 text-xs text-skin-muted border-2 border-yellow-400 rounded-lg">Email
                             non verifié ! 🚨
                         </span>
-                        <button *ngIf="!user?.active" (click)="resendConfirmationMail()"
+                        <button *ngIf="user && !user?.active" (click)="resendConfirmationMail()"
                             class="text-xs text-skin-muted hover:text-skin-base hover:underline">Renvoyer le lien de
                             confirmation</button>
                     </div>

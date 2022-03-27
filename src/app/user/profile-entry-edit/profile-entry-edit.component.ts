@@ -71,9 +71,10 @@ export class ProfileEntryEditComponent implements OnInit {
     this.loading = true;
 
     this.authService.updateUserProfile(this.form.value).subscribe({
-      next: (response: any) => {
+      next: (response: User) => {
         this.loading = false;
         this.messageService.openSnackBarSuccess('Enregistrement reussi !', 'Ok', 0);
+        this.authService.setUserData(response)
         console.log('UPDATED USER: ', response);
       },
       error: (error: HttpErrorResponse) => {

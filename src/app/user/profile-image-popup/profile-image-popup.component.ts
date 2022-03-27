@@ -74,14 +74,22 @@ export class ProfileImagePopupComponent implements OnInit {
         if (typeof (event) === 'object') {
           this.uploading = false;
 
-          const formData = { 'profilePicture': event.url };
+          const formData = {
+            "id": this.user?.id,
+            "fullName": this.user?.fullName,
+            "profilePicture": event.url,
+            "profession": this.user?.profession,
+            "bio": this.user?.bio,
+            "language": "fr",
+            "socialLinks": this.user?.socialLinks,
+            "website": this.user?.website
+          }
 
           this.authService.updateUserProfile(formData)
             .subscribe({
-              next: (response: any) => {
+              next: (response: User) => {
                 console.log('Profile image uploaded ! :', response);
-                // getUser() or set this.user.profilePicture = event.url
-                // this.user = response.user
+                this.authService.setUserData(response)
               },
               error: (_err: HttpErrorResponse) => {
                 console.log('Error uploading profile image');
