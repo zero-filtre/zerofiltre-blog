@@ -18,7 +18,6 @@ export class ProfileEntryEditComponent implements OnInit {
   public loading: boolean = false;
 
   constructor(
-    private router: Router,
     private formuilder: FormBuilder,
     private authService: AuthService,
     private messageService: MessageService,
@@ -27,12 +26,14 @@ export class ProfileEntryEditComponent implements OnInit {
 
   public InitForm(): void {
     this.form = this.formuilder.group({
+      id: [this.user?.id],
+      language: ['fr'],
       fullName: ['', [Validators.required]],
       profession: ['', []],
       bio: ['', []],
       website: ['', []],
       pseudo: ['', []],
-      socialNetworks: [[]],
+      socialLinks: [[]],
     })
   }
 
@@ -69,13 +70,15 @@ export class ProfileEntryEditComponent implements OnInit {
   public updateUserInfos(): void {
     this.loading = true;
 
-    return
-    this.authService.signup(this.form.value).subscribe({
-      next: (_response: any) => {
-        this.messageService.signUpSuccess();
-      },
-      error: (_error: HttpErrorResponse) => {
+    this.authService.updateUserProfile(this.form.value).subscribe({
+      next: (response: any) => {
         this.loading = false;
+        this.messageService.openSnackBarSuccess('Enregistrement reussi !', 'Ok', 0);
+        console.log('UPDATED USER: ', response);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.loading = false;
+        console.log('UPDATE USER ERROR: ', error);
       }
     })
   }
