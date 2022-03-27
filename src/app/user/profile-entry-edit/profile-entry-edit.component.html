@@ -29,8 +29,8 @@
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
-                                <input name="fullName" type="text" id="fullName" required formControlName="fullName"
-                                    class="" required placeholder="Nom complet">
+                                <input name="fullName" type="text" id="fullName" formControlName="fullName" class=""
+                                    required placeholder="Nom complet">
                             </div>
                             <div *ngIf="fullName?.invalid && fullName?.dirty" class="">
                                 <div *ngIf="fullName?.errors?.['required']"
@@ -47,8 +47,8 @@
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
-                                <input name="pseudo" type="text" id="pseudo" required formControlName="pseudo" class=""
-                                    required placeholder="Pseudo">
+                                <input name="pseudo" type="text" id="pseudo" formControlName="pseudo" class=""
+                                    placeholder="Pseudo">
                             </div>
                         </div>
                     </div>
@@ -59,19 +59,9 @@
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
-                                <input name="profession" type="text" id="profession" required
-                                    formControlName="profession" class="" autocomplete="profession" required
-                                    placeholder="Profession">
+                                <input name="profession" type="text" id="profession" formControlName="profession"
+                                    class="" autocomplete="profession" placeholder="Profession">
                             </div>
-                            <!-- <div *ngIf="profession?.invalid && profession?.dirty" class="">
-                                <div *ngIf="profession?.errors?.['required']"
-                                    class="mt-1 text-xs sm:text-sm text-error italic">
-                                    profession est obligatoire.
-                                </div>
-                                <div *ngIf="profession?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Vous devez entrer une adresse profession valide
-                                </div>
-                            </div> -->
                         </div>
                     </div>
 
@@ -81,8 +71,8 @@
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
-                                <input name="website" type="text" id="website" required formControlName="website"
-                                    class="" required placeholder="Votre site web">
+                                <input name="website" type="text" id="website" formControlName="website" class=""
+                                    placeholder="Votre site web">
                             </div>
                         </div>
                     </div>
@@ -131,8 +121,8 @@
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
-                                <textarea name="fullName" type="text" id="bio" required formControlName="bio" class=""
-                                    required placeholder="Votre bio">
+                                <textarea name="fullName" type="text" id="bio" formControlName="bio" class=""
+                                    placeholder="Votre bio">
                                 </textarea>
                             </div>
                         </div>

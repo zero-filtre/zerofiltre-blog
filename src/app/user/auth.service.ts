@@ -19,6 +19,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+
   private readonly apiServerUrl = environment.apiBaseUrl;
 
 
@@ -192,6 +193,13 @@ export class AuthService {
     return this.http.patch<User>(`${this.apiServerUrl}/user`, profile).pipe(
       shareReplay()
     )
+  }
+
+  public findUserProfile(userId: string): Observable<User> {
+    return this.http.get<User>(`${this.apiServerUrl}/user/profile/${userId}`)
+      .pipe(
+        shareReplay()
+      )
   }
 
   // HELPER SERVICES

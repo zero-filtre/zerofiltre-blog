@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-profile-entry-edit',
@@ -12,6 +13,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./profile-entry-edit.component.css']
 })
 export class ProfileEntryEditComponent implements OnInit {
+  public user!: User;
   public form!: FormGroup;
   public loading: boolean = false;
 
@@ -30,6 +32,7 @@ export class ProfileEntryEditComponent implements OnInit {
       bio: ['', []],
       website: ['', []],
       pseudo: ['', []],
+      socialNetworks: [[]],
     })
   }
 
@@ -38,6 +41,30 @@ export class ProfileEntryEditComponent implements OnInit {
   get fullName() { return this.form.get('fullName'); }
   get bio() { return this.form.get('bio'); }
   get website() { return this.form.get('website'); }
+  get socialLinks() { return this.form.get('socialLinks'); }
+
+  public setFormUserInfos() {
+    this.fullName?.setValue(this.user?.fullName)
+    this.profession?.setValue(this.user?.profession)
+    this.bio?.setValue(this.user?.bio)
+    this.website?.setValue(this.user?.website)
+    this.pseudo?.setValue(this.user?.pseudoName)
+    this.socialLinks?.setValue(this.user?.socialLinks)
+  }
+
+  public getUserProfile(): void {
+    this.authService.findUserProfile(this.user?.id!).subscribe({
+      next: (response: User) => {
+        this.user = response
+        this.fullName?.setValue(this.user.fullName)
+        this.profession?.setValue(this.user.profession)
+        this.socialLinks?.setValue(this.user.socialLinks)
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log('Error  Profile: ', error);
+      }
+    })
+  }
 
   public updateUserInfos(): void {
     this.loading = true;
@@ -54,7 +81,11 @@ export class ProfileEntryEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.authService?.currentUsr
+
+    // this.getUserProfile();
     this.InitForm();
+    this.setFormUserInfos();
 
     this.seo.generateTags({
       title: "Modifier son profil | Zerofiltre.tech",
