@@ -1,11 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
 import { User } from '../user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-entry-edit',
@@ -18,14 +18,14 @@ export class ProfileEntryEditComponent implements OnInit {
   public loading: boolean = false;
 
   constructor(
-    private formuilder: FormBuilder,
+    private fb: FormBuilder,
     private authService: AuthService,
     private messageService: MessageService,
     private seo: SeoService
   ) { }
 
   public InitForm(): void {
-    this.form = this.formuilder.group({
+    this.form = this.fb.group({
       id: [this.user?.id],
       language: ['fr'],
       fullName: ['', [Validators.required]],
@@ -33,7 +33,20 @@ export class ProfileEntryEditComponent implements OnInit {
       bio: ['', []],
       website: ['', []],
       pseudo: ['', []],
-      socialLinks: [[]],
+      socialLinks: this.fb.array([
+        this.fb.group({
+          platform: ['TWITTER'],
+          link: [''],
+        }),
+        this.fb.group({
+          platform: ['GITHUB'],
+          link: [''],
+        }),
+        this.fb.group({
+          platform: ['STACKOVERFLOW'],
+          link: [''],
+        }),
+      ])
     })
   }
 
@@ -42,15 +55,21 @@ export class ProfileEntryEditComponent implements OnInit {
   get fullName() { return this.form.get('fullName'); }
   get bio() { return this.form.get('bio'); }
   get website() { return this.form.get('website'); }
-  get socialLinks() { return this.form.get('socialLinks'); }
+  get socialLinks() { return this.form.get('socialLinks') as FormArray }
 
   public setFormUserInfos() {
-    this.fullName?.setValue(this.user?.fullName)
-    this.profession?.setValue(this.user?.profession)
-    this.bio?.setValue(this.user?.bio)
-    this.website?.setValue(this.user?.website)
-    this.pseudo?.setValue(this.user?.pseudoName)
-    this.socialLinks?.setValue(this.user?.socialLinks)
+    this.fullName?.setValue(this.user?.fullName);
+    this.profession?.setValue(this.user?.profession);
+    this.bio?.setValue(this.user?.bio);
+    this.website?.setValue(this.user?.website);
+    this.pseudo?.setValue(this.user?.pseudoName);
+    this.setUserSocialLinks();
+  }
+
+  public setUserSocialLinks(): any {
+    this.socialLinks.controls.forEach((formGroup: any, id: any) => {
+      // formGroup.controls['link'].setValue('the user link');
+    });
   }
 
   public getUserProfile(): void {
@@ -87,9 +106,11 @@ export class ProfileEntryEditComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService?.currentUsr
 
-    // this.getUserProfile();
     this.InitForm();
     this.setFormUserInfos();
+
+    console.log('SOCIAL LINKS: ', this.socialLinks);
+    console.log('USER SOCIAL LINKS: ', this.user?.socialLinks);
 
     this.seo.generateTags({
       title: "Modifier son profil | Zerofiltre.tech",

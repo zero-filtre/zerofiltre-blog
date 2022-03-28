@@ -12,7 +12,7 @@
             </a>
         </div>
 
-        <div class="nav-title font-semibold">
+        <div class="nav-title font-semibold sm:-mb-px">
             <span class="text-primary-500 text-xl sm:text-2xl">
                 Mes infos
             </span>
@@ -51,7 +51,7 @@
                     class="image-wrapper relative border border-skin-bgMuted rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
                     <img *ngIf="user?.profilePicture" class="w-full h-full object-cover rounded-full"
                         [src]="user?.profilePicture">
-                    <ng-container *ngIf="!user?.profilePicture">
+                    <ng-container *ngIf="user && !user?.profilePicture">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="w-full rounded-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
