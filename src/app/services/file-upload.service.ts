@@ -124,10 +124,7 @@ export class FileUploadService {
     })
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 0) {
-            console.log('ERROR FILE: ', error);
-            this.messageService.openSnackBarError('Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !', 'Ok', 0);
-          }
+          this.handleError(error);
           return throwError(() => error)
         })
       )
@@ -143,12 +140,16 @@ export class FileUploadService {
     return this.http.delete<any>(`${this.ovhServerUrl}/${fileName}`, httpOptions)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 404) {
-            console.log('404 ERR');
-            this.messageService.cancel();
-          }
+          this.handleError(error);
           return throwError(() => error)
         })
       )
+  }
+
+  public handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      console.log('ERROR FILE: ', error);
+      this.messageService.openSnackBarError('Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !', 'Ok', 0);
+    }
   }
 }

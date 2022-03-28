@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, of, throwError } from 'rxjs';
 import { File } from 'src/app/articles/article.model';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { AuthService } from '../auth.service';
@@ -22,6 +22,8 @@ export class ProfileImagePopupComponent implements OnInit {
     inProgress: false,
     progress: 0
   };
+
+  public profileData!: User;
 
 
   constructor(
@@ -70,17 +72,7 @@ export class ProfileImagePopupComponent implements OnInit {
         return of('Upload failed');
       })).subscribe((event: any) => {
         if (typeof (event) === 'object') {
-
-          const formData = {
-            "id": this.user?.id,
-            "fullName": this.user?.fullName,
-            "profilePicture": event.url,
-            "profession": this.user?.profession,
-            "bio": this.user?.bio,
-            "language": "fr",
-            "socialLinks": this.user?.socialLinks,
-            "website": this.user?.website
-          }
+          const formData = { ...this.profileData, profilePicture: event.url }
 
           this.authService.updateUserProfile(formData)
             .subscribe({
@@ -98,22 +90,81 @@ export class ProfileImagePopupComponent implements OnInit {
             })
         }
       })
-
   }
 
   deleteProfileImage(): void {
-    this.loading = true;
+    this.uploading = true;
+
+    const fileName = this.user?.profilePicture?.split('/')[6]!;
+    const fileNameUrl = this.user?.profilePicture?.split('/')[2];
+
+    if (fileNameUrl !== 'storage.gra.cloud.ovh.net') {
+      this.uploading = false;
+
+      this.user.profilePicture = '';
+      return;
+    }
+
+    this.fileUploadService.RemoveImage(fileName)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            console.log('404 ERR');
+            console.log(this.profileData);
+            const formData = { ...this.profileData, profilePicture: '' }
+
+            this.authService.updateUserProfile(formData)
+              .subscribe({
+                next: (response: User) => {
+                  console.log('Profile image deleted ! :', response);
+                  this.user.profilePicture = response.profilePicture;
+                  this.authService.setUserData(response)
+                  this.uploading = false;
+                },
+                error: (_err: HttpErrorResponse) => {
+                  this.dialogRef.close();
+                  console.log('Error uploading profile image');
+                  this.uploading = false;
+                }
+              })
+          }
+          return throwError(() => error)
+        })
+      )
+      .subscribe({
+        next: () => {
+          const formData = { ...this.profileData, profilePicture: '' }
+
+          this.authService.updateUserProfile(formData)
+            .subscribe({
+              next: (response: User) => {
+                console.log('Profile image deleted ! :', response);
+                this.user.profilePicture = response.profilePicture;
+                this.authService.setUserData(response)
+                this.uploading = false;
+              },
+              error: (_err: HttpErrorResponse) => {
+                this.dialogRef.close();
+                console.log('Error uploading profile image');
+                this.uploading = false;
+              }
+            })
+        },
+      })
   }
 
   ngOnInit(): void {
     this.user = this.authService?.currentUsr
-    console.log('IMAGE MOUNTED');
+
+    this.profileData = {
+      id: this.user?.id,
+      fullName: this.user?.fullName,
+      profession: this.user?.profession,
+      bio: this.user?.bio,
+      language: "fr",
+      socialLinks: this.user?.socialLinks,
+      website: this.user?.website
+    }
+
   }
 }
-
-/**upload image to ovh and start loading
- * => if ok get the returned url and patch the user 
- * => if ok fetch the updated user (authService.getuser)
- * => if ok stop loading and assign the updated user to the previous user
- * => if ok, After popup close update the main page profile image with the updated user
- */
