@@ -105,7 +105,7 @@ export class ProfileImagePopupComponent implements OnInit {
       return;
     }
 
-    this.fileUploadService.RemoveImage(fileName)
+    this.fileUploadService.removeImage(fileName)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (error.status === 404) {

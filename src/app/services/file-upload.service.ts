@@ -130,7 +130,7 @@ export class FileUploadService {
       )
   }
 
-  public RemoveImage(fileName: string): Observable<any> {
+  public removeImage(fileName: string): Observable<any> {
     const xToken = this.xTokenObj?.xToken || 'my-x-token';
 
     httpOptions.headers = httpOptions.headers

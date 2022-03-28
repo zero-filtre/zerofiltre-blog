@@ -264,7 +264,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       return;
     }
 
-    this.fileUploadService.RemoveImage(fileName)
+    this.fileUploadService.removeImage(fileName)
       .subscribe({
         next: () => {
           this.thumbnail?.setValue('');
