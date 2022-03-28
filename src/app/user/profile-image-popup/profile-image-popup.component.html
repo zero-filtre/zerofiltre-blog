@@ -10,7 +10,7 @@
     </nav>
 
     <div
-        class="profile-image-wrapper flex items-center justify-center w-[250px] h-[250px] sm:h-[280px] sm:w-[280px] mx-auto overflow-hidden rounded-full my-10">
+        class="profile-image-wrapper flex items-center justify-center w-[250px] h-[250px] sm:h-[280px] sm:w-[280px] mx-auto overflow-hidden shadow-sm rounded-full my-10">
         <img *ngIf="user?.profilePicture && !uploading" class="w-full h-full object-cover" [src]="user?.profilePicture"
             alt="user?.fullName">
         <ng-container *ngIf="!user?.profilePicture && !uploading">

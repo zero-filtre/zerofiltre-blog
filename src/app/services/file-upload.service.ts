@@ -122,6 +122,15 @@ export class FileUploadService {
       reportProgress: true,
       observe: 'events'
     })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            console.log('ERROR FILE: ', error);
+            this.messageService.openSnackBarError('Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !', 'Ok', 0);
+          }
+          return throwError(() => error)
+        })
+      )
   }
 
   public RemoveImage(fileName: string): Observable<any> {

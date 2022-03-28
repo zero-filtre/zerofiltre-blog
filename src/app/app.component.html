@@ -167,7 +167,6 @@
 
             <button *ngIf="authService.currentUsr as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
               aria-label="Example icon-button with a menu">
-              <!-- *ngIf="authService.user$ | async as currentUsr" -->
 
               <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
                 <img class="h-10 w-10 rounded-full" [src]="currentUsr?.profilePicture">
@@ -184,7 +183,7 @@
             </button>
 
             <mat-menu #menu="matMenu" class="mt-2 font-semibold">
-              <a routerLink="/user/profile"
+              <a href="/user/profile"
                 class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>Mon profil</span>
               </a>

@@ -1,7 +1,9 @@
+import { isPlatformServer } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../auth.service';
 import { DeleteAccountPopupComponent } from '../delete-account-popup/delete-account-popup.component';
@@ -21,7 +23,9 @@ export class ProfileComponent implements OnInit {
   constructor(
     private dialogRef: MatDialog,
     public authService: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private fileUploadService: FileUploadService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
   public openPasswordEntryDialog(): void {
@@ -48,7 +52,7 @@ export class ProfileComponent implements OnInit {
   public resendConfirmationMail() {
     this.loading = true;
     this.authService.resendUserConfirm(this.user?.email!).subscribe({
-      next: (response: any) => {
+      next: (_response: any) => {
         const msg = 'Un mail avec un lien de confirmation de compte a été envoyé dans votre boite mail'
         this.messageService.openSnackBarSuccess(msg, 'Ok', 0);
         this.loading = false;
@@ -61,6 +65,10 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService?.currentUsr
+
+    if (isPlatformServer(this.platformId)) {
+      this.fileUploadService.xToken$.subscribe();
+    }
   }
 
 }

@@ -46,8 +46,9 @@
 
     <div class="profile-container max-w-xl mx-auto mt-10 sm:mt-20">
         <div class="profile-header flex items-center justify-between">
-            <div class="header-infos flex items-center gap-3">
-                <div class="image-wrapper relative border rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
+            <div class="header-infos flex items-center gap-4">
+                <div
+                    class="image-wrapper relative border border-skin-bgMuted rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
                     <img *ngIf="user?.profilePicture" class="w-full h-full object-cover rounded-full"
                         [src]="user?.profilePicture">
                     <ng-container *ngIf="!user?.profilePicture">
