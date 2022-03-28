@@ -47,9 +47,6 @@ export class ProfileImagePopupComponent implements OnInit {
 
 
   uploadProfileImage(): void {
-    // this.user.profilePicture = 'https://cdn.britannica.com/69/155469-131-14083F59/airplane-flight.jpg'
-
-    this.uploading = true;
     const fileName = this.file.data.name
 
     this.file.inProgress = true;
@@ -68,11 +65,11 @@ export class ProfileImagePopupComponent implements OnInit {
       catchError((_error: HttpErrorResponse) => {
         this.file.inProgress = false;
         this.uploading = false;
+        this.dialogRef.close();
 
         return of('Upload failed');
       })).subscribe((event: any) => {
         if (typeof (event) === 'object') {
-          this.uploading = false;
 
           const formData = {
             "id": this.user?.id,
@@ -89,9 +86,13 @@ export class ProfileImagePopupComponent implements OnInit {
             .subscribe({
               next: (response: User) => {
                 console.log('Profile image uploaded ! :', response);
+                this.user.profilePicture = response.profilePicture;
                 this.authService.setUserData(response)
+                this.uploading = false;
               },
               error: (_err: HttpErrorResponse) => {
+                this.uploading = false;
+                this.dialogRef.close();
                 console.log('Error uploading profile image');
               }
             })

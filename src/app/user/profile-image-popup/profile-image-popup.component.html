@@ -10,10 +10,10 @@
     </nav>
 
     <div
-        class="profile-image-wrapper flex items-center justify-center w-[250px] h-[250px] sm:h-64 sm:w-64 mx-auto overflow-hidden rounded-full shadow-lg my-10">
-        <img *ngIf="user?.profilePicture" class="w-full h-full object-cover" [src]="user?.profilePicture"
+        class="profile-image-wrapper flex items-center justify-center w-[250px] h-[250px] sm:h-[280px] sm:w-[280px] mx-auto overflow-hidden rounded-full my-10">
+        <img *ngIf="user?.profilePicture && !uploading" class="w-full h-full object-cover" [src]="user?.profilePicture"
             alt="user?.fullName">
-        <ng-container *ngIf="!user?.profilePicture && !loading">
+        <ng-container *ngIf="!user?.profilePicture && !uploading">
             <svg xmlns="http://www.w3.org/2000/svg"
                 class="w-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
@@ -21,7 +21,7 @@
                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
         </ng-container>
-        <ng-container *ngIf="loading">
+        <ng-container *ngIf="uploading">
             <svg class="w-10 h-10 z-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                 <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"

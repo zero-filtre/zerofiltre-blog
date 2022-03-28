@@ -30,6 +30,10 @@ module.exports = {
           bgMuted: "#f3f4f6"
         },
       },
+      spacing: {
+        px: '1px',
+        btnHx: '38px',
+      }
     },
   },
   plugins: [

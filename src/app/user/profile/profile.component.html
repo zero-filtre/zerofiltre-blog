@@ -47,7 +47,7 @@
     <div class="profile-container max-w-xl mx-auto mt-10 sm:mt-20">
         <div class="profile-header flex items-center justify-between">
             <div class="header-infos flex items-center gap-3">
-                <div class="image-wrapper relative border rounded-full h-20 w-20 shadow-lg">
+                <div class="image-wrapper relative border rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
                     <img *ngIf="user?.profilePicture" class="w-full h-full object-cover rounded-full"
                         [src]="user?.profilePicture">
                     <ng-container *ngIf="!user?.profilePicture">
@@ -60,7 +60,7 @@
                     </ng-container>
 
                     <div
-                        class="profile-image-edit-btn absolute top-1 right-0 border-2 rounded-full w-5 h-5 bg-skin-card">
+                        class="profile-image-edit-btn absolute top-1 right-0 sm:right-4 border-2 border-skin-bgMuted rounded-full w-5 h-5 bg-skin-card">
                         <button (click)="openProfileImageDeleteDialog()">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 class="w-full p-0.5 -mx-[1px] text-primary-500 hover:fill-primary-500 transition-all duration-200"
@@ -139,7 +139,7 @@
                         <div class="text-skin-base font-bold">.....................</div>
                     </div>
                     <button (click)="openPasswordEntryDialog()"
-                        class="px-4 py-2 shadow-md text-white font-semibold text-xs rounded-full bg-primary-300 hover:bg-primary-500 transition-all duration-200">Changer</button>
+                        class="px-4 py-2 shadow-md text-white font-semibold text-xs sm:text-sm rounded-full bg-primary-300 hover:bg-primary-500 transition-all duration-200">Changer</button>
                 </div>
             </div>
 
@@ -152,7 +152,7 @@
 
             <div class="action-btns flex justify-end  mt-12">
                 <button (click)="openAccountDeleteDialog()"
-                    class="px-4 py-2 shadow-lg text-white font-semibold text-xs rounded-full bg-red-500 hover:bg-red-700 transition-all duration-200">Supprimer
+                    class="px-4 py-2 shadow-lg text-white font-semibold text-xs sm:text-sm rounded-full bg-red-500 hover:bg-red-700 transition-all duration-200">Supprimer
                     mon compte
                 </button>
             </div>
