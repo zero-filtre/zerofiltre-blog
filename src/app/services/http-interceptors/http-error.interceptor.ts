@@ -62,21 +62,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           return this.authInterceptor.intercept(request, next);
         }),
         catchError(errordata => {
-          localStorage.clear();
+          this.authService.logout();
           this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
           return throwError(() => errordata)
         })
       );
-  }
-
-  private clearLSwithout(itemValue: string) {
-    for (var i = 0, len = localStorage.length; i < len; i++) {
-      const key = localStorage.key(i)!;
-      const value = localStorage[key];
-      if (value !== itemValue) {
-        localStorage.removeItem(value);
-      }
-    }
   }
 
 
@@ -104,7 +94,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       }
 
       if (error.status === 401) {
-        localStorage.clear();
+        this.authService.logout();
         this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
       }
     }

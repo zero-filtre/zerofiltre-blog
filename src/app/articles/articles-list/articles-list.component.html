@@ -184,9 +184,8 @@
 
                             <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
 
-                                <div class="article-tags flex items-center space-x-2">
-                                    <div *ngFor="let tag of article?.tags"
-                                        class="flex flex-wrap space-y-1 items-center space-x-2">
+                                <div class="article-tags-container flex flex-wrap items-center gap-1">
+                                    <div *ngFor="let tag of article?.tags" class="tag-item flex items-center space-x-2">
                                         <span
                                             class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
                                             <svg class="mr-1 h-2 w-2 text-[{{tag?.colorCode}}]" fill="currentColor"

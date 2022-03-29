@@ -140,7 +140,7 @@ export class AuthService {
 
   public logout() {
     this.subject.next(null!);
-    localStorage.clear();
+    this.clearLSwithoutExcludedKey()
   }
 
   public requestPasswordReset(email: string): Observable<any> {
@@ -246,6 +246,17 @@ export class AuthService {
           this.router.navigateByUrl('/login');
         }
       })
+  }
+
+  private clearLSwithoutExcludedKey() {
+    const excludedKey = 'x_token'
+    const keys = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      keys.push(key)
+    }
+    const clearables = keys.filter(key => key !== excludedKey)
+    clearables.forEach(key => localStorage.removeItem(key!))
   }
 
   private extractTokenFromHeaders(response: any) {
