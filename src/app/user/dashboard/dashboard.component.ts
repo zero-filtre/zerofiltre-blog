@@ -133,9 +133,9 @@ export class DashboardComponent implements OnInit {
 
     this.scrollyPageNumber += 1;
 
-    const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
+    const queryParam = this.route.snapshot.queryParamMap.get('sortBy')!;
 
-    if (queryParamOne === this.DRAFT) {
+    if (queryParam === this.DRAFT) {
       console.log('FETCHING BY DRAFT');
       console.log('fetching...');
 
@@ -149,7 +149,7 @@ export class DashboardComponent implements OnInit {
       return
     }
 
-    if (queryParamOne === 'in-review') {
+    if (queryParam === 'in-review') {
       console.log('FETCHING BY IN-REVIEW');
       console.log('fetching...');
 

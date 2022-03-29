@@ -37,6 +37,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         .pipe(
           retryWhen(genericRetryPolicy({
             excludedStatusCodes: [400, 401, 403, 404, 500]
+            // excludedStatusCodes: [401, 403, 404]
           })),
           catchError((error: HttpErrorResponse) => {
             if (error.status === 401 && authToken && userOrigin === null) {

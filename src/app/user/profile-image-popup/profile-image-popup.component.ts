@@ -128,6 +128,7 @@ export class ProfileImagePopupComponent implements OnInit {
                 }
               })
           }
+          this.uploading = false;
           return throwError(() => error)
         })
       )

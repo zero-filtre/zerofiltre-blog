@@ -39,7 +39,6 @@ export class AuthService {
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
-    private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService
   ) {
