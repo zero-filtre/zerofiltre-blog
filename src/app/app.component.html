@@ -109,7 +109,7 @@
     <div class="top-toolbar fixed top-0 left-0 right-0 z-50">
 
       <mat-toolbar class="top-toolbar-container">
-        <a class="logo-link" href="/">
+        <a class="logo-link" routerLink="/">
           <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
             <img class="max-w-full" src="../../../assets/logoblue.svg" alt="Zerofiltre.tech">
           </div>
@@ -183,7 +183,7 @@
             </button>
 
             <mat-menu #menu="matMenu" class="mt-2 font-semibold">
-              <a href="/user/profile"
+              <a routerLink="/user/profile"
                 class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>Mon profil</span>
               </a>
@@ -262,7 +262,7 @@
           </span>
         </a>
 
-        <a routerLink="/user/dashboard" (click)="fetchAllArticlesAsAdmin()"
+        <a *ngIf="authService?.isAdmin" routerLink="/user/dashboard" (click)="fetchAllArticlesAsAdmin()"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg"
             class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"

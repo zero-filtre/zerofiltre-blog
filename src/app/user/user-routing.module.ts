@@ -17,17 +17,17 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    // canActivate: [AuthGuard] 
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile/edit',
     component: ProfileEntryEditComponent,
-    // canActivate: [AuthGuard] 
+    canActivate: [AuthGuard]
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    // canActivate: [AuthGuard] 
+    canActivate: [AuthGuard]
   }
 ];
 

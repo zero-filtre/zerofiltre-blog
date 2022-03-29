@@ -237,9 +237,8 @@ export class AuthService {
 
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)
-              .catch(() => this.router.navigate(['/']))
           } else {
-            this.router.navigate(['/'])
+            this.router.navigateByUrl('/');
           }
         },
         error: (_err: HttpErrorResponse) => {

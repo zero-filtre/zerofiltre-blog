@@ -1,9 +1,10 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, shareReplay } from 'rxjs';
+import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AuthService } from './user/auth.service';
 
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     public authService: AuthService,
+    private fileUploadService: FileUploadService
   ) {
     this.setBrowserTranslationConfigs();
   }
@@ -56,7 +58,8 @@ export class AppComponent implements OnInit {
 
   public logout() {
     this.authService.logout();
-    location.reload();
+    this.router.navigateByUrl('/')
+    // location.reload();
   }
 
   // Use to set the language on a btn click for example
@@ -98,5 +101,11 @@ export class AppComponent implements OnInit {
         return button;
       });
     }
+
+    if (isPlatformServer(this.platformId)) {
+      this.fileUploadService.xToken$.subscribe();
+    }
+
+    console.log('IS ADMIN? : ', this.authService.isAdmin);
   }
 }

@@ -65,10 +65,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService?.currentUsr
-
-    if (isPlatformServer(this.platformId)) {
-      this.fileUploadService.xToken$.subscribe();
-    }
   }
 
 }

@@ -333,11 +333,6 @@ export class ArticleEntryCreateComponent implements OnInit {
 
     this.fetchListOfTags();
 
-    if (isPlatformServer(this.platformId)) {
-      this.fileUploadService.xToken$.subscribe();
-    }
-
-
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',

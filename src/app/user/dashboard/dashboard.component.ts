@@ -212,9 +212,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.router.navigateByUrl('/user/dashboard');
 
-    this.isAdminUser = this.authService.isAdmin;
-    console.log('IS ADMIN? : ', this.isAdminUser);
-
     this.seo.generateTags({
       title: 'Mes articles | Zerofiltre.tech'
     });

@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { MessageService } from '../services/message.service';
@@ -11,6 +12,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
+    @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
   canActivate(
@@ -21,14 +23,17 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.authService.isLoggedIn$
-      .pipe(
-        tap((isLoggedIn) => {
-          if (!isLoggedIn) {
-            this.messageService.authError(state);
-          }
-        })
-      );
+    if (isPlatformBrowser(this.platformId)) {
+      return this.authService.isLoggedIn$
+        .pipe(
+          tap((isLoggedIn) => {
+            if (!isLoggedIn) {
+              this.messageService.authError(state);
+            }
+          })
+        );
+    }
+    return true
   }
 
 }
