@@ -28,23 +28,24 @@ export class ProfileEntryEditComponent implements OnInit {
     this.form = this.fb.group({
       id: [this.user?.id],
       language: ['fr'],
-      fullName: ['', [Validators.required]],
-      profession: ['', []],
-      bio: ['', []],
-      website: ['', []],
-      pseudo: ['', []],
+      fullName: [this.user?.fullName, [Validators.required]],
+      profession: [this.user?.profession],
+      profilePicture: [this.user?.profilePicture],
+      bio: [this.user?.bio],
+      website: [this.user?.website],
+      pseudo: [this.user?.pseudoName],
       socialLinks: this.fb.array([
         this.fb.group({
           platform: ['TWITTER'],
-          link: [''],
+          link: [this.user?.socialLinks[1].link],
         }),
         this.fb.group({
           platform: ['GITHUB'],
-          link: [''],
+          link: [this.user?.socialLinks[2].link],
         }),
         this.fb.group({
           platform: ['STACKOVERFLOW'],
-          link: [''],
+          link: [this.user?.socialLinks[0].link],
         }),
       ])
     })
@@ -58,11 +59,6 @@ export class ProfileEntryEditComponent implements OnInit {
   get socialLinks() { return this.form.get('socialLinks') as FormArray }
 
   public setFormUserInfos() {
-    this.fullName?.setValue(this.user?.fullName);
-    this.profession?.setValue(this.user?.profession);
-    this.bio?.setValue(this.user?.bio);
-    this.website?.setValue(this.user?.website);
-    this.pseudo?.setValue(this.user?.pseudoName);
     this.setUserSocialLinks();
   }
 
