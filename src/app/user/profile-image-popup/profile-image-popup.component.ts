@@ -54,6 +54,10 @@ export class ProfileImagePopupComponent implements OnInit {
     this.file.inProgress = true;
     this.uploading = true;
 
+    if (this.user?.profilePicture) {
+      this.deleteProfileImage()
+    }
+
     this.fileUploadService.uploadImage(fileName, this.file.data).pipe(
       map((event) => {
         switch (event.type) {

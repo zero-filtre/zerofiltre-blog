@@ -207,6 +207,13 @@ export class AuthService {
       )
   }
 
+  public deleteUserAccount(userId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/user/${userId}`)
+      .pipe(
+        shareReplay()
+      )
+  }
+
   // HELPER SERVICES
 
   private handleJWTauth(response: any, tokenType: string, redirectURL = '') {

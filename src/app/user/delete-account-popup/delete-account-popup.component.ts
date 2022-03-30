@@ -1,6 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../auth.service';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-delete-account-popup',
@@ -10,11 +13,13 @@ import { AuthService } from '../auth.service';
 export class DeleteAccountPopupComponent implements OnInit {
 
   public loading: boolean = false;
+  public user!: User;
 
   constructor(
     public dialogRef: MatDialogRef<DeleteAccountPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private authService: AuthService,
+    private messageService: MessageService
   ) { }
 
   onNoClick(): void {
@@ -24,21 +29,23 @@ export class DeleteAccountPopupComponent implements OnInit {
   handleDeleteAccount(): void {
     this.loading = true;
 
-    // this.authService.createArticle(this.title).subscribe({
-    //   next: (response) => {
-    //     this.article = response;
-    //     this.data.router.navigateByUrl(`articles/${this.article.id}/edit`);
-    //     this.loading = false;
-    //     this.dialogRef.close();
-    //   },
-    //   error: (error: HttpErrorResponse) => {
-    //     this.loading = false;
-    //     this.dialogRef.close();
-    //   }
-    // })
+    this.authService.deleteUserAccount(this.user?.id!).subscribe({
+      next: (_response) => {
+        this.loading = false;
+        this.messageService.openSnackBarSuccess('Votre compte a été desactivé !', '', 0);
+        this.authService.logout();
+        this.data.router.navigateByUrl(`/`);
+        this.dialogRef.close();
+      },
+      error: (_error: HttpErrorResponse) => {
+        this.loading = false;
+        this.dialogRef.close();
+      }
+    })
   }
 
   ngOnInit(): void {
+    this.user = this.authService?.currentUsr
   }
 
 }
