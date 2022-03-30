@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit {
   PUBLISHED = 'published';
   DRAFT = 'draft';
   IN_REVIEW = 'in_review';
-  ALL = 'all';
 
   public notEmptyArticles = true;
   public notScrolly = true;
@@ -38,9 +37,7 @@ export class DashboardComponent implements OnInit {
   public activePage: string = this.PUBLISHED;
   public mainPage = true;
 
-  public isAdminUser!: boolean;
-
-  subscription2$!: Subscription;
+  subscription$!: Subscription;
 
   constructor(
     private seo: SeoService,
@@ -59,13 +56,13 @@ export class DashboardComponent implements OnInit {
 
   public fetchMyArticlesByStatus(status: string) {
     this.loading = true;
-    this.subscription2$ = this.articleService.findAllMyArticles(this.pageNumber, this.pageItemsLimit, status)
+    this.subscription$ = this.articleService.findAllMyArticles(this.pageNumber, this.pageItemsLimit, status)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchAllArticlesAsAdmin(status: string) {
     this.loading = true;
-    this.subscription2$ = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, status)
+    this.subscription$ = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, status)
       .subscribe(this.handleFetchedArticles)
   }
 
@@ -75,36 +72,19 @@ export class DashboardComponent implements OnInit {
     if (tab === this.PUBLISHED) {
       this.activePage = this.PUBLISHED;
       this.router.navigateByUrl('/user/dashboard');
-      if (this.isAdminUser) {
-        this.fetchAllArticlesAsAdmin(this.PUBLISHED)
-      } else {
-        this.fetchMyArticlesByStatus(this.PUBLISHED);
-      }
+      this.fetchMyArticlesByStatus(this.PUBLISHED);
     }
 
     if (tab === this.DRAFT) {
       this.activePage = this.DRAFT
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
-      if (this.isAdminUser) {
-        this.fetchAllArticlesAsAdmin(this.DRAFT)
-      } else {
-        this.fetchMyArticlesByStatus(this.DRAFT);
-      }
+      this.fetchMyArticlesByStatus(this.DRAFT);
     }
 
     if (tab === this.IN_REVIEW) {
       this.activePage = this.IN_REVIEW
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
-      if (this.isAdminUser) {
-        this.fetchAllArticlesAsAdmin(this.IN_REVIEW)
-      } else {
-        this.fetchMyArticlesByStatus(this.IN_REVIEW);
-      }
-    }
-
-    if (tab === this.ALL) {
-      this.activePage = this.ALL
-      this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
+      this.fetchMyArticlesByStatus(this.IN_REVIEW);
     }
 
     this.scrollyPageNumber = 0;
@@ -113,18 +93,14 @@ export class DashboardComponent implements OnInit {
 
   public onScroll() {
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
-      console.log('scrolled!!');
-
       this.loadingMore = true;
       this.notScrolly = false;
       this.fetchMoreArticles();
     }
   }
 
-  public fetchMoreArticles() {
+  public fetchMoreArticles(): any {
     if (!this.hasNext) {
-      console.log('END OF THE LIST !');
-
       this.loadingMore = false;
       this.notScrolly = true;
       this.notEmptyArticles = false;
@@ -136,39 +112,13 @@ export class DashboardComponent implements OnInit {
     const queryParam = this.route.snapshot.queryParamMap.get('sortBy')!;
 
     if (queryParam === this.DRAFT) {
-      console.log('FETCHING BY DRAFT');
-      console.log('fetching...');
-
-      if (this.isAdminUser) {
-        this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, this.DRAFT)
-        return
-      }
-
-      this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.DRAFT)
+      return this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.DRAFT)
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
-      return
     }
 
     if (queryParam === 'in-review') {
-      console.log('FETCHING BY IN-REVIEW');
-      console.log('fetching...');
-
-      if (this.isAdminUser) {
-        this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, this.IN_REVIEW)
-        return
-      }
-
-      this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.IN_REVIEW)
+      return this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.IN_REVIEW)
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
-      return
-    }
-
-    console.log('FETCHING BY DEFAULT (PUBLISHED)');
-    console.log('fetching...');
-
-    if (this.isAdminUser) {
-      this.articleService.findAllArticles(this.scrollyPageNumber, this.pageItemsLimit, this.PUBLISHED)
-      return
     }
 
     this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.PUBLISHED)
@@ -217,17 +167,13 @@ export class DashboardComponent implements OnInit {
     });
 
     if (isPlatformBrowser(this.platformId)) {
-      if (this.isAdminUser) {
-        this.fetchAllArticlesAsAdmin(this.PUBLISHED)
-      } else {
-        this.fetchMyArticlesByStatus(this.PUBLISHED);
-      }
+      this.fetchMyArticlesByStatus(this.PUBLISHED);
     }
   }
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.subscription2$.unsubscribe()
+      this.subscription$.unsubscribe()
     }
   }
 

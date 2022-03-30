@@ -1,4 +1,4 @@
-<main class="articles-list-container py-5 mt-20">
+<main class="articles-list-container min-h-screen py-5 mt-20">
     <div class="max-w-2xl mx-auto">
         <div class="main-side-container">
             <div class="profile-navigation-btns lg:hidden">
@@ -9,7 +9,7 @@
                         </path>
                     </svg>
                     <span class="text-primary-500 text-base">
-                        Mes infos
+                        {{'dashboard.backToProfileText' | translate}}
                     </span>
                 </a>
             </div>
@@ -19,34 +19,25 @@
                     <button type="button" aria-current="page" (click)="sortBy(PUBLISHED)"
                         [ngClass]="activePage === PUBLISHED ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>Publiés</span>
+                        <span>{{'dashboard.published' | translate}}</span>
                     </button>
 
                     <button type=" button" aria-current="false" (click)="sortBy(DRAFT)"
                         [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>Brouillons</span>
+                        <span>{{'dashboard.draft' | translate}}</span>
                     </button>
 
                     <button type="button" aria-current="false" (click)="sortBy(IN_REVIEW)"
                         [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>En attente</span>
-                    </button>
-
-                    <button type="button" aria-current="false" (click)="sortBy(ALL)"
-                        [ngClass]="activePage === ALL ? 'active-tab' : ''"
-                        class="hidden text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>Tous</span>
+                        <span>{{'dashboard.inReview' | translate}}</span>
                     </button>
                 </nav>
             </div>
 
             <div class="articles-wrapper articles-scrollable-list-panel no-scrollbar min-h-[80vh] h-full py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none"
                 infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
-                <!-- no-scrollbar -->
-                <!-- [scrollWindow]="false" -->
-                <!-- h-screen overflow-y-scroll -->
 
                 <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
                     <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +106,9 @@
                                                 <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
                                                     date}}</time>
                                                 <span aria-hidden="true">·</span>
-                                                <span>{{article?.readingTime}} min de lecture</span>
+                                                <span>
+                                                    {{article?.readingTime}} {{'dashboard.ofReadTime' |translate}}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -226,7 +219,7 @@
                 <!-- Alert no more Articles -->
                 <div *ngIf="!notEmptyArticles" class="py-5">
                     <div class="flex justify-center">
-                        <div class="text-skin-base text-sm font-bold">Plus aucun article 😏!</div>
+                        <div class="text-skin-base text-sm font-bold">{{'dashboard.noMoreArticles' | translate}}</div>
                     </div>
                 </div>
             </div>

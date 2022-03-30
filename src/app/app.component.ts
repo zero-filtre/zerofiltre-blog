@@ -59,7 +59,6 @@ export class AppComponent implements OnInit {
   public logout() {
     this.authService.logout();
     this.router.navigateByUrl('/')
-    // location.reload();
   }
 
   // Use to set the language on a btn click for example
@@ -73,19 +72,9 @@ export class AppComponent implements OnInit {
   }
 
   public fetchAllArticlesAsAdmin() {
-    console.log('FECTH ALL AS ADMIN');
-    // set isUserAdmin = authService.currentUser.isAdmin
-    // if isUserAdmin ==> fetchAll(PUBLISHED)
-    // On click on Mes articless ==> component mount ==> ng onit ==> set isUserAdmin = false
-    // On page refresh set default to Mes articles ==> btn styles and initial feth ng onit
   }
 
   public fetchAllArticlesAsUser() {
-    console.log('FECTH ALL AS USER');
-    // set isUserAdmin = authService.currentUser.isAdmin
-    // if isUserAdmin ==> fetchAll(PUBLISHED)
-    // On click on Mes articless ==> component mount ==> ng onit ==> set isUserAdmin = false
-    // On page refresh set default to Mes articles ==> btn styles and initial feth ng onit
   }
 
   ngOnInit(): void {

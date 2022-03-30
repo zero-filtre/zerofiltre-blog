@@ -3,7 +3,14 @@ export const fr = {
         about: 'A propos',
         articles: 'articles',
         login: 'Se connecter',
-        register: "S'enregistrer"
+        register: "S'enregistrer",
+        myProfile: 'Mon profil',
+        logout: 'se déconnecter',
+    },
+    sidebar: {
+        myInfos: 'Mes infos',
+        myArticles: 'Mes articles',
+        allArticles: 'Tous les articles'
     },
     login: {
         title: 'Se connecter à son compte ',
@@ -29,7 +36,7 @@ export const fr = {
         noMoreArticles: 'Plus aucun article 😏!',
         ofReadTime: ' min de lecture',
         noArticlesAvailale: 'Aucun article à lire pour le moment 😊!',
-        errorMessage: 'Oops...!'
+        loadArticlesErrorMessage: 'Oops...!'
     },
     articleDetail: {
         aboutAuthor: 'A propos de l’auteur',
@@ -40,5 +47,25 @@ export const fr = {
         edit: "Editer l'article",
         delete: 'Supprimer',
         callToShareText: 'Vous aimez cet article ? Faite le savoir en partageant'
+    },
+    dashboard: {
+        backToProfileText: 'Mes infos',
+        published: 'Publiés',
+        draft: 'Brouillons',
+        inReview: 'En attente',
+        ofReadTime: 'min de lecture',
+        noMoreArticles: 'Plus aucun article 😏!',
+        noArticlesAvailale: 'Aucun article à lire pour le moment 😊!',
+        loadArticlesErrorMessage: 'Oops...!'
+    },
+    adminDashboard: {
+        backToProfileText: 'Mes infos',
+        published: 'Publiés',
+        draft: 'Brouillons',
+        inReview: 'En attente',
+        ofReadTime: 'min de lecture',
+        noMoreArticles: 'Plus aucun article 😏!',
+        noArticlesAvailale: 'Aucun article à lire pour le moment 😊!',
+        loadArticlesErrorMessage: 'Oops...!'
     }
 }

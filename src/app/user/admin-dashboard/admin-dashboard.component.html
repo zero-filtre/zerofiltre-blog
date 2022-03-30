@@ -1,1 +1,231 @@
-<p>admin-dashboard works!</p>
+<main class="articles-list-container min-h-screen py-5 mt-20">
+    <div class="max-w-2xl mx-auto">
+        <div class="main-side-container">
+            <div class="profile-navigation-btns lg:hidden">
+                <a routerLink="/user/profile" class="flex items-center space-x-1 font-semibold">
+                    <svg class="h-5 w-5 text-primary-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7">
+                        </path>
+                    </svg>
+                    <span class="text-primary-500 text-base">
+                        {{'adminDashboard.backToProfileText' | translate}}
+                    </span>
+                </a>
+            </div>
+
+            <div class="tabs-wrapper mt-8 border-b border-skin-border">
+                <nav class="relative flex space-x-8 -mb-[2px]" aria-label="Tabs">
+                    <button type="button" aria-current="page" (click)="sortBy(PUBLISHED)"
+                        [ngClass]="activePage === PUBLISHED ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'adminDashboard.published' | translate}}</span>
+                    </button>
+
+                    <button type=" button" aria-current="false" (click)="sortBy(DRAFT)"
+                        [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'adminDashboard.draft' | translate}}</span>
+                    </button>
+
+                    <button type="button" aria-current="false" (click)="sortBy(IN_REVIEW)"
+                        [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'adminDashboard.inReview' | translate}}</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="articles-wrapper articles-scrollable-list-panel no-scrollbar min-h-[80vh] h-full py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none"
+                infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+
+                <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
+                    <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="10" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                </div>
+
+                <ng-template [ngIf]="articles" *appShellNoRender>
+                    <div *ngFor="let article of articles">
+                        <div class="article-card lg:grid grid-cols-3 gap-6">
+                            <a routerLink="/articles/{{article.id}}" class="article-preview group">
+                                <div class="aspect-w-3 aspect-h-2">
+                                    <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75 transition-all duration-200"
+                                        src="{{article?.thumbnail}}" alt="{{article?.title}}">
+                                </div>
+                            </a>
+
+                            <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
+
+                                <div class="article-tags-container flex flex-wrap items-center gap-1">
+                                    <div *ngFor="let tag of article?.tags" class="tag-item flex items-center space-x-2">
+                                        <span
+                                            class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
+                                            <svg class="mr-1 h-2 w-2 text-[{{tag?.colorCode}}]" fill="currentColor"
+                                                viewBox="0 0 8 8">
+                                                <circle cx="4" cy="4" r="3"></circle>
+                                            </svg>
+                                            {{tag.name}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2">
+                                    <a routerLink="/articles/{{article.id}}" class="article-title group">
+                                        <h4
+                                            class="text-lg inline-block leading-6 font-semibold text-skin-inverted group-hover:text-primary-500 transition-all duration-200">
+                                            {{article?.title}}
+                                        </h4>
+                                    </a>
+
+                                    <p
+                                        class="article-description mt-2 text-sm tracking-wide font-light text-skin-base leading-5 line-clamp-2">
+                                        <ng-container *ngIf="article?.summary">{{article?.summary}}</ng-container>
+                                    </p>
+
+                                    <div class="article-author mt-3 flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <a href="">
+                                                <img class="h-10 w-10 rounded-full"
+                                                    src="{{article.author?.profilePicture}}"
+                                                    alt="{{article.author?.pseudoName}}">
+                                            </a>
+                                        </div>
+
+                                        <div class="ml-3">
+                                            <p class="text-[13px] font-semibold text-skin-inverted">
+                                                <a href="#" class="hover:underline">
+                                                    {{article?.author?.fullName}}
+                                                </a>
+                                            </p>
+                                            <div class="flex space-x-1 text-[13px] text-skin-muted">
+                                                <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
+                                                    date}}</time>
+                                                <span aria-hidden="true">·</span>
+                                                <span>
+                                                    {{article?.readingTime}} {{'adminDashboard.ofReadTime' |translate}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template [ngIf]="loading">
+                    <div *ngFor="let elt of [].constructor(pageItemsLimit)">
+                        <div class="skeleton-container lg:grid grid-cols-3 gap-6 items-start">
+                            <div class="aspect-w-3 aspect-h-2">
+                                <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                    'border-radius': '8px',
+                                     'height.%': 100,
+                                     'width.%': 100
+                                    }">
+                                </ngx-skeleton-loader>
+                            </div>
+
+                            <div class="col-span-2 mt-4 lg:mt-0">
+                                <div class="tags-container flex space-x-3">
+                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                    'border-radius': '9999px',
+                                        height: '30px',
+                                        width: '100px',
+                                        display: 'block'
+                                    }">
+                                    </ngx-skeleton-loader>
+                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                        'border-radius': '9999px',
+                                            height: '30px',
+                                            width: '100px',
+                                            display: 'block'
+                                        }">
+                                    </ngx-skeleton-loader>
+                                </div>
+
+                                <div class="content-container mt-2">
+                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                    'border-radius': '5px',
+                                        height: '40px',
+                                        display: 'block'
+                                    }">
+                                    </ngx-skeleton-loader>
+                                    <ngx-skeleton-loader count="2" appearance="line" [theme]="{ 
+                                            'border-radius': '5px',
+                                                height: '15px',
+                                                display: 'block'
+                                            }">
+                                    </ngx-skeleton-loader>
+
+                                    <div class="flex items-center space-x-2">
+                                        <div class="">
+                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '9999px',
+                                                'width.px': 50,
+                                                'height.px': 50
+                                            }">
+                                            </ngx-skeleton-loader>
+                                        </div>
+                                        <div class="flex-1">
+                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '5px',
+                                                height: '10px',
+                                                display: 'block'
+                                            }">
+                                            </ngx-skeleton-loader>
+                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '5px',
+                                                height: '10px',
+                                                 display: 'block'
+                                            }">
+                                            </ngx-skeleton-loader>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template [ngIf]="errorMessage && articles?.length === 0">
+                    <div class="flex flex-col justify-center items-center h-96 space-y-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-primary-500" fill="currentColor"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
+                        </svg>
+                        <div class="text-sm font-semibold text-skin-base">{{errorMessage}}</div>
+                    </div>
+                </ng-template>
+
+                <!-- loadingMorespinner -->
+                <div *ngIf="loadingMore" class="flex justify-center py-5">
+                    <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                </div>
+
+                <!-- Alert no more Articles -->
+                <div *ngIf="!notEmptyArticles" class="py-5">
+                    <div class="flex justify-center">
+                        <div class="text-skin-base text-sm font-bold">{{'adminDashboard.noMoreArticles' | translate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
