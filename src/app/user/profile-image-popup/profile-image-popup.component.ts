@@ -68,26 +68,13 @@ export class ProfileImagePopupComponent implements OnInit {
         this.file.inProgress = false;
         this.uploading = false;
         this.dialogRef.close();
-
         return of('Upload failed');
+
       })).subscribe((event: any) => {
         if (typeof (event) === 'object') {
           const formData = { ...this.profileData, profilePicture: event.url }
-
           this.authService.updateUserProfile(formData)
-            .subscribe({
-              next: (response: User) => {
-                console.log('Profile image uploaded ! :', response);
-                this.user.profilePicture = response.profilePicture;
-                this.authService.setUserData(response)
-                this.uploading = false;
-              },
-              error: (_err: HttpErrorResponse) => {
-                this.uploading = false;
-                this.dialogRef.close();
-                console.log('Error uploading profile image');
-              }
-            })
+            .subscribe(this.handleUserUpdate)
         }
       })
   }
@@ -101,7 +88,9 @@ export class ProfileImagePopupComponent implements OnInit {
     if (fileNameUrl !== 'storage.gra.cloud.ovh.net') {
       this.uploading = false;
 
-      this.user.profilePicture = '';
+      const formData = { ...this.profileData, profilePicture: '' }
+      this.authService.updateUserProfile(formData)
+        .subscribe(this.handleUserUpdate)
       return;
     }
 
@@ -109,24 +98,9 @@ export class ProfileImagePopupComponent implements OnInit {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (error.status === 404) {
-            console.log('404 ERR');
-            console.log(this.profileData);
             const formData = { ...this.profileData, profilePicture: '' }
-
             this.authService.updateUserProfile(formData)
-              .subscribe({
-                next: (response: User) => {
-                  console.log('Profile image deleted ! :', response);
-                  this.user.profilePicture = response.profilePicture;
-                  this.authService.setUserData(response)
-                  this.uploading = false;
-                },
-                error: (_err: HttpErrorResponse) => {
-                  this.dialogRef.close();
-                  console.log('Error uploading profile image');
-                  this.uploading = false;
-                }
-              })
+              .subscribe(this.handleUserUpdate)
           }
           this.uploading = false;
           return throwError(() => error)
@@ -135,23 +109,22 @@ export class ProfileImagePopupComponent implements OnInit {
       .subscribe({
         next: () => {
           const formData = { ...this.profileData, profilePicture: '' }
-
           this.authService.updateUserProfile(formData)
-            .subscribe({
-              next: (response: User) => {
-                console.log('Profile image deleted ! :', response);
-                this.user.profilePicture = response.profilePicture;
-                this.authService.setUserData(response)
-                this.uploading = false;
-              },
-              error: (_err: HttpErrorResponse) => {
-                this.dialogRef.close();
-                console.log('Error uploading profile image');
-                this.uploading = false;
-              }
-            })
+            .subscribe(this.handleUserUpdate)
         },
       })
+  }
+
+  private handleUserUpdate = {
+    next: (response: User) => {
+      this.user.profilePicture = response.profilePicture;
+      this.authService.setUserData(response)
+      this.uploading = false;
+    },
+    error: (_err: HttpErrorResponse) => {
+      this.dialogRef.close();
+      this.uploading = false;
+    }
   }
 
   ngOnInit(): void {

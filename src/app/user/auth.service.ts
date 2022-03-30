@@ -234,6 +234,7 @@ export class AuthService {
           localStorage.setItem(this.TOKEN_NAME, accessToken);
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
           localStorage.setItem('user_data', JSON.stringify(usr));
+          this.isAdmin = this.currentUsr?.roles.some((role: string) => role === 'ROLE_ADMIN');
 
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)

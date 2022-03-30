@@ -105,7 +105,5 @@ export class AppComponent implements OnInit {
     if (isPlatformServer(this.platformId)) {
       this.fileUploadService.xToken$.subscribe();
     }
-
-    console.log('IS ADMIN? : ', this.authService.isAdmin);
   }
 }

@@ -112,6 +112,7 @@ export class FileUploadService {
 
   public uploadImage(fileName: string, file: File): Observable<any> {
     const xToken = this.xTokenObj?.xToken || 'my-x-token';
+    // TODO: check file size(=<1mb) and extension (.png, .jpg)
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
