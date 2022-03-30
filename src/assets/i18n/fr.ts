@@ -5,7 +5,7 @@ export const fr = {
         login: 'Se connecter',
         register: "S'enregistrer",
         myProfile: 'Mon profil',
-        logout: 'se déconnecter',
+        logout: 'Se déconnecter',
     },
     sidebar: {
         myInfos: 'Mes infos',
