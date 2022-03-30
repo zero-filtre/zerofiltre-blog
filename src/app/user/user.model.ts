@@ -10,7 +10,7 @@ export interface User {
     socialLinks?: any;
     website?: string;
     active?: boolean;
-    role?: any;
+    roles?: string[];
     loginFrom?: string;
     expired?: boolean;
     language?: string;

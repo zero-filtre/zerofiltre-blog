@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class HasRoleGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
@@ -24,12 +24,11 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (isPlatformBrowser(this.platformId)) {
-      const user = this.authService.currentUsr;
-      const isLoggedIn = !!user;
-      if (!isLoggedIn) {
-        this.messageService.authError(state)
+      const isAuthorised = this.authService.currentUsr.roles?.includes(route.data?.role)!;
+      if (!isAuthorised) {
+        this.messageService.openSnackBarError("Vous n'etes pas autorisés", 'Ok');
       }
-      return isLoggedIn;
+      return isAuthorised;
     }
     return true
   }

@@ -16,6 +16,7 @@ import { DeleteAccountPopupComponent } from './delete-account-popup/delete-accou
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileEntryEditComponent } from './profile-entry-edit/profile-entry-edit.component';
 import { ProfileImagePopupComponent } from './profile-image-popup/profile-image-popup.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { ProfileImagePopupComponent } from './profile-image-popup/profile-image-
     DeleteAccountPopupComponent,
     DashboardComponent,
     ProfileEntryEditComponent,
-    ProfileImagePopupComponent
+    ProfileImagePopupComponent,
+    AdminDashboardComponent
   ],
   imports: [
     CommonModule,

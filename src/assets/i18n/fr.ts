@@ -16,6 +16,9 @@ export const fr = {
         signup: 'Creer mon compte',
         continue: 'Ou continuer avec'
     },
+    signup: {
+
+    },
     articles: {
         title: 'Récentes publications',
         subTitle: 'Tous les articles récemment publiés.',
