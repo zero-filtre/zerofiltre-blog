@@ -21,7 +21,8 @@
             <ng-container *ngIf="form.invalid; else validBtn">
                 <button [disabled]="form.invalid || loading"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
-                    Publier
+                    <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">Publier</span>
+                    <span *ngIf="!isPublishing && !isPublished && !authService.isAdmin">Soumettre</span>
                 </button>
 
                 <button *ngIf="isSaving" class="relative group">
@@ -64,7 +65,8 @@
                 <button type="submit" (click)="publishArticle()" [disabled]="isSaving"
                     [ngClass]="{'opacity-50': isSaving}"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
-                    <span *ngIf="!isPublishing">Publier</span>
+                    <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">Publier</span>
+                    <span *ngIf="!isPublishing && !isPublished && !authService.isAdmin">Soumettre</span>
                     <svg *ngIf="isPublishing" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
                         preserveAspectRatio="xMidYMid">

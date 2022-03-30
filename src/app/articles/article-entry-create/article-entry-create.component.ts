@@ -7,6 +7,7 @@ import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Su
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
+import { AuthService } from 'src/app/user/auth.service';
 import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
@@ -35,6 +36,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public loading = false;
   public isSaving = false;
   public isPublishing = false;
+  public isPublished = false
 
   private EditorText$ = new Subject<string>();
   private TitleText$ = new Subject<string>();
@@ -60,6 +62,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     public fileUploadService: FileUploadService,
     private messageService: MessageService,
     private seo: SeoService,
+    public authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
 
@@ -81,20 +84,30 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public getArticle(): void {
-    this.articleService.findArticleById(this.articleId).subscribe({
-      next: (response: Article) => {
-        this.article = response
-        this.articleTitle = response.title!
-        this.form.controls['id'].setValue(+this.articleId)
-        this.title?.setValue(this.articleTitle)
-        this.summary?.setValue(this.article.summary)
-        this.thumbnail?.setValue(this.article.thumbnail)
-        this.content?.setValue(this.article.content)
-        this.tags?.setValue(this.article.tags)
-        this.selectedTags = this.article.tags
-      },
-      error: (_error: HttpErrorResponse) => { }
-    })
+    this.articleService.findArticleById(this.articleId)
+      .pipe(
+        tap(art => {
+          if (art.status === 'PUBLISHED') {
+            this.isPublished = true;
+          } else {
+            this.isPublished = false;
+          }
+        })
+      )
+      .subscribe({
+        next: (response: Article) => {
+          this.article = response
+          this.articleTitle = response.title!
+          this.form.controls['id'].setValue(+this.articleId)
+          this.title?.setValue(this.articleTitle)
+          this.summary?.setValue(this.article.summary)
+          this.thumbnail?.setValue(this.article.thumbnail)
+          this.content?.setValue(this.article.content)
+          this.tags?.setValue(this.article.tags)
+          this.selectedTags = this.article.tags
+        },
+        error: (_error: HttpErrorResponse) => { }
+      })
   }
 
   public InitForm(): void {
