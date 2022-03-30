@@ -38,14 +38,17 @@ export class ProfileEntryEditComponent implements OnInit {
         this.fb.group({
           platform: ['TWITTER'],
           link: [this.user?.socialLinks.find((profile: any) => profile.platform === 'TWITTER')?.link],
+          userId: [this.user?.id]
         }),
         this.fb.group({
           platform: ['GITHUB'],
           link: [this.user?.socialLinks.find((profile: any) => profile.platform === 'GITHUB')?.link],
+          userId: [this.user?.id]
         }),
         this.fb.group({
           platform: ['STACKOVERFLOW'],
           link: [this.user?.socialLinks.find((profile: any) => profile.platform === 'STACKOVERFLOW')?.link],
+          userId: [this.user?.id]
         }),
       ])
     })
