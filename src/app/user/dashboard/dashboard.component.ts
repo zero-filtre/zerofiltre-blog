@@ -153,6 +153,7 @@ export class DashboardComponent implements OnInit {
     },
     error: (_error: HttpErrorResponse) => {
       this.loading = false;
+      this.hasNext = false;
       this.articles = [];
       this.errorMessage = 'Oops...!'
     }

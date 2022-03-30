@@ -220,8 +220,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       }
     },
     error: (_error: HttpErrorResponse) => {
-      this.articles = [];
       this.loading = false;
+      this.hasNext = false;
+      this.articles = [];
       this.errorMessage = 'Oops...!'
     }
   }

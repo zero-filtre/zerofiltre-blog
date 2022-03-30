@@ -36,7 +36,7 @@
     <hr class="border border-primary-500 rounded" />
 
     <div class="action-buttons mt-6 flex justify-center space-x-2">
-        <button *ngIf="!user?.profilePicture" (click)="fileUpload.click()" class=" group font-semibold flex justify-center items-center space-x-1 py-2 px-4 border border-transparent
+        <button [ngClass]="{'opacity-20': uploading}" [disabled]="uploading" (click)="fileUpload.click()" class=" group font-semibold flex justify-center items-center space-x-1 py-2 px-4 border border-transparent
             text-sm rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="2">
@@ -46,7 +46,8 @@
             </svg>
             <span class="text-xs sm:text-sm">Ajouter une photo</span>
         </button>
-        <button *ngIf="user?.profilePicture" (click)="deleteProfileImage()"
+        <button [ngClass]="{'opacity-20': uploading}" [disabled]="uploading" *ngIf="user?.profilePicture"
+            (click)="deleteProfileImage()"
             class="px-4 py-2 border flex justify-center items-center space-x-1 border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="2">
