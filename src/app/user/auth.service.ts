@@ -226,9 +226,6 @@ export class AuthService {
     httpOptions.headers = httpOptions.headers.set('Authorization', `${tokenType} ${accessToken}`);
 
     return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions).pipe(
-      retryWhen(genericRetryPolicy({
-        scalingDuration: 1000,
-      })),
       shareReplay()
     )
   }
@@ -250,7 +247,7 @@ export class AuthService {
           }
         },
         error: (_err: HttpErrorResponse) => {
-          this.messageService.openSnackBarError('Impossible de recupérer vos données. Veuillez reessayer!', '');
+          this.messageService.openSnackBarError('Impossible de recupérer vos données. Veuillez reessayer !', 'Ok', 0);
           this.router.navigateByUrl('/login');
         }
       })

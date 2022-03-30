@@ -30,7 +30,7 @@
                         <div class="">
                             <div class="relative ">
                                 <input name="email" type="email" id="email" required formControlName="email" class=""
-                                    autocomplete="email" required placeholder="Adresse E-mail">
+                                    autocomplete="off" required placeholder="Adresse E-mail">
                             </div>
                             <div *ngIf="email?.invalid && email?.dirty" class="">
                                 <div *ngIf="email?.errors?.['required']"
@@ -49,8 +49,7 @@
                         <div class="">
                             <div class="relative ">
                                 <input name="password" type="password" id="password" required minlength="6"
-                                    formControlName="password" class="" autocomplete="current-password"
-                                    placeholder="Mot de passe">
+                                    formControlName="password" class="" autocomplete="off" placeholder="Mot de passe">
                             </div>
                             <div *ngIf="password?.invalid && password?.dirty" class="">
                                 <div *ngIf="password?.errors?.['required']"
@@ -94,7 +93,8 @@
                 </div>
 
                 <div>
-                    <button *ngIf="form.valid" type="submit" [disabled]="loading" [ngClass]="{'opacity-50': loading}"
+                    <button *ngIf="form.valid && passwordDoesMatch" type="submit" [disabled]="loading"
+                        [ngClass]="{'opacity-50': loading}"
                         class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
                         <span class="lock-btn absolute left-0 flex items-center pl-3">
                             <svg class="h-5 w-5 fill-primary-500 group-hover:fill-primary-300"
@@ -115,7 +115,8 @@
                         </svg>
                     </button>
 
-                    <button *ngIf="form.invalid" [disabled]="form.invalid || loading"
+                    <button *ngIf="form.invalid || !passwordDoesMatch"
+                        [disabled]="form.invalid || loading || !passwordDoesMatch"
                         class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
                         <span class="lock-btn absolute left-0 flex items-center pl-3">
                             <svg class="h-5 w-5 fill-primary-500 opacity-20" xmlns="http://www.w3.org/2000/svg"
