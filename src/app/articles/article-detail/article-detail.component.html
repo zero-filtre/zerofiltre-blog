@@ -288,7 +288,7 @@
 
                             <div *ngIf="authService.currentUsr as currentUsr">
 
-                                <div *ngIf="isAuthor(currentUsr, article)">
+                                <div *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
                                     <button [matMenuTriggerFor]="menu" class="text-secondary"
                                         aria-label="icon-button with a menu">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
@@ -314,7 +314,7 @@
                                     </mat-menu>
                                 </div>
 
-                                <div *ngIf="!isAuthor(currentUsr, article)">
+                                <div *ngIf="!isAuthor(currentUsr, article) && !authService.isAdmin">
                                     <a routerLink="/" class="text-skin-base group flex w-full items-center space-x-1">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="h-6 w-6 group-hover:text-primary-500 transition-all duration-200"
