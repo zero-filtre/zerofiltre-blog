@@ -45,7 +45,7 @@
                             {{article?.author?.bio}}
                         </p>
 
-                        <div class="flex space-x-3">
+                        <div class="author-socialLinks flex items-center space-x-3">
                             <a *ngIf="authorHasSocialLinkFor('TWITTER')" href="{{authorPlatformLink('TWITTER')}}"
                                 class="text-skin-muted hover:text-[#1DA1F2]">
                                 <span class="sr-only">Twitter</span>
@@ -66,7 +66,7 @@
                                 </svg>
                             </a>
                             <a *ngIf="authorHasSocialLinkFor('GITHUB')" href="{{authorPlatformLink('GITHUB')}}"
-                                class="text-skin-muted hover:text-[#181717]">
+                                class="order-1 text-skin-muted hover:text-[#181717]">
                                 <span class="sr-only">GitHub</span>
                                 <svg class="h-6 w-6" fill="currentColor" role="img" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">

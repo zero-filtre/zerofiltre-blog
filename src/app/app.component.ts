@@ -53,7 +53,6 @@ export class AppComponent implements OnInit {
 
     this.translate.setDefaultLang('fr');
     this.translate.use('fr');
-    console.log('LOCALE LANGUAGE: ', this.browserLanguage);
   }
 
   public logout() {

@@ -63,8 +63,7 @@ export class FileUploadService {
     this.xTokenServerValue = this.state.get(STATE_KEY_X_TOKEN, <any>null);
 
     if (this.xTokenServerValue && isPlatformBrowser(this.platformId)) {
-      console.log('SERVER TOKEN VALUE: ', this.xTokenServerValue);
-
+      console.log('XTOKEN VALUE IN THE CLIENT: ', this.xTokenServerValue);
       this.subject.next(this.xTokenServerValue);
       localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(this.xTokenServerValue));
     }
@@ -85,7 +84,7 @@ export class FileUploadService {
               xToken,
               expireAt
             }
-            console.log('X-TOKEN: ', tokenObj);
+            console.log('XTOKEN VALUE IN THE SERVER: ', tokenObj);
             this.state.set(STATE_KEY_X_TOKEN, <any>tokenObj);
             this.subject.next(tokenObj);
           }),

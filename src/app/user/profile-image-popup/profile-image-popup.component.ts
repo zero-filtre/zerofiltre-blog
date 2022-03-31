@@ -33,7 +33,7 @@ export class ProfileImagePopupComponent implements OnInit {
     private authService: AuthService,
   ) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 
@@ -48,7 +48,7 @@ export class ProfileImagePopupComponent implements OnInit {
   }
 
 
-  uploadProfileImage(): void {
+  public uploadProfileImage(): void {
     const fileName = this.file.data.name
 
     this.file.inProgress = true;
@@ -83,7 +83,7 @@ export class ProfileImagePopupComponent implements OnInit {
       })
   }
 
-  deleteProfileImage(): void {
+  public deleteProfileImage(): void {
     this.uploading = true;
 
     const fileName = this.user?.profilePicture?.split('/')[6]!;
