@@ -109,9 +109,27 @@ export class FileUploadService {
     }
   }
 
+  public validateFile(file: File): boolean {
+    let isValid = false;
+    const sizeUnit = 1024 * 1024;
+    const fileSize = Math.round(file.size / sizeUnit);
+    const fileType = file.type.split('/')[0]
+
+    if (fileSize > 5) {
+      isValid = false
+      this.messageService.openSnackBarWarning('La taille de fichier maximum est limité a 5MB !', 'Ok', 0);
+    } else if (fileType !== 'image') {
+      isValid = false
+      this.messageService.openSnackBarWarning('Veuillez ajouter un fichier image svp!', 'Ok', 0);
+    } else {
+      isValid = true;
+    }
+
+    return isValid;
+  }
+
   public uploadImage(fileName: string, file: File): Observable<any> {
     const xToken = this.xTokenObj?.xToken || 'my-x-token';
-    // TODO: check file size(=<1mb) and extension (.png, .jpg)
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')

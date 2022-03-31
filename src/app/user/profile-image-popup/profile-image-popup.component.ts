@@ -49,8 +49,9 @@ export class ProfileImagePopupComponent implements OnInit {
 
 
   public uploadProfileImage(): void {
-    const fileName = this.file.data.name
+    if (!this.fileUploadService.validateFile(this.file.data)) return
 
+    const fileName = this.file.data.name
     this.file.inProgress = true;
     this.uploading = true;
 
