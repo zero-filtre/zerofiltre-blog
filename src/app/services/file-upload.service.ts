@@ -63,7 +63,7 @@ export class FileUploadService {
     this.xTokenServerValue = this.state.get(STATE_KEY_X_TOKEN, <any>null);
 
     if (this.xTokenServerValue && isPlatformBrowser(this.platformId)) {
-      console.log('XTOKEN VALUE IN THE CLIENT: ', this.xTokenServerValue);
+      // console.log('XTOKEN VALUE IN THE CLIENT: ', this.xTokenServerValue);
       this.subject.next(this.xTokenServerValue);
       localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(this.xTokenServerValue));
     }
@@ -117,10 +117,10 @@ export class FileUploadService {
 
     if (fileSize > 5) {
       isValid = false
-      this.messageService.openSnackBarWarning('La taille de fichier maximum est limité a 5MB !', 'Ok', 0);
+      this.messageService.openSnackBarWarning('La taille de fichier maximum est limitée à 5MB !', 'Ok', 0);
     } else if (fileType !== 'image') {
       isValid = false
-      this.messageService.openSnackBarWarning('Veuillez ajouter un fichier image svp!', 'Ok', 0);
+      this.messageService.openSnackBarWarning('Veuillez ajouter un fichier image svp !', 'Ok', 0);
     } else {
       isValid = true;
     }

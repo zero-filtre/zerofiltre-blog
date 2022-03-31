@@ -24,7 +24,22 @@ export const fr = {
         continue: 'Ou continuer avec'
     },
     signup: {
-
+        title: 'Rejoindre Zerofiltre ',
+        emailAddress: 'Adresse E-mail',
+        password: 'Mot de passe',
+        fullName: 'Nom complet',
+        matchingPassword: 'Confirmation mot de passe',
+        missingfullName: 'Votre nom est obligatoire',
+        missingEmail: "L'email est obligatoire",
+        invalidEmail: 'Vous devez entrer une adresse email valide',
+        missingPassword: ' Le mot de passe est obligatoire.',
+        invalidPasswordLenght: 'Le mot de passe doit comporter au moins 6 caractères.',
+        invalidPassword: "Le mot de passe n'est pas valide",
+        passwordDoesNotMatch: 'Le mot de passe ne correspond pas',
+        signin: 'Se connecter',
+        signup: 'Creer mon compte',
+        continue: 'Ou continuer avec',
+        newsletterInfo: 'Je veux recevoir la newsletter'
     },
     articles: {
         title: 'Récentes publications',
