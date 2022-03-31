@@ -63,8 +63,7 @@ export class FileUploadService {
     this.xTokenServerValue = this.state.get(STATE_KEY_X_TOKEN, <any>null);
 
     if (this.xTokenServerValue && isPlatformBrowser(this.platformId)) {
-      console.log('SERVER TOKEN VALUE: ', this.xTokenServerValue);
-
+      // console.log('XTOKEN VALUE IN THE CLIENT: ', this.xTokenServerValue);
       this.subject.next(this.xTokenServerValue);
       localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(this.xTokenServerValue));
     }
@@ -85,7 +84,7 @@ export class FileUploadService {
               xToken,
               expireAt
             }
-            console.log('X-TOKEN: ', tokenObj);
+            // console.log('XTOKEN VALUE IN THE SERVER: ', tokenObj);
             this.state.set(STATE_KEY_X_TOKEN, <any>tokenObj);
             this.subject.next(tokenObj);
           }),
@@ -110,6 +109,25 @@ export class FileUploadService {
     }
   }
 
+  public validateFile(file: File): boolean {
+    let isValid = false;
+    const sizeUnit = 1024 * 1024;
+    const fileSize = Math.round(file.size / sizeUnit);
+    const fileType = file.type.split('/')[0]
+
+    if (fileSize > 5) {
+      isValid = false
+      this.messageService.openSnackBarWarning('La taille de fichier maximum est limitée à 5MB !', 'Ok', 0);
+    } else if (fileType !== 'image') {
+      isValid = false
+      this.messageService.openSnackBarWarning('Veuillez ajouter un fichier image svp !', 'Ok', 0);
+    } else {
+      isValid = true;
+    }
+
+    return isValid;
+  }
+
   public uploadImage(fileName: string, file: File): Observable<any> {
     const xToken = this.xTokenObj?.xToken || 'my-x-token';
 
@@ -122,9 +140,15 @@ export class FileUploadService {
       reportProgress: true,
       observe: 'events'
     })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.handleError(error);
+          return throwError(() => error)
+        })
+      )
   }
 
-  public RemoveImage(fileName: string): Observable<any> {
+  public removeImage(fileName: string): Observable<any> {
     const xToken = this.xTokenObj?.xToken || 'my-x-token';
 
     httpOptions.headers = httpOptions.headers
@@ -134,12 +158,15 @@ export class FileUploadService {
     return this.http.delete<any>(`${this.ovhServerUrl}/${fileName}`, httpOptions)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 404) {
-            console.log('404 ERR');
-            this.messageService.cancel();
-          }
+          this.handleError(error);
           return throwError(() => error)
         })
       )
+  }
+
+  public handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      this.messageService.openSnackBarError('Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !', 'Ok', 0);
+    }
   }
 }

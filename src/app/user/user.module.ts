@@ -11,6 +11,12 @@ import { AccountConfirmationPageComponent } from './account-confirmation-page/ac
 import { ResendConfirmationPageComponent } from './resend-confirmation-page/resend-confirmation-page.component';
 import { SocialAuthComponent } from './social-auth/social-auth.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PasswordUpdatePopupComponent } from './password-update-popup/password-update-popup.component';
+import { DeleteAccountPopupComponent } from './delete-account-popup/delete-account-popup.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileEntryEditComponent } from './profile-entry-edit/profile-entry-edit.component';
+import { ProfileImagePopupComponent } from './profile-image-popup/profile-image-popup.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
@@ -22,7 +28,13 @@ import { ProfileComponent } from './profile/profile.component';
     AccountConfirmationPageComponent,
     ResendConfirmationPageComponent,
     SocialAuthComponent,
-    ProfileComponent
+    ProfileComponent,
+    PasswordUpdatePopupComponent,
+    DeleteAccountPopupComponent,
+    DashboardComponent,
+    ProfileEntryEditComponent,
+    ProfileImagePopupComponent,
+    AdminDashboardComponent
   ],
   imports: [
     CommonModule,

@@ -1,68 +1,68 @@
-<main class="relative py-10 max-w-7xl mx-auto">
+<main class="relative py-16 max-w-7xl mx-auto mt-20">
     <div class="login-content-wrapper flex items-center justify-center min-h-full">
         <div class="max-w-md w-full space-y-8">
             <div>
                 <h2 class="text-center text-3xl font-extrabold text-skin-inverted">
-                    Rejoindre Zerofiltre
+                    {{'signup.title' | translate}}
                 </h2>
             </div>
 
             <form [formGroup]="form" (ngSubmit)="signup()" class="space-y-6">
                 <div class="rounded-md space-y-4">
                     <div>
-                        <label for="fullName" class="sr-only">Nom</label>
+                        <label for="fullName" class="sr-only">Nom complet</label>
                         <div class="">
                             <div class="relative ">
                                 <input name="fullName" type="text" id="fullName" required formControlName="fullName"
-                                    class="" required placeholder="Nom complet">
+                                    class="" required placeholder="{{'signup.fullName' | translate}}">
                             </div>
                             <div *ngIf="fullName?.invalid && fullName?.dirty" class="">
                                 <div *ngIf="fullName?.errors?.['required']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Votre nom est obligatoire.
+                                    {{'signup.missingfullName' | translate}}
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <label for="email" class="sr-only">Adresse E-mail</label>
+                        <label for="email" class="sr-only">{{'signup.emailAddress' | translate}}</label>
                         <div class="">
                             <div class="relative ">
                                 <input name="email" type="email" id="email" required formControlName="email" class=""
-                                    autocomplete="email" required placeholder="Adresse E-mail">
+                                    autocomplete="off" required placeholder="{{'signup.emailAddress' | translate}}">
                             </div>
                             <div *ngIf="email?.invalid && email?.dirty" class="">
                                 <div *ngIf="email?.errors?.['required']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
-                                    L'email est obligatoire.
+                                    {{'signup.missingEmail' | translate}}.
                                 </div>
                                 <div *ngIf="email?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Vous devez entrer une adresse email valide
+                                    {{'signup.invalidEmail' | translate}}
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <label for="password" class="sr-only">Mot de passe</label>
+                        <label for="password" class="sr-only">{{'signup.password' | translate}}</label>
                         <div class="">
                             <div class="relative ">
                                 <input name="password" type="password" id="password" required minlength="6"
-                                    formControlName="password" class="" autocomplete="current-password"
-                                    placeholder="Mot de passe">
+                                    formControlName="password" class="" autocomplete="off"
+                                    placeholder="{{'signup.password' | translate}}">
                             </div>
                             <div *ngIf="password?.invalid && password?.dirty" class="">
                                 <div *ngIf="password?.errors?.['required']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Le mot de passe est obligatoire.
+                                    {{'signup.missingPassword' | translate}}
                                 </div>
                                 <div *ngIf="password?.errors?.['minlength']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Le mot de passe doit comporter au moins 6 caractères.
+                                    {{'signup.invalidPasswordLenght' | translate}}
                                 </div>
                                 <div *ngIf="password?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Le mot de passe n'est pas valide
+                                    {{'signup.invalidPassword' | translate}}
                                 </div>
                             </div>
                         </div>
@@ -74,11 +74,11 @@
                             <div class="relative ">
                                 <input name="matchingPassword" type="password" id="matchingPassword"
                                     formControlName="matchingPassword" class="" autocomplete="off"
-                                    placeholder="Confirmation mot de passe">
+                                    placeholder="{{'signup.matchingPassword' | translate}}">
                             </div>
                             <div *ngIf="matchingPassword?.dirty && !passwordDoesMatch"
                                 class="mt-1 text-xs sm:text-sm text-error italic">
-                                Le mot de passe ne correspond pas
+                                {{'signup.passwordDoesNotMatch' | translate}}
                             </div>
                         </div>
                     </div>
@@ -88,13 +88,14 @@
                     <div class="flex items-center">
                         <input id="remember_me" name="remember_me" type="checkbox" class="">
                         <label for="remember_me" class="ml-2 block text-sm text-skin-base font-normal cursor-pointer">
-                            Je veux recevoir la newsletter
+                            {{'signup.newsletterInfo' | translate}}
                         </label>
                     </div>
                 </div>
 
                 <div>
-                    <button *ngIf="form.valid" type="submit" [disabled]="loading" [ngClass]="{'opacity-50': loading}"
+                    <button *ngIf="form.valid && passwordDoesMatch" type="submit" [disabled]="loading"
+                        [ngClass]="{'opacity-50': loading}"
                         class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
                         <span class="lock-btn absolute left-0 flex items-center pl-3">
                             <svg class="h-5 w-5 fill-primary-500 group-hover:fill-primary-300"
@@ -105,7 +106,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </span>
-                        <span *ngIf="!loading">Créer mon compte</span>
+                        <span *ngIf="!loading">{{'signup.signup' | translate}}</span>
                         <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
                             viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -115,7 +116,8 @@
                         </svg>
                     </button>
 
-                    <button *ngIf="form.invalid" [disabled]="form.invalid || loading"
+                    <button *ngIf="form.invalid || !passwordDoesMatch"
+                        [disabled]="form.invalid || loading || !passwordDoesMatch"
                         class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
                         <span class="lock-btn absolute left-0 flex items-center pl-3">
                             <svg class="h-5 w-5 fill-primary-500 opacity-20" xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +127,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </span>
-                        Créer mon compte
+                        {{'signup.signup' | translate}}
                     </button>
                 </div>
             </form>
@@ -133,8 +135,8 @@
             <div class="">
                 <a routerLink="/login"
                     class="inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
-                    <span class="sr-only">Creer mon compte</span>
-                    Se connecter
+                    <span class="sr-only">{{'signup.login' | translate}}</span>
+                    {{'signup.signin' | translate}}
                 </a>
             </div>
 
@@ -142,7 +144,7 @@
                 <div class="relative mt-5">
                     <div class="relative flex justify-center text-sm">
                         <span class="px-2 text-skin-base font-normal">
-                            Ou continuer avec
+                            {{'signup.continue' | translate}}
                         </span>
                     </div>
                 </div>

@@ -61,21 +61,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           return this.authInterceptor.intercept(request, next);
         }),
         catchError(errordata => {
-          localStorage.clear();
+          this.authService.logout();
           this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
           return throwError(() => errordata)
         })
       );
-  }
-
-  private clearLSwithout(itemValue: string) {
-    for (var i = 0, len = localStorage.length; i < len; i++) {
-      const key = localStorage.key(i)!;
-      const value = localStorage[key];
-      if (value !== itemValue) {
-        localStorage.removeItem(value);
-      }
-    }
   }
 
 
@@ -87,26 +77,23 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    */
   setError(error: HttpErrorResponse): string {
     let errorMessage = "Un problème est survenu, merci d'essayer de nouveau plus tard ou de contacter un administrateur de l'API";
-    console.log('ERROR OCCURED: ', error);
 
     if (error.status === 0) {
       // Client side Error
       errorMessage = error.error.message;
     } else {
       // Server side error
-      if (error.status !== 0) {
-        let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
+      let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
 
-        if (serverErrorExist) {
-          errorMessage = error.error.error.message;
-        } else {
-          errorMessage = errorMessage;
-        }
+      if (serverErrorExist) {
+        errorMessage = error.error.error.message;
+      } else {
+        errorMessage = errorMessage;
+      }
 
-        if (error.status === 401) {
-          localStorage.clear();
-          this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
-        }
+      if (error.status === 401) {
+        this.authService.logout();
+        this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
       }
     }
 

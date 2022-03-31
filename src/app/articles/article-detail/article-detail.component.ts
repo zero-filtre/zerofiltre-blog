@@ -77,10 +77,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response: Article) => {
-          const platform = isPlatformBrowser(this.platformId) ?
-            'in the browser' : 'on the server';
-          console.log(`findArticleById : Running ${platform}`);
-
           this.article = response
 
           this.seo.generateTags({
@@ -145,11 +141,11 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   }
 
   authorHasSocialLinkFor(platform: string): boolean {
-    return this.article?.author?.socialLinks.some((link: any) => link.platform === platform)
+    return this.article?.author?.socialLinks.some((profile: any) => profile.platform === platform && profile.link)
   }
 
   authorPlatformLink(platform: string): string {
-    return this.article?.author?.socialLinks.find((link: any) => link.platform === platform)?.link
+    return this.article?.author?.socialLinks.find((profile: any) => profile.platform === platform)?.link
   }
 
   userHasAlreadyReactOnArticleFiftyTimes(): any {

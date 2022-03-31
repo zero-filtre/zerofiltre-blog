@@ -1,41 +1,44 @@
-<main class="relative py-10 max-w-7xl mx-auto">
+<main class="relative py-10 max-w-7xl mx-auto mt-20">
     <div class="login-content-wrapper flex items-center justify-center min-h-full">
         <div class="max-w-md w-full space-y-8">
             <div>
                 <h2 class="text-center text-3xl font-extrabold text-skin-inverted">
-                    Se connecter à son compte
+                    {{ 'login.title' | translate }}
                 </h2>
             </div>
 
             <form [formGroup]="form" (ngSubmit)="login()" class="space-y-6">
                 <div class="rounded-md space-y-4">
                     <div>
-                        <label for="username" class="sr-only">Adresse E-mail</label>
+                        <label for="username" class="sr-only">
+                            {{ 'login.emailAddress' | translate }}
+                        </label>
                         <div class="">
                             <div class="relative ">
                                 <input name="username" type="email" id="username" required formControlName="username"
-                                    class="" autocomplete="email" required placeholder="Adresse E-mail">
+                                    class="" autocomplete="email" required
+                                    placeholder="{{ 'login.emailAddress' | translate }}">
                             </div>
                             <div *ngIf="username?.invalid && username?.dirty" class="">
                                 <div *ngIf="username?.errors?.['required']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
-                                    L'email est obligatoire.
+                                    {{ 'login.missingUsername' | translate }}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <label for="password" class="sr-only">Mot de passe</label>
+                        <label for="password" class="sr-only">{{ 'login.password' | translate }}</label>
                         <div class="">
                             <div class="relative ">
                                 <input name="password" type="password" id="password" required minlength="6"
                                     formControlName="password" class="" autocomplete="current-password" required
-                                    placeholder="Mot de passe">
+                                    placeholder="{{ 'login.password' | translate }}">
                             </div>
                             <div *ngIf="password?.invalid && password?.dirty" class="">
                                 <div *ngIf="password?.errors?.['required']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Le mot de passe est obligatoire.
+                                    {{ 'login.missingPassword' | translate }}
                                 </div>
                             </div>
                         </div>
@@ -46,7 +49,7 @@
                     <div class="text-sm">
                         <a routerLink="/resetPassword"
                             class="font-semibold text-primary-500 hover:text-primary-300 transition-all">
-                            Mot de passe oublié?
+                            {{ 'login.forgotPassword' | translate }}
                         </a>
                     </div>
                 </div>
@@ -83,7 +86,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </span>
-                        Se connecter
+                        {{ 'login.signin' | translate }}
                     </button>
                 </div>
 
@@ -93,7 +96,7 @@
                 <a routerLink="/register"
                     class="inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
                     <span class="sr-only">Creer mon compte</span>
-                    Créer mon compte
+                    {{ 'login.signup' | translate }}
                 </a>
             </div>
 
@@ -101,7 +104,7 @@
                 <div class="relative mt-5">
                     <div class="relative flex justify-center text-sm">
                         <span class="px-2 text-skin-base font-normal">
-                            Ou continuer avec
+                            {{ 'login.continue' | translate }}
                         </span>
                     </div>
                 </div>

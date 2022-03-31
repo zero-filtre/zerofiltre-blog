@@ -1,12 +1,13 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap, tap, throwError } from 'rxjs';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
+import { AuthService } from 'src/app/user/auth.service';
 import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
@@ -35,6 +36,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public loading = false;
   public isSaving = false;
   public isPublishing = false;
+  public isPublished = false
 
   private EditorText$ = new Subject<string>();
   private TitleText$ = new Subject<string>();
@@ -60,6 +62,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     public fileUploadService: FileUploadService,
     private messageService: MessageService,
     private seo: SeoService,
+    public authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
 
@@ -81,20 +84,30 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public getArticle(): void {
-    this.articleService.findArticleById(this.articleId).subscribe({
-      next: (response: Article) => {
-        this.article = response
-        this.articleTitle = response.title!
-        this.form.controls['id'].setValue(+this.articleId)
-        this.title?.setValue(this.articleTitle)
-        this.summary?.setValue(this.article.summary)
-        this.thumbnail?.setValue(this.article.thumbnail)
-        this.content?.setValue(this.article.content)
-        this.tags?.setValue(this.article.tags)
-        this.selectedTags = this.article.tags
-      },
-      error: (_error: HttpErrorResponse) => { }
-    })
+    this.articleService.findArticleById(this.articleId)
+      .pipe(
+        tap(art => {
+          if (art.status === 'PUBLISHED') {
+            this.isPublished = true;
+          } else {
+            this.isPublished = false;
+          }
+        })
+      )
+      .subscribe({
+        next: (response: Article) => {
+          this.article = response
+          this.articleTitle = response.title!
+          this.form.controls['id'].setValue(+this.articleId)
+          this.title?.setValue(this.articleTitle)
+          this.summary?.setValue(this.article.summary)
+          this.thumbnail?.setValue(this.article.thumbnail)
+          this.content?.setValue(this.article.content)
+          this.tags?.setValue(this.article.tags)
+          this.selectedTags = this.article.tags
+        },
+        error: (_error: HttpErrorResponse) => { }
+      })
   }
 
   public InitForm(): void {
@@ -181,11 +194,9 @@ export class ArticleEntryCreateComponent implements OnInit {
 
 
   public uploadFile(host: string) {
+    if (!this.fileUploadService.validateFile(this.file.data)) return
 
-    const formData = new FormData();
     const fileName = this.file.data.name
-
-    formData.append('image', this.file.data, fileName);
     this.file.inProgress = true;
     this.uploading = true;
 
@@ -254,7 +265,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     }
   }
 
-  public removeFile() {
+  public removeFile(): any {
     const fileName = this.thumbnail?.value.split('/')[6];
     const fileNameUrl = this.thumbnail?.value.split('/')[2];
 
@@ -264,13 +275,20 @@ export class ArticleEntryCreateComponent implements OnInit {
       return;
     }
 
-    this.fileUploadService.RemoveImage(fileName)
+    return this.fileUploadService.removeImage(fileName)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            this.thumbnail?.setValue('');
+            this.ThumbnailText$.next('');
+          }
+          return throwError(() => error)
+        })
+      )
       .subscribe({
         next: () => {
           this.thumbnail?.setValue('');
           this.ThumbnailText$.next('');
-        },
-        error: (_err: HttpErrorResponse) => {
         }
       })
   }
@@ -332,11 +350,6 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.InitForm()
 
     this.fetchListOfTags();
-
-    if (isPlatformServer(this.platformId)) {
-      this.fileUploadService.xToken$.subscribe();
-    }
-
 
     this.dropdownSettings = {
       singleSelection: false,

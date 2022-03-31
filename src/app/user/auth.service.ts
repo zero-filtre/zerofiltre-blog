@@ -19,6 +19,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+
   private readonly apiServerUrl = environment.apiBaseUrl;
 
 
@@ -33,10 +34,11 @@ export class AuthService {
 
   private redirectURL: string;
 
+  public isAdmin!: boolean;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
-    private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService
   ) {
@@ -45,8 +47,11 @@ export class AuthService {
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.redirectURL = '';
+    this.isAdmin = this.currentUsr?.roles.some((role: string) => role === 'ROLE_ADMIN');
   }
 
+
+  // AUTH SERVICES
 
   private loadCurrentUser() {
     this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
@@ -55,7 +60,6 @@ export class AuthService {
           return throwError(() => error);
         }),
         tap(usr => {
-          console.log('ME: ', usr);
           this.subject.next(usr);
         })
       )
@@ -76,6 +80,12 @@ export class AuthService {
   get userData(): any {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem('user_data');
+    }
+  }
+
+  setUserData(user: User) {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('user_data', JSON.stringify(user));
     }
   }
 
@@ -129,7 +139,7 @@ export class AuthService {
 
   public logout() {
     this.subject.next(null!);
-    localStorage.clear();
+    this.clearLSwithoutExcludedKey()
   }
 
   public requestPasswordReset(email: string): Observable<any> {
@@ -176,6 +186,34 @@ export class AuthService {
     this.loadLoggedInUser(accessToken, 'stack');
   }
 
+
+  // USER PROFILE SERVICES
+
+  public updateUserPassword(passwords: FormData): Observable<any> {
+    return this.http.post<string>(`${this.apiServerUrl}/user/updatePassword`, passwords)
+  }
+
+  public updateUserProfile(profile: any): Observable<User> {
+    return this.http.patch<User>(`${this.apiServerUrl}/user`, profile).pipe(
+      shareReplay()
+    )
+  }
+
+  public findUserProfile(userId: string): Observable<User> {
+    return this.http.get<User>(`${this.apiServerUrl}/user/profile/${userId}`)
+      .pipe(
+        shareReplay()
+      )
+  }
+
+  public deleteUserAccount(userId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/user/${userId}`, {
+      responseType: 'text' as 'json'
+    }).pipe(shareReplay())
+  }
+
+  // HELPER SERVICES
+
   private handleJWTauth(response: any, tokenType: string, redirectURL = '') {
     const { refreshToken, accessToken } = response.body
     this.redirectURL = redirectURL;
@@ -186,9 +224,6 @@ export class AuthService {
     httpOptions.headers = httpOptions.headers.set('Authorization', `${tokenType} ${accessToken}`);
 
     return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions).pipe(
-      retryWhen(genericRetryPolicy({
-        scalingDuration: 1000,
-      })),
       shareReplay()
     )
   }
@@ -201,19 +236,30 @@ export class AuthService {
           localStorage.setItem(this.TOKEN_NAME, accessToken);
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
           localStorage.setItem('user_data', JSON.stringify(usr));
+          this.isAdmin = this.currentUsr?.roles.some((role: string) => role === 'ROLE_ADMIN');
 
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)
-              .catch(() => this.router.navigate(['/']))
           } else {
-            this.router.navigate(['/'])
+            this.router.navigateByUrl('/');
           }
         },
         error: (_err: HttpErrorResponse) => {
-          this.messageService.openSnackBarError('Impossible de recupérer vos données. Veuillez reessayer!', '');
+          this.messageService.openSnackBarError('Impossible de recupérer vos données. Veuillez reessayer !', 'Ok', 0);
           this.router.navigateByUrl('/login');
         }
       })
+  }
+
+  private clearLSwithoutExcludedKey() {
+    const excludedKey = 'x_token'
+    const keys = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      keys.push(key)
+    }
+    const clearables = keys.filter(key => key !== excludedKey)
+    clearables.forEach(key => localStorage.removeItem(key!))
   }
 
   private extractTokenFromHeaders(response: any) {

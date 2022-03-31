@@ -16,12 +16,13 @@
             <div class="left-side-container sticky top-4">
 
                 <div>
-                    <h4 class="text-xs text-skin-base font-semibold leading-4 tracking-wide uppercase">A propos
-                        de l’auteur</h4>
+                    <h4 class="text-xs text-skin-base font-semibold leading-4 tracking-wide uppercase">
+                        {{ 'articleDetail.aboutAuthor' | translate }}
+                    </h4>
 
-                    <div *ngIf="article; else articleAuthorLeftSideSkeletonLoader" class="mt-6 space-y-4">
+                    <div *ngIf="article; else articleAuthorLeftSideSkeletonLoader" class="mt-6 flex flex-col space-y-6">
                         <a href="#" class="flex-shrink-0 block">
-                            <div class="flex gap-3">
+                            <div class="flex items-center gap-3">
                                 <div class="">
                                     <img class="inline-block max-w-none h-9 w-9 rounded-full"
                                         src="{{article?.author?.profilePicture}} "
@@ -31,16 +32,20 @@
                                     <p class="text-sm font-semibold text-skin-inverted ">
                                         {{article?.author?.fullName}}
                                     </p>
-                                    <p class="text-xs font-semibold text-skin-muted line-clamp-2">
-                                        {{article?.author?.profession || 'Proféssion'}}
+                                    <p *ngIf="article?.author?.profession"
+                                        class="text-xs font-semibold text-skin-muted line-clamp-2">
+                                        {{article?.author?.profession}}
                                     </p>
                                 </div>
                             </div>
                         </a>
-                        <p class="text-[13px] text-skin-base leading-5 font-normal line-clamp-3">
+
+                        <p *ngIf="article?.author?.bio"
+                            class="text-[13px] text-skin-base leading-5 font-normal line-clamp-3">
                             {{article?.author?.bio}}
                         </p>
-                        <div class="flex space-x-3">
+
+                        <div class="author-socialLinks flex items-center space-x-3">
                             <a *ngIf="authorHasSocialLinkFor('TWITTER')" href="{{authorPlatformLink('TWITTER')}}"
                                 class="text-skin-muted hover:text-[#1DA1F2]">
                                 <span class="sr-only">Twitter</span>
@@ -61,7 +66,7 @@
                                 </svg>
                             </a>
                             <a *ngIf="authorHasSocialLinkFor('GITHUB')" href="{{authorPlatformLink('GITHUB')}}"
-                                class="text-skin-muted hover:text-[#181717]">
+                                class="order-1 text-skin-muted hover:text-[#181717]">
                                 <span class="sr-only">GitHub</span>
                                 <svg class="h-6 w-6" fill="currentColor" role="img" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -246,7 +251,7 @@
                                     </ng-container>
 
                                     <ng-container *ngIf="article?.publishedAt !== article?.lastPublishedAt">
-                                        <span class="">Mis à jour le</span>
+                                        <span class="">{{ 'articleDetail.updateOn' | translate }}</span>
                                         <time class="text-primary-500"
                                             [dateTime]="article?.lastPublishedAt | date">{{article?.lastPublishedAt |
                                             date}}
@@ -260,7 +265,7 @@
                                     </ng-container>
 
                                     <span aria-hidden="true">·</span>
-                                    <span>{{article?.readingTime}} min de lecture</span>
+                                    <span>{{article?.readingTime}} {{ 'articleDetail.ofReadTime' | translate }}</span>
                                 </div>
                             </div>
                         </div>
@@ -275,15 +280,15 @@
                                             d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                                     </svg>
                                     <span
-                                        class="hidden sm:inline-block text-xs font-semibold text-skin-base transition-all duration-200 group-hover:text-primary-500">Tous
-                                        les
-                                        articles</span>
+                                        class="hidden sm:inline-block text-xs font-semibold text-skin-base transition-all duration-200 group-hover:text-primary-500">
+                                        {{ 'articleDetail.AllArticles' | translate }}
+                                    </span>
                                 </a>
                             </div>
 
                             <div *ngIf="authService.currentUsr as currentUsr">
 
-                                <div *ngIf="isAuthor(currentUsr, article)">
+                                <div *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
                                     <button [matMenuTriggerFor]="menu" class="text-secondary"
                                         aria-label="icon-button with a menu">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
@@ -293,24 +298,23 @@
                                         </svg>
                                     </button>
 
-                                    <mat-menu #menu="matMenu" class="mt-2">
+                                    <mat-menu #menu="matMenu" class="mt-2 font-semibold text-skin-base">
                                         <a routerLink="/articles"
-                                            class="block px-4 py-2 hover:bg-skin-link hover:text-secondary text-xs font-montserat font-normal transition-all duration-200">
-
-                                            <span>Tous les articles</span>
+                                            class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                            <span>{{ 'articleDetail.AllArticles' | translate }}</span>
                                         </a>
-                                        <a href="articles/{{article?.id}}/edit"
-                                            class="block px-4 py-2 hover:bg-skin-link hover:text-secondary text-xs font-montserat font-normal transition-all duration-200">
-                                            <span>Editer l'article</span>
+                                        <a routerLink="edit"
+                                            class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                            <span>{{ 'articleDetail.edit' | translate }}</span>
                                         </a>
                                         <a routerLink="#"
-                                            class="block px-4 py-2 hover:bg-skin-link hover:text-secondary text-xs font-montserat font-normal transition-all duration-200">
-                                            <span>Supprimer</span>
+                                            class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                            <span>{{ 'articleDetail.delete' | translate }}</span>
                                         </a>
                                     </mat-menu>
                                 </div>
 
-                                <div *ngIf="!isAuthor(currentUsr, article)">
+                                <div *ngIf="!isAuthor(currentUsr, article) && !authService.isAdmin">
                                     <a routerLink="/" class="text-skin-base group flex w-full items-center space-x-1">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="h-6 w-6 group-hover:text-primary-500 transition-all duration-200"
@@ -319,9 +323,9 @@
                                                 d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                                         </svg>
                                         <span
-                                            class="hidden sm:inline-block text-xs font-semibold text-skin-base transition-all duration-200 group-hover:text-primary-500">Tous
-                                            les
-                                            articles</span>
+                                            class="hidden sm:inline-block text-xs font-semibold text-skin-base transition-all duration-200 group-hover:text-primary-500">
+                                            {{ 'articleDetail.AllArticles' | translate }}
+                                        </span>
                                     </a>
                                 </div>
                             </div>
@@ -421,8 +425,9 @@
                 </ng-template>
 
                 <div class="article-socials pt-10 lg:w-fit mx-auto">
-                    <p class="text-base text-skin-base font-light">Vous aimez cet article ? Faite le savoir en
-                        partageant</p>
+                    <p class="text-base text-skin-base font-light">
+                        {{ 'articleDetail.callToShareText' | translate }}
+                    </p>
                     <div class="mt-4 space-y-4 flex items-end flex-wrap gap-2 sm:gap-0 sm:space-y-0 sm:space-x-4">
                         <a href="https://twitter.com/intent/tweet?text={{article?.title}} par @{{trimAuthorName(article?.author?.fullName)}}&url={{blogUrl}}/articles/{{article?.id}}"
                             target="_blank"

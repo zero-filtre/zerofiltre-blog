@@ -9,4 +9,9 @@ export interface User {
     profession?: string;
     socialLinks?: any;
     website?: string;
+    active?: boolean;
+    roles?: string[];
+    loginFrom?: string;
+    expired?: boolean;
+    language?: string;
 }

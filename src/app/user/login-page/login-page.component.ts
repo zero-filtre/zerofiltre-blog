@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
@@ -27,7 +27,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private messageservice: MessageService,
     private seo: SeoService,
     private route: ActivatedRoute,
-    private router: Router,
   ) { }
 
   public InitForm(): void {

@@ -1,12 +1,12 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, shareReplay } from 'rxjs';
+import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AuthService } from './user/auth.service';
-
-// import * as Prism from 'prismjs';
 
 declare var Prism: any;
 
@@ -29,24 +29,35 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private breakpointObserver: BreakpointObserver,
     private messageService: MessageService,
+    private router: Router,
     public authService: AuthService,
+    private fileUploadService: FileUploadService
   ) {
     this.setBrowserTranslationConfigs();
   }
 
-  setBrowserTranslationConfigs() {
+  public checkRouteUrl(): boolean {
+    const componentsPrefix = [
+      '/user/profile',
+      '/user/profile/edit',
+      '/user/dashboard'
+    ]
+    const currentUrl = this.router.url;
+    return componentsPrefix.some((route: string) => currentUrl.includes(route));
+  }
+
+  public setBrowserTranslationConfigs() {
     if (isPlatformBrowser(this.platformId)) {
       this.browserLanguage = (window.navigator as any).language
     }
 
     this.translate.setDefaultLang('fr');
     this.translate.use('fr');
-    console.log('LOCALE LANGUAGE: ', this.browserLanguage);
   }
 
   public logout() {
     this.authService.logout();
-    location.reload();
+    this.router.navigateByUrl('/')
   }
 
   // Use to set the language on a btn click for example
@@ -55,8 +66,13 @@ export class AppComponent implements OnInit {
   }
 
   public alertCopy() {
-    console.log('COPY DONE');
     this.messageService.openSnackBarWarning('Code Copied', '');
+  }
+
+  public fetchAllArticlesAsAdmin() {
+  }
+
+  public fetchAllArticlesAsUser() {
   }
 
   ngOnInit(): void {
@@ -73,7 +89,8 @@ export class AppComponent implements OnInit {
       });
     }
 
-    // const copyBtn = (document as any).querySelector('.copy-to-clipboard-button');
-    // copyBtn.onclick = this.alertCopy();
+    if (isPlatformServer(this.platformId)) {
+      this.fileUploadService.xToken$.subscribe();
+    }
   }
 }
