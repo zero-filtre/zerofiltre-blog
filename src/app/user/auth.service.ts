@@ -207,9 +207,9 @@ export class AuthService {
   }
 
   public deleteUserAccount(userId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiServerUrl}/user/${userId}`).pipe(
-      shareReplay()
-    )
+    return this.http.delete<any>(`${this.apiServerUrl}/user/${userId}`, {
+      responseType: 'text' as 'json'
+    }).pipe(shareReplay())
   }
 
   // HELPER SERVICES

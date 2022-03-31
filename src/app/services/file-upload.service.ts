@@ -84,7 +84,7 @@ export class FileUploadService {
               xToken,
               expireAt
             }
-            console.log('XTOKEN VALUE IN THE SERVER: ', tokenObj);
+            // console.log('XTOKEN VALUE IN THE SERVER: ', tokenObj);
             this.state.set(STATE_KEY_X_TOKEN, <any>tokenObj);
             this.subject.next(tokenObj);
           }),
