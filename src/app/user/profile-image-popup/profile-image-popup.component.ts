@@ -83,7 +83,7 @@ export class ProfileImagePopupComponent implements OnInit {
       })
   }
 
-  public deleteProfileImage(): void {
+  public deleteProfileImage(): any {
     this.uploading = true;
 
     const fileName = this.user?.profilePicture?.split('/')[6]!;
@@ -91,14 +91,13 @@ export class ProfileImagePopupComponent implements OnInit {
 
     if (fileNameUrl !== 'storage.gra.cloud.ovh.net') {
       this.uploading = false;
-
       const formData = { ...this.profileData, profilePicture: '' }
-      this.authService.updateUserProfile(formData)
+
+      return this.authService.updateUserProfile(formData)
         .subscribe(this.handleUserUpdate)
-      return;
     }
 
-    this.fileUploadService.removeImage(fileName)
+    return this.fileUploadService.removeImage(fileName)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (error.status === 404) {

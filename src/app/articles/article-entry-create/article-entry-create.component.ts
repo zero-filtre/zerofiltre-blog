@@ -267,7 +267,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     }
   }
 
-  public removeFile() {
+  public removeFile(): any {
     const fileName = this.thumbnail?.value.split('/')[6];
     const fileNameUrl = this.thumbnail?.value.split('/')[2];
 
@@ -277,13 +277,20 @@ export class ArticleEntryCreateComponent implements OnInit {
       return;
     }
 
-    this.fileUploadService.removeImage(fileName)
+    return this.fileUploadService.removeImage(fileName)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            this.thumbnail?.setValue('');
+            this.ThumbnailText$.next('');
+          }
+          return throwError(() => error)
+        })
+      )
       .subscribe({
         next: () => {
           this.thumbnail?.setValue('');
           this.ThumbnailText$.next('');
-        },
-        error: (_err: HttpErrorResponse) => {
         }
       })
   }
