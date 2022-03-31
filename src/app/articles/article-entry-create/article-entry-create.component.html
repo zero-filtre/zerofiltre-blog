@@ -1,6 +1,6 @@
-<main class="pb-5 mt-28">
+<main class="pb-5 mt-28 sm:mt-32">
     <nav class="top-nav sm:flex sm:items-center justify-between">
-        <div class="nav-links inline-flex items-center space-x-4 font-semibold text-skin-base">
+        <div class="nav-links flex justify-between sm:justify-start items-center sm:gap-9 font-semibold text-skin-base">
             <a routerLink="/" class="group flex align-center">
                 <svg class="h-6 w-6 text-primary-500 mr-1 -mt-[1px]" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -10,14 +10,14 @@
                     Tous les articles
                 </span>
             </a>
-            <a routerLink="#dashboard" class="">
+            <a routerLink="/user/dashboard" class="">
                 <span>
                     Mes articles
                 </span>
             </a>
         </div>
 
-        <div class="action-buttons mt-5 sm:mt-0 flex gap-2 items-center justify-between lg:fixed top-28 right-20 z-10">
+        <div class="action-buttons mt-8 sm:mt-0 flex gap-2 items-center justify-between lg:fixed top-32 right-20 z-10">
             <ng-container *ngIf="form.invalid; else validBtn">
                 <button [disabled]="form.invalid || loading"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
