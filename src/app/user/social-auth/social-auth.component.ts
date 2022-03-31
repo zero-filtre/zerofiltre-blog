@@ -40,17 +40,11 @@ export class SocialAuthComponent implements OnInit {
     this.code = this.route.snapshot.queryParamMap.get('code')!;
     this.accessToken = this.route.snapshot.fragment?.split('=')[1]!;
 
-    const platform = isPlatformBrowser(this.platformId) ?
-      'in the browser' : 'on the server';
-    console.log(`Page currently : Running ${platform}`);
-
     if (isPlatformBrowser(this.platformId)) {
       if (this.code) {
         this.loginWithGithub();
-        console.log(`loginWithGithub : Running ${platform}`);
       } else {
         this.loginWithStackOverflow();
-        console.log(`loginWithStackOverflow : Running ${platform}`);
       }
     }
   }

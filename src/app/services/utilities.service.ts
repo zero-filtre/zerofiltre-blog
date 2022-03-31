@@ -65,7 +65,6 @@ export const genericRetryPolicy = ({
         return throwError(() => error);
       }
 
-      console.log(`Attempt ${retryAttempt}: retrying in ${retryAttempt * scalingDuration}ms`);
       // retry after 2s, 4s, 6s
       return timer(retryAttempt * scalingDuration);
     }),

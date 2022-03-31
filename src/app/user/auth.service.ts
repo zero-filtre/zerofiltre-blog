@@ -60,7 +60,6 @@ export class AuthService {
           return throwError(() => error);
         }),
         tap(usr => {
-          console.log('ME: ', usr);
           this.subject.next(usr);
         })
       )

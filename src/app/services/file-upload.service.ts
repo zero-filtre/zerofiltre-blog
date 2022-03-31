@@ -148,7 +148,6 @@ export class FileUploadService {
 
   public handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
-      console.log('ERROR FILE: ', error);
       this.messageService.openSnackBarError('Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !', 'Ok', 0);
     }
   }

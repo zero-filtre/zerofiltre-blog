@@ -80,7 +80,6 @@ export class ProfileEntryEditComponent implements OnInit {
         this.socialLinks?.setValue(this.user.socialLinks)
       },
       error: (error: HttpErrorResponse) => {
-        console.log('Error  Profile: ', error);
       }
     })
   }
@@ -93,11 +92,9 @@ export class ProfileEntryEditComponent implements OnInit {
         this.loading = false;
         this.messageService.openSnackBarSuccess('Enregistrement reussi !', 'Ok', 0);
         this.authService.setUserData(response)
-        console.log('UPDATED USER: ', response);
       },
       error: (error: HttpErrorResponse) => {
         this.loading = false;
-        console.log('UPDATE USER ERROR: ', error);
       }
     })
   }
@@ -107,9 +104,6 @@ export class ProfileEntryEditComponent implements OnInit {
 
     this.InitForm();
     this.setFormUserInfos();
-
-    console.log('SOCIAL LINKS: ', this.socialLinks);
-    console.log('USER SOCIAL LINKS: ', this.user?.socialLinks);
 
     this.seo.generateTags({
       title: "Modifier son profil | Zerofiltre.tech",

@@ -70,10 +70,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
     this.subscription1$ = this.articleService.getListOfTags().subscribe({
       next: (response: Tag[]) => {
-        const platform = isPlatformBrowser(this.platformId) ?
-          'in the browser' : 'on the server';
-        console.log(`getListOfTags : Running ${platform}`);
-
         this.tagList = response
         this.loading = false;
       },
@@ -146,8 +142,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public onScroll() {
     // Remove this.hasnext to enable end of list message
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
-      console.log('scrolled!!');
-
       this.loadingMore = true;
       this.notScrolly = false;
       this.fetchMoreArticles();
@@ -157,8 +151,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public fetchMoreArticles() {
 
     if (!this.hasNext) {
-      console.log('END OF THE LIST !');
-
       this.loadingMore = false;
       this.notScrolly = true;
       this.notEmptyArticles = false;
@@ -166,29 +158,21 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     }
 
     this.scrollyPageNumber += 1;
-    console.log('PAGE NUMBER: ', this.scrollyPageNumber);
-
     const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
     const queryParamTwo = this.route.snapshot.queryParamMap.get('tag')!;
 
     if (queryParamOne === this.POPULAR) {
-      console.log('FETCHING BY POPULAR');
-      console.log('fetching...');
       this.articleService.findAllArticlesByPopularity(this.scrollyPageNumber, this.pageItemsLimit)
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
       return
     }
 
     if (queryParamTwo) {
-      console.log('FETCHING BY TAGS');
-      console.log('fetching...');
       this.articleService.findAllArticlesByTag(this.scrollyPageNumber, this.pageItemsLimit, queryParamTwo)
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
       return
     }
 
-    console.log('FETCHING BY DEFAULT (RECENT)');
-    console.log('fetching...');
     this.articleService.findAllRecentArticles(this.scrollyPageNumber, this.pageItemsLimit)
       .subscribe((response: any) => this.handleNewFetchedArticles(response));
 
@@ -243,8 +227,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.fetchRecentArticles();
       this.fetchListOfTags()
     }
-
-    console.log('RENDERING LIST COMPONENT');
   }
 
   ngOnDestroy(): void {

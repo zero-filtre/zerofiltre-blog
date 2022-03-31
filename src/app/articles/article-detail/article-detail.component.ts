@@ -77,10 +77,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response: Article) => {
-          const platform = isPlatformBrowser(this.platformId) ?
-            'in the browser' : 'on the server';
-          console.log(`findArticleById : Running ${platform}`);
-
           this.article = response
 
           this.seo.generateTags({

@@ -66,7 +66,6 @@ export class AppComponent implements OnInit {
   }
 
   public alertCopy() {
-    console.log('COPY DONE');
     this.messageService.openSnackBarWarning('Code Copied', '');
   }
 
