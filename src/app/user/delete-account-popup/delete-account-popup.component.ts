@@ -30,12 +30,12 @@ export class DeleteAccountPopupComponent implements OnInit {
     this.loading = true;
 
     this.authService.deleteUserAccount(this.user?.id!).subscribe({
-      next: (_response) => {
+      next: (response) => {
         this.loading = false;
-        this.messageService.openSnackBarSuccess('Votre compte a été desactivé !', '', 0);
+        this.dialogRef.close();
         this.authService.logout();
         this.data.router.navigateByUrl(`/`);
-        this.dialogRef.close();
+        this.messageService.openSnackBarSuccess(response, '', 0);
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
