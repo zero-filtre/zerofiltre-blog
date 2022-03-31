@@ -9,14 +9,14 @@
                         </path>
                     </svg>
                     <span class="text-primary-500 text-base">
-                        Mes infos
+                        {{'profileEdit.myInfos' | translate}}
                     </span>
                 </a>
             </div>
 
             <div>
                 <h2 class="text-center text-xl lg:text-2xl font-extrabold text-primary-500 mt-9">
-                    Modifier mes infos
+                    {{'profileEdit.title' | translate}}
                 </h2>
             </div>
 
@@ -25,17 +25,17 @@
                     class="profile-edit-content flex flex-col space-y-4 px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md">
                     <div>
                         <label for="fullName" class="block text-sm font-semibold leading-5 text-skin-muted">
-                            Nom complet
+                            {{'profileEdit.fullName' | translate}}
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
                                 <input name="fullName" type="text" id="fullName" formControlName="fullName" class=""
-                                    required placeholder="Nom complet">
+                                    required placeholder="{{'profileEdit.fullName' | translate}}">
                             </div>
                             <div *ngIf="fullName?.invalid && fullName?.dirty" class="">
                                 <div *ngIf="fullName?.errors?.['required']"
                                     class="mt-1 text-xs sm:text-sm text-error italic">
-                                    Votre nom est obligatoire.
+                                    {{'profileEdit.missingfullName' | translate}}
                                 </div>
                             </div>
                         </div>
@@ -43,31 +43,32 @@
 
                     <div>
                         <label for="pseudo" class="block text-sm font-semibold leading-5 text-skin-muted">
-                            Pseudo
+                            {{'profileEdit.pseudo' | translate}}
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
                                 <input name="pseudo" type="text" id="pseudo" formControlName="pseudo" class=""
-                                    placeholder="Pseudo">
+                                    placeholder="{{'profileEdit.pseudo' | translate}}">
                             </div>
                         </div>
                     </div>
 
                     <div>
                         <label for="profession" class="block text-sm font-semibold leading-5 text-skin-muted">
-                            Profession
+                            {{'profileEdit.profession' | translate}}
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
                                 <input name="profession" type="text" id="profession" formControlName="profession"
-                                    class="" autocomplete="profession" placeholder="Profession">
+                                    class="" autocomplete="profession"
+                                    placeholder="{{'profileEdit.profession' | translate}}">
                             </div>
                         </div>
                     </div>
 
                     <div>
                         <label for="website" class="block text-sm font-semibold leading-5 text-skin-muted">
-                            Site web
+                            {{'profileEdit.website' | translate}}
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
@@ -79,7 +80,7 @@
 
                     <div formArrayName="socialLinks">
                         <label for="reseaux sociaux" class="block text-sm font-semibold leading-5 text-skin-muted">
-                            Réseaux sociaux
+                            {{'profileEdit.socialLinks' | translate}}
                         </label>
                         <div class="mt-2 flex flex-col space-y-1">
                             <div class="relative flex" formGroupName="0">
@@ -88,8 +89,9 @@
                                     Twitter
                                 </span>
                                 <input name="twitter-link" type="text" id="twitter-link" formControlName="link"
-                                    placeholder="Lien vers votre compte" class="flex-1 rounded-none rounded-r-md"
-                                    aria-label="Link Account Twitter" leading-addon="twitter.com/">
+                                    placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Twitter"
+                                    leading-addon="twitter.com/">
                             </div>
 
                             <div class="relative flex" formGroupName="1">
@@ -98,8 +100,9 @@
                                     Github
                                 </span>
                                 <input name="github-link" type="text" id="github-link" formControlName="link"
-                                    placeholder="Lien vers votre compte" class="flex-1 rounded-none rounded-r-md"
-                                    aria-label="Link Account Github" leading-addon="github.com/">
+                                    placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Github"
+                                    leading-addon="github.com/">
                             </div>
 
                             <div class="relative flex" formGroupName="2">
@@ -108,8 +111,9 @@
                                     Stackoverflow
                                 </span>
                                 <input name="linkedin-link" type="text" id="linkedin-link" formControlName="link"
-                                    placeholder="Lien vers votre compte" class="flex-1 rounded-none rounded-r-md"
-                                    aria-label="Link Account LinkedIn" leading-addon="stackoverflow.com/users/">
+                                    placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account LinkedIn"
+                                    leading-addon="stackoverflow.com/users/">
                             </div>
 
                         </div>
@@ -117,12 +121,12 @@
 
                     <div>
                         <label for="bio" class="block text-sm font-semibold leading-5 text-skin-muted">
-                            Bio
+                            {{'profileEdit.bio' | translate}}
                         </label>
                         <div class="mt-2">
                             <div class="relative ">
                                 <textarea name="fullName" type="text" id="bio" formControlName="bio" class=""
-                                    placeholder="Votre bio">
+                                    placeholder="{{'profileEdit.bio' | translate}}">
                                 </textarea>
                             </div>
                         </div>
@@ -139,12 +143,12 @@
                                 stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
                                 style="animation-play-state:paused"></circle>
                         </svg>
-                        <span>Enregistrer</span>
+                        <span>{{'profileEdit.updateBtn' | translate}}</span>
                     </button>
 
                     <button *ngIf="form.invalid" [disabled]="form.invalid || loading"
                         class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
-                        Enregistrer
+                        {{'profileEdit.updateBtn' | translate}}
                     </button>
                 </div>
             </form>

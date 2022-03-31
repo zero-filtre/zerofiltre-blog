@@ -3,18 +3,16 @@
         <div class="max-w-md w-full">
             <div>
                 <h2 class="text-center text-3xl font-extrabold text-skin-inverted sm:text-left">
-                    Demander un code de confirmation de compte
+                    {{'resendConfirmation.title' | translate}}
                 </h2>
                 <div class="mt-4 text-sm text-skin-base font-normal">
-                    Vous souhaitez confirmer votre compte? Aucun problème. Communiquez-nous simplement votre adresse
-                    e-mail et nous vous
-                    enverrons par e-mail un nouveau lien de confirmation qui vous permettra de le faire.
+                    {{'resendConfirmation.message' | translate}}
                 </div>
             </div>
             <form [formGroup]="form" (ngSubmit)="resendUserConfirmation()" class="mt-8">
                 <div class="block">
                     <label for="email" class="block text-sm font-semibold leading-5 text-skin-base">
-                        Email
+                        {{'resendConfirmation.email' | translate}}
                     </label>
                     <div class="mt-1">
                         <div class="relative">
@@ -23,7 +21,7 @@
                         </div>
                         <div *ngIf="email?.invalid && email?.dirty" class="">
                             <div *ngIf="email?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
-                                Vous devez entrer une adresse email valide
+                                {{'resendConfirmation.invaldEmail' | translate}}
                             </div>
                         </div>
                     </div>
@@ -41,7 +39,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </span>
-                        <span *ngIf="!loading">Envoyer le lien de confirmation</span>
+                        <span *ngIf="!loading">{{'resendConfirmation.sendLink' | translate}}</span>
                         <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
                             viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -61,7 +59,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </span>
-                        Envoyer le lien de confirmation
+                        {{'resendConfirmation.sendLink' | translate}}
                     </button>
                 </div>
             </form>

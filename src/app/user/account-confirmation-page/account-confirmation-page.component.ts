@@ -33,6 +33,7 @@ export class AccountConfirmationPageComponent implements OnInit {
         this.isTokenValid = true;
         this.messageService.openSnackBarSuccess(response, 'Ok', 0);
         this.successMessage = "Felicitations, votre compte a été confirmé ! Cliquez sur le lien en dessous pour vous rendre à la page d'acceuil."
+        // TODO: Update user value in LS
       },
       error: (_error: HttpErrorResponse) => {
         if (!this.token) this.messageService.cancel();

@@ -41,6 +41,14 @@ export const fr = {
         continue: 'Ou continuer avec',
         newsletterInfo: 'Je veux recevoir la newsletter'
     },
+    socialAuth: {},
+    resendConfirmation: {
+        title: 'Demander un code de confirmation de compte',
+        message: "Vous souhaitez confirmer votre compte? Aucun problème. Communiquez-nous simplement votre adresse e- mail et nous vous enverrons par e- mail un nouveau lien de confirmation qui vous permettra de le faire.",
+        email: 'Email',
+        invaldEmail: 'Vous devez entrer une adresse email valide',
+        sendLink: 'Envoyer le lien de confirmation'
+    },
     articles: {
         title: 'Récentes publications',
         subTitle: 'Tous les articles récemment publiés.',
@@ -62,6 +70,38 @@ export const fr = {
         edit: "Editer l'article",
         delete: 'Supprimer',
         callToShareText: 'Vous aimez cet article ? Faite le savoir en partageant'
+    },
+    profile: {
+        title: 'Mes infos',
+        fullName: 'Nom complet',
+        pseudo: 'Pseudo',
+        profession: 'Profession',
+        email: 'Email',
+        website: 'Site web',
+        bio: 'Bio',
+        password: 'Mot de passe',
+        allArticles: 'Tous les articles',
+        myArticles: 'Mes articles',
+        allAdminArticles: "Tous les articles par l'admin",
+        editMyInfos: 'Editer mes infos',
+        verifiedBadgeText: 'Email verifié !',
+        notVerifiedBadgeText: 'Email non verifié !',
+        resendConfirmationText: 'Renvoyer le lien de confirmation',
+        editBtn: 'Editer',
+        deleteMyAccount: 'Supprimer mon compte'
+    },
+    profileEdit: {
+        title: 'Modifier mes infos',
+        myInfos: 'Mes infos',
+        fullName: 'Nom complet',
+        missingfullName: 'Votre nom est obligatoire',
+        pseudo: 'Pseudo',
+        profession: 'Profession',
+        website: 'Site web',
+        socialLinks: 'Réseaux sociaux',
+        socialLinksPlaceholder: 'Lien vers votre compte',
+        bio: 'Bio',
+        updateBtn: 'Enregistrer'
     },
     dashboard: {
         backToProfileText: 'Mes infos',
