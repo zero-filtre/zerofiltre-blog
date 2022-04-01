@@ -10,6 +10,7 @@ import { DeleteAccountPopupComponent } from '../delete-account-popup/delete-acco
 import { PasswordUpdatePopupComponent } from '../password-update-popup/password-update-popup.component';
 import { ProfileImagePopupComponent } from '../profile-image-popup/profile-image-popup.component';
 import { User } from '../user.model';
+import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,30 +23,26 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialog,
+    private seo: SeoService,
     public authService: AuthService,
     private messageService: MessageService,
-    private fileUploadService: FileUploadService,
-    @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
   public openPasswordEntryDialog(): void {
     this.dialogRef.open(PasswordUpdatePopupComponent, {
       panelClass: 'password-popup-panel',
-      // backdropClass: 'password-popup-backdrop',
     });
   }
 
   public openAccountDeleteDialog(): void {
     this.dialogRef.open(DeleteAccountPopupComponent, {
       panelClass: 'delete-account-popup-panel',
-      // backdropClass: 'delete-account-popup-backdrop',
     });
   }
 
   public openProfileImageDeleteDialog(): void {
     this.dialogRef.open(ProfileImagePopupComponent, {
       panelClass: 'profile-image-popup-panel',
-      // backdropClass: 'profile-image-popup-backdrop',
     });
   }
 
@@ -65,6 +62,14 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService?.currentUsr
+
+    this.seo.generateTags({
+      title: "Mon profil | Zerofiltre.tech",
+      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      author: 'Zerofiltre.tech',
+      type: 'website',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
   }
 
 }

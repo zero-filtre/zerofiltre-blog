@@ -8,7 +8,7 @@ export const fr = {
         logout: 'Se déconnecter',
     },
     sidebar: {
-        myInfos: 'Mes infos',
+        myInfos: 'Mon compte',
         myArticles: 'Mes articles',
         allArticles: 'Tous les articles'
     },
@@ -72,7 +72,7 @@ export const fr = {
         callToShareText: 'Vous aimez cet article ? Faite le savoir en partageant'
     },
     profile: {
-        title: 'Mes infos',
+        title: 'Mon compte',
         fullName: 'Nom complet',
         pseudo: 'Pseudo',
         profession: 'Profession',
