@@ -111,13 +111,15 @@ export class FileUploadService {
 
   public validateFile(file: File): boolean {
     let isValid = false;
+    const maxSize = 5;
+
     const sizeUnit = 1024 * 1024;
     const fileSize = Math.round(file.size / sizeUnit);
     const fileType = file.type.split('/')[0]
 
-    if (fileSize > 5) {
+    if (fileSize > maxSize) {
       isValid = false
-      this.messageService.openSnackBarWarning('La taille de fichier maximum est limitée à 5MB !', 'Ok', 0);
+      this.messageService.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, 'Ok', 0);
     } else if (fileType !== 'image') {
       isValid = false
       this.messageService.openSnackBarWarning('Veuillez ajouter un fichier image svp !', 'Ok', 0);

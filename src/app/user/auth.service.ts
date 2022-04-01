@@ -190,7 +190,9 @@ export class AuthService {
   // USER PROFILE SERVICES
 
   public updateUserPassword(passwords: FormData): Observable<any> {
-    return this.http.post<string>(`${this.apiServerUrl}/user/updatePassword`, passwords)
+    return this.http.post<string>(`${this.apiServerUrl}/user/updatePassword`, passwords, {
+      responseType: 'text' as 'json'
+    }).pipe(shareReplay())
   }
 
   public updateUserProfile(profile: any): Observable<User> {

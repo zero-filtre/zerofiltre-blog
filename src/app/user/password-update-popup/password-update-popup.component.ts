@@ -60,7 +60,6 @@ export class PasswordUpdatePopupComponent implements OnInit {
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
-        this.dialogRef.close()
       }
     })
   }

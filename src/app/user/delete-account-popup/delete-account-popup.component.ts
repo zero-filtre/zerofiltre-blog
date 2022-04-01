@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../auth.service';
 import { User } from '../user.model';
@@ -17,9 +18,9 @@ export class DeleteAccountPopupComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DeleteAccountPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private authService: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) { }
 
   onNoClick(): void {
@@ -31,15 +32,14 @@ export class DeleteAccountPopupComponent implements OnInit {
 
     this.authService.deleteUserAccount(this.user?.id!).subscribe({
       next: (response) => {
+        this.authService.logout();
+        this.router.navigateByUrl(`/`);
+        this.messageService.openSnackBarSuccess(response, 'OK', 0);
         this.loading = false;
         this.dialogRef.close();
-        this.authService.logout();
-        this.data.router.navigateByUrl(`/`);
-        this.messageService.openSnackBarSuccess(response, '', 0);
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
-        this.dialogRef.close();
       }
     })
   }

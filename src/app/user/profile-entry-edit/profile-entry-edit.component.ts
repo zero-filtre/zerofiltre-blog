@@ -5,7 +5,6 @@ import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
 import { User } from '../user.model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-entry-edit',
