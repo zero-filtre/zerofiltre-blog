@@ -1,21 +1,22 @@
 <main class="mt-28 sm:pt-10 pb-20">
-    <nav class="profile-top-nav flex items-end justify-between sm:justify-start sm:gap-24 max-w-xl mx-auto">
-        <div class="nav-title group hidden sm:inline-flex items-center space-x-1 font-semibold">
-            <svg class="h-5 w-5 text-skin-muted -mt-[1px]" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
-            </svg>
-            <a routerLink="/articles">
-                <span class="text-skin-muted text-sm">
+    <nav class="profile-top-nav flex items-center justify-between max-w-xl mx-auto">
+        <div class="profile-navigation flex gap-20 w-full">
+            <a routerLink="/user/profile" class="group hidden sm:flex items-center gap-1 font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    class="text-primary-500 group-hover:text-primary-300" data-supported-dps="24x24" fill="currentColor"
+                    width="24" height="24" focusable="false">
+                    <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
+                </svg>
+                <span class="text-primary-500 group-hover:text-primary-300 text-base">
                     {{'profile.allArticles' | translate}}
                 </span>
             </a>
-        </div>
 
-        <div class="nav-title font-semibold sm:-mb-[3px]">
-            <span class="text-primary-500 text-xl sm:text-2xl">
-                {{'profile.title' | translate}}
-            </span>
+            <div class="flex-1">
+                <h1 class="text-primary-500 font-semibold text-xl sm:text-2xl">{{'profile.title' |
+                    translate}}
+                </h1>
+            </div>
         </div>
 
         <div class="profile-menu flex items-center sm:hidden">
@@ -130,28 +131,28 @@
 
                 <div class="full-name text-base">
                     <label class="text-skin-muted">{{'profile.fullName' | translate}}</label>
-                    <div class="text-skin-base font-bold">{{user?.fullName}}</div>
+                    <div class="text-skin-base font-semibold">{{user?.fullName}}</div>
                 </div>
 
                 <div class="pseudo text-base">
                     <label class="text-skin-muted">{{'profile.pseudo' | translate}}</label>
-                    <div class="text-skin-base font-bold">{{user?.pseudoName}}</div>
+                    <div class="text-skin-base font-semibold">{{user?.pseudoName}}</div>
                 </div>
 
                 <div class="profession text-base">
                     <label class="text-skin-muted">{{'profile.profession' | translate}}</label>
-                    <div class="text-skin-base font-bold">{{user?.profession}}</div>
+                    <div class="text-skin-base font-semibold">{{user?.profession}}</div>
                 </div>
 
                 <div class="email text-base">
                     <label class="text-skin-muted">{{'profile.email' | translate}}</label>
-                    <div class="text-skin-base font-bold">{{user?.email}}</div>
+                    <div class="text-skin-base font-semibold">{{user?.email}}</div>
                 </div>
 
                 <div class="flex justify-between items-center">
                     <div class="bio text-base">
                         <label class="text-skin-muted">{{'profile.bio' | translate}}</label>
-                        <div class="text-skin-base font-bold">{{user?.bio}}</div>
+                        <div class="text-skin-base font-semibold">{{user?.bio}}</div>
                     </div>
                 </div>
             </div>
@@ -160,8 +161,8 @@
                 class="user-password flex justify-between items-center px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md mt-5">
                 <div class="password text-base">
                     <label class="text-skin-muted">{{'profile.password' | translate}}</label>
-                    <div class="text-skin-base font-bold">
-                        ◾◾◾◾◾◾◾◾◾◾◾◾
+                    <div class="text-skin-base font-semibold">
+                        ◾◾◾◾◾◾◾◾◾◾◾
                     </div>
                 </div>
 

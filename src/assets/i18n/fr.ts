@@ -104,7 +104,7 @@ export const fr = {
         updateBtn: 'Enregistrer'
     },
     dashboard: {
-        backToProfileText: 'Mes infos',
+        backToProfileText: 'Mon compte',
         published: 'Publiés',
         draft: 'Brouillons',
         inReview: 'En attente',

@@ -1,20 +1,22 @@
 <main class="pb-5 mt-28 sm:mt-32">
     <nav class="top-nav sm:flex sm:items-center justify-between">
-        <div class="nav-links flex justify-between sm:justify-start items-center sm:gap-9 font-semibold text-skin-base">
-            <a routerLink="/" class="group flex align-center">
-                <svg class="h-6 w-6 text-primary-500 mr-1 -mt-[1px]" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
+        <div class="nav-links flex justify-between sm:justify-start items-center sm:gap-10 font-semibold">
+            <a routerLink="/" class="text-skin-base group flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    class="text-skin-base group-hover:text-primary-500" data-supported-dps="24x24" fill="currentColor"
+                    width="24" height="24" focusable="false">
+                    <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
                 </svg>
-                <span class="text-primary-500 hover:text-primary-300">
-                    Tous les articles
-                </span>
+                <h1
+                    class="sm:inline-block text-lg text-skin-base transition-all duration-200 group-hover:text-primary-500">
+                    {{ 'articleDetail.AllArticles' | translate }}
+                </h1>
             </a>
-            <a routerLink="/user/dashboard" class="">
-                <span>
+            <h2>
+                <a routerLink="/user/dashboard" class="text-lg text-primary-500 hover:text-primary-300">
                     Mes articles
-                </span>
-            </a>
+                </a>
+            </h2>
         </div>
 
         <div class="action-buttons mt-8 sm:mt-0 flex gap-2 items-center justify-between lg:fixed top-32 right-20 z-10">

@@ -1,9 +1,6 @@
-import { isPlatformServer } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { FileUploadService } from 'src/app/services/file-upload.service';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../auth.service';
 import { DeleteAccountPopupComponent } from '../delete-account-popup/delete-account-popup.component';
@@ -11,6 +8,7 @@ import { PasswordUpdatePopupComponent } from '../password-update-popup/password-
 import { ProfileImagePopupComponent } from '../profile-image-popup/profile-image-popup.component';
 import { User } from '../user.model';
 import { SeoService } from 'src/app/services/seo.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -18,8 +16,9 @@ import { SeoService } from 'src/app/services/seo.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user!: User;
-  loading!: boolean;
+  public user!: User;
+  public user$!: Subscription;
+  public loading!: boolean;
 
   constructor(
     private dialogRef: MatDialog,
@@ -50,7 +49,7 @@ export class ProfileComponent implements OnInit {
     this.loading = true;
     this.authService.resendUserConfirm(this.user?.email!).subscribe({
       next: (_response: any) => {
-        const msg = 'Un mail avec un lien de confirmation de compte a été envoyé dans votre boite mail'
+        const msg = 'Un email avec un lien de confirmation de compte a été envoyé dans votre boite mail'
         this.messageService.openSnackBarSuccess(msg, 'Ok', 0);
         this.loading = false;
       },
@@ -62,6 +61,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService?.currentUsr
+    this.user$ = this.authService.user$.subscribe()
 
     this.seo.generateTags({
       title: "Mon profil | Zerofiltre.tech",
