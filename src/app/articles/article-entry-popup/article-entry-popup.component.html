@@ -16,16 +16,16 @@
 
         <div *ngIf="name.invalid && name.dirty" class="">
             <div *ngIf="name.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
-                Le titre est obligatoire.
+                {{'articleEntryPopup.missingTitle' | translate}}
             </div>
             <div *ngIf="name.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
-                Le titre doit comporter au moins 4 caractères.
+                {{'articleEntryPopup.invalidTitleLenght' | translate}}
             </div>
         </div>
 
         <div class="mt-2 text-xs sm:text-sm text-skin-muted font-light italic space-x-2">
-            <span><span class="font-bold">*</span> Vous pourrez le modifier à tout moment lors de l'édition de votre
-                article
+            <span><span class="font-bold">*</span>
+                {{'articleEntryPopup.titleInfoText' | translate}}
             </span>
         </div>
 
@@ -33,20 +33,20 @@
             <button
                 class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-200"
                 (click)="onNoClick()">
-                Annuler
+                {{'app.cancel' | translate}}
             </button>
 
             <div *ngIf="name.invalid; else validBtn">
                 <button
                     class="px-4 py-2 border border-primary-500 shadow-sm bg-primary-500 opacity-[0.15] rounded-full text-sm text-white leading-5 font-semibold"
                     type="submit" disabled>
-                    Commencer
+                    {{'articleEntryPopup.createBtn' | translate}}
                 </button>
             </div>
             <ng-template #validBtn>
                 <button type="submit" (click)="handleArticleInit()"
                     class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
-                    Commencer
+                    {{'articleEntryPopup.createBtn' | translate}}
                 </button>
             </ng-template>
         </div>

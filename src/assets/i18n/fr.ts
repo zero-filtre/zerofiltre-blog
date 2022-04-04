@@ -1,4 +1,25 @@
 export const fr = {
+    app: {
+        home: 'Acceuil',
+        password: 'Mot de passe',
+        missingPassword: ' Le mot de passe est obligatoire.',
+        invalidPassword: "Le mot de passe n'est pas valide",
+        matchingPassword: 'Confirmation mot de passe',
+        passwordDoesNotMatch: 'Le mot de passe ne correspond pas',
+        invalidPasswordLenght: 'Le mot de passe doit comporter au moins 6 caractères.',
+        save: 'Enregistrer',
+        cancel: 'Annuler',
+        forgotPassword: 'Mot de passe oublié',
+        loginPage: 'Page de connexion',
+        email: 'Email',
+        missingEmail: "L'email est obligatoire",
+        invalidEmail: 'Vous devez entrer une adresse email valide',
+        invalidToken: "Votre jeton n'est plus valide 😢. Veuillez demander un autre et réessayer !",
+        myArticles: 'Mes articles',
+        allArticles: 'Tous les articles',
+        tags: 'Tags',
+        resendAccountConfirmationLinkText: 'Renvoyer le message de confirmation'
+    },
     navbar: {
         about: 'A propos',
         articles: 'articles',
@@ -47,7 +68,7 @@ export const fr = {
         message: "Vous souhaitez confirmer votre compte? Aucun problème. Communiquez-nous simplement votre adresse e- mail et nous vous enverrons par e- mail un nouveau lien de confirmation qui vous permettra de le faire.",
         email: 'Email',
         invaldEmail: 'Vous devez entrer une adresse email valide',
-        sendLink: 'Envoyer le lien de confirmation'
+        sendLink: 'Envoyer le lien de confirmation',
     },
     articles: {
         title: 'Récentes publications',
@@ -70,6 +91,37 @@ export const fr = {
         edit: "Editer l'article",
         delete: 'Supprimer',
         callToShareText: 'Vous aimez cet article ? Faite le savoir en partageant'
+    },
+    articleEntryPopup: {
+        missingTitle: 'Le titre est obligatoire.',
+        invalidTitleLenght: 'Le titre doit comporter au moins 4 caractères.',
+        titleInfoText: "Vous pourrez le modifier à tout moment lors de l'édition de votre article",
+        createBtn: 'Commencer'
+    },
+    articleEntryEdit: {
+        publishBtn: 'Publier',
+        submitBtn: 'Soumettre',
+        savingText: 'Sauvegarde en cours...',
+        saveSuccessText: 'Sauvegardé !',
+        saveFailedText: 'Echec de la sauvegarde !',
+        summary: 'Description',
+        summaryPlaceholder: 'Decrivez votre article en quelques mots... (Entre 20 et 250 caractères)',
+        missingSummary: 'La description est obligatoire.',
+        invalidSummaryLenght: 'La description doit comporter au moins 20 caractères.',
+        selectTagsPlaceholder: 'Selectionez vos tags',
+        coverImageTitle: 'Image de couverture',
+        titlePlaceholder: 'Entrez le titre de votre article...',
+        missingTitle: 'Le titre est obligatoire.',
+        invalidTitleLenght: 'Le titre doit comporter au moins 4 caractères.',
+        editTabText: 'Saisi',
+        previewTabText: 'Saisi',
+        helpTabText: 'Saisi',
+        missingArticleContent: "Le contenu de l'article est obligatoire.",
+        articleContentPlaceholder: 'Entrez votre texte ici...',
+        help: {
+            title: 'Les bases du Markdown',
+            subTitle: "Vous trouverez ci-dessous une syntaxe de markdown couramment utilisée. Pour une plongée plus profonde dans le language Markdown, consultez cet",
+        }
     },
     profile: {
         title: 'Mon compte',
@@ -122,5 +174,25 @@ export const fr = {
         noMoreArticles: 'Plus aucun article 😏!',
         noArticlesAvailale: 'Aucun article à lire pour le moment 😊!',
         loadArticlesErrorMessage: 'Oops...!'
+    },
+    passwordUpdatePopup: {
+        title: 'Changer votre mot de passe',
+        oldPassword: 'Ancien mot de passe',
+        oldPasswordError: "Vous devez entrer l'ancien mot de passe",
+        newPassword: 'Nouveau mot de passe',
+    },
+    passwordReset: {
+        title: 'Réinitialisation du mot de passe',
+        message: "Mot de passe oublié? Aucun problème. Communiquez-nous simplement votre adresse e-mail et nous vous enverrons par e- mail un lien de réinitialisation de mot de passe qui vous permettra d'en choisir un nouveau.",
+        sendResetLink: 'Envoyer le lien de réinitialisation'
+    },
+    passwordRenewal: {
+        title: 'Creer un nouveau mot de passe',
+        createBtnText: 'Creer mot de passe'
+    },
+    deleteAccountPopup: {
+        cautionTitle: 'Attention !',
+        cautionText: "En supprimant votre compte, si vous n'avez pas d'articles rédigés, ce dernier sera supprimé y compris toute votre activité sur la plateforme(Ex: Vos réactions).Cependant, si vous possédez des articles en cours, votre compte sera uniquement désactivé. Vous pourrez le réactiver à tout moment en contactant l'équipe Zerofiltre.",
+        deleteBtn: 'Supprimer mon compte'
     }
 }
