@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
@@ -28,6 +29,7 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private seo: SeoService,
+    private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -86,8 +88,8 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
     this.initForm();
 
     this.seo.generateTags({
-      title: 'Nouveau mot de passe | Zerofiltre.tech',
-      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      title: this.translate.instant('meta.passwordRenewalTite'),
+      description: this.translate.instant('meta.passwordRenewalDescription'),
       author: 'Zerofiltre.tech',
       type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'

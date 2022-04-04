@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
@@ -24,7 +25,8 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
     private formuilder: FormBuilder,
     private authService: AuthService,
     private messageService: MessageService,
-    private seo: SeoService
+    private seo: SeoService,
+    private translate: TranslateService
   ) { }
 
   public InitForm(): void {
@@ -62,8 +64,8 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
     this.InitForm();
 
     this.seo.generateTags({
-      title: "S'enregistrer | Zerofiltre.tech",
-      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      title: this.translate.instant('meta.signupTitle'),
+      description: this.translate.instant('meta.signupDescription'),
       author: 'Zerofiltre.tech',
       type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'

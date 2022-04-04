@@ -18,7 +18,8 @@ export const fr = {
         myArticles: 'Mes articles',
         allArticles: 'Tous les articles',
         tags: 'Tags',
-        resendAccountConfirmationLinkText: 'Renvoyer le message de confirmation'
+        resendAccountConfirmationLinkText: 'Renvoyer le message de confirmation',
+        authorRouteError: 'Vous ne pouvez pas acceder à cette page!'
     },
     navbar: {
         about: 'A propos',
@@ -42,7 +43,9 @@ export const fr = {
         forgotPassword: 'Mot de passe oublié',
         signin: 'Se connecter',
         signup: 'Creer mon compte',
-        continue: 'Ou continuer avec'
+        continue: 'Ou continuer avec',
+        loginFailedMessage: 'Email ou mot de passe incorrect !',
+        authErrorMessage: 'Veuillez Vous  connecter !'
     },
     signup: {
         title: 'Rejoindre Zerofiltre ',
@@ -60,7 +63,8 @@ export const fr = {
         signin: 'Se connecter',
         signup: 'Creer mon compte',
         continue: 'Ou continuer avec',
-        newsletterInfo: 'Je veux recevoir la newsletter'
+        newsletterInfo: 'Je veux recevoir la newsletter',
+        signUpSuccessMessage: 'Un email de validation de compte vous a été envoyé, veuillez consulter votre boite mail',
     },
     socialAuth: {},
     resendConfirmation: {
@@ -69,6 +73,7 @@ export const fr = {
         email: 'Email',
         invaldEmail: 'Vous devez entrer une adresse email valide',
         sendLink: 'Envoyer le lien de confirmation',
+        resendConfirmationSuccessMesssage: 'Un email avec un lien de confirmation de compte a été envoyé dans votre boite mail'
     },
     accountConfirmation: {
         accountVeriedText: "Felicitations, votre compte a été confirmé ! Cliquez sur le lien en dessous pour vous rendre à la page d'acceuil."
@@ -110,7 +115,10 @@ export const fr = {
         submitBtn: 'Soumettre',
         savingText: 'Sauvegarde en cours...',
         saveSuccessText: 'Sauvegardé !',
+        saveSuccessMessage: 'Article sauvegardé !',
+        publishSuccessMessage: 'Article publié avec success !',
         saveFailedText: 'Echec de la sauvegarde !',
+        saveFailedMessage: 'La sauvegarde a echouéé !',
         autoSaveAlertMessage: 'Hello Bao, surtout veille à renseigner tous les champs obligatoires pour assurer la sauvegarde automatique de ton article',
         summary: 'Description',
         summaryPlaceholder: 'Decrivez votre article en quelques mots... (Entre 20 et 250 caractères)',
@@ -122,14 +130,12 @@ export const fr = {
         missingTitle: 'Le titre est obligatoire.',
         invalidTitleLenght: 'Le titre doit comporter au moins 4 caractères.',
         editTabText: 'Saisi',
-        previewTabText: 'Saisi',
-        helpTabText: 'Saisi',
+        previewTabText: 'Preview',
+        helpTabText: 'Aide',
         missingArticleContent: "Le contenu de l'article est obligatoire.",
         articleContentPlaceholder: 'Entrez votre texte ici...',
-        help: {
-            title: 'Les bases du Markdown',
-            subTitle: "Vous trouverez ci-dessous une syntaxe de markdown couramment utilisée. Pour une plongée plus profonde dans le language Markdown, consultez cet",
-        }
+        helpTitle: 'Les bases du Markdown',
+        helpSubTitle: "Vous trouverez ci-dessous une syntaxe de markdown couramment utilisée. Pour une plongée plus profonde dans le language Markdown, consultez cet",
     },
     profile: {
         title: 'Mon compte',
@@ -148,7 +154,8 @@ export const fr = {
         notVerifiedBadgeText: 'Email non verifié !',
         resendConfirmationText: 'Renvoyer le lien de confirmation',
         editBtn: 'Editer',
-        deleteMyAccount: 'Supprimer mon compte'
+        deleteMyAccount: 'Supprimer mon compte',
+        updateSuccessMessage: 'Enregistrement reussi !'
     },
     profileEdit: {
         title: 'Modifier mes infos',
@@ -203,5 +210,47 @@ export const fr = {
         cautionTitle: 'Attention !',
         cautionText: "En supprimant votre compte, si vous n'avez pas d'articles rédigés, ce dernier sera supprimé y compris toute votre activité sur la plateforme(Ex: Vos réactions).Cependant, si vous possédez des articles en cours, votre compte sera uniquement désactivé. Vous pourrez le réactiver à tout moment en contactant l'équipe Zerofiltre.",
         deleteBtn: 'Supprimer mon compte'
+    },
+    fileUpload: {
+        sizeWarningMessage: 'La taille de fichier maximum est limitée à ${maxSize}MB !',
+        typeWarningMessage: 'Veuillez ajouter un fichier image svp !',
+        AuthError: 'Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !'
+    },
+    meta: {
+        articlesTitle: 'Tous les articles | Zerofiltre.tech',
+        articlesDescription: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+
+        articleEntryEditTitle: "Editer l'article | Zerofiltre.tech",
+        articleEntryEditDescription: '',
+
+        accountConfirmationTitle: 'Confirmation du compte | Zerofiltre.tech',
+        accountConfirmationDescription: '',
+
+        adminDashboadTitle: 'Admin Tous les articles | Zerofiltre.tech',
+        adminDashboadDescription: '',
+
+        dashboadTitle: 'Mes articles | Zerofiltre.tech',
+        dashboadDescription: '',
+
+        loginTitle: 'Se connecter | Zerofiltre.tech',
+        loginDescription: '',
+
+        signupTitle: "S'enregistrer | Zerofiltre.tech",
+        signupDescription: '',
+
+        passwordRenewalTite: 'Nouveau mot de passe | Zerofiltre.tech',
+        passwordRenewalDescription: '',
+
+        passwordResetTite: 'Reinitialisation du mot de passe | Zerofiltre.tech',
+        passwordResetDescription: '',
+
+        profileTitle: 'Mon profil | Zerofiltre.tech',
+        profileDescription: '',
+
+        profileEditTitle: 'Modifier son profil | Zerofiltre.tech',
+        profileEditDescription: '',
+
+        resendConfirmationAccountTitle: 'Renvoyer code de confirmation | Zerofiltre.tech',
+        resendConfirmationAccountDescription: '',
     }
 }

@@ -153,13 +153,13 @@
                             {{ 'app.tags' | translate }}
                         </label>
 
-                        <div class="mt-5 shadow-sm">
+                        <!-- <div class="mt-5 shadow-sm">
                             <ng-multiselect-dropdown
                                 [placeholder]="{{ 'articleEntryEdit.selectTagsPlaceholder' | translate }}"
                                 formControlName="tags" [settings]="dropdownSettings" [data]="tagList"
                                 (onSelect)="onItemSelect($event)">
                             </ng-multiselect-dropdown>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </aside>
@@ -286,9 +286,9 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <span [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''">
+                                    <!-- <span [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''">
                                         {{ 'articleEntryEdit.helpTabText' | translate }}
-                                    </span>
+                                    </span> -->
                                     <div [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
                                         class="green-border bg-primary-500 h-0.5 w-full absolute -inset-x-1 bottom-0 scale-0">
                                     </div>
@@ -312,7 +312,7 @@
                             <div *ngIf="content?.invalid && content?.dirty" class="">
                                 <div *ngIf="content?.errors?.['required']"
                                     class="p-4 bg-white text-xs sm:text-sm text-error italic">
-                                    {{ 'articleEntryEdit.missingArticleContent' | translate }}
+                                    <!-- {{ 'articleEntryEdit.missingArticleContent' | translate }} -->
                                 </div>
                             </div>
 
@@ -333,9 +333,9 @@
 
                             <div *ngIf="activeTab === 'help'"
                                 class="help-container h-full bg-skin-card min-h-screen p-4 relative z-30 prose md:prose-sm lg:prose-lg max-w-none">
-                                <h2>{{'articleEntryEdit.help.title' | translate}}</h2>
+                                <!-- <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2> -->
                                 <p>
-                                    {{'articleEntryEdit.help.subTitle' | translate}}
+                                    <!-- {{'articleEntryEdit.helpSubTitle' | translate}} -->
                                     <a class="text-primary-500 font-semibold no-underline"
                                         href="https://commonmark.org/help/" target="_blank"> Aide-mémoire
                                     </a>

@@ -9,6 +9,7 @@ import { ProfileImagePopupComponent } from '../profile-image-popup/profile-image
 import { User } from '../user.model';
 import { SeoService } from 'src/app/services/seo.service';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
@@ -25,6 +26,7 @@ export class ProfileComponent implements OnInit {
     private seo: SeoService,
     public authService: AuthService,
     private messageService: MessageService,
+    private translate: TranslateService
   ) { }
 
   public openPasswordEntryDialog(): void {
@@ -63,8 +65,8 @@ export class ProfileComponent implements OnInit {
     this.user$ = this.authService.user$.subscribe()
 
     this.seo.generateTags({
-      title: "Mon profil | Zerofiltre.tech",
-      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      title: this.translate.instant('meta.profileTitle'),
+      description: this.translate.instant('meta.profileDescription'),
       author: 'Zerofiltre.tech',
       type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { tap } from 'rxjs';
-import { Article } from '../articles/article.model';
-import { ArticleService } from '../articles/article.service';
-import { Router, RouterStateSnapshot } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +13,8 @@ export class MessageService {
 
   constructor(
     private snackBar: MatSnackBar,
-    private articleService: ArticleService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) { }
 
   private openSnackBar(message: string, action: string, className: string, type: string, duration: number) {
@@ -45,7 +42,8 @@ export class MessageService {
 
   // For non authenticated requests
   authError(state: any) {
-    this.openSnackBarError('Veuillez Vous  connecter !', '');
+    const msg = this.translate.instant('login.authErrorMessage')
+    this.openSnackBarError(msg, 'OK', 0);
     this.router.navigate(['/login'], { queryParams: { 'redirectURL': state.url } });
   }
 
@@ -56,55 +54,65 @@ export class MessageService {
 
   // When logging In
   loginError() {
-    this.openSnackBarError('Email ou mot de passe incorrect !', '');
+    const msg = this.translate.instant('login.loginFailedMessage');
+    this.openSnackBarError(msg, 'OK', 0);
   }
 
   // If not the author
   authorRoleError() {
-    this.openSnackBarError('Vous ne pouvez pas acceder à cette page!', '');
+    const msg = this.translate.instant('app.authorRouteError');
+    this.openSnackBarError(msg, 'OK');
     this.router.navigateByUrl('/');
   }
 
   // Email notification on signup success
   signUpSuccess() {
-    this.openSnackBarSuccess('Un email de validation de compte vous a été envoyé, veuillez consulter votre boite mail', 'Ok', 0);
+    const msg = this.translate.instant('signup.signUpSuccessMessage');
+    this.openSnackBarSuccess(msg, 'OK', 0);
   }
 
   saveArticleError() {
-    this.openSnackBarError('La sauvegarde a echoué !', '');
+    const msg = this.translate.instant('articleEntryEdit.saveFailedMessage');
+    this.openSnackBarError(msg, 'OK');
   }
 
   autoSaveAlert() {
-    const msg = 'Hello Bao, surtout veille à renseigner tous les champs obligatoires pour assurer la sauvegarde automatique de ton article'
+    const msg = this.translate.instant('articleEntryEdit.autoSaveAlertMessage');
     this.openSnackBarWarning(msg, "C'est noté !", 0)
   }
 
   saveArticleSuccess() {
-    this.openSnackBarSuccess('Article sauvegardé !', 'OK');
+    const msg = this.translate.instant('articleEntryEdit.saveSuccessMessage');
+    this.openSnackBarSuccess(msg, 'OK');
   }
 
   publishArticleSuccess() {
-    this.openSnackBarSuccess('Article pulié avec success !', 'OK');
+    const msg = this.translate.instant('articleEntryEdit.publishSuccessMessage');
+    this.openSnackBarSuccess(msg, 'OK');
   }
 
   resendConfirmationSuccess() {
-    const msg = 'Un email avec un lien de confirmation de compte a été envoyé dans votre boite mail'
+    const msg = this.translate.instant('resendConfirmation.resendConfirmationSuccessMesssage');
     this.openSnackBarSuccess(msg, 'OK', 0);
   }
 
   updateProfileSuccess() {
-    this.openSnackBarSuccess('Enregistrement reussi !', 'OK', 0);
+    const msg = this.translate.instant('profile.updateSuccessMessage');
+    this.openSnackBarSuccess(msg, 'OK', 0);
   }
 
   fileSizeWarning(maxSize: number) {
+    const msg = this.translate.instant('fileUpload.sizeWarningMessage');
     this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, 'OK', 0)
   }
 
   fileTypeWarning() {
-    this.openSnackBarWarning('Veuillez ajouter un fichier image svp !', 'OK', 0)
+    const msg = this.translate.instant('fileUpload.typeWarningMessage');
+    this.openSnackBarWarning(msg, 'OK', 0)
   }
 
   fileUploadAuthError() {
-    this.openSnackBarError('Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !', 'OK', 0);
+    const msg = this.translate.instant('fileUpload.AuthError');
+    this.openSnackBarError(msg, 'OK', 0);
   }
 }
