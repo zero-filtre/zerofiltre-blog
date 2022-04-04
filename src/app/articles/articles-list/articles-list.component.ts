@@ -35,7 +35,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public pageItemsLimit: number = 5;
 
   public loading = false;
-  public errorMessage = '';
+  public noArticlesAvailable!: boolean;
+  public loadArticlesErrorMessage!: boolean;
 
   public activePage: string = this.RECENT;
   public mainPage = true;
@@ -200,14 +201,14 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.hasNext = hasNext;
 
       if (this.articles.length === 0) {
-        this.errorMessage = "Aucun article à lire pour le moment 😊!"
+        this.noArticlesAvailable = true;
       }
     },
     error: (_error: HttpErrorResponse) => {
       this.loading = false;
       this.hasNext = false;
       this.articles = [];
-      this.errorMessage = 'Oops...!'
+      this.loadArticlesErrorMessage = true;
     }
   }
 

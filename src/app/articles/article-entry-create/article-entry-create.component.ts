@@ -51,7 +51,6 @@ export class ArticleEntryCreateComponent implements OnInit {
   public savingMessage!: string;
   public isSaved!: boolean;
   public saveFailed!: boolean;
-  public alertMessage: string = 'Hello Bao, surtout veille à renseigner tous les champs obligatoires pour assurer la sauvegarde automatique de ton article';
 
 
   constructor(
@@ -154,7 +153,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       next: (_response: Article) => {
         this.loading = false;
         this.isSaving = false;
-        this.messageService.openSnackBarSuccess('Article sauvegardé !', '');
+        this.messageService.saveArticleSuccess();
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
@@ -172,7 +171,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       next: (_response: Article) => {
         this.loading = false;
         this.isPublishing = false;
-        this.messageService.openSnackBarSuccess('Article pulié avec success !', '');
+        this.messageService.publishArticleSuccess();
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
@@ -338,7 +337,7 @@ export class ArticleEntryCreateComponent implements OnInit {
               })
             ).subscribe();
         } else {
-          this.messageService.openSnackBarWarning(this.alertMessage, "C'est noté !", 0);
+          this.messageService.autoSaveAlert();
         }
       }),
     ).subscribe()

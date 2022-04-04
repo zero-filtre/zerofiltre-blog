@@ -18,7 +18,7 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
   public isTokenValid = false;
   public token!: string;
   public form!: FormGroup;
-  public successMessage!: string;
+  public successMessage!: boolean;
   public tokenSub!: Subscription;
   public savePasswordSub!: Subscription;
 
@@ -67,7 +67,7 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
         this.loading = false;
         this.authService.logout();
         this.messageService.openSnackBarSuccess(response, 'Ok');
-        this.successMessage = 'Bravo vous avez crée un mot de passe avec succes! Veuillez retourner à la page de connexion.'
+        this.successMessage = true;
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;

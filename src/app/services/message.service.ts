@@ -11,6 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class MessageService {
   private durationLimit = 4;
+  public autoSaveAlertMessage!: string;
+
 
   constructor(
     private snackBar: MatSnackBar,
@@ -70,5 +72,39 @@ export class MessageService {
 
   saveArticleError() {
     this.openSnackBarError('La sauvegarde a echoué !', '');
+  }
+
+  autoSaveAlert() {
+    const msg = 'Hello Bao, surtout veille à renseigner tous les champs obligatoires pour assurer la sauvegarde automatique de ton article'
+    this.openSnackBarWarning(msg, "C'est noté !", 0)
+  }
+
+  saveArticleSuccess() {
+    this.openSnackBarSuccess('Article sauvegardé !', 'OK');
+  }
+
+  publishArticleSuccess() {
+    this.openSnackBarSuccess('Article pulié avec success !', 'OK');
+  }
+
+  resendConfirmationSuccess() {
+    const msg = 'Un email avec un lien de confirmation de compte a été envoyé dans votre boite mail'
+    this.openSnackBarSuccess(msg, 'OK', 0);
+  }
+
+  updateProfileSuccess() {
+    this.openSnackBarSuccess('Enregistrement reussi !', 'OK', 0);
+  }
+
+  fileSizeWarning(maxSize: number) {
+    this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, 'OK', 0)
+  }
+
+  fileTypeWarning() {
+    this.openSnackBarWarning('Veuillez ajouter un fichier image svp !', 'OK', 0)
+  }
+
+  fileUploadAuthError() {
+    this.openSnackBarError('Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !', 'OK', 0);
   }
 }

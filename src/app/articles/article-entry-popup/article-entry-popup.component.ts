@@ -11,7 +11,6 @@ import { ArticleService } from '../article.service';
 })
 export class ArticleEntryPopupComponent implements OnInit {
   public title!: string;
-  public placeholder!: string
   public loading: boolean = false;
   public article!: Article
 
@@ -21,7 +20,6 @@ export class ArticleEntryPopupComponent implements OnInit {
     private articleService: ArticleService,
   ) {
     this.title = '';
-    this.placeholder = 'Tout commence par un titre!'
   }
 
   onNoClick(): void {

@@ -15,7 +15,7 @@ export class AccountConfirmationPageComponent implements OnInit {
   public loading = false;
   public isTokenValid = false;
   public token!: string;
-  public successMessage!: string;
+  public successMessage!: boolean;
 
   constructor(
     private authService: AuthService,
@@ -32,7 +32,7 @@ export class AccountConfirmationPageComponent implements OnInit {
         this.loading = false;
         this.isTokenValid = true;
         this.messageService.openSnackBarSuccess(response, 'Ok', 0);
-        this.successMessage = "Felicitations, votre compte a été confirmé ! Cliquez sur le lien en dessous pour vous rendre à la page d'acceuil."
+        this.successMessage = true;
         // TODO: Update user value in LS
       },
       error: (_error: HttpErrorResponse) => {

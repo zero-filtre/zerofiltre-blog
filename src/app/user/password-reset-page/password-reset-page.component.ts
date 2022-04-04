@@ -33,7 +33,7 @@ export class PasswordResetPageComponent implements OnInit {
     this.loading = true;
     this.authService.requestPasswordReset(this.email?.value).subscribe({
       next: (response: string) => {
-        this.messageService.openSnackBarSuccess(response, 'Ok', 0);
+        this.messageService.openSnackBarSuccess(response, 'OK', 0);
         this.loading = false;
       },
       error: (_error: HttpErrorResponse) => {

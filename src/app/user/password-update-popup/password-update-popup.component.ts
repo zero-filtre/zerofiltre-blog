@@ -54,7 +54,7 @@ export class PasswordUpdatePopupComponent implements OnInit {
 
     this.authService.updateUserPassword(this.form.value).subscribe({
       next: (response) => {
-        this.messageService.openSnackBarSuccess(response, 'Ok', 0);
+        this.messageService.openSnackBarSuccess(response, 'OK', 0);
         this.loading = false;
         this.dialogRef.close();
       },

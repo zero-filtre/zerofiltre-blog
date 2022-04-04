@@ -101,7 +101,6 @@ export class AuthService {
     }
   }
 
-
   public setRedirectUrlValue(redirectURL: string) {
     this.redirectURL = redirectURL;
   }

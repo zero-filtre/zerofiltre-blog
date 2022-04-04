@@ -70,6 +70,9 @@ export const fr = {
         invaldEmail: 'Vous devez entrer une adresse email valide',
         sendLink: 'Envoyer le lien de confirmation',
     },
+    accountConfirmation: {
+        accountVeriedText: "Felicitations, votre compte a été confirmé ! Cliquez sur le lien en dessous pour vous rendre à la page d'acceuil."
+    },
     articles: {
         title: 'Récentes publications',
         subTitle: 'Tous les articles récemment publiés.',
@@ -79,7 +82,7 @@ export const fr = {
         tagTitle: 'Tous les tags',
         noMoreArticles: 'Plus aucun article 😏!',
         ofReadTime: ' min de lecture',
-        noArticlesAvailale: 'Aucun article à lire pour le moment 😊!',
+        noArticlesAvailable: 'Aucun article à lire pour le moment 😊!',
         loadArticlesErrorMessage: 'Oops...!'
     },
     articleDetail: {
@@ -90,9 +93,13 @@ export const fr = {
         AllArticles: 'Tous les articles',
         edit: "Editer l'article",
         delete: 'Supprimer',
-        callToShareText: 'Vous aimez cet article ? Faite le savoir en partageant'
+        callToShareText: 'Vous aimez cet article ? Faite le savoir en partageant',
+        maxNberReactionText: 'Tu as déja atteint le max de reactions sur cet article 😁',
+        loginToReactText: 'Vous devez vous connecter pour réagir sur cet article',
+        publishToReactText: 'Publiez cet article pour pouvoir y ajouter des reactions.'
     },
     articleEntryPopup: {
+        titlePlaceholder: 'Tout commence par un titre!',
         missingTitle: 'Le titre est obligatoire.',
         invalidTitleLenght: 'Le titre doit comporter au moins 4 caractères.',
         titleInfoText: "Vous pourrez le modifier à tout moment lors de l'édition de votre article",
@@ -104,6 +111,7 @@ export const fr = {
         savingText: 'Sauvegarde en cours...',
         saveSuccessText: 'Sauvegardé !',
         saveFailedText: 'Echec de la sauvegarde !',
+        autoSaveAlertMessage: 'Hello Bao, surtout veille à renseigner tous les champs obligatoires pour assurer la sauvegarde automatique de ton article',
         summary: 'Description',
         summaryPlaceholder: 'Decrivez votre article en quelques mots... (Entre 20 et 250 caractères)',
         missingSummary: 'La description est obligatoire.',
@@ -188,7 +196,8 @@ export const fr = {
     },
     passwordRenewal: {
         title: 'Creer un nouveau mot de passe',
-        createBtnText: 'Creer mot de passe'
+        createBtnText: 'Creer mot de passe',
+        renewSuccessText: "Bravo vous avez crée un mot de passe avec succes! Veuillez retourner à la page de connexion."
     },
     deleteAccountPopup: {
         cautionTitle: 'Attention !',

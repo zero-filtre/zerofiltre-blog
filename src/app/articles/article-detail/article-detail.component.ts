@@ -43,7 +43,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public likeReactions$ = this.likeReactions.asObservable();
 
   public articleSub!: Subscription;
-  public loginToAddReactionMessage!: string;
+  public loginToAddReaction!: boolean;
+  public maxNberOfReaction!: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -148,7 +149,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return this.article?.author?.socialLinks.find((profile: any) => profile.platform === platform)?.link
   }
 
-  userHasAlreadyReactOnArticleFiftyTimes(): any {
+  userHasAlreadyReactOnArticleFiftyTimes(): boolean {
     const artileReactions = this.article?.reactions;
     const currentUsr = this.authService?.currentUsr;
     return artileReactions.filter((reaction: any) => reaction?.authorId === currentUsr?.id).length === 49;
@@ -168,15 +169,12 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   addReaction(action: string): any {
     const currentUsr = this.authService?.currentUsr;
 
-    if (this.userHasAlreadyReactOnArticleFiftyTimes()) {
-      if (!this.loginToAddReactionMessage) return this.loginToAddReactionMessage = 'Tu as déja atteint le max de reactions sur cet article 😁'
-      return this.loginToAddReactionMessage = '';
-    };
-
     if (!currentUsr) {
-      if (!this.loginToAddReactionMessage) return this.loginToAddReactionMessage = 'Vous devez vous connecter pour réagir sur cet article'
-      return this.loginToAddReactionMessage = '';
+      return this.loginToAddReaction = true;
     }
+    if (this.userHasAlreadyReactOnArticleFiftyTimes()) {
+      return this.maxNberOfReaction = true;
+    };
 
     this.articleService.addReactionToAnArticle(this.articleId, action).subscribe({
       next: (response) => {

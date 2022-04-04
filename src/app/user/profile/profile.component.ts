@@ -49,8 +49,7 @@ export class ProfileComponent implements OnInit {
     this.loading = true;
     this.authService.resendUserConfirm(this.user?.email!).subscribe({
       next: (_response: any) => {
-        const msg = 'Un email avec un lien de confirmation de compte a été envoyé dans votre boite mail'
-        this.messageService.openSnackBarSuccess(msg, 'Ok', 0);
+        this.messageService.resendConfirmationSuccess();
         this.loading = false;
       },
       error: (_error: HttpErrorResponse) => {
