@@ -16,13 +16,18 @@ declare var Prism: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Handset])
+  public isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Handset])
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
 
-  browserLanguage!: string;
+  public browserLanguage!: string;
+  public MY_ACCOUNT = 'Mon compte';
+  public MY_ARTICLES = 'Mes articles';
+  public ALL_ARTICLES = 'Tous les articles';
+
+  public activePage = this.MY_ACCOUNT;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -69,10 +74,16 @@ export class AppComponent implements OnInit {
     this.messageService.openSnackBarWarning('Code Copied', '');
   }
 
+  public seeMyInfos() {
+    this.activePage = this.MY_ACCOUNT;
+  }
+
   public fetchAllArticlesAsAdmin() {
+    this.activePage = this.ALL_ARTICLES;
   }
 
   public fetchAllArticlesAsUser() {
+    this.activePage = this.MY_ARTICLES;
   }
 
   ngOnInit(): void {

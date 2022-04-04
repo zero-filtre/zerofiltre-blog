@@ -22,3 +22,19 @@
 .sidenav .sidenavLink div {
   @apply text-sm py-2 font-normal;
 }
+
+.link-active {
+  @apply bg-skin-bg text-skin-base;
+}
+
+.link-inactive {
+  @apply text-skin-base;
+}
+
+.svg-active {
+  @apply text-skin-base;
+}
+
+.svg-inactive {
+  @apply text-skin-muted group-hover:text-skin-base;
+}
