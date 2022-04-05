@@ -432,7 +432,7 @@
                         {{ 'articleDetail.callToShareText' | translate }}
                     </p>
                     <div class="mt-4 space-y-4 flex items-end flex-wrap gap-2 sm:gap-0 sm:space-y-0 sm:space-x-4">
-                        <a href="https://twitter.com/intent/tweet?text={{article?.title}} par @{{trimAuthorName(article?.author?.fullName)}}&url={{blogUrl}}/articles/{{article?.id}}"
+                        <a href="https://twitter.com/intent/tweet?url={{blogUrl}}/articles/{{article?.id}}&text={{article?.title}} par @{{trimAuthorName(article?.author?.fullName)}}"
                             target="_blank"
                             class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted">
                             <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

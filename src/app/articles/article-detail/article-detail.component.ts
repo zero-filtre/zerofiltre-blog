@@ -81,10 +81,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           this.article = response
 
           this.seo.generateTags({
-            title: this.article?.title,
-            description: this.article?.summary,
-            image: this.article?.thumbnail,
-            author: this.article?.author?.fullName,
+            title: this.article.title,
+            description: this.article.summary,
+            image: this.article.thumbnail,
+            author: this.article.author?.fullName,
             type: 'article'
           })
 

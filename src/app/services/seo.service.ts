@@ -28,13 +28,13 @@ export class SeoService {
       { property: 'og:site_name', content: 'zerofiltre.tech' },
       { property: 'keywords', content: keywords },
       // Twitter Card
+      { name: 'twitter:image', content: image },
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:site', content: '@zerofiltre.tech' },
       { name: 'twitter:creator', content: `@${author}` },
       { name: 'twitter:author', content: `@${author}` },
       { name: 'twitter:title', content: title },
       { name: 'twitter:description', content: description },
-      { name: 'twitter:image', content: image },
     ]);
   }
 }
