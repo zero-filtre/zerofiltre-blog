@@ -237,8 +237,8 @@
                                     class="flex items-center space-x-2 space-y-2 flex-wrap">
                                     <span
                                         class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                        <svg class="mr-1 h-2 w-2 text-[{{tag?.colorCode}}]" fill="currentColor"
-                                            viewBox="0 0 8 8">
+                                        <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
+                                            fill="currentColor" viewBox="0 0 8 8">
                                             <circle cx="4" cy="4" r="3"></circle>
                                         </svg>
                                         {{tag.name}}

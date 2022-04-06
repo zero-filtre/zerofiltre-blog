@@ -101,6 +101,11 @@ export class MessageService {
     this.openSnackBarSuccess(msg, 'OK', 0);
   }
 
+  badSocialLinksFormat() {
+    const msg = 'Veuillez modifier vos liens convenablement avant de soumettre à nouveau !';
+    this.openSnackBarWarning(msg, 'OK', 0);
+  }
+
   fileSizeWarning(maxSize: number) {
     const msg = this.translate.instant('fileUpload.sizeWarningMessage');
     this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, 'OK', 0)

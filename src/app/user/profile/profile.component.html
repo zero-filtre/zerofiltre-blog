@@ -1,7 +1,7 @@
 <main class="mt-28 sm:pt-10 pb-20">
     <nav class="profile-top-nav flex items-center justify-between max-w-xl mx-auto">
-        <div class="profile-navigation flex gap-[5.2rem] w-full">
-            <a routerLink="/articles" class="group hidden lg:flex items-center gap-2 font-semibold">
+        <div class="profile-navigation flex gap-[5.2rem] w-full items-end">
+            <a routerLink="/articles" class="group -mb-1.5 hidden lg:flex items-center gap-2 font-semibold">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                     class="text-primary-500 group-hover:text-primary-300" data-supported-dps="24x24" fill="currentColor"
                     width="24" height="24" focusable="false">
@@ -12,11 +12,11 @@
                 </span>
             </a>
 
-            <div class="flex-1">
-                <h1 class="text-primary-500 font-semibold text-xl sm:text-2xl">{{'profile.title' |
-                    translate}}
-                </h1>
-            </div>
+            <!-- <div class="flex-1"> -->
+            <h1 class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">{{'profile.title' |
+                translate}}
+            </h1>
+            <!-- </div> -->
         </div>
 
         <div class="profile-menu flex items-center lg:hidden">

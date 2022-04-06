@@ -76,58 +76,61 @@
                         </div>
                     </div>
 
-                    <div>
-                        <!-- formArrayName="socialLinks" -->
+                    <div formArrayName="socialLinks">
+
                         <label for="reseaux sociaux" class="block text-sm font-semibold leading-5 text-skin-muted">
                             {{'profileEdit.socialLinks' | translate}}
                         </label>
-                        <div class="mt-2 flex flex-col space-y-1">
-                            <!-- *ngFor="let social of socialLinks.controls; let i=index"
-                            <div class="relative flex" [formGroupName]="i">
-                                <span
-                                    class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
-                                    {{social.value.platform}}
-                                </span>
-                                <input name="link" type="text" id="link" formControlName="link"
-                                    placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
-                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account">
-                            </div> -->
 
-                            <div class="relative flex">
-                                <!-- formGroupName="0" -->
+                        <!-- <div *ngFor="let social of socialLinks.controls; let i=index"
+                            class="mt-2 flex flex-col space-y-1"> -->
+
+                        <!-- <div class="relative flex" [formGroupName]="i">
+                            <span
+                                class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
+                                {{social.value.platform}}
+                            </span>
+                            <input name="{{social.value.platform}}-link" type="text" id="{{social.value.platform}}-link"
+                                formControlName="link"
+                                placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                class="flex-1 rounded-none rounded-r-md" aria-label="Link Account">
+                        </div>
+
+                        <div *ngIf="invalidLink(social.value.link)" class="mt-1 text-xs sm:text-sm text-error italic">
+                            Votre lien doit etre precedé de <b>https://</b>
+                        </div> -->
+
+                        <div class="mt-2 flex flex-col space-y-1">
+
+                            <div class="relative flex" formGroupName="0">
                                 <span
                                     class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
                                     Twitter
                                 </span>
-                                <input name="twitter-link" type="text" id="twitter-link" formControlName="twitterLink"
+                                <input name="twitter-link" type="text" id="twitter-link" formControlName="link"
                                     placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
-                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Twitter"
-                                    leading-addon="twitter.com/">
+                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Twitter">
                             </div>
 
-                            <div class="relative flex">
-                                <!-- formGroupName="1" -->
+                            <div class="relative flex" formGroupName="1">
                                 <span
                                     class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
                                     Github
                                 </span>
-                                <input name="github-link" type="text" id="github-link" formControlName="githubLink"
+                                <input name="github-link" type="text" id="github-link" formControlName="link"
                                     placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
-                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Github"
-                                    leading-addon="github.com/">
+                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Github">
                             </div>
 
-                            <div class="relative flex">
-                                <!-- formGroupName="2" -->
+                            <div class="relative flex" formGroupName="2">
                                 <span
                                     class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 bg-skin-card text-skin-base sm:text-sm">
                                     Stackoverflow
                                 </span>
                                 <input name="stackoverflow-link" type="text" id="stackoverflow-link"
-                                    formControlName="soLink"
+                                    formControlName="link"
                                     placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
-                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account stackoverflow"
-                                    leading-addon="stackoverflow.com/users/">
+                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account stackoverflow">
                             </div>
 
                         </div>

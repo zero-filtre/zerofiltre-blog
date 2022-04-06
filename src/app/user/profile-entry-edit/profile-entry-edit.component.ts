@@ -16,6 +16,7 @@ export class ProfileEntryEditComponent implements OnInit {
   public user!: User;
   public form!: FormGroup;
   public loading: boolean = false;
+  private formToSend = {};
 
   constructor(
     private fb: FormBuilder,
@@ -36,31 +37,26 @@ export class ProfileEntryEditComponent implements OnInit {
       website: [this.user?.website],
       pseudo: [this.user?.pseudoName],
 
-      // socialLinks: this.fb.array(
-      // [
-      //   this.fb.group({
-      //     platform: ['TWITTER'],
-      //     link: [this.user?.socialLinks.find((profile: any) => profile.platform === 'TWITTER')?.link],
-      //     userId: [this.user?.id]
-      //   }),
-      //   this.fb.group({
-      //     platform: ['GITHUB'],
-      //     link: [this.user?.socialLinks.find((profile: any) => profile.platform === 'GITHUB')?.link],
-      //     userId: [this.user?.id]
-      //   }),
-      //   this.fb.group({
-      //     platform: ['STACKOVERFLOW'],
-      //     link: [this.user?.socialLinks.find((profile: any) => profile.platform === 'STACKOVERFLOW')?.link],
-      //     userId: [this.user?.id]
-      //   }),
-      // ]
-      // []
-      // )
-
-      twitterLink: [this.user?.socialLinks.find((profile: any) => profile.platform === 'TWITTER')?.link],
-      githubLink: [this.user?.socialLinks.find((profile: any) => profile.platform === 'GITHUB')?.link],
-      soLink: [this.user?.socialLinks.find((profile: any) => profile.platform === 'STACKOVERFLOW')?.link],
-      socialLinks: [[]]
+      socialLinks: this.fb.array(
+        [
+          this.fb.group({
+            platform: ['TWITTER'],
+            link: [this.user?.socialLinks.find((profile: any) => profile.platform === 'TWITTER')?.link],
+            userId: [this.user?.id]
+          }),
+          this.fb.group({
+            platform: ['GITHUB'],
+            link: [this.user?.socialLinks.find((profile: any) => profile.platform === 'GITHUB')?.link],
+            userId: [this.user?.id]
+          }),
+          this.fb.group({
+            platform: ['STACKOVERFLOW'],
+            link: [this.user?.socialLinks.find((profile: any) => profile.platform === 'STACKOVERFLOW')?.link],
+            userId: [this.user?.id]
+          }),
+        ]
+        // []
+      )
     })
   }
 
@@ -69,11 +65,16 @@ export class ProfileEntryEditComponent implements OnInit {
   get fullName() { return this.form.get('fullName'); }
   get bio() { return this.form.get('bio'); }
   get website() { return this.form.get('website'); }
-  get twitterLink() { return this.form.get('twitterLink'); }
-  get githubLink() { return this.form.get('githubLink'); }
-  get soLink() { return this.form.get('soLink'); }
-  get socialLinks() { return this.form.get('socialLinks')! }
-  // get socialLinks() { return this.form.get('socialLinks') as FormArray }
+  get socialLinks() { return this.form.get('socialLinks') as FormArray }
+
+  public invalidLink(link: string): boolean {
+    if (!link.match(/^https:\/\//)) return true;
+    return false
+  }
+
+  public userHasSocialLinkFor(platform: string): boolean {
+    return this.user?.socialLinks.some((profile: any) => profile.platform === platform && profile.link)
+  }
 
   // public addSocialLink(obj: any) {
   //   this.socialLinks.push(
@@ -91,45 +92,38 @@ export class ProfileEntryEditComponent implements OnInit {
 
   // public getUserSocialLinks(): any {
   //   this.user?.socialLinks.forEach((sl: any) => {
-  //     if (sl.link) this.addSocialLink(sl)
+  //     // if (sl.link) this.addSocialLink(sl)
+  //     this.addSocialLink(sl)
   //   })
   // }
 
-  public setUserSocialLinksBeforeUpdateRequest() {
+  public setUserSocialLinksBeforeUpdateRequest(): boolean {
     const socialLinks = this.socialLinks.value
-    let realSocialLinksValue;
+    let isOk = true;
+    const realLinks = []
 
-    // socialLinks.forEach((sl: any, id: any) => {
-    //   if (!sl.link) this.removeSocialLink(id)
-    // })
-
-    // realSocialLinksValue = socialLinks.filter((sl: any) => sl.link)
-
-    const links = [this.twitterLink, this.githubLink, this.soLink]
-    const linksToSend = links.filter((li: any) => li.value).map((li: any) => {
-      let obj;
-      obj = {
-        platform: 'plat',
-        link: li.value,
-        userId: this.user?.id
+    socialLinks.forEach((fg: any, id: any) => {
+      if (fg.link) {
+        realLinks.push(fg.link)
+        // this.removeSocialLink(id)
+      } else if (this.invalidLink(fg.link)) {
+        this.messageService.badSocialLinksFormat();
+        isOk = false;
       }
-      return obj;
     })
-
-    // this.form.removeControl('twitterLink')
-    // this.form.removeControl('githubLink')
-    // this.form.removeControl('soLink')
-
-    this.form.patchValue({ socialLinks: linksToSend })
+    return isOk
   }
 
   public updateUserInfos(): void {
-    this.loading = true;
-    this.setUserSocialLinksBeforeUpdateRequest();
+    if (!this.setUserSocialLinksBeforeUpdateRequest()) return;
+
+    this.formToSend = { ...this.form.value }
+    // this.formToSend.socialLinks = 
 
     console.log('FORM VALUE: ', this.form.value);
     // return
 
+    this.loading = true;
     this.authService.updateUserProfile(this.form.value).subscribe({
       next: (response: User) => {
         this.loading = false;
@@ -142,24 +136,11 @@ export class ProfileEntryEditComponent implements OnInit {
     })
   }
 
-  public getUserProfile(): void {
-    this.authService.findUserProfile(this.user?.id!).subscribe({
-      next: (response: User) => {
-        this.user = response
-        this.fullName?.setValue(this.user.fullName)
-        this.profession?.setValue(this.user.profession)
-        this.socialLinks?.setValue(this.user.socialLinks)
-      },
-      error: (_error: HttpErrorResponse) => {
-      }
-    })
-  }
 
   ngOnInit(): void {
     this.user = this.authService?.currentUsr
 
     this.InitForm();
-
     // this.getUserSocialLinks();
 
     this.seo.generateTags({
