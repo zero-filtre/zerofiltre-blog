@@ -245,12 +245,12 @@
                             class="editor-header mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
                             <div class="flex items-center w-full">
                                 <div (click)="setActiveTab('editor')"
-                                    class="relative tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer hover:bg-skin-muted sm:text-base">
-                                    <svg [ngClass]="activeTab == 'editor' ? 'text-primary-500' : ''" class="w-2 h-2"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                    class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer hover:bg-skin-muted sm:text-base">
+                                    <svg [ngClass]="activeTab == 'editor' ? 'text-primary-500' : ''" class="w-4 h-4"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        data-supported-dps="24x24" fill="currentColor" stroke="currentColor">
+                                        <path
+                                            d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
                                         </path>
                                     </svg>
                                     <span [ngClass]="activeTab == 'editor' ? 'text-primary-500' : ''">
@@ -262,8 +262,8 @@
                                 </div>
 
                                 <div (click)="setActiveTab('preview')"
-                                    class="relative tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
-                                    <svg [ngClass]="activeTab == 'preview' ? 'text-primary-500' : ''" class="w-2 h-2"
+                                    class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
+                                    <svg [ngClass]="activeTab == 'preview' ? 'text-primary-500' : ''" class="w-4 h-4"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -281,9 +281,9 @@
                                 </div>
 
                                 <div (click)="setActiveTab('help')"
-                                    class="relative tab flex space-x-1 items-center p-4 text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
+                                    class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
                                     <svg xmlns="http://www.w3.org/2000/svg"
-                                        [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''" class="h-2 w-2"
+                                        [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''" class="h-4 w-4"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
