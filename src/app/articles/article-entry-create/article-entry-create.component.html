@@ -9,7 +9,7 @@
                 </svg>
                 <h1
                     class="sm:inline-block text-lg text-skin-base transition-all duration-200 group-hover:text-primary-500">
-                    {{ 'app.AllArticles' | translate }}
+                    {{ 'app.allArticles' | translate }}
                 </h1>
             </a>
             <h2>
@@ -69,10 +69,12 @@
                 <button type="submit" (click)="publishArticle()" [disabled]="isSaving"
                     [ngClass]="{'opacity-50': isSaving}"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
-                    <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">{{ 'articleEntryEdit.publishBtn'
-                        | translate }}</span>
-                    <span *ngIf="!isPublishing && !isPublished && !authService.isAdmin">{{ 'articleEntryEdit.submitBtn'
-                        | translate }}</span>
+                    <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">
+                        {{ 'articleEntryEdit.publishBtn' | translate }}
+                    </span>
+                    <span *ngIf="!isPublishing && !isPublished && !authService.isAdmin">
+                        {{ 'articleEntryEdit.submitBtn' | translate }}
+                    </span>
                     <svg *ngIf="isPublishing" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
                         preserveAspectRatio="xMidYMid">
@@ -153,13 +155,13 @@
                             {{ 'app.tags' | translate }}
                         </label>
 
-                        <!-- <div class="mt-5 shadow-sm">
+                        <div class="mt-5 shadow-sm">
                             <ng-multiselect-dropdown
-                                [placeholder]="{{ 'articleEntryEdit.selectTagsPlaceholder' | translate }}"
+                                [placeholder]="'articleEntryEdit.selectTagsPlaceholder' | translate"
                                 formControlName="tags" [settings]="dropdownSettings" [data]="tagList"
                                 (onSelect)="onItemSelect($event)">
                             </ng-multiselect-dropdown>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -286,9 +288,9 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <!-- <span [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''">
+                                    <span [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''">
                                         {{ 'articleEntryEdit.helpTabText' | translate }}
-                                    </span> -->
+                                    </span>
                                     <div [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
                                         class="green-border bg-primary-500 h-0.5 w-full absolute -inset-x-1 bottom-0 scale-0">
                                     </div>
@@ -312,7 +314,7 @@
                             <div *ngIf="content?.invalid && content?.dirty" class="">
                                 <div *ngIf="content?.errors?.['required']"
                                     class="p-4 bg-white text-xs sm:text-sm text-error italic">
-                                    <!-- {{ 'articleEntryEdit.missingArticleContent' | translate }} -->
+                                    {{ 'articleEntryEdit.missingArticleContent' | translate }}
                                 </div>
                             </div>
 
@@ -333,9 +335,9 @@
 
                             <div *ngIf="activeTab === 'help'"
                                 class="help-container h-full bg-skin-card min-h-screen p-4 relative z-30 prose md:prose-sm lg:prose-lg max-w-none">
-                                <!-- <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2> -->
+                                <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
                                 <p>
-                                    <!-- {{'articleEntryEdit.helpSubTitle' | translate}} -->
+                                    {{'articleEntryEdit.helpSubTitle' | translate}}
                                     <a class="text-primary-500 font-semibold no-underline"
                                         href="https://commonmark.org/help/" target="_blank"> Aide-mémoire
                                     </a>

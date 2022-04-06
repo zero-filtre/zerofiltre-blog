@@ -167,6 +167,8 @@ export const fr = {
         website: 'Site web',
         socialLinks: 'Réseaux sociaux',
         socialLinksPlaceholder: 'Lien vers votre compte',
+        invalidSocialLinkError: ' Votre lien doit etre précedé de <b>https://</b>',
+        invalidSocialLinkMessage: 'Veuillez modifier vos liens convenablement avant de soumettre à nouveau !',
         bio: 'Bio',
         updateBtn: 'Enregistrer'
     },
@@ -212,7 +214,7 @@ export const fr = {
         deleteBtn: 'Supprimer mon compte'
     },
     fileUpload: {
-        sizeWarningMessage: 'La taille de fichier maximum est limitée à ${maxSize}MB !',
+        sizeWarningMessage: 'La taille de fichier maximum est limitée à {{maxSize}}MB !',
         typeWarningMessage: 'Veuillez ajouter un fichier image svp !',
         AuthError: 'Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !'
     },

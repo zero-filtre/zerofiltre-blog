@@ -16,7 +16,7 @@ export class ProfileEntryEditComponent implements OnInit {
   public user!: User;
   public form!: FormGroup;
   public loading: boolean = false;
-  private formToSend = {};
+  private dataToSend!: User;
 
   constructor(
     private fb: FormBuilder,
@@ -55,7 +55,6 @@ export class ProfileEntryEditComponent implements OnInit {
             userId: [this.user?.id]
           }),
         ]
-        // []
       )
     })
   }
@@ -68,8 +67,20 @@ export class ProfileEntryEditComponent implements OnInit {
   get socialLinks() { return this.form.get('socialLinks') as FormArray }
 
   public invalidLink(link: string): boolean {
-    if (!link.match(/^https:\/\//)) return true;
+    if (!link?.match(/^https:\/\//)) return true;
     return false
+  }
+
+  public isValidHttpUrl(link: string) {
+    let url;
+
+    try {
+      url = new URL(link);
+    } catch (_) {
+      return false;
+    }
+
+    return url.protocol === "http:" || url.protocol === "https:";
   }
 
   public userHasSocialLinkFor(platform: string): boolean {
@@ -97,34 +108,31 @@ export class ProfileEntryEditComponent implements OnInit {
   //   })
   // }
 
-  public setUserSocialLinksBeforeUpdateRequest(): boolean {
+  public validateUserSocialLinksBeforeUpdateRequest(): boolean {
     const socialLinks = this.socialLinks.value
+    const realLinks = <any>[]
     let isOk = true;
-    const realLinks = []
 
-    socialLinks.forEach((fg: any, id: any) => {
-      if (fg.link) {
-        realLinks.push(fg.link)
-        // this.removeSocialLink(id)
-      } else if (this.invalidLink(fg.link)) {
+    socialLinks.forEach((fg: any) => {
+      if (fg.link && !this.invalidLink(fg.link)) {
+        realLinks.push(fg)
+      } else if (fg.link && this.invalidLink(fg.link)) {
         this.messageService.badSocialLinksFormat();
         isOk = false;
       }
     })
+
+    this.dataToSend = { ...this.form.value }
+    this.dataToSend.socialLinks = realLinks
     return isOk
   }
 
   public updateUserInfos(): void {
-    if (!this.setUserSocialLinksBeforeUpdateRequest()) return;
-
-    this.formToSend = { ...this.form.value }
-    // this.formToSend.socialLinks = 
-
-    console.log('FORM VALUE: ', this.form.value);
-    // return
+    if (!this.validateUserSocialLinksBeforeUpdateRequest()) return;
 
     this.loading = true;
-    this.authService.updateUserProfile(this.form.value).subscribe({
+
+    this.authService.updateUserProfile(this.dataToSend).subscribe({
       next: (response: User) => {
         this.loading = false;
         this.messageService.updateProfileSuccess();
@@ -141,7 +149,6 @@ export class ProfileEntryEditComponent implements OnInit {
     this.user = this.authService?.currentUsr
 
     this.InitForm();
-    // this.getUserSocialLinks();
 
     this.seo.generateTags({
       title: this.translate.instant('meta.profileEditTitle'),

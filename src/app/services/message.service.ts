@@ -102,7 +102,7 @@ export class MessageService {
   }
 
   badSocialLinksFormat() {
-    const msg = 'Veuillez modifier vos liens convenablement avant de soumettre à nouveau !';
+    const msg = this.translate.instant('profileEdit.invalidSocialLinkMessage');
     this.openSnackBarWarning(msg, 'OK', 0);
   }
 

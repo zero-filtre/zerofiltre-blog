@@ -102,35 +102,58 @@
 
                         <div class="mt-2 flex flex-col space-y-1">
 
-                            <div class="relative flex" formGroupName="0">
-                                <span
-                                    class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
-                                    Twitter
-                                </span>
-                                <input name="twitter-link" type="text" id="twitter-link" formControlName="link"
-                                    placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
-                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Twitter">
+                            <div class="relative" formGroupName="0">
+                                <div class="flex">
+                                    <span
+                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
+                                        Twitter
+                                    </span>
+                                    <input name="twitter-link" type="text" id="twitter-link" formControlName="link"
+                                        placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                        class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Twitter">
+                                </div>
+
+                                <div *ngIf="socialLinks.controls[0].dirty && socialLinks.controls[0].value.link &&
+                                    invalidLink(socialLinks.controls[0].value?.link)"
+                                    class="mt-1 text-xs sm:text-sm text-error italic"
+                                    [innerHTML]="'profileEdit.invalidSocialLinkError' | translate">
+                                </div>
                             </div>
 
-                            <div class="relative flex" formGroupName="1">
-                                <span
-                                    class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
-                                    Github
-                                </span>
-                                <input name="github-link" type="text" id="github-link" formControlName="link"
-                                    placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
-                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Github">
+                            <div class="relative" formGroupName="1">
+                                <div class="flex">
+                                    <span
+                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
+                                        Github
+                                    </span>
+                                    <input name="github-link" type="text" id="github-link" formControlName="link"
+                                        placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                        class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Github">
+                                </div>
+
+                                <div *ngIf="socialLinks.controls[1].dirty && socialLinks.controls[1].value.link && invalidLink(socialLinks.controls[1].value?.link)"
+                                    class="mt-1 text-xs sm:text-sm text-error italic"
+                                    [innerHTML]="'profileEdit.invalidSocialLinkError' | translate">
+                                </div>
                             </div>
 
-                            <div class="relative flex" formGroupName="2">
-                                <span
-                                    class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 bg-skin-card text-skin-base sm:text-sm">
-                                    Stackoverflow
-                                </span>
-                                <input name="stackoverflow-link" type="text" id="stackoverflow-link"
-                                    formControlName="link"
-                                    placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
-                                    class="flex-1 rounded-none rounded-r-md" aria-label="Link Account stackoverflow">
+                            <div class="relative" formGroupName="2">
+                                <div class="flex">
+                                    <span
+                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 bg-skin-card text-skin-base sm:text-sm">
+                                        Stackoverflow
+                                    </span>
+                                    <input name="stackoverflow-link" type="text" id="stackoverflow-link"
+                                        formControlName="link"
+                                        placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                        class="flex-1 rounded-none rounded-r-md"
+                                        aria-label="Link Account stackoverflow">
+                                </div>
+
+                                <div *ngIf="socialLinks.controls[2].dirty && socialLinks.controls[2].value.link && invalidLink(socialLinks.controls[2].value?.link)"
+                                    class="mt-1 text-xs sm:text-sm text-error italic"
+                                    [innerHTML]="'profileEdit.invalidSocialLinkError' | translate">
+                                </div>
                             </div>
 
                         </div>
