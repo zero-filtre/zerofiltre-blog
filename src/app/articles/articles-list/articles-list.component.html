@@ -211,7 +211,7 @@
                                     </p>
 
                                     <div class="article-author mt-3 flex items-center">
-                                        <div class="flex-shrink-0">
+                                        <div class="author-image flex-shrink-0">
                                             <a href="">
                                                 <img class="h-10 w-10 rounded-full"
                                                     src="{{article.author?.profilePicture}}"
@@ -219,13 +219,13 @@
                                             </a>
                                         </div>
 
-                                        <div class="ml-3">
-                                            <p class="text-[13px] font-semibold text-skin-inverted">
+                                        <div class="author-text ml-3">
+                                            <p class="text-sm font-semibold text-skin-inverted">
                                                 <a href="#" class="hover:underline">
                                                     {{article?.author?.fullName}}
                                                 </a>
                                             </p>
-                                            <div class="flex space-x-1 text-[13px] text-skin-muted">
+                                            <div class="flex space-x-1 text-sm text-skin-muted">
                                                 <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
                                                     date}}</time>
                                                 <span aria-hidden="true">·</span>
@@ -233,6 +233,11 @@
                                                     {{article?.readingTime}}{{ 'articles.ofReadTime' | translate}}
                                                 </span>
                                             </div>
+                                        </div>
+
+                                        <div
+                                            class="reactions-total text-skin-inverted flex-1 self-end text-right text-sm font-semibold">
+                                            ⚡ {{nFormater(article?.reactions?.length)}}
                                         </div>
                                     </div>
                                 </div>

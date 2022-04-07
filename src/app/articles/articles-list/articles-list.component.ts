@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { calcReadingTime } from 'src/app/services/utilities.service';
+import { calcReadingTime, nFormatter } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -212,6 +212,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.articles = [];
       this.loadArticlesErrorMessage = true;
     }
+  }
+
+  public nFormater(totalReactions: number): string {
+    return nFormatter(totalReactions)
   }
 
 
