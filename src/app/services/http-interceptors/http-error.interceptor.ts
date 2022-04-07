@@ -80,7 +80,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     if (error.status === 0) {
       // Client side Error
-      errorMessage = error.error.message;
+      // errorMessage = error.error.message;
+      errorMessage = 'Connexion Instable !'
     } else {
       // Server side error
       let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true

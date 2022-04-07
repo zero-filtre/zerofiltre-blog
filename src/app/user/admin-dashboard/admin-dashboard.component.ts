@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
@@ -45,6 +46,7 @@ export class AdminDashboardComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public authService: AuthService,
+    private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -159,7 +161,8 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigateByUrl('/user/dashboard/admin');
 
     this.seo.generateTags({
-      title: 'Admin Tous les articles | Zerofiltre.tech'
+      title: this.translate.instant('meta.adminDashboadTitle'),
+      description: this.translate.instant('meta.adminDashboadDescription')
     });
 
     if (isPlatformBrowser(this.platformId)) {

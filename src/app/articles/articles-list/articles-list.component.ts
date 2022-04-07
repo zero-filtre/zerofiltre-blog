@@ -7,9 +7,10 @@ import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { calcReadingTime } from 'src/app/services/utilities.service';
+import { calcReadingTime, nFormatter } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-articles-list',
@@ -35,7 +36,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public pageItemsLimit: number = 5;
 
   public loading = false;
-  public errorMessage = '';
+  public noArticlesAvailable!: boolean;
+  public loadArticlesErrorMessage!: boolean;
 
   public activePage: string = this.RECENT;
   public mainPage = true;
@@ -50,6 +52,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     public authService: AuthService,
+    private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -200,22 +203,26 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.hasNext = hasNext;
 
       if (this.articles.length === 0) {
-        this.errorMessage = "Aucun article à lire pour le moment 😊!"
+        this.noArticlesAvailable = true;
       }
     },
     error: (_error: HttpErrorResponse) => {
       this.loading = false;
       this.hasNext = false;
       this.articles = [];
-      this.errorMessage = 'Oops...!'
+      this.loadArticlesErrorMessage = true;
     }
+  }
+
+  public nFormater(totalReactions: number): string {
+    return nFormatter(totalReactions)
   }
 
 
   ngOnInit(): void {
     this.seo.generateTags({
-      title: 'Tous les articles | Zerofiltre.tech',
-      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      title: this.translate.instant('meta.articlesTitle'),
+      description: this.translate.instant('meta.articlesDescription'),
       author: 'Zerofiltre.tech',
       type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'

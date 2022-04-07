@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
@@ -45,6 +46,7 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public authService: AuthService,
+    private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -164,7 +166,8 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl('/user/dashboard');
 
     this.seo.generateTags({
-      title: 'Mes articles | Zerofiltre.tech'
+      title: this.translate.instant('meta.dashboadTitle'),
+      description: this.translate.instant('meta.dashboadDescription')
     });
 
     if (isPlatformBrowser(this.platformId)) {

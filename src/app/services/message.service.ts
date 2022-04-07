@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { tap } from 'rxjs';
-import { Article } from '../articles/article.model';
-import { ArticleService } from '../articles/article.service';
-import { Router, RouterStateSnapshot } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
   private durationLimit = 4;
+  public autoSaveAlertMessage!: string;
+
 
   constructor(
     private snackBar: MatSnackBar,
-    private articleService: ArticleService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) { }
 
   private openSnackBar(message: string, action: string, className: string, type: string, duration: number) {
@@ -43,7 +42,8 @@ export class MessageService {
 
   // For non authenticated requests
   authError(state: any) {
-    this.openSnackBarError('Veuillez Vous  connecter !', '');
+    const msg = this.translate.instant('login.authErrorMessage')
+    this.openSnackBarError(msg, 'OK', 0);
     this.router.navigate(['/login'], { queryParams: { 'redirectURL': state.url } });
   }
 
@@ -54,21 +54,70 @@ export class MessageService {
 
   // When logging In
   loginError() {
-    this.openSnackBarError('Email ou mot de passe incorrect !', '');
+    const msg = this.translate.instant('login.loginFailedMessage');
+    this.openSnackBarError(msg, 'OK', 0);
   }
 
   // If not the author
   authorRoleError() {
-    this.openSnackBarError('Vous ne pouvez pas acceder à cette page!', '');
+    const msg = this.translate.instant('app.authorRouteError');
+    this.openSnackBarError(msg, 'OK');
     this.router.navigateByUrl('/');
   }
 
   // Email notification on signup success
   signUpSuccess() {
-    this.openSnackBarSuccess('Un email de validation de compte vous a été envoyé, veuillez consulter votre boite mail', 'Ok', 0);
+    const msg = this.translate.instant('signup.signUpSuccessMessage');
+    this.openSnackBarSuccess(msg, 'OK', 0);
   }
 
   saveArticleError() {
-    this.openSnackBarError('La sauvegarde a echoué !', '');
+    const msg = this.translate.instant('articleEntryEdit.saveFailedMessage');
+    this.openSnackBarError(msg, 'OK');
+  }
+
+  autoSaveAlert() {
+    const msg = this.translate.instant('articleEntryEdit.autoSaveAlertMessage');
+    this.openSnackBarWarning(msg, "C'est noté !", 0)
+  }
+
+  saveArticleSuccess() {
+    const msg = this.translate.instant('articleEntryEdit.saveSuccessMessage');
+    this.openSnackBarSuccess(msg, 'OK');
+  }
+
+  publishArticleSuccess() {
+    const msg = this.translate.instant('articleEntryEdit.publishSuccessMessage');
+    this.openSnackBarSuccess(msg, 'OK');
+  }
+
+  resendConfirmationSuccess() {
+    const msg = this.translate.instant('resendConfirmation.resendConfirmationSuccessMesssage');
+    this.openSnackBarSuccess(msg, 'OK', 0);
+  }
+
+  updateProfileSuccess() {
+    const msg = this.translate.instant('profile.updateSuccessMessage');
+    this.openSnackBarSuccess(msg, 'OK', 0);
+  }
+
+  badSocialLinksFormat() {
+    const msg = this.translate.instant('profileEdit.invalidSocialLinkMessage');
+    this.openSnackBarWarning(msg, 'OK', 0);
+  }
+
+  fileSizeWarning(maxSize: number) {
+    const msg = this.translate.instant('fileUpload.sizeWarningMessage');
+    this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, 'OK', 0)
+  }
+
+  fileTypeWarning() {
+    const msg = this.translate.instant('fileUpload.typeWarningMessage');
+    this.openSnackBarWarning(msg, 'OK', 0)
+  }
+
+  fileUploadAuthError() {
+    const msg = this.translate.instant('fileUpload.AuthError');
+    this.openSnackBarError(msg, 'OK', 0);
   }
 }

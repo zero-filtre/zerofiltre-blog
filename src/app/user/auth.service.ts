@@ -22,7 +22,6 @@ export class AuthService {
 
   private readonly apiServerUrl = environment.apiBaseUrl;
 
-
   private subject = new BehaviorSubject<User>(null!);
   public user$ = this.subject.asObservable();
 
@@ -47,22 +46,29 @@ export class AuthService {
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.redirectURL = '';
-    this.isAdmin = this.currentUsr?.roles.some((role: string) => role === 'ROLE_ADMIN');
+    this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
+
+    this.loadCurrentUser();
   }
 
 
   // AUTH SERVICES
 
   private loadCurrentUser() {
-    this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
-      .pipe(
-        catchError(error => {
-          return throwError(() => error);
-        }),
-        tap(usr => {
-          this.subject.next(usr);
-        })
-      )
+    if (isPlatformBrowser(this.platformId)) {
+      this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
+        .pipe(
+          catchError(error => {
+            console.log('ME ERROR: ', error);
+            return throwError(() => error);
+          }),
+          tap(usr => {
+            console.log('ME: ', usr);
+            this.subject.next(usr);
+            this.setUserData(usr);
+          })
+        )
+    }
   }
 
   get token(): any {
@@ -83,15 +89,15 @@ export class AuthService {
     }
   }
 
-  setUserData(user: User) {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('user_data', JSON.stringify(user));
-    }
-  }
-
   get currentUsr() {
     if (isPlatformBrowser(this.platformId)) {
       return JSON.parse(this.userData);
+    }
+  }
+
+  public setUserData(user: User) {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('user_data', JSON.stringify(user));
     }
   }
 
@@ -99,10 +105,6 @@ export class AuthService {
     this.redirectURL = redirectURL;
   }
 
-
-  /**
-   * AUTH REFRESH TOKEN METHODS
-   */
   public sendRefreshToken(): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/jwt/refreshToken?refreshToken=${this.refreshToken}`)
       .pipe(
@@ -112,8 +114,6 @@ export class AuthService {
         })
       )
   }
-  /** */
-
 
   public login(credentials: FormData, redirectURL: any): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
@@ -214,6 +214,7 @@ export class AuthService {
     }).pipe(shareReplay())
   }
 
+
   // HELPER SERVICES
 
   private handleJWTauth(response: any, tokenType: string, redirectURL = '') {
@@ -238,7 +239,7 @@ export class AuthService {
           localStorage.setItem(this.TOKEN_NAME, accessToken);
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
           localStorage.setItem('user_data', JSON.stringify(usr));
-          this.isAdmin = this.currentUsr?.roles.some((role: string) => role === 'ROLE_ADMIN');
+          this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
 
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)
@@ -256,12 +257,19 @@ export class AuthService {
   private clearLSwithoutExcludedKey() {
     const excludedKey = 'x_token'
     const keys = []
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-      keys.push(key)
+    if (isPlatformBrowser(this.platformId)) {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        keys.push(key)
+      }
+      const clearables = keys.filter(key => key !== excludedKey)
+      clearables.forEach(key => localStorage.removeItem(key!))
     }
-    const clearables = keys.filter(key => key !== excludedKey)
-    clearables.forEach(key => localStorage.removeItem(key!))
+  }
+
+  private checkRole(roles: string[], role: string): boolean {
+    // return roles?.some((role: string) => role === role);
+    return roles?.includes(role);
   }
 
   private extractTokenFromHeaders(response: any) {

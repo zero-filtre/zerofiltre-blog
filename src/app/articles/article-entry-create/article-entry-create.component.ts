@@ -3,6 +3,7 @@ import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap, tap, throwError } from 'rxjs';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -51,7 +52,6 @@ export class ArticleEntryCreateComponent implements OnInit {
   public savingMessage!: string;
   public isSaved!: boolean;
   public saveFailed!: boolean;
-  public alertMessage: string = 'Hello Bao, surtout veille à renseigner tous les champs obligatoires pour assurer la sauvegarde automatique de ton article';
 
 
   constructor(
@@ -63,6 +63,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     private messageService: MessageService,
     private seo: SeoService,
     public authService: AuthService,
+    private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
 
@@ -154,7 +155,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       next: (_response: Article) => {
         this.loading = false;
         this.isSaving = false;
-        this.messageService.openSnackBarSuccess('Article sauvegardé !', '');
+        this.messageService.saveArticleSuccess();
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
@@ -172,7 +173,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       next: (_response: Article) => {
         this.loading = false;
         this.isPublishing = false;
-        this.messageService.openSnackBarSuccess('Article pulié avec success !', '');
+        this.messageService.publishArticleSuccess();
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
@@ -338,7 +339,7 @@ export class ArticleEntryCreateComponent implements OnInit {
               })
             ).subscribe();
         } else {
-          this.messageService.openSnackBarWarning(this.alertMessage, "C'est noté !", 0);
+          this.messageService.autoSaveAlert();
         }
       }),
     ).subscribe()
@@ -365,8 +366,8 @@ export class ArticleEntryCreateComponent implements OnInit {
     };
 
     this.seo.generateTags({
-      title: "Editer l'aticle",
-      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      title: this.translate.instant('meta.articleEntryEditTitle'),
+      description: this.translate.instant('meta.articleEntryEditDescription'),
       author: 'Zerofiltre.tech',
       type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'

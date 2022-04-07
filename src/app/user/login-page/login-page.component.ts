@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
@@ -26,6 +27,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private messageservice: MessageService,
     private seo: SeoService,
+    private translate: TranslateService,
     private route: ActivatedRoute,
   ) { }
 
@@ -61,8 +63,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
 
     this.seo.generateTags({
-      title: 'Se connecter | Zerofiltre.tech',
-      description: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+      title: this.translate.instant('meta.loginTitle'),
+      description: this.translate.instant('meta.loginDescription'),
       author: 'Zerofiltre.tech',
       type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'

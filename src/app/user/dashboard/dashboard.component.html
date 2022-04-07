@@ -1,17 +1,22 @@
 <main class="articles-list-container min-h-screen py-5 mt-20">
     <div class="max-w-2xl mx-auto">
         <div class="main-side-container">
-            <div class="profile-navigation-btns lg:hidden">
-                <a routerLink="/user/profile" class="flex items-center space-x-1 font-semibold">
-                    <svg class="h-5 w-5 text-primary-500" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7">
-                        </path>
+            <div class="dashboard-navigation-btns flex lg:hidden mt-2 sm:mt-8">
+                <a routerLink="/user/profile" class="flex items-center gap-1 font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="text-primary-500"
+                        data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
+                        <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
                     </svg>
-                    <span class="text-primary-500 text-base">
+                    <span class="text-primary-500 hidden text-base">
                         {{'dashboard.backToProfileText' | translate}}
                     </span>
                 </a>
+
+                <div class="flex-1">
+                    <h1 class="text-primary-500 font-semibold text-xl sm:text-2xl text-center">
+                        {{'app.myArticles' | translate}}
+                    </h1>
+                </div>
             </div>
 
             <div class="tabs-wrapper mt-8 border-b border-skin-border">

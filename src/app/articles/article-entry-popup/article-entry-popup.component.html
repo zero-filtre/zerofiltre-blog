@@ -12,20 +12,21 @@
     <div class="content">
         <input name="title" id="title" required minlength="4"
             class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl focus:border-b-skin-borderBold"
-            placeholder={{placeholder}} [(ngModel)]="title" #name="ngModel" autocomplete="off" />
+            placeholder="{{'articleEntryPopup.titlePlaceholder' | translate}}" [(ngModel)]="title" #name="ngModel"
+            autocomplete="off" />
 
         <div *ngIf="name.invalid && name.dirty" class="">
             <div *ngIf="name.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
-                Le titre est obligatoire.
+                {{'articleEntryPopup.missingTitle' | translate}}
             </div>
             <div *ngIf="name.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
-                Le titre doit comporter au moins 4 caractères.
+                {{'articleEntryPopup.invalidTitleLenght' | translate}}
             </div>
         </div>
 
         <div class="mt-2 text-xs sm:text-sm text-skin-muted font-light italic space-x-2">
-            <span><span class="font-bold">*</span> Vous pourrez le modifier à tout moment lors de l'édition de votre
-                article
+            <span><span class="font-bold">*</span>
+                {{'articleEntryPopup.titleInfoText' | translate}}
             </span>
         </div>
 
@@ -33,20 +34,20 @@
             <button
                 class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-200"
                 (click)="onNoClick()">
-                Annuler
+                {{'app.cancel' | translate}}
             </button>
 
             <div *ngIf="name.invalid; else validBtn">
                 <button
                     class="px-4 py-2 border border-primary-500 shadow-sm bg-primary-500 opacity-[0.15] rounded-full text-sm text-white leading-5 font-semibold"
                     type="submit" disabled>
-                    Commencer
+                    {{'articleEntryPopup.createBtn' | translate}}
                 </button>
             </div>
             <ng-template #validBtn>
                 <button type="submit" (click)="handleArticleInit()"
                     class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
-                    Commencer
+                    {{'articleEntryPopup.createBtn' | translate}}
                 </button>
             </ng-template>
         </div>

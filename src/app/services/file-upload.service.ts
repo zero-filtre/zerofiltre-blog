@@ -119,10 +119,10 @@ export class FileUploadService {
 
     if (fileSize > maxSize) {
       isValid = false
-      this.messageService.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, 'Ok', 0);
+      this.messageService.fileSizeWarning(maxSize);
     } else if (fileType !== 'image') {
       isValid = false
-      this.messageService.openSnackBarWarning('Veuillez ajouter un fichier image svp !', 'Ok', 0);
+      this.messageService.fileTypeWarning();
     } else {
       isValid = true;
     }
@@ -168,7 +168,7 @@ export class FileUploadService {
 
   public handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
-      this.messageService.openSnackBarError('Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !', 'Ok', 0);
+      this.messageService.fileUploadAuthError();
     }
   }
 }
