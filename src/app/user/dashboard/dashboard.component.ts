@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
 import { SeoService } from 'src/app/services/seo.service';
-import { calcReadingTime } from 'src/app/services/utilities.service';
+import { calcReadingTime, nFormatter } from 'src/app/services/utilities.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -161,6 +161,9 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  public nFormater(totalReactions: number): string {
+    return nFormatter(totalReactions)
+  }
 
   ngOnInit(): void {
     this.router.navigateByUrl('/user/dashboard');

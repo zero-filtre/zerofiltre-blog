@@ -69,9 +69,9 @@
                                 <div class="article-tags-container flex flex-wrap items-center gap-1">
                                     <div *ngFor="let tag of article?.tags" class="tag-item flex items-center space-x-2">
                                         <span
-                                            class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                            <svg class="mr-1 h-2 w-2 text-[{{tag?.colorCode}}]" fill="currentColor"
-                                                viewBox="0 0 8 8">
+                                            class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
+                                            <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
+                                                fill="currentColor" viewBox="0 0 8 8">
                                                 <circle cx="4" cy="4" r="3"></circle>
                                             </svg>
                                             {{tag.name}}
@@ -93,7 +93,7 @@
                                     </p>
 
                                     <div class="article-author mt-3 flex items-center">
-                                        <div class="flex-shrink-0">
+                                        <div class="author-image flex-shrink-0">
                                             <a href="">
                                                 <img class="h-10 w-10 rounded-full"
                                                     src="{{article.author?.profilePicture}}"
@@ -101,26 +101,29 @@
                                             </a>
                                         </div>
 
-                                        <div class="ml-3">
-                                            <p class="text-[13px] font-semibold text-skin-inverted">
+                                        <div class="author-text ml-3">
+                                            <p class="text-sm font-semibold text-skin-inverted">
                                                 <a href="#" class="hover:underline">
                                                     {{article?.author?.fullName}}
                                                 </a>
                                             </p>
-                                            <div class="flex space-x-1 text-[13px] text-skin-muted">
+                                            <div class="flex space-x-1 text-sm text-skin-muted">
                                                 <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
                                                     date}}</time>
                                                 <span aria-hidden="true">·</span>
                                                 <span>
-                                                    {{article?.readingTime}} {{'dashboard.ofReadTime' |translate}}
+                                                    {{article?.readingTime}}{{ 'articles.ofReadTime' | translate}}
                                                 </span>
                                             </div>
                                         </div>
+
+                                        <div
+                                            class="reactions-total text-skin-inverted flex-1 self-end text-right text-sm font-semibold">
+                                            ⚡ {{nFormater(article?.reactions?.length)}}
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                 </ng-template>
