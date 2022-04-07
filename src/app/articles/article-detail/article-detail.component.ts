@@ -31,7 +31,12 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   private nberOfReactions = new BehaviorSubject<number>(0);
   public nberOfReactions$ = this.nberOfReactions.asObservable();
-  public typesOfReactions = ['clap', 'fire', 'love', 'like'];
+  public typesOfReactions = <any>[
+    { action: 'clap', emoji: '👏' },
+    { action: 'fire', emoji: '🔥' },
+    { action: 'love', emoji: '💖' },
+    { action: 'like', emoji: '👍' },
+  ];
 
   private fireReactions = new BehaviorSubject<number>(0);
   public fireReactions$ = this.fireReactions.asObservable();

@@ -130,37 +130,49 @@
                 <div class="pt-6 mt-6 border-t border-skin-border">
                     <div class="relative">
                         <div *ngIf="isPublished$ | async"
-                            class="mt-4 flex flex-wrap max-w-fit space-y-1 bg-skin-link rounded-lg px-4 py-2 shadow-xl">
+                            class="reactions-container flex flex-wrap max-w-fit gap-2 bg-skin-card rounded-lg px-4 shadow-xl">
+
                             <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction)"
-                                class="first-of-type:ml-0 last-of-type:mr-0 mr-1.5 focus:animate-bounce">
+                                class="group h-11 flex items-center justify-center transition-all duration-300"
+                                attr.aria-label="{{reaction.action}}">
+
                                 <div
-                                    class="flex items-center space-x-1 py-0.5 px-1 border border-transparent bg-skin-cardMuted hover:bg-skin-card hover:border-skin-borderBold rounded-2xl">
-                                    <ng-container *ngIf="reaction === 'clap'">
-                                        <div>👏</div>
-                                        <div class="text-sm font-semibold text-primary-500">{{clapReactions$ |
-                                            async}}
+                                    class="reaction-wrapper flex items-center space-x-1 group-hover:-translate-y-2 transition-all ease-in duration-200">
+                                    <ng-container *ngIf="reaction.action === 'clap'">
+                                        <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                                            {{reaction.emoji}}
+                                        </div>
+                                        <div class="text-sm font-semibold text-primary-500">
+                                            {{clapReactions$ | async}}
                                         </div>
                                     </ng-container>
-                                    <ng-container *ngIf="reaction === 'fire'">
-                                        <div>🔥</div>
-                                        <div class="text-sm font-semibold text-primary-500">{{fireReactions$ |
-                                            async}}
+                                    <ng-container *ngIf="reaction.action === 'fire'">
+                                        <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                                            {{reaction.emoji}}
+                                        </div>
+                                        <div class="text-sm font-semibold text-primary-500">
+                                            {{fireReactions$ | async}}
                                         </div>
                                     </ng-container>
-                                    <ng-container *ngIf="reaction === 'love'">
-                                        <div>💖</div>
-                                        <div class="text-sm font-semibold text-primary-500">{{loveReactions$ |
-                                            async}}
+                                    <ng-container *ngIf="reaction.action === 'love'">
+                                        <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                                            {{reaction.emoji}}
+                                        </div>
+                                        <div class="text-sm font-semibold text-primary-500">
+                                            {{loveReactions$ | async}}
                                         </div>
                                     </ng-container>
-                                    <ng-container *ngIf="reaction === 'like'">
-                                        <div>👍</div>
-                                        <div class="text-sm font-semibold text-primary-500">{{likeReactions$ |
-                                            async}}
+                                    <ng-container *ngIf="reaction.action === 'like'">
+                                        <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                                            {{reaction.emoji}}
+                                        </div>
+                                        <div class="text-sm font-semibold text-primary-500">
+                                            {{likeReactions$ | async}}
                                         </div>
                                     </ng-container>
                                 </div>
                             </button>
+
                         </div>
 
                         <ng-container *ngIf="!(isPublished$ | async)">
