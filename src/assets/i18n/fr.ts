@@ -99,8 +99,8 @@ export const fr = {
         edit: "Editer l'article",
         delete: 'Supprimer',
         callToShareText: 'Vous aimez cet article ? Faite le savoir en partageant',
-        maxNberReactionText: 'Tu as déja atteint le max de reactions sur cet article 😁',
-        loginToReactText: 'Vous devez vous connecter pour réagir sur cet article',
+        maxNberReactionText: '🚨 Tu as déja atteint le max de reactions sur cet article 😁',
+        loginToReactText: '🚨 Vous devez vous connecter pour réagir sur cet article',
         publishToReactText: 'Publiez cet article pour pouvoir y ajouter des reactions.'
     },
     articleEntryPopup: {
