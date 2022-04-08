@@ -142,36 +142,36 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  isAuthor(user: any, article: Article): boolean {
+  public isAuthor(user: any, article: Article): boolean {
     return user?.id === article?.author?.id
   }
 
-  authorHasSocialLinkFor(platform: string): boolean {
+  public authorHasSocialLinkFor(platform: string): boolean {
     return this.article?.author?.socialLinks.some((profile: any) => profile.platform === platform && profile.link)
   }
 
-  authorPlatformLink(platform: string): string {
+  public authorPlatformLink(platform: string): string {
     return this.article?.author?.socialLinks.find((profile: any) => profile.platform === platform)?.link
   }
 
-  userHasAlreadyReactOnArticleFiftyTimes(): boolean {
+  public userHasAlreadyReactOnArticleFiftyTimes(): boolean {
     const artileReactions = this.article?.reactions;
     const currentUsr = this.authService?.currentUsr;
     return artileReactions.filter((reaction: any) => reaction?.authorId === currentUsr?.id).length === 49;
   }
 
-  findTotalReactionByAction(action: string, reactions: []): number {
+  public findTotalReactionByAction(action: string, reactions: []): number {
     return reactions.filter((reaction: any) => reaction.action === action).length;
   }
 
-  areRelated(a: Article, b: Article): boolean {
+  public areRelated(a: Article, b: Article): boolean {
     const tagsA = a.tags;
     const tagsB = b.tags;
 
     return tagsA.some((tag: Tag) => tagsB.some((item: Tag) => item.name === tag.name));
   }
 
-  addReaction(action: string): any {
+  public addReaction(action: string): any {
     const currentUsr = this.authService?.currentUsr;
 
     if (!currentUsr) {

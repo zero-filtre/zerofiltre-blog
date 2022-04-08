@@ -132,7 +132,7 @@
                         <div *ngIf="isPublished$ | async"
                             class="reactions-container flex flex-wrap max-w-fit gap-2 px-4">
 
-                            <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction)"
+                            <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
                                 class="group h-11 flex items-center justify-center transition-all duration-300"
                                 attr.aria-label="{{reaction.action}}">
 
