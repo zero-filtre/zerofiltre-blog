@@ -9,13 +9,12 @@
 
 <main class="article-container py-10 min-h-screen mt-20" *appShellNoRender>
 
-    <article class="lg:grid grid-cols-10 gap-10 items-start">
+    <article class="flex flex-col gap-10 lg:grid lg:grid-cols-10 lg:items-start">
 
-        <aside class="col-span-2 hidden lg:block sticky top-4">
-
-            <div class="left-side-container sticky top-4">
-
-                <div>
+        <aside class="lg:col-span-2 order-2 lg:order-none">
+            <div class="left-side-container flex flex-col">
+                <div
+                    class="article-author pt-6 lg:pt-0 order-3 lg:order-none border-t border-skin-border lg:border-none">
                     <h4 class="text-sm text-skin-base font-semibold leading-4 tracking-wide uppercase">
                         {{ 'articleDetail.aboutAuthor' | translate }}
                     </h4>
@@ -33,7 +32,7 @@
                                         {{article?.author?.fullName}}
                                     </p>
                                     <p *ngIf="article?.author?.profession"
-                                        class="text-xs font-semibold text-skin-muted line-clamp-2">
+                                        class="text-xs font-semibold text-primary-500 line-clamp-2">
                                         {{article?.author?.profession}}
                                     </p>
                                 </div>
@@ -41,7 +40,7 @@
                         </a>
 
                         <p *ngIf="article?.author?.bio"
-                            class="text-[13px] text-skin-base leading-5 font-normal line-clamp-3">
+                            class="text-sm text-skin-base leading-5 font-normal line-clamp-3">
                             {{article?.author?.bio}}
                         </p>
 
@@ -100,82 +99,68 @@
                     </div>
                 </div>
 
-                <div class="pt-6 mt-6 space-y-6 border-t border-skin-border">
-                    <div *ngIf="nextArticle">
-                        <h2 class="text-sm leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
-                            suivant</h2>
+                <div class="related-articles order-4 lg:order-none pt-6 mt-6 space-y-6 border-t border-skin-border">
+                    <div>
+                        <h2 class="text-sm leading-5 tracking-wide uppercase text-skin-base font-semibold">
+                            Articles similaires
+                        </h2>
                         <a routerLink="/articles/{{nextArticle.id}}" class="mt-3 flex items-center space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{nextArticle?.thumbnail}}"
-                                alt="{{nextArticle?.title}} ">
+                                alt="{{nextArticle?.title}}">
                             <span
                                 class="text-sm font-black leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2 transition-all duration-200">
                                 {{nextArticle?.title}}
                             </span>
                         </a>
                     </div>
-                    <div *ngIf="previousArticle">
-                        <h2 class="text-sm leading-5 tracking-wide uppercase text-skin-base font-semibold">Article
-                            précédent</h2>
-                        <a routerLink="/articles/{{previousArticle.id}}" class="mt-3 flex items-center space-x-2">
-                            <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{previousArticle?.thumbnail}}"
-                                alt="{{previousArticle?.title}}">
-                            <span
-                                class="text-sm font-black leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2 transition-all duration-200">
-                                {{previousArticle?.title}}
-                            </span>
-                        </a>
-                    </div>
                 </div>
 
-                <div class="pt-6 mt-6 border-t border-skin-border">
-                    <div class="relative">
-                        <div *ngIf="isPublished$ | async"
-                            class="reactions-container flex flex-wrap max-w-fit gap-2 px-4">
+                <div class="reactions order-1 lg:order-none py-6 lg:mt-6 border-t border-skin-border">
+                    <div *ngIf="isPublished$ | async"
+                        class="reactions-container flex flex-wrap max-w-fit gap-2 lg:px-4">
+                        <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
+                            class="group flex items-center justify-center transition-all duration-300"
+                            attr.aria-label="{{reaction.action}}">
 
-                            <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
-                                class="group h-11 flex items-center justify-center transition-all duration-300"
-                                attr.aria-label="{{reaction.action}}">
+                            <div
+                                class="reaction-wrapper flex items-center space-x-1 group-hover:-translate-y-2 transition-all ease-in duration-200">
+                                <ng-container *ngIf="reaction.action === 'clap'">
+                                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                                        {{reaction.emoji}}
+                                    </div>
+                                    <div class="text-sm font-semibold text-primary-500">
+                                        {{clapReactions$ | async}}
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="reaction.action === 'fire'">
+                                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                                        {{reaction.emoji}}
+                                    </div>
+                                    <div class="text-sm font-semibold text-primary-500">
+                                        {{fireReactions$ | async}}
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="reaction.action === 'love'">
+                                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                                        {{reaction.emoji}}
+                                    </div>
+                                    <div class="text-sm font-semibold text-primary-500">
+                                        {{loveReactions$ | async}}
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="reaction.action === 'like'">
+                                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                                        {{reaction.emoji}}
+                                    </div>
+                                    <div class="text-sm font-semibold text-primary-500">
+                                        {{likeReactions$ | async}}
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </button>
+                    </div>
 
-                                <div
-                                    class="reaction-wrapper flex items-center space-x-1 group-hover:-translate-y-2 transition-all ease-in duration-200">
-                                    <ng-container *ngIf="reaction.action === 'clap'">
-                                        <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                            {{reaction.emoji}}
-                                        </div>
-                                        <div class="text-sm font-semibold text-primary-500">
-                                            {{clapReactions$ | async}}
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="reaction.action === 'fire'">
-                                        <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                            {{reaction.emoji}}
-                                        </div>
-                                        <div class="text-sm font-semibold text-primary-500">
-                                            {{fireReactions$ | async}}
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="reaction.action === 'love'">
-                                        <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                            {{reaction.emoji}}
-                                        </div>
-                                        <div class="text-sm font-semibold text-primary-500">
-                                            {{loveReactions$ | async}}
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="reaction.action === 'like'">
-                                        <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                            {{reaction.emoji}}
-                                        </div>
-                                        <div class="text-sm font-semibold text-primary-500">
-                                            {{likeReactions$ | async}}
-                                        </div>
-                                    </ng-container>
-                                </div>
-                            </button>
-
-                        </div>
-
-                        <!-- <ng-container *ngIf="!(isPublished$ | async)">
+                    <!-- <ng-container *ngIf="!(isPublished$ | async)">
                             <div class="text-sm text-primary-500">
                                 {{ 'articleDetail.publishToReactText' | translate }}
                             </div>
@@ -185,10 +170,47 @@
                             {{ 'articleDetail.maxNberReactionText' | translate }}
                         </div> -->
 
-                        <div *ngIf="loginToAddReaction"
-                            class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
-                            {{ 'articleDetail.loginToReactText' | translate }}
-                        </div>
+                    <div *ngIf="loginToAddReaction"
+                        class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
+                        {{ 'articleDetail.loginToReactText' | translate }}
+                    </div>
+                </div>
+
+                <div class="article-socials-btns order-2 space-y-5 pb-6 lg:hidden">
+                    <p class="text-base text-skin-base font-light">
+                        {{ 'articleDetail.callToShareText' | translate }}
+                    </p>
+                    <div class="flex items-end flex-wrap gap-2">
+                        <a href="https://twitter.com/intent/tweet?url={{blogUrl}}/articles/{{article?.id}}&text={{article?.title}} par @{{trimAuthorName(article?.author?.fullName)}}"
+                            target="_blank"
+                            class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted">
+                            <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84">
+                                </path>
+                            </svg>
+                            Twitter
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{blogUrl}}/articles/{{article?.id}}"
+                            target="_blank"
+                            class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted">
+                            <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Facebook
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{blogUrl}}/articles/{{article?.id}}"
+                            target="_blank"
+                            class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted">
+                            <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8 19H5V8h3v11zM6.5 6.732c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476V19z">
+                                </path>
+                            </svg>
+                            LinkedIn
+                        </a>
                     </div>
                 </div>
 
@@ -237,10 +259,8 @@
 
         </aside>
 
-        <main class="col-span-6">
-
+        <main class="col-span-6 order-1 lg:order-none">
             <div class="main-side-container">
-
                 <header *ngIf="article; else articleHeaderSkeletonLoader" class="article-header space-y-4">
                     <div class="flex items-center justify-between gap-5">
                         <div class="flex flex-col space-y-4">
@@ -303,7 +323,6 @@
                             </div>
 
                             <div *ngIf="authService.currentUsr as currentUsr">
-
                                 <div *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
                                     <button [matMenuTriggerFor]="menu" class="text-secondary"
                                         aria-label="icon-button with a menu">
@@ -345,7 +364,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="!mt-10">
@@ -354,23 +372,6 @@
                             {{article?.title}}
                         </h1>
                     </div>
-
-                    <a href="#" class="flex-shrink-0 group block lg:hidden">
-                        <div class="flex items-center">
-                            <div>
-                                <img class="inline-block h-8 w-8 rounded-full" src="{{article?.author?.profilePicture}}"
-                                    alt="{{article?.author?.pseudoName}} ">
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-xs font-semibold tracking-tighter text-skin-base">
-                                    {{article?.author?.fullName}}
-                                </p>
-                                <p class="text-xs font-medium text-primary-500 group-hover:text-skin-primary">
-                                    {{article?.author?.profession || 'Proféssion'}}
-                                </p>
-                            </div>
-                        </div>
-                    </a>
                 </header>
 
                 <ng-template #articleHeaderSkeletonLoader>
@@ -439,7 +440,7 @@
                     </ngx-skeleton-loader>
                 </ng-template>
 
-                <div class="article-socials pt-10 lg:w-fit mx-auto">
+                <div class="article-socials-btns hidden lg:block pt-10 lg:w-fit mx-auto">
                     <p class="text-base text-skin-base font-light">
                         {{ 'articleDetail.callToShareText' | translate }}
                     </p>
