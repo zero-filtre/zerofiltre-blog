@@ -96,6 +96,7 @@ export const fr = {
         updateOn: 'Mis à jour le',
         ofReadTime: 'min de lecture',
         AllArticles: 'Tous les articles',
+        similarArticles: 'Articles similaires',
         edit: "Editer l'article",
         delete: 'Supprimer',
         callToShareText: 'Vous aimez cet article ? Faites le savoir en partageant',
