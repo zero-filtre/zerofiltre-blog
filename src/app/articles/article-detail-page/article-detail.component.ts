@@ -101,7 +101,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
-          this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
+          // this.fetchSimilarArticles();
           this.loading = false;
         },
         error: (_error: HttpErrorResponse) => {
@@ -111,35 +111,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       })
   }
 
-  // TODO: implementer une liste d'articles similaires(limit: 5) (collectés par tags) a la place des siblings
-  public fetchArticleSiblings(prev: number, next: number): void {
-    this.articleSub = this.articleService.findArticleById(next.toString()).pipe(
-      filter(objectExists)
-    ).subscribe({
-      next: (response: Article) => {
-        this.nextArticle = response;
-      },
-      error: (_error: HttpErrorResponse) => {
-        this.loading = false;
-        this.nextArticle = null!;
-        this.messageService.cancel();
-      }
-    })
-
-    if (prev !== 0) {
-      this.articleService.findArticleById(prev.toString()).pipe(
-        filter(objectExists)
-      ).subscribe({
-        next: (response: Article) => {
-          this.previousArticle = response;
-        },
-        error: (_error: HttpErrorResponse) => {
-          this.loading = false;
-          this.previousArticle = null!;
-          this.messageService.cancel();
-        }
-      })
-    }
+  public fetchSimilarArticles(): void {
+    this.articleSub = this.articleService.findArticleById('1').subscribe()
   }
 
   public isAuthor(user: any, article: Article): boolean {

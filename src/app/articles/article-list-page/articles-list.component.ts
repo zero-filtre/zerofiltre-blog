@@ -143,7 +143,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public onScroll() {
-    // Remove this.hasnext to enable end of list message
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
       this.loadingMore = true;
       this.notScrolly = false;
@@ -152,14 +151,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public fetchMoreArticles() {
-
-    if (!this.hasNext) {
-      this.loadingMore = false;
-      this.notScrolly = true;
-      this.notEmptyArticles = false;
-      return
-    }
-
     this.scrollyPageNumber += 1;
     const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
     const queryParamTwo = this.route.snapshot.queryParamMap.get('tag')!;
