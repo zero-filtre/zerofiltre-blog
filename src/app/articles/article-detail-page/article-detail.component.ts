@@ -109,14 +109,18 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   }
 
   public fetchSimilarArticles(): void {
+    if (!this.article?.tags.length) return
+
     const randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
     const randomTagName = this.article?.tags[randomTagIndex]?.name!
+    const maxArticles = 2
 
     this.articleService.findAllArticlesByTag(0, 20, randomTagName)
       .subscribe({
         next: ({ content }: any) => {
           const selected = content
             .filter((article: Article) => article.id !== this.article.id)
+            .slice(0, maxArticles)
           this.similarArticles = selected;
         }
       })
