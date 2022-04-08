@@ -24,7 +24,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public previousArticle!: Article;
   public nextArticle!: Article;
   public articleHasTags!: boolean;
-  public loading: boolean = false;
+  public loading!: boolean;
   private isPublished = new BehaviorSubject<any>(null);
   public isPublished$ = this.isPublished.asObservable();
   readonly blogUrl = environment.blogUrl;
@@ -86,10 +86,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           this.article = response
 
           this.seo.generateTags({
-            title: this.article.title,
-            description: this.article.summary,
-            image: this.article.thumbnail,
-            author: this.article.author?.fullName,
+            title: response.title,
+            description: response.summary,
+            image: response.thumbnail,
+            author: response.author?.fullName,
             type: 'article'
           })
 

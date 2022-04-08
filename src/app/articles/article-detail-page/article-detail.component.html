@@ -19,15 +19,14 @@
                         {{ 'articleDetail.aboutAuthor' | translate }}
                     </h4>
 
-                    <div *ngIf="article; else articleAuthorLeftSideSkeletonLoader" class="mt-6 flex flex-col space-y-6">
-                        <a href="#" class="flex-shrink-0 block">
+                    <div *ngIf="article" class="mt-6 flex flex-col space-y-6">
+                        <a href="#" class="">
                             <div class="flex items-center gap-3">
                                 <div class="">
-                                    <img class="inline-block max-w-none h-9 w-9 rounded-full"
-                                        src="{{article?.author?.profilePicture}} "
+                                    <img class="h-9 w-9 rounded-full" src="{{article?.author?.profilePicture}} "
                                         alt="{{article?.author?.pseudoName}}">
                                 </div>
-                                <div class="">
+                                <div class="flex-1">
                                     <p class="text-sm font-semibold text-skin-inverted ">
                                         {{article?.author?.fullName}}
                                     </p>
@@ -97,13 +96,45 @@
                             </a>
                         </div>
                     </div>
+
+                    <ng-container *ngIf="loading" class="articleAuthorSkeletonLoader">
+                        <div class="mt-6">
+                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '9999px',
+                                            height: '50px',
+                                            'width.%': 20
+                                        }">
+                            </ngx-skeleton-loader>
+                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                        'border-radius': '5px',
+                                            height: '50px',
+                                            'width.%': 78,
+                                            'margin-left.%': 2
+                                        }">
+                            </ngx-skeleton-loader>
+                        </div>
+                        <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                    'border-radius': '5px',
+                                        height: '100px',
+                                        'width.%': 100,
+                                        display: 'block'
+                                    }">
+                        </ngx-skeleton-loader>
+
+                        <ngx-skeleton-loader class="space-x-1" count="3" appearance="line" [theme]="{ 
+                                    'border-radius': '9999px',
+                                        height: '30px',
+                                        width: '30px'
+                                    }">
+                        </ngx-skeleton-loader>
+                    </ng-container>
                 </div>
 
                 <div class="related-articles order-4 lg:order-none pt-6 mt-6 space-y-6 border-t border-skin-border">
-                    <div>
-                        <h2 class="text-sm leading-5 tracking-wide uppercase text-skin-base font-semibold">
-                            Articles similaires
-                        </h2>
+                    <h2 class="text-sm leading-5 tracking-wide uppercase text-skin-base font-semibold">
+                        Articles similaires
+                    </h2>
+                    <div *ngIf="article" class="similar-articles">
                         <a routerLink="/articles/{{nextArticle.id}}" class="mt-3 flex items-center space-x-2">
                             <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{nextArticle?.thumbnail}}"
                                 alt="{{nextArticle?.title}}">
@@ -113,10 +144,20 @@
                             </span>
                         </a>
                     </div>
+
+                    <ng-container *ngIf="loading" class="similarArticlesSkeletonLoader">
+                        <ngx-skeleton-loader class="block mt-2" count="2" appearance="line" [theme]="{ 
+                                    'border-radius': '5px',
+                                        height: '30px',
+                                        'width.%': 100,
+                                        display: 'block'
+                                    }">
+                        </ngx-skeleton-loader>
+                    </ng-container>
                 </div>
 
                 <div class="reactions order-1 lg:order-none py-6 lg:mt-6 border-t border-skin-border">
-                    <div *ngIf="isPublished$ | async"
+                    <div *ngIf="!loading && (isPublished$ | async)"
                         class="reactions-container flex flex-wrap max-w-fit gap-2 lg:px-4">
                         <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
                             class="group flex items-center justify-center transition-all duration-300"
@@ -160,15 +201,14 @@
                         </button>
                     </div>
 
-                    <!-- <ng-container *ngIf="!(isPublished$ | async)">
-                            <div class="text-sm text-primary-500">
-                                {{ 'articleDetail.publishToReactText' | translate }}
-                            </div>
-                        </ng-container>
-                        <div *ngIf="maxNberOfReaction"
-                            class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
-                            {{ 'articleDetail.maxNberReactionText' | translate }}
-                        </div> -->
+                    <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
+                        <ngx-skeleton-loader class="space-x-2" count="4" appearance="line" [theme]="{ 
+                                    'border-radius': '5px',
+                                        height: '20px',
+                                        width: '20px'
+                                    }">
+                        </ngx-skeleton-loader>
+                    </ng-container>
 
                     <div *ngIf="loginToAddReaction"
                         class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
@@ -216,140 +256,61 @@
 
             </div>
 
-            <ng-template #articleAuthorLeftSideSkeletonLoader>
-                <div class="mt-6">
-                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                        'border-radius': '9999px',
-                        height: '50px',
-                        'width.%': 20
-                    }">
-                    </ngx-skeleton-loader>
-                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                    'border-radius': '5px',
-                        height: '50px',
-                        'width.%': 78,
-                        'margin-left.%': 2
-                    }">
-                    </ngx-skeleton-loader>
-                </div>
-                <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                'border-radius': '5px',
-                    height: '100px',
-                    'width.%': 100,
-                    display: 'block'
-                }">
-                </ngx-skeleton-loader>
-
-                <ngx-skeleton-loader class="space-x-1" count="3" appearance="line" [theme]="{ 
-                'border-radius': '9999px',
-                    height: '30px',
-                    width: '30px'
-                }">
-                </ngx-skeleton-loader>
-            </ng-template>
-
-            <ng-template #articleReactionButtonLeftSideSkeletonLoader>
-                <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                'border-radius': '5px',
-                    height: '35px',
-                    'width.%': 25
-                }">
-                </ngx-skeleton-loader>
-            </ng-template>
-
         </aside>
 
         <main class="col-span-6 order-1 lg:order-none">
             <div class="main-side-container">
-                <header *ngIf="article; else articleHeaderSkeletonLoader" class="article-header space-y-4">
-                    <div class="flex items-center justify-between gap-5">
-                        <div class="flex flex-col space-y-4">
-                            <div *ngIf="articleHasTags" class="flex items-center space-x-2">
-                                <div *ngFor="let tag of article?.tags"
-                                    class="flex items-center space-x-2 space-y-2 flex-wrap">
-                                    <span
-                                        class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
-                                        <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
-                                            fill="currentColor" viewBox="0 0 8 8">
-                                            <circle cx="4" cy="4" r="3"></circle>
-                                        </svg>
-                                        {{tag.name}}
-                                    </span>
+                <header class="article-header space-y-4">
+                    <ng-container *ngIf="article">
+                        <div class="flex items-center justify-between gap-5">
+                            <div class="flex flex-col space-y-4">
+                                <div *ngIf="articleHasTags" class="flex items-center space-x-2">
+                                    <div *ngFor="let tag of article?.tags"
+                                        class="flex items-center space-x-2 space-y-2 flex-wrap">
+                                        <span
+                                            class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
+                                            <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
+                                                fill="currentColor" viewBox="0 0 8 8">
+                                                <circle cx="4" cy="4" r="3"></circle>
+                                            </svg>
+                                            {{tag.name}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex flex-col space-y-1 sm:space-y-0 sm:flex-row text-sm font-semibold text-skin-base">
+                                    <div class="space-x-1">
+                                        <ng-container *ngIf="article?.publishedAt === article?.lastPublishedAt">
+                                            <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
+                                                date}}
+                                            </time>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="article?.publishedAt !== article?.lastPublishedAt">
+                                            <span class="">{{ 'articleDetail.updateOn' | translate }}</span>
+                                            <time class="text-primary-500"
+                                                [dateTime]="article?.lastPublishedAt | date">{{article?.lastPublishedAt
+                                                |
+                                                date}}
+                                            </time>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="!article?.publishedAt && !article?.lastPublishedAt">
+                                            <time [dateTime]="article?.createdAt | date">{{article?.createdAt |
+                                                date}}
+                                            </time>
+                                        </ng-container>
+
+                                        <span aria-hidden="true">·</span>
+                                        <span>{{article?.readingTime}} {{ 'articleDetail.ofReadTime' | translate
+                                            }}</span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div
-                                class="flex flex-col space-y-1 sm:space-y-0 sm:flex-row text-sm font-semibold text-skin-base">
-                                <div class="space-x-1">
-                                    <ng-container *ngIf="article?.publishedAt === article?.lastPublishedAt">
-                                        <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
-                                            date}}
-                                        </time>
-                                    </ng-container>
-
-                                    <ng-container *ngIf="article?.publishedAt !== article?.lastPublishedAt">
-                                        <span class="">{{ 'articleDetail.updateOn' | translate }}</span>
-                                        <time class="text-primary-500"
-                                            [dateTime]="article?.lastPublishedAt | date">{{article?.lastPublishedAt |
-                                            date}}
-                                        </time>
-                                    </ng-container>
-
-                                    <ng-container *ngIf="!article?.publishedAt && !article?.lastPublishedAt">
-                                        <time [dateTime]="article?.createdAt | date">{{article?.createdAt |
-                                            date}}
-                                        </time>
-                                    </ng-container>
-
-                                    <span aria-hidden="true">·</span>
-                                    <span>{{article?.readingTime}} {{ 'articleDetail.ofReadTime' | translate }}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="">
-                            <div *ngIf="!authService.currentUsr">
-                                <a routerLink="/" class="text-skin-base group flex w-full items-center space-x-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                        class="group-hover:text-primary-500" data-supported-dps="24x24"
-                                        fill="currentColor" width="24" height="24" focusable="false">
-                                        <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
-                                    </svg>
-                                    <span
-                                        class="hidden sm:inline-block text-sm font-semibold text-skin-base transition-all duration-200 group-hover:text-primary-500">
-                                        {{ 'articleDetail.AllArticles' | translate }}
-                                    </span>
-                                </a>
-                            </div>
-
-                            <div *ngIf="authService.currentUsr as currentUsr">
-                                <div *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
-                                    <button [matMenuTriggerFor]="menu" class="text-secondary"
-                                        aria-label="icon-button with a menu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                                        </svg>
-                                    </button>
-
-                                    <mat-menu #menu="matMenu" class="mt-2 font-semibold text-skin-base">
-                                        <a routerLink="/articles"
-                                            class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                                            <span>{{ 'articleDetail.AllArticles' | translate }}</span>
-                                        </a>
-                                        <a routerLink="edit"
-                                            class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                                            <span>{{ 'articleDetail.edit' | translate }}</span>
-                                        </a>
-                                        <a routerLink="#"
-                                            class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                                            <span>{{ 'articleDetail.delete' | translate }}</span>
-                                        </a>
-                                    </mat-menu>
-                                </div>
-
-                                <div *ngIf="!isAuthor(currentUsr, article) && !authService.isAdmin">
+                            <div class="">
+                                <div *ngIf="!authService.currentUsr">
                                     <a routerLink="/" class="text-skin-base group flex w-full items-center space-x-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             class="group-hover:text-primary-500" data-supported-dps="24x24"
@@ -362,83 +323,126 @@
                                         </span>
                                     </a>
                                 </div>
+
+                                <div *ngIf="authService.currentUsr as currentUsr">
+                                    <div *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
+                                        <button [matMenuTriggerFor]="menu" class="text-secondary"
+                                            aria-label="icon-button with a menu">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                            </svg>
+                                        </button>
+
+                                        <mat-menu #menu="matMenu" class="mt-2 font-semibold text-skin-base">
+                                            <a routerLink="/articles"
+                                                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                                <span>{{ 'articleDetail.AllArticles' | translate }}</span>
+                                            </a>
+                                            <a routerLink="edit"
+                                                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                                <span>{{ 'articleDetail.edit' | translate }}</span>
+                                            </a>
+                                            <a routerLink="#"
+                                                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                                <span>{{ 'articleDetail.delete' | translate }}</span>
+                                            </a>
+                                        </mat-menu>
+                                    </div>
+
+                                    <div *ngIf="!isAuthor(currentUsr, article) && !authService.isAdmin">
+                                        <a routerLink="/"
+                                            class="text-skin-base group flex w-full items-center space-x-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                class="group-hover:text-primary-500" data-supported-dps="24x24"
+                                                fill="currentColor" width="24" height="24" focusable="false">
+                                                <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
+                                            </svg>
+                                            <span
+                                                class="hidden sm:inline-block text-sm font-semibold text-skin-base transition-all duration-200 group-hover:text-primary-500">
+                                                {{ 'articleDetail.AllArticles' | translate }}
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="!mt-10">
-                        <h1
-                            class="text-2xl w-full font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl xl:text-5xl xl:leading-[3.5rem]">
-                            {{article?.title}}
-                        </h1>
-                    </div>
+                        <div class="!mt-10">
+                            <h1
+                                class="text-2xl w-full font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl xl:text-5xl xl:leading-[3.5rem]">
+                                {{article?.title}}
+                            </h1>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="loading" class="articleHeaderSkeletonLoader">
+                        <div class="tags-container flex space-x-3">
+                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                                'border-radius': '9999px',
+                                                    height: '30px',
+                                                    width: '100px'
+                                                }">
+                            </ngx-skeleton-loader>
+                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                                'border-radius': '9999px',
+                                                    height: '30px',
+                                                    width: '100px'
+                                                }">
+                            </ngx-skeleton-loader>
+                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                                'border-radius': '9999px',
+                                                    height: '30px',
+                                                    width: '100px'
+                                                }">
+                            </ngx-skeleton-loader>
+                        </div>
+                        <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '9999px',
+                                                height: '20px',
+                                                width: '200px'
+                                            }">
+                        </ngx-skeleton-loader>
+                        <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '5px',
+                                                height: '50px',
+                                                'width.%': 100
+                                            }">
+                        </ngx-skeleton-loader>
+                    </ng-container>
                 </header>
 
-                <ng-template #articleHeaderSkeletonLoader>
-                    <div class="tags-container flex space-x-3">
-                        <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                            'border-radius': '9999px',
-                                height: '30px',
-                                width: '100px'
-                            }">
+                <div class="article-cover-image mt-6 aspect-w-4 aspect-h-2 sm:mt-8 mx-auto">
+                    <ng-container *ngIf="article" class="">
+                        <img class="object-cover shadow-lg rounded-lg" src="{{article?.thumbnail}}"
+                            alt="{{article?.title}}">
+                    </ng-container>
+                    <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
+                        <ngx-skeleton-loader class="shadow-lg rounded-lg" count="1" appearance="line" [theme]="{ 
+                                    'height.%': 100,
+                                    'width.%': 100
+                                }">
                         </ngx-skeleton-loader>
-                        <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                            'border-radius': '9999px',
-                                height: '30px',
-                                width: '100px'
-                            }">
-                        </ngx-skeleton-loader>
-                        <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                            'border-radius': '9999px',
-                                height: '30px',
-                                width: '100px'
-                            }">
-                        </ngx-skeleton-loader>
-                    </div>
-                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                        'border-radius': '5px',
-                            height: '20px',
-                            width: '200px'
-                        }">
-                    </ngx-skeleton-loader>
-                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                        'border-radius': '5px',
-                            height: '50px',
-                            'width.%': 100
-                        }">
-                    </ngx-skeleton-loader>
-                </ng-template>
-
-                <div *ngIf="article; else articlePreviewSkeletonLoader"
-                    class="article-preview mt-6 aspect-w-4 aspect-h-2 sm:mt-8 mx-auto">
-                    <img class="object-cover shadow-lg rounded-lg" src="{{article?.thumbnail}}"
-                        alt="{{article?.title}}">
+                    </ng-container>
                 </div>
 
-                <ng-template #articlePreviewSkeletonLoader>
-                    <div class="article-preview mt-2 aspect-w-4 aspect-h-2 mx-auto">
-                        <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                        'border-radius': '8px',
-                            'height.%': 100,
-                            'width.%': 100
-                        }">
-                        </ngx-skeleton-loader>
-                    </div>
-                </ng-template>
 
-                <div *ngIf="article; else articleContentSkeletonLoader"
-                    class="markdown-content mt-10 prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:text-slate-600 prose-code:bg-primary-100 prose-code:rounded-md prose-code:!text-base prose-code:whitespace-nowrap prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
-                    <markdown [data]="article?.content"></markdown>
+                <div class="article-content">
+                    <div *ngIf="article"
+                        class="markdown-content mt-10 prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:text-slate-600 prose-code:bg-primary-100 prose-code:rounded-md prose-code:!text-base prose-code:whitespace-nowrap prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
+                        <markdown [data]="article?.content"></markdown>
+                    </div>
+                    <ng-container *ngIf="loading" class="articleContentSkeletonLoader">
+                        <ngx-skeleton-loader class="block mt-10" count="10" appearance="line" [theme]="{ 
+                            'border-radius': '5px',
+                                'height.px': 20,
+                                'width.%': 100
+                            }">
+                        </ngx-skeleton-loader>
+                    </ng-container>
                 </div>
 
-                <ng-template #articleContentSkeletonLoader>
-                    <ngx-skeleton-loader count="10" appearance="line" [theme]="{ 
-                        'border-radius': '5px',
-                            'height.px': 20,
-                            'width.%': 100
-                        }">
-                    </ngx-skeleton-loader>
-                </ng-template>
 
                 <div class="article-socials-btns hidden lg:block pt-10 lg:w-fit mx-auto">
                     <p class="text-base text-skin-base font-light">
