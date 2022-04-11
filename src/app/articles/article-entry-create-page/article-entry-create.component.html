@@ -328,13 +328,12 @@
 
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
-                                <markdown [data]="content?.value"
-                                    class="markdown-content prose text-skin-base font-normal max-w-none prose-cyan md:prose-lg prose-code:p-1 prose-code:text-slate-600 prose-code:bg-primary-100 prose-code:rounded-md prose-code:!text-base prose-img:rounded-md prose-p:leading-9 prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-headings:text-skin-inverted">
+                                <markdown [data]="content?.value" class="markdown-content">
                                 </markdown>
                             </div>
 
                             <div *ngIf="activeTab === 'help'"
-                                class="help-container h-full bg-skin-card min-h-screen p-4 relative z-30 prose md:prose-sm lg:prose-lg max-w-none">
+                                class="help-container h-full bg-skin-card min-h-screen p-4 relative z-30">
                                 <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
                                 <p>
                                     {{'articleEntryEdit.helpSubTitle' | translate}}
@@ -355,8 +354,7 @@
                                     <br>
                                     <span class="flex items-center bg-primary-100 space-x-4">
                                         <span class="bg-primary-100 p-1 text-primary-500 rounded-md">`backtick`</span>
-                                        <markdown ngPreserveWhitespaces
-                                            class="prose-code:p-1 prose-code:text-slate-600 prose-code:bg-primary-100 prose-code:rounded-md prose-code:!text-lg prose-img:rounded-md">
+                                        <markdown ngPreserveWhitespaces class="">
                                             `backtick`
                                         </markdown>
                                     </span>
