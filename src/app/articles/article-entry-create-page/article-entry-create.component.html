@@ -328,12 +328,12 @@
 
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
-                                <markdown [data]="content?.value" class="markdown-content">
+                                <markdown [data]="content?.value" class="prose max-w-none text-lg">
                                 </markdown>
                             </div>
 
                             <div *ngIf="activeTab === 'help'"
-                                class="help-container h-full bg-skin-card min-h-screen p-4 relative z-30">
+                                class="help-container h-full bg-skin-card min-h-screen p-4 prose max-w-none text-lg">
                                 <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
                                 <p>
                                     {{'articleEntryEdit.helpSubTitle' | translate}}

@@ -401,7 +401,7 @@
 
                 <div class="article-content">
                     <div *ngIf="article" class="markdown-content mt-10">
-                        <markdown [data]="article?.content"></markdown>
+                        <markdown class="prose max-w-none text-lg" [data]="article?.content"></markdown>
                     </div>
                     <ng-container *ngIf="loading" class="articleContentSkeletonLoader">
                         <ngx-skeleton-loader class="block mt-10" count="10" appearance="line" [theme]="{ 
