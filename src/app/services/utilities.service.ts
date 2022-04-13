@@ -50,7 +50,7 @@ interface iRetryPolicy {
 }
 
 export const genericRetryPolicy = ({
-  maxRetryAttempts = 3,
+  maxRetryAttempts = 1,
   scalingDuration = 2000,
   excludedStatusCodes = []
 }: iRetryPolicy = {}) => (attempts: Observable<any>) => {

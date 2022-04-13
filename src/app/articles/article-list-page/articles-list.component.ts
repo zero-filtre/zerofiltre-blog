@@ -24,6 +24,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   RECENT = 'recent';
   POPULAR = 'popular';
   TRENDING = 'trending';
+  TAGS = 'tags';
 
   public notEmptyArticles = true;
   public notScrolly = true;
@@ -41,6 +42,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public activePage: string = this.RECENT;
   public mainPage = true;
+  public openedTagsDropdown!: boolean;
 
   subscription1$!: Subscription;
   subscription2$!: Subscription;
@@ -127,12 +129,18 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/articles');
     }
 
+    if (trendName === this.TAGS) {
+      this.activePage = this.TAGS
+      this.openedTagsDropdown = true;
+    }
+
     this.scrollyPageNumber = 0;
     this.notEmptyArticles = true;
   }
 
 
   public sortByTag(tagName: any): void {
+    this.openedTagsDropdown = false;
     this.articles = [];
 
     this.fetchArticlesByTag(tagName);
