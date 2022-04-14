@@ -5,7 +5,7 @@
     </aside>
 
     <main class="col-span-5">
-        <div class="main-side-container">
+        <div class="main-side-container max-w-xl mx-auto lg:max-w-none">
             <div class="tabs-wrapper flex items-center justify-between lg:mt-8 border-b border-skin-border">
                 <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
                     <button type="button" aria-current="page" (click)="sortBy(RECENT)"
@@ -30,83 +30,82 @@
                         [ngClass]="activePage === TAGS ? 'active-tab' : ''"
                         class="lg:hidden relative text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'app.tags' | translate}}</span>
-
-                        <div *ngIf="activePage === TAGS && openedTagsDropdown"
-                            class="tagList-container flex flex-wrap absolute z-30 top-full right-0 gap-1 px-4 py-3 mt-2 max-h-[50vh] bg-skin-card shadow-lg rounded-lg overflow-scroll">
-                            <!-- <ng-container *ngFor="let tag of tagList">
-                                <button (click)="sortByTag(tag.name)" type="button"
-                                    class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                    <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
-                                        viewBox="0 0 8 8">
-                                        <circle cx="4" cy="4" r="3"></circle>
-                                    </svg>
-                                    <span
-                                        class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
-                                </button>
-                            </ng-container> -->
-
-                            <button (click)="sortByTag('')" type="button"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span class="truncate lowercase font-semibold group-hover:text-primary-500">java</span>
-                            </button>
-                            <button (click)="sortByTag('')" type="button"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span
-                                    class="truncate lowercase font-semibold group-hover:text-primary-500">spring-boot</span>
-                            </button>
-                            <button (click)="sortByTag('')" type="button"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span
-                                    class="truncate lowercase font-semibold group-hover:text-primary-500">angular</span>
-                            </button>
-                            <button (click)="sortByTag('')" type="button"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span
-                                    class="truncate lowercase font-semibold group-hover:text-primary-500">javascript</span>
-                            </button>
-                            <button (click)="sortByTag('')" type="button"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span class="truncate lowercase font-semibold group-hover:text-primary-500">react</span>
-                            </button>
-                            <button (click)="sortByTag('')" type="button"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span class="truncate lowercase font-semibold group-hover:text-primary-500">coding
-                                    chalenge</span>
-                            </button>
-                            <button (click)="sortByTag('')" type="button"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span class="truncate lowercase font-semibold group-hover:text-primary-500">ux</span>
-                            </button>
-                        </div>
                     </button>
+
+                    <div *ngIf="openedTagsDropdown"
+                        class="tagList-container flex flex-wrap absolute z-30 top-full gap-1 px-3 py-3 mt-4 max-h-[50vh] bg-skin-cardMuted border shadow-lg rounded-2xl overflow-y-scroll no-scrollbar">
+                        <!-- <ng-container *ngFor="let tag of tagList">
+                            <button (click)="sortByTag(tag.name)" type="button" aria-current="false"
+                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span
+                                    class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
+                            </button>
+                        </ng-container> -->
+
+                        <button (click)="sortByTag('java')" type="button" aria-current="false"
+                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                            <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span class="truncate lowercase font-semibold group-hover:text-primary-500">java</span>
+                        </button>
+                        <button (click)="sortByTag('spring-boot')" type="button"
+                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                            <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span
+                                class="truncate lowercase font-semibold group-hover:text-primary-500">spring-boot</span>
+                        </button>
+                        <button (click)="sortByTag('angular')" type="button"
+                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                            <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span class="truncate lowercase font-semibold group-hover:text-primary-500">angular</span>
+                        </button>
+                        <button (click)="sortByTag('javascript')" type="button"
+                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                            <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span
+                                class="truncate lowercase font-semibold group-hover:text-primary-500">javascript</span>
+                        </button>
+                        <button (click)="sortByTag('react')" type="button"
+                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                            <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span class="truncate lowercase font-semibold group-hover:text-primary-500">react</span>
+                        </button>
+                        <button (click)="sortByTag('coding-chalenge')" type="button"
+                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                            <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span class="truncate lowercase font-semibold group-hover:text-primary-500">coding
+                                chalenge</span>
+                        </button>
+                        <button (click)="sortByTag('ui-ux')" type="button"
+                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                            <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span class="truncate lowercase font-semibold group-hover:text-primary-500">ui-ux</span>
+                        </button>
+                    </div>
                 </nav>
 
                 <div *ngIf="!authService.currentUsr">
@@ -122,7 +121,7 @@
                 </div>
             </div>
 
-            <div class="articles-wrapper articles-scrollable-list-panel no-scrollbar min-h-[80vh] h-full py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none"
+            <div class="articles-wrapper articles-scrollable-list-panel no-scrollbar min-h-[80vh] h-full py-12 space-y-12 sm:space-y-11"
                 infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
 
                 <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
@@ -328,7 +327,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
 
@@ -344,11 +342,11 @@
                 </span>
 
                 <div class="mt-4" aria-labelledby="article-tags">
-                    <ng-template [ngIf]="tagList">
-                        <div class="tagList-container space-y-1" *appShellNoRender>
+                    <ng-template [ngIf]="!tagList">
+                        <div class="tagList-container flex flex-wrap gap-1" *appShellNoRender>
                             <ng-container *ngFor="let tag of tagList">
                                 <button (click)="sortByTag(tag.name)" type="button"
-                                    class="group inline-flex items-center mr-1 px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                    class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
                                     <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
                                         viewBox="0 0 8 8">
                                         <circle cx="4" cy="4" r="3"></circle>
@@ -357,6 +355,67 @@
                                         class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
                                 </button>
                             </ng-container>
+
+                            <button (click)="sortByTag('java')" type="button" aria-current="false"
+                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span class="truncate lowercase font-semibold group-hover:text-primary-500">java</span>
+                            </button>
+                            <button (click)="sortByTag('spring-boot')" type="button"
+                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span
+                                    class="truncate lowercase font-semibold group-hover:text-primary-500">spring-boot</span>
+                            </button>
+                            <button (click)="sortByTag('angular')" type="button"
+                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span
+                                    class="truncate lowercase font-semibold group-hover:text-primary-500">angular</span>
+                            </button>
+                            <button (click)="sortByTag('javascript')" type="button"
+                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span
+                                    class="truncate lowercase font-semibold group-hover:text-primary-500">javascript</span>
+                            </button>
+                            <button (click)="sortByTag('react')" type="button"
+                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span class="truncate lowercase font-semibold group-hover:text-primary-500">react</span>
+                            </button>
+                            <button (click)="sortByTag('coding-chalenge')" type="button"
+                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span class="truncate lowercase font-semibold group-hover:text-primary-500">coding
+                                    chalenge</span>
+                            </button>
+                            <button (click)="sortByTag('ui-ux')" type="button"
+                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span class="truncate lowercase font-semibold group-hover:text-primary-500">ui-ux</span>
+                            </button>
                         </div>
                     </ng-template>
 

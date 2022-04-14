@@ -42,7 +42,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public activePage: string = this.RECENT;
   public mainPage = true;
-  public openedTagsDropdown!: boolean;
+  public openedTagsDropdown = false;
 
   subscription1$!: Subscription;
   subscription2$!: Subscription;
@@ -131,7 +131,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
     if (trendName === this.TAGS) {
       this.activePage = this.TAGS
-      this.openedTagsDropdown = true;
+      this.openedTagsDropdown = !this.openedTagsDropdown;
+    }else {
+      this.openedTagsDropdown = false;
     }
 
     this.scrollyPageNumber = 0;
@@ -142,10 +144,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public sortByTag(tagName: any): void {
     this.openedTagsDropdown = false;
     this.articles = [];
-
+    
     this.fetchArticlesByTag(tagName);
     this.router.navigateByUrl(`?tag=${tagName}`)
-
+    
     this.scrollyPageNumber = 0;
     this.notEmptyArticles = true;
   }
