@@ -1,8 +1,7 @@
 <mat-sidenav-container class="sidenav-container bg-skin-bg min-h-screen">
 
   <!-- APP MOBILE SIDENAV -->
-
-  <mat-sidenav #drawer class="sidenav relative rounded-bl-lg" position="end" fixedInViewport
+  <mat-sidenav #drawer class="sidenav mobile-sidebar-menu relative rounded-bl-lg" position="end" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'over'" [opened]="false">
 
     <div class="absolute top-6 right-6 w-fit" (click)="drawer.close()">
@@ -98,16 +97,13 @@
 
     </ul>
   </mat-sidenav>
-
   <!-- END APP MOBILE SIDENAV  -->
 
 
-  <!-- APP WEB NAVBAR-->
-
   <mat-sidenav-content class="!h-screen">
 
+    <!-- APP DESKTOP NAVBAR-->
     <div class="top-toolbar sticky top-0 z-50">
-
       <mat-toolbar class="top-toolbar-container">
         <a class="logo-link" routerLink="/">
           <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
@@ -204,32 +200,23 @@
           </svg>
         </button>
       </mat-toolbar>
-
     </div>
-
-    <!-- END APP NAVBAR -->
-
+    <!-- END APP DESKTOP NAVBAR -->
 
     <!-- APP CONTENT -->
-
     <div class="container">
       <router-outlet></router-outlet>
     </div>
-
     <!-- END APP CONTENT -->
 
-
     <!-- APP FOOTER -->
-
     <app-footer></app-footer>
-
     <!-- END APP FOOTER -->
 
   </mat-sidenav-content>
 
 
   <!-- PROFILE SIDEBAR -->
-
   <mat-sidenav *appShellNoRender
     class="profile-sidebar !hidden lg:!block bg-skin-bgMuted shadow-md border-0 rounded-none !fixed !top-20 w-full max-w-xs"
     mode="side" [opened]="checkRouteUrl()">
@@ -283,7 +270,6 @@
 
     </div>
   </mat-sidenav>
-
   <!-- END PROFILE SIDEBAR -->
 
 </mat-sidenav-container>
