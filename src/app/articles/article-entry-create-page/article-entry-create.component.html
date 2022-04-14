@@ -1,4 +1,4 @@
-<main class="pb-5 mt-28 sm:mt-32">
+<main class="pb-5">
     <nav class="top-nav sm:flex sm:items-center justify-between">
         <div class="nav-links flex justify-between sm:justify-start items-center sm:gap-10 font-semibold">
             <a routerLink="/" class="text-skin-base group flex items-center gap-1">
@@ -124,7 +124,7 @@
     </nav>
 
     <form [formGroup]="form">
-        <div class="article-data-container lg:grid grid-cols-10 gap-10 items-start mt-10 lg:mt-20">
+        <div class="article-data-container lg:grid grid-cols-9 gap-10 lg:gap-14 items-start mt-10 lg:mt-20">
             <aside class="col-span-2">
                 <div class="left-side-container">
                     <div class="article-summary mt-10 sm:mt-0">
@@ -166,7 +166,7 @@
                 </div>
             </aside>
 
-            <main class="col-span-6">
+            <main class="col-span-5">
                 <div class="main-side-container">
                     <label for="cover_photo" class="block text-sm font-semibold leading-5 text-skin-base mt-5 lg:mt-0">
                         {{ 'articleEntryEdit.coverImageTitle' | translate }}
@@ -450,7 +450,6 @@
 
             <aside class="col-span-2">
                 <div class="rigth-side-container">
-
                 </div>
             </aside>
         </div>
