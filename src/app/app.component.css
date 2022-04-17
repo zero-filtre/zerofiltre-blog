@@ -24,7 +24,7 @@
 }
 
 .link-active {
-  @apply bg-skin-bg text-skin-base;
+  @apply bg-skin-bg text-skin-base shadow-lg;
 }
 
 .link-inactive {
