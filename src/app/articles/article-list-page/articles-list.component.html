@@ -34,7 +34,7 @@
 
                 <div *ngIf="openedTagsDropdown"
                     class="tagList-container lg:hidden flex flex-wrap justify-center absolute z-30 top-full gap-1 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%] bg-skin-cardMuted border shadow-lg rounded-2xl overflow-y-scroll no-scrollbar">
-                    <!-- <ng-container *ngFor="let tag of tagList">
+                    <ng-container *ngFor="let tag of tagList">
                         <button (click)="sortByTag(tag.name)" type="button" aria-current="false"
                             class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
                             <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
@@ -44,9 +44,9 @@
                             <span
                                 class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
                         </button>
-                    </ng-container> -->
+                    </ng-container>
 
-                    <ng-container *ngFor="let tag of [].constructor(10)">
+                    <!-- <ng-container *ngFor="let tag of [].constructor(10)">
                         <button (click)="sortByTag('un-super-tag')" type="button" aria-current="false"
                             class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
                             <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
@@ -57,7 +57,7 @@
                                 un super tag
                             </span>
                         </button>
-                    </ng-container>
+                    </ng-container> -->
                 </div>
 
                 <div *ngIf="!authService.currentUsr">
@@ -86,7 +86,7 @@
                     </svg>
                 </div>
 
-                <div *ngFor="let article of [].constructor(10); let i=index" class="space-y-11">
+                <!-- <div *ngFor="let article of [].constructor(10); let i=index" class="space-y-11">
                     <div class="fake-article-card space-y-1 bg-blue-300 p-2 rounded-md shadow-sm">
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum voluptates sed ut, vero
@@ -102,7 +102,7 @@
                             expedita quo quae aperiam, quasi beatae sequi.
                         </p>
                     </div>
-                </div>
+                </div> -->
 
                 <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles; let i=index" class="space-y-11">
@@ -310,7 +310,7 @@
             </span>
 
             <div class="mt-4" aria-labelledby="article-tags">
-                <ng-template [ngIf]="!tagList">
+                <ng-template [ngIf]="tagList">
                     <div class="tagList-container flex flex-wrap gap-1" *appShellNoRender>
                         <ng-container *ngFor="let tag of tagList">
                             <button (click)="sortByTag(tag.name)" type="button"
@@ -324,7 +324,7 @@
                             </button>
                         </ng-container>
 
-                        <ng-container *ngFor="let tag of [].constructor(10)">
+                        <!-- <ng-container *ngFor="let tag of [].constructor(10)">
                             <button (click)="sortByTag('un-super-tag')" type="button" aria-current="false"
                                 class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
                                 <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
@@ -335,7 +335,7 @@
                                     un super tag
                                 </span>
                             </button>
-                        </ng-container>
+                        </ng-container> -->
                     </div>
                 </ng-template>
 
