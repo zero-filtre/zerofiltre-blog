@@ -109,21 +109,22 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public sortBy(trendName: string): void {
-    this.articles = [];
-
     if (trendName === this.RECENT) {
+      this.articles = [];
       this.activePage = this.RECENT;
       this.fetchRecentArticles();
       this.router.navigateByUrl('/articles');
     }
 
     if (trendName === this.POPULAR) {
+      this.articles = [];
       this.activePage = this.POPULAR
       this.fetchPopularArticles();
       this.router.navigateByUrl(`?sortBy=${trendName}`);
     }
 
     if (trendName === this.TRENDING) {
+      this.articles = [];
       this.activePage = this.TRENDING
       this.fetchRecentArticles();
       this.router.navigateByUrl('/articles');
@@ -202,6 +203,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.setArticlesReadingTime(this.articles);
       this.loading = false;
       this.hasNext = hasNext;
+      this.noArticlesAvailable = false;
 
       if (this.articles.length === 0) {
         this.noArticlesAvailable = true;

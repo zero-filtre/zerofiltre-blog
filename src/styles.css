@@ -34,8 +34,9 @@
   }
 }
 
-.container {
-  max-width: 110rem;
+.site-container {
+  /* max-width: 100rem;  */
+  max-width: 95rem; 
   @apply mx-auto px-5 xl:px-[5%];
 }
 
