@@ -12,7 +12,7 @@
 }
 
 .top-toolbar .navLink div {
-  @apply text-sm font-normal;
+  @apply text-base font-normal;
 }
 
 .sidenav {
