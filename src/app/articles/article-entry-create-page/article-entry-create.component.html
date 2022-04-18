@@ -19,7 +19,7 @@
             </h2>
         </div>
 
-        <div class="action-buttons mt-8 sm:mt-0 flex gap-2 items-center justify-between lg:fixed top-32 right-20 z-10">
+        <div class="action-buttons mt-8 sm:mt-0 flex gap-2 items-center justify-between sticky top-32 z-10">
             <ng-container *ngIf="form.invalid; else validBtn">
                 <button [disabled]="form.invalid || loading"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
@@ -124,55 +124,14 @@
     </nav>
 
     <form [formGroup]="form">
-        <div class="article-data-container lg:grid grid-cols-9 gap-10 lg:gap-14 items-start mt-10 lg:mt-20">
-            <aside class="col-span-2">
-                <div class="left-side-container">
-                    <div class="article-summary mt-10 sm:mt-0">
-                        <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
-                            {{ 'articleEntryEdit.summary' | translate }}
-                        </label>
-                        <div class="mt-5">
-                            <textarea (keyup)="typeInSummary(getValue($event))"
-                                class="editor-textarea rounded-md shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
-                                rows="5" cols="33" placeholder="{{ 'articleEntryEdit.summaryPlaceholder' | translate }}"
-                                id="summary" formControlName="summary" required minlength="20" maxlength="250">
-                            </textarea>
-                            <div *ngIf="summary?.invalid && summary?.dirty" class="">
-                                <div *ngIf="summary?.errors?.['required']"
-                                    class="mt-2 text-xs sm:text-sm text-error italic">
-                                    {{ 'articleEntryEdit.missingSummary' | translate }}
-                                </div>
-                                <div *ngIf="summary?.errors?.['minlength']"
-                                    class="mt-2 text-xs sm:text-sm text-error italic">
-                                    {{ 'articleEntryEdit.invalidSummaryLenght' | translate }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tag-list mt-10">
-                        <label for="tags_selected" class="block text-sm font-semibold leading-5 text-skin-base">
-                            {{ 'app.tags' | translate }}
-                        </label>
-
-                        <div class="mt-5 shadow-sm">
-                            <ng-multiselect-dropdown
-                                [placeholder]="'articleEntryEdit.selectTagsPlaceholder' | translate"
-                                formControlName="tags" [settings]="dropdownSettings" [data]="tagList"
-                                (onSelect)="onItemSelect($event)">
-                            </ng-multiselect-dropdown>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
+        <div class="article-data-container lg:grid grid-cols-7 gap-10 lg:gap-14 items-stretch mt-10 lg:mt-20">
             <main class="col-span-5">
                 <div class="main-side-container">
-                    <label for="cover_photo" class="block text-sm font-semibold leading-5 text-skin-base mt-5 lg:mt-0">
+                    <label for="cover_photo"
+                        class="block text-base font-semibold leading-5 text-skin-base mt-5 lg:mt-0">
                         {{ 'articleEntryEdit.coverImageTitle' | translate }}
                     </label>
 
-                    <!-- START -->
                     <div class="article-image-preview-wrapper relative mt-5">
                         <div *ngIf="!thumbnail?.value"
                             class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden">
@@ -222,7 +181,6 @@
                             (click)="removeFile()">x
                         </div>
                     </div>
-                    <!-- END -->
 
                     <div class="article-title mt-10">
                         <input (keyup)="typeInTitle(getValue($event))" id="title" required minlength="4"
@@ -321,19 +279,20 @@
                             <div *ngIf="activeTab === 'editor'">
                                 <textarea (keyup)="typeInEditor(getValue($event))" formControlName="content"
                                     id="content" required
-                                    class="editor-textarea bg-white text-skin-base p-4 h-screen w-full"
+                                    class="editor-textarea bg-white text-lg text-skin-base p-4 h-screen w-full"
                                     placeholder="{{ 'articleEntryEdit.articleContentPlaceholder' | translate }}">
                                 </textarea>
                             </div>
 
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
-                                <markdown [data]="content?.value" class="prose max-w-none text-lg">
+                                <markdown [data]="content?.value"
+                                    class="prose max-w-none text-xl prose-headings:text-skin-inverted prose-headings:text-2xl lg:prose-headings:text-4xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base">
                                 </markdown>
                             </div>
 
                             <div *ngIf="activeTab === 'help'"
-                                class="help-container h-full bg-skin-card min-h-screen p-4 prose max-w-none text-lg">
+                                class="help-container h-full bg-skin-card min-h-screen p-4 prose max-w-none text-xl prose-headings:text-skin-inverted prose-headings:text-2xl lg:prose-headings:text-4xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base">
                                 <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
                                 <p>
                                     {{'articleEntryEdit.helpSubTitle' | translate}}
@@ -449,7 +408,43 @@
             </main>
 
             <aside class="col-span-2">
-                <div class="rigth-side-container">
+                <div class="left-side-container">
+                    <div class="article-summary mt-10 sm:mt-0">
+                        <label for="tags_selected" class="block text-base font-semibold leading-5 text-skin-base">
+                            {{ 'articleEntryEdit.summary' | translate }}
+                        </label>
+                        <div class="mt-5">
+                            <textarea (keyup)="typeInSummary(getValue($event))"
+                                class="editor-textarea rounded-md shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
+                                rows="5" cols="33" placeholder="{{ 'articleEntryEdit.summaryPlaceholder' | translate }}"
+                                id="summary" formControlName="summary" required minlength="20" maxlength="250">
+                            </textarea>
+                            <div *ngIf="summary?.invalid && summary?.dirty" class="">
+                                <div *ngIf="summary?.errors?.['required']"
+                                    class="mt-2 text-xs sm:text-sm text-error italic">
+                                    {{ 'articleEntryEdit.missingSummary' | translate }}
+                                </div>
+                                <div *ngIf="summary?.errors?.['minlength']"
+                                    class="mt-2 text-xs sm:text-sm text-error italic">
+                                    {{ 'articleEntryEdit.invalidSummaryLenght' | translate }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tag-list mt-10">
+                        <label for="tags_selected" class="block text-base font-semibold leading-5 text-skin-base">
+                            {{ 'app.tags' | translate }}
+                        </label>
+
+                        <div class="mt-5 shadow-sm">
+                            <ng-multiselect-dropdown
+                                [placeholder]="'articleEntryEdit.selectTagsPlaceholder' | translate"
+                                formControlName="tags" [settings]="dropdownSettings" [data]="tagList"
+                                (onSelect)="onItemSelect($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                    </div>
                 </div>
             </aside>
         </div>
