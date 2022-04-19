@@ -2,7 +2,6 @@
     <main class="col-span-5">
         <div class="main-side-container max-w-xl mx-auto lg:max-w-none min-h-screen">
             <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
-                <!-- lg:sticky top-28 -->
                 <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
                     <button type="button" aria-current="page" (click)="sortBy(RECENT)"
                         [ngClass]="activePage === RECENT ? 'active-tab' : ''"
@@ -70,8 +69,8 @@
                 </div>
             </div>
 
-            <div class="articles-wrapper articles-scrollable-list-panel no-scrollbar min-h-[80vh] h-full py-12 space-y-12 sm:space-y-11"
-                infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+            <div class="articles-wrapper articles-scrollable-list-panel h-full py-12 space-y-12 sm:space-y-11">
+                <!-- infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" -->
 
                 <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
                     <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg"
@@ -82,24 +81,6 @@
                             style="animation-play-state:paused"></circle>
                     </svg>
                 </div>
-
-                <!-- <div *ngFor="let article of [].constructor(10); let i=index" class="space-y-11">
-                    <div class="fake-article-card space-y-1 bg-blue-300 p-2 rounded-md shadow-sm">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum voluptates sed ut, vero
-                            autem, molestias alias iste ullam praesentium, accusantium dolor. Dolor laborum quis
-                            molestiae
-                            placeat adipisci illum veniam beatae!
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur temporibus voluptas
-                            dolor
-                            mollitia perspiciatis. Consectetur cumque ea hic voluptates perspiciatis atque quidem.
-                            Veritatis
-                            expedita quo quae aperiam, quasi beatae sequi.
-                        </p>
-                    </div>
-                </div> -->
 
                 <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles; let i=index" class="space-y-11">
@@ -317,19 +298,6 @@
                                     class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
                             </button>
                         </ng-container>
-
-                        <!-- <ng-container *ngFor="let tag of [].constructor(10)">
-                            <button (click)="sortByTag('un-super-tag')" type="button" aria-current="false"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span class="truncate lowercase font-semibold group-hover:text-primary-500">
-                                    un super tag
-                                </span>
-                            </button>
-                        </ng-container> -->
                     </div>
                 </ng-template>
 
