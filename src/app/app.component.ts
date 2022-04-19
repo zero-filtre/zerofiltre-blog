@@ -87,6 +87,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activePage = this.MY_ACCOUNT
+    
     if (isPlatformBrowser(this.platformId)) {
       Prism.plugins.toolbar.registerButton('select-code', function (_env: any) {
         const button = document.createElement('button');
