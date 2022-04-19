@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './user/auth.guard';
 import { LoggedInAuthGuard } from './user/logged-in-auth.guard';
 import { LoginPageComponent } from './user/login-page/login-page.component';
 import { PasswordResetPageComponent } from './user/password-reset-page/password-reset-page.component';
@@ -11,17 +10,17 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginPageComponent,
-    canActivate: [LoggedInAuthGuard]
+    canActivate: [LoggedInAuthGuard],
   },
   {
     path: 'register',
     component: SignUpPageComponent,
-    canActivate: [LoggedInAuthGuard]
+    canActivate: [LoggedInAuthGuard],
   },
   {
     path: 'resetPassword',
     component: PasswordResetPageComponent,
-    canActivate: [LoggedInAuthGuard]
+    canActivate: [LoggedInAuthGuard],
   },
   {
     path: 'resendConfirmation',
@@ -29,11 +28,12 @@ const routes: Routes = [
   },
   {
     path: 'user',
-    loadChildren: () => import('./user/user.module').then(m => m.UserModule),
+    loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
   },
   {
     path: 'articles',
-    loadChildren: () => import('./articles/articles.module').then(m => m.ArticlesModule),
+    loadChildren: () =>
+      import('./articles/articles.module').then((m) => m.ArticlesModule),
   },
   {
     path: '**',
@@ -43,9 +43,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabledBlocking'
-  })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      initialNavigation: 'enabledBlocking',
+      scrollPositionRestoration: 'top',
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

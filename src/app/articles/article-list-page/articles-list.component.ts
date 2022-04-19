@@ -44,8 +44,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public mainPage = true;
   public openedTagsDropdown = false;
 
-  subscription1$!: Subscription;
-  subscription2$!: Subscription;
+  public tags$!: Subscription;
+  public articles$!: Subscription;
 
   constructor(
     private seo: SeoService,
@@ -72,8 +72,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchListOfTags(): void {
     this.loading = true;
-
-    this.subscription1$ = this.articleService.getListOfTags().subscribe({
+    this.tags$ = this.articleService.getListOfTags().subscribe({
       next: (response: Tag[]) => {
         this.tagList = response
         this.loading = false;
@@ -86,19 +85,19 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchRecentArticles(): void {
     this.loading = true;
-    this.subscription2$ = this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
+    this.articles$ = this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchPopularArticles(): void {
     this.loading = true;
-    this.subscription2$ = this.articleService.findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
+    this.articles$ = this.articleService.findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchArticlesByTag(tagName: string): void {
     this.loading = true;
-    this.subscription2$ = this.articleService.findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName)
+    this.articles$ = this.articleService.findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName)
       .subscribe(this.handleFetchedArticles)
   }
 
@@ -245,8 +244,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.subscription1$.unsubscribe()
-      this.subscription2$.unsubscribe()
+      this.tags$.unsubscribe()
+      this.articles$.unsubscribe()
     }
   }
 }

@@ -50,8 +50,8 @@ interface iRetryPolicy {
 }
 
 export const genericRetryPolicy = ({
-  maxRetryAttempts = 1,
-  scalingDuration = 2000,
+  maxRetryAttempts = 2,
+  scalingDuration = 1000,
   excludedStatusCodes = []
 }: iRetryPolicy = {}) => (attempts: Observable<any>) => {
 
@@ -65,7 +65,7 @@ export const genericRetryPolicy = ({
         return throwError(() => error);
       }
 
-      // retry after 2s, 4s, 6s
+      // retry after 1s, 2s, 3s
       return timer(retryAttempt * scalingDuration);
     }),
     finalize(() => console.log('Retry end, We are done!'))

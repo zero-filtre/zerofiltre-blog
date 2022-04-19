@@ -13,16 +13,17 @@ declare var Prism: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  public isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Handset])
+  public isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe([Breakpoints.Handset])
     .pipe(
-      map(result => result.matches),
+      map((result) => result.matches),
       shareReplay()
     );
 
-  public browserLanguage!: string;
+  public userBrowserLanguage!: string;
   public MY_ACCOUNT = 'Mon compte';
   public MY_ARTICLES = 'Mes articles';
   public ALL_ARTICLES = 'Tous les articles';
@@ -45,15 +46,15 @@ export class AppComponent implements OnInit {
     const componentsPrefix = [
       '/user/profile',
       '/user/profile/edit',
-      '/user/dashboard'
-    ]
+      '/user/dashboard',
+    ];
     const currentUrl = this.router.url;
     return componentsPrefix.some((route: string) => currentUrl.includes(route));
   }
 
   public setBrowserTranslationConfigs() {
     if (isPlatformBrowser(this.platformId)) {
-      this.browserLanguage = (window.navigator as any).language
+      this.userBrowserLanguage = (window.navigator as any).language;
     }
 
     this.translate.setDefaultLang('fr');
@@ -62,7 +63,7 @@ export class AppComponent implements OnInit {
 
   public logout() {
     this.authService.logout();
-    this.router.navigateByUrl('/')
+    this.router.navigateByUrl('/');
   }
 
   // Use to set the language on a btn click for example
@@ -87,8 +88,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activePage = this.MY_ACCOUNT
-    
+    this.activePage = this.MY_ACCOUNT;
+
     if (isPlatformBrowser(this.platformId)) {
       Prism.plugins.toolbar.registerButton('select-code', function (_env: any) {
         const button = document.createElement('button');
