@@ -46,19 +46,19 @@
 }
 
 .article-popup-panel .mat-dialog-container {
-  @apply !rounded-xl !flex bg-skin-bg justify-center items-center !p-4 sm:p-6;
+  @apply !rounded-2xl !flex bg-skin-bg justify-center items-center !p-4 sm:p-6;
 }
 
 .password-popup-panel .mat-dialog-container {
-  @apply !rounded-xl bg-skin-bg;
+  @apply !rounded-2xl bg-skin-bg;
 }
 
 .delete-account-popup-panel .mat-dialog-container {
-  @apply !rounded-xl bg-skin-bg;
+  @apply !rounded-2xl bg-skin-bg;
 }
 
 .profile-image-popup-panel .mat-dialog-container {
-  @apply !rounded-xl bg-skin-bg sm:!min-w-[390px];
+  @apply !rounded-2xl bg-skin-bg sm:!min-w-[390px];
 }
 /* .article-popup-backdrop {
 }

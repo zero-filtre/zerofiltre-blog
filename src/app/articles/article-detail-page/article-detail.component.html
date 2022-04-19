@@ -121,7 +121,7 @@
                             </div>
                         </div>
 
-                        <div class="!mt-10">
+                        <div class="">
                             <h1
                                 class="text-3xl leading-10 w-full font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3.5rem]">
                                 {{article?.title}}
@@ -165,7 +165,7 @@
                     </ng-container>
                 </header>
 
-                <div class="article-cover-image !mt-10 aspect-w-4 aspect-h-2 sm:mt-8 mx-auto">
+                <div class="article-cover-image aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
                     <ng-container *ngIf="article" class="">
                         <img class="object-cover shadow-lg rounded-lg" src="{{article?.thumbnail}}"
                             alt="{{article?.title}}">
@@ -239,18 +239,19 @@
 
         <aside class="lg:col-span-2 order-2 lg:order-none flex flex-col space-y-6">
             <div class="article-author pt-6 lg:pt-0 order-3 lg:order-none border-t border-skin-border lg:border-none">
-                <h2 class="text-sm lg:text-base leading-4 tracking-wide uppercase text-skin-text font-semibold">
+                <h2
+                    class="text-sm text-center lg:text-left lg:text-base leading-4 tracking-wide uppercase text-skin-text font-semibold">
                     {{ 'articleDetail.aboutAuthor' | translate }}
                 </h2>
 
                 <div *ngIf="article" class="mt-6 flex flex-col space-y-6">
                     <a href="#" class="">
-                        <div class="flex items-center gap-3">
+                        <div class="flex items-center justify-center gap-3">
                             <div class="">
                                 <img class="h-9 w-9 rounded-full" src="{{article?.author?.profilePicture}} "
                                     alt="{{article?.author?.pseudoName}}">
                             </div>
-                            <div class="flex-1">
+                            <div class="lg:flex-1">
                                 <p class="text-sm lg:text-base font-semibold text-skin-inverted ">
                                     {{article?.author?.fullName}}
                                 </p>
@@ -263,7 +264,7 @@
                     </a>
 
                     <p *ngIf="article?.author?.bio"
-                        class="text-sm text-skin-base leading-5 font-normal hidden lg:block line-clamp-3">
+                        class="text-sm text-center lg:text-left text-skin-base leading-5 font-normal hidden lg:block line-clamp-3">
                         {{article?.author?.bio}}
                     </p>
 
@@ -480,7 +481,8 @@
                 </div>
 
                 <div class="related-articles lg:order-none mt-6 lg:mt-10 pt-6 space-y-6 border-t border-skin-border">
-                    <h2 class="text-sm lg:text-base leading-4 tracking-wide uppercase text-skin-text font-semibold">
+                    <h2
+                        class="text-sm lg:text-base text-center lg:text-left leading-4 tracking-wide uppercase text-skin-text font-semibold">
                         {{'articleDetail.similarArticles' | translate}}
                     </h2>
                     <div *ngIf="article" class="similar-articles">
@@ -508,7 +510,7 @@
                 </div>
             </div>
 
-            <div class="article-socials-btns order-2 space-y-5 pb-6 lg:hidden">
+            <div class="article-socials-btns text-center lg:text-left order-2 space-y-5 pb-6 lg:hidden">
                 <p class="text-base text-skin-base font-light">
                     {{ 'articleDetail.callToShareText' | translate }}
                 </p>
