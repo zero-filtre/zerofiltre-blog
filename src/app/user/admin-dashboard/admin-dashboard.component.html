@@ -109,8 +109,9 @@
                                                 </a>
                                             </p>
                                             <div class="flex space-x-1 text-sm text-skin-muted">
-                                                <time [dateTime]="article?.publishedAt | date">{{article?.publishedAt |
-                                                    date}}</time>
+                                                <time [dateTime]="article?.publishedAt || article?.lastSavedAt | date">
+                                                    {{article?.publishedAt || article?.lastSavedAt | date}}
+                                                </time>
                                                 <span aria-hidden="true">·</span>
                                                 <span>
                                                     {{article?.readingTime}}{{ 'articles.ofReadTime' | translate}}
