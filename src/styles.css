@@ -123,3 +123,20 @@
 .toolbar-item {
   @apply first-of-type:absolute first-of-type:opacity-0;
 }
+
+.markdown-content {
+  @apply marker:text-primary-500
+}
+
+.markdown-content li {
+  @apply pl-0 lg:pl-1
+}
+
+.markdown-content li > p {
+  @apply m-0
+}
+
+/* .markdown-content:first-child {
+  @apply prose-lg lg:prose-xl max-w-none prose-headings:text-skin-inverted prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base
+} */
+

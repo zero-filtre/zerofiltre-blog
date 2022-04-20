@@ -12,9 +12,9 @@
     <article class="flex flex-col lg:grid lg:grid-cols-7 gap-10 lg:gap-20 lg:items-stretch">
         <main class="col-span-5 order-1 lg:order-none">
             <div class="main-side-container">
-                <header class="article-header space-y-4">
+                <header class="article-header space-y-6 lg:space-y-4">
                     <ng-container *ngIf="article">
-                        <div class="flex items-center justify-between gap-5">
+                        <div class="flex items-start lg:items-center justify-between gap-5">
                             <div class="flex flex-col space-y-4">
                                 <div *ngIf="articleHasTags" class="flex items-center space-x-2">
                                     <div *ngFor="let tag of article?.tags"
@@ -180,9 +180,9 @@
                 </div>
 
                 <div class="article-content">
-                    <div *ngIf="article" class="markdown-content mt-10 lg:mt-14">
+                    <div *ngIf="article" class="markdown-content mt-6 lg:mt-14">
                         <markdown
-                            class="prose max-w-none text-xl prose-headings:text-skin-inverted prose-headings:text-2xl lg:prose-headings:text-4xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base"
+                            class="prose max-w-none text-lg lg:text-xl prose-headings:text-skin-inverted prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base"
                             [data]="article?.content">
                         </markdown>
                     </div>
@@ -246,7 +246,7 @@
 
                 <div *ngIf="article" class="mt-6 flex flex-col space-y-6">
                     <a href="#" class="">
-                        <div class="flex items-center justify-center gap-3">
+                        <div class="flex items-center justify-center gap-2">
                             <div class="">
                                 <img class="h-9 w-9 rounded-full" src="{{article?.author?.profilePicture}} "
                                     alt="{{article?.author?.pseudoName}}">
