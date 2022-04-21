@@ -237,7 +237,7 @@
             </div>
         </main>
 
-        <aside class="lg:col-span-2 order-2 lg:order-none flex flex-col space-y-6">
+        <aside class="lg:col-span-2 order-2 lg:order-none flex flex-col space-y-6 lg:space-y-10">
             <div class="article-author pt-6 lg:pt-0 order-3 lg:order-none border-t border-skin-border lg:border-none">
                 <h2
                     class="text-sm text-center lg:text-left lg:text-base leading-4 tracking-wide uppercase text-skin-text font-semibold">
@@ -416,7 +416,7 @@
                 </div>
             </div>
 
-            <div class="sticky-content sticky top-28 order-4">
+            <div class="sticky-content sticky top-28 order-4 lg:space-y-10">
                 <div
                     class="sponsor-content lg:order-none h-52 flex items-center justify-center shadow-lg rounded-lg text-white bg-primary-500">
                     <div>
@@ -424,7 +424,7 @@
                     </div>
                 </div>
 
-                <div class="reactions hidden lg:block lg:order-none py-6 lg:mt-10 border-t border-skin-border">
+                <div class="reactions hidden lg:block lg:order-none py-6 border-t border-skin-border">
                     <div *ngIf="!loading && (isPublished$ | async)"
                         class="reactions-container flex flex-wrap justify-center lg:justify-start gap-3">
                         <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
@@ -485,7 +485,7 @@
                 </div>
 
                 <div *ngIf="similarArticles.length > 0"
-                    class="related-articles lg:order-none mt-6 lg:mt-10 pt-6 space-y-6 border-t border-skin-border">
+                    class="related-articles lg:order-none pt-6 space-y-6 border-t border-skin-border">
                     <h2
                         class="text-sm lg:text-base text-center lg:text-left leading-4 tracking-wide uppercase text-skin-text font-semibold">
                         {{'articleDetail.similarArticles' | translate}}
