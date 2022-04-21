@@ -1,7 +1,0 @@
-.blog-content {
-  @apply tracking-tight font-light sm:leading-10 text-lg lg:text-xl lg:leading-9;
-}
-
-.blog-content h1 {
-  @apply text-2xl font-extrabold tracking-tight sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3.5rem];
-}

@@ -24,6 +24,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   RECENT = 'recent';
   POPULAR = 'popular';
   TRENDING = 'trending';
+  TAGS = 'tags';
 
   public notEmptyArticles = true;
   public notScrolly = true;
@@ -41,9 +42,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public activePage: string = this.RECENT;
   public mainPage = true;
+  public openedTagsDropdown = false;
 
-  subscription1$!: Subscription;
-  subscription2$!: Subscription;
+  public tags$!: Subscription;
+  public articles$!: Subscription;
 
   constructor(
     private seo: SeoService,
@@ -70,8 +72,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchListOfTags(): void {
     this.loading = true;
-
-    this.subscription1$ = this.articleService.getListOfTags().subscribe({
+    this.tags$ = this.articleService.getListOfTags().subscribe({
       next: (response: Tag[]) => {
         this.tagList = response
         this.loading = false;
@@ -84,19 +85,19 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchRecentArticles(): void {
     this.loading = true;
-    this.subscription2$ = this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
+    this.articles$ = this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchPopularArticles(): void {
     this.loading = true;
-    this.subscription2$ = this.articleService.findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
+    this.articles$ = this.articleService.findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchArticlesByTag(tagName: string): void {
     this.loading = true;
-    this.subscription2$ = this.articleService.findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName)
+    this.articles$ = this.articleService.findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName)
       .subscribe(this.handleFetchedArticles)
   }
 
@@ -107,24 +108,32 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public sortBy(trendName: string): void {
-    this.articles = [];
-
     if (trendName === this.RECENT) {
+      this.articles = [];
       this.activePage = this.RECENT;
       this.fetchRecentArticles();
       this.router.navigateByUrl('/articles');
     }
 
     if (trendName === this.POPULAR) {
+      this.articles = [];
       this.activePage = this.POPULAR
       this.fetchPopularArticles();
       this.router.navigateByUrl(`?sortBy=${trendName}`);
     }
 
     if (trendName === this.TRENDING) {
+      this.articles = [];
       this.activePage = this.TRENDING
       this.fetchRecentArticles();
       this.router.navigateByUrl('/articles');
+    }
+
+    if (trendName === this.TAGS) {
+      this.activePage = this.TAGS
+      this.openedTagsDropdown = !this.openedTagsDropdown;
+    }else {
+      this.openedTagsDropdown = false;
     }
 
     this.scrollyPageNumber = 0;
@@ -133,18 +142,22 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
 
   public sortByTag(tagName: any): void {
+    this.openedTagsDropdown = false;
     this.articles = [];
-
+    
     this.fetchArticlesByTag(tagName);
     this.router.navigateByUrl(`?tag=${tagName}`)
-
+    
     this.scrollyPageNumber = 0;
     this.notEmptyArticles = true;
   }
 
   public onScroll() {
-    // Remove this.hasnext to enable end of list message
+    console.log('Normal Scroll...!')
+
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
+      console.log('HasMore Scroll...!')
+
       this.loadingMore = true;
       this.notScrolly = false;
       this.fetchMoreArticles();
@@ -152,14 +165,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public fetchMoreArticles() {
-
-    if (!this.hasNext) {
-      this.loadingMore = false;
-      this.notScrolly = true;
-      this.notEmptyArticles = false;
-      return
-    }
-
     this.scrollyPageNumber += 1;
     const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
     const queryParamTwo = this.route.snapshot.queryParamMap.get('tag')!;
@@ -201,6 +206,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.setArticlesReadingTime(this.articles);
       this.loading = false;
       this.hasNext = hasNext;
+      this.noArticlesAvailable = false;
 
       if (this.articles.length === 0) {
         this.noArticlesAvailable = true;
@@ -238,8 +244,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.subscription1$.unsubscribe()
-      this.subscription2$.unsubscribe()
+      this.tags$.unsubscribe()
+      this.articles$.unsubscribe()
     }
   }
 }

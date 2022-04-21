@@ -3,8 +3,8 @@
 }
 
 .top-toolbar-container {
-  max-width: 110rem;
-  @apply mx-auto px-5 xl:px-[5%] flex justify-between bg-white;
+  max-width: 95rem;
+  @apply mx-auto !px-5 xl:!px-[5%] flex justify-between bg-white;
 }
 
 .top-toolbar .navLink {
@@ -12,7 +12,7 @@
 }
 
 .top-toolbar .navLink div {
-  @apply text-sm font-normal;
+  @apply text-base font-normal;
 }
 
 .sidenav {
@@ -24,7 +24,7 @@
 }
 
 .link-active {
-  @apply bg-skin-bg text-skin-base;
+  @apply bg-skin-bg text-skin-base shadow-lg;
 }
 
 .link-inactive {

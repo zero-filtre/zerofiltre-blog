@@ -16,18 +16,10 @@ import { LOCALE_ID } from '@angular/core';
 import { httpInterceptorProviders } from './services/http-interceptors';
 import { AuthInterceptor } from './services/http-interceptors/auth.interceptor';
 
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './shared/lang-switcher/translate-universal-loader';
 
 registerLocaleData(localeFr, 'fr');
-
-// AoT requires an exported function for factories
-// export function HttpLoaderFactory(http: HttpClient) {
-//   return new TranslateHttpLoader(http);
-// }
 
 @NgModule({
   declarations: [
@@ -45,8 +37,6 @@ registerLocaleData(localeFr, 'fr');
       loader: {
         provide: TranslateLoader,
         useClass: TranslateUniversalLoader
-        // useFactory: HttpLoaderFactory,
-        // deps: [HttpClient]
       }
     })
   ],

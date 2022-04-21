@@ -3,11 +3,11 @@
 }
 
 .useful-links .title {
-  @apply pb-4 text-sm;
+  @apply pb-4 text-sm lg:text-base;
 }
 
 .useful-links li {
-  @apply text-xs mb-3;
+  @apply text-xs lg:text-sm mb-3;
 }
 
 .services,

@@ -19,6 +19,7 @@ module.exports = {
         grays: "#eef1f4",
         skin: {
           base: "#6b7280",
+          text: "#374151",
           link: "#f3f4f6",
           muted: "#9ca3af",
           inverted: "#052b5d",

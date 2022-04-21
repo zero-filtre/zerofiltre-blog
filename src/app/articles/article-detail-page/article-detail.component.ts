@@ -1,14 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap, filter } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
-import { calcReadingTime, formatDate, objectExists } from 'src/app/services/utilities.service';
+import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
-import { Article, Tag } from '../article.model';
+import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
-import { MessageService } from 'src/app/services/message.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -21,10 +20,9 @@ import { isPlatformBrowser } from '@angular/common';
 export class ArticleDetailComponent implements OnInit, OnDestroy {
   public article!: Article;
   public articleId!: string;
-  public previousArticle!: Article;
-  public nextArticle!: Article;
+  public similarArticles!: Article[];
   public articleHasTags!: boolean;
-  public loading: boolean = false;
+  public loading!: boolean;
   private isPublished = new BehaviorSubject<any>(null);
   public isPublished$ = this.isPublished.asObservable();
   readonly blogUrl = environment.blogUrl;
@@ -56,7 +54,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private articleService: ArticleService,
     private seo: SeoService,
     private router: Router,
-    private messageService: MessageService,
     public authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
@@ -86,10 +83,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           this.article = response
 
           this.seo.generateTags({
-            title: this.article.title,
-            description: this.article.summary,
-            image: this.article.thumbnail,
-            author: this.article.author?.fullName,
+            title: response.title,
+            description: response.summary,
+            image: response.thumbnail,
+            author: response.author?.fullName,
             type: 'article'
           })
 
@@ -101,7 +98,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
-          this.fetchArticleSiblings(+this.articleId - 1, +this.articleId + 1)
+          this.fetchSimilarArticles();
           this.loading = false;
         },
         error: (_error: HttpErrorResponse) => {
@@ -111,67 +108,47 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       })
   }
 
-  // TODO: implementer une liste d'articles similaires(limit: 5) (collectés par tags) a la place des siblings
-  public fetchArticleSiblings(prev: number, next: number): void {
-    this.articleSub = this.articleService.findArticleById(next.toString()).pipe(
-      filter(objectExists)
-    ).subscribe({
-      next: (response: Article) => {
-        this.nextArticle = response;
-      },
-      error: (_error: HttpErrorResponse) => {
-        this.loading = false;
-        this.nextArticle = null!;
-        this.messageService.cancel();
-      }
-    })
+  public fetchSimilarArticles(): void {
+    if (!this.article?.tags.length) return
 
-    if (prev !== 0) {
-      this.articleService.findArticleById(prev.toString()).pipe(
-        filter(objectExists)
-      ).subscribe({
-        next: (response: Article) => {
-          this.previousArticle = response;
-        },
-        error: (_error: HttpErrorResponse) => {
-          this.loading = false;
-          this.previousArticle = null!;
-          this.messageService.cancel();
+    const randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
+    const randomTagName = this.article?.tags[randomTagIndex]?.name!
+    const maxArticles = 2
+
+    this.articleService.findAllArticlesByTag(0, 20, randomTagName)
+      .subscribe({
+        next: ({ content }: any) => {
+          const selected = content
+            .filter((article: Article) => article.id !== this.article.id)
+            .slice(0, maxArticles)
+          this.similarArticles = selected;
         }
       })
-    }
   }
 
-  isAuthor(user: any, article: Article): boolean {
+  public isAuthor(user: any, article: Article): boolean {
     return user?.id === article?.author?.id
   }
 
-  authorHasSocialLinkFor(platform: string): boolean {
+  public authorHasSocialLinkFor(platform: string): boolean {
     return this.article?.author?.socialLinks.some((profile: any) => profile.platform === platform && profile.link)
   }
 
-  authorPlatformLink(platform: string): string {
+  public authorPlatformLink(platform: string): string {
     return this.article?.author?.socialLinks.find((profile: any) => profile.platform === platform)?.link
   }
 
-  userHasAlreadyReactOnArticleFiftyTimes(): boolean {
+  public userHasAlreadyReactOnArticleFiftyTimes(): boolean {
     const artileReactions = this.article?.reactions;
     const currentUsr = this.authService?.currentUsr;
     return artileReactions.filter((reaction: any) => reaction?.authorId === currentUsr?.id).length === 49;
   }
 
-  findTotalReactionByAction(action: string, reactions: []): number {
+  public findTotalReactionByAction(action: string, reactions: []): number {
     return reactions.filter((reaction: any) => reaction.action === action).length;
   }
 
-  areRelated(a: Article, b: Article): boolean {
-    const tagsA = a.tags;
-    const tagsB = b.tags;
-
-    return tagsA.some((tag: Tag) => tagsB.some((item: Tag) => item.name === tag.name));
-  }
-
-  addReaction(action: string): any {
+  public addReaction(action: string): any {
     const currentUsr = this.authService?.currentUsr;
 
     if (!currentUsr) {

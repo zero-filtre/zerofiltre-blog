@@ -1,9 +1,8 @@
 <mat-sidenav-container class="sidenav-container bg-skin-bg min-h-screen">
 
   <!-- APP MOBILE SIDENAV -->
-
-  <mat-sidenav #drawer class="sidenav relative rounded-bl-lg" position="end" fixedInViewport
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'over'" [opened]="false">
+  <mat-sidenav #drawer class="sidenav mobile-sidebar-menu lg:!hidden relative rounded-bl-lg" position="end"
+    fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'over'" [opened]="false">
 
     <div class="absolute top-6 right-6 w-fit" (click)="drawer.close()">
       <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()">
@@ -98,24 +97,19 @@
 
     </ul>
   </mat-sidenav>
-
   <!-- END APP MOBILE SIDENAV  -->
 
-
-  <!-- APP WEB NAVBAR-->
-
-  <mat-sidenav-content class="">
-
-    <div class="top-toolbar fixed top-0 left-0 right-0 z-50">
-
-      <mat-toolbar class="top-toolbar-container">
+  <mat-sidenav-content class="!h-screen">
+    <!-- APP DESKTOP NAVBAR-->
+    <div class="top-toolbar sticky top-0 z-50">
+      <mat-toolbar class="top-toolbar-container !px-0">
         <a class="logo-link" routerLink="/">
           <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
             <img class="max-w-full" src="../../../assets/logoblue.svg" alt="Zerofiltre.tech">
           </div>
         </a>
 
-        <div class="hidden lg:flex items-center text-secondary">
+        <div class="navbar-links hidden lg:flex items-center text-secondary">
           <a class="navLink" routerLink="/a-propos">
             <div>{{'navbar.about' | translate}}</div>
           </a>
@@ -204,37 +198,28 @@
           </svg>
         </button>
       </mat-toolbar>
-
     </div>
-
-    <!-- END APP NAVBAR -->
-
+    <!-- END APP DESKTOP NAVBAR -->
 
     <!-- APP CONTENT -->
-
-    <div class="container">
+    <div class="site-container">
       <router-outlet></router-outlet>
     </div>
-
     <!-- END APP CONTENT -->
 
-
     <!-- APP FOOTER -->
-
     <app-footer></app-footer>
-
     <!-- END APP FOOTER -->
 
   </mat-sidenav-content>
 
 
   <!-- PROFILE SIDEBAR -->
-
   <mat-sidenav *appShellNoRender
-    class="profile-sidebar !hidden lg:!block bg-skin-bgMuted shadow-md border-0 rounded-none !fixed !top-20 w-full max-w-xs"
+    class="profile-sidebar !hidden lg:!block bg-skin-bgMuted shadow-sm border-0 rounded-none !fixed w-full max-w-xs"
     mode="side" [opened]="checkRouteUrl()">
 
-    <div class="profile-sidebar-container p-10 pl-20 text-skin-base">
+    <div class="profile-sidebar-container py-32 px-10 text-skin-base">
 
       <div class="flex flex-col space-y-1">
         <a routerLink="/user/profile" (click)="seeMyInfos()"
@@ -283,7 +268,6 @@
 
     </div>
   </mat-sidenav>
-
   <!-- END PROFILE SIDEBAR -->
 
 </mat-sidenav-container>

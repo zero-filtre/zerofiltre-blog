@@ -1,121 +1,59 @@
-<main class="articles-list-container lg:grid grid-cols-10 gap-10 py-10 items-start !mt-20">
-    <aside class="col-span-2 hidden lg:block">
+<main class="articles-list-container lg:grid grid-cols-7 gap-10 lg:gap-20 py-10 items-stretch">
+    <main class="col-span-5">
+        <div class="main-side-container max-w-xl mx-auto lg:max-w-none min-h-screen">
+            <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
+                <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
+                    <button type="button" aria-current="page" (click)="sortBy(RECENT)"
+                        [ngClass]="activePage === RECENT ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'articles.new' | translate}}</span>
+                    </button>
 
-        <div class="left-side-container">
+                    <button type=" button" aria-current="false" (click)="sortBy(POPULAR)"
+                        [ngClass]="activePage === POPULAR ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'articles.famous' | translate}}</span>
+                    </button>
 
-            <div class="pb-8 space-y-1">
-                <button type="button" (click)="sortBy(RECENT)" aria-current="page"
-                    [ngClass]="activePage === RECENT ? 'button-active' : 'button-inactive'"
-                    class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
-                    <svg [ngClass]="activePage === RECENT ? 'svg-active' : 'svg-inactive'"
-                        class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        aria-hidden="true">
-                        <path d="M15.596 15.696h-7.22M15.596 11.937h-7.22M11.131 8.177H8.376" stroke-width="1.5"
-                            stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path clip-rule="evenodd"
-                            d="M3.61 12c0 6.937 2.098 9.25 8.391 9.25 6.294 0 8.391-2.313 8.391-9.25 0-6.937-2.097-9.25-8.391-9.25C5.708 2.75 3.61 5.063 3.61 12z"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                    <span class="truncate">
-                        {{ 'articles.recent' | translate }}
-                    </span>
-                </button>
+                    <button type="button" aria-current="false" (click)="sortBy(TRENDING)"
+                        [ngClass]="activePage === TRENDING ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'articles.modish' | translate}}</span>
+                    </button>
 
-                <button type="button" (click)="sortBy(POPULAR)" aria-current="false"
-                    [ngClass]="activePage === POPULAR ? 'button-active' : 'button-inactive'"
-                    class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
-                    <svg [ngClass]="activePage === POPULAR ? 'svg-active' : 'svg-inactive'"
-                        class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200" fill="none"
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path clip-rule="evenodd"
-                            d="M12 3C9.964 3 9.771 6.547 8.56 7.8c-1.213 1.253-4.982-.18-5.505 2.044-.523 2.225 2.867 2.98 3.285 4.89.42 1.909-1.65 4.59.12 5.926 1.77 1.334 3.674-1.685 5.54-1.685s3.77 3.019 5.54 1.685c1.77-1.335-.3-4.017.12-5.927.419-1.909 3.808-2.664 3.285-4.889-.522-2.224-4.292-.791-5.503-2.044C14.23 6.547 14.036 3 12 3z"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                    <span class="truncate">
-                        {{ 'articles.popular' | translate }}
-                    </span>
-                </button>
+                    <button type="button" aria-current="false" (click)="sortBy(TAGS)"
+                        [ngClass]="activePage === TAGS ? 'active-tab' : ''"
+                        class="lg:hidden relative text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'app.tags' | translate}}</span>
+                    </button>
+                </nav>
 
-                <button type="button" (click)="sortBy(TRENDING)" aria-current="false"
-                    [ngClass]="activePage === TRENDING ? 'button-active' : 'button-inactive'"
-                    class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
-                    <svg [ngClass]="activePage === TRENDING ? 'svg-active' : 'svg-inactive'"
-                        class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        aria-hidden="true">
-                        <path
-                            d="M6.98 4.601V17.22M2.9 8.7s2.169-4.1 4.078-4.1c1.908 0 4.078 4.1 4.078 4.1M16.906 19.428V6.81M20.985 15.329s-2.17 4.1-4.078 4.1c-1.908 0-4.078-4.1-4.078-4.1"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                    <span class="truncate">
-                        {{ 'articles.trending' | translate }}
-                    </span>
-                </button>
-            </div>
+                <div *ngIf="openedTagsDropdown"
+                    class="tagList-container lg:hidden flex flex-wrap justify-center absolute z-30 top-full gap-1.5 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%] bg-skin-cardMuted border shadow-lg rounded-2xl overflow-y-scroll no-scrollbar">
+                    <ng-container *ngFor="let tag of tagList">
+                        <button (click)="sortByTag(tag.name)" type="button" aria-current="false"
+                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                            <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span
+                                class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
+                        </button>
+                    </ng-container>
 
-            <div class="pt-8 border-t border-skin-border">
-                <span
-                    class="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
-                    <svg class="mr-1.5 h-2 w-2 text-skin-base" fill="currentColor" viewBox="0 0 8 8">
-                        <circle cx="4" cy="4" r="3"></circle>
-                    </svg>
-                    {{ 'articles.tagTitle' | translate }}
-                </span>
-
-                <div class="mt-4" aria-labelledby="posts-tags">
-
-                    <ng-template [ngIf]="tagList">
-                        <div class="tagList-container space-y-1" *appShellNoRender>
-                            <ng-container *ngFor="let tag of tagList">
-                                <button (click)="sortByTag(tag.name)" type="button"
-                                    class="group inline-flex items-center mr-1 px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                    <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
-                                        viewBox="0 0 8 8">
-                                        <circle cx="4" cy="4" r="3"></circle>
-                                    </svg>
-                                    <span
-                                        class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
-                                </button>
-                            </ng-container>
-                        </div>
-                    </ng-template>
-
-                    <ng-template [ngIf]="loading && !tagList">
-                        <div class="tags-skeleton-container">
-                            <ngx-skeleton-loader class="flex space-x-1" count="3" appearance="line" [theme]="{ 
-                                'border-radius': '9999px',
-                                 width: '80px',
-                                 height: '30px',
-                                 display: 'block'
-                                }">
-                            </ngx-skeleton-loader>
-                            <ngx-skeleton-loader class="flex space-x-1" count="2" appearance="line" [theme]="{ 
-                                'border-radius': '9999px',
-                                 width: '100px',
-                                 height: '30px',
-                                 display: 'block'
-                                }">
-                            </ngx-skeleton-loader>
-                        </div>
-                    </ng-template>
-                </div>
-            </div>
-
-        </div>
-
-    </aside>
-
-    <main class="col-span-6">
-        <div class="main-side-container">
-            <div class="pb-5 border-b border-skin-border flex items-center justify-between">
-                <div>
-                    <h1 class="text-3xl leading-8 font-extrabold tracking-tight text-skin-inverted">
-                        {{ 'articles.title' | translate }}
-                    </h1>
-                    <p class="mt-2 max-w-4xl text-sm leading-5 text-skin-base">
-                        {{ 'articles.subTitle' | translate }}
-                    </p>
+                    <!-- <ng-container *ngFor="let tag of [].constructor(10)">
+                        <button (click)="sortByTag('un-super-tag')" type="button" aria-current="false"
+                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                            <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span class="truncate lowercase font-semibold group-hover:text-primary-500">
+                                un super tag
+                            </span>
+                        </button>
+                    </ng-container> -->
                 </div>
 
                 <div *ngIf="authService.currentUsr">
@@ -131,36 +69,8 @@
                 </div>
             </div>
 
-            <div class="mt-10 max-w-lg mx-auto lg:hidden">
-                <nav class="relative bg-white z-0 rounded-lg shadow flex divide-x divide-skin-border" aria-label="Tabs">
-                    <button type="button" (click)="sortBy('recent')" aria-current="page"
-                        class="w-full text-skin-inverted rounded-l-lg group relative min-w-0 flex-1 overflow-hidden bg-skin-card p-4 sm:px-6 text-xs font-semibold text-center hover:bg-skin-cardMuted focus:z-10">
-                        <span>{{ 'articles.recent' | translate }}</span>
-                        <span [ngClass]="activePage == 'recent' ? 'active-tab' : ''" aria-hidden="true"
-                            class="absolute inset-x-0 bottom-0 h-0.5 scale-0"></span>
-                    </button>
-
-                    <button type="button" (click)="sortBy('popular')" aria-current="false"
-                        class="w-full text-skin-base hover:text-skin-inverted group relative min-w-0 flex-1 overflow-hidden bg-skin-card p-4 sm:px-6 text-xs font-semibold text-center hover:bg-skin-cardMuted focus:z-10">
-                        <span>{{ 'articles.popular' | translate }}</span>
-                        <span [ngClass]="activePage == 'popular' ? 'active-tab' : ''" aria-hidden="true"
-                            class="bg-transparent absolute inset-x-0 bottom-0 h-0.5 scale-0"></span>
-                    </button>
-
-                    <button type="button" (click)="sortBy('trending')" aria-current="false"
-                        class="w-full text-skin-base hover:text-skin-inverted rounded-r-lg group relative min-w-0 flex-1 overflow-hidden bg-skin-card p-4 sm:px-6 text-xs font-semibold text-center hover:bg-skin-cardMuted focus:z-10">
-                        <span>{{ 'articles.trending' | translate }}</span>
-                        <span [ngClass]="activePage == 'trending' ? 'active-tab' : ''" aria-hidden="true"
-                            class="bg-transparent absolute inset-x-0 bottom-0 h-0.5 scale-0"></span>
-                    </button>
-                </nav>
-            </div>
-
-            <div class="articles-wrapper articles-scrollable-list-panel no-scrollbar min-h-[80vh] h-full py-12 space-y-12 sm:space-y-11 max-w-lg mx-auto lg:max-w-none"
+            <div class="articles-wrapper articles-scrollable-list-panel h-full py-12 space-y-12 sm:space-y-11"
                 infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
-                <!-- no-scrollbar -->
-                <!-- [scrollWindow]="false" -->
-                <!-- h-screen overflow-y-scroll -->
 
                 <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
                     <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg"
@@ -173,9 +83,10 @@
                 </div>
 
                 <ng-template [ngIf]="articles" *appShellNoRender>
-                    <div *ngFor="let article of articles">
+                    <div *ngFor="let article of articles; let i=index" class="space-y-11">
                         <div class="article-card lg:grid grid-cols-3 gap-6">
-                            <a [routerLink]="[article.id]" class="article-preview group">
+                            <!-- [routerLink]="[article.id]" -->
+                            <a routerLink="/articles/{{article.id}}" class="article-preview group">
                                 <div class="aspect-w-3 aspect-h-2">
                                     <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75 transition-all duration-200"
                                         src="{{article?.thumbnail}}" alt="{{article?.title}}">
@@ -183,7 +94,6 @@
                             </a>
 
                             <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
-
                                 <div class="article-tags-container flex flex-wrap items-center gap-1">
                                     <div *ngFor="let tag of article?.tags" class="tag-item flex items-center space-x-2">
                                         <span
@@ -198,22 +108,22 @@
                                 </div>
 
                                 <div class="mt-2">
-                                    <a [routerLink]="[article.id]" class="article-title group">
+                                    <a routerLink="/articles/{{article.id}}" class="article-title group">
                                         <h4
-                                            class="text-lg inline-block leading-6 font-semibold text-skin-inverted group-hover:text-primary-500 transition-all duration-200">
+                                            class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted group-hover:text-primary-500 transition-all duration-200">
                                             {{article?.title}}
                                         </h4>
                                     </a>
 
                                     <p
-                                        class="article-description mt-2 text-sm tracking-wide font-light text-skin-base leading-5 line-clamp-2">
+                                        class="article-description mt-1 text-sm lg:text-base tracking-wide font-light text-skin-text leading-5 line-clamp-2">
                                         <ng-container *ngIf="article?.summary">{{article?.summary}}</ng-container>
                                     </p>
 
                                     <div class="article-author mt-3 flex items-center">
                                         <div class="author-image flex-shrink-0">
                                             <a href="">
-                                                <img class="h-10 w-10 rounded-full"
+                                                <img class="h-10 w-10 rounded-full shadow-sm"
                                                     src="{{article.author?.profilePicture}}"
                                                     alt="{{article.author?.pseudoName}}">
                                             </a>
@@ -241,10 +151,18 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
+
+                        <ng-container *ngIf="(i+1)%3 === 0">
+                            <div
+                                class="sponsor-content h-52 flex items-center justify-center shadow-lg rounded-lg text-white bg-primary-500">
+                                <div>
+                                    <p>contenu sponsorisé</p>
+                                    <p>Le {{i+2}} eme rang</p>
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
                 </ng-template>
 
@@ -353,11 +271,62 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <aside class="col-span-2 hidden lg:block">
-        <div class="right-side-container h-96 shadow-lg rounded-lg"></div>
+    <aside class="col-span-2 hidden lg:block space-y-6">
+        <div class="tags space-y-6">
+            <span
+                class="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
+                <svg class="mr-1.5 h-2 w-2 text-skin-base" fill="currentColor" viewBox="0 0 8 8">
+                    <circle cx="4" cy="4" r="3"></circle>
+                </svg>
+                {{ 'articles.tagTitle' | translate }}
+            </span>
+
+            <div class="" aria-labelledby="article-tags">
+                <ng-template [ngIf]="tagList">
+                    <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
+                        <ng-container *ngFor="let tag of tagList">
+                            <button (click)="sortByTag(tag.name)" type="button"
+                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span
+                                    class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
+                            </button>
+                        </ng-container>
+                    </div>
+                </ng-template>
+
+                <ng-template [ngIf]="loading && !tagList">
+                    <div class="tags-skeleton-container">
+                        <ngx-skeleton-loader class="flex space-x-1" count="3" appearance="line" [theme]="{ 
+                                'border-radius': '9999px',
+                                 width: '80px',
+                                 height: '30px',
+                                 display: 'block'
+                                }">
+                        </ngx-skeleton-loader>
+                        <ngx-skeleton-loader class="flex space-x-1" count="2" appearance="line" [theme]="{ 
+                                'border-radius': '9999px',
+                                 width: '100px',
+                                 height: '30px',
+                                 display: 'block'
+                                }">
+                        </ngx-skeleton-loader>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+
+        <div
+            class="sponsor-content sticky top-28 h-52 flex items-center justify-center shadow-lg rounded-lg text-white bg-primary-500">
+            <div>
+                <p>contenu sponsorisé</p>
+            </div>
+        </div>
     </aside>
 </main>

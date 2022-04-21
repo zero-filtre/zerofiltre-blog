@@ -13,16 +13,17 @@ declare var Prism: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  public isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Handset])
+  public isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe([Breakpoints.Handset])
     .pipe(
-      map(result => result.matches),
+      map((result) => result.matches),
       shareReplay()
     );
 
-  public browserLanguage!: string;
+  public userBrowserLanguage!: string;
   public MY_ACCOUNT = 'Mon compte';
   public MY_ARTICLES = 'Mes articles';
   public ALL_ARTICLES = 'Tous les articles';
@@ -45,15 +46,15 @@ export class AppComponent implements OnInit {
     const componentsPrefix = [
       '/user/profile',
       '/user/profile/edit',
-      '/user/dashboard'
-    ]
+      '/user/dashboard',
+    ];
     const currentUrl = this.router.url;
     return componentsPrefix.some((route: string) => currentUrl.includes(route));
   }
 
   public setBrowserTranslationConfigs() {
     if (isPlatformBrowser(this.platformId)) {
-      this.browserLanguage = (window.navigator as any).language
+      this.userBrowserLanguage = (window.navigator as any).language;
     }
 
     this.translate.setDefaultLang('fr');
@@ -62,7 +63,7 @@ export class AppComponent implements OnInit {
 
   public logout() {
     this.authService.logout();
-    this.router.navigateByUrl('/')
+    this.router.navigateByUrl('/');
   }
 
   // Use to set the language on a btn click for example
@@ -86,18 +87,34 @@ export class AppComponent implements OnInit {
     this.activePage = this.MY_ARTICLES;
   }
 
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      Prism.plugins.toolbar.registerButton('select-code', function (_env: any) {
-        const button = document.createElement('button');
+  public loadCopyToClipboardSvg() {
+    Prism.plugins.toolbar.registerButton('copy-code', function (env: any) {
+      const svgButton = document.createElement('button');
 
-        button.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-      </svg>`;
+      svgButton.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+    </svg>`;
 
-        return button;
+      svgButton.classList.add('copy-to-clipboard-svg');
+
+      svgButton.addEventListener('click', (_e) => {
+        const copyToClipboardButton = (document as any).querySelector(
+          '.copy-to-clipboard-button'
+        );
+        copyToClipboardButton.click();
+        alert('Code copied !');
       });
+
+      return svgButton;
+    });
+  }
+
+  ngOnInit(): void {
+    this.activePage = this.MY_ACCOUNT;
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadCopyToClipboardSvg();
     }
 
     if (isPlatformServer(this.platformId)) {
