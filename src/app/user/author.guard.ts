@@ -35,10 +35,13 @@ export class AuthorGuard implements CanActivate {
     | UrlTree {
     this.isAdminUser = this.authService.isAdmin;
     this.currentUsrId = this.authService?.currentUsr?.id;
-    this.articleService.findArticleById(route.params.id).subscribe({
-      next: (article: Article) =>
-        (this.currentArticleAuthorId = article?.author?.id!),
-    });
+
+    this.articleService
+      .findArticleById(route.params.id)
+      .subscribe(
+        (article: Article) =>
+          (this.currentArticleAuthorId = article?.author?.id!)
+      );
 
     if (this.currentUsrId === this.currentArticleAuthorId || this.isAdminUser) {
       return true;
