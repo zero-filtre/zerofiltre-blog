@@ -131,7 +131,7 @@
 }
 
 .toolbar-item .copy-to-clipboard-button {
-  @apply absolute inset-0 opacity-0
+  @apply text-sm absolute inset-0 opacity-0
 }
 
 

@@ -89,21 +89,24 @@ export class AppComponent implements OnInit {
 
   public loadCopyToClipboardSvg() {
     Prism.plugins.toolbar.registerButton('copy-code', function (env: any) {
-      const button = document.createElement('button');
+      const svgButton = document.createElement('button');
 
-      button.innerHTML = `
+      svgButton.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
     </svg>`;
 
-      button.classList.add('copy-to-clipboard-svg');
+      svgButton.classList.add('copy-to-clipboard-svg');
 
-      button.addEventListener('click', (_e) => {
-        (document as any).querySelector('.copy-to-clipboard-button').click();
+      svgButton.addEventListener('click', (_e) => {
+        const copyToClipboardButton = (document as any).querySelector(
+          '.copy-to-clipboard-button'
+        );
+        copyToClipboardButton.click();
         alert('Code copied !');
       });
 
-      return button;
+      return svgButton;
     });
   }
 
