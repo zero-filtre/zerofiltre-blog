@@ -7,13 +7,16 @@ import { Subscription } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
 import { SeoService } from 'src/app/services/seo.service';
-import { calcReadingTime, nFormatter } from 'src/app/services/utilities.service';
+import {
+  calcReadingTime,
+  nFormatter,
+} from 'src/app/services/utilities.service';
 import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
   public articles!: Article[];
@@ -48,7 +51,7 @@ export class DashboardComponent implements OnInit {
     public authService: AuthService,
     private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: any
-  ) { }
+  ) {}
 
   public setArticlesReadingTime(articles: Article[]): void {
     for (const article of articles) {
@@ -58,14 +61,16 @@ export class DashboardComponent implements OnInit {
 
   public fetchMyArticlesByStatus(status: string) {
     this.loading = true;
-    this.subscription$ = this.articleService.findAllMyArticles(this.pageNumber, this.pageItemsLimit, status)
-      .subscribe(this.handleFetchedArticles)
+    this.subscription$ = this.articleService
+      .findAllMyArticles(this.pageNumber, this.pageItemsLimit, status)
+      .subscribe(this.handleFetchedArticles);
   }
 
   public fetchAllArticlesAsAdmin(status: string) {
     this.loading = true;
-    this.subscription$ = this.articleService.findAllArticles(this.pageNumber, this.pageItemsLimit, status)
-      .subscribe(this.handleFetchedArticles)
+    this.subscription$ = this.articleService
+      .findAllArticles(this.pageNumber, this.pageItemsLimit, status)
+      .subscribe(this.handleFetchedArticles);
   }
 
   public sortBy(tab: string): void {
@@ -78,13 +83,13 @@ export class DashboardComponent implements OnInit {
     }
 
     if (tab === this.DRAFT) {
-      this.activePage = this.DRAFT
+      this.activePage = this.DRAFT;
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
       this.fetchMyArticlesByStatus(this.DRAFT);
     }
 
     if (tab === this.IN_REVIEW) {
-      this.activePage = this.IN_REVIEW
+      this.activePage = this.IN_REVIEW;
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
       this.fetchMyArticlesByStatus(this.IN_REVIEW);
     }
@@ -94,7 +99,10 @@ export class DashboardComponent implements OnInit {
   }
 
   public onScroll() {
+    console.log('Normal Scroll...!');
+
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
+      console.log('HasMore Scroll...!');
       this.loadingMore = true;
       this.notScrolly = false;
       this.fetchMoreArticles();
@@ -106,7 +114,7 @@ export class DashboardComponent implements OnInit {
       this.loadingMore = false;
       this.notScrolly = true;
       this.notEmptyArticles = false;
-      return
+      return;
     }
 
     this.scrollyPageNumber += 1;
@@ -114,18 +122,32 @@ export class DashboardComponent implements OnInit {
     const queryParam = this.route.snapshot.queryParamMap.get('sortBy')!;
 
     if (queryParam === this.DRAFT) {
-      return this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.DRAFT)
+      return this.articleService
+        .findAllMyArticles(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          this.DRAFT
+        )
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
     }
 
     if (queryParam === 'in-review') {
-      return this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.IN_REVIEW)
+      return this.articleService
+        .findAllMyArticles(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          this.IN_REVIEW
+        )
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
     }
 
-    this.articleService.findAllMyArticles(this.scrollyPageNumber, this.pageItemsLimit, this.PUBLISHED)
+    this.articleService
+      .findAllMyArticles(
+        this.scrollyPageNumber,
+        this.pageItemsLimit,
+        this.PUBLISHED
+      )
       .subscribe((response: any) => this.handleNewFetchedArticles(response));
-
   }
 
   private handleNewFetchedArticles({ content, hasNext }: any) {
@@ -150,19 +172,19 @@ export class DashboardComponent implements OnInit {
       this.hasNext = hasNext;
 
       if (this.articles.length === 0) {
-        this.errorMessage = "Aucun article trouvé 😊!"
+        this.errorMessage = 'Aucun article trouvé 😊!';
       }
     },
     error: (_error: HttpErrorResponse) => {
       this.loading = false;
       this.hasNext = false;
       this.articles = [];
-      this.errorMessage = 'Oops...!'
-    }
-  }
+      this.errorMessage = 'Oops...!';
+    },
+  };
 
   public nFormater(totalReactions: number): string {
-    return nFormatter(totalReactions)
+    return nFormatter(totalReactions);
   }
 
   ngOnInit(): void {
@@ -170,7 +192,7 @@ export class DashboardComponent implements OnInit {
 
     this.seo.generateTags({
       title: this.translate.instant('meta.dashboadTitle'),
-      description: this.translate.instant('meta.dashboadDescription')
+      description: this.translate.instant('meta.dashboadDescription'),
     });
 
     if (isPlatformBrowser(this.platformId)) {
@@ -180,8 +202,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.subscription$.unsubscribe()
+      this.subscription$.unsubscribe();
     }
   }
-
 }
