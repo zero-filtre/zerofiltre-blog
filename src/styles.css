@@ -106,9 +106,14 @@
   @apply bg-accent text-white;
 }
 
+.info-snackbar {
+  @apply bg-secondary text-white;
+}
+
 .success-snackbar button,
 .error-snackbar button,
-.warning-snackbar button {
+.warning-snackbar button,
+.info-snackbar button {
   @apply text-white;
 }
 
