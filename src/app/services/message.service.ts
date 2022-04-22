@@ -8,6 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class MessageService {
   private durationLimit = 6;
+  private defaultHoPosition = 'right'
+  private defaultVePosition = 'bottom'
   private OK = 'OK';
 
   constructor(
@@ -16,26 +18,26 @@ export class MessageService {
     private translate: TranslateService
   ) { }
 
-  private openSnackBar(message: string, action: string, className: string, type: string, duration: number) {
+  private openSnackBar(message: string, action: string, className: string, type: string, duration: number, hoPosition: any) {
     this.snackBar.open(message, action, {
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
+      horizontalPosition: hoPosition,
+      verticalPosition: this.defaultVePosition as any,
       duration: duration * 1000,
       panelClass: [className, type],
     });
   }
 
-  public openSnackBarSuccess(message: string, action: string, duration = this.durationLimit) {
-    this.openSnackBar(message, action, 'success-snackbar', 'success', duration)
+  public openSnackBarSuccess(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+    this.openSnackBar(message, action, 'success-snackbar', 'success', duration, hoPosition)
   }
-  public openSnackBarError(message: string, action: string, duration = this.durationLimit) {
-    this.openSnackBar(message, action, 'error-snackbar', 'error', duration)
+  public openSnackBarError(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+    this.openSnackBar(message, action, 'error-snackbar', 'error', duration, hoPosition)
   }
-  public openSnackBarWarning(message: string, action: string, duration = this.durationLimit) {
-    this.openSnackBar(message, action, 'warning-snackbar', 'error', duration)
+  public openSnackBarWarning(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+    this.openSnackBar(message, action, 'warning-snackbar', 'error', duration, hoPosition)
   }
-  public openSnackBarInfo(message: string, action: string, duration = this.durationLimit) {
-    this.openSnackBar(message, action, 'info-snackbar', 'error', duration)
+  public openSnackBarInfo(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+    this.openSnackBar(message, action, 'info-snackbar', 'info', duration, hoPosition)
   }
 
   public cancel() {
@@ -61,7 +63,7 @@ export class MessageService {
   }
 
   loadUserFailed() {
-    const msg = this.translate.instant('login.loadUserFailed');
+    const msg = this.translate.instant('login.loadUserFailedMessage');
     this.openSnackBarError(msg, this.OK, 0);
   }
 
@@ -130,6 +132,6 @@ export class MessageService {
 
   codeCopied() {
     const msg = this.translate.instant('app.codeCopied');
-    this.openSnackBarInfo(msg, '', 2);
+    this.openSnackBarInfo(msg, '', 2, 'center');
   }
 }
