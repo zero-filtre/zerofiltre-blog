@@ -45,7 +45,7 @@ export class MessageService {
   // For non authenticated requests
   authError(state: any) {
     const msg = this.translate.instant('login.authErrorMessage')
-    this.openSnackBarError(msg, 'this.OK', 0);
+    this.openSnackBarError(msg, this.OK, 0);
     this.router.navigate(['/login'], { queryParams: { 'redirectURL': state.url } });
   }
 
@@ -57,25 +57,25 @@ export class MessageService {
   // When logging In
   loginError() {
     const msg = this.translate.instant('login.loginFailedMessage');
-    this.openSnackBarError(msg, 'this.OK', 0);
+    this.openSnackBarError(msg, this.OK, 0);
   }
 
   // If not the author
   authorRoleError() {
     const msg = this.translate.instant('app.authorRouteError');
-    this.openSnackBarError(msg, 'this.OK');
+    this.openSnackBarError(msg, this.OK);
     this.router.navigateByUrl('/');
   }
 
   // Email notification on signup success
   signUpSuccess() {
     const msg = this.translate.instant('signup.signUpSuccessMessage');
-    this.openSnackBarSuccess(msg, 'this.OK', 0);
+    this.openSnackBarSuccess(msg, this.OK, 0);
   }
 
   saveArticleError() {
     const msg = this.translate.instant('articleEntryEdit.saveFailedMessage');
-    this.openSnackBarError(msg, 'this.OK');
+    this.openSnackBarError(msg, this.OK);
   }
 
   autoSaveAlert() {
@@ -85,42 +85,42 @@ export class MessageService {
 
   saveArticleSuccess() {
     const msg = this.translate.instant('articleEntryEdit.saveSuccessMessage');
-    this.openSnackBarSuccess(msg, 'this.OK');
+    this.openSnackBarSuccess(msg, this.OK);
   }
 
   publishArticleSuccess() {
     const msg = this.translate.instant('articleEntryEdit.publishSuccessMessage');
-    this.openSnackBarSuccess(msg, 'this.OK');
+    this.openSnackBarSuccess(msg, this.OK);
   }
 
   resendConfirmationSuccess() {
     const msg = this.translate.instant('resendConfirmation.resendConfirmationSuccessMesssage');
-    this.openSnackBarSuccess(msg, 'this.OK', 0);
+    this.openSnackBarSuccess(msg, this.OK, 0);
   }
 
   updateProfileSuccess() {
     const msg = this.translate.instant('profile.updateSuccessMessage');
-    this.openSnackBarSuccess(msg, 'this.OK', 0);
+    this.openSnackBarSuccess(msg, this.OK, 0);
   }
 
   badSocialLinksFormat() {
     const msg = this.translate.instant('profileEdit.invalidSocialLinkMessage');
-    this.openSnackBarWarning(msg, 'this.OK', 0);
+    this.openSnackBarWarning(msg, this.OK, 0);
   }
 
   fileSizeWarning(maxSize: number) {
     const msg = this.translate.instant('fileUpload.sizeWarningMessage');
-    this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, 'this.OK', 0)
+    this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, this.OK, 0)
   }
 
   fileTypeWarning() {
     const msg = this.translate.instant('fileUpload.typeWarningMessage');
-    this.openSnackBarWarning(msg, 'this.OK', 0)
+    this.openSnackBarWarning(msg, this.OK, 0)
   }
 
   fileUploadAuthError() {
     const msg = this.translate.instant('fileUpload.AuthError');
-    this.openSnackBarError(msg, 'this.OK', 0);
+    this.openSnackBarError(msg, this.OK, 0);
   }
 
   codeCopied() {

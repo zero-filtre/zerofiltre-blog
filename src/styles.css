@@ -94,37 +94,45 @@
   @apply !outline-none !ring-0;
 }
 
+/* Message Notification styles */
 .success-snackbar {
-  @apply bg-primary-500 text-white;
+  @apply bg-primary-500;
 }
 
 .error-snackbar {
-  @apply bg-error text-white;
+  @apply bg-error;
 }
 
 .warning-snackbar {
-  @apply bg-accent text-white;
+  @apply bg-accent;
 }
 
 .info-snackbar {
-  @apply bg-secondary text-white;
+  @apply bg-secondary;
+}
+
+.success-snackbar,
+.error-snackbar,
+.warning-snackbar,
+.info-snackbar {
+  @apply text-skin-link;
 }
 
 .success-snackbar button,
 .error-snackbar button,
 .warning-snackbar button,
 .info-snackbar button {
-  @apply text-white;
+  @apply text-skin-link;
 }
 
 
 /* Block code styles */
 .code-toolbar {
-  @apply relative z-20;
+  @apply relative z-20 text-sm lg:text-lg;
 }
 
 .toolbar {
-  @apply flex absolute top-2.5 right-2.5 h-7;
+  @apply flex absolute top-2.5 right-2.5 h-5 lg:h-7;
 }
 
 .toolbar-item {
