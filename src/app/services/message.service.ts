@@ -60,6 +60,11 @@ export class MessageService {
     this.openSnackBarError(msg, this.OK, 0);
   }
 
+  loadUserFailed() {
+    const msg = this.translate.instant('login.loadUserFailed');
+    this.openSnackBarError(msg, this.OK, 0);
+  }
+
   // If not the author
   authorRoleError() {
     const msg = this.translate.instant('app.authorRouteError');

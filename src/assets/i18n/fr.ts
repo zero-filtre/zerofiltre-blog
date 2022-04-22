@@ -46,7 +46,8 @@ export const fr = {
         signup: 'Creer mon compte',
         continue: 'Ou continuer avec',
         loginFailedMessage: 'Email ou mot de passe incorrect !',
-        authErrorMessage: 'Veuillez Vous  connecter !'
+        authErrorMessage: 'Veuillez Vous  connecter !',
+        loadUserFailed: 'Impossible de recupérer vos données. Veuillez reessayer !'
     },
     signup: {
         title: 'Rejoindre Zerofiltre ',
