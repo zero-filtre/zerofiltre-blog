@@ -132,11 +132,11 @@
 }
 
 .toolbar {
-  @apply flex absolute top-2.5 right-2.5 h-5 lg:h-7;
+  @apply flex absolute top-2.5 right-2.5 text-skin-muted hover:text-skin-border h-5 lg:h-7;
 }
 
 .toolbar-item {
-  @apply text-skin-muted hover:text-skin-border first-of-type:z-0 last-of-type:z-10;
+  @apply first-of-type:z-10 last-of-type:z-0;
 }
 
 .toolbar-item button {

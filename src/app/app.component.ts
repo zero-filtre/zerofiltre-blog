@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, shareReplay } from 'rxjs';
@@ -15,7 +15,7 @@ declare var Prism: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewChecked {
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])
     .pipe(
@@ -87,25 +87,32 @@ export class AppComponent implements OnInit {
     this.activePage = this.MY_ARTICLES;
   }
 
-  public loadCopyToClipboardSvg() {
-    const svgButton = document.createElement('button');
-    svgButton.classList.add('copy-to-clipboard-svg');
-
-    svgButton.innerHTML = `
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-  </svg>
-  `;
-
-    svgButton.addEventListener('click', (_e) => {
-      const copyToClipboardButton = (document as any).querySelector(
-        '.copy-to-clipboard-button'
-      );
-      copyToClipboardButton.click();
+  public addClickEvents() {
+    const copyToClipboardButtons = (document as any).querySelectorAll(
+      '.copy-to-clipboard-button'
+    );
+    console.log('BTNS: ', copyToClipboardButtons)
+    const logMessage = () => {
+      console.log('CLICKED')
       this.messageService.codeCopied();
-    });
+    }
 
+    copyToClipboardButtons.forEach((btn: any) => {
+      btn.addEventListener('click', logMessage)
+    });
+  }
+
+  public loadCopyToClipboardSvg() {
     Prism.plugins.toolbar.registerButton('copy-code', function (env: any) {
+      const svgButton = document.createElement('button');
+      svgButton.classList.add('copy-to-clipboard-svg');
+
+      svgButton.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+    </svg>
+    `;
+
       return svgButton;
     });
   }
@@ -120,5 +127,9 @@ export class AppComponent implements OnInit {
     if (isPlatformServer(this.platformId)) {
       this.fileUploadService.xToken$.subscribe();
     }
+  }
+
+  ngAfterViewChecked(): void {
+    this.addClickEvents();
   }
 }

@@ -71,7 +71,6 @@ export class MessageService {
   authorRoleError() {
     const msg = this.translate.instant('app.authorRouteError');
     this.openSnackBarError(msg, this.OK);
-    // this.router.navigateByUrl('/');
   }
 
   // Email notification on signup success
