@@ -2,9 +2,9 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.
 
-## Usage
+## Setup and Install dependencies
 
-Run
+Run the following in a terminal
 
 ```
 git clone https://github.com/zero-filtre/zerofiltre-blog.git
@@ -12,7 +12,7 @@ cd zerofiltre-blog
 npm install
 ```
 
-## Development server
+## Run Development server
 
 Create a file `environment.locals.ts` in `/src/environments/` and add your local variables inside.
 
@@ -39,9 +39,9 @@ Navigate to `http://localhost:4200/`. The app will automatically reload if you c
 
 ## Build
 
-Run `ng build` to build the **client-side project**. The build artifacts will be stored in the `dist/` directory.
+Run `ng build` to build the **client-side project** bundle. The build artifacts will be stored in the `dist/` directory.
 
-Run `npm run build:ssr` to build the **server-side project**. The build artifacts will be stored in the `dist/` directory.  
+Run `npm run build:ssr` to build the **server-side project** bundle. The build artifacts will be stored in the `dist/` directory.  
 Run `npm run serve:ssr` and navigate to `http://localhost:4000/` to browse the app.
 
 ## Running unit tests

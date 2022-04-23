@@ -17,6 +17,7 @@ declare var Prism: any;
 })
 export class AppComponent implements OnInit {
   @HostListener('click', ['$event']) onClick(event: any) {
+    console.log(event.target)
     this.logCopySuccessMessage(event)
   }
 
@@ -88,7 +89,7 @@ export class AppComponent implements OnInit {
   }
 
   public logCopySuccessMessage(event: any) {
-    if (event.target.innerText === 'Copy' && event.target.parentElement.className === 'copy-to-clipboard-button') {
+    if (event.target.innerText === 'Copy' || event.target.className === 'copy-to-clipboard-button' || event.target.parentElement.className === 'copy-to-clipboard-button') {
       this.messageService.codeCopied();
     }
   }
