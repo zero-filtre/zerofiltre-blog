@@ -6,7 +6,7 @@ RUN apt-get update
 RUN apt-get -y install gettext-base
 RUN apt-get clean
 RUN npm install -g @angular/cli
-RUN npm install
+RUN npm install -f
 
 ADD .docker/entrypoint.sh entrypoint-dos.sh 
 

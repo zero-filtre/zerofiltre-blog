@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, shareReplay } from 'rxjs';
@@ -16,6 +16,11 @@ declare var Prism: any;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  @HostListener('click', ['$event']) onClick(event: any) {
+    console.log(event.target)
+    this.logCopySuccessMessage(event)
+  }
+
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])
     .pipe(
@@ -37,7 +42,7 @@ export class AppComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     public authService: AuthService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
   ) {
     this.setBrowserTranslationConfigs();
   }
@@ -71,10 +76,6 @@ export class AppComponent implements OnInit {
     this.translate.use(language);
   }
 
-  public alertCopy() {
-    this.messageService.openSnackBarWarning('Code Copied', '');
-  }
-
   public seeMyInfos() {
     this.activePage = this.MY_ACCOUNT;
   }
@@ -87,24 +88,22 @@ export class AppComponent implements OnInit {
     this.activePage = this.MY_ARTICLES;
   }
 
+  public logCopySuccessMessage(event: any) {
+    if (event.target.innerText === 'Copy' || event.target.className === 'copy-to-clipboard-button' || event.target.parentElement.className === 'copy-to-clipboard-button') {
+      this.messageService.codeCopied();
+    }
+  }
+
   public loadCopyToClipboardSvg() {
-    Prism.plugins.toolbar.registerButton('copy-code', function (env: any) {
+    Prism.plugins.toolbar.registerButton('copy-code', function (_env: any) {
       const svgButton = document.createElement('button');
+      svgButton.classList.add('copy-to-clipboard-svg');
 
       svgButton.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-    </svg>`;
-
-      svgButton.classList.add('copy-to-clipboard-svg');
-
-      svgButton.addEventListener('click', (_e) => {
-        const copyToClipboardButton = (document as any).querySelector(
-          '.copy-to-clipboard-button'
-        );
-        copyToClipboardButton.click();
-        alert('Code copied !');
-      });
+    </svg>
+    `;
 
       return svgButton;
     });

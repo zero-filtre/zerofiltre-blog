@@ -248,7 +248,7 @@ export class AuthService {
           }
         },
         error: (_err: HttpErrorResponse) => {
-          this.messageService.openSnackBarError('Impossible de recupérer vos données. Veuillez reessayer !', 'Ok', 0);
+          this.messageService.loadUserFailed();
           this.router.navigateByUrl('/login');
         }
       })

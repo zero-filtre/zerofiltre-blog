@@ -16,14 +16,14 @@ import { AuthService } from './auth.service';
 })
 export class AuthorGuard implements CanActivate {
   currentUsrId!: string;
-  currentArticleAuthorId!: string;
+  articleId!: string;
   isAdminUser!: boolean;
 
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
     private articleService: ArticleService
-  ) {}
+  ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -35,16 +35,15 @@ export class AuthorGuard implements CanActivate {
     | UrlTree {
     this.isAdminUser = this.authService.isAdmin;
     this.currentUsrId = this.authService?.currentUsr?.id;
-    this.articleService.findArticleById(route.params.id).subscribe({
-      next: (article: Article) =>
-        (this.currentArticleAuthorId = article?.author?.id!),
-    });
+    this.articleId = route.params.id
 
-    if (this.currentUsrId === this.currentArticleAuthorId || this.isAdminUser) {
-      return true;
-    } else {
-      this.messageService.authorRoleError();
-      return false;
-    }
+    return this.articleService.canEditArticle(this.currentUsrId, this.articleId, this.isAdminUser)
+      .pipe(
+        tap((canEdit) => {
+          if (!canEdit) {
+            this.messageService.authorRoleError();
+          }
+        })
+      )
   }
 }

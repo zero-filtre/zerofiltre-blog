@@ -113,15 +113,27 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
     const randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
     const randomTagName = this.article?.tags[randomTagIndex]?.name!
-    const maxArticles = 2
+    let maxArticles = 2
 
     this.articleService.findAllArticlesByTag(0, 20, randomTagName)
       .subscribe({
         next: ({ content }: any) => {
-          const selected = content
-            .filter((article: Article) => article.id !== this.article.id)
-            .slice(0, maxArticles)
-          this.similarArticles = selected;
+          const randomIndexes = <any>[]
+          const selectedArticles = []
+
+          const filteredArticles = content.filter((article: Article) => article.id !== this.article.id)
+
+          for (let i = 0; i < maxArticles; i++) {
+            const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+            if (randomIndexes.includes(randomArticleIndex)) {
+              maxArticles += 1
+            } else {
+              randomIndexes.push(randomArticleIndex)
+              selectedArticles.push(filteredArticles[randomArticleIndex])
+            }
+          }
+
+          this.similarArticles = selectedArticles;
         }
       })
   }

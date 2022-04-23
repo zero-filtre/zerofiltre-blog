@@ -94,36 +94,49 @@
   @apply !outline-none !ring-0;
 }
 
+/* Message Notification styles */
 .success-snackbar {
-  @apply bg-primary-500 text-white;
+  @apply bg-primary-500;
 }
 
 .error-snackbar {
-  @apply bg-error text-white;
+  @apply bg-error;
 }
 
 .warning-snackbar {
-  @apply bg-accent text-white;
+  @apply bg-accent;
+}
+
+.info-snackbar {
+  @apply bg-secondary;
+}
+
+.success-snackbar,
+.error-snackbar,
+.warning-snackbar,
+.info-snackbar {
+  @apply text-skin-link;
 }
 
 .success-snackbar button,
 .error-snackbar button,
-.warning-snackbar button {
-  @apply text-white;
+.warning-snackbar button,
+.info-snackbar button {
+  @apply text-skin-link;
 }
 
 
 /* Block code styles */
 .code-toolbar {
-  @apply relative z-20;
+  @apply relative z-20 text-sm lg:text-lg;
 }
 
 .toolbar {
-  @apply flex absolute top-2.5 right-2.5 h-7;
+  @apply flex absolute top-2.5 right-2.5 text-skin-muted hover:text-skin-border h-5 lg:h-7;
 }
 
 .toolbar-item {
-  @apply text-skin-muted hover:text-skin-border first-of-type:z-0 last-of-type:z-10;
+  @apply first-of-type:z-10 last-of-type:z-0;
 }
 
 .toolbar-item button {

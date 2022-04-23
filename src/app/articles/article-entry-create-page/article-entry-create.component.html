@@ -177,20 +177,20 @@
                             <div *ngIf="activeTab === 'editor'">
                                 <textarea (keyup)="typeInEditor(getValue($event))" formControlName="content"
                                     id="content" required
-                                    class="editor-textarea bg-white text-lg text-skin-base p-4 h-screen w-full"
+                                    class="editor-textarea bg-white text-lg text-skin-base p-4 w-full"
                                     placeholder="{{ 'articleEntryEdit.articleContentPlaceholder' | translate }}">
                                 </textarea>
                             </div>
 
                             <div *ngIf="activeTab === 'preview'"
-                                class="markdown-preview-container bg-skin-bg min-h-screen w-full p-4">
+                                class="markdown-preview-container bg-skin-bg w-full p-4">
                                 <markdown [data]="content?.value"
                                     class="prose max-w-none text-xl prose-headings:text-skin-inverted prose-headings:text-2xl lg:prose-headings:text-4xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base">
                                 </markdown>
                             </div>
 
                             <div *ngIf="activeTab === 'help'"
-                                class="help-container h-full bg-skin-card min-h-screen p-4 prose max-w-none text-xl prose-headings:text-skin-inverted prose-headings:text-2xl lg:prose-headings:text-4xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base">
+                                class="help-container bg-skin-card p-4 prose max-w-none text-xl prose-headings:text-skin-inverted prose-headings:text-2xl lg:prose-headings:text-4xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base">
                                 <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
                                 <p>
                                     {{'articleEntryEdit.helpSubTitle' | translate}}

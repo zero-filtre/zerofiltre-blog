@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
+import { BehaviorSubject, map, mergeMap, Observable, of, pluck, shareReplay, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Article, Author, Tag } from './article.model';
 
@@ -9,6 +9,7 @@ import { Article, Author, Tag } from './article.model';
 })
 export class ArticleService {
   readonly apiServerUrl = environment.apiBaseUrl;
+  private articleAuthorId!: string;
 
   private articleSubject$ = new BehaviorSubject<Article[]>([]);
   public articles$: Observable<Article[]> = this.articleSubject$.asObservable();
@@ -109,5 +110,16 @@ export class ArticleService {
   public addReactionToAnArticle(articleId: string, action: string): Observable<any> {
     return this.http.post<string>(`${this.apiServerUrl}/reaction?articleId=${articleId}&action=${action}`, {})
       .pipe(shareReplay());
+  }
+
+  public canEditArticle(currentUsrId: any, articleId: any, isAdminUser: boolean): Observable<any> {
+    return this.findArticleById(articleId)
+      .pipe(
+        tap((article: Article) => {
+          this.articleAuthorId = article?.author?.id!
+        }),
+        mergeMap(_ => of(currentUsrId === this.articleAuthorId || isAdminUser)),
+        shareReplay()
+      )
   }
 }
