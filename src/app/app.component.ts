@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, shareReplay } from 'rxjs';
@@ -15,7 +15,11 @@ declare var Prism: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent implements OnInit {
+  @HostListener('click', ['$event']) onClick(event: any) {
+    this.logCopySuccessMessage(event)
+  }
+
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])
     .pipe(
@@ -37,7 +41,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private router: Router,
     public authService: AuthService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
   ) {
     this.setBrowserTranslationConfigs();
   }
@@ -71,10 +75,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.translate.use(language);
   }
 
-  public alertCopy() {
-    this.messageService.openSnackBarWarning('Code Copied', '');
-  }
-
   public seeMyInfos() {
     this.activePage = this.MY_ACCOUNT;
   }
@@ -87,23 +87,14 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.activePage = this.MY_ARTICLES;
   }
 
-  public addClickEvents() {
-    const copyToClipboardButtons = (document as any).querySelectorAll(
-      '.copy-to-clipboard-button'
-    );
-    console.log('BTNS: ', copyToClipboardButtons)
-    const logMessage = () => {
-      console.log('CLICKED')
+  public logCopySuccessMessage(event: any) {
+    if (event.target.innerText === 'Copy' && event.target.parentElement.className === 'copy-to-clipboard-button') {
       this.messageService.codeCopied();
     }
-
-    copyToClipboardButtons.forEach((btn: any) => {
-      btn.addEventListener('click', logMessage)
-    });
   }
 
   public loadCopyToClipboardSvg() {
-    Prism.plugins.toolbar.registerButton('copy-code', function (env: any) {
+    Prism.plugins.toolbar.registerButton('copy-code', function (_env: any) {
       const svgButton = document.createElement('button');
       svgButton.classList.add('copy-to-clipboard-svg');
 
@@ -127,9 +118,5 @@ export class AppComponent implements OnInit, AfterViewChecked {
     if (isPlatformServer(this.platformId)) {
       this.fileUploadService.xToken$.subscribe();
     }
-  }
-
-  ngAfterViewChecked(): void {
-    this.addClickEvents();
   }
 }
