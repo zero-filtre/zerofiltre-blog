@@ -19,7 +19,7 @@ export const fr = {
         allArticles: 'Tous les articles',
         tags: 'Tags',
         resendAccountConfirmationLinkText: 'Renvoyer le message de confirmation',
-        authorRouteError: 'Vous ne pouvez pas acceder à cette page!',
+        authorRouteError: 'Vous ne pouvez pas acceder à cette page !',
         codeCopied: 'Code copié !'
     },
     navbar: {
