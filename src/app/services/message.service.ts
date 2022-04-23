@@ -132,6 +132,6 @@ export class MessageService {
 
   codeCopied() {
     const msg = this.translate.instant('app.codeCopied');
-    this.openSnackBarInfo(msg, '', 2, 'center');
+    this.openSnackBarInfo(msg, '', 1, 'center');
   }
 }
