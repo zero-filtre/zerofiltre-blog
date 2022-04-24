@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, shareReplay } from 'rxjs';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
+import { AddTargetToExternalLinks } from './services/utilities.service';
 import { AuthService } from './user/auth.service';
 
 declare var Prism: any;
@@ -17,7 +18,6 @@ declare var Prism: any;
 })
 export class AppComponent implements OnInit {
   @HostListener('click', ['$event']) onClick(event: any) {
-    console.log(event.target)
     this.logCopySuccessMessage(event)
   }
 
@@ -109,11 +109,14 @@ export class AppComponent implements OnInit {
     });
   }
 
+
+
   ngOnInit(): void {
     this.activePage = this.MY_ACCOUNT;
 
     if (isPlatformBrowser(this.platformId)) {
       this.loadCopyToClipboardSvg();
+      (window as any).onload = AddTargetToExternalLinks();
     }
 
     if (isPlatformServer(this.platformId)) {
