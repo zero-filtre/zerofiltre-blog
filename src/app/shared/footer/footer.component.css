@@ -10,6 +10,10 @@
   @apply text-xs lg:text-sm mb-3;
 }
 
+.useful-links li > a:first-child {
+  @apply hover:text-skin-borderBold;
+}
+
 .services,
 .achievments,
 .articles,
