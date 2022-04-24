@@ -153,7 +153,7 @@
                                 </div>
                             </div>
 
-                            <div
+                            <div *ngIf="activeTab === 'editor'"
                                 class="relative cursor-pointer inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-link transition-all duration-200">
                                 <input class="sr-only" (change)="onFileSelected($event, 'editorImage')" type="file"
                                     id="editorFileUpload" name="editorFileUpload" #editorFileUpload accept="image/*">
