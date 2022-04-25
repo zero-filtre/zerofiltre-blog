@@ -493,11 +493,12 @@
                     <div class="similar-articles flex justify-center lg:justify-start">
                         <div class="wrapper">
                             <ng-container *ngFor="let article of similarArticles">
-                                <a routerLink="/articles/{{article.id}}" class="mt-3 flex items-center space-x-2">
+                                <a routerLink="/articles/{{article.id}}"
+                                    class="first-of-type:mt-0 mt-3 flex items-center space-x-2">
                                     <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{article?.thumbnail}}"
                                         alt="{{article?.title}}">
                                     <span
-                                        class="text-sm font-black leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2 transition-all duration-200">
+                                        class="text-sm font-semibold leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2 transition-all duration-200">
                                         {{article?.title}}
                                     </span>
                                 </a>
