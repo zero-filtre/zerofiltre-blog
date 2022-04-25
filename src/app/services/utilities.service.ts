@@ -89,9 +89,13 @@ export function nFormatter(num: number): string {
   return num.toString();
 }
 
-export function AddTargetToExternalLinks() {
+export function AddTargetToExternalLinks(): void {
   for (let anchors = document.querySelectorAll('a'), i = 0; i < anchors.length; i++) {
     let b = anchors[i];
     b.target = '_blank'
   }
 }
+
+export function getCurrentYear(): number {
+  return new Date().getFullYear();
+};
