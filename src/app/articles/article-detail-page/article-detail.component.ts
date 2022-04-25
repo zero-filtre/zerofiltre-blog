@@ -98,7 +98,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
-          this.fetchSimilarArticles();
+          // this.fetchSimilarArticles();
           this.loading = false;
         },
         error: (_error: HttpErrorResponse) => {
