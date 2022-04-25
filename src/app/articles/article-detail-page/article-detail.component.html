@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center" *appShellRender>
+<div class="flex justify-center items-center min-h-screen" *appShellRender>
     <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
         width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
         <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="10" r="35"
@@ -490,17 +490,19 @@
                         class="text-sm lg:text-base text-center lg:text-left leading-4 uppercase text-skin-text font-semibold">
                         {{'articleDetail.similarArticles' | translate}}
                     </h2>
-                    <div class="similar-articles">
-                        <ng-container *ngFor="let article of similarArticles">
-                            <a routerLink="/articles/{{article.id}}" class="mt-3 flex items-center space-x-2">
-                                <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{article?.thumbnail}}"
-                                    alt="{{article?.title}}">
-                                <span
-                                    class="text-sm font-black leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2 transition-all duration-200">
-                                    {{article?.title}}
-                                </span>
-                            </a>
-                        </ng-container>
+                    <div class="similar-articles flex justify-center lg:justify-start">
+                        <div class="wrapper">
+                            <ng-container *ngFor="let article of similarArticles">
+                                <a routerLink="/articles/{{article.id}}" class="mt-3 flex items-center space-x-2">
+                                    <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{article?.thumbnail}}"
+                                        alt="{{article?.title}}">
+                                    <span
+                                        class="text-sm font-black leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2 transition-all duration-200">
+                                        {{article?.title}}
+                                    </span>
+                                </a>
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
 
