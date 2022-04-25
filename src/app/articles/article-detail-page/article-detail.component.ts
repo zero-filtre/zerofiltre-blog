@@ -98,7 +98,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
-          // this.fetchSimilarArticles();
+          this.fetchSimilarArticles();
           this.loading = false;
         },
         error: (_error: HttpErrorResponse) => {
@@ -121,19 +121,21 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           const randomIndexes = <any>[]
           const selectedArticles = []
 
-          const filteredArticles = content.filter((article: Article) => article.id !== this.article.id)
+          const filteredArticles = content
+            .filter((article: Article) => article.id !== this.article.id)
+            .slice(0, maxArticles);
 
-          for (let i = 0; i < maxArticles; i++) {
-            const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
-            if (randomIndexes.includes(randomArticleIndex)) {
-              maxArticles += 1
-            } else {
-              randomIndexes.push(randomArticleIndex)
-              selectedArticles.push(filteredArticles[randomArticleIndex])
-            }
-          }
+          // for (let i = 0; i < maxArticles; i++) {
+          //   const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+          //   if (randomIndexes.includes(randomArticleIndex)) {
+          //     maxArticles += 1
+          //   } else {
+          //     randomIndexes.push(randomArticleIndex)
+          //     selectedArticles.push(filteredArticles[randomArticleIndex])
+          //   }
+          // }
 
-          this.similarArticles = selectedArticles;
+          this.similarArticles = filteredArticles;
         }
       })
   }
