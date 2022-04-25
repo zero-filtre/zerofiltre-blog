@@ -41,7 +41,7 @@ export class AuthorGuard implements CanActivate {
       .pipe(
         tap((canEdit) => {
           if (!canEdit) {
-            this.messageService.authorRoleError();
+            this.messageService.authorRouteError();
           }
         })
       )

@@ -29,7 +29,7 @@
                 </nav>
 
                 <div *ngIf="openedTagsDropdown"
-                    class="tagList-container lg:hidden flex flex-wrap justify-center absolute z-30 top-full gap-1.5 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%] bg-skin-cardMuted border shadow-lg rounded-2xl overflow-y-scroll no-scrollbar">
+                    class="tagList-container lg:hidden flex flex-wrap justify-center absolute z-30 top-full gap-1.5 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%] bg-skin-bgMuted border shadow-2xl rounded-2xl overflow-y-scroll no-scrollbar">
                     <ng-container *ngFor="let tag of tagList">
                         <button (click)="sortByTag(tag.name)" type="button" aria-current="false"
                             class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">

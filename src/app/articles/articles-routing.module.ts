@@ -21,4 +21,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [AuthGuard, AuthorGuard],
 })
-export class ArticlesRoutingModule {}
+export class ArticlesRoutingModule { }

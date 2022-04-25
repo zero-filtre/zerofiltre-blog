@@ -47,7 +47,7 @@ export class MessageService {
   // For non authenticated requests
   authError(state: any) {
     const msg = this.translate.instant('login.authErrorMessage')
-    this.openSnackBarError(msg, this.OK, 0);
+    this.openSnackBarError(msg, this.OK);
     this.router.navigate(['/login'], { queryParams: { 'redirectURL': state.url } });
   }
 
@@ -59,18 +59,19 @@ export class MessageService {
   // When logging In
   loginError() {
     const msg = this.translate.instant('login.loginFailedMessage');
-    this.openSnackBarError(msg, this.OK, 0);
+    this.openSnackBarError(msg, this.OK);
   }
 
   loadUserFailed() {
     const msg = this.translate.instant('login.loadUserFailedMessage');
-    this.openSnackBarError(msg, this.OK, 0);
+    this.openSnackBarError(msg, this.OK);
   }
 
   // If not the author
-  authorRoleError() {
+  authorRouteError() {
     const msg = this.translate.instant('app.authorRouteError');
     this.openSnackBarError(msg, this.OK);
+    this.router.navigateByUrl('/');
   }
 
   // Email notification on signup success
@@ -106,12 +107,12 @@ export class MessageService {
 
   updateProfileSuccess() {
     const msg = this.translate.instant('profile.updateSuccessMessage');
-    this.openSnackBarSuccess(msg, this.OK, 0);
+    this.openSnackBarSuccess(msg, this.OK);
   }
 
   badSocialLinksFormat() {
     const msg = this.translate.instant('profileEdit.invalidSocialLinkMessage');
-    this.openSnackBarWarning(msg, this.OK, 0);
+    this.openSnackBarWarning(msg, this.OK);
   }
 
   fileSizeWarning(maxSize: number) {
@@ -121,12 +122,12 @@ export class MessageService {
 
   fileTypeWarning() {
     const msg = this.translate.instant('fileUpload.typeWarningMessage');
-    this.openSnackBarWarning(msg, this.OK, 0)
+    this.openSnackBarWarning(msg, this.OK)
   }
 
   fileUploadAuthError() {
     const msg = this.translate.instant('fileUpload.AuthError');
-    this.openSnackBarError(msg, this.OK, 0);
+    this.openSnackBarError(msg, this.OK);
   }
 
   codeCopied() {
