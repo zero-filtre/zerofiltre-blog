@@ -484,7 +484,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="similarArticles.length"
+                <div *ngIf="similarArticles?.length"
                     class="related-articles lg:order-none pt-6 space-y-6 border-t border-skin-border">
                     <h2
                         class="text-sm lg:text-base text-center lg:text-left leading-4 uppercase text-skin-text font-semibold">
@@ -493,7 +493,7 @@
                     <div class="similar-articles flex justify-center lg:justify-start">
                         <div class="wrapper">
                             <ng-container *ngFor="let article of similarArticles">
-                                <a routerLink="/articles/{{article.id}}"
+                                <a routerLink="/articles/{{article?.id}}"
                                     class="first-of-type:mt-0 mt-3 flex items-center space-x-2">
                                     <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{article?.thumbnail}}"
                                         alt="{{article?.title}}">
