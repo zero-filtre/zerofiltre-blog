@@ -36,7 +36,7 @@
 
 .site-container {
   /* max-width: 100rem;  */
-  max-width: 95rem; 
+  max-width: 95rem;
   @apply mx-auto px-5 xl:px-[5%];
 }
 
@@ -125,43 +125,39 @@
   @apply text-skin-link;
 }
 
-
 /* Block code styles */
 .code-toolbar {
   @apply relative z-20 text-sm lg:text-lg;
 }
 
 .toolbar {
-  @apply flex absolute top-2.5 right-2.5 text-skin-muted hover:text-skin-border h-5 lg:h-7 overflow-hidden;
+  @apply flex absolute top-2.5 right-2.5 text-skin-muted hover:text-skin-border overflow-hidden;
 }
 
 .toolbar-item {
   @apply first-of-type:z-10 last-of-type:z-0;
+  /* @apply first-of-type:bg-red-400 last-of-type:bg-blue-400; */
+  @apply last-of-type:absolute inset-0;
+  @apply first-of-type:opacity-0;
 }
 
 .toolbar-item button {
-  @apply h-full
+  @apply text-sm h-full;
 }
-
-.toolbar-item .copy-to-clipboard-button {
-  @apply text-sm absolute inset-0 opacity-0
-}
-
 
 /* Markdown preview styles */
 .markdown-content {
-  @apply marker:text-primary-500
+  @apply marker:text-primary-500;
 }
 
 .markdown-content li {
-  @apply pl-0 lg:pl-1
+  @apply pl-0 lg:pl-1;
 }
 
 .markdown-content li > p {
-  @apply m-0
+  @apply m-0;
 }
 
 /* .markdown-content:first-child {
   @apply prose-lg lg:prose-xl max-w-none prose-headings:text-skin-inverted prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base
 } */
-
