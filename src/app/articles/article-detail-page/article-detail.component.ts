@@ -122,15 +122,17 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           const filteredArticles = content
             .filter((article: Article) => article.id !== this.article.id)
 
-          const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
-          selectedArticles.push(filteredArticles[randomArticleIndex])
+          if (filteredArticles.length) {
+            const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+            selectedArticles.push(filteredArticles[randomArticleIndex])
 
-          const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
-          if (newRandomArticleIndex !== randomArticleIndex) {
-            selectedArticles.push(filteredArticles[newRandomArticleIndex])
+            const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+            if (newRandomArticleIndex !== randomArticleIndex) {
+              selectedArticles.push(filteredArticles[newRandomArticleIndex])
+            }
           }
 
-          this.similarArticles = selectedArticles;
+          this.similarArticles = [...selectedArticles];
         }
       })
   }

@@ -1,6 +1,12 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, shareReplay } from 'rxjs';
@@ -18,7 +24,7 @@ declare var Prism: any;
 })
 export class AppComponent implements OnInit {
   @HostListener('click', ['$event']) onClick(event: any) {
-    this.logCopySuccessMessage(event)
+    this.logCopySuccessMessage(event);
   }
 
   public isHandset$: Observable<boolean> = this.breakpointObserver
@@ -42,7 +48,7 @@ export class AppComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     public authService: AuthService,
-    private fileUploadService: FileUploadService,
+    private fileUploadService: FileUploadService
   ) {
     this.setBrowserTranslationConfigs();
   }
@@ -89,7 +95,11 @@ export class AppComponent implements OnInit {
   }
 
   public logCopySuccessMessage(event: any) {
-    if (event.target.innerText === 'Copy' || event.target.className === 'copy-to-clipboard-button' || event.target.parentElement.className === 'copy-to-clipboard-button') {
+    if (
+      event.target.innerText === 'Copy' ||
+      event.target.className === 'copy-to-clipboard-button' ||
+      event.target.parentElement.className === 'copy-to-clipboard-button'
+    ) {
       this.messageService.codeCopied();
     }
   }
@@ -108,8 +118,6 @@ export class AppComponent implements OnInit {
       return svgButton;
     });
   }
-
-
 
   ngOnInit(): void {
     this.activePage = this.MY_ACCOUNT;
