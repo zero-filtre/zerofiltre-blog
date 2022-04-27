@@ -14,20 +14,20 @@
     </div>
 
     <ul>
-      <a (click)="drawer.close()" class="sidenavLink" routerLink="/a-propos">
+      <a (click)="drawer.close()" class="sidenavLink" routerLink="/">
         <div>{{'navbar.about' | translate}}</div>
       </a>
 
       <a (click)="drawer.close()" class="sidenavLink" routerLink="/">
-        <div>Cours</div>
+        <div>{{'navbar.courses' | translate}}</div>
       </a>
 
       <a (click)="drawer.close()" class="sidenavLink" routerLink="/articles">
-        <div>Blog</div>
+        <div>{{'navbar.blog' | translate}}</div>
       </a>
 
       <a (click)="drawer.close()" class="sidenavLink" href="https://zerofiltre.tech" target="_blank">
-        <div>Portfolio</div>
+        <div>{{'navbar.portfolio' | translate}}</div>
       </a>
 
       <a *ngIf="!(authService.currentUsr)" (click)="drawer.close()" class="sidenavLink" routerLink="/login">
@@ -84,20 +84,20 @@
         </a>
 
         <div class="navbar-links hidden lg:flex items-center text-secondary">
-          <a class="navLink" routerLink="/a-propos">
+          <a class="navLink" routerLink="/">
             <div>{{'navbar.about' | translate}}</div>
           </a>
 
           <a class="navLink" routerLink="/">
-            <div>Cours</div>
+            <div>{{'navbar.courses' | translate}}</div>
           </a>
 
           <a class="navLink" routerLink="/articles">
-            <div>Blog</div>
+            <div>{{'navbar.blog' | translate}}</div>
           </a>
 
           <a class="navLink" href="https://zerofiltre.tech" target="_blank">
-            <div>Portfolio</div>
+            <div>{{'navbar.portfolio' | translate}}</div>
           </a>
 
           <ng-container class="navbar-links-hidden-on-server-rendering" *appShellNoRender>

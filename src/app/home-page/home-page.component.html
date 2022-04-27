@@ -1,3 +1,199 @@
-<div class="container text-center grid h-96 place-items-center">
-    <h1 class="text-5xl">Welcome to the {{title}} Blog home page! </h1>
-</div>
+<main>
+    <div class="overflow-hidden text-skin-text -mt-32 pt-32">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 pt-16 lg:pt-9 xl:pt-20 pb-16">
+            <div class="sm:mb-24 xl:mb-32 lg:flex">
+                <div
+                    class="text-block flex-none relative z-10 flex flex-col items-start lg:pt-10 max-w-screen-sm mx-auto lg:max-w-2xl lg:mx-0 lg:pr-20 mb-12 sm:mb-16 lg:mb-0">
+                    <h1
+                        class="order-1 text-3xl sm:text-5xl sm:leading-none font-extrabold tracking-tight text-white mb-4">
+                        <span class="text-primary-500">Cours UI components,</span> crafted with Tailwind CSS
+                    </h1>
+
+                    <p class="order-2 leading-relaxed mb-8">Over 500+ professionally designed, fully responsive,
+                        expertly crafted component examples you can drop into your Tailwind projects and customize to
+                        your heart’s content. Get started by checking out our free preview components, or browsing all
+                        of the examples in the categories you're most curious about.
+                    </p>
+
+                    <div class="order-2 w-full text-center grid grid-cols-1 gap-3 sm:flex sm:gap-0 sm:space-x-6">
+                        <a routerLink="/"
+                            class="text-sm font-semibold bg-white text-gray-900 py-3 px-4 rounded-lg hover:bg-gray-300 hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">
+                            Allons-y
+                        </a>
+                        <a routerLink="/"
+                            class="text-sm font-semibold bg-gray-800 text-gray-300 py-3 px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">
+                            À la decouverte
+                        </a>
+                    </div>
+                </div>
+
+                <div class="aside-block relative max-w-screen-sm mx-auto lg:max-w-none lg:-ml-12 lg:mr-0 xl:-ml-6">
+                    <img src="/img/beams.jpg" alt=""
+                        class="absolute top-[-20%] sm:top-[-40%] transform translate-x-[-34%] w-[40.312rem] sm:w-[60.5rem] max-w-none">
+                    <svg aria-hidden="true" viewBox="0 0 900 589"
+                        class="w-[135%] sm:w-[56.25rem] overflow-visible relative lg:absolute lg:top-0 lg:left-0 mx-auto lg:mx-0 mb-[-17%] sm:-mb-44 lg:mb-0">
+                        <defs>
+                            <linearGradient id="hero-gradient" gradientTransform="rotate(90)">
+                                <stop offset="0%" stop-color="white"></stop>
+                                <stop offset="80%" stop-color="white" stop-opacity="0.2"></stop>
+                                <stop offset="100%" stop-color="black" stop-opacity="0"></stop>
+                            </linearGradient>
+                            <mask id="hero-mask">
+                                <rect x="-32" y="-32" width="964" height="653" fill="url(#hero-gradient)"></rect>
+                            </mask>
+                            <clipPath id="one">
+                                <rect width="560" height="265" rx="6"></rect>
+                                <rect width="308" height="218" x="592" rx="6"></rect>
+                                <rect width="236" height="241" x="592" y="250" rx="6"></rect>
+                                <rect width="476" height="356" x="84" y="297" rx="6"></rect>
+                            </clipPath>
+                        </defs>
+                        <g mask="url(#hero-mask)">
+                            <rect width="777" height="605" x="68.5" y="-15.5" rx="6" stroke="rgba(128, 135, 149, 0.2)"
+                                fill="none" vector-effect="non-scaling-stroke"></rect>
+                            <line vector-effect="non-scaling-stroke" x1="576" x2="576" y1="-15" y2="605"
+                                stroke="rgba(128, 135, 149, 0.2)"></line>
+                            <line vector-effect="non-scaling-stroke" x1="68.5" x2="576" y1="281" y2="281"
+                                stroke="rgba(128, 135, 149, 0.2)"></line>
+                            <line vector-effect="non-scaling-stroke" x1="576" x2="845.5" y1="234" y2="234"
+                                stroke="rgba(128, 135, 149, 0.2)"></line>
+                            <image width="900" height="621" clip-path="url(#one)" href="/img/hero.jpg"></image>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overflow-hidden text-skin-text -mt-32 pt-32">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 pt-16 lg:pt-9 xl:pt-20 pb-16">
+            <div class="sm:mb-24 xl:mb-32 lg:flex">
+                <div
+                    class="text-block flex-none relative z-10 flex flex-col items-start lg:pt-10 max-w-screen-sm mx-auto lg:max-w-2xl lg:mx-0 lg:pr-20 mb-12 sm:mb-16 lg:mb-0">
+                    <h1
+                        class="order-1 text-3xl sm:text-5xl sm:leading-none font-extrabold tracking-tight text-white mb-4">
+                        <span class="text-primary-500">Blog UI components,</span> crafted with Tailwind CSS
+                    </h1>
+
+                    <p class="order-2 leading-relaxed mb-8">Over 500+ professionally designed, fully responsive,
+                        expertly crafted component examples you can drop into your Tailwind projects and customize to
+                        your heart’s content. Get started by checking out our free preview components, or browsing all
+                        of the examples in the categories you're most curious about.
+                    </p>
+
+                    <div class="order-2 w-full text-center grid grid-cols-1 gap-3 sm:flex sm:gap-0 sm:space-x-6">
+                        <a routerLink="/"
+                            class="text-sm font-semibold bg-white text-gray-900 py-3 px-4 rounded-lg hover:bg-gray-300 hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">
+                            Allons-y
+                        </a>
+                        <a routerLink="/"
+                            class="text-sm font-semibold bg-gray-800 text-gray-300 py-3 px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">
+                            À la decouverte
+                        </a>
+                    </div>
+                </div>
+
+                <div class="aside-block relative max-w-screen-sm mx-auto lg:max-w-none lg:-ml-12 lg:mr-0 xl:-ml-6">
+                    <img src="/img/beams.jpg" alt=""
+                        class="absolute top-[-20%] sm:top-[-40%] transform translate-x-[-34%] w-[40.312rem] sm:w-[60.5rem] max-w-none">
+                    <svg aria-hidden="true" viewBox="0 0 900 589"
+                        class="w-[135%] sm:w-[56.25rem] overflow-visible relative lg:absolute lg:top-0 lg:left-0 mx-auto lg:mx-0 mb-[-17%] sm:-mb-44 lg:mb-0">
+                        <defs>
+                            <linearGradient id="hero-gradient" gradientTransform="rotate(90)">
+                                <stop offset="0%" stop-color="white"></stop>
+                                <stop offset="80%" stop-color="white" stop-opacity="0.2"></stop>
+                                <stop offset="100%" stop-color="black" stop-opacity="0"></stop>
+                            </linearGradient>
+                            <mask id="hero-mask">
+                                <rect x="-32" y="-32" width="964" height="653" fill="url(#hero-gradient)"></rect>
+                            </mask>
+                            <clipPath id="one">
+                                <rect width="560" height="265" rx="6"></rect>
+                                <rect width="308" height="218" x="592" rx="6"></rect>
+                                <rect width="236" height="241" x="592" y="250" rx="6"></rect>
+                                <rect width="476" height="356" x="84" y="297" rx="6"></rect>
+                            </clipPath>
+                        </defs>
+                        <g mask="url(#hero-mask)">
+                            <rect width="777" height="605" x="68.5" y="-15.5" rx="6" stroke="rgba(128, 135, 149, 0.2)"
+                                fill="none" vector-effect="non-scaling-stroke"></rect>
+                            <line vector-effect="non-scaling-stroke" x1="576" x2="576" y1="-15" y2="605"
+                                stroke="rgba(128, 135, 149, 0.2)"></line>
+                            <line vector-effect="non-scaling-stroke" x1="68.5" x2="576" y1="281" y2="281"
+                                stroke="rgba(128, 135, 149, 0.2)"></line>
+                            <line vector-effect="non-scaling-stroke" x1="576" x2="845.5" y1="234" y2="234"
+                                stroke="rgba(128, 135, 149, 0.2)"></line>
+                            <image width="900" height="621" clip-path="url(#one)" href="/img/hero.jpg"></image>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overflow-hidden text-skin-text -mt-32 pt-32">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 pt-16 lg:pt-9 xl:pt-20 pb-16">
+            <div class="sm:mb-24 xl:mb-32 lg:flex">
+                <div
+                    class="text-block flex-none relative z-10 flex flex-col items-start lg:pt-10 max-w-screen-sm mx-auto lg:max-w-2xl lg:mx-0 lg:pr-20 mb-12 sm:mb-16 lg:mb-0">
+                    <h1
+                        class="order-1 text-3xl sm:text-5xl sm:leading-none font-extrabold tracking-tight text-white mb-4">
+                        <span class="text-primary-500">Portfolio UI components,</span> crafted with Tailwind CSS
+                    </h1>
+
+                    <p class="order-2 leading-relaxed mb-8">Over 500+ professionally designed, fully responsive,
+                        expertly crafted component examples you can drop into your Tailwind projects and customize to
+                        your heart’s content. Get started by checking out our free preview components, or browsing all
+                        of the examples in the categories you're most curious about.
+                    </p>
+
+                    <div class="order-2 w-full text-center grid grid-cols-1 gap-3 sm:flex sm:gap-0 sm:space-x-6">
+                        <a routerLink="/"
+                            class="text-sm font-semibold bg-white text-gray-900 py-3 px-4 rounded-lg hover:bg-gray-300 hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">
+                            Allons-y
+                        </a>
+                        <a routerLink="/"
+                            class="text-sm font-semibold bg-gray-800 text-gray-300 py-3 px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">
+                            À la decouverte
+                        </a>
+                    </div>
+                </div>
+
+                <div class="aside-block relative max-w-screen-sm mx-auto lg:max-w-none lg:-ml-12 lg:mr-0 xl:-ml-6">
+                    <img src="/img/beams.jpg" alt=""
+                        class="absolute top-[-20%] sm:top-[-40%] transform translate-x-[-34%] w-[40.312rem] sm:w-[60.5rem] max-w-none">
+                    <svg aria-hidden="true" viewBox="0 0 900 589"
+                        class="w-[135%] sm:w-[56.25rem] overflow-visible relative lg:absolute lg:top-0 lg:left-0 mx-auto lg:mx-0 mb-[-17%] sm:-mb-44 lg:mb-0">
+                        <defs>
+                            <linearGradient id="hero-gradient" gradientTransform="rotate(90)">
+                                <stop offset="0%" stop-color="white"></stop>
+                                <stop offset="80%" stop-color="white" stop-opacity="0.2"></stop>
+                                <stop offset="100%" stop-color="black" stop-opacity="0"></stop>
+                            </linearGradient>
+                            <mask id="hero-mask">
+                                <rect x="-32" y="-32" width="964" height="653" fill="url(#hero-gradient)"></rect>
+                            </mask>
+                            <clipPath id="one">
+                                <rect width="560" height="265" rx="6"></rect>
+                                <rect width="308" height="218" x="592" rx="6"></rect>
+                                <rect width="236" height="241" x="592" y="250" rx="6"></rect>
+                                <rect width="476" height="356" x="84" y="297" rx="6"></rect>
+                            </clipPath>
+                        </defs>
+                        <g mask="url(#hero-mask)">
+                            <rect width="777" height="605" x="68.5" y="-15.5" rx="6" stroke="rgba(128, 135, 149, 0.2)"
+                                fill="none" vector-effect="non-scaling-stroke"></rect>
+                            <line vector-effect="non-scaling-stroke" x1="576" x2="576" y1="-15" y2="605"
+                                stroke="rgba(128, 135, 149, 0.2)"></line>
+                            <line vector-effect="non-scaling-stroke" x1="68.5" x2="576" y1="281" y2="281"
+                                stroke="rgba(128, 135, 149, 0.2)"></line>
+                            <line vector-effect="non-scaling-stroke" x1="576" x2="845.5" y1="234" y2="234"
+                                stroke="rgba(128, 135, 149, 0.2)"></line>
+                            <image width="900" height="621" clip-path="url(#one)" href="/img/hero.jpg"></image>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

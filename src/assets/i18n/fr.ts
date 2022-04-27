@@ -29,6 +29,9 @@ export const fr = {
         register: "S'enregistrer",
         myProfile: 'Mon profil',
         logout: 'Se déconnecter',
+        courses: 'Cours',
+        blog: 'Blog',
+        portfolio: 'portfolio'
     },
     sidebar: {
         myInfos: 'Mon compte',
