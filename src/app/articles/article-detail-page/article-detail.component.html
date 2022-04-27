@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center min-h-screen" *appShellRender>
+<div class="flex justify-center items-center min-h-[75vh]" *appShellRender>
     <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
         width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
         <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="10" r="35"
@@ -271,7 +271,7 @@
                     <div class="author-socialLinks flex items-center justify-center lg:justify-start gap-2">
                         <a *ngIf="authorHasSocialLinkFor('LINKEDIN')" target="_blank"
                             href="{{authorPlatformLink('LINKEDIN')}}"
-                            class="order-1 text-skin-muted hover:text-[#0A66C2]">
+                            class="order-1 text-skin-muted hover:text-[#0A66C2] transition-all duration-200">
                             <span class="sr-only">LinkedIn</span>
                             <svg class="h-6 w-6 rounded-md" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
@@ -281,7 +281,7 @@
                         </a>
                         <a *ngIf="authorHasSocialLinkFor('GITHUB')" target="_blank"
                             href="{{authorPlatformLink('GITHUB')}}"
-                            class="order-2 text-skin-muted hover:text-[#181717]">
+                            class="order-2 text-skin-muted hover:text-[#181717] transition-all duration-200">
                             <span class="sr-only">GitHub</span>
                             <svg class="h-6 w-6" fill="currentColor" role="img" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -292,7 +292,7 @@
                         </a>
                         <a *ngIf="authorHasSocialLinkFor('TWITTER')" target="_blank"
                             href="{{authorPlatformLink('TWITTER')}}"
-                            class="order-3 text-skin-muted hover:text-[#1DA1F2]">
+                            class="order-3 text-skin-muted hover:text-[#1DA1F2] transition-all duration-200">
                             <span class="sr-only">Twitter</span>
                             <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
@@ -302,7 +302,7 @@
                         </a>
                         <a *ngIf="authorHasSocialLinkFor('STACKOVERFLOW')" target="_blank"
                             href="{{authorPlatformLink('STACKOVERFLOW')}}"
-                            class="order-5 text-skin-muted hover:text-[#F58025]">
+                            class="order-5 text-skin-muted hover:text-[#F58025] transition-all duration-200">
                             <span class="sr-only">stackoverflow</span>
                             <svg class="h-6 w-6 rounded-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                                 <path d="M28.16 32H2.475V20.58H5.32v8.575h19.956V20.58h2.884z" fill="currentColor" />
@@ -312,7 +312,7 @@
                             </svg>
                         </a>
                         <a *ngIf="article?.author?.website" target="_blank" href="{{article?.author?.website}}"
-                            class="order-4 text-skin-muted hover:text-primary-500">
+                            class="order-4 text-skin-muted hover:text-primary-500 transition-all duration-200">
                             <span class="sr-only">Website</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
