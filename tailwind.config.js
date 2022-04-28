@@ -14,7 +14,10 @@ module.exports = {
           100: "#f2feff",
         },
         secondary: "#052b5d",
-        accent: "#fdbc5a",
+        accent: {
+          500: '#fdbc5a',
+          400: '#ffbd59'
+        },
         error: "#f55f44",
         grays: "#eef1f4",
         skin: {

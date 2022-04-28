@@ -22,6 +22,9 @@ export const fr = {
         authorRouteError: 'Vous ne pouvez pas acceder à cette page !',
         codeCopied: 'Code copié !'
     },
+    home: {
+        explore: 'Explorer',
+    },
     navbar: {
         about: 'À propos',
         articles: 'Articles',
