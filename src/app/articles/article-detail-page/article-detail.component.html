@@ -63,7 +63,8 @@
 
                             <div class="">
                                 <div *ngIf="!authService.currentUsr">
-                                    <a routerLink="/" class="text-skin-base group flex w-full items-center space-x-1">
+                                    <a routerLink="/articles"
+                                        class="text-skin-base group flex w-full items-center space-x-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             class="group-hover:text-primary-500" data-supported-dps="24x24"
                                             fill="currentColor" width="24" height="24" focusable="false">
@@ -104,7 +105,7 @@
                                     </div>
 
                                     <div *ngIf="!isAuthor(currentUsr, article) && !authService.isAdmin">
-                                        <a routerLink="/"
+                                        <a routerLink="/articles"
                                             class="text-skin-base group flex w-full items-center space-x-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                 class="group-hover:text-primary-500" data-supported-dps="24x24"
@@ -198,7 +199,7 @@
                 </div>
 
                 <div class="article-socials-btns hidden lg:block mt-16 lg:w-fit mx-auto">
-                    <p class="text-base text-skin-base">
+                    <p class="text-base text-skin-base text-center">
                         {{ 'articleDetail.callToShareText' | translate }}
                     </p>
                     <div class="mt-4 space-y-4 flex items-end flex-wrap gap-2 sm:gap-0 sm:space-y-0 sm:space-x-4">
