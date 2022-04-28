@@ -3,7 +3,7 @@
 
 .top-toolbar-container {
   max-width: 95rem;
-  @apply mx-auto !px-5 xl:!px-[5%] flex justify-between bg-white;
+  @apply mx-auto !px-4 xl:!px-[5%] flex justify-between bg-white;
 }
 
 .top-toolbar .navLink {

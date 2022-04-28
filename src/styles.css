@@ -35,9 +35,8 @@
 }
 
 .site-container {
-  /* max-width: 100rem;  */
   max-width: 95rem;
-  @apply mx-auto px-5 xl:px-[5%];
+  @apply mx-auto px-4 xl:px-[5%];
 }
 
 .article-popup-panel {
