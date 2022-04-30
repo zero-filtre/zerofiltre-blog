@@ -1,1 +1,5 @@
-
+.landing-bg {
+  background-image: url("/assets/images/landing-bg-gray.png");
+  /* background-size: contain; */
+  /* background-size: cover; */
+}
