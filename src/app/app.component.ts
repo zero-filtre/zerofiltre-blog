@@ -7,9 +7,9 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { map, Observable, shareReplay } from 'rxjs';
+import { filter, map, Observable, shareReplay } from 'rxjs';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   public userBrowserLanguage!: string;
   public MY_ACCOUNT = 'Mon compte';
   public MY_ARTICLES = 'Mes articles';
-  public ALL_ARTICLES = 'Tous les articles';
+  public ALL_ARTICLES = 'Tous nos articles';
 
   public activePage = this.MY_ACCOUNT;
 
@@ -51,6 +51,13 @@ export class AppComponent implements OnInit {
     private fileUploadService: FileUploadService
   ) {
     this.setBrowserTranslationConfigs();
+
+    router.events.pipe(filter(event => event instanceof NavigationStart))
+      .subscribe(({ url }: any) => {
+        if (url === '/user/profile') this.activePage = this.MY_ACCOUNT;
+        if (url === '/user/dashboard') this.activePage = this.MY_ARTICLES;
+        if (url === '/user/dashboard/admin') this.activePage = this.ALL_ARTICLES;
+      });
   }
 
   public checkRouteUrl(): boolean {
