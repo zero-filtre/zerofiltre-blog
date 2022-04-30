@@ -11,6 +11,8 @@ import { ArticleService } from '../article.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { isPlatformBrowser } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-article-popup.component';
 
 @Component({
   selector: 'app-article-detail',
@@ -50,6 +52,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public maxNberOfReaction!: boolean;
 
   constructor(
+    private dialogRef: MatDialog,
     private route: ActivatedRoute,
     private articleService: ArticleService,
     private seo: SeoService,
@@ -176,6 +179,15 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         this.clapReactions.next(this.findTotalReactionByAction('CLAP', response));
         this.loveReactions.next(this.findTotalReactionByAction('LOVE', response));
         this.likeReactions.next(this.findTotalReactionByAction('LIKE', response));
+      }
+    });
+  }
+
+  public openArticleDeleteDialog(): void {
+    this.dialogRef.open(DeleteArticlePopupComponent, {
+      panelClass: 'delete-article-popup-panel',
+      data: {
+        id: this.articleId
       }
     });
   }

@@ -59,6 +59,11 @@
 .profile-image-popup-panel .mat-dialog-container {
   @apply !rounded-2xl bg-skin-bg sm:!min-w-[390px];
 }
+
+.delete-article-popup-panel .mat-dialog-container {
+  @apply !rounded-2xl bg-skin-bg;
+}
+
 /* .article-popup-backdrop {
 }
 

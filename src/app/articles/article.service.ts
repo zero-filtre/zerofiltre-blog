@@ -81,8 +81,9 @@ export class ArticleService {
   }
 
   public deleteArticle(articleId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/article/delete/${articleId}`)
-      .pipe(shareReplay());
+    return this.http.delete<void>(`${this.apiServerUrl}/article/${articleId}`, {
+      responseType: 'text' as 'json'
+    }).pipe(shareReplay());
   }
 
   public getListOfTags(): Observable<Tag[]> {

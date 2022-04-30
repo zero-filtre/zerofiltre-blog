@@ -97,10 +97,10 @@
                                                 class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                                                 <span>{{ 'articleDetail.edit' | translate }}</span>
                                             </a>
-                                            <a routerLink="#"
-                                                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                            <button (click)="openArticleDeleteDialog()"
+                                                class="block font-semibold text-skin-base w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                                                 <span>{{ 'articleDetail.delete' | translate }}</span>
-                                            </a>
+                                            </button>
                                         </mat-menu>
                                     </div>
 
