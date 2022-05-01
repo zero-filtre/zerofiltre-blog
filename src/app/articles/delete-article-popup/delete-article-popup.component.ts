@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { ArticleService } from '../article.service';
 
@@ -18,6 +19,7 @@ export class DeleteArticlePopupComponent implements OnInit {
     private messageService: MessageService,
     private articleService: ArticleService,
     private location: Location,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
@@ -31,7 +33,11 @@ export class DeleteArticlePopupComponent implements OnInit {
 
     this.articleService.deleteArticle(this.data.id).subscribe({
       next: (response: any) => {
-        this.location.back();
+        if (this.data.hasHistory) {
+          this.location.back();
+        } else {
+          this.router.navigateByUrl('/articles');
+        }
         this.messageService.openSnackBarSuccess(response, 'OK', 0);
         this.loading = false;
         this.dialogRef.close();

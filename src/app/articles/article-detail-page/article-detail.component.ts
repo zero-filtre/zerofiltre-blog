@@ -50,6 +50,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public articleSub!: Subscription;
   public loginToAddReaction!: boolean;
   public maxNberOfReaction!: boolean;
+  public hasHistory: boolean;
 
   constructor(
     private dialogRef: MatDialog,
@@ -59,7 +60,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     public authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: any
-  ) { }
+  ) {
+    this.hasHistory = this.router.navigated;
+  }
 
   public setDateFormat(date: any) {
     return formatDate(date)
@@ -187,7 +190,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.dialogRef.open(DeleteArticlePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
-        id: this.articleId
+        id: this.articleId,
+        hasHistory: this.hasHistory
       }
     });
   }

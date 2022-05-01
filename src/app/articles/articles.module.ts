@@ -8,7 +8,6 @@ import { SharedModule } from '../shared/shared.module';
 import { ArticleEntryPopupComponent } from './article-entry-popup/article-entry-popup.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { ArticleEntryCreateComponent } from './article-entry-create-page/article-entry-create.component';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ArticleItemComponent } from './article-item/article-item.component';
 import { ArticleListContainerComponent } from './article-list-container/article-list-container.component';
 import { DeleteArticlePopupComponent } from './delete-article-popup/delete-article-popup.component';
@@ -28,7 +27,6 @@ import { DeleteArticlePopupComponent } from './delete-article-popup/delete-artic
     SharedModule,
     ArticlesRoutingModule,
     MarkdownModule.forChild(),
-    NgMultiSelectDropDownModule.forRoot(),
   ]
 })
 export class ArticlesModule { }
