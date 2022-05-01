@@ -29,7 +29,7 @@ export class FooterComponent implements OnInit {
         map(({ content }: any) => {
           return content;
         }),
-        tap(console.log)
+        // tap(console.log)
       )
   }
 

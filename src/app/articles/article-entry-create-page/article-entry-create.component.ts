@@ -1,7 +1,6 @@
-import { isPlatformServer } from '@angular/common';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap, tap, throwError } from 'rxjs';
@@ -12,13 +11,14 @@ import { AuthService } from 'src/app/user/auth.service';
 import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
+import { FormArray } from '@angular/forms';
+
 @Component({
   selector: 'app-article-entry-create',
   templateUrl: './article-entry-create.component.html',
   styleUrls: ['./article-entry-create.component.css']
 })
 export class ArticleEntryCreateComponent implements OnInit {
-
   public file: File = {
     data: null,
     inProgress: false,
@@ -33,7 +33,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public article!: Article
   public articleId!: string;
   public articleTitle!: string;
-  public selectedTags: Tag[] = []
+  public articleTags: Tag[] = []
   public loading = false;
   public isSaving = false;
   public isPublishing = false;
@@ -46,16 +46,17 @@ export class ArticleEntryCreateComponent implements OnInit {
   private ThumbnailText$ = new Subject<string>();
 
   savedArticle$!: Observable<Article>;
-  dropdownSettings = {};
 
   public tagList!: Tag[];
   public savingMessage!: string;
   public isSaved!: boolean;
   public saveFailed!: boolean;
 
+  public tagsDropdownOpened!: boolean
+
 
   constructor(
-    private formuilder: FormBuilder,
+    private fb: FormBuilder,
     private articleService: ArticleService,
     private router: Router,
     private route: ActivatedRoute,
@@ -64,9 +65,12 @@ export class ArticleEntryCreateComponent implements OnInit {
     private seo: SeoService,
     public authService: AuthService,
     private translate: TranslateService,
-    @Inject(PLATFORM_ID) private platformId: any
   ) {
 
+  }
+
+  public openTagsDropdown() {
+    this.tagsDropdownOpened = !this.tagsDropdownOpened
   }
 
   public setActiveTab(tabName: string): void {
@@ -88,12 +92,14 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.articleService.findArticleById(this.articleId)
       .pipe(
         tap(art => {
+          this.articleTags = art.tags
+
           if (art.status === 'PUBLISHED') {
             this.isPublished = true;
           } else {
             this.isPublished = false;
           }
-        })
+        }),
       )
       .subscribe({
         next: (response: Article) => {
@@ -104,21 +110,25 @@ export class ArticleEntryCreateComponent implements OnInit {
           this.summary?.setValue(this.article.summary)
           this.thumbnail?.setValue(this.article.thumbnail)
           this.content?.setValue(this.article.content)
-          this.tags?.setValue(this.article.tags)
-          this.selectedTags = this.article.tags
+          // this.tags?.setValue(this.articleTags)
         },
         error: (_error: HttpErrorResponse) => { }
       })
   }
 
   public InitForm(): void {
-    this.form = this.formuilder.group({
+    this.form = this.fb.group({
       id: [null],
       title: ['', [Validators.required]],
       summary: ['', [Validators.required]],
       thumbnail: [''],
       content: ['', [Validators.required]],
-      tags: [[]]
+      tags: this.fb.array([])
+      // tags: this.fb.array([
+      //   { id: 1, name: "java", colorCode: "#4AC3CD" },
+      //   { id: 1, name: "java", colorCode: "#4AC3CD" },
+      //   { id: 1, name: "java", colorCode: "#4AC3CD" }
+      // ])
     })
   }
 
@@ -126,7 +136,27 @@ export class ArticleEntryCreateComponent implements OnInit {
   get summary() { return this.form.get('summary'); }
   get content() { return this.form.get('content'); }
   get thumbnail() { return this.form.get('thumbnail'); }
-  get tags() { return this.form.get('tags'); }
+  get tags() { return this.form.get('tags') as FormArray; }
+
+  public addtag(tag: Tag) {
+    const tagItem = this.fb.group({
+      id: tag.id,
+      name: tag.name,
+      colorCode: tag.colorCode
+    })
+
+    if (!this.tags.value.some((el: Tag) => el.id === tag.id)) {
+      this.tags.push(tagItem)
+      this.typeInTags();
+    } else {
+      console.log('Already there !')
+    }
+  }
+
+  public removeTag(tagIndex: number) {
+    this.tags.removeAt(tagIndex);
+    this.typeInTags();
+  }
 
   public getValue(event: Event): string {
     return (event.target as HTMLInputElement).value;
@@ -140,8 +170,8 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.TitleText$.next(content);
   }
 
-  public typeInTags(content: any) {
-    this.TagsText$.next(content);
+  public typeInTags() {
+    this.TagsText$.next(this.tags.value);
   }
   public typeInSummary(content: string) {
     this.SummaryText$.next(content);
@@ -294,27 +324,6 @@ export class ArticleEntryCreateComponent implements OnInit {
       })
   }
 
-  public onItemSelect(item: any) {
-    this.setFormTagsValue();
-    this.typeInTags(item);
-  }
-
-  private setFormTagsValue(): void {
-    this.selectedTags = this.getFullObjectsFromTagListBySelectedTagsIds(this.getSelectedTagsIds())
-    this.form.controls['tags'].setValue(this.selectedTags)
-  }
-
-  private getSelectedTagsIds() {
-    return this.form.value.tags.map((tag: Tag) => tag.id)
-  }
-
-  /** The ng-multiselect-dropdown library doesn't return the full object selected by default,
-  * therefore we need a function to get the correct object value to send to the server
-  */
-  private getFullObjectsFromTagListBySelectedTagsIds(ids: any) {
-    return this.tagList.filter(item => ids.includes(item.id))
-  }
-
   public onChanges(element: Observable<any>): void {
     element.pipe(
       debounceTime(2000),
@@ -348,22 +357,9 @@ export class ArticleEntryCreateComponent implements OnInit {
   ngOnInit(): void {
     this.articleId = this.route.snapshot.paramMap.get('id')!;
     this.getArticle()
-    this.InitForm()
+    this.InitForm();
 
     this.fetchListOfTags();
-
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'name',
-      selectAllText: 'Tout Sélectioner',
-      unSelectAllText: 'Déselectioner tout',
-      allowSearchFilter: true,
-      searchPlaceholderText: "Rechercher",
-      enableCheckAll: false
-      // itemsShowLimit: 3,
-      // limitSelection: 3,
-    };
 
     this.seo.generateTags({
       title: this.translate.instant('meta.articleEntryEditTitle'),
