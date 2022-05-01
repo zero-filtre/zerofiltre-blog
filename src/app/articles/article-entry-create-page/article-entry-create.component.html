@@ -1,5 +1,5 @@
-<main class="py-10 lg:py-14">
-    <form [formGroup]="form">
+<main class="py-10 lg:py-14 min-h-screen">
+    <form *ngIf="form" [formGroup]="form">
         <div class="article-data-container flex flex-col lg:grid grid-cols-7 gap-10 lg:gap-14 items-stretch">
             <main class="col-span-5 order-2 lg:order-none">
                 <div class="main-side-container">
@@ -436,7 +436,7 @@
                         </label>
                         <div class="mt-5">
                             <textarea (keyup)="typeInSummary(getValue($event))"
-                                class="editor-textarea rounded-md shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
+                                class="editor-textarea rounded-xl shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
                                 rows="5" cols="33" placeholder="{{ 'articleEntryEdit.summaryPlaceholder' | translate }}"
                                 id="summary" formControlName="summary" required minlength="20" maxlength="250">
                                 </textarea>
@@ -458,20 +458,33 @@
                             {{ 'app.tags' | translate }}
                         </div>
 
-                        <div class="mt-5 shadow-sm">
+                        <div class="mt-5">
                             <div (click)="openTagsDropdown()"
-                                class="selected-tags-container cursor-pointer relative flex flex-wrap p-3 min-h-[50px] gap-1 border rounded-lg shadow-sm">
+                                class="selected-tags-container cursor-pointer relative flex flex-wrap p-2 min-h-[50px] gap-1 rounded-xl shadow-md">
                                 <ng-container *ngFor="let tag of tags.controls; let i = index">
-                                    <div class="flex justify-between items-center gap-2 px-2 py-1 text-skin-link bg-primary-500 rounded-md"
+                                    <!-- <div class="flex justify-between items-center gap-2 px-2 py-1 text-skin-link bg-primary-500 rounded-md"
                                         [formGroupName]="i">
                                         <span>{{tag.value.name}}</span>
                                         <button (click)="removeTag(i)" class="cursor-pointer">x</button>
-                                    </div>
+                                    </div> -->
+
+                                    <span [formGroupName]="i"
+                                        class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border">
+                                        <svg [ngStyle]="{'color': tag.value.colorCode}" class="mr-1 h-2 w-2"
+                                            fill="currentColor" viewBox="0 0 8 8">
+                                            <circle cx="4" cy="4" r="3"></circle>
+                                        </svg>
+                                        <span>{{tag.value.name}}</span>
+                                        <button (click)="removeTag(i)"
+                                            class="cursor-pointer text-skin-muted flex items-center justify-center ml-2 border rounded-full h-4 w-4 justify-self-end">
+                                            <span>x</span>
+                                        </button>
+                                    </span>
                                 </ng-container>
                             </div>
 
                             <div *ngIf="tagsDropdownOpened"
-                                class="multiselect-tags-dropdown mt-1 border shadow-md rounded-md min-h-[150px] max-h-80 overflow-x-auto">
+                                class="multiselect-tags-dropdown mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
                                 <ng-container *ngFor="let tag of tagList; let i = index">
                                     <p class="flex items-center gap-2 text-skin-base hover:bg-slate-100 px-4 py-2 cursor-pointer"
                                         (click)="addtag(tag)">

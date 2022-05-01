@@ -16,11 +16,6 @@ import { AppShellNoRenderDirective } from '../directives/app-shell-no-render.dir
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-
 const components = [
   AppShellRenderDirective,
   AppShellNoRenderDirective,
@@ -41,11 +36,6 @@ const modules = [
   ReactiveFormsModule,
   InfiniteScrollModule,
   TranslateModule,
-
-  MatFormFieldModule,
-  MatInputModule,
-  MatSelectModule,
-  MatCheckboxModule
 ];
 
 @NgModule({

@@ -71,33 +71,6 @@
   filter: blur(5px);
 } */
 
-.multiselect-dropdown .dropdown-btn {
-  @apply !border-skin-borderBold;
-}
-.multiselect-dropdown .selected-item {
-  @apply !border-secondary !bg-secondary !rounded-md !max-w-none !px-2 my-1 sm:mb-0;
-}
-
-.multiselect-item-checkbox input[type="checkbox"] + div:before {
-  @apply !border-secondary !text-secondary;
-}
-
-.multiselect-item-checkbox input[type="checkbox"]:checked + div:before {
-  @apply !bg-secondary !border-secondary !text-secondary;
-}
-
-.dropdown-list {
-  /* @apply !rounded-sm !shadow-lg; */
-}
-
-.dropdown-list .filter-textbox {
-  @apply !border-b-skin-borderBold;
-}
-
-.dropdown-list .filter-textbox input {
-  @apply !outline-none !ring-0;
-}
-
 /* Message Notification styles */
 .success-snackbar {
   @apply bg-primary-500;

@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -33,7 +33,6 @@ export class ArticleEntryCreateComponent implements OnInit {
   public article!: Article
   public articleId!: string;
   public articleTitle!: string;
-  public articleTags: Tag[] = []
   public loading = false;
   public isSaving = false;
   public isPublishing = false;
@@ -52,7 +51,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public isSaved!: boolean;
   public saveFailed!: boolean;
 
-  public tagsDropdownOpened!: boolean
+  public tagsDropdownOpened: boolean = true;
 
 
   constructor(
@@ -65,13 +64,9 @@ export class ArticleEntryCreateComponent implements OnInit {
     private seo: SeoService,
     public authService: AuthService,
     private translate: TranslateService,
-  ) {
+  ) { }
 
-  }
-
-  public openTagsDropdown() {
-    this.tagsDropdownOpened = !this.tagsDropdownOpened
-  }
+  public openTagsDropdown() { }
 
   public setActiveTab(tabName: string): void {
     if (tabName === 'editor') this.activeTab = 'editor'
@@ -80,20 +75,17 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public fetchListOfTags(): void {
-    this.articleService.getListOfTags().subscribe({
-      next: (response: Tag[]) => {
+    this.articleService.getListOfTags().subscribe(
+      (response: Tag[]) => {
         this.tagList = response
-      },
-      error: (_error: HttpErrorResponse) => { }
-    })
+      }
+    )
   }
 
   public getArticle(): void {
     this.articleService.findArticleById(this.articleId)
       .pipe(
         tap(art => {
-          this.articleTags = art.tags
-
           if (art.status === 'PUBLISHED') {
             this.isPublished = true;
           } else {
@@ -101,34 +93,23 @@ export class ArticleEntryCreateComponent implements OnInit {
           }
         }),
       )
-      .subscribe({
-        next: (response: Article) => {
+      .subscribe(
+        (response: Article) => {
           this.article = response
           this.articleTitle = response.title!
-          this.form.controls['id'].setValue(+this.articleId)
-          this.title?.setValue(this.articleTitle)
-          this.summary?.setValue(this.article.summary)
-          this.thumbnail?.setValue(this.article.thumbnail)
-          this.content?.setValue(this.article.content)
-          // this.tags?.setValue(this.articleTags)
-        },
-        error: (_error: HttpErrorResponse) => { }
-      })
+          this.InitForm(this.article)
+        }
+      )
   }
 
-  public InitForm(): void {
+  public InitForm(article: Article): void {
     this.form = this.fb.group({
-      id: [null],
-      title: ['', [Validators.required]],
-      summary: ['', [Validators.required]],
-      thumbnail: [''],
-      content: ['', [Validators.required]],
-      tags: this.fb.array([])
-      // tags: this.fb.array([
-      //   { id: 1, name: "java", colorCode: "#4AC3CD" },
-      //   { id: 1, name: "java", colorCode: "#4AC3CD" },
-      //   { id: 1, name: "java", colorCode: "#4AC3CD" }
-      // ])
+      id: [+article.id!],
+      title: [article.title, [Validators.required]],
+      summary: [article.summary, [Validators.required]],
+      thumbnail: [article.thumbnail],
+      content: [article.content, [Validators.required]],
+      tags: this.fb.array(article.tags.map(tag => this.buildTagItemFields(tag)))
     })
   }
 
@@ -137,6 +118,14 @@ export class ArticleEntryCreateComponent implements OnInit {
   get content() { return this.form.get('content'); }
   get thumbnail() { return this.form.get('thumbnail'); }
   get tags() { return this.form.get('tags') as FormArray; }
+
+  public buildTagItemFields(tag: Tag): FormGroup {
+    return new FormGroup({
+      id: new FormControl(tag.id),
+      name: new FormControl(tag.name),
+      colorCode: new FormControl(tag.colorCode),
+    });
+  }
 
   public addtag(tag: Tag) {
     const tagItem = this.fb.group({
@@ -357,7 +346,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   ngOnInit(): void {
     this.articleId = this.route.snapshot.paramMap.get('id')!;
     this.getArticle()
-    this.InitForm();
+    // this.InitForm();
 
     this.fetchListOfTags();
 
