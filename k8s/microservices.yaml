@@ -107,7 +107,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   rules:
-    - host: "blog-${env_name}.zerofiltre.tech"
+    - host: "${env_name}.zerofiltre.tech"
       http:
         paths:
           - path: /
@@ -116,5 +116,5 @@ spec:
               servicePort: 80
   tls: # < placing a host in the TLS config will indicate a certificate should be created
     - hosts:
-        - "blog-${env_name}.zerofiltre.tech"
+        - "${env_name}.zerofiltre.tech"
       secretName: blog-front-zerofiltre-ingress-cert # < cert-manager will store the created certificate in this secret.
