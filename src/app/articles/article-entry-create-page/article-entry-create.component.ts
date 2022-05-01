@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,6 +19,14 @@ import { FormArray } from '@angular/forms';
   styleUrls: ['./article-entry-create.component.css']
 })
 export class ArticleEntryCreateComponent implements OnInit {
+  @HostListener('click', ['$event']) onClick(event: any) {
+    if (event.target.classList.contains('tagItem') || event.target.classList.contains('selected-tags-container')) {
+      this.tagsDropdownOpened = true
+    } else {
+      this.tagsDropdownOpened = false
+    }
+  }
+
   public file: File = {
     data: null,
     inProgress: false,
@@ -51,7 +59,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public isSaved!: boolean;
   public saveFailed!: boolean;
 
-  public tagsDropdownOpened: boolean = true;
+  public tagsDropdownOpened!: boolean;
 
 
   constructor(
@@ -66,7 +74,9 @@ export class ArticleEntryCreateComponent implements OnInit {
     private translate: TranslateService,
   ) { }
 
-  public openTagsDropdown() { }
+  public openTagsDropdown() {
+    this.tagsDropdownOpened = true
+  }
 
   public setActiveTab(tabName: string): void {
     if (tabName === 'editor') this.activeTab = 'editor'
