@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class MessageService {
-  private durationLimit = 6;
+  private durationLimit = 5;
   private defaultHoPosition = 'right'
   private defaultVePosition = 'bottom'
   private OK = 'OK';
@@ -77,7 +77,7 @@ export class MessageService {
   // Email notification on signup success
   signUpSuccess() {
     const msg = this.translate.instant('signup.signUpSuccessMessage');
-    this.openSnackBarSuccess(msg, this.OK, 0);
+    this.openSnackBarSuccess(msg, this.OK);
   }
 
   saveArticleError() {
@@ -87,7 +87,7 @@ export class MessageService {
 
   autoSaveAlert() {
     const msg = this.translate.instant('articleEntryEdit.autoSaveAlertMessage');
-    this.openSnackBarWarning(msg, "C'est noté !", 0)
+    this.openSnackBarWarning(msg, "C'est noté !")
   }
 
   saveArticleSuccess() {
@@ -102,7 +102,7 @@ export class MessageService {
 
   resendConfirmationSuccess() {
     const msg = this.translate.instant('resendConfirmation.resendConfirmationSuccessMesssage');
-    this.openSnackBarSuccess(msg, this.OK, 0);
+    this.openSnackBarSuccess(msg, this.OK);
   }
 
   updateProfileSuccess() {
@@ -117,7 +117,7 @@ export class MessageService {
 
   fileSizeWarning(maxSize: number) {
     const msg = this.translate.instant('fileUpload.sizeWarningMessage');
-    this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, this.OK, 0)
+    this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, this.OK)
   }
 
   fileTypeWarning() {
