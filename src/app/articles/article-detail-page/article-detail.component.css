@@ -1,3 +1,3 @@
 .markdown-props {
-    @apply prose max-w-none text-xl prose-headings:text-skin-inverted prose-headings:text-2xl lg:prose-headings:text-4xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base;
+  @apply prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:text-primary-500 prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-text prose-code:border prose-code:font-normal prose-code:before:hidden prose-code:after:hidden;
 }

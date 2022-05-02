@@ -23,6 +23,7 @@ module.exports = {
         skin: {
           base: "#6b7280",
           text: "#374151",
+          art: "#052b5d",
           link: "#f3f4f6",
           muted: "#9ca3af",
           inverted: "#052b5d",
