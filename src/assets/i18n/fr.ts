@@ -34,7 +34,7 @@ export const fr = {
         logout: 'Se déconnecter',
         courses: 'Cours',
         blog: 'Blog',
-        portfolio: 'services'
+        portfolio: 'Services'
     },
     sidebar: {
         myInfos: 'Mon compte',
