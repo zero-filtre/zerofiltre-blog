@@ -16,9 +16,9 @@ export class CachingInterceptor implements HttpInterceptor {
   constructor(private cache: RequestCacheService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('REQ: ', req)
-    if (req.method !== 'GET') {
-      return next.handle(req);
+    if (!isCacheable(req)) {
+      console.log('NOT CACHEABLE: ', req)
+      return next.handle(req)
     }
 
     if (req.headers.get('x-refresh')) {
@@ -27,7 +27,7 @@ export class CachingInterceptor implements HttpInterceptor {
     }
 
     const cachedResponse = this.cache.get(req.url);
-    console.log('CACHED: ', cachedResponse)
+    console.log('CACHED VAL: ', cachedResponse)
     return cachedResponse ? of(cachedResponse) : this.sendRequest(req, next);
   }
 
@@ -43,4 +43,14 @@ export class CachingInterceptor implements HttpInterceptor {
       })
     );
   }
+}
+
+function isCacheable(req: HttpRequest<any>): boolean {
+  const urlArr = req.url.split('/')
+  const last = urlArr.length - 1
+
+  // if (req.method === 'GET' && !urlArr[last].startsWith('user')) return true
+  if (req.method === 'GET' && !urlArr[last].startsWith('refreshToken?')) return true
+
+  return false;
 }
