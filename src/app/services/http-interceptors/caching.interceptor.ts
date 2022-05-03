@@ -19,7 +19,8 @@ export class CachingInterceptor implements HttpInterceptor {
     if (!isCacheable(req)) { return next.handle(req); }
 
     const cachedResponse = this.cache.get(req.url);
-    console.log('CACHED 1: ', cachedResponse);
+    console.log('REQ-URL: ', req.url);
+    console.log('CACHED REQ: ', cachedResponse);
 
     return cachedResponse
       ? of(cachedResponse)

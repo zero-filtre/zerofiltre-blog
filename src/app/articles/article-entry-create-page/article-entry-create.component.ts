@@ -20,7 +20,11 @@ import { FormArray } from '@angular/forms';
 })
 export class ArticleEntryCreateComponent implements OnInit {
   @HostListener('click', ['$event']) onClick(event: any) {
-    if (event.target.classList.contains('tagItem') || event.target.classList.contains('selected-tags-container')) {
+    if (
+      event.target.classList.contains('tagItem')
+      || event.target.classList.contains('selected-tags-container')
+      // || event.target.classList.contains('remove-tag-btn')
+    ) {
       this.tagsDropdownOpened = true
     } else {
       this.tagsDropdownOpened = false

@@ -186,12 +186,12 @@
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg w-full p-4">
                                 <markdown [data]="content?.value"
-                                    class="prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:text-primary-500 prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-text prose-code:border prose-code:font-normal prose-code:before:hidden prose-code:after:hidden">
+                                    class="prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:text-primary-500 prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-text prose-code:font-normal prose-code:before:hidden prose-code:after:hidden">
                                 </markdown>
                             </div>
 
                             <div *ngIf="activeTab === 'help'"
-                                class="help-container bg-skin-card p-4 prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:text-primary-500 prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-text prose-code:border prose-code:font-normal prose-code:before:hidden prose-code:after:hidden">
+                                class="help-container bg-skin-card p-4 prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:text-primary-500 prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-text prose-code:font-normal prose-code:before:hidden prose-code:after:hidden">
                                 <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
                                 <p>
                                     {{'articleEntryEdit.helpSubTitle' | translate}}
@@ -460,7 +460,7 @@
 
                         <div class="mt-5">
                             <div (click)="openTagsDropdown()"
-                                class="selected-tags-container cursor-pointer relative flex flex-wrap p-2 min-h-[50px] gap-1 rounded-xl shadow-md">
+                                class="selected-tags-container bg-skin-cardMuted cursor-pointer relative flex flex-wrap p-2 min-h-[50px] gap-1 rounded-xl shadow-md">
                                 <ng-container *ngFor="let tag of tags.controls; let i = index">
                                     <!-- <div class="flex justify-between items-center gap-2 px-2 py-1 text-skin-link bg-primary-500 rounded-md"
                                         [formGroupName]="i">
@@ -476,21 +476,21 @@
                                         </svg>
                                         <span>{{tag.value.name}}</span>
                                         <button (click)="removeTag(i)"
-                                            class="cursor-pointer text-skin-muted flex items-center justify-center ml-2 border rounded-full h-4 w-4 justify-self-end">
-                                            <span>x</span>
+                                            class="remove-tag-btn cursor-pointer text-skin-muted flex items-center justify-center ml-2 border rounded-full h-4 w-4 justify-self-end">
+                                            <span class="remove-tag-btn">x</span>
                                         </button>
                                     </span>
                                 </ng-container>
-                            </div>
 
-                            <div *ngIf="tagsDropdownOpened"
-                                class="multiselect-tags-dropdown mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
-                                <ng-container *ngFor="let tag of tagList; let i = index">
-                                    <p class="tagItem flex items-center gap-2 text-skin-base hover:bg-slate-100 px-4 py-2 cursor-pointer"
-                                        (click)="addtag(tag)">
-                                        {{tag?.name}}
-                                    </p>
-                                </ng-container>
+                                <ul *ngIf="tagsDropdownOpened"
+                                    class="multiselect-tags-dropdown absolute bottom-full inset-x-0 mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
+                                    <ng-container *ngFor="let tag of tagList; let i = index">
+                                        <li class="tagItem flex items-center gap-2 text-skin-base hover:bg-slate-100 px-4 py-2 cursor-pointer"
+                                            (click)="addtag(tag)">
+                                            {{tag?.name}}
+                                        </li>
+                                    </ng-container>
+                                </ul>
                             </div>
                         </div>
                     </div>
