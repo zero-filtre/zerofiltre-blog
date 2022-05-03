@@ -7,34 +7,35 @@ import { Injectable } from '@angular/core';
 export class RequestCacheService {
   private cache = new Map<string, [Date, HttpResponse<any>]>();
 
-  constructor() {
-    console.log('CACHE SERVICE MOUNTED');
-  }
+  constructor() { }
 
-  get(key: any): HttpResponse<any> {
-    const tuple = this.cache.get(key);
-    if (!tuple) return null!;
+  set(key: string, value: HttpResponse<any>, timeToLive: number | null = null) {
+    console.log(`Set cache key `, key);
 
-    const expires = tuple[0];
-    const httpResponse = tuple[1];
-
-    // Don't observe expired keys
-    const now = new Date();
-    if (expires && expires.getTime() < now.getTime()) {
-      this.cache.delete(key);
-      return null!;
-    }
-
-    return httpResponse;
-  }
-
-  set(key: any, value: any, ttl: any = null) {
-    if (ttl) {
-      const expires = new Date();
-      expires.setSeconds(expires.getSeconds() + ttl);
-      this.cache.set(key, [expires, value]);
+    if (timeToLive) {
+      const expiresIn = new Date();
+      expiresIn.setSeconds(expiresIn.getSeconds() + timeToLive);
+      this.cache.set(key, [expiresIn, value]);
     } else {
       this.cache.set(key, [null!, value]);
     }
+  }
+
+  get(key: string) {
+    const tuple = this.cache.get(key);
+
+    if (!tuple) return null;
+
+    // Extract tuple
+    const expiresIn = tuple[0];
+    const httpSavedResponse = tuple[1];
+    const now = new Date();
+
+    if (expiresIn && expiresIn.getTime() < now.getTime()) {
+      this.cache.delete(key);
+      return null;
+    }
+
+    return httpSavedResponse;
   }
 }
