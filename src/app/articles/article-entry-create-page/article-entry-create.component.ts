@@ -359,9 +359,7 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.articleId = this.route.snapshot.paramMap.get('id')!;
-    this.getArticle()
-    // this.InitForm();
-
+    this.getArticle();
     this.fetchListOfTags();
 
     this.seo.generateTags({
