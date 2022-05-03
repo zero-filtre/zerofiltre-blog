@@ -119,7 +119,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       this.articles = [];
       this.activePage = this.POPULAR
       this.fetchPopularArticles();
-      this.router.navigateByUrl(`?sortBy=${trendName}`);
+      this.router.navigateByUrl(`/articles?sortBy=${trendName}`);
     }
 
     if (trendName === this.TRENDING) {
@@ -132,7 +132,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     if (trendName === this.TAGS) {
       this.activePage = this.TAGS
       this.openedTagsDropdown = !this.openedTagsDropdown;
-    }else {
+    } else {
       this.openedTagsDropdown = false;
     }
 
@@ -144,10 +144,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public sortByTag(tagName: any): void {
     this.openedTagsDropdown = false;
     this.articles = [];
-    
+
     this.fetchArticlesByTag(tagName);
-    this.router.navigateByUrl(`?tag=${tagName}`)
-    
+    this.router.navigateByUrl(`/articles?tag=${tagName}`)
+
     this.scrollyPageNumber = 0;
     this.notEmptyArticles = true;
   }
