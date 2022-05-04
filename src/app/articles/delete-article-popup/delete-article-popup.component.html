@@ -12,32 +12,30 @@
     <div class="delete-account-content-wrapper max-w-md flex flex-col items-center justify-center">
         <div class="alert-message border-t-4 border-red-500 rounded-b text-skin-base px-4 py-3" role="alert">
             <div class="flex">
-                <div class="py-1"><svg class="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg"
+                <div class="py-1">
+                    <svg class="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20">
                         <path
                             d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
-                    </svg></div>
+                    </svg>
+                </div>
                 <div>
                     <p class="font-bold text-xl">{{'deleteAccountPopup.cautionTitle' | translate}}</p>
                     <p class="text-base">
-                        <!-- {{'deleteAccountPopup.cautionText' | translate}} -->
-                        Voulez-vous vraiment supprimer cet article ?
+                        {{'app.deleteArticleCautionText' | translate}}
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="action-buttons mt-6 flex space-x-2">
-            <button (click)="handleDeleteArticle()"
-                class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-red-500 hover:bg-red-700 focus:outline-none">
-                <span>
-                    <!-- {{'deleteAccountPopup.deleteBtn' | translate}} -->
-                    Supprimer
-                </span>
-            </button>
+        <div class="action-buttons mt-6 flex gap-2">
             <button (click)="onNoClick()"
-                class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted transition-all duration-200">
+                class="order-2 font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-red-500 hover:bg-red-700 focus:outline-none">
                 <span>{{'app.cancel' | translate}}</span>
+            </button>
+            <button (click)="handleDeleteArticle()"
+                class="order-1 px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted transition-all duration-200">
+                <span>{{'app.deleteArticlePopupBtn' | translate}}</span>
             </button>
         </div>
     </div>

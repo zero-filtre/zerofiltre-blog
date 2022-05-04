@@ -12,6 +12,7 @@ import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
 import { FormArray } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-article-entry-create',
@@ -65,6 +66,8 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   public tagsDropdownOpened!: boolean;
 
+  public hasHistory: boolean;
+
 
   constructor(
     private fb: FormBuilder,
@@ -76,7 +79,18 @@ export class ArticleEntryCreateComponent implements OnInit {
     private seo: SeoService,
     public authService: AuthService,
     private translate: TranslateService,
-  ) { }
+    private location: Location,
+  ) {
+    this.hasHistory = this.router.navigated;
+  }
+
+  public navigateBack() {
+    if (this.hasHistory) {
+      this.location.back();
+    } else {
+      this.router.navigateByUrl('/articles');
+    }
+  }
 
   public openTagsDropdown() {
     this.tagsDropdownOpened = true

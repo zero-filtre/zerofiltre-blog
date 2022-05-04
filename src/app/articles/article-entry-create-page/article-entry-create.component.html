@@ -6,17 +6,17 @@
                     <nav class="top-nav items-center justify-between hidden lg:flex">
                         <div
                             class="nav-links flex justify-between sm:justify-start items-center sm:gap-10 font-semibold">
-                            <a routerLink="/" class="text-skin-base group flex items-center gap-1">
+                            <button (click)="navigateBack()" class="text-primary-500 group flex items-center gap-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    class="text-skin-base group-hover:text-primary-500" data-supported-dps="24x24"
+                                    class="text-primary-500 group-hover:text-primary-300" data-supported-dps="24x24"
                                     fill="currentColor" width="24" height="24" focusable="false">
                                     <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
                                 </svg>
-                                <h1
-                                    class="sm:inline-block text-lg text-skin-base transition-all duration-200 group-hover:text-primary-500">
+                                <!-- <h1
+                                    class="sm:inline-block text-lg text-skin-base transition-all duration-200 group-hover:text-primary-300">
                                     {{ 'app.allArticles' | translate }}
-                                </h1>
-                            </a>
+                                </h1> -->
+                            </button>
                             <h2>
                                 <a routerLink="/user/dashboard" class="text-lg text-primary-500 hover:text-primary-300">
                                     {{ 'app.myArticles' | translate }}
@@ -477,16 +477,20 @@
                                         <span>{{tag.value.name}}</span>
                                         <button (click)="removeTag(i)"
                                             class="remove-tag-btn cursor-pointer text-skin-muted flex items-center justify-center ml-2 border rounded-full h-4 w-4 justify-self-end">
-                                            <span class="remove-tag-btn">x</span>
+                                            <span class="remove-tag-btn text-xs">x</span>
                                         </button>
                                     </span>
                                 </ng-container>
 
                                 <ul *ngIf="tagsDropdownOpened"
-                                    class="multiselect-tags-dropdown absolute bottom-full inset-x-0 mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
+                                    class="multiselect-tags-dropdown absolute top-full inset-x-0 mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
                                     <ng-container *ngFor="let tag of tagList; let i = index">
                                         <li class="tagItem flex items-center gap-2 text-skin-base hover:bg-slate-100 px-4 py-2 cursor-pointer"
                                             (click)="addtag(tag)">
+                                            <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
+                                                fill="currentColor" viewBox="0 0 8 8">
+                                                <circle cx="4" cy="4" r="3"></circle>
+                                            </svg>
                                             {{tag?.name}}
                                         </li>
                                     </ng-container>
