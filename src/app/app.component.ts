@@ -10,6 +10,7 @@ import {
 import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, Observable, shareReplay } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
@@ -26,6 +27,9 @@ export class AppComponent implements OnInit {
   @HostListener('click', ['$event']) onClick(event: any) {
     this.logCopySuccessMessage(event);
   }
+
+  readonly servicesUrl = environment.servicesUrl
+  readonly coursUrl = environment.coursUrl
 
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])

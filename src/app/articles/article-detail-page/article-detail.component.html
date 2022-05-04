@@ -124,7 +124,7 @@
 
                         <div class="">
                             <h1
-                                class="text-3xl leading-10 w-full font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3.5rem]">
+                                class="text-3xl w-full font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
                                 {{article?.title}}
                             </h1>
                         </div>
@@ -183,7 +183,7 @@
                 <div class="article-content">
                     <div *ngIf="article" class="markdown-content mt-6 lg:mt-14">
                         <markdown
-                            class="prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:text-primary-500 prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-text prose-code:font-normal prose-code:before:hidden prose-code:after:hidden"
+                            class="prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:font-extrabold prose-headings:text-skin-inverted prose-headings:text-2xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-red-500 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden"
                             [data]="article?.content">
                         </markdown>
                     </div>
