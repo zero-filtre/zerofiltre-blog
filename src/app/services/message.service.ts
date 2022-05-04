@@ -8,8 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class MessageService {
   private durationLimit = 5;
-  private defaultHoPosition = 'right'
-  private defaultVePosition = 'bottom'
+  private defaultHorizontalPosition = 'right'
+  private defaultVerticalPosition = 'bottom'
   private OK = 'OK';
 
   constructor(
@@ -21,22 +21,22 @@ export class MessageService {
   private openSnackBar(message: string, action: string, className: string, type: string, duration: number, hoPosition: any) {
     this.snackBar.open(message, action, {
       horizontalPosition: hoPosition,
-      verticalPosition: this.defaultVePosition as any,
+      verticalPosition: this.defaultVerticalPosition as any,
       duration: duration * 1000,
       panelClass: [className, type],
     });
   }
 
-  public openSnackBarSuccess(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+  public openSnackBarSuccess(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'success-snackbar', 'success', duration, hoPosition)
   }
-  public openSnackBarError(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+  public openSnackBarError(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'error-snackbar', 'error', duration, hoPosition)
   }
-  public openSnackBarWarning(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+  public openSnackBarWarning(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'warning-snackbar', 'error', duration, hoPosition)
   }
-  public openSnackBarInfo(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+  public openSnackBarInfo(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'info-snackbar', 'info', duration, hoPosition)
   }
 

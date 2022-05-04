@@ -108,18 +108,18 @@
 }
 
 .toolbar {
-  @apply flex absolute top-2.5 right-2.5 text-skin-muted hover:text-skin-border overflow-hidden;
+  @apply flex absolute top-1.5 right-0 text-skin-muted hover:text-skin-border overflow-hidden;
 }
 
 .toolbar-item {
   @apply first-of-type:z-10 last-of-type:z-0;
-  /* @apply first-of-type:bg-red-400 last-of-type:bg-blue-400; */
+  @apply first-of-type:w-6 first-of-type:lg:w-8;
   @apply last-of-type:absolute inset-0;
   @apply first-of-type:opacity-0;
 }
 
 .toolbar-item button {
-  @apply text-sm h-full;
+  @apply text-sm h-full w-full;
 }
 
 /* Markdown preview styles */
