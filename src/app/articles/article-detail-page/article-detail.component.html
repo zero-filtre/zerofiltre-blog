@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center min-h-screen" *appShellRender>
+<div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
     <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
         width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
         <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="10" r="35"
@@ -63,7 +63,8 @@
 
                             <div class="">
                                 <div *ngIf="!authService.currentUsr">
-                                    <a routerLink="/" class="text-skin-base group flex w-full items-center space-x-1">
+                                    <a routerLink="/articles"
+                                        class="text-skin-base group flex w-full items-center space-x-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             class="group-hover:text-primary-500" data-supported-dps="24x24"
                                             fill="currentColor" width="24" height="24" focusable="false">
@@ -96,15 +97,15 @@
                                                 class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                                                 <span>{{ 'articleDetail.edit' | translate }}</span>
                                             </a>
-                                            <a routerLink="#"
-                                                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                            <button (click)="openArticleDeleteDialog()"
+                                                class="block font-semibold text-skin-base w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                                                 <span>{{ 'articleDetail.delete' | translate }}</span>
-                                            </a>
+                                            </button>
                                         </mat-menu>
                                     </div>
 
                                     <div *ngIf="!isAuthor(currentUsr, article) && !authService.isAdmin">
-                                        <a routerLink="/"
+                                        <a routerLink="/articles"
                                             class="text-skin-base group flex w-full items-center space-x-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                 class="group-hover:text-primary-500" data-supported-dps="24x24"
@@ -123,7 +124,7 @@
 
                         <div class="">
                             <h1
-                                class="text-3xl leading-10 w-full font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3.5rem]">
+                                class="text-3xl w-full font-black text-skin-inverted tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
                                 {{article?.title}}
                             </h1>
                         </div>
@@ -182,7 +183,7 @@
                 <div class="article-content">
                     <div *ngIf="article" class="markdown-content mt-6 lg:mt-14">
                         <markdown
-                            class="prose max-w-none text-lg lg:text-xl prose-headings:text-skin-inverted prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-base"
+                            class="prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:font-extrabold prose-headings:text-skin-inverted prose-headings:text-2xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-red-500 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden"
                             [data]="article?.content">
                         </markdown>
                     </div>
@@ -198,7 +199,7 @@
                 </div>
 
                 <div class="article-socials-btns hidden lg:block mt-16 lg:w-fit mx-auto">
-                    <p class="text-base text-skin-base">
+                    <p class="text-base text-skin-base text-center">
                         {{ 'articleDetail.callToShareText' | translate }}
                     </p>
                     <div class="mt-4 space-y-4 flex items-end flex-wrap gap-2 sm:gap-0 sm:space-y-0 sm:space-x-4">
@@ -271,7 +272,7 @@
                     <div class="author-socialLinks flex items-center justify-center lg:justify-start gap-2">
                         <a *ngIf="authorHasSocialLinkFor('LINKEDIN')" target="_blank"
                             href="{{authorPlatformLink('LINKEDIN')}}"
-                            class="order-1 text-skin-muted hover:text-[#0A66C2]">
+                            class="order-1 text-skin-muted hover:text-[#0A66C2] transition-all duration-200">
                             <span class="sr-only">LinkedIn</span>
                             <svg class="h-6 w-6 rounded-md" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
@@ -281,7 +282,7 @@
                         </a>
                         <a *ngIf="authorHasSocialLinkFor('GITHUB')" target="_blank"
                             href="{{authorPlatformLink('GITHUB')}}"
-                            class="order-2 text-skin-muted hover:text-[#181717]">
+                            class="order-2 text-skin-muted hover:text-[#181717] transition-all duration-200">
                             <span class="sr-only">GitHub</span>
                             <svg class="h-6 w-6" fill="currentColor" role="img" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -292,7 +293,7 @@
                         </a>
                         <a *ngIf="authorHasSocialLinkFor('TWITTER')" target="_blank"
                             href="{{authorPlatformLink('TWITTER')}}"
-                            class="order-3 text-skin-muted hover:text-[#1DA1F2]">
+                            class="order-3 text-skin-muted hover:text-[#1DA1F2] transition-all duration-200">
                             <span class="sr-only">Twitter</span>
                             <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
@@ -302,7 +303,7 @@
                         </a>
                         <a *ngIf="authorHasSocialLinkFor('STACKOVERFLOW')" target="_blank"
                             href="{{authorPlatformLink('STACKOVERFLOW')}}"
-                            class="order-5 text-skin-muted hover:text-[#F58025]">
+                            class="order-5 text-skin-muted hover:text-[#F58025] transition-all duration-200">
                             <span class="sr-only">stackoverflow</span>
                             <svg class="h-6 w-6 rounded-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                                 <path d="M28.16 32H2.475V20.58H5.32v8.575h19.956V20.58h2.884z" fill="currentColor" />
@@ -312,7 +313,7 @@
                             </svg>
                         </a>
                         <a *ngIf="article?.author?.website" target="_blank" href="{{article?.author?.website}}"
-                            class="order-4 text-skin-muted hover:text-primary-500">
+                            class="order-4 text-skin-muted hover:text-primary-500 transition-all duration-200">
                             <span class="sr-only">Website</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -493,11 +494,12 @@
                     <div class="similar-articles flex justify-center lg:justify-start">
                         <div class="wrapper">
                             <ng-container *ngFor="let article of similarArticles">
-                                <a routerLink="/articles/{{article.id}}" class="mt-3 flex items-center space-x-2">
+                                <a routerLink="/articles/{{article?.id}}"
+                                    class="first-of-type:mt-0 mt-3 flex items-center space-x-2">
                                     <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{article?.thumbnail}}"
                                         alt="{{article?.title}}">
                                     <span
-                                        class="text-sm font-black leading-4 text-skin-inverted hover:text-primary-500 line-clamp-2 transition-all duration-200">
+                                        class="text-sm font-semibold leading-4 text-skin-text hover:text-primary-500 line-clamp-2 transition-all duration-200">
                                         {{article?.title}}
                                     </span>
                                 </a>

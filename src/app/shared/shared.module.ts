@@ -35,7 +35,7 @@ const modules = [
   FormsModule,
   ReactiveFormsModule,
   InfiniteScrollModule,
-  TranslateModule
+  TranslateModule,
 ];
 
 @NgModule({

@@ -7,9 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class MessageService {
-  private durationLimit = 6;
-  private defaultHoPosition = 'right'
-  private defaultVePosition = 'bottom'
+  private durationLimit = 5;
+  private defaultHorizontalPosition = 'right'
+  private defaultVerticalPosition = 'bottom'
   private OK = 'OK';
 
   constructor(
@@ -21,22 +21,22 @@ export class MessageService {
   private openSnackBar(message: string, action: string, className: string, type: string, duration: number, hoPosition: any) {
     this.snackBar.open(message, action, {
       horizontalPosition: hoPosition,
-      verticalPosition: this.defaultVePosition as any,
+      verticalPosition: this.defaultVerticalPosition as any,
       duration: duration * 1000,
       panelClass: [className, type],
     });
   }
 
-  public openSnackBarSuccess(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+  public openSnackBarSuccess(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'success-snackbar', 'success', duration, hoPosition)
   }
-  public openSnackBarError(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+  public openSnackBarError(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'error-snackbar', 'error', duration, hoPosition)
   }
-  public openSnackBarWarning(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+  public openSnackBarWarning(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'warning-snackbar', 'error', duration, hoPosition)
   }
-  public openSnackBarInfo(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHoPosition) {
+  public openSnackBarInfo(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'info-snackbar', 'info', duration, hoPosition)
   }
 
@@ -77,7 +77,7 @@ export class MessageService {
   // Email notification on signup success
   signUpSuccess() {
     const msg = this.translate.instant('signup.signUpSuccessMessage');
-    this.openSnackBarSuccess(msg, this.OK, 0);
+    this.openSnackBarSuccess(msg, this.OK);
   }
 
   saveArticleError() {
@@ -87,7 +87,7 @@ export class MessageService {
 
   autoSaveAlert() {
     const msg = this.translate.instant('articleEntryEdit.autoSaveAlertMessage');
-    this.openSnackBarWarning(msg, "C'est noté !", 0)
+    this.openSnackBarWarning(msg, "C'est noté !")
   }
 
   saveArticleSuccess() {
@@ -102,7 +102,7 @@ export class MessageService {
 
   resendConfirmationSuccess() {
     const msg = this.translate.instant('resendConfirmation.resendConfirmationSuccessMesssage');
-    this.openSnackBarSuccess(msg, this.OK, 0);
+    this.openSnackBarSuccess(msg, this.OK);
   }
 
   updateProfileSuccess() {
@@ -117,7 +117,7 @@ export class MessageService {
 
   fileSizeWarning(maxSize: number) {
     const msg = this.translate.instant('fileUpload.sizeWarningMessage');
-    this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, this.OK, 0)
+    this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, this.OK)
   }
 
   fileTypeWarning() {

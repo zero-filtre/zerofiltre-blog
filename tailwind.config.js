@@ -14,12 +14,16 @@ module.exports = {
           100: "#f2feff",
         },
         secondary: "#052b5d",
-        accent: "#fdbc5a",
+        accent: {
+          500: '#fdbc5a',
+          400: '#ffbd59'
+        },
         error: "#f55f44",
         grays: "#eef1f4",
         skin: {
           base: "#6b7280",
           text: "#374151",
+          art: "#052b5d",
           link: "#f3f4f6",
           muted: "#9ca3af",
           inverted: "#052b5d",

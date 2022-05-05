@@ -20,7 +20,12 @@ export const fr = {
         tags: 'Tags',
         resendAccountConfirmationLinkText: 'Renvoyer le message de confirmation',
         authorRouteError: 'Vous ne pouvez pas acceder à cette page !',
-        codeCopied: 'Code copié !'
+        codeCopied: 'Code copié !',
+        deleteArticlePopupBtn: 'Supprimer',
+        deleteArticleCautionText: 'Voulez-vous vraiment supprimer cet article ?'
+    },
+    home: {
+        explore: 'Explorer',
     },
     navbar: {
         about: 'À propos',
@@ -29,6 +34,9 @@ export const fr = {
         register: "S'enregistrer",
         myProfile: 'Mon profil',
         logout: 'Se déconnecter',
+        courses: 'Cours',
+        blog: 'Blog',
+        portfolio: 'Services'
     },
     sidebar: {
         myInfos: 'Mon compte',

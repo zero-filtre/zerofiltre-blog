@@ -2,6 +2,8 @@ export const environment = {
   production: false,
   apiBaseUrl: '',
   blogUrl: '',
+  servicesUrl: '',
+  coursUrl: '',
   ovhServerUrl: '',
   ovhTokenUrl: '',
   GITHUB_CLIENT_ID: '',

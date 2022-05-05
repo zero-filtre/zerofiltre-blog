@@ -11,6 +11,8 @@ import { ArticleService } from '../article.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { isPlatformBrowser } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-article-popup.component';
 
 @Component({
   selector: 'app-article-detail',
@@ -48,15 +50,19 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public articleSub!: Subscription;
   public loginToAddReaction!: boolean;
   public maxNberOfReaction!: boolean;
+  public hasHistory: boolean;
 
   constructor(
+    private dialogRef: MatDialog,
     private route: ActivatedRoute,
     private articleService: ArticleService,
     private seo: SeoService,
     private router: Router,
     public authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: any
-  ) { }
+  ) {
+    this.hasHistory = this.router.navigated;
+  }
 
   public setDateFormat(date: any) {
     return formatDate(date)
@@ -98,7 +104,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
-          // this.fetchSimilarArticles();
+          this.fetchSimilarArticles();
           this.loading = false;
         },
         error: (_error: HttpErrorResponse) => {
@@ -113,27 +119,26 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
     const randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
     const randomTagName = this.article?.tags[randomTagIndex]?.name!
-    let maxArticles = 2
 
     this.articleService.findAllArticlesByTag(0, 20, randomTagName)
       .subscribe({
         next: ({ content }: any) => {
-          const randomIndexes = <any>[]
           const selectedArticles = []
 
-          const filteredArticles = content.filter((article: Article) => article.id !== this.article.id)
+          const filteredArticles = content
+            .filter((article: Article) => article.id !== this.article.id)
 
-          for (let i = 0; i < maxArticles; i++) {
+          if (filteredArticles.length) {
             const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
-            if (randomIndexes.includes(randomArticleIndex)) {
-              maxArticles += 1
-            } else {
-              randomIndexes.push(randomArticleIndex)
-              selectedArticles.push(filteredArticles[randomArticleIndex])
+            selectedArticles.push(filteredArticles[randomArticleIndex])
+
+            const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+            if (newRandomArticleIndex !== randomArticleIndex) {
+              selectedArticles.push(filteredArticles[newRandomArticleIndex])
             }
           }
 
-          this.similarArticles = selectedArticles;
+          this.similarArticles = [...selectedArticles];
         }
       })
   }
@@ -177,6 +182,16 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         this.clapReactions.next(this.findTotalReactionByAction('CLAP', response));
         this.loveReactions.next(this.findTotalReactionByAction('LOVE', response));
         this.likeReactions.next(this.findTotalReactionByAction('LIKE', response));
+      }
+    });
+  }
+
+  public openArticleDeleteDialog(): void {
+    this.dialogRef.open(DeleteArticlePopupComponent, {
+      panelClass: 'delete-article-popup-panel',
+      data: {
+        id: this.articleId,
+        hasHistory: this.hasHistory
       }
     });
   }

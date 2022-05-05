@@ -2,6 +2,8 @@ export const environment = {
     production: true,
     apiBaseUrl: '${API_BASE_URL}',
     blogUrl: '${BLOG_URL}',
+    servicesUrl: '${SERVICES_URL}',
+    coursUrl: '${COURS_URL}',
     ovhServerUrl: '${OVH_SERVER_URL}',
     ovhTokenUrl: '${OVH_AUTH_URL}',
     GITHUB_CLIENT_ID: '${GITHUB_CLIENT_ID}',

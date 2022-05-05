@@ -1,9 +1,16 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  Component,
+  HostListener,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
+import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { map, Observable, shareReplay } from 'rxjs';
+import { filter, map, Observable, shareReplay } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
@@ -18,8 +25,11 @@ declare var Prism: any;
 })
 export class AppComponent implements OnInit {
   @HostListener('click', ['$event']) onClick(event: any) {
-    this.logCopySuccessMessage(event)
+    this.logCopySuccessMessage(event);
   }
+
+  readonly servicesUrl = environment.servicesUrl
+  readonly coursUrl = environment.coursUrl
 
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])
@@ -31,7 +41,7 @@ export class AppComponent implements OnInit {
   public userBrowserLanguage!: string;
   public MY_ACCOUNT = 'Mon compte';
   public MY_ARTICLES = 'Mes articles';
-  public ALL_ARTICLES = 'Tous les articles';
+  public ALL_ARTICLES = 'Tous nos articles';
 
   public activePage = this.MY_ACCOUNT;
 
@@ -42,9 +52,16 @@ export class AppComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     public authService: AuthService,
-    private fileUploadService: FileUploadService,
+    private fileUploadService: FileUploadService
   ) {
     this.setBrowserTranslationConfigs();
+
+    router.events.pipe(filter(event => event instanceof NavigationStart))
+      .subscribe(({ url }: any) => {
+        if (url === '/user/profile') this.activePage = this.MY_ACCOUNT;
+        if (url === '/user/dashboard') this.activePage = this.MY_ARTICLES;
+        if (url === '/user/dashboard/admin') this.activePage = this.ALL_ARTICLES;
+      });
   }
 
   public checkRouteUrl(): boolean {
@@ -89,7 +106,11 @@ export class AppComponent implements OnInit {
   }
 
   public logCopySuccessMessage(event: any) {
-    if (event.target.innerText === 'Copy' || event.target.className === 'copy-to-clipboard-button' || event.target.parentElement.className === 'copy-to-clipboard-button') {
+    if (
+      event.target.innerText === 'Copy' ||
+      event.target.className === 'copy-to-clipboard-button' ||
+      event.target.parentElement.className === 'copy-to-clipboard-button'
+    ) {
       this.messageService.codeCopied();
     }
   }
@@ -100,7 +121,7 @@ export class AppComponent implements OnInit {
       svgButton.classList.add('copy-to-clipboard-svg');
 
       svgButton.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 lg:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
     </svg>
     `;
@@ -108,8 +129,6 @@ export class AppComponent implements OnInit {
       return svgButton;
     });
   }
-
-
 
   ngOnInit(): void {
     this.activePage = this.MY_ACCOUNT;

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomePageComponent } from './home-page/home-page.component';
 import { LoggedInAuthGuard } from './user/logged-in-auth.guard';
 import { LoginPageComponent } from './user/login-page/login-page.component';
 import { PasswordResetPageComponent } from './user/password-reset-page/password-reset-page.component';
@@ -36,19 +37,23 @@ const routes: Routes = [
       import('./articles/articles.module').then((m) => m.ArticlesModule),
   },
   {
+    path: '',
+    component: HomePageComponent,
+  },
+  {
     path: '**',
     redirectTo: 'articles',
   },
-  { path: '', redirectTo: 'articles', pathMatch: 'full' },
+  // { path: '', redirectTo: 'articles', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
       initialNavigation: 'enabledBlocking',
-      scrollPositionRestoration: 'top',
+      scrollPositionRestoration: 'enabled',
     }),
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

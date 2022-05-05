@@ -1,3 +1,101 @@
-<div class="container text-center grid h-96 place-items-center">
-    <h1 class="text-5xl">Welcome to the {{title}} Blog home page! </h1>
-</div>
+<main class="pb-10 lg:pb-5">
+    <div class="overflow-hidden text-skin-inverted">
+        <div class="mx-auto pt-10 sm:pb-5 lg:pb-10 xl:pb-14 lg:pt-9 xl:pt-20">
+            <div class="flex flex-col lg:grid grid-cols-6">
+                <div
+                    class="text-block order-2 lg:order-none col-span-4 xl:col-span-3 flex-none relative z-10 flex flex-col items-start lg:pt-10 max-w-screen-sm mx-auto lg:max-w-2xl lg:mx-0 lg:pr-20 mt-8 sm:mt-9 lg:mt-0">
+                    <h1
+                        class="order-1 text-3xl sm:text-5xl sm:leading-none font-extrabold tracking-tight text-skin-base mb-4">
+                        <span class="text-primary-500">Cours UI components,</span> crafted with Tailwind CSS
+                    </h1>
+
+                    <p class="order-2 leading-relaxed mb-8">Over 500+ professionally designed, fully responsive,
+                        expertly crafted component examples you can drop into your Tailwind projects and customize to
+                        your heart’s content. Get started by checking out our free preview components, or browsing all
+                        of the examples in the categories you're most curious about.
+                    </p>
+
+                    <div class="order-2 w-full text-center grid grid-cols-1 gap-3 sm:flex sm:gap-0 sm:space-x-6">
+                        <a href="#" target="_blank"
+                            class="text-sm font-semibold bg-secondary bg-opacity-90 text-skin-link py-3 px-4 rounded-lg hover:bg-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">
+                            {{'home.explore' | translate}}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="aside-block order-1 lg:order-none col-span-2 xl:col-span-3 aspect-w-5 aspect-h-3">
+                    <img class="object-cover shadow-lg rounded-lg" src="assets/images/course-workshop-2.jpg"
+                        alt="atelier de cours de codage">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overflow-hidden text-skin-inverted">
+        <div class="mx-auto pt-16 sm:pb-5 lg:pb-10 xl:pb-14 lg:pt-9 xl:pt-20">
+            <div class="flex flex-col lg:grid grid-cols-6">
+                <div
+                    class="text-block order-2 lg:order-2 col-span-4 xl:col-span-3 flex-none relative z-10 flex flex-col items-start lg:pt-10 max-w-screen-sm mx-auto lg:max-w-2xl lg:mx-0 lg:pl-20 mt-8 sm:mt-9 lg:mt-0">
+                    <h1
+                        class="order-1 text-3xl sm:text-5xl sm:leading-none font-extrabold tracking-tight text-skin-base mb-4">
+                        <span class="text-primary-500">Blog UI components,</span> crafted with Tailwind CSS
+                    </h1>
+
+                    <p class="order-2 leading-relaxed mb-8">Over 500+ professionally designed, fully responsive,
+                        expertly crafted component examples you can drop into your Tailwind projects and customize to
+                        your heart’s content. Get started by checking out our free preview components, or browsing all
+                        of the examples in the categories you're most curious about.
+                    </p>
+
+                    <div class="order-2 w-full text-center grid grid-cols-1 gap-3 sm:flex sm:gap-0 sm:space-x-6">
+                        <a routerLink="/articles"
+                            class="text-sm font-semibold bg-secondary bg-opacity-90 text-skin-link py-3 px-4 rounded-lg hover:bg-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">
+                            {{'home.explore' | translate}}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="aside-block order-1 lg:order-1 col-span-2 xl:col-span-3 aspect-w-5 aspect-h-3">
+                    <img class="object-cover shadow-lg rounded-lg" src="assets/images/blog-post.jpg" alt="blog post">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overflow-hidden text-skin-inverted">
+        <div class="mx-auto pt-16 sm:pb-5 lg:pb-10 xl:pb-14 lg:pt-9 xl:pt-20">
+            <div class="flex flex-col lg:grid grid-cols-6">
+                <div
+                    class="text-block order-2 lg:order-none col-span-4 xl:col-span-3 flex-none relative z-10 flex flex-col items-start lg:pt-10 max-w-screen-sm mx-auto lg:max-w-2xl lg:mx-0 lg:pr-20 mt-8 sm:mt-9 lg:mt-0">
+                    <h1
+                        class="order-1 text-3xl sm:text-5xl sm:leading-none font-extrabold tracking-tight text-skin-base mb-4">
+                        <span class="text-primary-500">Services UI components,</span> crafted with Tailwind CSS
+                    </h1>
+
+                    <p class="order-2 leading-relaxed mb-8">Over 500+ professionally designed, fully responsive,
+                        expertly crafted component examples you can drop into your Tailwind projects and customize to
+                        your heart’s content. Get started by checking out our free preview components, or browsing all
+                        of the examples in the categories you're most curious about.
+                    </p>
+
+                    <div class="order-2 w-full text-center grid grid-cols-1 gap-3 sm:flex sm:gap-0 sm:space-x-6">
+                        <a href="https://zerofiltre.tech" target="_blank"
+                            class="text-sm font-semibold bg-secondary bg-opacity-90 text-skin-link py-3 px-4 rounded-lg hover:bg-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900">
+                            {{'home.explore' | translate}}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="aside-block order-1 lg:order-none col-span-2 xl:col-span-3 aspect-w-5 aspect-h-3">
+                    <!-- aspect-w-3 aspect-h-2 -->
+                    <img class="object-cover shadow-lg rounded-lg" src="assets/images/our-services.jpg"
+                        alt="nos service en cadeau">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed -z-20 inset-0 landing-bg"></div>
+</main>
+
+<!-- bg-[url('assets/images/landing-bg-yellow.png')] -->

@@ -33,9 +33,8 @@ export class AccountConfirmationPageComponent implements OnInit {
       next: (response: any) => {
         this.loading = false;
         this.isTokenValid = true;
-        this.messageService.openSnackBarSuccess(response, 'Ok', 0);
+        this.messageService.openSnackBarSuccess(response, 'OK');
         this.successMessage = true;
-        // TODO: Update user value in LS
       },
       error: (_error: HttpErrorResponse) => {
         if (!this.token) this.messageService.cancel();

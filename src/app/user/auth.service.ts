@@ -1,11 +1,10 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, catchError, map, Observable, of, retryWhen, shareReplay, tap, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, catchError, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MessageService } from '../services/message.service';
-import { genericRetryPolicy } from '../services/utilities.service';
 import { User } from './user.model';
 
 const httpOptions = {
@@ -35,6 +34,8 @@ export class AuthService {
 
   public isAdmin!: boolean;
 
+  private refreshData!: boolean
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
@@ -56,6 +57,10 @@ export class AuthService {
 
   private loadCurrentUser() {
     if (isPlatformBrowser(this.platformId)) {
+      if (this.refreshData) {
+        httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
+      }
+
       this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
         .pipe(
           catchError(error => {
@@ -66,7 +71,10 @@ export class AuthService {
             console.log('ME: ', usr);
             this.subject.next(usr);
             this.setUserData(usr);
-          })
+            this.refreshData = false
+            httpOptions.headers = httpOptions.headers.delete('x-refresh');
+          }),
+          shareReplay()
         )
     }
   }
@@ -162,7 +170,10 @@ export class AuthService {
   public registrationConfirm(token: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/registrationConfirm?token=${token}`, {
       responseType: 'text' as 'json'
-    }).pipe(shareReplay())
+    }).pipe(
+      tap(_ => this.refreshData = true),
+      shareReplay()
+    );
   }
 
   public resendUserConfirm(email: string): Observable<any> {
@@ -196,9 +207,11 @@ export class AuthService {
   }
 
   public updateUserProfile(profile: any): Observable<User> {
-    return this.http.patch<User>(`${this.apiServerUrl}/user`, profile).pipe(
-      shareReplay()
-    )
+    return this.http.patch<User>(`${this.apiServerUrl}/user`, profile)
+      .pipe(
+        tap(_ => this.refreshData = true),
+        shareReplay()
+      );
   }
 
   public findUserProfile(userId: string): Observable<User> {
@@ -238,13 +251,13 @@ export class AuthService {
           this.subject.next(usr);
           localStorage.setItem(this.TOKEN_NAME, accessToken);
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
-          localStorage.setItem('user_data', JSON.stringify(usr));
+          this.setUserData(usr);
           this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
 
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)
           } else {
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/articles');
           }
         },
         error: (_err: HttpErrorResponse) => {
