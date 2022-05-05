@@ -82,6 +82,18 @@ spec:
                   name: zerofiltre-blog-front
                   key: github_redirect_url
 
+            - name: SERVICES_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-front
+                  key: services_url
+
+            - name: COURSES_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-front
+                  key: courses_url
+
 ---
 apiVersion: v1
 kind: Service

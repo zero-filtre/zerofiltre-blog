@@ -3,7 +3,7 @@ export const environment = {
   apiBaseUrl: '',
   blogUrl: '',
   servicesUrl: '',
-  coursUrl: '',
+  coursesUrl: '',
   ovhServerUrl: '',
   ovhTokenUrl: '',
   GITHUB_CLIENT_ID: '',
@@ -13,4 +13,3 @@ export const environment = {
   ovhAuthPassword: '',
   ovhAuthName: '',
 };
-
