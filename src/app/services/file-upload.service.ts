@@ -131,6 +131,7 @@ export class FileUploadService {
   }
 
   public uploadImage(fileName: string, file: File): Observable<any> {
+    //TODO: validate file here instead of inside the component
     const xToken = this.xTokenObj?.xToken || 'my-x-token';
 
     httpOptions.headers = httpOptions.headers
