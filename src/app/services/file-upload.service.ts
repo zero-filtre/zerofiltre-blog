@@ -117,12 +117,12 @@ export class FileUploadService {
     const fileSize = Math.round(file.size / sizeUnit);
     const fileType = file.type.split('/')[0]
 
-    if (fileSize > maxSize) {
-      isValid = false
-      this.messageService.fileSizeWarning(maxSize);
-    } else if (fileType !== 'image') {
+    if (fileType !== 'image') {
       isValid = false
       this.messageService.fileTypeWarning();
+    } else if (fileSize > maxSize) {
+      isValid = false
+      this.messageService.fileSizeWarning(maxSize);
     } else {
       isValid = true;
     }
@@ -131,7 +131,8 @@ export class FileUploadService {
   }
 
   public uploadImage(fileName: string, file: File): Observable<any> {
-    //TODO: validate file here instead of inside the component
+    if (!this.validateFile(file)) return throwError(() => new Error('Invalid file'))
+
     const xToken = this.xTokenObj?.xToken || 'my-x-token';
 
     httpOptions.headers = httpOptions.headers
