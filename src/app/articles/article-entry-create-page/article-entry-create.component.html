@@ -371,9 +371,9 @@
                         </ng-container>
 
                         <ng-template #validBtn>
-                            <button type="submit" (click)="publishArticle()" [disabled]="isSaving"
-                                [ngClass]="{'opacity-50': isSaving}"
-                                class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
+                            <button type="submit" (click)="publishArticle()" [disabled]="isSaving || isPublishing"
+                                [ngClass]="{'opacity-50': isSaving || isPublishing }"
+                                class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
                                 <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">
                                     {{ 'articleEntryEdit.publishBtn' | translate }}
                                 </span>

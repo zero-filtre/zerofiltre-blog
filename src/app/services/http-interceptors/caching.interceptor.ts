@@ -21,6 +21,8 @@ export class CachingInterceptor implements HttpInterceptor {
       return next.handle(req)
     }
 
+    //TODO: If prevReq was cacheable && prevReq.headers had x-refresh => curr req.headers set x-refresh, assuming curr req is cacheable
+
     if (req.headers.get('x-refresh')) {
       console.log('UPDATING CACHE...!');
       return this.sendRequest(req, next);
