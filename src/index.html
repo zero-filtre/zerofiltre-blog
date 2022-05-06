@@ -37,24 +37,15 @@
       cookieconsent.run({ "notice_banner_type": "simple", "consent_type": "express", "palette": "light", "language": "fr", "page_load_consent_levels": ["strictly-necessary", "functionality", "tracking", "targeting"], "notice_banner_reject_button_hide": false, "preferences_center_close_button_hide": false, "website_name": "Zerofiltre.tech", "website_privacy_policy_url": "https://zerofiltre.tech/terms_of_use.html", "open_preferences_center_selector": "#open_preferences_center" });
 
       const cookieText = document.getElementById('cc-nb-text');
-      cookieText?.textContent = "Salut c'est nous...🍪 les Cookies! Nous sommes là pour améliorer votre expérience de navigation sur notre site, on aimerait bien vous accompagner pendant votre visite... C'est OK pour vous ?";
+      cookieText.textContent = "Salut c'est nous...🍪 les Cookies! Nous sommes là pour améliorer votre expérience de navigation sur notre site, on aimerait bien vous accompagner pendant votre visite... C'est OK pour vous ?";
       const agreeBtn = document.querySelector('.cc-nb-okagree');
-      agreeBtn?.textContent = 'Ok pour moi';
+      agreeBtn.textContent = 'Ok pour moi';
       const changePrefBtn = document.querySelector('.cc-nb-changep');
-      changePrefBtn?.textContent = 'Je choisis';
+      changePrefBtn.textContent = 'Je choisis';
     });
   </script>
 
   <!-- Google Analytics -->
-  <script type="text/plain" cookie-consent="tracking" async
-    src="https://www.googletagmanager.com/gtag/js?id=G-FPLWQNHWMT"></script>
-  <script type="text/plain" cookie-consent="tracking">
-          window.dataLayer = window.dataLayer || [];
-          function gtag() { dataLayer.push(arguments); }
-          gtag('js', new Date());
-  
-          gtag('config', 'G-FPLWQNHWMT');
-      </script>
   <!-- end of Google Analytics-->
 
   <noscript>Cookie Consent by <a href="https://www.privacypolicies.com/privacy-policy-generator/"
