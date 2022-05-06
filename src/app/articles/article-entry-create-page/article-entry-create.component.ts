@@ -242,8 +242,6 @@ export class ArticleEntryCreateComponent implements OnInit {
 
 
   public uploadFile(host: string) {
-    if (!this.fileUploadService.validateFile(this.file.data)) return
-
     const fileName = this.file.data.name
     this.file.inProgress = true;
     this.uploading = true;

@@ -7,7 +7,7 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router, RouterEvent } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, Observable, shareReplay } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   }
 
   readonly servicesUrl = environment.servicesUrl
-  readonly coursUrl = environment.coursUrl
+  readonly coursesUrl = environment.coursesUrl
 
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])

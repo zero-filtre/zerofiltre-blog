@@ -40,7 +40,6 @@ export class FileUploadService {
   }
 
   private loadxToken() {
-
     const body = {
       "auth": {
         "identity": {
@@ -63,7 +62,6 @@ export class FileUploadService {
     this.xTokenServerValue = this.state.get(STATE_KEY_X_TOKEN, <any>null);
 
     if (this.xTokenServerValue && isPlatformBrowser(this.platformId)) {
-      // console.log('XTOKEN VALUE IN THE CLIENT: ', this.xTokenServerValue);
       this.subject.next(this.xTokenServerValue);
       localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(this.xTokenServerValue));
     }
@@ -84,7 +82,6 @@ export class FileUploadService {
               xToken,
               expireAt
             }
-            // console.log('XTOKEN VALUE IN THE SERVER: ', tokenObj);
             this.state.set(STATE_KEY_X_TOKEN, <any>tokenObj);
             this.subject.next(tokenObj);
           }),
@@ -117,12 +114,12 @@ export class FileUploadService {
     const fileSize = Math.round(file.size / sizeUnit);
     const fileType = file.type.split('/')[0]
 
-    if (fileSize > maxSize) {
-      isValid = false
-      this.messageService.fileSizeWarning(maxSize);
-    } else if (fileType !== 'image') {
+    if (fileType !== 'image') {
       isValid = false
       this.messageService.fileTypeWarning();
+    } else if (fileSize > maxSize) {
+      isValid = false
+      this.messageService.fileSizeWarning(maxSize);
     } else {
       isValid = true;
     }
@@ -131,6 +128,8 @@ export class FileUploadService {
   }
 
   public uploadImage(fileName: string, file: File): Observable<any> {
+    if (!this.validateFile(file)) return throwError(() => new Error('Invalid file'))
+
     const xToken = this.xTokenObj?.xToken || 'my-x-token';
 
     httpOptions.headers = httpOptions.headers
