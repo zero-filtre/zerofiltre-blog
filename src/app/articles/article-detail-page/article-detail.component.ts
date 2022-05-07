@@ -200,12 +200,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe(
       params => {
         this.articleId = params.get('id')!;
-
         this.getCurrentArticle(this.articleId);
-
-        // TODO: add server APi transfert state to prevent double request
-        // if (isPlatformBrowser(this.platformId)) {
-        // }
       }
     );
   }

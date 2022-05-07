@@ -51,9 +51,6 @@ function isCacheable(req: HttpRequest<any>): boolean {
   const urlArr = req.url.split('/')
   const last = urlArr.length - 1
 
-  // if (req.method !== 'GET') return false;
-  // if (req.method === 'GET' && !urlArr[last].startsWith('user')) return true;
-  if (req.method === 'GET' && !urlArr[last].startsWith('refreshToken')) return true;
-
+  if (req.method === 'GET' && (!urlArr[last].startsWith('refreshToken') && !urlArr[last].startsWith('user'))) return true;
   return false;
 }

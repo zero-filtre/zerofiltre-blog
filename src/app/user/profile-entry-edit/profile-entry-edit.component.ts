@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'src/app/services/message.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
 import { User } from '../user.model';
@@ -23,7 +24,8 @@ export class ProfileEntryEditComponent implements OnInit {
     private authService: AuthService,
     private messageService: MessageService,
     private seo: SeoService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    public navigate: NavigationService,
   ) { }
 
   public InitForm(): void {
@@ -86,27 +88,6 @@ export class ProfileEntryEditComponent implements OnInit {
   public userHasSocialLinkFor(platform: string): boolean {
     return this.user?.socialLinks.some((profile: any) => profile.platform === platform && profile.link)
   }
-
-  // public addSocialLink(obj: any) {
-  //   this.socialLinks.push(
-  //     this.fb.group({
-  //       platform: [obj.platform],
-  //       link: [obj.link],
-  //       userId: [obj.userId]
-  //     })
-  //   );
-  // }
-
-  // public removeSocialLink(id: any) {
-  //   this.socialLinks.removeAt(id)
-  // }
-
-  // public getUserSocialLinks(): any {
-  //   this.user?.socialLinks.forEach((sl: any) => {
-  //     // if (sl.link) this.addSocialLink(sl)
-  //     this.addSocialLink(sl)
-  //   })
-  // }
 
   public validateUserSocialLinksBeforeUpdateRequest(): boolean {
     const socialLinks = this.socialLinks.value
