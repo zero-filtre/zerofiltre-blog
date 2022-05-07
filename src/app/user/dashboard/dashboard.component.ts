@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { SeoService } from 'src/app/services/seo.service';
 import {
   calcReadingTime,
@@ -50,8 +51,9 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,
     public authService: AuthService,
     private translate: TranslateService,
+    public navigate: NavigationService,
     @Inject(PLATFORM_ID) private platformId: any
-  ) {}
+  ) { }
 
   public setArticlesReadingTime(articles: Article[]): void {
     for (const article of articles) {
