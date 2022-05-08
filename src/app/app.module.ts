@@ -18,6 +18,8 @@ import { AuthInterceptor } from './services/http-interceptors/auth.interceptor';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './shared/lang-switcher/translate-universal-loader';
+import { ImagekitioAngularModule } from 'imagekitio-angular';
+import { environment } from 'src/environments/environment';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -32,6 +34,13 @@ registerLocaleData(localeFr, 'fr');
     MarkdownModule.forRoot(),
     SharedModule,
     AppRoutingModule,
+
+    ImagekitioAngularModule.forRoot({
+      publicKey: 'public_TOa/IP2yX1o2eHip4nsS+rPLsjE=', // or environment.publicKey
+      urlEndpoint: 'https://ik.imagekit.io/lfegvix1p', // or environment.urlEndpoint
+      authenticationEndpoint: environment.ovhTokenUrl // or environment.authenticationEndpoint
+    }),
+
     TranslateModule.forRoot({
       defaultLanguage: 'fr',
       loader: {

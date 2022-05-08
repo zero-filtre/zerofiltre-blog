@@ -7,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
   title = 'Zerofiltre'
-  
+
+  public transformations = [{
+    width: 1200,
+    aspectRatio: "5-3"
+  }]
+
   constructor() { }
 
   ngOnInit(): void {
