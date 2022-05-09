@@ -6,11 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  title = 'Zerofiltre'
-
   public transformations = [{
     width: 1200,
-    aspectRatio: "5-3"
+    aspectRatio: "auto"
   }]
 
   constructor() { }
