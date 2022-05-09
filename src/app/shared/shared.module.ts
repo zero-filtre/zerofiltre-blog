@@ -15,11 +15,15 @@ import { AppShellRenderDirective } from '../directives/app-shell-render.directiv
 import { AppShellNoRenderDirective } from '../directives/app-shell-no-render.directive';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TranslateModule } from '@ngx-translate/core';
+import { ImageComponent } from './image/image.component';
+import { ImagekitioAngularModule } from 'imagekitio-angular';
+import { environment } from 'src/environments/environment';
 
 const components = [
   AppShellRenderDirective,
   AppShellNoRenderDirective,
-  FooterComponent
+  FooterComponent,
+  ImageComponent
 ];
 
 const modules = [
@@ -40,7 +44,14 @@ const modules = [
 
 @NgModule({
   declarations: [...components],
-  imports: [...modules],
+  imports: [
+    ...modules,
+    ImagekitioAngularModule.forRoot({
+      publicKey: 'public_TOa/IP2yX1o2eHip4nsS+rPLsjE=', // or environment.publicKey
+      urlEndpoint: 'https://ik.imagekit.io/lfegvix1p', // or environment.urlEndpoint
+      authenticationEndpoint: environment.ovhTokenUrl // or environment.authenticationEndpoint
+    }),
+  ],
   exports: [
     ...components,
     ...modules,

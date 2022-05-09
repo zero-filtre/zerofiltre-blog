@@ -11,6 +11,10 @@ export class HomePageComponent implements OnInit {
     aspectRatio: "auto"
   }]
 
+  public blogHeroImage = 'https://ik.imagekit.io/lfegvix1p/blog-post_Fqr6Kp8fF.jpg?'
+  public coursesHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-workshop-2_MdBjzHzLo.jpg'
+  public servicesHeroImage = 'https://ik.imagekit.io/lfegvix1p/our-services_4MZFz7DlJ.jpg'
+
   constructor() { }
 
   ngOnInit(): void {

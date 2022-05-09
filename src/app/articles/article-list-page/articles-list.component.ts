@@ -69,12 +69,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     });
   }
 
-  public imageKitSource(url: string): string {
-    const imageName = urlLastElement(url);
-    const imageKitUrl = 'https://ik.imagekit.io/lfegvix1p/'
-    return imageKitUrl + imageName
-  }
-
   public fetchListOfTags(): void {
     this.loading = true;
     this.tags$ = this.articleService.getListOfTags().subscribe({
