@@ -85,11 +85,12 @@
                 <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles; let i=index" class="space-y-11">
                         <div class="article-card lg:grid grid-cols-3 gap-6">
-                            <!-- [routerLink]="[article.id]" -->
                             <a routerLink="/articles/{{article.id}}" class="article-preview group">
-                                <div class="aspect-w-3 aspect-h-2">
-                                    <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75 transition-all duration-200"
-                                        src="{{article?.thumbnail}}" alt="{{article?.title}}">
+                                <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
+                                    <app-image
+                                        [classes]="'object-cover group-hover:opacity-75 transition-all duration-200'"
+                                        [sourceUrl]="article?.thumbnail!">
+                                    </app-image>
                                 </div>
                             </a>
 
@@ -123,9 +124,9 @@
                                     <div class="article-author mt-3 flex items-center">
                                         <div class="author-image flex-shrink-0">
                                             <a href="">
-                                                <img class="h-10 w-10 rounded-full shadow-sm"
-                                                    src="{{article.author?.profilePicture}}"
-                                                    alt="{{article.author?.pseudoName}}">
+                                                <app-image [classes]="'h-10 w-10 rounded-full shadow-sm'"
+                                                    [sourceUrl]="article.author?.profilePicture!">
+                                                </app-image>
                                             </a>
                                         </div>
 

@@ -34,6 +34,11 @@
   }
 }
 
+img {
+  @apply max-h-full w-full;
+  aspect-ratio: attr(width) / attr(height);
+}
+
 .site-container {
   max-width: 95rem;
   @apply mx-auto px-4 xl:px-[5%];

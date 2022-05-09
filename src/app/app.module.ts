@@ -32,6 +32,7 @@ registerLocaleData(localeFr, 'fr');
     MarkdownModule.forRoot(),
     SharedModule,
     AppRoutingModule,
+
     TranslateModule.forRoot({
       defaultLanguage: 'fr',
       loader: {
