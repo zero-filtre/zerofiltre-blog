@@ -59,9 +59,11 @@
                     <div *ngFor="let article of articles">
                         <div class="article-card lg:grid grid-cols-3 gap-6">
                             <a routerLink="/articles/{{article.id}}" class="article-preview group">
-                                <div class="aspect-w-3 aspect-h-2">
-                                    <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75 transition-all duration-200"
-                                        src="{{article?.thumbnail}}" alt="{{article?.title}}">
+                                <div class="shadow-lg rounded-lg overflow-hidden aspect-w-3 aspect-h-2">
+                                    <app-image
+                                        [classes]="'object-cover group-hover:opacity-75 transition-all duration-200'"
+                                        [sourceUrl]="article?.thumbnail!">
+                                    </app-image>
                                 </div>
                             </a>
 
@@ -96,9 +98,9 @@
                                     <div class="article-author mt-3 flex items-center">
                                         <div class="author-image flex-shrink-0">
                                             <a href="">
-                                                <img class="h-10 w-10 rounded-full"
-                                                    src="{{article.author?.profilePicture}}"
-                                                    alt="{{article.author?.pseudoName}}">
+                                                <app-image [classes]="'h-10 w-10 rounded-full'"
+                                                    [sourceUrl]="article.author?.profilePicture!">
+                                                </app-image>
                                             </a>
                                         </div>
 

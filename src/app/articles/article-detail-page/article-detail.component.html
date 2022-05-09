@@ -166,10 +166,11 @@
                     </ng-container>
                 </header>
 
-                <div class="article-cover-image aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
+                <div
+                    class="article-cover-image shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
                     <ng-container *ngIf="article" class="">
-                        <img class="object-cover shadow-lg rounded-lg" src="{{article?.thumbnail}}"
-                            alt="{{article?.title}}">
+                        <app-image [classes]="'object-cover'" [sourceUrl]="article?.thumbnail!">
+                        </app-image>
                     </ng-container>
                     <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
                         <ngx-skeleton-loader class="shadow-lg rounded-lg" count="1" appearance="line" [theme]="{ 
@@ -249,8 +250,9 @@
                     <a href="#" class="">
                         <div class="flex items-center justify-center gap-2">
                             <div class="">
-                                <img class="h-9 w-9 rounded-full" src="{{article?.author?.profilePicture}} "
-                                    alt="{{article?.author?.pseudoName}}">
+                                <app-image [classes]="'h-9 w-9 rounded-full'"
+                                    [sourceUrl]="article?.author?.profilePicture!">
+                                </app-image>
                             </div>
                             <div class="lg:flex-1">
                                 <p class="text-sm lg:text-base font-semibold text-skin-inverted ">
@@ -500,8 +502,9 @@
                             <ng-container *ngFor="let article of similarArticles">
                                 <a routerLink="/articles/{{article?.id}}"
                                     class="first-of-type:mt-0 mt-3 flex items-center space-x-2">
-                                    <img class="h-8 w-8 object-cover shadow-lg rounded-md" src="{{article?.thumbnail}}"
-                                        alt="{{article?.title}}">
+                                    <app-image [classes]="'h-8 w-8 object-cover shadow-lg rounded-md'"
+                                        [sourceUrl]="article?.thumbnail!">
+                                    </app-image>
                                     <span
                                         class="text-sm font-semibold leading-4 text-skin-text hover:text-primary-500 line-clamp-2 transition-all duration-200">
                                         {{article?.title}}

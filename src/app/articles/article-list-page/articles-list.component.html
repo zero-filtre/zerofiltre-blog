@@ -124,9 +124,9 @@
                                     <div class="article-author mt-3 flex items-center">
                                         <div class="author-image flex-shrink-0">
                                             <a href="">
-                                                <img class="h-10 w-10 rounded-full shadow-sm"
-                                                    src="{{article.author?.profilePicture}}"
-                                                    alt="{{article.author?.pseudoName}}">
+                                                <app-image [classes]="'h-10 w-10 rounded-full shadow-sm'"
+                                                    [sourceUrl]="article.author?.profilePicture!">
+                                                </app-image>
                                             </a>
                                         </div>
 
