@@ -85,11 +85,13 @@
                 <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles; let i=index" class="space-y-11">
                         <div class="article-card lg:grid grid-cols-3 gap-6">
-                            <!-- [routerLink]="[article.id]" -->
                             <a routerLink="/articles/{{article.id}}" class="article-preview group">
-                                <div class="aspect-w-3 aspect-h-2">
-                                    <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75 transition-all duration-200"
-                                        src="{{article?.thumbnail}}" alt="{{article?.title}}">
+                                <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
+                                    <!-- <img class="object-cover shadow-lg rounded-lg group-hover:opacity-75 transition-all duration-200"
+                                        src="{{article?.thumbnail}}" alt="{{article?.title}}"> -->
+                                    <ik-image class="object-cover group-hover:opacity-75 transition-all duration-200"
+                                        [src]="imageKitSource(article?.thumbnail!)">
+                                    </ik-image>
                                 </div>
                             </a>
 

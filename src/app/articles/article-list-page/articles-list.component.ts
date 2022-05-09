@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { calcReadingTime, nFormatter } from 'src/app/services/utilities.service';
+import { calcReadingTime, nFormatter, urlLastElement } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -63,11 +63,16 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       width: '850px',
       height: '350px',
       panelClass: 'article-popup-panel',
-      // backdropClass: 'article-popup-backdrop',
       data: {
         router: this.router
       }
     });
+  }
+
+  public imageKitSource(url: string): string {
+    const imageName = urlLastElement(url);
+    const imageKitUrl = 'https://ik.imagekit.io/lfegvix1p/'
+    return imageKitUrl + imageName
   }
 
   public fetchListOfTags(): void {
