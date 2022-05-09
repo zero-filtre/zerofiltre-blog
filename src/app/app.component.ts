@@ -7,7 +7,7 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, Observable, shareReplay } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -15,6 +15,15 @@ import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
 import { AuthService } from './user/auth.service';
+
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+  RouterEvent,
+} from '@angular/router';
 
 declare var Prism: any;
 
@@ -45,6 +54,8 @@ export class AppComponent implements OnInit {
   public MY_ARTICLES = 'Mes articles';
   public ALL_ARTICLES = 'Tous nos articles';
 
+  public showRouteLoader!: boolean;
+
   public activePage = this.MY_ACCOUNT;
 
   constructor(
@@ -64,6 +75,23 @@ export class AppComponent implements OnInit {
         if (url === '/user/dashboard') this.activePage = this.MY_ARTICLES;
         if (url === '/user/dashboard/admin') this.activePage = this.ALL_ARTICLES;
       });
+
+    router.events.pipe(filter((event): event is RouterEvent => event instanceof RouterEvent))
+      .subscribe(e => this.checkRouteChange(e))
+  }
+
+  public checkRouteChange(routerEvent: RouterEvent) {
+    if (routerEvent instanceof NavigationStart) {
+      this.showRouteLoader = true;
+    }
+    if (routerEvent instanceof NavigationEnd ||
+      routerEvent instanceof NavigationCancel ||
+      routerEvent instanceof NavigationError
+    ) {
+      setTimeout(() => {
+        this.showRouteLoader = false;
+      }, 1000);
+    }
   }
 
   public checkRouteUrl(): boolean {

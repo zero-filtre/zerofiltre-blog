@@ -19,6 +19,8 @@ import { ImageComponent } from './image/image.component';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { environment } from 'src/environments/environment';
 
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 const components = [
   AppShellRenderDirective,
   AppShellNoRenderDirective,
@@ -40,6 +42,7 @@ const modules = [
   ReactiveFormsModule,
   InfiniteScrollModule,
   TranslateModule,
+  MatProgressBarModule
 ];
 
 @NgModule({
