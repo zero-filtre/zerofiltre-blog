@@ -12,8 +12,6 @@ import { ArticleItemComponent } from './article-item/article-item.component';
 import { ArticleListContainerComponent } from './article-list-container/article-list-container.component';
 import { DeleteArticlePopupComponent } from './delete-article-popup/delete-article-popup.component';
 
-import { ImagekitioAngularModule } from 'imagekitio-angular';
-import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -30,11 +28,6 @@ import { environment } from 'src/environments/environment';
     SharedModule,
     ArticlesRoutingModule,
     MarkdownModule.forChild(),
-    ImagekitioAngularModule.forRoot({
-      publicKey: 'public_TOa/IP2yX1o2eHip4nsS+rPLsjE=', // or environment.publicKey
-      urlEndpoint: 'https://ik.imagekit.io/lfegvix1p', // or environment.urlEndpoint
-      authenticationEndpoint: environment.ovhTokenUrl // or environment.authenticationEndpoint
-    })
   ]
 })
 export class ArticlesModule { }

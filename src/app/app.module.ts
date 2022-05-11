@@ -7,7 +7,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HomePageComponent } from './home-page/home-page.component';
-import { MarkdownModule } from 'ngx-markdown';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -15,9 +14,6 @@ import { LOCALE_ID } from '@angular/core';
 
 import { httpInterceptorProviders } from './services/http-interceptors';
 import { AuthInterceptor } from './services/http-interceptors/auth.interceptor';
-
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateUniversalLoader } from './shared/lang-switcher/translate-universal-loader';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -29,17 +25,8 @@ registerLocaleData(localeFr, 'fr');
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MarkdownModule.forRoot(),
     SharedModule,
     AppRoutingModule,
-
-    TranslateModule.forRoot({
-      defaultLanguage: 'fr',
-      loader: {
-        provide: TranslateLoader,
-        useClass: TranslateUniversalLoader
-      }
-    })
   ],
   providers: [
     httpInterceptorProviders,
