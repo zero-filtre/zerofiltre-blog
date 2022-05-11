@@ -14,12 +14,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppShellRenderDirective } from '../directives/app-shell-render.directive';
 import { AppShellNoRenderDirective } from '../directives/app-shell-no-render.directive';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { TranslateModule } from '@ngx-translate/core';
 import { ImageComponent } from './image/image.component';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { environment } from 'src/environments/environment';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MarkdownModule } from 'ngx-markdown';
+
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateUniversalLoader } from './lang-switcher/translate-universal-loader';
 
 const components = [
   AppShellRenderDirective,
@@ -49,11 +52,21 @@ const modules = [
   declarations: [...components],
   imports: [
     ...modules,
+    MarkdownModule.forRoot(),
+
     ImagekitioAngularModule.forRoot({
-      publicKey: 'public_TOa/IP2yX1o2eHip4nsS+rPLsjE=', // or environment.publicKey
-      urlEndpoint: 'https://ik.imagekit.io/lfegvix1p', // or environment.urlEndpoint
-      authenticationEndpoint: environment.ovhTokenUrl // or environment.authenticationEndpoint
+      publicKey: 'public_TOa/IP2yX1o2eHip4nsS+rPLsjE=', // or environment.imagekitPublicKey
+      urlEndpoint: 'https://ik.imagekit.io/lfegvix1p', // or environment.imagekitUrlEndpoint
+      authenticationEndpoint: environment.ovhTokenUrl // or environment.bucketAuthenticationEndpoint
     }),
+
+    TranslateModule.forRoot({
+      defaultLanguage: 'fr',
+      loader: {
+        provide: TranslateLoader,
+        useClass: TranslateUniversalLoader
+      }
+    })
   ],
   exports: [
     ...components,
