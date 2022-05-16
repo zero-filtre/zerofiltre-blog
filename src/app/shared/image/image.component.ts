@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { urlLastElement } from 'src/app/services/utilities.service';
+import { getUrlLastElement } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-image',
@@ -13,7 +13,7 @@ export class ImageComponent implements OnInit {
   constructor() { }
 
   public imageKitSource(): string {
-    const imageName = urlLastElement(this.sourceUrl);
+    const imageName = getUrlLastElement(this.sourceUrl);
     const imageKitUrl = 'https://ik.imagekit.io/lfegvix1p/'
     return imageKitUrl + imageName
   }

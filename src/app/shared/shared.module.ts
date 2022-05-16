@@ -57,7 +57,7 @@ const modules = [
     ImagekitioAngularModule.forRoot({
       publicKey: 'public_TOa/IP2yX1o2eHip4nsS+rPLsjE=', // or environment.imagekitPublicKey
       urlEndpoint: 'https://ik.imagekit.io/lfegvix1p', // or environment.imagekitUrlEndpoint
-      authenticationEndpoint: environment.ovhTokenUrl // or environment.bucketAuthenticationEndpoint
+      authenticationEndpoint: '' // or environment.bucketAuthenticationEndpoint
     }),
 
     TranslateModule.forRoot({

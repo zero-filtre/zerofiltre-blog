@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { calcReadingTime, nFormatter, urlLastElement } from 'src/app/services/utilities.service';
+import { calcReadingTime, nFormatter } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';

@@ -100,7 +100,7 @@ export function getCurrentYear(): number {
   return new Date().getFullYear();
 };
 
-export function urlLastElement(url: string): string {
+export function getUrlLastElement(url: string): string {
   if (!url) return '';
 
   const urlArr = url.split('/')
