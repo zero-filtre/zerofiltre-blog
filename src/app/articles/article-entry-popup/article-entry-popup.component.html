@@ -31,21 +31,21 @@
         </div>
 
         <div class="action-buttons flex space-x-1 sm:space-x-2 mt-4">
-            <button
+            <button aria-labelledby="cancel"
                 class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-200"
                 (click)="onNoClick()">
                 {{'app.cancel' | translate}}
             </button>
 
             <div *ngIf="name.invalid; else validBtn">
-                <button
+                <button aria-labelledby="create an article"
                     class="px-4 py-2 border border-primary-500 shadow-sm bg-primary-500 opacity-[0.15] rounded-full text-sm text-white leading-5 font-semibold"
                     type="submit" disabled>
                     {{'articleEntryPopup.createBtn' | translate}}
                 </button>
             </div>
             <ng-template #validBtn>
-                <button type="submit" (click)="handleArticleInit()"
+                <button type="submit" aria-labelledby="create an article" (click)="handleArticleInit()"
                     class="px-4 py-2 border border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-primary-500 hover:bg-skin-cardMuted hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
                     {{'articleEntryPopup.createBtn' | translate}}
                 </button>

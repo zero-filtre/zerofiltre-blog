@@ -27,11 +27,11 @@
         </div>
 
         <div class="action-buttons mt-6 flex gap-2">
-            <button (click)="handleDeleteAccount()"
+            <button (click)="handleDeleteAccount()" aria-labelledby="Delete account button"
                 class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted transition-all duration-200">
                 <span>{{'deleteAccountPopup.deleteBtn' | translate}}</span>
             </button>
-            <button (click)="onNoClick()"
+            <button (click)="onNoClick()" aria-labelledby="Cancel button"
                 class="font-semibold relative py-2 px-4 border border-transparent text-sm rounded-full text-white bg-red-500 hover:bg-red-700 focus:outline-none transition-all duration-200">
                 <span>{{'app.cancel' | translate}}</span>
             </button>

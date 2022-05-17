@@ -4,24 +4,28 @@
             <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
                 <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
                     <button type="button" aria-current="page" (click)="sortBy(RECENT)"
+                        aria-labelledby="Toggle to recent articles tab"
                         [ngClass]="activePage === RECENT ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'articles.new' | translate}}</span>
                     </button>
 
                     <button type=" button" aria-current="false" (click)="sortBy(POPULAR)"
+                        aria-labelledby="Toggle to pupular articles tab"
                         [ngClass]="activePage === POPULAR ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'articles.famous' | translate}}</span>
                     </button>
 
                     <button type="button" aria-current="false" (click)="sortBy(TRENDING)"
+                        aria-labelledby="Toggle to trending articles tab"
                         [ngClass]="activePage === TRENDING ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'articles.modish' | translate}}</span>
                     </button>
 
                     <button type="button" aria-current="false" (click)="sortBy(TAGS)"
+                        aria-labelledby="Toggle to the tag articles tab"
                         [ngClass]="activePage === TAGS ? 'active-tab' : ''"
                         class="lg:hidden relative text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'app.tags' | translate}}</span>
@@ -31,7 +35,7 @@
                 <div *ngIf="openedTagsDropdown"
                     class="tagList-container lg:hidden flex flex-wrap justify-center absolute z-30 top-full gap-1.5 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%] bg-skin-bgMuted border shadow-2xl rounded-2xl overflow-y-scroll no-scrollbar">
                     <ng-container *ngFor="let tag of tagList">
-                        <button (click)="sortByTag(tag.name)" type="button" aria-current="false"
+                        <button (click)="sortByTag(tag.name)" type="button" aria-current="false" aria-labelledby="a tag"
                             class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
                             <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
                                 viewBox="0 0 8 8">
@@ -57,7 +61,8 @@
                 </div>
 
                 <div *ngIf="authService.currentUsr">
-                    <button (click)="openArticleEntryDialog()" type="button" class="">
+                    <button aria-label="Button to create a new article" (click)="openArticleEntryDialog()" type="button"
+                        class="">
                         <span class="sr-only">Nouvel article</span>
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="h-10 w-10 text-white fill-primary-500 border-primary-500" fill="none"
@@ -289,7 +294,7 @@
                 <ng-template [ngIf]="tagList">
                     <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
                         <ng-container *ngFor="let tag of tagList">
-                            <button (click)="sortByTag(tag.name)" type="button"
+                            <button (click)="sortByTag(tag.name)" type="button" aria-labelledby="A tag"
                                 class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
                                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
                                     viewBox="0 0 8 8">

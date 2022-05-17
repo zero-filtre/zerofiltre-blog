@@ -65,7 +65,7 @@
             <span>{{'navbar.myProfile' | translate}}</span>
           </a>
 
-          <button (click)="logout()"
+          <button (click)="logout()" aria-labelledby="logout button"
             class="block w-full text-left py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>{{'navbar.logout' | translate}}</span>
           </button>
@@ -137,7 +137,7 @@
                 <span>{{'navbar.myProfile' | translate}}</span>
               </a>
 
-              <button (click)="logout()"
+              <button (click)="logout()" aria-labelledby="logout button"
                 class="inline-block w-full px-4 py-2 font-semibold hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>{{'navbar.logout' | translate}}</span>
               </button>

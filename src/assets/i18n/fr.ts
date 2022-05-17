@@ -162,7 +162,9 @@ export const fr = {
         notVerifiedBadgeText: 'Email non verifié !',
         resendConfirmationText: 'Renvoyer le lien de confirmation',
         deleteMyAccount: 'Supprimer mon compte',
-        updateSuccessMessage: 'Enregistrement reussi !'
+        updateSuccessMessage: 'Enregistrement reussi !',
+        addProfilePictureBtnText: 'Ajouter une photo',
+        deleteProfilePictureBtnText: 'Supprimer',
     },
     profileEdit: {
         title: 'Modifier mes infos',
