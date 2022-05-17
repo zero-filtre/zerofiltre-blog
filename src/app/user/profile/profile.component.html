@@ -55,7 +55,7 @@
                     class="image-wrapper relative border border-skin-bgMuted rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
                     <app-image *ngIf="authService.currentUsr?.profilePicture"
                         [classes]="'w-full h-full object-cover rounded-full'"
-                        [sourceUrl]="authService.currentUsr?.profilePicture!">
+                        [sourceUrl]="authService.currentUsr?.profilePicture!" [alt]="authService.currentUsr?.fullName!">
                     </app-image>
 
                     <ng-container *ngIf="!authService.currentUsr?.profilePicture">

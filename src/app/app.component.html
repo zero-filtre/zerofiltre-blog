@@ -42,7 +42,7 @@
         <div class="flex items-center gap-2">
           <div>
             <app-image *ngIf="currentUsr?.profilePicture" [classes]="'h-10 w-10 rounded-full'"
-              [sourceUrl]="currentUsr?.profilePicture!">
+              [alt]="currentUsr?.fullName" [sourceUrl]="currentUsr?.profilePicture!">
             </app-image>
 
             <ng-container *ngIf="!currentUsr?.profilePicture">
@@ -82,7 +82,7 @@
       <mat-toolbar class="top-toolbar-container !px-0">
         <a class="logo-link" routerLink="/">
           <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
-            <app-image [classes]="'max-w-full'" [sourceUrl]="appLogoUrl">
+            <app-image [classes]="'max-w-full'" [sourceUrl]="appLogoUrl" [alt]="'Zerofiltre blog'">
             </app-image>
           </div>
         </a>
@@ -116,7 +116,8 @@
               aria-label="Example icon-button with a menu">
 
               <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
-                <app-image [classes]="'h-10 w-10 rounded-full'" [sourceUrl]="currentUsr?.profilePicture!">
+                <app-image [classes]="'h-10 w-10 rounded-full'" [sourceUrl]="currentUsr?.profilePicture!"
+                  [alt]="currentUsr?.fullName">
                 </app-image>
               </div>
 

@@ -169,7 +169,7 @@
                 <div
                     class="article-cover-image shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
                     <ng-container *ngIf="article" class="">
-                        <app-image [classes]="'object-cover'" [sourceUrl]="article?.thumbnail!">
+                        <app-image [classes]="'object-cover'" [sourceUrl]="article?.thumbnail!" [alt]="article?.title!">
                         </app-image>
                     </ng-container>
                     <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
@@ -251,7 +251,7 @@
                         <div class="flex items-center justify-center gap-2">
                             <div class="">
                                 <app-image [classes]="'h-9 w-9 rounded-full'"
-                                    [sourceUrl]="article?.author?.profilePicture!">
+                                    [sourceUrl]="article?.author?.profilePicture!" [alt]="article?.author?.fullName!">
                                 </app-image>
                             </div>
                             <div class="lg:flex-1">
@@ -503,7 +503,7 @@
                                 <a routerLink="/articles/{{article?.id}}"
                                     class="first-of-type:mt-0 mt-3 flex items-center space-x-2">
                                     <app-image [classes]="'h-8 w-8 object-cover shadow-lg rounded-md'"
-                                        [sourceUrl]="article?.thumbnail!">
+                                        [sourceUrl]="article?.thumbnail!" [alt]="article?.title!">
                                     </app-image>
                                     <span
                                         class="text-sm font-semibold leading-4 text-skin-text hover:text-primary-500 line-clamp-2 transition-all duration-200">

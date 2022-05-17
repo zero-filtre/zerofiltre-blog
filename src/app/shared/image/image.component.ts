@@ -9,6 +9,7 @@ import { getUrlLastElement } from 'src/app/services/utilities.service';
 export class ImageComponent implements OnInit {
   @Input() classes!: string;
   @Input() sourceUrl!: string;
+  @Input() alt!: string;
 
   constructor() { }
 
