@@ -110,6 +110,7 @@ export const fr = {
         callToShareText: 'Vous avez aimé, alors partagez !',
         maxNberReactionText: '🚨 Nombre max de reactions sur cet article atteint !',
         loginToReactText: '🚨 Vous devez vous connecter pour réagir sur cet article',
+        publishToReactText: 'Vous pourrez reagir sur cet article apres sa publication.'
     },
     articleEntryPopup: {
         titlePlaceholder: 'Tout commence par un titre!',
