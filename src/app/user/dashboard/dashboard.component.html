@@ -61,7 +61,8 @@
                 <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles">
                         <div class="article-card lg:grid grid-cols-3 gap-6">
-                            <a routerLink="/articles/{{article.id}}" class="article-preview group">
+                            <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
+                                class="article-preview group">
                                 <div class="shadow-lg rounded-lg overflow-hidden aspect-w-3 aspect-h-2">
                                     <app-image
                                         [classes]="'object-cover group-hover:opacity-75 transition-all duration-200'"
@@ -86,7 +87,8 @@
                                 </div>
 
                                 <div class="mt-2">
-                                    <a routerLink="/articles/{{article.id}}" class="article-title group">
+                                    <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
+                                        class="article-title group">
                                         <h4
                                             class="text-lg inline-block leading-6 font-semibold text-skin-inverted group-hover:text-primary-500 transition-all duration-200">
                                             {{article?.title}}
@@ -100,7 +102,7 @@
 
                                     <div class="article-author mt-3 flex items-center">
                                         <div class="author-image flex-shrink-0">
-                                            <a href="">
+                                            <a aria-labelledby="Link to about page" href="">
                                                 <app-image [classes]="'h-10 w-10 rounded-full'"
                                                     [sourceUrl]="article.author?.profilePicture!"
                                                     [alt]="article?.author?.fullName!">
@@ -110,7 +112,8 @@
 
                                         <div class="author-text ml-3">
                                             <p class="text-sm font-semibold text-skin-inverted">
-                                                <a href="#" class="hover:underline">
+                                                <a aria-labelledby="Link to about page" href="#"
+                                                    class="hover:underline">
                                                     {{article?.author?.fullName}}
                                                 </a>
                                             </p>

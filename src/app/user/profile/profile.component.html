@@ -1,13 +1,14 @@
 <main class="py-10 lg:py-16">
     <nav class="profile-top-nav flex items-center justify-between max-w-xl mx-auto">
-        <div class="profile-navigation flex gap-[5.2rem] w-full items-end">
-            <a routerLink="/articles" class="group -mb-1.5 hidden lg:flex items-center gap-2 font-semibold">
+        <div class="profile-navigation flex gap-[5.2rem] w-full items-center">
+            <a aria-labelledby="Link to about page" routerLink="/articles"
+                class="group hidden lg:flex items-center gap-2 font-semibold">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                    class="text-primary-500 group-hover:text-primary-300" data-supported-dps="24x24" fill="currentColor"
-                    width="24" height="24" focusable="false">
+                    class="text-primary-500 group-hover:text-primary-300 h-5 w-5" data-supported-dps="24x24"
+                    fill="currentColor" width="24" height="24" focusable="false">
                     <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
                 </svg>
-                <span class="text-primary-500 group-hover:text-primary-300 text-base">
+                <span class="text-primary-500 group-hover:text-primary-300">
                     {{'profile.allArticles' | translate}}
                 </span>
             </a>
@@ -28,19 +29,19 @@
             </button>
 
             <mat-menu #menu="matMenu" class="mt-2 text-skin-base font-semibold">
-                <a routerLink="/articles"
+                <a aria-labelledby="Link to about page" routerLink="/articles"
                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.allArticles' | translate}}</span>
                 </a>
-                <a routerLink="/user/dashboard"
+                <a aria-labelledby="Link to about page" routerLink="/user/dashboard"
                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.myArticles' | translate}}</span>
                 </a>
-                <a *ngIf="authService?.isAdmin" routerLink="/user/dashboard/admin"
+                <a aria-labelledby="Link to about page" *ngIf="authService?.isAdmin" routerLink="/user/dashboard/admin"
                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.allAdminArticles' | translate}}</span>
                 </a>
-                <a routerLink="edit"
+                <a aria-labelledby="Link to about page" routerLink="edit"
                     class="hidden px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.editMyInfos' | translate}}</span>
                 </a>
@@ -120,7 +121,7 @@
                 <nav class="user-credentials-nav flex justify-between items-center">
                     <div class="text-xl sm:text-2xl text-skin-base font-bold">Mes infos</div>
                     <div class="edit-action-btn">
-                        <a routerLink="edit"
+                        <a aria-labelledby="Link to about page" routerLink="edit"
                             class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-border transition-all duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
                                 fill="currentColor" class="" width="24" height="24" focusable="false">

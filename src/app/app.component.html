@@ -14,27 +14,31 @@
     </div>
 
     <ul>
-      <a (click)="drawer.close()" class="sidenavLink" href="{{servicesUrl}}/#about">
+      <a aria-labelledby="Link to about page" (click)="drawer.close()" class="sidenavLink"
+        href="{{servicesUrl}}/#about">
         <div>{{'navbar.about' | translate}}</div>
       </a>
 
-      <a (click)="drawer.close()" class="sidenavLink" href="{{coursesUrl}}">
+      <a aria-labelledby="Link to about page" (click)="drawer.close()" class="sidenavLink" href="{{coursesUrl}}">
         <div>{{'navbar.courses' | translate}}</div>
       </a>
 
-      <a (click)="drawer.close()" class="sidenavLink" routerLink="/articles">
+      <a aria-labelledby="Link to about page" (click)="drawer.close()" class="sidenavLink" routerLink="/articles">
         <div>{{'navbar.blog' | translate}}</div>
       </a>
 
-      <a (click)="drawer.close()" class="sidenavLink" href="{{servicesUrl}}" target="_blank">
+      <a aria-labelledby="Link to about page" (click)="drawer.close()" class="sidenavLink" href="{{servicesUrl}}"
+        target="_blank">
         <div>{{'navbar.portfolio' | translate}}</div>
       </a>
 
-      <a *ngIf="!(authService.currentUsr)" (click)="drawer.close()" class="sidenavLink" routerLink="/login">
+      <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" (click)="drawer.close()"
+        class="sidenavLink" routerLink="/login">
         <div class="!font-medium text-primary-500">{{'navbar.login' | translate}}</div>
       </a>
 
-      <a *ngIf="!(authService.currentUsr)" (click)="drawer.close()" class="sidenavLink" routerLink="/register">
+      <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" (click)="drawer.close()"
+        class="sidenavLink" routerLink="/register">
         <div>{{'navbar.register' | translate}}</div>
       </a>
 
@@ -60,7 +64,7 @@
         </div>
 
         <div class="mt-2">
-          <a routerLink="/user/profile" (click)="drawer.close()"
+          <a aria-labelledby="Link to about page" routerLink="/user/profile" (click)="drawer.close()"
             class="block py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>{{'navbar.myProfile' | translate}}</span>
           </a>
@@ -80,7 +84,7 @@
     <!-- APP DESKTOP NAVBAR-->
     <div class="top-toolbar sticky top-0 shadow-sm bg-white py-2 z-50">
       <mat-toolbar class="top-toolbar-container !px-0">
-        <a class="logo-link" routerLink="/">
+        <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
           <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
             <app-image [classes]="'max-w-full'" [sourceUrl]="appLogoUrl" [alt]="'Zerofiltre blog'">
             </app-image>
@@ -88,27 +92,29 @@
         </a>
 
         <div class="navbar-links hidden lg:flex items-center text-secondary">
-          <a class="navLink" href="{{servicesUrl}}/#about">
+          <a aria-labelledby="Link to about page" class="navLink" href="{{servicesUrl}}/#about">
             <div>{{'navbar.about' | translate}}</div>
           </a>
 
-          <a class="navLink" href="{{coursesUrl}}">
+          <a aria-labelledby="Link to about page" class="navLink" href="{{coursesUrl}}">
             <div>{{'navbar.courses' | translate}}</div>
           </a>
 
-          <a class="navLink" routerLink="/articles">
+          <a aria-labelledby="Link to about page" class="navLink" routerLink="/articles">
             <div>{{'navbar.blog' | translate}}</div>
           </a>
 
-          <a class="navLink" href="{{servicesUrl}}" target="_blank">
+          <a aria-labelledby="Link to about page" class="navLink" href="{{servicesUrl}}" target="_blank">
             <div>{{'navbar.portfolio' | translate}}</div>
           </a>
 
           <ng-container class="navbar-links-hidden-on-server-rendering" *appShellNoRender>
-            <a *ngIf="!(authService.currentUsr)" class="navLink" routerLink="/login">
+            <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" class="navLink"
+              routerLink="/login">
               <div class="!font-medium text-primary-500">{{'navbar.login' | translate}}</div>
             </a>
-            <a *ngIf="!(authService.currentUsr)" class="navLink" routerLink="/register">
+            <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" class="navLink"
+              routerLink="/register">
               <div>{{'navbar.register' | translate}}</div>
             </a>
 
@@ -132,7 +138,7 @@
             </button>
 
             <mat-menu #menu="matMenu" class="mt-2 font-semibold text-skin-base">
-              <a routerLink="/user/profile"
+              <a aria-labelledby="Link to about page" routerLink="/user/profile"
                 class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                 <span>{{'navbar.myProfile' | translate}}</span>
               </a>
@@ -178,7 +184,7 @@
     <div class="profile-sidebar-container py-32 px-10 text-skin-base">
 
       <div class="flex flex-col space-y-1">
-        <a routerLink="/user/profile" (click)="seeMyInfos()"
+        <a aria-labelledby="Link to about page" routerLink="/user/profile" (click)="seeMyInfos()"
           [ngClass]="activePage === MY_ACCOUNT ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg" [ngClass]="activePage === MY_ACCOUNT ? 'svg-active' : 'svg-inactive'"
@@ -192,7 +198,7 @@
           </span>
         </a>
 
-        <a routerLink="/user/dashboard" (click)="fetchAllArticlesAsUser()"
+        <a aria-labelledby="Link to about page" routerLink="/user/dashboard" (click)="fetchAllArticlesAsUser()"
           [ngClass]="activePage === MY_ARTICLES ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg" [ngClass]="activePage === MY_ARTICLES ? 'svg-active' : 'svg-inactive'"
@@ -206,8 +212,8 @@
           </span>
         </a>
 
-        <a *ngIf="authService?.isAdmin" routerLink="/user/dashboard/admin" (click)="fetchAllArticlesAsAdmin()"
-          [ngClass]="activePage === ALL_ARTICLES ? 'link-active' : 'link-inactive'"
+        <a aria-labelledby="Link to about page" *ngIf="authService?.isAdmin" routerLink="/user/dashboard/admin"
+          (click)="fetchAllArticlesAsAdmin()" [ngClass]="activePage === ALL_ARTICLES ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg"
             [ngClass]="activePage === ALL_ARTICLES ? 'svg-active' : 'svg-inactive'"

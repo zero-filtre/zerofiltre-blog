@@ -15,7 +15,8 @@
                                 </svg>
                             </button>
                             <h2>
-                                <a routerLink="/user/dashboard" class="text-lg text-primary-500 hover:text-primary-300">
+                                <a aria-labelledby="Link to about page" routerLink="/user/dashboard"
+                                    class="text-lg text-primary-500 hover:text-primary-300">
                                     {{ 'app.myArticles' | translate }}
                                 </a>
                             </h2>
@@ -194,7 +195,8 @@
                                 <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
                                 <p>
                                     {{'articleEntryEdit.helpSubTitle' | translate}}
-                                    <a class="text-primary-500 font-semibold no-underline"
+                                    <a aria-labelledby="Link to about page"
+                                        class="text-primary-500 font-semibold no-underline"
                                         href="https://commonmark.org/help/" target="_blank"> Aide-mémoire
                                     </a>
                                 </p>
@@ -251,7 +253,8 @@
                                 </blockquote>
                                 <hr>
                                 <h3>Liens</h3>
-                                <p>Vous pouvez ajouter <a href="#_">des liens</a> en ajoutant du texte à l'intérieur de
+                                <p>Vous pouvez ajouter <a aria-labelledby="Example markdown link" href="#_">des
+                                        liens</a> en ajoutant du texte à l'intérieur de
                                     <span class="p-1  text-primary-500 bg-primary-100">[]</span> et le lien à
                                     l'intérieur de <span class="p-1  text-primary-500 bg-primary-100">()</span>,
                                     ainsi:
@@ -318,7 +321,8 @@
                         </button>
 
                         <h2>
-                            <a routerLink="/user/dashboard" class="text-lg text-primary-500 hover:text-primary-300">
+                            <a aria-labelledby="Link to about page" routerLink="/user/dashboard"
+                                class="text-lg text-primary-500 hover:text-primary-300">
                                 <span>{{ 'app.myArticles' | translate }}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="inline ml-1 h-6 w-6" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

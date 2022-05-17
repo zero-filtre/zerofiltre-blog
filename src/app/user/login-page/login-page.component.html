@@ -47,7 +47,7 @@
 
                 <div class="flex items-center justify-between">
                     <div class="text-sm">
-                        <a routerLink="/resetPassword"
+                        <a aria-labelledby="Link to about page" routerLink="/resetPassword"
                             class="font-semibold text-primary-500 hover:text-primary-300 transition-all">
                             {{ 'login.forgotPassword' | translate }}
                         </a>
@@ -94,7 +94,7 @@
             </form>
 
             <div class="">
-                <a routerLink="/register"
+                <a aria-labelledby="Link to about page" routerLink="/register"
                     class="inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
                     <span class="sr-only">Creer mon compte</span>
                     {{ 'login.signup' | translate }}
@@ -112,7 +112,7 @@
 
                 <div class="mt-6 flex gap-2">
                     <div class="flex-1">
-                        <a (click)="setRedirectURL()"
+                        <a aria-labelledby="Link to about page" (click)="setRedirectURL()"
                             href="https://github.com/login/oauth/authorize?client_id={{GITHUB_CLIENT_ID}}&redirect_uri={{gitHubRedirectURL}}&scope=user:email"
                             class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
                             <span class="sr-only">Continuer avec Github</span>
@@ -125,7 +125,7 @@
                         </a>
                     </div>
                     <div class="flex-1">
-                        <a (click)="setRedirectURL()"
+                        <a aria-labelledby="Link to about page" (click)="setRedirectURL()"
                             href="https://stackoverflow.com/oauth/dialog?client_id={{STACK_OVERFLOW_CLIENT_ID}}&redirect_uri={{stackOverflowRedirectURL}}&scope=no_expiry"
                             class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
                             <span class="sr-only">Continuer avec StackOverflow</span>
