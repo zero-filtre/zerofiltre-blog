@@ -67,7 +67,6 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
       title: this.translate.instant('meta.signupTitle'),
       description: this.translate.instant('meta.signupDescription'),
       author: 'Zerofiltre.tech',
-      type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
   }

@@ -1,20 +1,21 @@
 <main class="py-10 lg:py-16">
     <nav class="profile-top-nav flex items-center justify-between max-w-xl mx-auto">
-        <div class="profile-navigation flex gap-[5.2rem] w-full items-end">
-            <a routerLink="/articles" class="group -mb-1.5 hidden lg:flex items-center gap-2 font-semibold">
+        <div class="profile-navigation flex gap-[5.2rem] w-full items-center">
+            <a aria-labelledby="Link to about page" routerLink="/articles"
+                class="group hidden lg:flex items-center gap-2 font-semibold">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                    class="text-primary-500 group-hover:text-primary-300" data-supported-dps="24x24" fill="currentColor"
-                    width="24" height="24" focusable="false">
+                    class="text-primary-500 group-hover:text-primary-300 h-5 w-5" data-supported-dps="24x24"
+                    fill="currentColor" width="24" height="24" focusable="false">
                     <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
                 </svg>
-                <span class="text-primary-500 group-hover:text-primary-300 text-base">
+                <span class="text-primary-500 group-hover:text-primary-300">
                     {{'profile.allArticles' | translate}}
                 </span>
             </a>
 
             <h1 class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">
                 {{'profile.title' | translate}}
-                <span *ngIf="authService.isAdmin" class="text-sm">(Admin user)</span>
+                <span *ngIf="authService.isAdmin" class="text-sm">(Admin)</span>
             </h1>
         </div>
 
@@ -28,19 +29,19 @@
             </button>
 
             <mat-menu #menu="matMenu" class="mt-2 text-skin-base font-semibold">
-                <a routerLink="/articles"
+                <a aria-labelledby="Link to about page" routerLink="/articles"
                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.allArticles' | translate}}</span>
                 </a>
-                <a routerLink="/user/dashboard"
+                <a aria-labelledby="Link to about page" routerLink="/user/dashboard"
                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.myArticles' | translate}}</span>
                 </a>
-                <a *ngIf="authService?.isAdmin" routerLink="/user/dashboard/admin"
+                <a aria-labelledby="Link to about page" *ngIf="authService?.isAdmin" routerLink="/user/dashboard/admin"
                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.allAdminArticles' | translate}}</span>
                 </a>
-                <a routerLink="edit"
+                <a aria-labelledby="Link to about page" routerLink="edit"
                     class="hidden px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.editMyInfos' | translate}}</span>
                 </a>
@@ -55,7 +56,7 @@
                     class="image-wrapper relative border border-skin-bgMuted rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
                     <app-image *ngIf="authService.currentUsr?.profilePicture"
                         [classes]="'w-full h-full object-cover rounded-full'"
-                        [sourceUrl]="authService.currentUsr?.profilePicture!">
+                        [sourceUrl]="authService.currentUsr?.profilePicture!" [alt]="authService.currentUsr?.fullName!">
                     </app-image>
 
                     <ng-container *ngIf="!authService.currentUsr?.profilePicture">
@@ -69,7 +70,7 @@
 
                     <div
                         class="profile-image-edit-btn absolute top-1 right-0 sm:right-4 border-2 border-skin-bgMuted rounded-full w-5 h-5 bg-skin-card hover:bg-skin-cardMuted">
-                        <button (click)="openProfileImageDeleteDialog()">
+                        <button (click)="openProfileImageDeleteDialog()" aria-label="Edit profile button">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
                                 fill="currentColor" stroke="currentColor" class=" w-full p-0.5 -mx-[2px] text-primary-500 hover:fill-primary-500 transition-all
                                 duration-200">
@@ -106,6 +107,7 @@
                                 clip-rule="evenodd" />
                         </svg>
                         <button *ngIf="user && !user?.active" (click)="resendConfirmationMail()"
+                            aria-labelledby="Resend account confirmation button"
                             class="sm:ml-2 mt-1 sm:mt-0 text-xs text-skin-muted hover:text-skin-base hover:underline">
                             {{'profile.resendConfirmationText' | translate}}
                         </button>
@@ -119,7 +121,7 @@
                 <nav class="user-credentials-nav flex justify-between items-center">
                     <div class="text-xl sm:text-2xl text-skin-base font-bold">Mes infos</div>
                     <div class="edit-action-btn">
-                        <a routerLink="edit"
+                        <a aria-labelledby="Link to about page" routerLink="edit"
                             class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-border transition-all duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
                                 fill="currentColor" class="" width="24" height="24" focusable="false">
@@ -170,7 +172,7 @@
                     </div>
                 </div>
 
-                <button (click)="openPasswordEntryDialog()"
+                <button (click)="openPasswordEntryDialog()" aria-label="Edit password button"
                     class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-border transition-all duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
                         fill="currentColor" class="" width="24" height="24" focusable="false">
@@ -182,7 +184,7 @@
             </div>
 
             <div class="action-btns flex justify-end  mt-12">
-                <button (click)="openAccountDeleteDialog()"
+                <button (click)="openAccountDeleteDialog()" aria-labelledby="Delete account button"
                     class="px-4 py-2 shadow-lg text-white font-semibold text-xs sm:text-sm rounded-full bg-red-500 hover:bg-red-700 transition-all duration-200">
                     {{'profile.deleteMyAccount' | translate}}
                 </button>

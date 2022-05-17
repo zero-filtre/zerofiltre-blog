@@ -6,7 +6,8 @@
                     <nav class="top-nav items-center justify-between hidden lg:flex">
                         <div
                             class="nav-links flex justify-between sm:justify-start items-center sm:gap-10 font-semibold">
-                            <button (click)="navigate.back()" class="text-primary-500 group flex items-center gap-1">
+                            <button (click)="navigate.back()" class="text-primary-500 group flex items-center gap-1"
+                                aria-label="navigate back button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                     class="text-primary-500 group-hover:text-primary-300" data-supported-dps="24x24"
                                     fill="currentColor" width="24" height="24" focusable="false">
@@ -14,7 +15,8 @@
                                 </svg>
                             </button>
                             <h2>
-                                <a routerLink="/user/dashboard" class="text-lg text-primary-500 hover:text-primary-300">
+                                <a aria-labelledby="Link to about page" routerLink="/user/dashboard"
+                                    class="text-lg text-primary-500 hover:text-primary-300">
                                     {{ 'app.myArticles' | translate }}
                                 </a>
                             </h2>
@@ -67,7 +69,8 @@
 
                         <div *ngIf="thumbnail?.value"
                             class="image-wrapper shadow-lg overflow-hidden rounded-lg aspect-w-4 aspect-h-2">
-                            <app-image [classes]="'object-cover'" [sourceUrl]="thumbnail?.value!">
+                            <app-image [classes]="'object-cover'" [sourceUrl]="thumbnail?.value!"
+                                [alt]="article?.title!">
                             </app-image>
                         </div>
 
@@ -192,7 +195,8 @@
                                 <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
                                 <p>
                                     {{'articleEntryEdit.helpSubTitle' | translate}}
-                                    <a class="text-primary-500 font-semibold no-underline"
+                                    <a aria-labelledby="Link to about page"
+                                        class="text-primary-500 font-semibold no-underline"
                                         href="https://commonmark.org/help/" target="_blank"> Aide-mémoire
                                     </a>
                                 </p>
@@ -249,7 +253,8 @@
                                 </blockquote>
                                 <hr>
                                 <h3>Liens</h3>
-                                <p>Vous pouvez ajouter <a href="#_">des liens</a> en ajoutant du texte à l'intérieur de
+                                <p>Vous pouvez ajouter <a aria-labelledby="Example markdown link" href="#_">des
+                                        liens</a> en ajoutant du texte à l'intérieur de
                                     <span class="p-1  text-primary-500 bg-primary-100">[]</span> et le lien à
                                     l'intérieur de <span class="p-1  text-primary-500 bg-primary-100">()</span>,
                                     ainsi:
@@ -306,7 +311,8 @@
             <aside class="col-span-2 order-1 lg:order-none">
                 <div class="sticky top-36 z-20 space-y-10">
                     <nav class="top-nav font-semibold flex items-center justify-between lg:hidden">
-                        <button (click)="navigate.back()" class="text-primary-500 group flex items-center gap-1">
+                        <button (click)="navigate.back()" class="text-primary-500 group flex items-center gap-1"
+                            aria-label="navigate back button">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                 class="text-primary-500 group-hover:text-primary-300" data-supported-dps="24x24"
                                 fill="currentColor" width="24" height="24" focusable="false">
@@ -315,7 +321,8 @@
                         </button>
 
                         <h2>
-                            <a routerLink="/user/dashboard" class="text-lg text-primary-500 hover:text-primary-300">
+                            <a aria-labelledby="Link to about page" routerLink="/user/dashboard"
+                                class="text-lg text-primary-500 hover:text-primary-300">
                                 <span>{{ 'app.myArticles' | translate }}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="inline ml-1 h-6 w-6" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -328,6 +335,7 @@
                     <div class="action-buttons lg:!mt-0 flex gap-2 items-center justify-between">
                         <ng-container *ngIf="form.invalid; else validBtn">
                             <button [disabled]="form.invalid || loading"
+                                aria-labelledby="button to publish or submit an artticle"
                                 class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
                                 <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">
                                     {{ 'articleEntryEdit.publishBtn' | translate }}</span>
@@ -335,7 +343,7 @@
                                     {{ 'articleEntryEdit.submitBtn' | translate }}</span>
                             </button>
 
-                            <button *ngIf="isSaving" class="relative group">
+                            <button *ngIf="isSaving" class="relative group" aria-label="saving article">
                                 <svg class="w-6 h-6 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
                                     viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -348,7 +356,7 @@
                                 </span>
                             </button>
 
-                            <button *ngIf="isSaved && !isSaving" class="relative group">
+                            <button *ngIf="isSaved && !isSaving" class="relative group" aria-label="successfully saved">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -359,7 +367,7 @@
                                 </span>
                             </button>
 
-                            <button *ngIf="saveFailed && !isSaving" class="relative group">
+                            <button *ngIf="saveFailed && !isSaving" class="relative group" aria-label="saving failed">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-error" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -372,7 +380,8 @@
                         </ng-container>
 
                         <ng-template #validBtn>
-                            <button type="submit" (click)="publishArticle()" [disabled]="isSaving || isPublishing"
+                            <button type="submit" aria-labelledby="button to publish or submit an article"
+                                (click)="publishArticle()" [disabled]="isSaving || isPublishing"
                                 [ngClass]="{'opacity-50': isSaving || isPublishing }"
                                 class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
                                 <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">
@@ -391,7 +400,7 @@
                             </button>
 
 
-                            <button *ngIf="isSaving" class="relative group">
+                            <button *ngIf="isSaving" class="relative group" aria-label="saving article">
                                 <svg class="w-6 h-6 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
                                     viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -404,7 +413,7 @@
                                 </span>
                             </button>
 
-                            <button *ngIf="isSaved && !isSaving" class="relative group">
+                            <button *ngIf="isSaved && !isSaving" class="relative group" aria-label="successfully saved">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -415,7 +424,7 @@
                                 </span>
                             </button>
 
-                            <button *ngIf="saveFailed && !isSaving" class="relative group">
+                            <button *ngIf="saveFailed && !isSaving" class="relative group" aria-label="saving failed">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-error" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -473,7 +482,7 @@
                                             <circle cx="4" cy="4" r="3"></circle>
                                         </svg>
                                         <span>{{tag.value.name}}</span>
-                                        <button (click)="removeTag(i)"
+                                        <button aria-label="remove the tag" (click)="removeTag(i)"
                                             class="remove-tag-btn cursor-pointer text-skin-muted flex items-center justify-center ml-2 border rounded-full h-4 w-4 justify-self-end">
                                             <span class="remove-tag-btn text-xs">x</span>
                                         </button>

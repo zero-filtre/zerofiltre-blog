@@ -14,7 +14,7 @@
             {{'app.invalidToken' | translate}}
         </p>
         <div class="text-sm mt-5">
-            <a routerLink="/resendConfirmation" class="cursor-pointer"
+            <a aria-labelledby="Link to about page" routerLink="/resendConfirmation" class="cursor-pointer"
                 class="font-semibold text-primary-500 hover:text-primary-300 underline transition-all">
                 {{'app.resendAccountConfirmationLinkText' | translate}}
             </a>
@@ -29,7 +29,8 @@
         </svg>
         <p class="sm:text-2xl mt-5">{{'accountConfirmation.accountVeriedText' | translate}}</p>
         <div class="text-sm mt-5">
-            <a routerLink="/" class="font-semibold text-primary-500 hover:text-primary-300 underline transition-all">
+            <a aria-labelledby="Link to about page" routerLink="/"
+                class="font-semibold text-primary-500 hover:text-primary-300 underline transition-all">
                 {{'app.home' | translate}}
             </a>
         </div>

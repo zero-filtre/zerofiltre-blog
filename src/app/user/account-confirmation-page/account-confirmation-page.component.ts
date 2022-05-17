@@ -56,7 +56,6 @@ export class AccountConfirmationPageComponent implements OnInit {
       title: this.translate.instant('meta.accountConfirmationTitle'),
       description: this.translate.instant('meta.accountConfirmationDescription'),
       author: 'Zerofiltre.tech',
-      type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
   }

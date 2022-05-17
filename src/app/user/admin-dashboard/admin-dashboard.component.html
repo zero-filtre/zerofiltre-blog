@@ -2,7 +2,8 @@
     <div class="max-w-2xl mx-auto">
         <div class="main-side-container">
             <div class="admin-dashboard-navigation-btns flex lg:hidden mt-2 sm:mt-8">
-                <button (click)="navigate.back()" class="flex items-center gap-1 font-semibold">
+                <button aria-label="Navigate back button" (click)="navigate.back()"
+                    class="flex items-center gap-1 font-semibold">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="text-primary-500"
                         data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
                         <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
@@ -23,18 +24,21 @@
             <div class="tabs-wrapper mt-8 border-b border-skin-border">
                 <nav class="relative flex space-x-8 -mb-[2px]" aria-label="Tabs">
                     <button type="button" aria-current="page" (click)="sortBy(PUBLISHED)"
+                        aria-labelledby="Toggle to published articles tab"
                         [ngClass]="activePage === PUBLISHED ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'adminDashboard.published' | translate}}</span>
                     </button>
 
                     <button type=" button" aria-current="false" (click)="sortBy(DRAFT)"
+                        aria-labelledby="Toggle to draft articles tab"
                         [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'adminDashboard.draft' | translate}}</span>
                     </button>
 
                     <button type="button" aria-current="false" (click)="sortBy(IN_REVIEW)"
+                        aria-labelledby="Toggle to in-review articles tab"
                         [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'adminDashboard.inReview' | translate}}</span>
@@ -58,11 +62,12 @@
                 <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles">
                         <div class="article-card lg:grid grid-cols-3 gap-6">
-                            <a routerLink="/articles/{{article.id}}" class="article-preview group">
+                            <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
+                                class="article-preview group">
                                 <div class="shadow-lg rounded-lg overflow-hidden aspect-w-3 aspect-h-2">
                                     <app-image
                                         [classes]="'object-cover group-hover:opacity-75 transition-all duration-200'"
-                                        [sourceUrl]="article?.thumbnail!">
+                                        [sourceUrl]="article?.thumbnail!" [alt]="article?.title!">
                                     </app-image>
                                 </div>
                             </a>
@@ -83,7 +88,8 @@
                                 </div>
 
                                 <div class="mt-2">
-                                    <a routerLink="/articles/{{article.id}}" class="article-title group">
+                                    <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
+                                        class="article-title group">
                                         <h4
                                             class="text-lg inline-block leading-6 font-semibold text-skin-inverted group-hover:text-primary-500 transition-all duration-200">
                                             {{article?.title}}
@@ -97,16 +103,18 @@
 
                                     <div class="article-author mt-3 flex items-center">
                                         <div class="author-image flex-shrink-0">
-                                            <a href="">
+                                            <a aria-labelledby="Link to about page" href="">
                                                 <app-image [classes]="'h-10 w-10 rounded-full'"
-                                                    [sourceUrl]="article.author?.profilePicture!">
+                                                    [sourceUrl]="article.author?.profilePicture!"
+                                                    [alt]="article?.author?.fullName!">
                                                 </app-image>
                                             </a>
                                         </div>
 
                                         <div class="author-text ml-3">
                                             <p class="text-sm font-semibold text-skin-inverted">
-                                                <a href="#" class="hover:underline">
+                                                <a aria-labelledby="Link to about page" href="#"
+                                                    class="hover:underline">
                                                     {{article?.author?.fullName}}
                                                 </a>
                                             </p>

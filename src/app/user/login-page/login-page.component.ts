@@ -66,7 +66,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       title: this.translate.instant('meta.loginTitle'),
       description: this.translate.instant('meta.loginDescription'),
       author: 'Zerofiltre.tech',
-      type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
   }
