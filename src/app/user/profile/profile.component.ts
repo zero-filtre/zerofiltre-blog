@@ -68,7 +68,6 @@ export class ProfileComponent implements OnInit {
       title: this.translate.instant('meta.profileTitle'),
       description: this.translate.instant('meta.profileDescription'),
       author: 'Zerofiltre.tech',
-      type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
   }

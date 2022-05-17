@@ -51,7 +51,6 @@ export class PasswordResetPageComponent implements OnInit {
       title: this.translate.instant('meta.passwordResetTite'),
       description: this.translate.instant('meta.passwordResetDescription'),
       author: 'Zerofiltre.tech',
-      type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
   }

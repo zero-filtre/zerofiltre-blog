@@ -91,7 +91,6 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
       title: this.translate.instant('meta.passwordRenewalTite'),
       description: this.translate.instant('meta.passwordRenewalDescription'),
       author: 'Zerofiltre.tech',
-      type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
   }

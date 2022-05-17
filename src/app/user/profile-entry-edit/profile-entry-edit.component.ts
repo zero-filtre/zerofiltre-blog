@@ -135,7 +135,6 @@ export class ProfileEntryEditComponent implements OnInit {
       title: this.translate.instant('meta.profileEditTitle'),
       description: this.translate.instant('meta.profileEditDescription'),
       author: 'Zerofiltre.tech',
-      type: 'website',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
   }
