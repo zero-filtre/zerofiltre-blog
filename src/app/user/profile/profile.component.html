@@ -54,10 +54,10 @@
             <div class="header-infos flex items-center gap-4">
                 <div
                     class="image-wrapper relative border border-skin-bgMuted rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
-                    <app-my-image *ngIf="authService.currentUsr?.profilePicture"
+                    <app-image *ngIf="authService.currentUsr?.profilePicture"
                         [classes]="'w-full h-full object-cover rounded-full'"
                         [sourceUrl]="authService.currentUsr?.profilePicture!" [alt]="authService.currentUsr?.fullName!">
-                    </app-my-image>
+                    </app-image>
 
                     <ng-container *ngIf="!authService.currentUsr?.profilePicture">
                         <svg xmlns="http://www.w3.org/2000/svg"

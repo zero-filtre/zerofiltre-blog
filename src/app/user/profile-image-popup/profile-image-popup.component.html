@@ -11,9 +11,9 @@
 
     <div
         class="profile-image-wrapper flex justify-center w-[250px] h-[250px] sm:h-[280px] sm:w-[280px] mx-auto overflow-hidden shadow-sm rounded-full my-10">
-        <app-my-image *ngIf="user?.profilePicture && !uploading" [classes]="'w-full h-full self-stretch object-cover'"
+        <app-image *ngIf="user?.profilePicture && !uploading" [classes]="'w-full h-full self-stretch object-cover'"
             [sourceUrl]="user?.profilePicture!" [alt]="user?.fullName!">
-        </app-my-image>
+        </app-image>
 
         <ng-container *ngIf="!user?.profilePicture && !uploading">
             <svg xmlns="http://www.w3.org/2000/svg"

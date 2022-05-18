@@ -1,5 +1,7 @@
-<ik-image width="1200" height="1200" class="{{classes}}" src="{{imageKitSource()}}" [attr.alt]="alt"
-    [attr.srcset]="srcsetValue">
-</ik-image>
+<!-- <ik-image *ngIf="browserRunning" width="1200" height="1200" [src]="imageKitSource()" class="{{classes}}"
+    [attr.alt]="alt" [attr.srcset]="srcsetValue">
+</ik-image> -->
 
-<!-- <img width="1200" height="1200" [src]="sourceUrl" class="{{classes}}" [alt]="alt"> -->
+<!-- *ngIf="serverRunning" -->
+
+<img width="1200" height="1200" [src]="imageKitSource()" class="{{classes}}" [alt]="alt" [srcset]="srcsetValue" />
