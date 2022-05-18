@@ -6,7 +6,7 @@ import { getUrlLastElement } from 'src/app/services/utilities.service';
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.css']
 })
-export class ImageComponent implements OnInit {
+export class MyImageComponent implements OnInit {
   @Input() classes!: string;
   @Input() sourceUrl!: string;
   @Input() alt!: string;
