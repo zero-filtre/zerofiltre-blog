@@ -30,7 +30,8 @@ podTemplate(label: label, containers: [
             }
 
             stage('Deploy on k8s') {
-                runApp()
+                if(env.BRANCH_NAME =='ready' || env.BRANCH_NAME =='main')
+                    runApp()
             }
         }
     }
