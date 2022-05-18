@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { getUrlLastElement } from 'src/app/services/utilities.service';
 
 @Component({
-  selector: 'app-image',
+  selector: 'app-my-image',
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.css']
 })
-export class ImageComponent implements OnInit {
+export class MyImageComponent implements OnInit {
   @Input() classes!: string;
   @Input() sourceUrl!: string;
   @Input() alt!: string;

@@ -45,9 +45,9 @@
       <div *ngIf="authService.currentUsr as currentUsr" class="border border-primary-500 rounded-lg p-4 mt-5">
         <div class="flex items-center gap-2">
           <div>
-            <app-image *ngIf="currentUsr?.profilePicture" [classes]="'h-10 w-10 rounded-full'"
+            <app-my-image *ngIf="currentUsr?.profilePicture" [classes]="'h-10 w-10 rounded-full'"
               [alt]="currentUsr?.fullName" [sourceUrl]="currentUsr?.profilePicture!">
-            </app-image>
+            </app-my-image>
 
             <ng-container *ngIf="!currentUsr?.profilePicture">
               <svg xmlns="http://www.w3.org/2000/svg"
@@ -86,8 +86,9 @@
       <mat-toolbar class="top-toolbar-container !px-0">
         <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
           <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
-            <app-image [classes]="'max-w-[145px] sm:max-w-[175px]'" [sourceUrl]="appLogoUrl" [alt]="'Zerofiltre blog'">
-            </app-image>
+            <app-my-image [classes]="'max-w-[145px] sm:max-w-[175px]'" [sourceUrl]="appLogoUrl"
+              [alt]="'Zerofiltre blog'">
+            </app-my-image>
           </div>
         </a>
 
@@ -122,9 +123,9 @@
               aria-label="Example icon-button with a menu">
 
               <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
-                <app-image [classes]="'h-10 w-10 rounded-full'" [sourceUrl]="currentUsr?.profilePicture!"
+                <app-my-image [classes]="'h-10 w-10 rounded-full'" [sourceUrl]="currentUsr?.profilePicture!"
                   [alt]="currentUsr?.fullName">
-                </app-image>
+                </app-my-image>
               </div>
 
               <div *ngIf="!currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
