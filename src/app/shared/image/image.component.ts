@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { getUrlLastElement } from 'src/app/services/utilities.service';
 
 @Component({
-  selector: 'app-image',
+  selector: 'app-my-image',
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.css']
 })
