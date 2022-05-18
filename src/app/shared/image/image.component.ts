@@ -16,7 +16,7 @@ export class ImageComponent implements OnInit {
 
   public imageKitSource(): string {
     const imageName = getUrlLastElement(this.sourceUrl);
-    const imageKitUrl = `https://ik.imagekit.io/lfegvix1p/tr:di-${this.defaultImage}/`
+    const imageKitUrl = `https://ik.imagekit.io/lfegvix1p/tr:di-${this.defaultImage}, tr:w-800/`
     return imageKitUrl + imageName
   }
 
