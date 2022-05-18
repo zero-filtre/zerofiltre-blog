@@ -438,7 +438,7 @@
                     </div>
 
                     <div class="article-summary">
-                        <label for="tags_selected" class="block text-base font-semibold leading-5 text-skin-base">
+                        <label for="summary" class="block text-base font-semibold leading-5 text-skin-base">
                             {{ 'articleEntryEdit.summary' | translate }}
                         </label>
                         <div class="mt-5">
@@ -469,12 +469,6 @@
                             <div (click)="openTagsDropdown()"
                                 class="selected-tags-container bg-skin-cardMuted cursor-pointer relative flex flex-wrap p-2 min-h-[50px] gap-1 rounded-xl shadow-md">
                                 <ng-container *ngFor="let tag of tags.controls; let i = index">
-                                    <!-- <div class="flex justify-between items-center gap-2 px-2 py-1 text-skin-link bg-primary-500 rounded-md"
-                                        [formGroupName]="i">
-                                        <span>{{tag.value.name}}</span>
-                                        <button (click)="removeTag(i)" class="cursor-pointer">x</button>
-                                    </div> -->
-
                                     <span [formGroupName]="i"
                                         class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border">
                                         <svg [ngStyle]="{'color': tag.value.colorCode}" class="mr-1 h-2 w-2"
@@ -487,6 +481,12 @@
                                             <span class="remove-tag-btn text-xs">x</span>
                                         </button>
                                     </span>
+                                </ng-container>
+
+                                <ng-container *ngIf="!tags.length">
+                                    <p class="selected-tags-container text-skin-muted leading-9">Cliquez ici
+                                        pour ajouter des tags
+                                    </p>
                                 </ng-container>
 
                                 <ul *ngIf="tagsDropdownOpened"

@@ -14,6 +14,7 @@ import { ArticleService } from '../article.service';
 import { FormArray } from '@angular/forms';
 import { Location } from '@angular/common';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { taggedTemplate } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-article-entry-create',
@@ -25,7 +26,6 @@ export class ArticleEntryCreateComponent implements OnInit {
     if (
       event.target.classList.contains('tagItem')
       || event.target.classList.contains('selected-tags-container')
-      // || event.target.classList.contains('remove-tag-btn')
     ) {
       this.tagsDropdownOpened = true
     } else {
@@ -83,6 +83,8 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   public openTagsDropdown() {
     this.tagsDropdownOpened = true
+    console.log('CLICKED!!!')
+    console.log(this.tagsDropdownOpened)
   }
 
   public setActiveTab(tabName: string): void {
