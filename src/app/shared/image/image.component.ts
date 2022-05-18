@@ -2,42 +2,48 @@ import { Component, Input, OnInit } from '@angular/core';
 import { getUrlLastElement } from 'src/app/services/utilities.service';
 
 @Component({
-  selector: 'app-my-image',
+  selector: 'app-image',
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.css']
 })
-export class MyImageComponent implements OnInit {
+export class ImageComponent implements OnInit {
   @Input() classes!: string;
   @Input() sourceUrl!: string;
   @Input() alt!: string;
+
+  imageKitAccountId = 'lfegvix1p'
+
   defaultImage = 'blog-default-image_kttj78fSc.jpg'
   srcsetValue !: string;
+
+  browserRunning!: boolean;
+  serverRunning!: boolean;
 
   constructor() { }
 
   public imageKitSource(): string {
     const imageName = getUrlLastElement(this.sourceUrl);
-    const imageKitBaseUrl = `https://ik.imagekit.io/lfegvix1p/tr:w-800,ar-auto,dpr-auto,di-${this.defaultImage}/`
+    const imageKitBaseUrl = `https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-800,ar-auto,dpr-auto,di-${this.defaultImage}/`
     let scr;
 
     if (imageName) {
       scr = imageKitBaseUrl + imageName
 
       this.srcsetValue = `
-      https://ik.imagekit.io/lfegvix1p/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 400w,
-      https://ik.imagekit.io/lfegvix1p/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 800w,
-      https://ik.imagekit.io/lfegvix1p/tr:w-600,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1200w,
-      https://ik.imagekit.io/lfegvix1p/tr:w-800,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1300w,
-      https://ik.imagekit.io/lfegvix1p/tr:w-1200,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1400w
+      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 400w,
+      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 800w,
+      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-600,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1200w,
+      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-800,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1300w,
+      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-1200,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1400w
       `;
     } else {
       scr = imageKitBaseUrl + 'not_found_image.jpg';
 
       this.srcsetValue = `
-      https://ik.imagekit.io/lfegvix1p/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 400w,
-      https://ik.imagekit.io/lfegvix1p/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 800w,
-      https://ik.imagekit.io/lfegvix1p/tr:w-600,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 1200w,
-      https://ik.imagekit.io/lfegvix1p/tr:w-800,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 1300w,
+      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 400w,
+      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 800w,
+      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-600,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 1200w,
+      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-800,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 1300w,
       `;
     }
 

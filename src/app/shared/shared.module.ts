@@ -14,7 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppShellRenderDirective } from '../directives/app-shell-render.directive';
 import { AppShellNoRenderDirective } from '../directives/app-shell-no-render.directive';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { MyImageComponent } from './image/image.component';
+import { ImageComponent } from './image/image.component';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -27,7 +27,7 @@ const components = [
   AppShellRenderDirective,
   AppShellNoRenderDirective,
   FooterComponent,
-  MyImageComponent
+  ImageComponent
 ];
 
 const modules = [
