@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   readonly servicesUrl = environment.servicesUrl
   readonly coursesUrl = environment.coursesUrl
 
-  public appLogoUrl = 'https://ik.imagekit.io/lfegvix1p/logoblue_6whym-RBD.svg'
+  public appLogoUrl = 'assets/logoblue.svg';
 
   public isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])

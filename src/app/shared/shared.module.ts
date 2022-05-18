@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatDialogModule } from '@angular/material/dialog'
+import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppShellRenderDirective } from '../directives/app-shell-render.directive';
 import { AppShellNoRenderDirective } from '../directives/app-shell-no-render.directive';
@@ -39,6 +40,7 @@ const modules = [
   MatMenuModule,
   MatSnackBarModule,
   MatDialogModule,
+  MatIconModule,
   RouterModule,
   HttpClientModule,
   NgxSkeletonLoaderModule,

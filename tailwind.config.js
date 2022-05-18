@@ -1,5 +1,20 @@
 module.exports = {
   content: ["./src/**/*.{html,ts,css}"],
+  daisyui: {
+    themes: [
+      {
+        zerofiltre: {
+          primary: "#15b2bc",
+          secondary: "#FFE5BD",
+          accent: "#fdbc5a",
+          neutral: "#3d4451",
+          "base-100": "#ffffff",
+        },
+      },
+      "dark",
+      "cupcake",
+    ],
+  },
   theme: {
     extend: {
       fontFamily: {
@@ -19,7 +34,10 @@ module.exports = {
           400: '#ffbd59'
         },
         error: "#f55f44",
-        grays: "#eef1f4",
+        grays: {
+          100: "#eef1f4",
+          600: "#4B5563"
+        },
         skin: {
           base: "#6b7280",
           text: "#374151",
@@ -46,5 +64,6 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/aspect-ratio'),
+    require("daisyui"),
   ],
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
+import { HomePage2Component } from './home-page2/home-page2.component';
 import { LoggedInAuthGuard } from './user/logged-in-auth.guard';
 import { LoginPageComponent } from './user/login-page/login-page.component';
 import { PasswordResetPageComponent } from './user/password-reset-page/password-reset-page.component';
@@ -43,6 +44,10 @@ const routes: Routes = [
   {
     path: 'courses',
     loadChildren: () => import('./courses/courses.module').then((m) => m.CoursesModule),
+  },
+  {
+    path: '',
+    component: HomePage2Component,
   },
   {
     path: '**',
