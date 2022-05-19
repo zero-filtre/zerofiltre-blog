@@ -28,6 +28,10 @@ const routes: Routes = [
     component: ResendConfirmationPageComponent,
   },
   {
+    path: '',
+    component: HomePageComponent,
+  },
+  {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
   },
@@ -37,14 +41,15 @@ const routes: Routes = [
       import('./articles/articles.module').then((m) => m.ArticlesModule),
   },
   {
-    path: '',
-    component: HomePageComponent,
+    path: 'courses',
+    loadChildren: () => import('./courses/courses.module').then((m) => m.CoursesModule),
   },
   {
     path: '**',
     redirectTo: 'articles',
   },
-  // { path: '', redirectTo: 'articles', pathMatch: 'full' },
+
+  { path: '', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({
