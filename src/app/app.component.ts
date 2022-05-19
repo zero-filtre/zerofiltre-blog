@@ -149,6 +149,7 @@ export class AppComponent implements OnInit {
     Prism.plugins.toolbar.registerButton('copy-code', function (_env: any) {
       const svgButton = document.createElement('button');
       svgButton.classList.add('copy-to-clipboard-svg');
+      svgButton.ariaLabel = 'Copy to clipboard button';
 
       svgButton.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" aria-label="Copy to clipboard button" class="w-5 lg:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
