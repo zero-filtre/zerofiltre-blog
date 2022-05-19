@@ -29,6 +29,8 @@ export class HomePageComponent implements OnInit {
       author: 'Zerofiltre.tech',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
+
+    //TODO: Add class .transparent to header on mounting and remove it when unmonuting
   }
 
 }

@@ -22,12 +22,14 @@ import { MarkdownModule } from 'ngx-markdown';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './lang-switcher/translate-universal-loader';
+import { HeaderComponent } from './header/header.component';
 
 const components = [
   AppShellRenderDirective,
   AppShellNoRenderDirective,
   FooterComponent,
-  ImageComponent
+  ImageComponent,
+  HeaderComponent
 ];
 
 const modules = [
@@ -48,7 +50,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, HeaderComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
