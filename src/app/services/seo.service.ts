@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class SeoService {
   readonly blogUrl = environment.blogUrl
+  transparentHeader!: boolean;
 
   constructor(private title: Title, private meta: Meta, private router: Router) { }
 
@@ -30,5 +31,13 @@ export class SeoService {
       { name: 'twitter:title', content: title },
       { name: 'twitter:description', content: description },
     ]);
+  }
+
+  enanabletransparentHeader() {
+    this.transparentHeader = true;
+  }
+
+  disabletransparentHeader() {
+    this.transparentHeader = false;
   }
 }

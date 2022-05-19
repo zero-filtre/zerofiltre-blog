@@ -1,0 +1,87 @@
+<div *ngIf="seo.transparentHeader" class="min-h-[5px]">
+    <mat-progress-bar *ngIf="changingRoute" color="accent" mode="indeterminate"></mat-progress-bar>
+</div>
+
+<header class="header" [ngClass]="{'transparent' : seo.transparentHeader}">
+    <mat-toolbar class="header-container">
+        <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
+            <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
+                <app-image [classes]="'max-w-[145px] sm:max-w-[175px]'" [sourceUrl]="appLogoUrl"
+                    [alt]="'Zerofiltre blog'">
+                </app-image>
+            </div>
+        </a>
+
+        <div class="navbar-links hidden lg:flex items-center text-secondary">
+            <a aria-labelledby="Link to about page" class="navLink" href="{{servicesUrl}}/#about">
+                <div>{{'navbar.about' | translate}}</div>
+            </a>
+
+            <a aria-labelledby="Link to about page" class="navLink" href="{{coursesUrl}}">
+                <div>{{'navbar.courses' | translate}}</div>
+            </a>
+
+            <a aria-labelledby="Link to about page" class="navLink" routerLink="/articles">
+                <div>{{'navbar.blog' | translate}}</div>
+            </a>
+
+            <a aria-labelledby="Link to about page" class="navLink" href="{{servicesUrl}}" target="_blank">
+                <div>{{'navbar.portfolio' | translate}}</div>
+            </a>
+
+            <ng-container class="navbar-links-hidden-on-server-rendering" *appShellNoRender>
+                <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" class="navLink"
+                    routerLink="/login">
+                    <div class="!font-medium text-primary-500">{{'navbar.login' | translate}}</div>
+                </a>
+                <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" class="navLink"
+                    routerLink="/register">
+                    <div>{{'navbar.register' | translate}}</div>
+                </a>
+
+                <button *ngIf="authService.currentUsr as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
+                    aria-label="Example icon-button with a menu">
+
+                    <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
+                        <app-image [classes]="'h-10 w-10 rounded-full'" [sourceUrl]="currentUsr?.profilePicture!"
+                            [alt]="currentUsr?.fullName">
+                        </app-image>
+                    </div>
+
+                    <div *ngIf="!currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-10 w-10 p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white rounded-full"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                </button>
+
+                <mat-menu #menu="matMenu" class="mt-2 font-semibold text-skin-base">
+                    <a aria-labelledby="Link to about page" routerLink="/user/profile"
+                        class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                        <span>{{'navbar.myProfile' | translate}}</span>
+                    </a>
+
+                    <button (click)="logout()" aria-labelledby="logout button"
+                        class="inline-block w-full px-4 py-2 font-semibold hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                        <span>{{'navbar.logout' | translate}}</span>
+                    </button>
+                </mat-menu>
+            </ng-container>
+
+        </div>
+
+        <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" class="lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </mat-toolbar>
+</header>
+
+<div *ngIf="!seo.transparentHeader" class="min-h-[5px]">
+    <mat-progress-bar *ngIf="changingRoute" color="accent" mode="indeterminate"></mat-progress-bar>
+</div>

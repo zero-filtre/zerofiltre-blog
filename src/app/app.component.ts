@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
   public MY_ARTICLES = 'Mes articles';
   public ALL_ARTICLES = 'Tous nos articles';
 
-  public showRouteLoader!: boolean;
+  public changingRoute!: boolean;
 
   public activePage = this.MY_ACCOUNT;
 
@@ -82,14 +82,14 @@ export class AppComponent implements OnInit {
 
   public checkRouteChange(routerEvent: RouterEvent) {
     if (routerEvent instanceof NavigationStart) {
-      this.showRouteLoader = true;
+      this.changingRoute = true;
     }
     if (routerEvent instanceof NavigationEnd ||
       routerEvent instanceof NavigationCancel ||
       routerEvent instanceof NavigationError
     ) {
       setTimeout(() => {
-        this.showRouteLoader = false;
+        this.changingRoute = false;
       }, 1000);
     }
   }
@@ -149,9 +149,10 @@ export class AppComponent implements OnInit {
     Prism.plugins.toolbar.registerButton('copy-code', function (_env: any) {
       const svgButton = document.createElement('button');
       svgButton.classList.add('copy-to-clipboard-svg');
+      svgButton.ariaLabel = 'Copy to clipboard button';
 
       svgButton.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 lg:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <svg xmlns="http://www.w3.org/2000/svg" aria-label="Copy to clipboard button" class="w-5 lg:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
     </svg>
     `;

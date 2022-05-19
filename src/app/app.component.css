@@ -1,16 +1,3 @@
-.top-toolbar-container {
-  max-width: 95rem;
-  @apply mx-auto !px-4 xl:!px-[5%] flex justify-between bg-white;
-}
-
-.top-toolbar .navLink {
-  @apply hidden lg:block mx-4 last:mr-0 hover:text-primary-500 transition-all duration-200;
-}
-
-.top-toolbar .navLink div {
-  @apply text-base font-normal;
-}
-
 .sidenav {
   @apply w-60 h-fit pt-24 pb-10 px-6;
 }
