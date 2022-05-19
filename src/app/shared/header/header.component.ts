@@ -1,7 +1,6 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, Observable, shareReplay } from 'rxjs';
+import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { environment } from 'src/environments/environment';
 
@@ -22,6 +21,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
+    public seo: SeoService
   ) { }
 
   public logout() {

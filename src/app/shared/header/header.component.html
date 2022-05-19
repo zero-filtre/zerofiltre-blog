@@ -1,4 +1,8 @@
-<header class="header">
+<div *ngIf="seo.transparentHeader" class="min-h-[5px]">
+    <mat-progress-bar *ngIf="changingRoute" color="accent" mode="indeterminate"></mat-progress-bar>
+</div>
+
+<header class="header" [ngClass]="{'transparent' : seo.transparentHeader}">
     <mat-toolbar class="header-container">
         <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
             <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
@@ -78,6 +82,6 @@
     </mat-toolbar>
 </header>
 
-<div class="min-h-[5px]">
+<div *ngIf="!seo.transparentHeader" class="min-h-[5px]">
     <mat-progress-bar *ngIf="changingRoute" color="accent" mode="indeterminate"></mat-progress-bar>
 </div>

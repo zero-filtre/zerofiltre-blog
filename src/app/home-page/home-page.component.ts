@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { SeoService } from '../services/seo.service';
 
@@ -7,7 +7,7 @@ import { SeoService } from '../services/seo.service';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
   public transformations = [{
     width: 1200,
     aspectRatio: "auto"
@@ -30,7 +30,11 @@ export class HomePageComponent implements OnInit {
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
 
-    //TODO: Add class .transparent to header on mounting and remove it when unmonuting
+    this.seo.enanabletransparentHeader();
+  }
+
+  ngOnDestroy(): void {
+    this.seo.disabletransparentHeader();
   }
 
 }
