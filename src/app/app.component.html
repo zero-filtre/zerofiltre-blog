@@ -82,8 +82,8 @@
 
   <mat-sidenav-content class="!overflow-visible">
     <!-- APP DESKTOP NAVBAR-->
-    <div class="top-toolbar sticky top-0 shadow-sm bg-white py-2 z-50">
-      <mat-toolbar class="top-toolbar-container !px-0">
+    <header class="header home">
+      <mat-toolbar class="header-container">
         <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
           <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
             <app-image [classes]="'max-w-[145px] sm:max-w-[175px]'" [sourceUrl]="appLogoUrl" [alt]="'Zerofiltre blog'">
@@ -159,16 +159,16 @@
           </svg>
         </button>
       </mat-toolbar>
-    </div>
+    </header>
     <div class="min-h-[5px]">
       <mat-progress-bar *ngIf="showRouteLoader" color="accent" mode="indeterminate"></mat-progress-bar>
     </div>
     <!-- END APP DESKTOP NAVBAR -->
 
     <!-- APP CONTENT -->
-    <div class="site-container">
+    <main>
       <router-outlet></router-outlet>
-    </div>
+    </main>
     <!-- END APP CONTENT -->
 
     <!-- APP FOOTER -->

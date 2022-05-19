@@ -1,13 +1,31 @@
-.top-toolbar-container {
-  max-width: 95rem;
-  @apply mx-auto !px-4 xl:!px-[5%] flex justify-between bg-white;
+.header,
+.header-container {
+  @apply bg-white;
 }
 
-.top-toolbar .navLink {
+.header.home,
+.header.home .header-container {
+  @apply !bg-transparent;
+}
+
+.header {
+  @apply sticky top-0 shadow-sm py-2 z-40;
+}
+
+.header.home {
+  @apply !relative shadow-none;
+}
+
+.header-container {
+  max-width: 95rem;
+  @apply mx-auto !px-4 xl:!px-[5%] flex justify-between;
+}
+
+.header .navLink {
   @apply hidden lg:block mx-4 last:mr-0 hover:text-primary-500 transition-all duration-200;
 }
 
-.top-toolbar .navLink div {
+.header .navLink div {
   @apply text-base font-normal;
 }
 
