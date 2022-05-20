@@ -33,11 +33,11 @@ export class SeoService {
     ]);
   }
 
-  enanabletransparentHeader() {
+  enanableTransparentHeader() {
     this.transparentHeader = true;
   }
 
-  disabletransparentHeader() {
+  disableTransparentHeader() {
     this.transparentHeader = false;
   }
 }

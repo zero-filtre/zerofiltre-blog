@@ -13,18 +13,71 @@ h3 {
 }
 
 h1 {
-  @apply text-3xl lg:text-4xl font-medium;
+  @apply text-3xl lg:text-5xl font-medium;
 }
 
 h2 {
-  @apply text-xl lg:text-3xl font-light;
+  @apply text-xl lg:text-[1.7rem] lg:leading-10 font-light;
 }
 
 h3 {
-  @apply text-2xl lg:text-3xl font-bold mb-11 relative after:absolute after:w-32 lg:after:w-20 after:h-1.5 after:bg-skin-base after:-bottom-6 after:left-[calc(50%-4rem)] lg:after:left-0 after:rounded-sm;
+  @apply text-2xl lg:text-3xl font-medium mb-12 relative after:absolute after:w-32 lg:after:w-20 after:h-1.5 after:bg-accent-400 after:-bottom-6 after:left-[calc(50%-4rem)] lg:after:left-0 after:rounded-sm;
   @apply text-center lg:text-left;
 }
 
 p {
-  @apply text-lg font-normal !mb-5 last:!mb-0 text-center lg:text-left;
+  @apply text-lg lg:text-xl font-light !mb-5 last:!mb-0 text-center lg:text-left;
+}
+
+.green-divider {
+  @apply bg-primary-500 py-10 space-y-8;
+}
+
+.green-divider.triangle {
+}
+
+.green-divider.ovale {
+}
+
+.green-divider p {
+  @apply max-w-7xl mx-auto text-center text-white font-medium text-xl lg:text-2xl;
+}
+
+.master-class-section {
+  @apply text-white;
+}
+
+.master-class-section h3 {
+  @apply text-white after:bg-primary-500;
+}
+
+h3.master-class-title {
+  @apply text-4xl;
+}
+
+h3.lesson-group-title {
+  @apply text-2xl mb-10;
+}
+
+.master-class-section h4 {
+  @apply text-lg uppercase font-medium;
+}
+
+.master-class-section ol {
+  @apply pl-10 mt-5 space-y-2;
+}
+
+.master-class-section li {
+  @apply text-xl font-light;
+}
+
+/* ol auto increment */
+ol {
+  list-style: none;
+  counter-reset: item;
+}
+
+ol > li:before {
+  content: counters(item, ".") ". ";
+  counter-increment: item;
 }

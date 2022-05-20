@@ -30,11 +30,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
 
-    this.seo.enanabletransparentHeader();
+    this.seo.enanableTransparentHeader();
   }
 
   ngOnDestroy(): void {
-    this.seo.disabletransparentHeader();
+    this.seo.disableTransparentHeader();
   }
 
 }

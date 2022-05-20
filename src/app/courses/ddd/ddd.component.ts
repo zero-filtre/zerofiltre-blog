@@ -12,10 +12,10 @@ export class DddComponent implements OnInit, OnDestroy {
   constructor(private seo: SeoService) { }
 
   ngOnInit(): void {
-    // this.seo.enanabletransparentHeader();
+    // this.seo.enanableTransparentHeader();
   }
 
   ngOnDestroy(): void {
-    // this.seo.disabletransparentHeader();
+    // this.seo.disableTransparentHeader();
   }
 }
