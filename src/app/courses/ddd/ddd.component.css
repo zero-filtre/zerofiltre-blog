@@ -1,0 +1,30 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+h1,
+h3 {
+  @apply text-primary-500;
+}
+
+h1 {
+  @apply text-3xl lg:text-4xl font-medium;
+}
+
+h2 {
+  @apply text-xl lg:text-3xl font-light;
+}
+
+h3 {
+  @apply text-2xl lg:text-3xl font-bold mb-11 relative after:absolute after:w-32 lg:after:w-20 after:h-1.5 after:bg-skin-base after:-bottom-6 after:left-[calc(50%-4rem)] lg:after:left-0 after:rounded-sm;
+  @apply text-center lg:text-left;
+}
+
+p {
+  @apply text-lg font-normal !mb-5 last:!mb-0 text-center lg:text-left;
+}

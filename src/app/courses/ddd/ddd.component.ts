@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-ddd',
   templateUrl: './ddd.component.html',
   styleUrls: ['./ddd.component.css']
 })
-export class DddComponent implements OnInit {
+export class DddComponent implements OnInit, OnDestroy {
+  public coursesHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-workshop-2_MdBjzHzLo.jpg'
 
-  constructor() { }
+  constructor(private seo: SeoService) { }
 
   ngOnInit(): void {
+    // this.seo.enanabletransparentHeader();
   }
 
+  ngOnDestroy(): void {
+    // this.seo.disabletransparentHeader();
+  }
 }

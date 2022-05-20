@@ -5,7 +5,7 @@ import { AuthorGuard } from '../user/author.guard';
 import { DddComponent } from './ddd/ddd.component';
 
 const routes: Routes = [
-  { path: 'learn-ddd-course', component: DddComponent },
+  { path: 'learn-ddd', component: DddComponent },
 ];
 
 @NgModule({

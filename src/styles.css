@@ -35,6 +35,7 @@
 img {
   @apply max-h-full text-xs text-transparent;
   aspect-ratio: attr(width) / attr(height);
+  height: inherit;
 }
 
 .site-container {
