@@ -144,7 +144,7 @@
         </div>
     </div>
 
-    <section class="py-8 lg:py-14 bg-[#525E74] master-class-section">
+    <section class="pt-12 pb-8 lg:py-14 bg-[#525E74] master-class-section">
         <div class="site-container">
             <div class="flex flex-col gap-5 lg:grid grid-cols-10">
                 <div class="master-class-text col-span-7">
@@ -158,17 +158,16 @@
                     </p>
                 </div>
 
-                <div
-                    class="master-class-image hidden lg:block shadow-lg rounded-lg overflow-hidden col-span-3 aspect-w-5 aspect-h-3">
+                <div class="master-class-image shadow-lg rounded-lg overflow-hidden col-span-3 aspect-w-5 aspect-h-3">
                     <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
                         [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                     </app-image>
                 </div>
             </div>
 
-            <div class="course-lessons-grid mt-20 grid grid-cols-6 gap-5 lg:pr-36">
+            <div class="course-lessons-grid mt-20 grid lg:grid-cols-6 gap-y-8 gap-x-5 lg:pr-36">
 
-                <div class="lessons-group col-span-3 flex flex-start">
+                <section class="lessons-group col-span-3 flex flex-start">
                     <div class="group-image"></div>
                     <div class="group-text">
                         <h3 class="lesson-group-title">1. Bien démarrer avec le Domain-Driven Design (DDD)</h3>
@@ -178,9 +177,9 @@
                             <li>Présentation du projet à réaliser</li>
                         </ol>
                     </div>
-                </div>
+                </section>
 
-                <div class="lessons-group col-span-3 flex flex-start">
+                <section class="lessons-group lg:mt-0 col-span-3 flex flex-start">
                     <div class="group-image"></div>
                     <div class="group-text">
                         <h3 class="lesson-group-title">2. Utilisez les patterns stratégiques du DDD pour distiller le
@@ -196,7 +195,7 @@
                             <li>Faites le bon choix d’intégration entre les bounded contexts: “Context Mapping”</li>
                         </ol>
                     </div>
-                </div>
+                </section>
 
             </div>
         </div>

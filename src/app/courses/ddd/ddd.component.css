@@ -56,7 +56,7 @@ h3.master-class-title {
 }
 
 h3.lesson-group-title {
-  @apply text-2xl mb-10;
+  @apply text-xl lg:text-2xl mb-10 after:left-0 text-left font-bold;
 }
 
 .master-class-section h4 {
@@ -68,7 +68,7 @@ h3.lesson-group-title {
 }
 
 .master-class-section li {
-  @apply text-xl font-light;
+  @apply text-lg lg:text-xl font-light;
 }
 
 /* ol auto increment */
