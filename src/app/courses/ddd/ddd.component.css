@@ -13,7 +13,7 @@ h3 {
 }
 
 h1 {
-  @apply text-3xl lg:text-5xl font-medium;
+  @apply text-3xl lg:text-[40px] lg:leading-10 font-medium;
 }
 
 h2 {
@@ -80,4 +80,5 @@ ol {
 ol > li:before {
   content: counters(item, ".") ". ";
   counter-increment: item;
+  /* font-weight: 300; */
 }

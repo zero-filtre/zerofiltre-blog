@@ -144,7 +144,7 @@
         </div>
     </div>
 
-    <section class="pt-12 pb-8 lg:py-14 bg-[#525E74] master-class-section">
+    <section class="pt-16 pb-10 lg:pt-32 bg-[#525E74] master-class-section">
         <div class="site-container">
             <div class="flex flex-col gap-5 lg:grid grid-cols-10">
                 <div class="master-class-text col-span-7">
@@ -165,11 +165,15 @@
                 </div>
             </div>
 
-            <div class="course-lessons-grid mt-20 grid lg:grid-cols-6 gap-y-8 gap-x-5 lg:pr-36">
+            <div class="course-lessons-grid mt-20 grid lg:grid-cols-6 gap-y-8 max-w-6xl">
 
-                <section class="lessons-group col-span-3 flex flex-start">
-                    <div class="group-image"></div>
-                    <div class="group-text">
+                <section class="lessons-group col-span-3 flex gap-5 flex-start">
+                    <div class="group-image shadow-lg rounded-lg overflow-hidden hidden lg:block h-16 w-16">
+                        <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+                            [alt]="'atelier de cours de codage informatique java html en salle de classe'">
+                        </app-image>
+                    </div>
+                    <div class="group-text flex-1">
                         <h3 class="lesson-group-title">1. Bien démarrer avec le Domain-Driven Design (DDD)</h3>
                         <h4 class="nber-of-lessons">2 Leçons</h4>
                         <ol class="group-lessons-list">
@@ -179,9 +183,13 @@
                     </div>
                 </section>
 
-                <section class="lessons-group lg:mt-0 col-span-3 flex flex-start">
-                    <div class="group-image"></div>
-                    <div class="group-text">
+                <section class="lessons-group lg:mt-0 col-span-3 flex gap-5 flex-start">
+                    <div class="group-image shadow-lg rounded-lg overflow-hidden hidden lg:block h-16 w-16">
+                        <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+                            [alt]="'atelier de cours de codage informatique java html en salle de classe'">
+                        </app-image>
+                    </div>
+                    <div class="group-text flex-1">
                         <h3 class="lesson-group-title">2. Utilisez les patterns stratégiques du DDD pour distiller le
                             besoin métier</h3>
                         <h4 class="nber-of-lessons">6 Leçons</h4>
