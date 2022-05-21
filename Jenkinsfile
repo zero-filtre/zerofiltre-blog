@@ -1,4 +1,4 @@
-def label = "worker-${UUID.randomUUID().toString()}"
+def label = "worker-${UUID.randomUUID()}"
 
 podTemplate(label: label, containers: [
         containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
@@ -8,33 +8,41 @@ podTemplate(label: label, containers: [
         volumes: [
                 hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
         ]) {
+            node(label) {
+                try {
+                    stage('Checkout') {
+                            scm_vars = checkout scm
+                            env.GIT_COMMIT = scm_vars.GIT_COMMIT
+                    }
 
-    node(label) {
-        stage('Checkout') {
-            checkout scm
-        }
+                    withEnv(["api_image_tag=${getTag(env.BUILD_NUMBER, env.BRANCH_NAME)}",
+                                "env_name=${getEnvName(env.BRANCH_NAME)}"
 
-        withEnv(["api_image_tag=${getTag(env.BUILD_NUMBER, env.BRANCH_NAME)}",
-                 "env_name=${getEnvName(env.BRANCH_NAME)}"
+                        ]) {
+                            // stage('Build with test') {
+                            //     buildAndTest()
+                            // }
 
-        ]) {
+                            stage('Build and push to docker registry') {
+                                withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                                    buildDockerImageAndPush(USERNAME, PASSWORD)
+                                }
+                            }
 
-            // stage('Build with test') {
-            //     buildAndTest()
-            // }
-
-            stage('Build and push to docker registry') {
-                withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    buildDockerImageAndPush(USERNAME, PASSWORD)
+                            stage('Deploy on k8s') {
+                                if (env.BRANCH_NAME == 'ready' || env.BRANCH_NAME == 'main') {
+                            runApp()
+                                }
+                            }
+                    }
+                } finally {
+                    script {
+                        env.COMMIT_AUTHOR_NAME = sh(script: "git --no-pager show -s --format='%an' ${env.GIT_COMMIT}", returnStdout: true)
+                        env.COMMIT_AUTHOR_EMAIL = sh(script: "git --no-pager show -s --format='%ae' ${env.GIT_COMMIT}", returnStdout: true)
+                    }
+                    sendEmail()
                 }
             }
-
-            stage('Deploy on k8s') {
-                if(env.BRANCH_NAME =='ready' || env.BRANCH_NAME =='main')
-                    runApp()
-            }
-        }
-    }
         }
 
 String getEnvName(String branchName) {
@@ -45,7 +53,7 @@ String getEnvName(String branchName) {
 }
 
 String getTag(String buildNumber, String branchName) {
-    String tag = "imzerofiltre/zerofiltretech-blog-front:" + buildNumber;
+    String tag = 'imzerofiltre/zerofiltretech-blog-front:' + buildNumber
     if (branchName == 'main') {
         return tag + '-stable'
     }
@@ -94,4 +102,12 @@ def runApp() {
                 fi
             """
     }
+}
+
+def sendEmail() {
+    String url = env.BUILD_URL.replace("http://jenkins:8080","https://jenkins.zerofiltre.tech")
+    mail(
+            to: env.COMMIT_AUTHOR_EMAIL,
+            subject: env.COMMIT_AUTHOR_NAME + " build #${env.BUILD_NUMBER} is a ${currentBuild.currentResult} - (${currentBuild.fullDisplayName})",
+            body: "Check console output at: ${url}/console" + "\n")
 }
