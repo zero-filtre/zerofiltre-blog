@@ -27,6 +27,7 @@ h3 {
 
 p {
   @apply text-lg lg:text-xl font-light !mb-5 last:!mb-0 text-center lg:text-left;
+  /* @apply text-lg lg:text-lg font-normal !mb-5 last:!mb-0 text-center lg:text-left; */
 }
 
 .green-divider {
@@ -69,6 +70,7 @@ h3.lesson-group-title {
 
 .master-class-section li {
   @apply text-lg lg:text-xl font-light;
+  /* @apply text-lg lg:text-lg font-light; */
 }
 
 /* ol auto increment */
