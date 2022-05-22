@@ -35,12 +35,27 @@ podTemplate(label: label, containers: [
                                 }
                             }
                     }
+                } catch(exc) {
+                    currentBuild.result = 'FAILURE'
+                    throw exc
                 } finally {
-                    script {
-                        env.COMMIT_AUTHOR_NAME = sh(script: "git --no-pager show -s --format='%an' ${env.GIT_COMMIT}", returnStdout: true)
-                        env.COMMIT_AUTHOR_EMAIL = sh(script: "git --no-pager show -s --format='%ae' ${env.GIT_COMMIT}", returnStdout: true)
+                    if(currentBuild.result=='FAILURE') {
+                        script {
+                            env.COMMIT_AUTHOR_NAME = sh(script: "git --no-pager show -s --format='%an' ${env.GIT_COMMIT}", returnStdout: true)
+                            env.COMMIT_AUTHOR_EMAIL = sh(script: "git --no-pager show -s --format='%ae' ${env.GIT_COMMIT}", returnStdout: true)
+                        }
+                        sendEmail()
                     }
-                    sendEmail()
+                    deleteDir()
+                    dir("${env.WORKSPACE}@tmp") {
+                        deleteDir()
+                    }
+                    dir("${env.WORKSPACE}@script") {
+                        deleteDir()
+                    }
+                    dir("${env.WORKSPACE}@script@tmp") {
+                        deleteDir()
+                    }
                 }
             }
         }
