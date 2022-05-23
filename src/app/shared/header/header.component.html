@@ -1,5 +1,5 @@
 <div *ngIf="seo.transparentHeader" class="min-h-[5px]">
-    <mat-progress-bar *ngIf="changingRoute" color="accent" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="changingRoute" class="bg-primary-500" mode="indeterminate"></mat-progress-bar>
 </div>
 
 <header class="header" [ngClass]="{'transparent' : seo.transparentHeader}">
@@ -83,5 +83,5 @@
 </header>
 
 <div *ngIf="!seo.transparentHeader" class="min-h-[5px]">
-    <mat-progress-bar *ngIf="changingRoute" color="accent" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="changingRoute" class="bg-primary-500" mode="indeterminate"></mat-progress-bar>
 </div>
