@@ -230,44 +230,89 @@ export const fr = {
         typeWarningMessage: 'Veuillez ajouter un fichier de type image svp !',
         AuthError: 'Oups..😢 Une erreur est survenue, veuillez rafraichir cette page !'
     },
-    meta: {
-        homeTitle: 'Zerofiltre.tech | Zerofiltre.tech',
-        homeDescription: 'Nous fournissons des services à valeur ajoutée avec une approche taillée pour chaque enterprise',
+    // meta: {
+    //     homeTitle: 'Zerofiltre.tech | Zerofiltre.tech',
 
-        articlesTitle: 'Tous les articles | Zerofiltre.tech',
-        articlesDescription: "Développez des Apps à valeur ajoutée pour votre business et pas que pour l'IT. Avec Zerofiltre, profitez d'offres taillées pour chaque entreprise. Industrialisez vos Apps. Maintenance, extension, supervision.",
+    //     homeDescription: 'La communauté d'experts de l'IT  qui changent des vies et des carrières grâce à la tech, tout ceci
+    // 	sans discrimination et sans filtres'
 
-        articleEntryEditTitle: "Editer l'article | Zerofiltre.tech",
-        articleEntryEditDescription: 'Editer votre article deja publie ou non avec une sauvegarde automatique assurée !',
+    //     articlesTitle: 'Tous les articles | Zerofiltre.tech',
+    //     articlesDescription: "Développez des Applications à haute valeur ajoutée pour votre business et pas que pour l'IT.
+    // 	Profitez d'offres taillées pour chaque entreprise. Industrialisation, Maintenance, extension, monitoring et supervision.",
 
-        accountConfirmationTitle: 'Confirmation du compte | Zerofiltre.tech',
-        accountConfirmationDescription: 'Confirmez votre compte pour rejoindre la communauté Zerofiltre',
+    //     articleEntryEditTitle: "Editer l'article | Zerofiltre.tech",
+    //     articleEntryEditDescription: 'Editer votre article dejà publié ou non avec une sauvegarde automatique assurée !',
 
-        adminDashboadTitle: 'Admin Tous les articles | Zerofiltre.tech',
-        adminDashboadDescription: "Espace d'administration des articles du blo Zerofiltre",
+    //     accountConfirmationTitle: 'Confirmation du compte | Zerofiltre.tech',
+    //     accountConfirmationDescription: 'Confirmez votre compte pour rejoindre la communauté Zerofiltre',
 
-        dashboadTitle: 'Mes articles | Zerofiltre.tech',
-        dashboadDescription: "Mon espace de gestion de mes article",
+    //     adminDashboadTitle: 'Admin Tous les articles | Zerofiltre.tech',
+    //     adminDashboadDescription: "Espace d'administration des articles du blog Zerofiltre",
 
-        loginTitle: 'Se connecter | Zerofiltre.tech',
-        loginDescription: 'Connexion à la plateforme Zerofiltre.tech',
+    //     dashboadTitle: 'Mes articles | Zerofiltre.tech',
+    //     dashboadDescription: "Mon espace de gestion de mes article",
 
-        signupTitle: "S'enregistrer | Zerofiltre.tech",
-        signupDescription: 'Rejoignez la plateforme Zerofiltre.tech',
+    //     loginTitle: 'Se connecter | Zerofiltre.tech',
+    //     loginDescription: 'Connexion à la plateforme Zerofiltre.tech',
 
-        passwordRenewalTite: 'Nouveau mot de passe | Zerofiltre.tech',
-        passwordRenewalDescription: 'Renouveller mon mot de passe sur la plateforme Zerofiltre.tech',
+    //     signupTitle: "S'enregistrer | Zerofiltre.tech",
+    //     signupDescription: 'Rejoignez une communauté d'experts qui changent des vies et des carrières grâce à la tech, et tout ceci
+    // 	sans discrimination et sans filtres.',
 
-        passwordResetTite: 'Reinitialisation du mot de passe | Zerofiltre.tech',
-        passwordResetDescription: 'Reinitialiser mon mot de passe sur la plateforme Zerofiltre.tech',
+    //     passwordRenewalTite: 'Nouveau mot de passe | Zerofiltre.tech',
+    //     passwordRenewalDescription: 'Renouveller mon mot de passe sur la plateforme Zerofiltre.tech',
 
-        profileTitle: 'Mon profil | Zerofiltre.tech',
-        profileDescription: 'Mon compte Zerofiltre.tech',
+    //     passwordResetTite: 'Reinitialisation du mot de passe | Zerofiltre.tech',
+    //     passwordResetDescription: 'Reinitialiser mon mot de passe sur la plateforme Zerofiltre.tech',
 
-        profileEditTitle: 'Modifier son profil | Zerofiltre.tech',
-        profileEditDescription: 'Modifiez votre profil sur Zerofiltre.tech',
+    //     profileTitle: 'Mon profil | Zerofiltre.tech',
+    //     profileDescription: 'Mon compte Zerofiltre.tech',
 
-        resendConfirmationAccountTitle: 'Renvoyer code de confirmation | Zerofiltre.tech',
-        resendConfirmationAccountDescription: 'Vous pouvez demander un nouveau lien de confirmation de compte sur la plateforme Zerofiltre.tech facilement',
-    }
+    //     profileEditTitle: 'Modifier son profil | Zerofiltre.tech',
+    //     profileEditDescription: 'Modifiez votre profil sur Zerofiltre.tech',
+
+    //     resendConfirmationAccountTitle: 'Renvoyer code de confirmation | Zerofiltre.tech',
+    //     resendConfirmationAccountDescription: 'Demandez un nouveau lien de confirmation de compte sur la plateforme Zerofiltre.tech facilement', homeTitle: 'Zerofiltre.tech | Zerofiltre.tech',
+
+    //     homeDescription: 'La communauté d'experts de l'IT  qui changent des vies et des carrières grâce à la tech, tout ceci
+    // 	sans discrimination et sans filtres'
+
+    //     articlesTitle: 'Tous les articles | Zerofiltre.tech',
+    //     articlesDescription: "Développez des Applications à haute valeur ajoutée pour votre business et pas que pour l'IT.
+    // 	Profitez d'offres taillées pour chaque entreprise. Industrialisation, Maintenance, extension, monitoring et supervision.",
+
+    //     articleEntryEditTitle: "Editer l'article | Zerofiltre.tech",
+    //     articleEntryEditDescription: 'Editer votre article dejà publié ou non avec une sauvegarde automatique assurée !',
+
+    //     accountConfirmationTitle: 'Confirmation du compte | Zerofiltre.tech',
+    //     accountConfirmationDescription: 'Confirmez votre compte pour rejoindre la communauté Zerofiltre',
+
+    //     adminDashboadTitle: 'Admin Tous les articles | Zerofiltre.tech',
+    //     adminDashboadDescription: "Espace d'administration des articles du blog Zerofiltre",
+
+    //     dashboadTitle: 'Mes articles | Zerofiltre.tech',
+    //     dashboadDescription: "Mon espace de gestion de mes article",
+
+    //     loginTitle: 'Se connecter | Zerofiltre.tech',
+    //     loginDescription: 'Connexion à la plateforme Zerofiltre.tech',
+
+    //     signupTitle: "S'enregistrer | Zerofiltre.tech",
+    //     signupDescription: 'Rejoignez une communauté d'experts qui changent des vies et des carrières grâce à la tech, et tout ceci
+    // 	sans discrimination et sans filtres.',
+
+    //     passwordRenewalTite: 'Nouveau mot de passe | Zerofiltre.tech',
+    //     passwordRenewalDescription: 'Renouveller mon mot de passe sur la plateforme Zerofiltre.tech',
+
+    //     passwordResetTite: 'Reinitialisation du mot de passe | Zerofiltre.tech',
+    //     passwordResetDescription: 'Reinitialiser mon mot de passe sur la plateforme Zerofiltre.tech',
+
+    //     profileTitle: 'Mon profil | Zerofiltre.tech',
+    //     profileDescription: 'Mon compte Zerofiltre.tech',
+
+    //     profileEditTitle: 'Modifier son profil | Zerofiltre.tech',
+    //     profileEditDescription: 'Modifiez votre profil sur Zerofiltre.tech',
+
+    //     resendConfirmationAccountTitle: 'Renvoyer code de confirmation | Zerofiltre.tech',
+    //     resendConfirmationAccountDescription: 'Demandez un nouveau lien de confirmation de compte sur la plateforme Zerofiltre.tech facilement',
+    // }
 }
