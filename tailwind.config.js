@@ -1,20 +1,5 @@
 module.exports = {
   content: ["./src/**/*.{html,ts,css}"],
-  daisyui: {
-    themes: [
-      {
-        zerofiltre: {
-          primary: "#15b2bc",
-          secondary: "#FFE5BD",
-          accent: "#fdbc5a",
-          neutral: "#3d4451",
-          "base-100": "#ffffff",
-        },
-      },
-      "dark",
-      "cupcake",
-    ],
-  },
   theme: {
     extend: {
       fontFamily: {
@@ -24,6 +9,7 @@ module.exports = {
       },
       colors: {
         primary: {
+          600: "#418FBC",
           500: "#15b2bc",
           300: "#00c2cb",
           100: "#f2feff",
@@ -64,6 +50,5 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/aspect-ratio'),
-    require("daisyui"),
   ],
 }
