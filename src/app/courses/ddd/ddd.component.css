@@ -45,13 +45,6 @@ p {
 }
 
 .green-divider.ovale {
-  --mask: linear-gradient(#000 0 0) top/100% calc(100% - 100px) no-repeat,
-    radial-gradient(circle farthest-side, #0000 98%, #000) 50%
-      calc(100% + 100px) / 185px 200px;
-  -webkit-mask: var(--mask);
-  mask: var(--mask);
-
-  @apply pb-44;
 }
 
 .green-divider p {
