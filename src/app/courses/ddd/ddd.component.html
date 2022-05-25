@@ -9,8 +9,8 @@
                 des besoins complexes</h2>
         </div>
 
-        <section class="why-section mt-12 lg:mt-20 site-container flex flex-col gap-5 lg:grid grid-cols-10">
-            <div class="why-text order-2 lg:order-none col-span-7">
+        <section class="why-section mt-12 lg:mt-20 site-container flex flex-col lg:flex-row gap-5">
+            <div class="why-text order-2 lg:order-none flex-1">
                 <h3>Pourquoi choisir les modèles du DDD pour développer un logiciel?</h3>
 
                 <p>Le but d’un logiciel est de satisfaire au maximum le besoin du client.</p>
@@ -34,9 +34,8 @@
                 </p>
             </div>
 
-            <div
-                class="why-image order-1 lg:order-none shadow-lg rounded-lg overflow-hidden col-span-3 aspect-w-5 aspect-h-3">
-                <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+            <div class="why-image order-1 lg:order-none overflow-hidden">
+                <app-image [classes]="'max-w-[428px]'" [sourceUrl]="whySectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
@@ -44,14 +43,14 @@
     </section>
 
     <section class="py-8 lg:py-14 bg-white learn-section">
-        <div class="site-container flex flex-col gap-5 lg:grid grid-cols-10">
-            <div class="learn-image lg:ml-10 shadow-lg rounded-lg overflow-hidden col-span-3 aspect-w-5 aspect-h-3">
-                <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+        <div class="site-container flex flex-col lg:flex-row gap-5">
+            <div class="learn-image lg:ml-10 overflow-hidden">
+                <app-image [classes]="'max-w-[360px]'" [sourceUrl]="learnSectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
 
-            <div class="learn-text col-span-7">
+            <div class="learn-text flex-1">
                 <h3>Apprenez le DDD par la pratique</h3>
 
                 <p>
@@ -73,8 +72,8 @@
     </section>
 
     <section class="py-8 lg:py-14 step-by-step-section">
-        <div class="site-container flex flex-col gap-5 lg:grid grid-cols-10">
-            <div class="step-by-step-text col-span-7">
+        <div class="site-container flex flex-col lg:flex-row items-center gap-5">
+            <div class="step-by-step-text flex-1">
                 <h3>Implémentez les méthodes du DDD étape par étapes</h3>
 
                 <p>
@@ -90,9 +89,8 @@
                 </p>
             </div>
 
-            <div
-                class="step-by-step-image hidden lg:block shadow-lg rounded-lg overflow-hidden col-span-3 aspect-w-5 aspect-h-3">
-                <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+            <div class="step-by-step-image hidden lg:block overflow-hidden">
+                <app-image [classes]="'max-w-[300px]'" [sourceUrl]="stepSectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
@@ -109,9 +107,9 @@
         </div>
     </div>
 
-    <section class="py-8 lg:py-14 bg-white practice-section">
-        <div class="site-container flex flex-col gap-5 lg:grid grid-cols-10">
-            <div class="step-by-step-text col-span-7">
+    <section class="py-8 lg:py-14 bg-white practice-section -mt-5">
+        <div class="site-container flex flex-col lg:flex-row items-center gap-5">
+            <div class="step-by-step-text flex-1">
                 <h3>Le DDD c’est aussi du code</h3>
 
                 <p>
@@ -125,9 +123,8 @@
                 </p>
             </div>
 
-            <div
-                class="practice-image hidden lg:block shadow-lg rounded-lg overflow-hidden col-span-3 aspect-w-5 aspect-h-3">
-                <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+            <div class="practice-image hidden lg:block overflow-hidden">
+                <app-image [classes]="'max-w-[300px]'" [sourceUrl]="practiceSectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
@@ -144,10 +141,10 @@
         </div>
     </div>
 
-    <section class="pt-16 pb-10 lg:pt-32 bg-[#525E74] master-class-section">
+    <section class="pt-16 pb-10 lg:pt-36 bg-[#525E74] master-class-section -mt-28">
         <div class="site-container">
-            <div class="flex flex-col gap-5 lg:grid grid-cols-10">
-                <div class="master-class-text col-span-7">
+            <div class="flex flex-col lg:flex-row items-start gap-5">
+                <div class="master-class-text flex-1">
                     <h3 class="master-class-title">Qu’allez-vous apprendre ?</h3>
 
                     <p>
@@ -158,8 +155,8 @@
                     </p>
                 </div>
 
-                <div class="master-class-image shadow-lg rounded-lg overflow-hidden col-span-3 aspect-w-5 aspect-h-3">
-                    <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+                <div class="master-class-image overflow-hidden">
+                    <app-image [classes]="'max-w-[300px]'" [sourceUrl]="masterSectionImage"
                         [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                     </app-image>
                 </div>
@@ -167,9 +164,9 @@
 
             <div class="course-lessons-grid mt-20 grid lg:grid-cols-6 gap-y-8 max-w-6xl">
 
-                <section class="lessons-group col-span-3 flex gap-5 flex-start">
-                    <div class="group-image shadow-lg rounded-lg overflow-hidden hidden lg:block h-16 w-16">
-                        <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+                <section class="lessons-group col-span-3 flex gap-4 flex-start">
+                    <div class="group-image overflow-hidden hidden lg:block h-16 w-16">
+                        <app-image [classes]="'object-cover'" [sourceUrl]="lessonGroupImage1"
                             [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                         </app-image>
                     </div>
@@ -183,9 +180,9 @@
                     </div>
                 </section>
 
-                <section class="lessons-group col-span-3 flex gap-5 flex-start">
-                    <div class="group-image shadow-lg rounded-lg overflow-hidden hidden lg:block h-16 w-16">
-                        <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+                <section class="lessons-group col-span-3 flex gap-4 flex-start">
+                    <div class="group-image overflow-hidden hidden lg:block h-16 w-16">
+                        <app-image [classes]="'object-cover'" [sourceUrl]="lessonGroupImage2"
                             [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                         </app-image>
                     </div>
@@ -205,9 +202,9 @@
                     </div>
                 </section>
 
-                <section class="lessons-group col-span-3 flex gap-5 flex-start">
-                    <div class="group-image shadow-lg rounded-lg overflow-hidden hidden lg:block h-16 w-16">
-                        <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+                <section class="lessons-group col-span-3 flex gap-4 flex-start">
+                    <div class="group-image overflow-hidden hidden lg:block h-16 w-16">
+                        <app-image [classes]="'object-cover'" [sourceUrl]="lessonGroupImage3"
                             [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                         </app-image>
                     </div>

@@ -7,7 +7,15 @@ import { SeoService } from 'src/app/services/seo.service';
   styleUrls: ['./ddd.component.css']
 })
 export class DddComponent implements OnInit, OnDestroy {
-  public coursesHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-workshop-2_MdBjzHzLo.jpg'
+  public whySectionImage = 'https://ik.imagekit.io/lfegvix1p/domain-bgg-off_rKGMAzNWa.png';
+  public learnSectionImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png';
+  public stepSectionImage = 'https://ik.imagekit.io/lfegvix1p/step-bg-off_tsTm1s3al.png';
+  public practiceSectionImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png';
+  public masterSectionImage = 'https://ik.imagekit.io/lfegvix1p/image3_ynuh5_peV.svg';
+
+  public lessonGroupImage1 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
+  public lessonGroupImage2 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
+  public lessonGroupImage3 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
 
   constructor(private seo: SeoService) { }
 
