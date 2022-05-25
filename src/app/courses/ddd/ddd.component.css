@@ -37,7 +37,7 @@ p {
 .green-divider.triangle {
   --mask: linear-gradient(#000 0 0) top/100% calc(100% - 25px) no-repeat,
     conic-gradient(from -70deg at bottom, #0000, #000 1deg 139deg, #0000 140deg)
-      bottom/137.37px 25px repeat-x;
+      bottom/60vw 25px repeat-x;
   -webkit-mask: var(--mask);
   mask: var(--mask);
 
