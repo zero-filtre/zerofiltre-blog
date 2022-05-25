@@ -1,0 +1,31 @@
+.text-secondary-600 {
+    color: #B77A18 !important;
+}
+
+
+.text-primary-600{
+    color: #00737A;
+}
+
+.text-primary-ligth{
+    color: #A7EAED;
+}
+
+
+
+.btn{
+    @apply flex items-center inline-block px-5 py-3 text-sm font-semibold text-white uppercase transition duration-200 ease-in-out rounded-md cursor-pointer
+}
+
+
+.btn-primary{
+    @apply bg-primary-500 hover:bg-primary-300
+}
+
+.btn-secondary{
+    background-color: #FFE5BD;
+}
+
+.btn-secondary:hover{
+    background-color: #fdbc5a;
+}

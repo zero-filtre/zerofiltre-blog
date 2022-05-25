@@ -14,6 +14,7 @@ import { LOCALE_ID } from '@angular/core';
 
 import { httpInterceptorProviders } from './services/http-interceptors';
 import { AuthInterceptor } from './services/http-interceptors/auth.interceptor';
+import { HomePage2Component } from './home-page2/home-page2.component';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -21,6 +22,7 @@ registerLocaleData(localeFr, 'fr');
   declarations: [
     AppComponent,
     HomePageComponent,
+    HomePage2Component,
   ],
   imports: [
     BrowserModule,

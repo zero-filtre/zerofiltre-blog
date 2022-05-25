@@ -9,6 +9,7 @@ module.exports = {
       },
       colors: {
         primary: {
+          600: "#418FBC",
           500: "#15b2bc",
           300: "#00c2cb",
           100: "#f2feff",
@@ -19,7 +20,10 @@ module.exports = {
           400: '#ffbd59'
         },
         error: "#f55f44",
-        grays: "#eef1f4",
+        grays: {
+          100: "#eef1f4",
+          600: "#4B5563"
+        },
         skin: {
           base: "#6b7280",
           text: "#374151",

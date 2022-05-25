@@ -12,4 +12,5 @@ export const environment = {
   stackOverflowRedirectURL: '',
   ovhAuthPassword: '',
   ovhAuthName: '',
+
 };
