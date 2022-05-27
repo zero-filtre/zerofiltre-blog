@@ -27,5 +27,22 @@
 }
 
 .btn-secondary:hover{
-    background-color: #fdbc5a;
+    background-color: #f5e8d4;
 }
+
+.from-primary-100{
+    --tw-gradient-from: #D4F2F4
+}
+
+.to-primary-100{
+    --tw-gradient-to: #D4F2F4
+}
+
+.to-primary-200{
+    --tw-gradient-to: #81E2E7
+}
+
+.from-primary-200{
+    --tw-gradient-from: #81E2E7
+}
+
