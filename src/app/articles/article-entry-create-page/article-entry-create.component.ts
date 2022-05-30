@@ -81,20 +81,6 @@ export class ArticleEntryCreateComponent implements OnInit {
     public navigate: NavigationService,
   ) {
 
-    const texteditor = <HTMLInputElement>document.getElementById('content');
-
-    texteditor.addEventListener('keydown', function (e) {
-      if (e.key == 'Tab') {
-        e.preventDefault();
-        let start = this.selectionStart || 0;
-        let end = this.selectionEnd || 0;
-
-        this.value = this.value.substring(0, start) +
-          "\t" + this.value.substring(end);
-
-        this.selectionStart = this.selectionEnd = start + 1;
-      }
-    });
 
   }
 
@@ -183,11 +169,16 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.typeInTags();
   }
 
-  public getValue(event: Event): string {
-    return (event.target as HTMLInputElement).value;
+  public getValue(event: KeyboardEvent): string {
+    return (event.target as HTMLInputElement).value || event.key;
   }
 
   public typeInEditor(content: string) {
+    if (content === "TAB") {
+
+      content="\t";
+
+    }
     this.EditorText$.next(content);
   }
 
