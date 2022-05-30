@@ -170,13 +170,22 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public getValue(event: KeyboardEvent): string {
-    return (event.target as HTMLInputElement).value || event.key;
+
+    event.preventDefault();
+
+    if (event.target) {
+      return (event.target as HTMLInputElement).value
+    }
+    else {
+      return event.key
+    }
+
   }
 
   public typeInEditor(content: string) {
     if (content === "TAB") {
 
-      content="\t";
+      content = "\t";
 
     }
     this.EditorText$.next(content);
