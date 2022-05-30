@@ -79,7 +79,24 @@ export class ArticleEntryCreateComponent implements OnInit {
     public authService: AuthService,
     private translate: TranslateService,
     public navigate: NavigationService,
-  ) { }
+  ) {
+
+    const texteditor = <HTMLInputElement>document.getElementById('content');
+
+    texteditor.addEventListener('keydown', function (e) {
+      if (e.key == 'Tab') {
+        e.preventDefault();
+        let start = this.selectionStart || 0;
+        let end = this.selectionEnd || 0;
+
+        this.value = this.value.substring(0, start) +
+          "\t" + this.value.substring(end);
+
+        this.selectionStart = this.selectionEnd = start + 1;
+      }
+    });
+
+  }
 
   public openTagsDropdown() {
     this.tagsDropdownOpened = true
