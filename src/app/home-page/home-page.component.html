@@ -1,9 +1,9 @@
 <main class="">
     <section class="overflow-hidden course -mt-24 text-skin-inverted bg-gradient-to-b from-white to-lime-50">
         <div class="site-container mx-auto mt-20 pt-10 sm:pb-5 lg:pb-10 xl:pb-14 lg:pt-9 xl:pt-20">
-            <div class="flex flex-col lg:grid grid-cols-6">
+            <div class="flex flex-col lg:grid grid-cols-12">
                 <div
-                    class="text-block order-2 lg:order-none col-span-4 xl:col-span-3 flex-none relative z-10 flex flex-col items-start lg:pt-10 max-w-screen-sm mx-auto lg:max-w-2xl lg:mx-0 lg:pr-20 mt-8 sm:mt-9 lg:mt-0">
+                    class="text-block border order-2 lg:order-none col-span-4 xl:col-span-8 flex-none relative z-10 flex flex-col items-start lg:pt-10 max-w-screen-sm mx-auto lg:max-w-2xl lg:mx-0 mt-8 sm:mt-9 lg:mt-0">
                     <h1
                         class="order-1 text-3xl sm:text-5xl sm:leading-none font-extrabold tracking-tight text-skin-base mb-4">
                         <span class="text-primary-500">Cours UI components,</span> crafted with Tailwind CSS
@@ -24,8 +24,8 @@
                 </div>
 
                 <div
-                    class="aside-block shadow-lg rounded-lg overflow-hidden order-1 lg:order-none col-span-2 xl:col-span-3 aspect-w-5 aspect-h-3">
-                    <app-image [classes]="'object-cover'" [sourceUrl]="coursesHeroImage"
+                    class="aside-block border shadow-lg rounded-lg overflow-hidden order-1 lg:order-none col-span-2 xl:col-span-4 aspect-w-5 aspect-h-3">
+                    <app-image [classes]="'object-contain w-auto ml-auto'" [sourceUrl]="coursesHeroImage"
                         [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                     </app-image>
                 </div>
