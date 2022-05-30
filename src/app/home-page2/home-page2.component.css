@@ -46,4 +46,7 @@
     --tw-gradient-from: #81E2E7;
 }
 
+.bg-gradient{
+    background-image: linear-gradient(white 12%, #81E2E7 49%, #15b2bc 71%);
+}
 
