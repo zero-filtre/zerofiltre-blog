@@ -107,3 +107,10 @@ export function getUrlLastElement(url: string): string {
   const last = urlArr.length - 1
   return urlArr[last];
 }
+
+export function getUrlHost(url: string): string {
+  if (!url) return '';
+
+  const urlArr = url.split('/')
+  return urlArr[2]
+}
