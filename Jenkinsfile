@@ -42,6 +42,7 @@ podTemplate(label: label, containers: [
                             env.COMMIT_AUTHOR_NAME = sh(script: "git --no-pager show -s --format='%an' ${env.GIT_COMMIT}", returnStdout: true)
                             env.COMMIT_AUTHOR_EMAIL = sh(script: "git --no-pager show -s --format='%ae' ${env.GIT_COMMIT}", returnStdout: true)
                         }
+                        deleteImageOnFail()
                         sendEmail()
                     }
                     deleteDir()
@@ -82,6 +83,15 @@ String getTag(String buildNumber, String branchName) {
 //         """
 //     }
 // }
+
+def deleteImageOnFail(){
+    container('docker') {
+        sh """
+                docker rmi ${api_image_tag}
+                echo "Image deleted"
+         """
+    }
+}
 
 def buildDockerImageAndPush(dockerUser, dockerPassword) {
     container('docker') {
