@@ -86,6 +86,7 @@ String getTag(String buildNumber, String branchName) {
 def buildDockerImageAndPush(dockerUser, dockerPassword) {
     container('docker') {
         sh """
+                docker rmi ${api_image_tag}
                 docker build -f .docker/Dockerfile -t ${api_image_tag} --pull --no-cache .
                 echo "Image build complete"
                 docker login -u $dockerUser -p $dockerPassword
