@@ -172,32 +172,38 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.typeInTags();
   }
 
-  public handleTab(event: Event) {
-
-    event.preventDefault();
-    this.changeDetector.detectChanges();
-    this.editor.nativeElement.focus();
+  public handleTab(event: Event, isUp: Boolean = false) {
 
 
-    (event.target as HTMLTextAreaElement).focus()
+
     if ((event as KeyboardEvent).key === "Tab") {
+
+      event.preventDefault();
 
 
       let start = (event.target as HTMLTextAreaElement).selectionStart;
       var end = (event.target as HTMLTextAreaElement).selectionEnd;
       (event.target as HTMLTextAreaElement).value = (event.target as HTMLTextAreaElement).value.substring(0, start) + '\t' + (event.target as HTMLTextAreaElement).value.substring(end);
       (event.target as HTMLTextAreaElement).selectionStart = (event.target as HTMLTextAreaElement).selectionEnd = start + 1;
-      (event.target as HTMLTextAreaElement).value += "    ";
 
       let value = (event.target as HTMLTextAreaElement).value;
 
-      event.preventDefault();
+     
       this.changeDetector.detectChanges();
       this.editor.nativeElement.focus();
 
       this.EditorText$.next(value);
     }
 
+    if ( (event as KeyboardEvent).key === "Tab" && isUp){
+
+      event.preventDefault();
+      this.changeDetector.detectChanges();
+      this.editor.nativeElement.focus();
+    }
+
+    let value = (event.target as HTMLTextAreaElement).value;
+    this.EditorText$.next(value);
 
   }
 
