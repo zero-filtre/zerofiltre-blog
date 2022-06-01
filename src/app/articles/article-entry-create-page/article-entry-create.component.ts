@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,6 +32,8 @@ export class ArticleEntryCreateComponent implements OnInit {
       this.tagsDropdownOpened = false
     }
   }
+
+  @ViewChild("editor") editor!: ElementRef;
 
   public file: File = {
     data: null,
@@ -79,6 +81,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     public authService: AuthService,
     private translate: TranslateService,
     public navigate: NavigationService,
+    private changeDetector: ChangeDetectorRef
   ) {
 
 
@@ -169,25 +172,67 @@ export class ArticleEntryCreateComponent implements OnInit {
     this.typeInTags();
   }
 
-  public getValue(event: KeyboardEvent): string {
+  public handleTab(event: Event) {
 
     event.preventDefault();
+    this.changeDetector.detectChanges();
+    this.editor.nativeElement.focus();
 
-    if (event.target) {
-      return (event.target as HTMLInputElement).value
+
+    (event.target as HTMLTextAreaElement).focus()
+    if ((event as KeyboardEvent).key === "Tab") {
+
+
+      let start = (event.target as HTMLTextAreaElement).selectionStart;
+      var end = (event.target as HTMLTextAreaElement).selectionEnd;
+      (event.target as HTMLTextAreaElement).value = (event.target as HTMLTextAreaElement).value.substring(0, start) + '\t' + (event.target as HTMLTextAreaElement).value.substring(end);
+      (event.target as HTMLTextAreaElement).selectionStart = (event.target as HTMLTextAreaElement).selectionEnd = start + 1;
+      (event.target as HTMLTextAreaElement).value += "    ";
+
+      let value = (event.target as HTMLTextAreaElement).value;
+
+      event.preventDefault();
+      this.changeDetector.detectChanges();
+      this.editor.nativeElement.focus();
+
+      this.EditorText$.next(value);
     }
-    else {
-      return event.key
+
+
+  }
+
+  public getValue(event: Event): string {
+
+    event.preventDefault();
+    
+
+
+    if ((event as KeyboardEvent).key === "Tab") {
+
+      
+      event.preventDefault();
+
+      let start = this.editor.nativeElement.selectionStart;
+      let end = this.editor.nativeElement.selectionEnd;
+
+   
+      this.editor.nativeElement.value=this.editor.nativeElement.value.substring(0, start) +
+      "\t" + this.editor.nativeElement.value.substring(end);
+
+      
+      this.changeDetector.detectChanges();
+      this.editor.nativeElement.focus()
+
+      
     }
+
+
+    return (event.target as HTMLTextAreaElement).value
+
 
   }
 
   public typeInEditor(content: string) {
-    if (content === "TAB") {
-
-      content = "\t";
-
-    }
     this.EditorText$.next(content);
   }
 

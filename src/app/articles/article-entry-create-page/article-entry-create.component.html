@@ -176,7 +176,7 @@
                             </div>
 
                             <div *ngIf="activeTab === 'editor'">
-                                <textarea (keyup)="typeInEditor(getValue($event))" (keydown)="typeInEditor(getValue($event))" formControlName="content"
+                                <textarea #editor  (keyup.Tab)="handleTab($event);" formControlName="content"
                                     id="content" required
                                     class="editor-textarea bg-white text-lg text-skin-base p-4 w-full min-h-screen"
                                     placeholder="{{ 'articleEntryEdit.articleContentPlaceholder' | translate }}">
