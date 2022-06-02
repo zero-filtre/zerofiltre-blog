@@ -30,7 +30,7 @@ RUN apt-get update && apt-get -y install gettext-base
 RUN npm install -g @angular/cli
 RUN npm install -f
 
-RUN envsubst < src/environments/environment.template.ts > src/environments/environment.ts
+RUN envsubst < ./src/environments/environment.template.ts > src/environments/environment.ts
 
 RUN ng build && ng run zerofiltre-blog:server
 
@@ -40,7 +40,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-COPY --from=builder /app/dist ./
+COPY --from=builder /app/dist/ ./
 
 EXPOSE 4000
 
