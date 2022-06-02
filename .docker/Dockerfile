@@ -33,6 +33,7 @@ RUN envsubst < src/environments/environment.template.ts > src/environments/envir
 RUN ng build && ng run zerofiltre-blog:server
 
 
+
 FROM node:16-alpine AS runner
 WORKDIR /app
 
