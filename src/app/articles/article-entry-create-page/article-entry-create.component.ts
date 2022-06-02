@@ -184,7 +184,7 @@ export class ArticleEntryCreateComponent implements OnInit {
       let start = (event.target as HTMLTextAreaElement).selectionStart;
       var end = (event.target as HTMLTextAreaElement).selectionEnd;
       (event.target as HTMLTextAreaElement).value = (event.target as HTMLTextAreaElement).value.substring(0, start) + '    ' + (event.target as HTMLTextAreaElement).value.substring(end);
-      (event.target as HTMLTextAreaElement).selectionStart = (event.target as HTMLTextAreaElement).selectionEnd = start + 1;
+      (event.target as HTMLTextAreaElement).selectionStart = (event.target as HTMLTextAreaElement).selectionEnd = start + 4;
 
       let value = (event.target as HTMLTextAreaElement).value;
 
