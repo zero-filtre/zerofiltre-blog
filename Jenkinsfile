@@ -89,7 +89,7 @@ def deleteImageOnFail(){
         def images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
 
         if(images){
-            sf("docker rmi $images")
+            sh("docker rmi $images")
         }
        
     }
@@ -102,7 +102,7 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
         def images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
 
         if(images){
-            sf("docker rmi $images")
+            sh("docker rmi $images")
         }
         
         sh '''
