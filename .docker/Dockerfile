@@ -21,7 +21,7 @@
 FROM node:latest AS builder
 
 WORKDIR /app
-COPY package.json ./
+COPY . .
 
 RUN apt-get update && apt-get -y install gettext-base
 
@@ -31,7 +31,6 @@ RUN npm install -f
 RUN envsubst < src/environments/environment.template.ts > src/environments/environment.ts
 
 RUN ng build && ng run zerofiltre-blog:server
-
 
 
 FROM node:16-alpine AS runner
