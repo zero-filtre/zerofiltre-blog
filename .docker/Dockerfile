@@ -33,6 +33,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+RUN envsubst < src/environments/environment.template.ts > src/environments/environment.ts
+
 RUN ng build && ng run zerofiltre-blog:server
 
 
