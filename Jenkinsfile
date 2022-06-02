@@ -107,6 +107,7 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
         
         sh("""
                 docker build -f .docker/Dockerfile -t ${api_image_tag} --pull --no-cache .
+                docker image prune --filter label=stage=builder
                 echo "Image build complete"
                 docker login -u $dockerUser -p $dockerPassword
                 docker push ${api_image_tag}
