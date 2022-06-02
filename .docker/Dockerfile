@@ -40,8 +40,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-COPY --from=builder /app/dist/zerofiltre-blog/browser ./
-COPY --from=builder /app/dist/zerofiltre-blog/server ./
+COPY --from=builder /app/dist/zerofiltre-blog ./
 
 EXPOSE 4000
 
