@@ -42,7 +42,7 @@ podTemplate(label: label, containers: [
                             env.COMMIT_AUTHOR_NAME = sh(script: "git --no-pager show -s --format='%an' ${env.GIT_COMMIT}", returnStdout: true)
                             env.COMMIT_AUTHOR_EMAIL = sh(script: "git --no-pager show -s --format='%ae' ${env.GIT_COMMIT}", returnStdout: true)
                         }
-                        deleteImageOnFail()
+                        // deleteImageOnFail()
                         sendEmail()
                     }
                     deleteDir()
@@ -101,9 +101,9 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
 
         def images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
 
-        if(images){
-            sh("docker rmi $images")
-        }
+        // if(images){
+        //     sh("docker rmi $images")
+        // }
         
         sh("""
                 docker build --rm -f .docker/Dockerfile -t ${api_image_tag} --pull --no-cache .
