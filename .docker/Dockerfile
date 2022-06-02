@@ -40,7 +40,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-COPY --from=builder /app/dist ./
+COPY --from=builder /app/dist/ ./
 
 EXPOSE 4000
 
