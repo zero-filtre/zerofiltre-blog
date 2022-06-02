@@ -87,7 +87,7 @@ String getTag(String buildNumber, String branchName) {
 def deleteImageOnFail(){
     container('docker') {
         sh """
-                docker rmi ${api_image_tag}
+                docker rmi $(docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q)
                 echo "Image deleted"
          """
     }
@@ -96,7 +96,7 @@ def deleteImageOnFail(){
 def buildDockerImageAndPush(dockerUser, dockerPassword) {
     container('docker') {
         sh """
-                docker rmi ${api_image_tag}
+                docker rmi $(docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q)
                 docker build -f .docker/Dockerfile -t ${api_image_tag} --pull --no-cache .
                 echo "Image build complete"
                 docker login -u $dockerUser -p $dockerPassword
