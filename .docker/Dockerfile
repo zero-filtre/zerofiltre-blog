@@ -18,7 +18,7 @@
 # ENTRYPOINT ["./entrypoint.sh"]
 
 
-FROM node:latest AS deps
+FROM node:latest AS builder
 
 WORKDIR /app
 COPY package.json ./
@@ -27,12 +27,6 @@ RUN apt-get update && apt-get -y install gettext-base
 
 RUN npm install -g @angular/cli
 RUN npm install -f
-
-
-FROM node:latest AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
 
 RUN envsubst < src/environments/environment.template.ts > src/environments/environment.ts
 
