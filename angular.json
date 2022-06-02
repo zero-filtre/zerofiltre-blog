@@ -45,7 +45,18 @@
               "node_modules/prismjs/components/prism-python.min.js",
               "node_modules/prismjs/components/prism-javascript.min.js",
               "node_modules/prismjs/components/prism-yaml.min.js",
-              "node_modules/prismjs/components/prism-docker.min.js"
+              "node_modules/prismjs/components/prism-docker.min.js",
+              "node_modules/prismjs/components/prism-php.min.js",
+              "node_modules/prismjs/components/prism-c.min.js",
+              "node_modules/prismjs/components/prism-cpp.min.js",
+              "node_modules/prismjs/components/prism-json.min.js",
+              "node_modules/prismjs/components/prism-markdown.min.js",
+              "node_modules/prismjs/components/prism-sql.min.js",
+              "node_modules/prismjs/components/prism-visual-basic.min.js",
+              "node_modules/prismjs/components/prism-makefile.min.js",
+              "node_modules/prismjs/components/prism-jsx.min.js",
+              "node_modules/prismjs/components/prism-go.min.js",
+              "node_modules/prismjs/components/prism-git.min.js"
             ]
           },
           "configurations": {
