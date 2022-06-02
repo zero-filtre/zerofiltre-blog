@@ -1,47 +1,47 @@
-# FROM node:latest
-# WORKDIR /app
-# COPY . .
-
-# RUN apt-get update 
-# RUN apt-get -y install gettext-base
-# RUN apt-get clean
-# RUN npm install -g @angular/cli
-# RUN npm install -f
-
-# ADD .docker/entrypoint.sh entrypoint-dos.sh 
-
-# RUN sed -e 's/\r$//' entrypoint-dos.sh > entrypoint.sh
-# RUN chmod 755 entrypoint.sh
-
-# EXPOSE 4000
-
-# ENTRYPOINT ["./entrypoint.sh"]
-
-
-
-FROM node:latest AS builder
-LABEL stage=builder
-
+FROM node:latest
 WORKDIR /app
 COPY . .
 
-RUN apt-get update && apt-get -y install gettext-base
-
+RUN apt-get update 
+RUN apt-get -y install gettext-base
+RUN apt-get clean
 RUN npm install -g @angular/cli
 RUN npm install -f
 
-RUN envsubst < ./src/environments/environment.template.ts > src/environments/environment.ts
+ADD .docker/entrypoint.sh entrypoint-dos.sh 
 
-RUN ng build && ng run zerofiltre-blog:server
-
-
-FROM node:16-alpine
-WORKDIR /app
-
-ENV NODE_ENV production
-
-COPY --from=builder /app/dist/ ./
+RUN sed -e 's/\r$//' entrypoint-dos.sh > entrypoint.sh
+RUN chmod 755 entrypoint.sh
 
 EXPOSE 4000
 
-ENTRYPOINT ["node", "zerofiltre-blog/server/main.js"]
+ENTRYPOINT ["./entrypoint.sh"]
+
+
+
+# FROM node:latest AS builder
+# LABEL stage=builder
+
+# WORKDIR /app
+# COPY . .
+
+# RUN apt-get update && apt-get -y install gettext-base
+
+# RUN npm install -g @angular/cli
+# RUN npm install -f
+
+# RUN envsubst < ./src/environments/environment.template.ts > src/environments/environment.ts
+
+# RUN ng build && ng run zerofiltre-blog:server
+
+
+# FROM node:16-alpine
+# WORKDIR /app
+
+# ENV NODE_ENV production
+
+# COPY --from=builder /app/dist ./dist
+
+# EXPOSE 4000
+
+# ENTRYPOINT ["node", "zerofiltre-blog/server/main.js"]
