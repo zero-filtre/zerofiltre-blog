@@ -100,14 +100,6 @@ spec:
             initialDelaySeconds:  100000
             periodSeconds: 10
 
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 4000
-            initialDelaySeconds: 100000
-            periodSeconds: 10
-
-
           
 ---
 apiVersion: v1
