@@ -105,27 +105,27 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
             sh("docker rmi $images")
         }
         
-        sh '''
+        sh("""
                 docker build -f .docker/Dockerfile -t ${api_image_tag} --pull --no-cache .
                 echo "Image build complete"
                 docker login -u $dockerUser -p $dockerPassword
                 docker push ${api_image_tag}
                 echo "Image push complete"
-         '''
+         """)
     }
 }
 
 def runApp() {
     container('kubectl') {
         dir('k8s') {
-            sh '''
+            sh """
                   ls -la
                   echo "Branch:" ${env.BRANCH_NAME}
                   echo "env:" ${env_name}
                   envsubst < microservices.yaml | kubectl apply -f -
-               '''
+               """
         }
-        sh '''
+        sh """
                 kubectl set image deployment/zerofiltretech-blog-front-${env_name} zerofiltretech-blog-front-${env_name}=${api_image_tag} -n zerofiltretech-${env_name}
                 kubectl get deploy zerofiltretech-blog-front-${env_name} -o yaml -n zerofiltretech-${env_name}
                 if ! kubectl rollout status -w deployment/zerofiltretech-blog-front-${env_name} -n zerofiltretech-${env_name}; then
@@ -133,7 +133,7 @@ def runApp() {
                     kubectl rollout status deployment/zerofiltretech-blog-front-${env_name} -n zerofiltretech-${env_name}
                     exit 1
                 fi
-            '''
+            """
     }
 }
 
