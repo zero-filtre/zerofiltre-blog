@@ -86,11 +86,12 @@ String getTag(String buildNumber, String branchName) {
 
 def deleteImageOnFail(){
     container('docker') {
-        images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
-        sh '''
-                docker rmi $images
-                echo "Image deleted"
-         '''
+        def images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
+
+        if(images){
+            sf("docker rmi $images")
+        }
+       
     }
 }
 
@@ -98,10 +99,13 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
 
     container('docker') {
 
-        images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
+        def images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
+
+        if(images){
+            sf("docker rmi $images")
+        }
         
         sh '''
-                docker rmi $images
                 docker build -f .docker/Dockerfile -t ${api_image_tag} --pull --no-cache .
                 echo "Image build complete"
                 docker login -u $dockerUser -p $dockerPassword
