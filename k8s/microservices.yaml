@@ -97,21 +97,16 @@ spec:
             httpGet:
               path: /
               port: 4000
-            initialDelaySeconds: 3
-            periodSeconds: 3
+            initialDelaySeconds:  100000
+            periodSeconds: 10
 
           readinessProbe:
             httpGet:
               path: /
               port: 4000
-            initialDelaySeconds: 3
-            periodSeconds: 3
+            initialDelaySeconds: 100000
+            periodSeconds: 10
 
-          startupProbe:
-            httpGet:
-              path: /
-              port: 4000
-            failureThreshold: 30
 
           
 ---
