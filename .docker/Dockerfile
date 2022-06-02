@@ -23,9 +23,10 @@ FROM node:latest AS deps
 WORKDIR /app
 COPY package.json ./
 
+RUN apt-get update && apt-get -y install gettext-base
+
 RUN npm install -g @angular/cli
 RUN npm install -f
-
 
 
 FROM node:latest AS builder
