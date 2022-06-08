@@ -142,7 +142,7 @@ img {
 }
 
 .cc-nb-main-container {
-  @apply !flex items-center !py-4 !px-4 max-w-[95rem] mx-auto overflow-hidden;
+  @apply !flex lg:items-center flex-col lg:flex-row gap-3 lg:gap-0 !py-4 !px-4 max-w-[95rem] mx-auto overflow-hidden;
 }
 
 .cc-nb-title-container .cc-nb-title {
@@ -157,7 +157,7 @@ img {
 }
 
 .cc-nb-buttons-container {
-  @apply !flex gap-2 !ml-2;
+  @apply !flex gap-2 lg:!ml-2;
 }
 
 .cc-nb-buttons-container .cc-nb-changep {
