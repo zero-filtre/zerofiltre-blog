@@ -32,7 +32,7 @@
             </div>
 
             <div class="why-image m-auto order-1 lg:order-none overflow-hidden">
-                <app-image [classes]="'max-w-[428px]'" [sourceUrl]="whySectionImage"
+                <app-image [classes]="'lg:max-w-[428px]'" [sourceUrl]="whySectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
@@ -42,7 +42,7 @@
     <section class="py-8 lg:py-14 bg-white learn-section">
         <div class="site-container flex flex-col lg:flex-row gap-5">
             <div class="learn-image m-auto lg:ml-10 overflow-hidden">
-                <app-image [classes]="'max-w-[360px]'" [sourceUrl]="learnSectionImage"
+                <app-image [classes]="'lg:max-w-[360px]'" [sourceUrl]="learnSectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
@@ -87,29 +87,31 @@
             </div>
 
             <div class="step-by-step-image m-auto hidden lg:block overflow-hidden">
-                <app-image [classes]="'max-w-[300px]'" [sourceUrl]="stepSectionImage"
+                <app-image [classes]="'lg:max-w-[300px]'" [sourceUrl]="stepSectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
         </div>
 
-        <div class="custom-shape-divider-top-1654600154">
+        <!-- <div class="custom-shape-divider-top-1654600154">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
                 preserveAspectRatio="none">
                 <path d="M1200 0L0 0 598.97 114.72 1200 0z" class="shape-fill"></path>
             </svg>
-        </div>
+        </div> -->
     </section>
 
-    <!-- <div class="green-divider triangle">
+    <div class="green-divider triangle">
         <div class="site-container">
-            <p>La pratique de codage réelle à travers un
+            <p class="!max-w-7xl !mx-auto !font-semibold !text-xl !text-center text-white">La pratique de codage réelle
+                à
+                travers un
                 projet du monde
                 réel est la meilleure façon d'apprendre un concept
                 complexe tel que le DDD
             </p>
         </div>
-    </div> -->
+    </div>
 
     <section class="py-8 lg:py-14 bg-white practice-section -mt-5">
         <div class="site-container flex flex-col lg:flex-row items-center gap-5">
@@ -128,7 +130,7 @@
             </div>
 
             <div class="practice-image m-auto hidden lg:block overflow-hidden">
-                <app-image [classes]="'max-w-[300px]'" [sourceUrl]="practiceSectionImage"
+                <app-image [classes]="'lg:max-w-[300px]'" [sourceUrl]="practiceSectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
@@ -137,16 +139,22 @@
 
 
     <section class="pt-16 pb-10 bg-[#525E74] master-class-section relative">
-        <div class="custom-shape-divider-top-1654551278">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+        <div class="custom-shape-divider-top-1654551278 relative">
+            <svg class="" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
                 preserveAspectRatio="none">
                 <path
                     d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
                     class="shape-fill"></path>
             </svg>
+            <p
+                class="max-w-7xl mx-auto text-white absolute rotate-180 top-[60%] md:top-[69%] inset-x-0 !font-semibold !text-xl !text-center">
+                Ce cours est axé sur les bases du DDD.
+                Celles-ci sont essentielles pour aller de l'avant, comprendre les aspects les plus avancés et
+                créer des systèmes plus complexes
+            </p>
         </div>
 
-        <div class="site-container pt-80">
+        <div class="site-container pt-60">
             <div class="flex flex-col lg:flex-row items-start gap-5">
                 <div class="master-class-text flex-1">
                     <h3 class="master-class-title">Qu’allez-vous apprendre ?</h3>
@@ -160,7 +168,7 @@
                 </div>
 
                 <div class="master-class-image m-auto overflow-hidden">
-                    <app-image [classes]="'max-w-[300px]'" [sourceUrl]="masterSectionImage"
+                    <app-image [classes]="'lg:max-w-[300px]'" [sourceUrl]="masterSectionImage"
                         [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                     </app-image>
                 </div>
