@@ -13,9 +13,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
     aspectRatio: "auto"
   }]
 
-  public blogHeroImage = 'https://ik.imagekit.io/lfegvix1p/blog-post_Fqr6Kp8fF.jpg?'
-  public coursesHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-workshop-2_MdBjzHzLo.jpg'
-  public servicesHeroImage = 'https://ik.imagekit.io/lfegvix1p/our-services_4MZFz7DlJ.jpg'
+  public blogHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png'
+  public coursesHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png'
+  public servicesHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png'
 
   constructor(
     private translate: TranslateService,
