@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { getUrlLastElement } from 'src/app/services/utilities.service';
+import { getUrlHost, getUrlLastElement } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-image',
@@ -23,19 +23,26 @@ export class ImageComponent implements OnInit {
 
   public imageKitSource(): string {
     const imageName = getUrlLastElement(this.sourceUrl);
+    const imageHost = getUrlHost(this.sourceUrl);
+
     const imageKitBaseUrl = `https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-800,ar-auto,dpr-auto,di-${this.defaultImage}/`
-    let scr;
+    const ovhHost = 'storage.gra.cloud.ovh.net';
+    let src;
 
-    if (imageName) {
-      scr = imageKitBaseUrl + imageName
+    if (this.sourceUrl) {
+      if (imageName !== null && imageHost === ovhHost) {
+        src = imageKitBaseUrl + imageName
 
-      this.srcsetValue = `https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 400w,
-      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 800w,
-      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-600,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1200w,
-      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-800,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1300w,
-      https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-1200,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1400w`;
+        this.srcsetValue = `https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 400w,
+        https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 800w,
+        https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-600,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1200w,
+        https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-800,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1300w,
+        https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-1200,ar-auto,dpr-auto,di-${this.defaultImage}/${imageName} 1400w`;
+      } else {
+        src = this.sourceUrl
+      }
     } else {
-      scr = imageKitBaseUrl + 'not_found_image.jpg';
+      src = imageKitBaseUrl + 'not_found_image.jpg';
 
       this.srcsetValue = `https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 400w,
       https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-400,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 800w,
@@ -43,7 +50,7 @@ export class ImageComponent implements OnInit {
       https://ik.imagekit.io/${this.imageKitAccountId}/tr:w-800,ar-auto,dpr-auto,di-${this.defaultImage}/not_found_image.jpg 1300w`;
     }
 
-    return scr
+    return src
   }
 
   ngOnInit(): void {
