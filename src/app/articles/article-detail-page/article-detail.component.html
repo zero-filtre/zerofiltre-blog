@@ -438,15 +438,11 @@
 
             <div class="sticky-content sticky top-28 order-4 lg:space-y-10">
                 <div
-                    class="sponsor-content lg:order-none h-52 flex items-center justify-center shadow-lg rounded-lg text-white bg-primary-500">
-                    <a routerLink="/courses/learn-ddd">
-                        <div class="space-y-2 px-4">
-                            <h1 class="font-semibold text-lg lg:text-xl">Mettez (enfin) en place le DDD</h1>
-                            <h2 class="text-skin-cardMuted">Apprenez et implémentez les modèles de conception simples
-                                pour satisfaire
-                                des besoins complexes
-                            </h2>
-                        </div>
+                    class="sponsor-content overflow-hidden max-w-md mx-auto lg:order-none shadow-lg rounded-lg text-white bg-primary-500">
+                    <a routerLink="/courses/learn-ddd" class="">
+                        <app-image [classes]="'object-cover'" [alt]="'apprener le DDD'"
+                            [sourceUrl]="dddSponsorContentSourceUrl">
+                        </app-image>
                     </a>
                 </div>
 
