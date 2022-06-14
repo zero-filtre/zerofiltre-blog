@@ -25,7 +25,8 @@ export const fr = {
         deleteArticleCautionText: 'Voulez-vous vraiment supprimer cet article ?'
     },
     home: {
-        explore: 'Explorer',
+        explore: 'Découvrez nos services',
+        portfolio: 'Voir le portfolio'
     },
     navbar: {
         about: 'À propos',
