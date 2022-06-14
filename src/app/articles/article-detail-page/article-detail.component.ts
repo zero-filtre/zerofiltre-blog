@@ -52,7 +52,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public maxNberOfReaction!: boolean;
   public hasHistory: boolean;
 
-  dddSponsorContentSourceUrl = 'https://ik.imagekit.io/lfegvix1p/Frame_DDD_mxMc3-SbQ.svg'
+  dddSponsorContentSourceUrl = 'https://ik.imagekit.io/lfegvix1p/tr:w-1200/Frame_DDD__2__sX1um3Ntq.svg'
 
   constructor(
     private dialogRef: MatDialog,

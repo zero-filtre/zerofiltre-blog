@@ -26,7 +26,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   TRENDING = 'trending';
   TAGS = 'tags';
 
-  dddSponsorContentSourceUrl = 'https://ik.imagekit.io/lfegvix1p/Frame_DDD_mxMc3-SbQ.svg'
+  // dddSponsorContentSourceUrl = 'assets/images/Frame DDD (2).svg';
+  dddSponsorContentSourceUrl = 'https://ik.imagekit.io/lfegvix1p/tr:w-1200/Frame_DDD__2__sX1um3Ntq.svg'
 
   public notEmptyArticles = true;
   public notScrolly = true;
