@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 import { SeoService } from '../services/seo.service';
 
 @Component({
@@ -12,6 +13,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
     width: 1200,
     aspectRatio: "auto"
   }]
+
+  readonly servicesUrl = environment.servicesUrl
+  readonly coursesUrl = environment.coursesUrl
 
   public blogHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png'
   public coursesHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png'
