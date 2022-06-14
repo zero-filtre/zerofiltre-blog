@@ -13,7 +13,7 @@ export class ImageComponent implements OnInit {
 
   imageKitAccountId = 'lfegvix1p'
 
-  defaultImage = 'blog-default-image_kttj78fSc.jpg'
+  defaultImage = 'Article_default_oz_Yb-VZj.svg'
   srcsetValue !: string;
 
   browserRunning!: boolean;
