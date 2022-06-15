@@ -28,7 +28,16 @@ export const fr = {
         exploreServices: 'Découvrez nos services',
         exploreCourses: 'Découvrez nos cours',
         exploreBlog: 'Découvrez notre blog',
-        seeBlog: 'Voir le blog'
+        seeBlog: 'Voir le blog',
+
+        coursesTitle: 'Montez en compétences sur des sujets techniques afin de devenir un profil désiré par des entreprises !',
+        coursesText: 'Des experts du métier vous accompangent sur des sujets techniques via des bootcamps et formations enregistrées.',
+
+        blogTitle: 'Montez en compétences sur des sujets techniques afin de devenir un profil désiré par des entreprises !',
+        blogText: 'Des experts du métier vous accompangent sur des sujets techniques via des bootcamps et formations enregistrées.',
+
+        servicesTitle: 'Montez en compétences sur des sujets techniques afin de devenir un profil désiré par des entreprises !',
+        servicesText: 'Des experts du métier vous accompangent sur des sujets techniques via des bootcamps et formations enregistrées.',
     },
     navbar: {
         about: 'À propos',

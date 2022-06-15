@@ -17,9 +17,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   readonly servicesUrl = environment.servicesUrl
   readonly coursesUrl = environment.coursesUrl
 
-  public blogHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png'
-  public coursesHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png'
-  public servicesHeroImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png'
+  public blogHeroImage = 'assets/images/communaute.svg'
+  public coursesHeroImage = 'assets/images/Cours.svg'
+  public servicesHeroImage = 'assets/images/services.svg'
 
   constructor(
     private translate: TranslateService,
