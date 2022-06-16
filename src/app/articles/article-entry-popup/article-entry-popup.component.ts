@@ -27,6 +27,8 @@ export class ArticleEntryPopupComponent implements OnInit {
   }
 
   handleArticleInit(): void {
+    if (!this.title.trim()) return;
+
     this.loading = true;
 
     this.articleService.createArticle(this.title).subscribe({
@@ -36,7 +38,7 @@ export class ArticleEntryPopupComponent implements OnInit {
         this.loading = false;
         this.dialogRef.close();
       },
-      error: (error: HttpErrorResponse) => {
+      error: (_error: HttpErrorResponse) => {
         this.loading = false;
         this.dialogRef.close();
       }
