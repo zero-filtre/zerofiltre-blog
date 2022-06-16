@@ -14,9 +14,10 @@ export class DddComponent implements OnInit, OnDestroy {
   public practiceSectionImage = 'https://ik.imagekit.io/lfegvix1p/Mesa-1_rxodYJjzE.svg';
   public masterSectionImage = 'https://ik.imagekit.io/lfegvix1p/inspiration__1__x-J3qi03A.svg';
 
-  public lessonGroupImage1 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
-  public lessonGroupImage2 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
-  public lessonGroupImage3 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
+  // public lessonGroupImage1 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
+  public lessonGroupImage1 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
+  public lessonGroupImage2 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
+  public lessonGroupImage3 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
 
   constructor(private seo: SeoService) { }
 
