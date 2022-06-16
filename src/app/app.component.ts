@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
 
     router.events.pipe(filter(event => event instanceof NavigationStart))
       .subscribe(({ url }: any) => {
-        if (url === '/user/profile') this.activePage = this.MY_ACCOUNT;
+        if (url === '/user/profile/') this.activePage = this.MY_ACCOUNT;
         if (url === '/user/dashboard') this.activePage = this.MY_ARTICLES;
         if (url === '/user/dashboard/admin') this.activePage = this.ALL_ARTICLES;
       });

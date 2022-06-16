@@ -10,6 +10,7 @@ import { User } from '../user.model';
 import { SeoService } from 'src/app/services/seo.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -18,15 +19,20 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ProfileComponent implements OnInit {
   public user!: User;
-  public user$!: Subscription;
+  public loggedUser!: User;
+  public userID!: string;
   public loading!: boolean;
+
+  public loggedUser$!: Subscription;
 
   constructor(
     private dialogRef: MatDialog,
     private seo: SeoService,
     public authService: AuthService,
     private messageService: MessageService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   public openPasswordEntryDialog(): void {
@@ -60,9 +66,30 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  public getUserProfile(userID: string) {
+    console.log('USER-ID: ', userID);
+    this.authService.findUserProfile(userID).subscribe({
+      next: (data: any) => {
+        this.user = data
+        console.log('USER PROFILE: ', data);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log('ERROR: ', error);
+        this.router.navigateByUrl('/articles');
+      }
+    })
+  }
+
   ngOnInit(): void {
-    this.user = this.authService?.currentUsr
-    this.user$ = this.authService.user$.subscribe()
+    this.loggedUser = this.authService?.currentUsr
+    this.loggedUser$ = this.authService.user$.subscribe()
+
+    this.route.paramMap.subscribe(
+      params => {
+        this.userID = params.get('userID')!;
+        this.getUserProfile(this.userID);
+      }
+    );
 
     this.seo.generateTags({
       title: this.translate.instant('meta.profileTitle'),
@@ -71,5 +98,4 @@ export class ProfileComponent implements OnInit {
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
   }
-
 }

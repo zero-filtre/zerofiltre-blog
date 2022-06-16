@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'social-auth', component: SocialAuthComponent, canActivate: [LoggedInAuthGuard] },
 
   {
-    path: 'profile',
+    path: 'profile/:userID',
     component: ProfileComponent,
     canActivate: [AuthGuard]
   },
