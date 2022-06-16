@@ -5,8 +5,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable, pipe, tap } from 'rxjs';
-import { Article } from '../articles/article.model';
+import { Observable, tap } from 'rxjs';
 import { ArticleService } from '../articles/article.service';
 import { MessageService } from '../services/message.service';
 import { AuthService } from './auth.service';

@@ -22,7 +22,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'profile/edit',
+    path: 'profile/:userID/edit',
     component: ProfileEntryEditComponent,
     canActivate: [AuthGuard]
   },
