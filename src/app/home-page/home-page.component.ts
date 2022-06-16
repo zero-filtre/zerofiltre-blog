@@ -17,7 +17,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   readonly servicesUrl = environment.servicesUrl
   readonly coursesUrl = environment.coursesUrl
 
-  public blogHeroImage = 'assets/images/communaute.svg'
+  public blogHeroImage = 'assets/images/community1.svg'
   public coursesHeroImage = 'assets/images/Cours.svg'
   public servicesHeroImage = 'assets/images/services.svg'
 
