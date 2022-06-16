@@ -67,11 +67,13 @@ export class ProfileComponent implements OnInit {
   }
 
   public getUserProfile(userID: string) {
-    console.log('USER-ID: ', userID);
     this.authService.findUserProfile(userID).subscribe({
       next: (data: any) => {
         this.user = data
-        console.log('USER PROFILE: ', data);
+
+        if (this.isConnectedUserProfile()) {
+          this.loggedUser$ = this.authService.user$.subscribe()
+        }
       },
       error: (error: HttpErrorResponse) => {
         console.log('ERROR: ', error);
@@ -80,9 +82,12 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  public isConnectedUserProfile(): boolean {
+    return this.loggedUser?.fullName == this.user?.fullName
+  }
+
   ngOnInit(): void {
     this.loggedUser = this.authService?.currentUsr
-    this.loggedUser$ = this.authService.user$.subscribe()
 
     this.route.paramMap.subscribe(
       params => {
