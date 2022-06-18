@@ -178,7 +178,7 @@
                             <div *ngIf="activeTab === 'editor'">
                                 <textarea #editor (keydown)="handleTab($event, false);" formControlName="content"
                                     id="content" required
-                                    class="editor-textarea bg-white text-lg text-skin-base p-4 w-full min-h-screen"
+                                    class="editor-textarea bg-white text-lg text-[#111] p-4 w-full min-h-screen"
                                     placeholder="{{ 'articleEntryEdit.articleContentPlaceholder' | translate }}">
                                 </textarea>
                             </div>
@@ -186,12 +186,12 @@
                             <div *ngIf="activeTab === 'preview'"
                                 class="markdown-preview-container bg-skin-bg w-full p-4">
                                 <markdown [data]="content?.value"
-                                    class="prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:text-primary-500 prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-text prose-code:font-normal prose-code:before:hidden prose-code:after:hidden">
+                                    class="prose max-w-none text-skin-art prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-red-500 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden">
                                 </markdown>
                             </div>
 
                             <div *ngIf="activeTab === 'help'"
-                                class="help-container bg-skin-card p-4 prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:text-primary-500 prose-headings:text-xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-skin-text prose-code:font-normal prose-code:before:hidden prose-code:after:hidden">
+                                class="help-container bg-skin-card p-4 prose max-w-none text-skin-art text-lg lg:text-xl prose-headings:font-extrabold prose-headings:text-skin-inverted prose-headings:text-2xl lg:prose-headings:text-3xl prose-a:text-primary-500 prose-code:bg-skin-link prose-code:p-1 prose-code:rounded-lg prose-code:text-red-500 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden">
                                 <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
                                 <p>
                                     {{'articleEntryEdit.helpSubTitle' | translate}}

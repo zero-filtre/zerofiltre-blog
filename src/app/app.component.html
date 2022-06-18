@@ -64,7 +64,7 @@
         </div>
 
         <div class="mt-2">
-          <a aria-labelledby="Link to about page" routerLink="/user/profile" (click)="drawer.close()"
+          <a aria-labelledby="Link to about page" routerLink="/user/profile/{{currentUsr.id}}" (click)="drawer.close()"
             class="block py-2 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <span>{{'navbar.myProfile' | translate}}</span>
           </a>

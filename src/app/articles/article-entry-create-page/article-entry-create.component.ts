@@ -89,8 +89,6 @@ export class ArticleEntryCreateComponent implements OnInit {
 
   public openTagsDropdown() {
     this.tagsDropdownOpened = true
-    console.log('CLICKED!!!')
-    console.log(this.tagsDropdownOpened)
   }
 
   public setActiveTab(tabName: string): void {
@@ -188,14 +186,14 @@ export class ArticleEntryCreateComponent implements OnInit {
 
       let value = (event.target as HTMLTextAreaElement).value;
 
-     
+
       this.changeDetector.detectChanges();
       this.editor.nativeElement.focus();
 
       this.EditorText$.next(value);
     }
 
-    if ( (event as KeyboardEvent).key === "Tab" && isUp){
+    if ((event as KeyboardEvent).key === "Tab" && isUp) {
 
       event.preventDefault();
       this.changeDetector.detectChanges();
@@ -210,26 +208,26 @@ export class ArticleEntryCreateComponent implements OnInit {
   public getValue(event: Event): string {
 
     event.preventDefault();
-    
+
 
 
     if ((event as KeyboardEvent).key === "Tab") {
 
-      
+
       event.preventDefault();
 
       let start = this.editor.nativeElement.selectionStart;
       let end = this.editor.nativeElement.selectionEnd;
 
-   
-      this.editor.nativeElement.value=this.editor.nativeElement.value.substring(0, start) +
-      "\t" + this.editor.nativeElement.value.substring(end);
 
-      
+      this.editor.nativeElement.value = this.editor.nativeElement.value.substring(0, start) +
+        "\t" + this.editor.nativeElement.value.substring(end);
+
+
       this.changeDetector.detectChanges();
       this.editor.nativeElement.focus()
 
-      
+
     }
 
 
