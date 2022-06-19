@@ -10,6 +10,7 @@ import { PasswordRenewalPageComponent } from './password-renewal-page/password-r
 import { ProfileEntryEditComponent } from './profile-entry-edit/profile-entry-edit.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SocialAuthComponent } from './social-auth/social-auth.component';
+import { UserResolver } from './user.resolver';
 
 const routes: Routes = [
   { path: 'passwordReset', component: PasswordRenewalPageComponent, canActivate: [LoggedInAuthGuard] },
@@ -19,6 +20,9 @@ const routes: Routes = [
   {
     path: 'profile/:userID',
     component: ProfileComponent,
+    resolve: {
+      user: UserResolver
+    },
     canActivate: [AuthGuard]
   },
   {

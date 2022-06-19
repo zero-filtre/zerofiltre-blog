@@ -8,9 +8,9 @@ import { PasswordUpdatePopupComponent } from '../password-update-popup/password-
 import { ProfileImagePopupComponent } from '../profile-image-popup/profile-image-popup.component';
 import { User } from '../user.model';
 import { SeoService } from 'src/app/services/seo.service';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
   public loading!: boolean;
 
   public loggedUser$!: Subscription;
+  public user$!: Observable<User>;
 
   constructor(
     private dialogRef: MatDialog,
@@ -32,7 +33,6 @@ export class ProfileComponent implements OnInit {
     private messageService: MessageService,
     private translate: TranslateService,
     private route: ActivatedRoute,
-    private router: Router
   ) { }
 
   public openPasswordEntryDialog(): void {
@@ -66,21 +66,21 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  public getUserProfile(userID: string) {
-    this.authService.findUserProfile(userID).subscribe({
-      next: (data: any) => {
-        this.user = data
+  // public getUserProfile(userID: string) {
+  //   this.authService.findUserProfile(userID).subscribe({
+  //     next: (data: any) => {
+  //       this.user = data
 
-        if (this.isConnectedUserProfile()) {
-          this.loggedUser$ = this.authService.user$.subscribe()
-        }
-      },
-      error: (error: HttpErrorResponse) => {
-        console.log('ERROR: ', error);
-        this.router.navigateByUrl('/articles');
-      }
-    })
-  }
+  //       if (this.isConnectedUserProfile()) {
+  //         this.loggedUser$ = this.authService.user$.subscribe()
+  //       }
+  //     },
+  //     error: (error: HttpErrorResponse) => {
+  //       console.log('ERROR: ', error);
+  //       this.router.navigateByUrl('/articles');
+  //     }
+  //   })
+  // }
 
   public isConnectedUserProfile(): boolean {
     return this.loggedUser?.fullName == this.user?.fullName
@@ -89,12 +89,16 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.loggedUser = this.authService?.currentUsr
 
-    this.route.paramMap.subscribe(
-      params => {
-        this.userID = params.get('userID')!;
-        this.getUserProfile(this.userID);
-      }
-    );
+    // this.route.paramMap.subscribe(
+    //   params => {
+    //     this.userID = params.get('userID')!;
+    //     this.getUserProfile(this.userID);
+    //   }
+    // );
+
+    this.user$ = this.route.data.pipe(
+      map(data => data.user)
+    )
 
     this.seo.generateTags({
       title: this.translate.instant('meta.profileTitle'),

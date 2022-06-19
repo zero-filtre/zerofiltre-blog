@@ -55,13 +55,13 @@
         </div>
     </nav>
 
-    <div class="profile-container max-w-xl mx-auto mt-10 sm:mt-20">
+    <div *ngIf="user$ | async as user" class="profile-container max-w-xl mx-auto mt-10 sm:mt-20">
         <div class="profile-header flex items-center justify-between">
             <div class="header-infos flex items-center gap-4">
                 <div
                     class="image-wrapper relative border border-skin-bgMuted rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
-                    <app-image *ngIf="user?.profilePicture" [classes]="'w-full h-full object-cover rounded-full'"
-                        [sourceUrl]="user?.profilePicture!" [alt]="user?.fullName!">
+                    <app-image [classes]="'w-full h-full object-cover rounded-full'" [sourceUrl]="user?.profilePicture!"
+                        [alt]="user?.fullName!">
                     </app-image>
 
                     <ng-container *ngIf="!user?.profilePicture">
