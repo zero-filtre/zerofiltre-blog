@@ -3,7 +3,7 @@ import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
-import { calcReadingTime, formatDate } from 'src/app/services/utilities.service';
+import { calcReadingTime, capitalizeString, formatDate } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
@@ -195,6 +195,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         hasHistory: this.hasHistory
       }
     });
+  }
+
+  public capitalize(str: string): string {
+    return capitalizeString(str);
   }
 
   ngOnInit(): void {

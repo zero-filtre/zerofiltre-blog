@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { calcReadingTime, nFormatter } from 'src/app/services/utilities.service';
+import { calcReadingTime, capitalizeString, nFormatter } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -225,6 +225,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     return nFormatter(totalReactions)
   }
 
+  public capitalize(str: string): string {
+    return capitalizeString(str);
+  }
+
 
   ngOnInit(): void {
 
@@ -243,6 +247,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
           if (!this.status) {
             this.activePage ||= this.RECENT;
+            console.log('ACTIVE: ', this.activePage);
             return this.fetchRecentArticles();
           }
 

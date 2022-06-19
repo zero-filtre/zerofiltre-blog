@@ -254,6 +254,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public saveArticle() {
     this.loading = true;
     this.isSaving = true;
+
     this.articleService.updateToSave(this.form.value).pipe(
     ).subscribe({
       next: (_response: Article) => {
@@ -271,6 +272,7 @@ export class ArticleEntryCreateComponent implements OnInit {
   public publishArticle() {
     this.loading = true;
     this.isPublishing = true;
+
     this.articleService.updateToPublish(this.form.value).pipe(
       tap(() => this.router.navigateByUrl(`articles/${this.articleId}`))
     ).subscribe({

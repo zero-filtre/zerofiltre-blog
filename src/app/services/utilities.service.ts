@@ -114,3 +114,7 @@ export function getUrlHost(url: string): string {
   const urlArr = url.split('/')
   return urlArr[2]
 }
+
+export function capitalizeString(str: string): string {
+  return str.trim().toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
+}
