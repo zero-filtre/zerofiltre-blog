@@ -42,7 +42,8 @@ export class AdminDashboardComponent implements OnInit {
   public activePage: string = this.PUBLISHED;
   public mainPage = true;
 
-  public subscription$!: Subscription;
+  subscription$!: Subscription;
+  status!: string;
 
   constructor(
     private seo: SeoService,
@@ -74,19 +75,16 @@ export class AdminDashboardComponent implements OnInit {
     if (tab === this.PUBLISHED) {
       this.activePage = this.PUBLISHED;
       this.router.navigateByUrl('/user/dashboard/admin');
-      this.fetchAllArticlesAsAdmin(this.PUBLISHED);
     }
 
     if (tab === this.DRAFT) {
       this.activePage = this.DRAFT;
       this.router.navigateByUrl(`/user/dashboard/admin?sortBy=${tab}`);
-      this.fetchAllArticlesAsAdmin(this.DRAFT);
     }
 
     if (tab === this.IN_REVIEW) {
       this.activePage = this.IN_REVIEW;
       this.router.navigateByUrl(`/user/dashboard/admin?sortBy=${tab}`);
-      this.fetchAllArticlesAsAdmin(this.IN_REVIEW);
     }
 
     this.scrollyPageNumber = 0;
@@ -94,7 +92,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   public onScroll() {
-    console.log('Normal Scroll...!');
 
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
       console.log('HasMore Scroll...!');
@@ -148,14 +145,14 @@ export class AdminDashboardComponent implements OnInit {
 
   private sortArticle(list: Article[]): Article[] {
 
-    
+
     return list
-      ?.sort((a: any, b: any) =>{ 
-        if(a.status != "PUBLISHED"){
-            return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+      ?.sort((a: any, b: any) => {
+        if (a.status != "PUBLISHED") {
+          return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
         }
         return new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf()
-        })
+      })
   }
 
 
@@ -197,16 +194,26 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.router.navigateByUrl('/user/dashboard/admin');
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.route.queryParamMap.subscribe(
+        query => {
+          this.status = query.get('sortBy')!;
+          if (!this.status) {
+            this.activePage = this.PUBLISHED;
+            return this.fetchAllArticlesAsAdmin(this.PUBLISHED);
+          }
+
+          this.activePage = this.status;
+          this.fetchAllArticlesAsAdmin(this.status);
+        }
+      );
+    }
 
     this.seo.generateTags({
       title: this.translate.instant('meta.adminDashboadTitle'),
       description: this.translate.instant('meta.adminDashboadDescription'),
     });
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.fetchAllArticlesAsAdmin(this.PUBLISHED);
-    }
   }
 
   ngOnDestroy(): void {

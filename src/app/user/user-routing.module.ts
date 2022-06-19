@@ -17,12 +17,12 @@ const routes: Routes = [
   { path: 'social-auth', component: SocialAuthComponent, canActivate: [LoggedInAuthGuard] },
 
   {
-    path: 'profile',
+    path: 'profile/:userID',
     component: ProfileComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'profile/edit',
+    path: 'profile/:userID/edit',
     component: ProfileEntryEditComponent,
     canActivate: [AuthGuard]
   },

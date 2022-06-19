@@ -7,15 +7,17 @@ import { SeoService } from 'src/app/services/seo.service';
   styleUrls: ['./ddd.component.css']
 })
 export class DddComponent implements OnInit, OnDestroy {
-  public whySectionImage = 'https://ik.imagekit.io/lfegvix1p/domain-bgg-off_rKGMAzNWa.png';
-  public learnSectionImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png';
-  public stepSectionImage = 'https://ik.imagekit.io/lfegvix1p/step-bg-off_tsTm1s3al.png';
-  public practiceSectionImage = 'https://ik.imagekit.io/lfegvix1p/course-bg-off_r4Pa4_TT_.png';
-  public masterSectionImage = 'https://ik.imagekit.io/lfegvix1p/image3_ynuh5_peV.svg';
+  // public whySectionImage = 'https://ik.imagekit.io/lfegvix1p/domain-bgg-off_rKGMAzNWa.png';
+  public whySectionImage = 'https://ik.imagekit.io/lfegvix1p/inspiration__1__x-J3qi03A.svg';
+  public learnSectionImage = 'https://ik.imagekit.io/lfegvix1p/Meza-3_a9TUXnmba.svg';
+  public stepSectionImage = 'https://ik.imagekit.io/lfegvix1p/a_jWE-ysuJM.svg';
+  public practiceSectionImage = 'https://ik.imagekit.io/lfegvix1p/Mesa-1_rxodYJjzE.svg';
+  public masterSectionImage = 'https://ik.imagekit.io/lfegvix1p/inspiration__1__x-J3qi03A.svg';
 
-  public lessonGroupImage1 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
-  public lessonGroupImage2 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
-  public lessonGroupImage3 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
+  // public lessonGroupImage1 = 'https://ik.imagekit.io/lfegvix1p/ddd-icon-bg-off_uYBd7RKWP.png';
+  public lessonGroupImage1 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
+  public lessonGroupImage2 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
+  public lessonGroupImage3 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
 
   constructor(private seo: SeoService) { }
 

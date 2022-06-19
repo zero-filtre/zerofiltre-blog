@@ -110,7 +110,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         },
         error: (_error: HttpErrorResponse) => {
           this.loading = false;
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/articles');
         }
       })
   }

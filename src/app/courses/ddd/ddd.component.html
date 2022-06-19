@@ -6,8 +6,9 @@
                 des besoins complexes</h2>
         </div>
 
-        <section class="why-section mt-12 lg:mt-20 site-container flex flex-col lg:flex-row gap-5">
-            <div class="why-text order-2 lg:order-none flex-1">
+        <section class="why-section mt-12 lg:mt-20 site-container flex flex-col lg:flex-row justify-between">
+            <div
+                class="why-text order-2 lg:order-none lg:basis-1/2 xl:basis-2/3 text-center lg:text-left flex flex-col lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pr-4">
                 <h3>Pourquoi choisir les modèles du DDD pour développer un logiciel?</h3>
 
                 <p>Le but d’un logiciel est de satisfaire au maximum le besoin du client.</p>
@@ -31,8 +32,9 @@
                 </p>
             </div>
 
-            <div class="why-image m-auto order-1 lg:order-none overflow-hidden">
-                <app-image [classes]="'lg:max-w-[428px]'" [sourceUrl]="whySectionImage"
+            <div class="why-image m-auto order-1 lg:order-none lg:basis-1/2 xl:basis-1/3">
+                <app-image [classes]="'m-auto object-contain w-auto sm:max-w-[50%] lg:max-w-full'"
+                    [sourceUrl]="whySectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
@@ -40,14 +42,16 @@
     </section>
 
     <section class="py-8 lg:py-14 bg-white learn-section">
-        <div class="site-container flex flex-col lg:flex-row gap-5">
-            <div class="learn-image m-auto lg:ml-10 overflow-hidden">
-                <app-image [classes]="'lg:max-w-[360px]'" [sourceUrl]="learnSectionImage"
+        <div class="site-container flex flex-col lg:flex-row justify-between">
+            <div class="learn-image lg:basis-1/2 xl:basis-1/3">
+                <app-image [classes]="'m-auto object-contain w-auto sm:max-w-[50%] lg:max-w-full'"
+                    [sourceUrl]="learnSectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
 
-            <div class="learn-text flex-1">
+            <div
+                class="learn-text lg:basis-1/2 xl:basis-2/3 text-center lg:text-left flex flex-col lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pl-4">
                 <h3>Apprenez le DDD par la pratique</h3>
 
                 <p>
@@ -69,8 +73,9 @@
     </section>
 
     <section class="py-8 lg:py-14 step-by-step-section relative">
-        <div class="site-container flex flex-col lg:flex-row items-center gap-5">
-            <div class="step-by-step-text flex-1">
+        <div class="site-container flex flex-col lg:flex-row justify-between">
+            <div
+                class="step-by-step-text lg:basis-1/2 xl:basis-2/3 text-center lg:text-left flex flex-col lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pr-4">
                 <h3>Implémentez les méthodes du DDD étape par étapes</h3>
 
                 <p>
@@ -86,8 +91,9 @@
                 </p>
             </div>
 
-            <div class="step-by-step-image m-auto hidden lg:block overflow-hidden">
-                <app-image [classes]="'lg:max-w-[300px]'" [sourceUrl]="stepSectionImage"
+            <div class="step-by-step-image hidden lg:block lg:basis-1/2 xl:basis-1/3">
+                <app-image [classes]="'m-auto object-contain w-auto sm:max-w-[50%] lg:max-w-[350px]'"
+                    [sourceUrl]="stepSectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
@@ -114,8 +120,9 @@
     </div>
 
     <section class="py-8 lg:py-14 bg-white practice-section -mt-5">
-        <div class="site-container flex flex-col lg:flex-row items-center gap-5">
-            <div class="step-by-step-text flex-1">
+        <div class="site-container flex flex-col lg:flex-row justify-between">
+            <div
+                class="step-by-step-text lg:basis-1/2 xl:basis-2/3 text-center lg:text-left flex flex-col lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pr-4">
                 <h3>Le DDD c’est aussi du code</h3>
 
                 <p>
@@ -129,8 +136,9 @@
                 </p>
             </div>
 
-            <div class="practice-image m-auto hidden lg:block overflow-hidden">
-                <app-image [classes]="'lg:max-w-[300px]'" [sourceUrl]="practiceSectionImage"
+            <div class="practice-image m-auto hidden lg:block lg:basis-1/2 xl:basis-1/3">
+                <app-image [classes]="'m-auto object-contain w-auto sm:max-w-[50%] lg:max-w-[250px]'"
+                    [sourceUrl]="practiceSectionImage"
                     [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                 </app-image>
             </div>
@@ -138,7 +146,7 @@
     </section>
 
 
-    <section class="pt-16 pb-10 bg-[#525E74] master-class-section relative">
+    <section class="pt-16 pb-10 bg-grays-600 master-class-section relative">
         <div class="custom-shape-divider-top-1654551278 relative">
             <svg class="" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
                 preserveAspectRatio="none">
@@ -155,8 +163,9 @@
         </div>
 
         <div class="site-container pt-60">
-            <div class="flex flex-col lg:flex-row items-start gap-5">
-                <div class="master-class-text flex-1">
+            <div class="flex flex-col lg:flex-row justify-between">
+                <div
+                    class="master-class-text lg:basis-1/2 xl:basis-2/3 text-center lg:text-left flex flex-col lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pr-4">
                     <h3 class="master-class-title">Qu’allez-vous apprendre ?</h3>
 
                     <p>
@@ -167,22 +176,23 @@
                     </p>
                 </div>
 
-                <div class="master-class-image m-auto overflow-hidden">
-                    <app-image [classes]="'lg:max-w-[300px]'" [sourceUrl]="masterSectionImage"
+                <div class="master-class-image m-auto lg:basis-1/2 xl:basis-1/3 mt-12 lg:mt-0">
+                    <app-image [classes]="'m-auto object-contain w-auto max-w-[75%] sm:max-w-[50%] lg:max-w-[250px]'"
+                        [sourceUrl]="masterSectionImage"
                         [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                     </app-image>
                 </div>
             </div>
 
-            <div class="course-lessons-grid mt-20 grid lg:grid-cols-6 gap-y-8 max-w-6xl">
+            <div class="course-lessons-grid mt-12 lg:mt-20 grid lg:grid-cols-6 gap-y-8 max-w-6xl">
 
-                <section class="lessons-group col-span-3 flex gap-4 flex-start">
+                <section class="lessons-group col-span-3 flex gap-2 flex-start">
                     <div class="group-image overflow-hidden hidden lg:block h-16 w-16">
                         <app-image [classes]="'object-cover'" [sourceUrl]="lessonGroupImage1"
                             [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                         </app-image>
                     </div>
-                    <div class="group-text flex-1">
+                    <div class="group-text pt-1 flex-1">
                         <h3 class="lesson-group-title">1. Bien démarrer avec le Domain-Driven Design (DDD)</h3>
                         <h4 class="nber-of-lessons">2 Leçons</h4>
                         <ol class="group-lessons-list">
@@ -192,13 +202,13 @@
                     </div>
                 </section>
 
-                <section class="lessons-group col-span-3 flex gap-4 flex-start">
+                <section class="lessons-group col-span-3 flex gap-2 flex-start">
                     <div class="group-image overflow-hidden hidden lg:block h-16 w-16">
                         <app-image [classes]="'object-cover'" [sourceUrl]="lessonGroupImage2"
                             [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                         </app-image>
                     </div>
-                    <div class="group-text flex-1">
+                    <div class="group-text pt-1 flex-1">
                         <h3 class="lesson-group-title">2. Utilisez les patterns stratégiques du DDD pour distiller le
                             besoin métier</h3>
                         <h4 class="nber-of-lessons">6 Leçons</h4>
@@ -214,13 +224,13 @@
                     </div>
                 </section>
 
-                <section class="lessons-group col-span-3 flex gap-4 flex-start">
+                <section class="lessons-group col-span-3 flex gap-2 flex-start">
                     <div class="group-image overflow-hidden hidden lg:block h-16 w-16">
                         <app-image [classes]="'object-cover'" [sourceUrl]="lessonGroupImage3"
                             [alt]="'atelier de cours de codage informatique java html en salle de classe'">
                         </app-image>
                     </div>
-                    <div class="group-text flex-1">
+                    <div class="group-text pt-1 flex-1">
                         <h3 class="lesson-group-title">
                             3. Mettez en pratique les modèles de conception tactiques du DDD
                         </h3>

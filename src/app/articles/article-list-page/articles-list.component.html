@@ -140,7 +140,8 @@
 
                                         <div class="author-text ml-3">
                                             <p class="text-sm font-semibold text-skin-inverted">
-                                                <a aria-labelledby="Link to about page" href="#"
+                                                <a aria-labelledby="Link to about page"
+                                                    routerLink="/user/profile/{{article?.author?.id}}"
                                                     class="hover:underline">
                                                     {{article?.author?.fullName}}
                                                 </a>
