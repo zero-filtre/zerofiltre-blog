@@ -10,6 +10,7 @@ import { NavigationService } from 'src/app/services/navigation.service';
 import { SeoService } from 'src/app/services/seo.service';
 import {
   calcReadingTime,
+  capitalizeString,
   nFormatter,
 } from 'src/app/services/utilities.service';
 import { AuthService } from '../auth.service';
@@ -178,6 +179,10 @@ export class DashboardComponent implements OnInit {
 
   public nFormater(totalReactions: number): string {
     return nFormatter(totalReactions);
+  }
+
+  public capitalize(str: string): string {
+    return capitalizeString(str);
   }
 
   ngOnInit(): void {
