@@ -49,6 +49,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public tags$!: Subscription;
   public articles$!: Subscription;
+  status!: string;
+  tag!: string;
 
   constructor(
     private seo: SeoService,
@@ -74,32 +76,37 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public fetchListOfTags(): void {
     this.loading = true;
-    this.tags$ = this.articleService.getListOfTags().subscribe({
-      next: (response: Tag[]) => {
-        this.tagList = response
-        this.loading = false;
-      },
-      error: (_error: HttpErrorResponse) => {
-        this.loading = false;
-      }
-    })
+    this.tags$ = this.articleService
+      .getListOfTags()
+      .subscribe({
+        next: (response: Tag[]) => {
+          this.tagList = response
+          this.loading = false;
+        },
+        error: (_error: HttpErrorResponse) => {
+          this.loading = false;
+        }
+      })
   }
 
   public fetchRecentArticles(): void {
     this.loading = true;
-    this.articles$ = this.articleService.findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
+    this.articles$ = this.articleService
+      .findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchPopularArticles(): void {
     this.loading = true;
-    this.articles$ = this.articleService.findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
+    this.articles$ = this.articleService
+      .findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchArticlesByTag(tagName: string): void {
     this.loading = true;
-    this.articles$ = this.articleService.findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName)
+    this.articles$ = this.articleService
+      .findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName)
       .subscribe(this.handleFetchedArticles)
   }
 
@@ -110,24 +117,20 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public sortBy(trendName: string): void {
+    // this.articles = [];
+
     if (trendName === this.RECENT) {
-      this.articles = [];
       this.activePage = this.RECENT;
-      this.fetchRecentArticles();
       this.router.navigateByUrl('/articles');
     }
 
     if (trendName === this.POPULAR) {
-      this.articles = [];
       this.activePage = this.POPULAR
-      this.fetchPopularArticles();
       this.router.navigateByUrl(`/articles?sortBy=${trendName}`);
     }
 
     if (trendName === this.TRENDING) {
-      this.articles = [];
       this.activePage = this.TRENDING
-      this.fetchRecentArticles();
       this.router.navigateByUrl('/articles');
     }
 
@@ -145,9 +148,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public sortByTag(tagName: any): void {
     this.openedTagsDropdown = false;
-    this.articles = [];
 
-    this.fetchArticlesByTag(tagName);
     this.router.navigateByUrl(`/articles?tag=${tagName}`)
 
     this.scrollyPageNumber = 0;
@@ -155,10 +156,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   public onScroll() {
-    console.log('Normal Scroll...!')
 
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
-      console.log('HasMore Scroll...!')
 
       this.loadingMore = true;
       this.notScrolly = false;
@@ -228,19 +227,39 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.fetchListOfTags()
+
+      this.route.queryParamMap.subscribe(
+        query => {
+          this.status = query.get('sortBy')!;
+          this.tag = query.get('tag')!;
+
+          if (this.tag) {
+            // this.activePage = this.TAGS;
+            return this.fetchArticlesByTag(this.tag);
+          }
+
+          if (!this.status) {
+            this.activePage ||= this.RECENT;
+            return this.fetchRecentArticles();
+          }
+
+          if (this.status == this.POPULAR) {
+            this.activePage = this.status;
+            return this.fetchPopularArticles();
+          }
+        }
+      );
+    }
+
     this.seo.generateTags({
       title: this.translate.instant('meta.articlesTitle'),
       description: this.translate.instant('meta.articlesDescription'),
       author: 'Zerofiltre.tech',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
-
-    this.router.navigateByUrl('/articles');
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.fetchRecentArticles();
-      this.fetchListOfTags()
-    }
   }
 
   ngOnDestroy(): void {
