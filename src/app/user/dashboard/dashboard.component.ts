@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit {
   public mainPage = true;
 
   subscription$!: Subscription;
+  status!: string;
 
   constructor(
     private seo: SeoService,
@@ -68,32 +69,22 @@ export class DashboardComponent implements OnInit {
       .subscribe(this.handleFetchedArticles);
   }
 
-  public fetchAllArticlesAsAdmin(status: string) {
-    this.loading = true;
-    this.subscription$ = this.articleService
-      .findAllArticles(this.pageNumber, this.pageItemsLimit, status)
-      .subscribe(this.handleFetchedArticles);
-  }
-
   public sortBy(tab: string): void {
     this.articles = [];
 
     if (tab === this.PUBLISHED) {
       this.activePage = this.PUBLISHED;
       this.router.navigateByUrl('/user/dashboard');
-      this.fetchMyArticlesByStatus(this.PUBLISHED);
     }
 
     if (tab === this.DRAFT) {
       this.activePage = this.DRAFT;
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
-      this.fetchMyArticlesByStatus(this.DRAFT);
     }
 
     if (tab === this.IN_REVIEW) {
       this.activePage = this.IN_REVIEW;
       this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
-      this.fetchMyArticlesByStatus(this.IN_REVIEW);
     }
 
     this.scrollyPageNumber = 0;
@@ -190,16 +181,26 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.router.navigateByUrl('/user/dashboard');
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.route.queryParamMap.subscribe(
+        query => {
+          this.status = query.get('sortBy')!;
+          if (!this.status) {
+            this.activePage = this.PUBLISHED;
+            return this.fetchMyArticlesByStatus(this.PUBLISHED);
+          }
+
+          this.activePage = this.status;
+          this.fetchMyArticlesByStatus(this.status);
+        }
+      );
+    }
 
     this.seo.generateTags({
       title: this.translate.instant('meta.dashboadTitle'),
       description: this.translate.instant('meta.dashboadDescription'),
     });
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.fetchMyArticlesByStatus(this.PUBLISHED);
-    }
   }
 
   ngOnDestroy(): void {
