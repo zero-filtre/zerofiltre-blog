@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
-import { getCurrentYear } from 'src/app/services/utilities.service';
+import { capitalizeString, getCurrentYear } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-footer',
@@ -19,6 +19,10 @@ export class FooterComponent implements OnInit {
 
   public loadCurrentYear() {
     this.currentYear = getCurrentYear();
+  }
+
+  public capitalize(str: string): string {
+    return capitalizeString(str);
   }
 
   ngOnInit(): void {
