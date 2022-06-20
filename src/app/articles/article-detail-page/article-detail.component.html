@@ -247,8 +247,7 @@
 
         <aside class="lg:col-span-2 order-2 lg:order-none flex flex-col space-y-6 lg:space-y-10">
             <div class="article-author pt-6 lg:pt-0 order-3 lg:order-none border-t border-skin-border lg:border-none">
-                <h2
-                    class="text-sm text-center lg:text-left lg:text-base leading-4 uppercase text-skin-text font-semibold">
+                <h2 class="text-sm text-center lg:text-left leading-4 uppercase text-skin-base font-semibold">
                     {{ 'articleDetail.aboutAuthor' | translate }}
                 </h2>
 
@@ -512,8 +511,7 @@
 
                 <div *ngIf="similarArticles?.length"
                     class="related-articles lg:order-none pt-6 space-y-6 border-t border-skin-border">
-                    <h2
-                        class="text-sm lg:text-base text-center lg:text-left leading-4 uppercase text-skin-text font-semibold">
+                    <h2 class="text-sm text-center lg:text-left leading-4 uppercase text-skin-base font-semibold">
                         {{'articleDetail.similarArticles' | translate}}
                     </h2>
                     <div class="similar-articles flex justify-center lg:justify-start">
@@ -526,7 +524,7 @@
                                     </app-image>
                                     <span
                                         class="flex-1 text-sm font-semibold leading-4 text-skin-text hover:text-primary-500 line-clamp-2 transition-all duration-200">
-                                        {{article?.title}}
+                                        {{capitalize(article?.title!)}}
                                     </span>
                                 </a>
                             </ng-container>
