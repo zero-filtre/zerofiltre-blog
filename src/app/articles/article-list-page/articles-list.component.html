@@ -300,6 +300,7 @@
                     <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
                         <ng-container *ngFor="let tag of tagList">
                             <button (click)="sortByTag(tag.name)" type="button" aria-labelledby="A tag"
+                                [ngClass]="{'active-tag': activeTag == tag.name}"
                                 class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
                                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
                                     viewBox="0 0 8 8">
