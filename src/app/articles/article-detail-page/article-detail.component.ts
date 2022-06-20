@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/user/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-article-popup.component';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-article-detail',
@@ -61,6 +62,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private seo: SeoService,
     private router: Router,
     public authService: AuthService,
+    public messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
     this.hasHistory = this.router.navigated;
@@ -110,6 +112,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         },
         error: (_error: HttpErrorResponse) => {
           this.loading = false;
+          this.messageService.openSnackBarError("Oops cet article est n'existe pas 😣!", '');
           this.router.navigateByUrl('/articles');
         }
       })

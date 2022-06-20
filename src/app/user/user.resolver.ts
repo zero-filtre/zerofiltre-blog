@@ -25,7 +25,7 @@ export class UserResolver implements Resolve<User> {
       .pipe(
         catchError(_ => {
           this.router.navigateByUrl('/articles');
-          this.messageService.openSnackBarError('Oops ce profil est inexistant !', '');
+          this.messageService.openSnackBarError("Oops ce profil n'existe pas 😣!", '');
           return EMPTY;
         })
       )
