@@ -145,12 +145,10 @@ export class AdminDashboardComponent implements OnInit {
 
 
   private sortArticle(list: Article[]): Article[] {
-
-
     return list
       ?.sort((a: any, b: any) => {
         if (a.status != "PUBLISHED") {
-          return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+          return new Date(b.lastSavedAt).valueOf() - new Date(a.lastSavedAt).valueOf()
         }
         return new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf()
       })
@@ -173,7 +171,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private handleFetchedArticles = {
     next: ({ content, hasNext }: any) => {
-      this.articles = content;
+      this.articles = this.sortArticle(content);
       this.setArticlesReadingTime(this.articles);
       this.loading = false;
       this.hasNext = hasNext;

@@ -44,7 +44,7 @@
                 <ul>
                     <ng-container *ngFor="let article of recentArticles$ | async">
                         <li><a aria-labelledby="Link to about page"
-                                routerLink="articles/{{article?.id}}">{{article?.title}}</a></li>
+                                routerLink="articles/{{article?.id}}">{{capitalize(article?.title!)}}</a></li>
                     </ng-container>
                 </ul>
             </div>
