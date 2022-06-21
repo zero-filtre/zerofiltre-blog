@@ -3,7 +3,10 @@ export const fr = {
         home: 'Acceuil',
         password: 'Mot de passe',
         missingPassword: 'Le mot de passe est obligatoire',
-        invalidPassword: "Le mot de passe n'est pas valide",
+        invalidPassword: `Le mot de passe doit contenir au moins:
+        - une majuscule 
+        - un caractère spécial 
+        - un chiffre compris entre 0 et 9`,
         matchingPassword: 'Confirmation mot de passe',
         passwordDoesNotMatch: 'Les mots de passe ne correspondent pas',
         invalidPasswordLenght: 'Le mot de passe doit comporter au moins 6 caractères.',
@@ -82,7 +85,10 @@ export const fr = {
         invalidEmail: 'Vous devez entrer une adresse email valide',
         missingPassword: ' Le mot de passe est obligatoire.',
         invalidPasswordLenght: 'Le mot de passe doit comporter au moins 6 caractères.',
-        invalidPassword: "Le mot de passe n'est pas valide",
+        invalidPassword: `Le mot de passe doit contenir au moins:
+        - une majuscule
+        - un caractère spécial 
+        - un chiffre compris entre 0 et 9`,
         passwordDoesNotMatch: 'Les mots de passe ne correspondent pas',
         signin: 'Se connecter',
         signup: 'Allons-y',
