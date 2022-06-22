@@ -87,7 +87,9 @@ String getTag(String buildNumber, String branchName) {
 
 def injectEnv(envFile){
 
-    sh "cp \$envFile src/environments/environment.ts"
+    sh "echo  $envFile"
+
+    sh "cp $envFile src/environments/environment.ts"
 
 }
 
