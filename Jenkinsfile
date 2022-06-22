@@ -106,11 +106,6 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
 
     container('docker') {
 
-        def images = sh(returnStdout: true, script: 'docker images -q -f "label=autodelete=true"')
-
-        // if(images){
-        //     sh("docker rmi $images")
-        // }
         
         sh("""
                 docker build -f .docker/Dockerfile -t ${api_image_tag} --pull --target prod .
@@ -120,6 +115,13 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
                 echo "Image push complete"
                 docker rmi $images
          """)
+
+        def images = sh(returnStdout: true, script: 'docker images -q -f "label=autodelete=true"')
+
+        if(images){
+            sh("docker rmi $images")
+        }
+
     }
 }
 
