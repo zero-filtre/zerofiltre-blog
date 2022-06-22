@@ -118,7 +118,6 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
                 docker login -u $dockerUser -p $dockerPassword
                 docker push ${api_image_tag}
                 echo "Image push complete"
-                docker images -q -f "dangling=true" -f "label=autodelete=true"
          """)
     }
 }
