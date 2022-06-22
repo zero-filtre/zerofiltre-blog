@@ -7,17 +7,7 @@ COPY package.json .
 
 RUN npm install -g @angular/cli
 RUN npm install -f
-
-
-FROM deps AS builder
-LABEL stage=builder
-LABEL autodelete="true"
-
-WORKDIR /app
-COPY . .
-
 RUN ng build && ng run zerofiltre-blog:server
-
 
 FROM node:16-alpine as prod
 WORKDIR /app
