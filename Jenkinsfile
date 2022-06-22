@@ -87,8 +87,6 @@ String getTag(String buildNumber, String branchName) {
 
 def injectEnv(envFile){
 
-    sh "echo  $envFile"
-
     sh "cp $envFile src/environments/environment.ts"
 
 }
@@ -120,6 +118,7 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
                 docker login -u $dockerUser -p $dockerPassword
                 docker push ${api_image_tag}
                 echo "Image push complete"
+                docker images -q -f "dangling=true" -f "label=autodelete=true"
          """)
     }
 }

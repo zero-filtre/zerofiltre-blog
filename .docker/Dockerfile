@@ -1,11 +1,19 @@
-FROM node:latest AS builder
-LABEL stage=builder
+FROM node:latest AS deps
+LABEL stage=deps
 
 WORKDIR /app
-COPY . .
+COPY package.json .
 
 RUN npm install -g @angular/cli
 RUN npm install -f
+
+
+FROM deps AS builder
+LABEL stage=builder
+LABEL autodelete="true"
+
+WORKDIR /app
+COPY . .
 
 RUN ng build && ng run zerofiltre-blog:server
 
