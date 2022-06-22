@@ -2,7 +2,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { MessageService } from './message.service';
 
@@ -15,6 +15,7 @@ const httpOptions = {
 };
 
 const STATE_KEY_X_TOKEN = makeStateKey('x-token-value');
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,12 @@ export class FileUploadService {
     private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
-    this.loadxToken();
+    if (isPlatformServer(this.platformId)){
+      this.loadxToken();
+    }
+    
   }
+
 
   private loadxToken() {
     const body = {
@@ -52,7 +57,7 @@ export class FileUploadService {
               "domain": {
                 "id": "default"
               },
-              "password": environment.ovhAuthPassword
+              "password": process.env.OVH_AUTH_PASSWORD
             }
           }
         }

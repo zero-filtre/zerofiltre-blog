@@ -24,7 +24,8 @@ podTemplate(label: label, containers: [
                             // }
 
                             stage('Build and push to docker registry') {
-                                withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                                withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'), file(credentialsId: 'FrontEnv', variable: 'FRONTENV')]) {
+                                    injectEnv(FRONTENV)
                                     buildDockerImageAndPush(USERNAME, PASSWORD)
                                 }
                             }
@@ -83,6 +84,12 @@ String getTag(String buildNumber, String branchName) {
 //         """
 //     }
 // }
+
+def injectEnv(envFile){
+
+    sh "cp \$envFile src/environments/environment.ts"
+
+}
 
 def deleteImageOnFail(){
     container('docker') {
