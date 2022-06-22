@@ -18,7 +18,7 @@ COPY . .
 RUN ng build && ng run zerofiltre-blog:server
 
 
-FROM node:16-alpine
+FROM node:16-alpine as prod
 WORKDIR /app
 
 ENV NODE_ENV production
