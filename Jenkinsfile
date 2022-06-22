@@ -106,7 +106,7 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
 
     container('docker') {
 
-        def images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
+        def images = sh(returnStdout: true, script: 'docker images -q -f "dangling=true" -f "label=autodelete=true"')
 
         // if(images){
         //     sh("docker rmi $images")
@@ -118,7 +118,7 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
                 docker login -u $dockerUser -p $dockerPassword
                 docker push ${api_image_tag}
                 echo "Image push complete"
-                docker rmi $(docker images -q -f "label=autodelete=true)"
+                docker rmi $images
          """)
     }
 }
