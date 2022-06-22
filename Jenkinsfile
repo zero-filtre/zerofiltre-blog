@@ -27,11 +27,13 @@ podTemplate(label: label, containers: [
                                 withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'), file(credentialsId: 'FrontEnv', variable: 'FRONTENV')]) {
                                     injectEnv(FRONTENV)
                                     buildDockerImageAndPush(USERNAME, PASSWORD)
+
                                 }
                             }
 
                             stage('Deploy on k8s') {
                                 runApp()
+                                deleteImages()
                             }
                     }
                 } catch(exc) {
@@ -91,9 +93,9 @@ def injectEnv(envFile){
 
 }
 
-def deleteImageOnFail(){
+def deleteImages(){
     container('docker') {
-        def images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
+        def images = sh(returnStdout: true, script: 'docker images -q -f "label=autodelete=true"')
 
         if(images){
             sh("docker rmi $images")
@@ -115,11 +117,6 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
                 echo "Image push complete"
          """)
 
-        def images = sh(returnStdout: true, script: 'docker images -q -f "label=autodelete=true"')
-
-        // if(images){
-        //     sh("docker rmi $images")
-        // }
 
     }
 }
