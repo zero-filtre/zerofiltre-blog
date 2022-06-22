@@ -113,7 +113,6 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
                 docker login -u $dockerUser -p $dockerPassword
                 docker push ${api_image_tag}
                 echo "Image push complete"
-                docker rmi $images
          """)
 
         def images = sh(returnStdout: true, script: 'docker images -q -f "label=autodelete=true"')
