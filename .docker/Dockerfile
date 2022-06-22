@@ -19,4 +19,4 @@ COPY --from=builder /app/dist ./dist
 
 EXPOSE 4000
 
-ENTRYPOINT ["node", "zerofiltre-blog/server/main.js"]
+ENTRYPOINT ["node", "dist/zerofiltre-blog/server/main.js"]
