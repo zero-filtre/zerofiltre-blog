@@ -27,13 +27,12 @@ podTemplate(label: label, containers: [
                                 withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'), file(credentialsId: 'FrontEnv', variable: 'FRONTENV')]) {
                                     injectEnv(FRONTENV)
                                     buildDockerImageAndPush(USERNAME, PASSWORD)
-
+                                    deleteImages()
                                 }
                             }
 
                             stage('Deploy on k8s') {
                                 runApp()
-                                deleteImages()
                             }
                     }
                 } catch(exc) {
@@ -98,7 +97,7 @@ def deleteImages(){
         def images = sh(returnStdout: true, script: 'docker images -q -f "label=autodelete=true"')
 
         if(images){
-            sh("docker rmi $images")
+            sh(''' docker rmi $(docker images -q -f "label=autodelete=true") ''')
         }
        
     }
