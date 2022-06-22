@@ -113,7 +113,7 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
         // }
         
         sh("""
-                docker build -f .docker/Dockerfile -t ${api_image_tag}  --target prod .
+                docker build -f .docker/Dockerfile -t ${api_image_tag} --pull --target prod .
                 echo "Image build complete"
                 docker login -u $dockerUser -p $dockerPassword
                 docker push ${api_image_tag}

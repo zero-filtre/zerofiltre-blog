@@ -1,5 +1,6 @@
 FROM node:latest AS deps
 LABEL stage=deps
+LABEL autodelete="true"
 
 WORKDIR /app
 COPY package.json .
