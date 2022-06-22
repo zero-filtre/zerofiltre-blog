@@ -117,9 +117,9 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
 
         def images = sh(returnStdout: true, script: 'docker images -q -f "label=autodelete=true"')
 
-        if(images){
-            sh("docker rmi $images")
-        }
+        // if(images){
+        //     sh("docker rmi $images")
+        // }
 
     }
 }

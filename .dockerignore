@@ -50,3 +50,4 @@ Thumbs.db
 /.git
 /.docker
 /k8s
+Jenkinsfile
