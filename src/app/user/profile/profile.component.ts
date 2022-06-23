@@ -8,7 +8,7 @@ import { PasswordUpdatePopupComponent } from '../password-update-popup/password-
 import { ProfileImagePopupComponent } from '../profile-image-popup/profile-image-popup.component';
 import { User } from '../user.model';
 import { SeoService } from 'src/app/services/seo.service';
-import { map, Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription, tap } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -66,24 +66,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  // public getUserProfile(userID: string) {
-  //   this.authService.findUserProfile(userID).subscribe({
-  //     next: (data: any) => {
-  //       this.user = data
 
-  //       if (this.isConnectedUserProfile()) {
-  //         this.loggedUser$ = this.authService.user$.subscribe()
-  //       }
-  //     },
-  //     error: (error: HttpErrorResponse) => {
-  //       console.log('ERROR: ', error);
-  //       this.router.navigateByUrl('/articles');
-  //     }
-  //   })
-  // }
-
-  public isConnectedUserProfile(): boolean {
-    return this.loggedUser?.fullName == this.user?.fullName
+  public isConnectedUserProfile(user: any): boolean {
+    return this.loggedUser?.fullName == user?.fullName
   }
 
   ngOnInit(): void {
@@ -97,6 +82,14 @@ export class ProfileComponent implements OnInit {
     // );
 
     this.user$ = this.route.data.pipe(
+      tap(({ user }: any) => {
+        if (this.isConnectedUserProfile(user)) {
+          console.log('FETCH LOGGED-IN USER!')
+          this.authService.user$.subscribe(
+            data => this.loggedUser = data
+          );
+        }
+      }),
       map(data => data.user)
     )
 
