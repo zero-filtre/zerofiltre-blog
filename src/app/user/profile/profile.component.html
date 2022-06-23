@@ -2,7 +2,7 @@
     <nav class="profile-top-nav flex items-center justify-between max-w-xl mx-auto">
         <div class="profile-navigation flex gap-[5.2rem] w-full items-center">
             <a aria-labelledby="Link to about page" routerLink="/articles"
-                class="group hidden lg:flex items-center gap-3 font-semibold">
+                class="group hidden lg:flex items-center gap-3 font-semibold relative top-[7px]">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                     class="text-primary-500 group-hover:text-primary-300 w-[18px]" data-supported-dps="24x24"
                     fill="currentColor" width="24" height="24" focusable="false">
@@ -64,7 +64,7 @@
                         [alt]="user?.fullName!">
                     </app-image>
 
-                    <ng-container *ngIf="!user?.profilePicture">
+                    <ng-container *ngIf="user && !user?.profilePicture">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="w-full rounded-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
