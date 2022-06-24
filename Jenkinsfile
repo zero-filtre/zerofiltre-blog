@@ -24,8 +24,7 @@ podTemplate(label: label, containers: [
                             // }
 
                             stage('Build and push to docker registry') {
-                                withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'), file(credentialsId: 'FrontEnv', variable: 'FRONTENV')]) {
-                                    injectEnv(FRONTENV)
+                                withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                                     buildDockerImageAndPush(USERNAME, PASSWORD)
                                     deleteImages()
                                 }
