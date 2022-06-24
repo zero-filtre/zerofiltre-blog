@@ -37,32 +37,15 @@ export class FileUploadService {
     private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
-    if (isPlatformServer(this.platformId)){
-      this.loadxToken();
-    }
-    
+
+
+    this.loadxToken();
+
+
   }
 
 
   private loadxToken() {
-    const body = {
-      "auth": {
-        "identity": {
-          "methods": [
-            "password"
-          ],
-          "password": {
-            "user": {
-              "name": environment.ovhAuthName,
-              "domain": {
-                "id": "default"
-              },
-              "password": process.env.OVH_AUTH_PASSWORD
-            }
-          }
-        }
-      }
-    }
 
     this.xTokenServerValue = this.state.get(STATE_KEY_X_TOKEN, <any>null);
 
@@ -71,7 +54,28 @@ export class FileUploadService {
       localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(this.xTokenServerValue));
     }
 
-    if (!this.xTokenServerValue) {
+    if (!this.xTokenServerValue && isPlatformServer(this.platformId)) {
+
+      const body = {
+        "auth": {
+          "identity": {
+            "methods": [
+              "password"
+            ],
+            "password": {
+              "user": {
+                "name": environment.ovhAuthName,
+                "domain": {
+                  "id": "default"
+                },
+                "password": process.env.OVH_AUTH_PASSWORD
+              }
+            }
+          }
+        }
+      }
+
+
       this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
         ...httpOptions,
         observe: 'response'
