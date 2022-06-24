@@ -45,8 +45,8 @@ export class AppComponent implements OnInit {
     this.logCopySuccessMessage(event);
   }
 
-  private servicesUrl!:string;
-  private coursesUrl!:string;
+  public servicesUrl!:string;
+  public coursesUrl!:string;
 
   public appLogoUrl = 'assets/logoblue.svg';
 
