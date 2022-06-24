@@ -105,13 +105,7 @@
               "namedChunks": true,
               "extractLicenses": false,
               "vendorChunk": true,
-              "buildOptimizer": false,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.locals.ts"
-                }
-              ]
+              "buildOptimizer": false
             }
           },
           "defaultConfiguration": "prod"
@@ -186,13 +180,7 @@
             "local": {
               "optimization": false,
               "sourceMap": true,
-              "extractLicenses": false,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.locals.ts"
-                }
-              ]
+              "extractLicenses": false
             }
           },
           "defaultConfiguration": "prod"

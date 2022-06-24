@@ -10,7 +10,6 @@ import {
 
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, Observable, shareReplay } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import envTemplate from 'src/environments/environment.template';
 
 import { FileUploadService } from './services/file-upload.service';
@@ -46,8 +45,8 @@ export class AppComponent implements OnInit {
     this.logCopySuccessMessage(event);
   }
 
-  readonly servicesUrl = environment.servicesUrl
-  readonly coursesUrl = environment.coursesUrl
+  private servicesUrl!:string;
+  private coursesUrl!:string;
 
   public appLogoUrl = 'assets/logoblue.svg';
 
@@ -85,6 +84,12 @@ export class AppComponent implements OnInit {
 
     this.loadEnv()
 
+    if (isPlatformBrowser(platformId)){
+      this.loadEnv()
+    }
+
+    
+
     router.events.pipe(filter(event => event instanceof NavigationStart))
       .subscribe(({ url }: any) => {
         if (url.startsWith('/user/profile/')) this.activePage = this.MY_ACCOUNT;
@@ -94,6 +99,15 @@ export class AppComponent implements OnInit {
 
     router.events.pipe(filter((event): event is RouterEvent => event instanceof RouterEvent))
       .subscribe(e => this.checkRouteChange(e))
+  }
+
+  private loadUrl(){
+
+    let env = JSON.parse(localStorage.getItem(this.ENV_NAME)||'{}')
+
+    this.servicesUrl = env.servicesUrl
+    this.coursesUrl = env.coursesUrl
+    
   }
 
   private loadEnv() {
