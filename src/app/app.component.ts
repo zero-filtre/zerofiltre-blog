@@ -10,7 +10,8 @@ import {
 
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, Observable, shareReplay } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import envTemplate from 'src/environments/environment.template';
+
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
@@ -25,7 +26,14 @@ import {
   RouterEvent,
 } from '@angular/router';
 
+import { makeStateKey, TransferState } from '@angular/platform-browser';
+
+
+
 declare var Prism: any;
+
+
+const STATE_ENV = makeStateKey('env-value');
 
 @Component({
   selector: 'app-root',
@@ -37,8 +45,8 @@ export class AppComponent implements OnInit {
     this.logCopySuccessMessage(event);
   }
 
-  readonly servicesUrl = environment.servicesUrl
-  readonly coursesUrl = environment.coursesUrl
+  public servicesUrl!:string;
+  public coursesUrl!:string;
 
   public appLogoUrl = 'assets/logoblue.svg';
 
@@ -58,8 +66,15 @@ export class AppComponent implements OnInit {
 
   public activePage = this.MY_ACCOUNT;
 
+  private ENV_NAME = 'env-value';
+
+  public envValue!: any;
+
+  public loading: boolean = true;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
+    private state: TransferState,
     private translate: TranslateService,
     private breakpointObserver: BreakpointObserver,
     private messageService: MessageService,
@@ -67,7 +82,20 @@ export class AppComponent implements OnInit {
     public authService: AuthService,
     private fileUploadService: FileUploadService
   ) {
+
+
+
+    this.loadEnv()
+
     this.setBrowserTranslationConfigs();
+
+    
+
+    if (isPlatformBrowser(platformId)){
+      this.loadUrl()
+    }
+
+    
 
     router.events.pipe(filter(event => event instanceof NavigationStart))
       .subscribe(({ url }: any) => {
@@ -78,6 +106,40 @@ export class AppComponent implements OnInit {
 
     router.events.pipe(filter((event): event is RouterEvent => event instanceof RouterEvent))
       .subscribe(e => this.checkRouteChange(e))
+  }
+
+  private loadUrl(){
+
+    let env = JSON.parse(localStorage.getItem(this.ENV_NAME)||'{"apiBaseUrl":"https://blog-api-dev.zerofiltre.tech"}')
+
+    this.servicesUrl = env.servicesUrl
+    this.coursesUrl = env.coursesUrl
+    
+  }
+
+  private loadEnv() {
+
+    this.envValue = this.state.get(STATE_ENV, <any>null);
+
+
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(this.ENV_NAME, JSON.stringify(this.envValue));
+      this.loading = false;
+    }
+
+    if (isPlatformServer(this.platformId)) {
+
+      let env: any={}
+
+      for (const key in envTemplate) {
+          env[key]=process.env[(<any>envTemplate)[key]]
+      }
+
+      this.state.set(STATE_ENV, env);
+
+    }
+
+
   }
 
   public checkRouteChange(routerEvent: RouterEvent) {

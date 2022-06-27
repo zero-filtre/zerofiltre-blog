@@ -28,7 +28,6 @@ export const environment = {
   STACK_OVERFLOW_CLIENT_ID: "",
   gitHubRedirectURL: "",
   stackOverflowRedirectURL: "",
-  ovhAuthPassword: "",
   ovhAuthName: "",
 };
 ```

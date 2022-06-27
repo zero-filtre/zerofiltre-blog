@@ -1,47 +1,23 @@
-FROM node:latest
-WORKDIR /app
-COPY . .
+FROM node:latest AS deps
+LABEL stage=deps
+LABEL autodelete="true"
 
-RUN apt-get update 
-RUN apt-get -y install gettext-base
-RUN apt-get clean
+WORKDIR /app
+COPY package.json .
+
 RUN npm install -g @angular/cli
 RUN npm install -f
 
-ADD .docker/entrypoint.sh entrypoint-dos.sh 
+COPY . .
+RUN ng build && ng run zerofiltre-blog:server
 
-RUN sed -e 's/\r$//' entrypoint-dos.sh > entrypoint.sh
-RUN chmod 755 entrypoint.sh
+FROM node:16-alpine as prod
+WORKDIR /app
+
+ENV NODE_ENV production
+
+COPY --from=deps /app/dist ./dist
 
 EXPOSE 4000
 
-ENTRYPOINT ["./entrypoint.sh"]
-
-
-
-# FROM node:latest AS builder
-# LABEL stage=builder
-
-# WORKDIR /app
-# COPY . .
-
-# RUN apt-get update && apt-get -y install gettext-base
-
-# RUN npm install -g @angular/cli
-# RUN npm install -f
-
-# RUN envsubst < ./src/environments/environment.template.ts > src/environments/environment.ts
-
-# RUN ng build && ng run zerofiltre-blog:server
-
-
-# FROM node:16-alpine
-# WORKDIR /app
-
-# ENV NODE_ENV production
-
-# COPY --from=builder /app/dist ./dist
-
-# EXPOSE 4000
-
-# ENTRYPOINT ["node", "zerofiltre-blog/server/main.js"]
+ENTRYPOINT ["node", "dist/zerofiltre-blog/server/main.js"]

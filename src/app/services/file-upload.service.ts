@@ -2,7 +2,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { MessageService } from './message.service';
 
@@ -15,6 +15,7 @@ const httpOptions = {
 };
 
 const STATE_KEY_X_TOKEN = makeStateKey('x-token-value');
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,28 +37,15 @@ export class FileUploadService {
     private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
+
+
     this.loadxToken();
+
+
   }
 
+
   private loadxToken() {
-    const body = {
-      "auth": {
-        "identity": {
-          "methods": [
-            "password"
-          ],
-          "password": {
-            "user": {
-              "name": environment.ovhAuthName,
-              "domain": {
-                "id": "default"
-              },
-              "password": environment.ovhAuthPassword
-            }
-          }
-        }
-      }
-    }
 
     this.xTokenServerValue = this.state.get(STATE_KEY_X_TOKEN, <any>null);
 
@@ -66,7 +54,28 @@ export class FileUploadService {
       localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(this.xTokenServerValue));
     }
 
-    if (!this.xTokenServerValue) {
+    if (!this.xTokenServerValue && isPlatformServer(this.platformId)) {
+
+      const body = {
+        "auth": {
+          "identity": {
+            "methods": [
+              "password"
+            ],
+            "password": {
+              "user": {
+                "name": environment.ovhAuthName,
+                "domain": {
+                  "id": "default"
+                },
+                "password": process.env.OVH_AUTH_PASSWORD
+              }
+            }
+          }
+        }
+      }
+
+
       this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
         ...httpOptions,
         observe: 'response'

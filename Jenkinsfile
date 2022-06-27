@@ -26,6 +26,7 @@ podTemplate(label: label, containers: [
                             stage('Build and push to docker registry') {
                                 withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                                     buildDockerImageAndPush(USERNAME, PASSWORD)
+                                    deleteImages()
                                 }
                             }
 
@@ -84,12 +85,18 @@ String getTag(String buildNumber, String branchName) {
 //     }
 // }
 
-def deleteImageOnFail(){
+def injectEnv(envFile){
+
+    sh "cp $envFile src/environments/environment.ts"
+
+}
+
+def deleteImages(){
     container('docker') {
-        def images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
+        def images = sh(returnStdout: true, script: 'docker images -q -f "label=autodelete=true"')
 
         if(images){
-            sh("docker rmi $images")
+            sh(''' docker rmi $(docker images -q -f "label=autodelete=true") ''')
         }
        
     }
@@ -99,19 +106,16 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
 
     container('docker') {
 
-        def images = sh(returnStdout: true, script: "docker images 'imzerofiltre/zerofiltretech-blog-front' -a -q")
-
-        // if(images){
-        //     sh("docker rmi $images")
-        // }
         
         sh("""
-                docker build --rm -f .docker/Dockerfile -t ${api_image_tag} --pull --no-cache .
+                docker build -f .docker/Dockerfile -t ${api_image_tag} --pull --target prod .
                 echo "Image build complete"
                 docker login -u $dockerUser -p $dockerPassword
                 docker push ${api_image_tag}
                 echo "Image push complete"
          """)
+
+
     }
 }
 
