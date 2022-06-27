@@ -70,6 +70,8 @@ export class AppComponent implements OnInit {
 
   public envValue!: any;
 
+  public loading: boolean = true;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private state: TransferState,
@@ -80,12 +82,17 @@ export class AppComponent implements OnInit {
     public authService: AuthService,
     private fileUploadService: FileUploadService
   ) {
-    this.setBrowserTranslationConfigs();
+
+
 
     this.loadEnv()
 
+    this.setBrowserTranslationConfigs();
+
+    
+
     if (isPlatformBrowser(platformId)){
-      this.loadEnv()
+      this.loadUrl()
     }
 
     
@@ -103,7 +110,7 @@ export class AppComponent implements OnInit {
 
   private loadUrl(){
 
-    let env = JSON.parse(localStorage.getItem(this.ENV_NAME)||'{}')
+    let env = JSON.parse(localStorage.getItem(this.ENV_NAME)||'{"apiBaseUrl":"https://blog-api-dev.zerofiltre.tech"}')
 
     this.servicesUrl = env.servicesUrl
     this.coursesUrl = env.coursesUrl
@@ -117,6 +124,7 @@ export class AppComponent implements OnInit {
 
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(this.ENV_NAME, JSON.stringify(this.envValue));
+      this.loading = false;
     }
 
     if (isPlatformServer(this.platformId)) {

@@ -62,6 +62,8 @@ export class ArticleService {
   }
 
   public findAllRecentArticles(page: number, limit: number): Observable<Article[]> {
+
+
     if (this.refreshData) {
       httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
     }
