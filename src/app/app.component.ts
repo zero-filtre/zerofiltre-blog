@@ -7,6 +7,7 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
+import { isDevMode } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, Observable, shareReplay } from 'rxjs';
@@ -27,8 +28,8 @@ import {
 } from '@angular/router';
 
 import { makeStateKey, TransferState } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment.locals';
 
+import { environment } from 'src/environments/environment';
 
 
 declare var Prism: any;
