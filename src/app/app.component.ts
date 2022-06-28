@@ -27,6 +27,7 @@ import {
 } from '@angular/router';
 
 import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment.locals';
 
 
 
@@ -45,8 +46,8 @@ export class AppComponent implements OnInit {
     this.logCopySuccessMessage(event);
   }
 
-  public servicesUrl!:string;
-  public coursesUrl!:string;
+  public servicesUrl!: string;
+  public coursesUrl!: string;
 
   public appLogoUrl = 'assets/logoblue.svg';
 
@@ -83,19 +84,24 @@ export class AppComponent implements OnInit {
     private fileUploadService: FileUploadService
   ) {
 
-
-
-    this.loadEnv()
+    if (!environment.production){
+      this.loadEnv()
+    }
+    
 
     this.setBrowserTranslationConfigs();
 
-    
 
-    if (isPlatformBrowser(platformId)){
+
+    if (isPlatformBrowser(platformId) && environment.production) {
       this.loadUrl()
     }
+    else {
+      this.servicesUrl = environment.servicesUrl
+      this.coursesUrl = environment.coursesUrl
+    }
 
-    
+
 
     router.events.pipe(filter(event => event instanceof NavigationStart))
       .subscribe(({ url }: any) => {
@@ -108,13 +114,13 @@ export class AppComponent implements OnInit {
       .subscribe(e => this.checkRouteChange(e))
   }
 
-  private loadUrl(){
+  private loadUrl() {
 
-    let env = JSON.parse(localStorage.getItem(this.ENV_NAME)||'{"apiBaseUrl":"https://blog-api-dev.zerofiltre.tech"}')
+    let env = JSON.parse(localStorage.getItem(this.ENV_NAME) || '{"apiBaseUrl":"https://blog-api-dev.zerofiltre.tech"}')
 
     this.servicesUrl = env.servicesUrl
     this.coursesUrl = env.coursesUrl
-    
+
   }
 
   private loadEnv() {
@@ -129,10 +135,10 @@ export class AppComponent implements OnInit {
 
     if (isPlatformServer(this.platformId)) {
 
-      let env: any={}
+      let env: any = {}
 
       for (const key in envTemplate) {
-          env[key]=process.env[(<any>envTemplate)[key]]
+        env[key] = process.env[(<any>envTemplate)[key]]
       }
 
       this.state.set(STATE_ENV, env);
