@@ -28,6 +28,7 @@ import {
 } from '@angular/router';
 
 import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment.locals';
 
 import { environment } from 'src/environments/environment';
 
