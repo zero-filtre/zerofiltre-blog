@@ -96,7 +96,7 @@ def deleteImages(){
         def images = sh(returnStdout: true, script: 'docker images -q -f "label=autodelete=true"')
 
         if(images){
-            sh(''' docker rmi $(docker images -q -f "label=autodelete=true") ''')
+            sh(''' docker rmi -f $(docker images -q -f "label=autodelete=true") ''')
         }
        
     }
