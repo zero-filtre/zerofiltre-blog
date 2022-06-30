@@ -4,6 +4,7 @@ import {
   Component,
   HostListener,
   Inject,
+  isDevMode,
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
@@ -11,7 +12,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, Observable, shareReplay } from 'rxjs';
 import envTemplate from 'src/environments/environment.template';
-
+import { environment } from 'src/environments/environment.locals';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
@@ -84,19 +85,23 @@ export class AppComponent implements OnInit {
   ) {
 
 
+    if (isDevMode()){
 
-    this.loadEnv()
+      this.servicesUrl = environment.servicesUrl
+      this.coursesUrl = environment.coursesUrl
+
+    }
+    else{
+      this.loadEnv()
+      if (isPlatformBrowser(platformId)){
+        this.loadUrl()
+      }
+    }
+    
 
     this.setBrowserTranslationConfigs();
 
     
-
-    if (isPlatformBrowser(platformId)){
-      this.loadUrl()
-    }
-
-    
-
     router.events.pipe(filter(event => event instanceof NavigationStart))
       .subscribe(({ url }: any) => {
         if (url.startsWith('/user/profile/')) this.activePage = this.MY_ACCOUNT;

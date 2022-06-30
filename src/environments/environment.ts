@@ -13,4 +13,4 @@ else {
 }
 
 
-export const environment: any = env;
+export default env;
