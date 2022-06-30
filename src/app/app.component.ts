@@ -12,7 +12,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, Observable, shareReplay } from 'rxjs';
 import envTemplate from 'src/environments/environment.template';
-import { environment } from 'src/environments/environment.locals';
+import { environment } from 'src/environments/environment';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';

@@ -1,4 +1,4 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, isDevMode, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
@@ -54,7 +54,18 @@ export class FileUploadService {
       localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(this.xTokenServerValue));
     }
 
-    if (!this.xTokenServerValue && isPlatformServer(this.platformId)) {
+    let ovhPass = ''
+
+    if (isPlatformServer(this.platformId)){
+      ovhPass = process.env.OVH_AUTH_PASSWORD || '';
+    }
+
+    if (isDevMode()){
+      ovhPass = environment.ovhAuthPassword;
+    }
+
+
+    if (!this.xTokenServerValue) {
 
       const body = {
         "auth": {
@@ -68,13 +79,12 @@ export class FileUploadService {
                 "domain": {
                   "id": "default"
                 },
-                "password": process.env.OVH_AUTH_PASSWORD
+                "password": ovhPass
               }
             }
           }
         }
       }
-
 
       this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
         ...httpOptions,
@@ -85,6 +95,7 @@ export class FileUploadService {
             return throwError(() => error);
           }),
           tap(response => {
+
             const xToken = this.extractTokenFromHeaders(response);
             const expireAt = response.body.token.expires_at;
             const tokenObj = {
