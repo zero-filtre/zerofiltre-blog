@@ -53,7 +53,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public maxNberOfReaction!: boolean;
   public hasHistory: boolean;
 
-  dddSponsorContentSourceUrl = 'assets/images/ddd-image.svg';
+  dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg';
 
   constructor(
     private dialogRef: MatDialog,
@@ -149,6 +149,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   public isAuthor(user: any, article: Article): boolean {
     return user?.id === article?.author?.id
+  }
+
+  public authorHasSocials(): boolean {
+    return this.article?.author?.socialLinks.length > 0
   }
 
   public authorHasSocialLinkFor(platform: string): boolean {
