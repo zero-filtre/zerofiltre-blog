@@ -4,15 +4,15 @@ import {
   Component,
   HostListener,
   Inject,
+  isDevMode,
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { isDevMode } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, Observable, shareReplay } from 'rxjs';
 import envTemplate from 'src/environments/environment.template';
-
+import { environment } from 'src/environments/environment';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
@@ -29,7 +29,6 @@ import {
 
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 
-import { environment } from 'src/environments/environment';
 
 
 declare var Prism: any;
@@ -47,8 +46,8 @@ export class AppComponent implements OnInit {
     this.logCopySuccessMessage(event);
   }
 
-  public servicesUrl!: string;
-  public coursesUrl!: string;
+  public servicesUrl!:string;
+  public coursesUrl!:string;
 
   public appLogoUrl = 'assets/logoblue.svg';
 
@@ -85,25 +84,24 @@ export class AppComponent implements OnInit {
     private fileUploadService: FileUploadService
   ) {
 
-    if (!environment.production){
+
+    if (isDevMode()){
+
+      this.servicesUrl = environment.servicesUrl
+      this.coursesUrl = environment.coursesUrl
+
+    }
+    else{
       this.loadEnv()
+      if (isPlatformBrowser(platformId)){
+        this.loadUrl()
+      }
     }
     
 
     this.setBrowserTranslationConfigs();
 
-
-
-    if (isPlatformBrowser(platformId) && environment.production) {
-      this.loadUrl()
-    }
-    else {
-      this.servicesUrl = environment.servicesUrl
-      this.coursesUrl = environment.coursesUrl
-    }
-
-
-
+    
     router.events.pipe(filter(event => event instanceof NavigationStart))
       .subscribe(({ url }: any) => {
         if (url.startsWith('/user/profile/')) this.activePage = this.MY_ACCOUNT;
@@ -115,13 +113,13 @@ export class AppComponent implements OnInit {
       .subscribe(e => this.checkRouteChange(e))
   }
 
-  private loadUrl() {
+  private loadUrl(){
 
-    let env = JSON.parse(localStorage.getItem(this.ENV_NAME) || '{"apiBaseUrl":"https://blog-api-dev.zerofiltre.tech"}')
+    let env = JSON.parse(localStorage.getItem(this.ENV_NAME)||'{"apiBaseUrl":"https://blog-api-dev.zerofiltre.tech"}')
 
     this.servicesUrl = env.servicesUrl
     this.coursesUrl = env.coursesUrl
-
+    
   }
 
   private loadEnv() {
@@ -136,10 +134,10 @@ export class AppComponent implements OnInit {
 
     if (isPlatformServer(this.platformId)) {
 
-      let env: any = {}
+      let env: any={}
 
       for (const key in envTemplate) {
-        env[key] = process.env[(<any>envTemplate)[key]]
+          env[key]=process.env[(<any>envTemplate)[key]]
       }
 
       this.state.set(STATE_ENV, env);
