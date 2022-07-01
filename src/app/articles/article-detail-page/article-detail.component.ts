@@ -151,6 +151,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return user?.id === article?.author?.id
   }
 
+  public authorHasSocials(): boolean {
+    return this.article?.author?.socialLinks.length > 0
+  }
+
   public authorHasSocialLinkFor(platform: string): boolean {
     return this.article?.author?.socialLinks.some((profile: any) => profile.platform === platform && profile.link)
   }
