@@ -94,7 +94,8 @@
                             <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
                                 class="article-preview group">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
-                                    <app-image [classes]="'group-hover:opacity-75 transition-all duration-200'"
+                                    <app-image
+                                        [classes]="'object-cover group-hover:opacity-75 transition-all duration-200'"
                                         [sourceUrl]="article?.thumbnail!" [alt]="article?.title!">
                                     </app-image>
                                 </div>

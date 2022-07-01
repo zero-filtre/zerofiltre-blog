@@ -53,7 +53,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public maxNberOfReaction!: boolean;
   public hasHistory: boolean;
 
-  dddSponsorContentSourceUrl = 'assets/images/ddd-image.svg';
+  dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg';
 
   constructor(
     private dialogRef: MatDialog,
