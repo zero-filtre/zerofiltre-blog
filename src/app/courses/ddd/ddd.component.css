@@ -26,8 +26,6 @@ h3 {
 }
 
 p {
-  /* @apply text-lg lg:text-xl font-light !mb-5 last:!mb-0 text-center lg:text-left; */
-  /* @apply text-lg lg:text-lg font-normal !mb-5 last:!mb-0 text-center lg:text-left; */
   @apply text-lg lg:text-xl font-normal !mb-5 last:!mb-0 text-center lg:text-left;
 }
 
@@ -86,11 +84,11 @@ p {
 }
 
 .master-class-section {
-  @apply text-white;
+  @apply text-secondary;
 }
 
 .master-class-section h3 {
-  @apply text-white after:bg-primary-500;
+  @apply text-primary-500 after:bg-accent-400;
 }
 
 h3.master-class-title {
@@ -111,9 +109,7 @@ h3.lesson-group-title {
 }
 
 .master-class-section li {
-  /* @apply text-lg lg:text-xl font-light; */
-  /* @apply text-lg lg:text-lg font-normal; */
-  @apply text-lg lg:text-lg font-light;
+  @apply text-lg lg:text-lg font-normal;
 }
 
 /* ol auto increment */
@@ -126,5 +122,5 @@ ol > li:before {
   content: counters(item, ".") ". ";
   counter-increment: item;
   font-weight: 500;
-  font-style: oblique;
+  /* font-style: oblique; */
 }
