@@ -1,11 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
+import { DeleteArticlePopupComponent } from 'src/app/articles/delete-article-popup/delete-article-popup.component';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SeoService } from 'src/app/services/seo.service';
 import {
@@ -54,6 +56,7 @@ export class DashboardComponent implements OnInit {
     public authService: AuthService,
     private translate: TranslateService,
     public navigate: NavigationService,
+    private dialogDeleteRef: MatDialog,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -61,6 +64,20 @@ export class DashboardComponent implements OnInit {
     for (const article of articles) {
       calcReadingTime(article);
     }
+  }
+
+  public isAuthor(user: any, article: Article): boolean {
+    return user?.id === article?.author?.id
+  }
+
+  public openArticleDeleteDialog(articleId: number | undefined): void {
+    this.dialogDeleteRef.open(DeleteArticlePopupComponent, {
+      panelClass: 'delete-article-popup-panel',
+      data: {
+        id: articleId,
+        history: this.router.url
+      }
+    });
   }
 
   public fetchMyArticlesByStatus(status: string) {
