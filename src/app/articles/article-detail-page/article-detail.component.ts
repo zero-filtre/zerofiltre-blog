@@ -195,7 +195,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       panelClass: 'delete-article-popup-panel',
       data: {
         id: this.articleId,
-        hasHistory: this.hasHistory
+        history: this.router.url
       }
     });
   }
