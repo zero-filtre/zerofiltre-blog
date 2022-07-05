@@ -1,14 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
 import { calcReadingTime, capitalizeString, formatDate } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -121,30 +121,61 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public fetchSimilarArticles(): void {
     if (!this.article?.tags.length) return
 
-    const randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
-    const randomTagName = this.article?.tags[randomTagIndex]?.name!
+    let randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
+    let randomTagName = this.article?.tags[randomTagIndex]?.name!
+
+    console.log('TAG-INDEX: ', randomTagIndex);
+    console.log('TAG-NAME: ', randomTagName);
+
+    const selectedArticles = <any>[]
+    let filteredArticles = <any>[]
 
     this.articleService.findAllArticlesByTag(0, 20, randomTagName)
-      .subscribe({
-        next: ({ content }: any) => {
-          const selectedArticles = []
-
-          const filteredArticles = content
-            .filter((article: Article) => article.id !== this.article.id)
+      .pipe(
+        tap(({ content }: any) => {
+          filteredArticles = content.filter((article: Article) => article.id !== this.article.id);
 
           if (filteredArticles.length) {
+            console.log('SIMILAR ONES: ', filteredArticles);
+
             const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
             selectedArticles.push(filteredArticles[randomArticleIndex])
 
             const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+
             if (newRandomArticleIndex !== randomArticleIndex) {
               selectedArticles.push(filteredArticles[newRandomArticleIndex])
             }
+
+          } else {
+            console.log('TRY AGAIN SIMILAR ONES: ', filteredArticles);
+            randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
+            randomTagName = this.article?.tags[randomTagIndex]?.name!
+
+            this.articleService.findAllArticlesByTag(0, 20, randomTagName)
+              .pipe(tap(({ content }: any) => {
+                filteredArticles = content.filter((article: Article) => article.id !== this.article.id);
+
+                if (filteredArticles.length) {
+
+                  const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+                  selectedArticles.push(filteredArticles[randomArticleIndex])
+
+                  const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+
+                  if (newRandomArticleIndex !== randomArticleIndex) {
+                    selectedArticles.push(filteredArticles[newRandomArticleIndex])
+                  }
+                }
+              }))
           }
 
-          this.similarArticles = [...selectedArticles];
-        }
-      })
+          return selectedArticles;
+        }),
+
+        mergeMap(_ => of(selectedArticles))
+      )
+      .subscribe(data => this.similarArticles = [...data])
   }
 
   public isAuthor(user: any, article: Article): boolean {

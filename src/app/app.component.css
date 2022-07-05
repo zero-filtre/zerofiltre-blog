@@ -3,7 +3,7 @@
 }
 
 .sidenav .sidenavLink div {
-  @apply text-sm py-2 font-normal;
+  @apply text-sm py-2 font-normal font-ubuntu;
 }
 
 .link-active {

@@ -52,7 +52,7 @@ export const fr = {
         courses: 'Cours',
         blog: 'Blog',
         services: 'Services',
-        portfolio: 'Portfolio',
+        portfolio: 'Services',
         contact: 'Contact',
     },
     sidebar: {
