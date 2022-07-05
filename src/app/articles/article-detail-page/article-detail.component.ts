@@ -124,6 +124,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     const randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
     const randomTagName = this.article?.tags[randomTagIndex]?.name!
 
+    console.log('TAG-INDEX: ', randomTagIndex);
+    console.log('TAG-NAME: ', randomTagName);
+
     this.articleService.findAllArticlesByTag(0, 20, randomTagName)
       .subscribe({
         next: ({ content }: any) => {
@@ -133,10 +136,13 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
             .filter((article: Article) => article.id !== this.article.id)
 
           if (filteredArticles.length) {
+            console.log('SIMILAR ONES: ', filteredArticles);
+
             const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
             selectedArticles.push(filteredArticles[randomArticleIndex])
 
             const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+
             if (newRandomArticleIndex !== randomArticleIndex) {
               selectedArticles.push(filteredArticles[newRandomArticleIndex])
             }

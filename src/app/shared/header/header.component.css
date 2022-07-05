@@ -26,7 +26,7 @@
 }
 
 .header .navLink div {
-  @apply text-base font-normal;
+  @apply text-base font-normal font-ubuntu;
 }
 
 ::ng-deep .mat-progress-bar-fill::after {
