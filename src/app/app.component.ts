@@ -85,23 +85,11 @@ export class AppComponent implements OnInit {
   ) {
 
 
-    if (isDevMode()){
-
-      this.servicesUrl = environment.servicesUrl
-      this.coursesUrl = environment.coursesUrl
-
-    }
-    else{
-      this.loadEnv()
-      if (isPlatformBrowser(platformId)){
-        this.loadUrl()
-      }
-    }
-    
+    this.loadEnv()
 
     this.setBrowserTranslationConfigs();
 
-    
+
     router.events.pipe(filter(event => event instanceof NavigationStart))
       .subscribe(({ url }: any) => {
         if (url.startsWith('/user/profile/')) this.activePage = this.MY_ACCOUNT;
@@ -115,7 +103,7 @@ export class AppComponent implements OnInit {
 
   private loadUrl(){
 
-    let env = JSON.parse(localStorage.getItem(this.ENV_NAME)||'{"apiBaseUrl":"https://blog-api-dev.zerofiltre.tech"}')
+    let env = JSON.parse(localStorage.getItem(this.ENV_NAME)||'{}')
 
     this.servicesUrl = env.servicesUrl
     this.coursesUrl = env.coursesUrl
@@ -126,10 +114,12 @@ export class AppComponent implements OnInit {
 
     this.envValue = this.state.get(STATE_ENV, <any>null);
 
+    console.log(this.platformId, this.envValue)
 
-    if (isPlatformBrowser(this.platformId)) {
+
+    if (isPlatformBrowser(this.platformId) && this.envValue) {
       localStorage.setItem(this.ENV_NAME, JSON.stringify(this.envValue));
-      this.loading = false;
+      this.loadUrl()
     }
 
     if (isPlatformServer(this.platformId)) {
@@ -139,6 +129,7 @@ export class AppComponent implements OnInit {
       for (const key in envTemplate) {
           env[key]=process.env[(<any>envTemplate)[key]]
       }
+
 
       this.state.set(STATE_ENV, env);
 

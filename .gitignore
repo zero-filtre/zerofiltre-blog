@@ -47,3 +47,4 @@ Thumbs.db
 
 .env
 /src/environments/environment.locals.ts
+devlaunch.sh
