@@ -16,6 +16,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2017",
+    "allowJs": true,
     "module": "es2020",
     "lib": [
       "es2018",

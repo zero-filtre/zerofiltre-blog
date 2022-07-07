@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Article, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
@@ -11,6 +11,7 @@ import { calcReadingTime, capitalizeString, nFormatter } from 'src/app/services/
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-article-popup.component';
 
 @Component({
   selector: 'app-articles-list',
@@ -57,21 +58,38 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   constructor(
     private seo: SeoService,
     private articleService: ArticleService,
-    private dialogRef: MatDialog,
+    private dialogEntryRef: MatDialog,
+    private dialogDeleteRef: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
     public authService: AuthService,
     private translate: TranslateService,
+    private changeDetectorRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: any
-  ) { }
+  ) {
+   }
 
   openArticleEntryDialog(): void {
-    this.dialogRef.open(ArticleEntryPopupComponent, {
+    this.dialogEntryRef.open(ArticleEntryPopupComponent, {
       width: '850px',
       height: '350px',
       panelClass: 'article-popup-panel',
       data: {
         router: this.router
+      }
+    });
+  }
+
+  public isAuthor(user: any, article: Article): boolean {
+    return user?.id === article?.author?.id
+  }
+
+  public openArticleDeleteDialog(articleId: number | undefined): void {
+    this.dialogDeleteRef.open(DeleteArticlePopupComponent, {
+      panelClass: 'delete-article-popup-panel',
+      data: {
+        id: articleId,
+        history: this.router.url
       }
     });
   }
