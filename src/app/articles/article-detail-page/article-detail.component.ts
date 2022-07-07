@@ -373,58 +373,60 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     let randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
     let randomTagName = this.article?.tags[randomTagIndex]?.name!
 
-    console.log('TAG-INDEX: ', randomTagIndex);
-    console.log('TAG-NAME: ', randomTagName);
-
     const selectedArticles = <any>[]
     let filteredArticles = <any>[]
 
+    console.log('FIRST TAG: ', randomTagName);
+
     this.articleService.findAllArticlesByTag(0, 20, randomTagName)
-      .pipe(
-        tap(({ content }: any) => {
+      .subscribe(({ content, numberOfElements }: any) => {
+        if (numberOfElements > 1) {
           filteredArticles = content.filter((article: Article) => article.id !== this.article.id);
 
-          if (filteredArticles.length) {
-            console.log('SIMILAR ONES: ', filteredArticles);
+          const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+          selectedArticles.push(filteredArticles[randomArticleIndex])
 
-            const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
-            selectedArticles.push(filteredArticles[randomArticleIndex])
+          const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
 
-            const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
-
-            if (newRandomArticleIndex !== randomArticleIndex) {
-              selectedArticles.push(filteredArticles[newRandomArticleIndex])
-            }
-
-          } else {
-            console.log('TRY AGAIN SIMILAR ONES: ', filteredArticles);
-            randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
-            randomTagName = this.article?.tags[randomTagIndex]?.name!
-
-            this.articleService.findAllArticlesByTag(0, 20, randomTagName)
-              .pipe(tap(({ content }: any) => {
-                filteredArticles = content.filter((article: Article) => article.id !== this.article.id);
-
-                if (filteredArticles.length) {
-
-                  const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
-                  selectedArticles.push(filteredArticles[randomArticleIndex])
-
-                  const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
-
-                  if (newRandomArticleIndex !== randomArticleIndex) {
-                    selectedArticles.push(filteredArticles[newRandomArticleIndex])
-                  }
-                }
-              }))
+          if (newRandomArticleIndex !== randomArticleIndex) {
+            selectedArticles.push(filteredArticles[newRandomArticleIndex])
           }
 
-          return selectedArticles;
-        }),
+          console.log('SIMILAR ARTICLES: ', selectedArticles)
+          this.similarArticles = [...selectedArticles]
+        } else {
+          if (this.article?.tags.length == 1) {
+            console.log('ARTICLE HAS ONLY ONE TAG AND NO SIMILAR ARTICLES')
+            return;
+          } else if ((this.article?.tags.length - 1) == randomTagIndex && randomTagIndex != 0) {
+            randomTagIndex -= 1;
+          } else {
+            randomTagIndex += 1;
+          }
+          randomTagName = this.article?.tags[randomTagIndex]?.name!
 
-        mergeMap(_ => of(selectedArticles))
-      )
-      .subscribe(data => this.similarArticles = [...data])
+          console.log('SECOND TAG: ', randomTagName);
+
+          this.articleService.findAllArticlesByTag(0, 20, randomTagName)
+            .subscribe(({ content }: any) => {
+              filteredArticles = content.filter((article: Article) => article.id !== this.article.id);
+
+              if (filteredArticles.length) {
+                const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+                selectedArticles.push(filteredArticles[randomArticleIndex])
+
+                const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+
+                if (newRandomArticleIndex !== randomArticleIndex) {
+                  selectedArticles.push(filteredArticles[newRandomArticleIndex])
+                }
+
+                console.log('SIMILAR ARTICLES: ', selectedArticles)
+                this.similarArticles = [...selectedArticles]
+              }
+            })
+        }
+      })
   }
 
   public isAuthor(user: any, article: Article): boolean {
