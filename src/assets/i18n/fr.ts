@@ -287,5 +287,8 @@ export const fr = {
 
         resendConfirmationAccountTitle: 'Renvoyer code de confirmation | Zerofiltre.tech',
         resendConfirmationAccountDescription: 'Demandez un nouveau lien de confirmation de compte sur la plateforme Zerofiltre.tech facilement',
+    },
+    ddd: {
+        buyButtonText: 'Acces permanent pour 150 €'
     }
 }
