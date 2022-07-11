@@ -85,11 +85,11 @@ String getTag(String buildNumber, String branchName) {
 //     }
 // }
 
-def injectEnv(envFile){
+// def injectEnv(envFile){
 
-    sh "cp $envFile src/environments/environment.ts"
+//     sh "cp $envFile src/environments/environment.ts"
 
-}
+// }
 
 def deleteImages(){
     container('docker') {

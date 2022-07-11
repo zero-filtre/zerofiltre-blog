@@ -56,13 +56,14 @@ export class FileUploadService {
 
     let ovhPass = ''
 
+    if (isDevMode()){
+      ovhPass = environment.ovhAuthPassword;
+    }
+
     if (isPlatformServer(this.platformId)){
       ovhPass = process.env.OVH_AUTH_PASSWORD || '';
     }
 
-    if (isDevMode()){
-      ovhPass = environment.ovhAuthPassword;
-    }
 
 
     if (!this.xTokenServerValue) {
@@ -85,6 +86,8 @@ export class FileUploadService {
           }
         }
       }
+
+      
 
       this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
         ...httpOptions,

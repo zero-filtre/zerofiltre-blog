@@ -1,17 +1,28 @@
-import envTemplate from 'src/environments/environment.template';
+// import envTemplate from 'src/environments/environment.template';
 
-let env: any = {}
-
-try {
-    env = JSON.parse(localStorage.getItem("env-value") || '{}')
-}
-catch {
-
-    for (const key in envTemplate) {
-        env[key] = process.env[(<any>envTemplate)[key]]
-    }
+// let env: any = {}
 
 
-}
+// if(typeof(process)!='undefined'){
 
-export const environment: any = env;
+   
+
+//     for (const key in envTemplate) {
+//         env[key] = process.env[(<any>envTemplate)[key]]
+//     }
+
+//     console.log("SERVER", env)
+
+    
+
+// }
+// else{
+
+//     env = JSON.parse(localStorage.getItem("env-value") || '{}')
+
+//     console.log("CHECK ENV TS", localStorage.getItem("env-value"));
+   
+// }
+
+
+export const environment: any = {};
