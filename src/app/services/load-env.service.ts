@@ -2,10 +2,10 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import envTemplate from 'src/environments/environment.template';
 import { environment } from 'src/environments/environment';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 
-const STATE_ENV = makeStateKey('env-value');
+const STATE_ENV_OBJECT = makeStateKey('env-value');
 
 
 @Injectable({
@@ -13,40 +13,46 @@ const STATE_ENV = makeStateKey('env-value');
 })
 export class LoadEnvService {
 
-  private ENV_NAME = 'env-value';
-
-  public envValue!: any;
+  public serverEnvObject!: any;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private state: TransferState,
   ) {
 
-    this.loadEnv();
+    this.loadEnvObject();
 
   }
 
-  private loadEnv() {
+  private loadEnvObject() {
 
-    this.envValue = this.state.get(STATE_ENV, <any>null);
+    this.serverEnvObject = this.state.get(STATE_ENV_OBJECT, <any>null);
 
-    if (!this.envValue) {
-      let env: any = {}
+    if (!this.serverEnvObject) {
 
-      for (const key in envTemplate) {
-        env[key] = process.env[(<any>envTemplate)[key]]
-        environment[key] = process.env[(<any>envTemplate)[key]];
+      if (isPlatformServer(this.platformId)) {
+        console.log('SSR RUNING...')
+
+        const envObj: any = {}
+
+        for (const key in envTemplate) {
+          envObj[key] = process.env[(<any>envTemplate)[key]]
+          environment[key] = process.env[(<any>envTemplate)[key]];
+        }
+
+        this.state.set(STATE_ENV_OBJECT, envObj);
+      } else {
+        console.log('CSR RUNING...')
+        // Define environment values here if App would run on CSR
       }
-
-      this.state.set(STATE_ENV, env);
     }
     else {
 
       if (isPlatformBrowser(this.platformId)) {
-        localStorage.setItem(this.ENV_NAME, JSON.stringify(this.envValue));
+        console.log('CSR READING SSR VALUES...')
 
-        for (const key in this.envValue) {
-          environment[key] =  this.envValue[key];
+        for (const key in this.serverEnvObject) {
+          environment[key] = this.serverEnvObject[key];
         }
 
       }
