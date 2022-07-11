@@ -17,17 +17,20 @@
                         <div class="flex items-start lg:items-start justify-between gap-5">
                             <div class="flex flex-col space-y-4">
                                 <div *ngIf="articleHasTags" class="flex items-center space-x-2">
-                                    <div *ngFor="let tag of article?.tags"
-                                        class="flex items-center space-x-2 space-y-2 flex-wrap">
+                                    <a *ngFor="let tag of article?.tags" [href]="'/articles?tag='+tag.name"
+                                        class="tag-item flex items-center space-x-2 group">
                                         <span
-                                            class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border border-skin-borderBold">
+                                            class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
                                             <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
                                                 fill="currentColor" viewBox="0 0 8 8">
                                                 <circle cx="4" cy="4" r="3"></circle>
                                             </svg>
-                                            {{tag.name}}
+                                            <span class="group-hover:text-primary-500">
+                                                {{tag.name}}
+                                            </span>
+
                                         </span>
-                                    </div>
+                                    </a>
                                 </div>
 
                                 <div

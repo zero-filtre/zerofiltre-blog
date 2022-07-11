@@ -105,24 +105,28 @@
 
                                 <div class="flex justify-between">
                                     <div class="article-tags-container flex flex-wrap items-center gap-1">
-                                        <div *ngFor="let tag of article?.tags"
-                                            class="tag-item flex items-center space-x-2">
+                                        <a *ngFor="let tag of article?.tags" [href]="'/articles?tag='+tag.name"
+                                            class="tag-item flex items-center space-x-2 group">
                                             <span
                                                 class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
                                                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
                                                     fill="currentColor" viewBox="0 0 8 8">
                                                     <circle cx="4" cy="4" r="3"></circle>
                                                 </svg>
-                                                {{tag.name}}
+                                                <span class="group-hover:text-primary-500">
+                                                    {{tag.name}}
+                                                </span>
+
                                             </span>
-                                        </div>
+                                        </a>
 
                                     </div>
                                     <div>
 
                                         <div *ngIf="authService.currentUsr as currentUsr">
                                             <div *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
-                                                <button [matMenuTriggerFor]="menu" class="rounded-full p-3 bg-gray-100 hover:bg-gray-200 text-secondary"
+                                                <button [matMenuTriggerFor]="menu"
+                                                    class="rounded-full p-3 bg-gray-100 hover:bg-gray-200 text-secondary"
                                                     aria-label="icon-button with a menu">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -138,7 +142,8 @@
                                                         class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                                                         <span>{{ 'articleDetail.AllArticles' | translate }}</span>
                                                     </a>
-                                                    <a aria-labelledby="Link to about page" routerLink="{{article.id}}/edit"
+                                                    <a aria-labelledby="Link to about page"
+                                                        routerLink="{{article.id}}/edit"
                                                         class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                                                         <span>{{ 'articleDetail.edit' | translate }}</span>
                                                     </a>
