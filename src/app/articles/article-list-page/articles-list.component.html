@@ -90,7 +90,7 @@
 
                 <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles; let i=index" class="space-y-11">
-                        <div class="article-card lg:grid grid-cols-3 gap-6">
+                        <div class="article-card lg:grid grid-cols-3 gap-6 group">
                             <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
                                 class="article-preview group">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
@@ -127,7 +127,7 @@
                                         <div *ngIf="authService.currentUsr as currentUsr">
                                             <div *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
                                                 <button [matMenuTriggerFor]="menu"
-                                                    class="rounded-full p-3 bg-gray-100 hover:bg-gray-200 text-secondary"
+                                                    class="rounded-full p-3 group-hover:bg-gray-200 group-hover:text-secondary text-white"
                                                     aria-label="icon-button with a menu">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor">
