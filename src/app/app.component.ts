@@ -4,15 +4,12 @@ import {
   Component,
   HostListener,
   Inject,
-  isDevMode,
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, Observable, shareReplay } from 'rxjs';
-import envTemplate from 'src/environments/environment.template';
-import { environment } from 'src/environments/environment';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
@@ -27,14 +24,12 @@ import {
   RouterEvent,
 } from '@angular/router';
 
-import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { LoadEnvService } from './services/load-env.service';
 
 
 
 declare var Prism: any;
 
-
-const STATE_ENV = makeStateKey('env-value');
 
 @Component({
   selector: 'app-root',
@@ -46,8 +41,8 @@ export class AppComponent implements OnInit {
     this.logCopySuccessMessage(event);
   }
 
-  public servicesUrl!:string;
-  public coursesUrl!:string;
+  public servicesUrl!: string;
+  public coursesUrl!: string;
 
   public appLogoUrl = 'assets/logoblue.svg';
 
@@ -67,7 +62,6 @@ export class AppComponent implements OnInit {
 
   public activePage = this.MY_ACCOUNT;
 
-  private ENV_NAME = 'env-value';
 
   public envValue!: any;
 
@@ -75,17 +69,15 @@ export class AppComponent implements OnInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
-    private state: TransferState,
     private translate: TranslateService,
     private breakpointObserver: BreakpointObserver,
     private messageService: MessageService,
     private router: Router,
     public authService: AuthService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private loadEnvService: LoadEnvService
   ) {
 
-
-    this.loadEnv()
 
     this.setBrowserTranslationConfigs();
 
@@ -99,43 +91,6 @@ export class AppComponent implements OnInit {
 
     router.events.pipe(filter((event): event is RouterEvent => event instanceof RouterEvent))
       .subscribe(e => this.checkRouteChange(e))
-  }
-
-  private loadUrl(){
-
-    let env = JSON.parse(localStorage.getItem(this.ENV_NAME)||'{}')
-
-    this.servicesUrl = env.servicesUrl
-    this.coursesUrl = env.coursesUrl
-    
-  }
-
-  private loadEnv() {
-
-    this.envValue = this.state.get(STATE_ENV, <any>null);
-
-    console.log(this.platformId, this.envValue)
-
-
-    if (isPlatformBrowser(this.platformId) && this.envValue) {
-      localStorage.setItem(this.ENV_NAME, JSON.stringify(this.envValue));
-      this.loadUrl()
-    }
-
-    if (isPlatformServer(this.platformId)) {
-
-      let env: any={}
-
-      for (const key in envTemplate) {
-          env[key]=process.env[(<any>envTemplate)[key]]
-      }
-
-
-      this.state.set(STATE_ENV, env);
-
-    }
-
-
   }
 
   public checkRouteChange(routerEvent: RouterEvent) {
@@ -220,7 +175,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
     this.activePage = this.MY_ACCOUNT;
+
 
     if (isPlatformBrowser(this.platformId)) {
       this.loadCopyToClipboardSvg();
