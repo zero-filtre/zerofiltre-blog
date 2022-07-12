@@ -60,10 +60,10 @@ export class AuthService {
         httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
       }
 
-      this.user$ = this.http.get<User>(`${environment.apiBaseUrl}/user`)
+      this.user$ = this.http.get<User>(`https://blog-api-uat.zerofiltre.tech/user`)
         .pipe(
           catchError(error => {
-            // console.log('ME ERROR: ', error);
+            console.log('ME ERROR: ', error);
             return throwError(() => error);
           }),
           tap(usr => {

@@ -56,11 +56,11 @@ export class FileUploadService {
 
     let ovhPass = ''
 
-    if (isDevMode()){
+    if (isDevMode()) {
       ovhPass = environment.ovhAuthPassword;
     }
 
-    if (isPlatformServer(this.platformId)){
+    if (isPlatformServer(this.platformId)) {
       ovhPass = process.env.OVH_AUTH_PASSWORD || '';
     }
 
@@ -87,9 +87,9 @@ export class FileUploadService {
         }
       }
 
-      
 
-      this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
+
+      this.xToken$ = this.http.post<any>(`${environment.ovhTokenUrl}`, body, {
         ...httpOptions,
         observe: 'response'
       })
@@ -159,7 +159,7 @@ export class FileUploadService {
       .set('Content-Type', 'image/png')
       .set('X-Auth-Token', xToken)
 
-    return this.http.put<string>(`${this.ovhServerUrl}/${fileName}`, file, {
+    return this.http.put<string>(`${environment.ovhServerUrl}/${fileName}`, file, {
       ...httpOptions,
       reportProgress: true,
       observe: 'events'
@@ -179,7 +179,7 @@ export class FileUploadService {
       .set('Content-Type', 'image/png')
       .set('X-Auth-Token', xToken)
 
-    return this.http.delete<any>(`${this.ovhServerUrl}/${fileName}`, httpOptions)
+    return this.http.delete<any>(`${environment.ovhServerUrl}/${fileName}`, httpOptions)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           this.handleError(error);
