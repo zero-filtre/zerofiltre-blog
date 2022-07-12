@@ -18,7 +18,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  readonly apiServerUrl = environment.apiBaseUrl;
+  apiServerUrl = environment.apiBaseUrl;
 
   private subject = new BehaviorSubject<User>(null!);
   public user$ = this.subject.asObservable();
@@ -126,7 +126,7 @@ export class AuthService {
     console.log('LOGIN ENV VALUES: ', environment);
     console.log('ENV_API_BASE_URL: ', environment.apiBaseUrl);
     console.log('SERVICE_API_BASE_URL: ', this.apiServerUrl);
-    return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
+    return this.http.post<any>(`${environment.apiBaseUrl}/auth`, credentials, {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
