@@ -19,7 +19,7 @@ const httpOptions = {
 })
 export class AuthService {
 
-  private readonly apiServerUrl = environment.apiBaseUrl;
+  private apiServerUrl = environment.apiBaseUrl;
 
   private subject = new BehaviorSubject<User>(null!);
   public user$ = this.subject.asObservable();
@@ -125,6 +125,8 @@ export class AuthService {
 
   public login(credentials: FormData, redirectURL: any): Observable<any> {
     console.log('LOGIN ENV VALUES: ', environment);
+    console.log('ENV_API_BASE_URL: ', environment.apiBaseUrl);
+    console.log('SERVICE_API_BASE_URL: ', this.apiServerUrl);
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
       observe: 'response'
     }).pipe(
