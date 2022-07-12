@@ -63,7 +63,7 @@ export class AuthService {
       this.user$ = this.http.get<User>(`${environment.apiBaseUrl}/user`)
         .pipe(
           catchError(error => {
-            console.log('ME ERROR: ', error);
+            // console.log('ME ERROR: ', error);
             return throwError(() => error);
           }),
           tap(usr => {
