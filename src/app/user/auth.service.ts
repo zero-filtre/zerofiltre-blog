@@ -48,8 +48,6 @@ export class AuthService {
     this.redirectURL = '';
     this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
 
-    console.log(this.apiServerUrl)
-
     this.loadCurrentUser();
   }
 
@@ -65,7 +63,7 @@ export class AuthService {
       this.user$ = this.http.get<User>(`${environment.apiBaseUrl}/user`)
         .pipe(
           catchError(error => {
-            console.log('ME ERROR: ', error);
+            // console.log('ME ERROR: ', error);
             return throwError(() => error);
           }),
           tap(usr => {
@@ -187,7 +185,6 @@ export class AuthService {
   }
 
   public getGithubAccessTokenFromCode(code: string): Observable<any> {
-    console.log('LOGIN ENV VALUES: ', environment);
     return this.http.post<any>(`${environment.apiBaseUrl}/user/github/accessToken?code=${code}`, {}, {
       observe: 'response'
     }).pipe(
@@ -199,7 +196,6 @@ export class AuthService {
   }
 
   public InitSOLoginWithAccessToken(accessToken: string) {
-    console.log('LOGIN ENV VALUES: ', environment);
     this.loadLoggedInUser(accessToken, 'stack');
   }
 
