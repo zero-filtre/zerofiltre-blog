@@ -18,7 +18,7 @@
                             <div class="flex flex-col space-y-4">
                                 <div *ngIf="articleHasTags" class="flex items-center space-x-2">
                                     <a *ngFor="let tag of article?.tags" [href]="'/articles?tag='+tag.name"
-                                        class="tag-item flex items-center space-x-2 group">
+                                        class="tag-item flex items-center space-x-2 group  space-y-2 flex-wrap">
                                         <span
                                             class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
                                             <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"

@@ -75,7 +75,7 @@
                                 <div class="flex justify-between">
                                     <div class="article-tags-container flex flex-wrap items-center gap-1">
                                         <a *ngFor="let tag of article?.tags" [href]="'/articles?tag='+tag.name"
-                                            class="tag-item flex items-center space-x-2 group">
+                                            class="tag-item flex items-center space-x-2 group space-y-2 flex-wrap">
                                             <span
                                                 class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
                                                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
