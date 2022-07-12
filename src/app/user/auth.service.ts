@@ -19,7 +19,7 @@ const httpOptions = {
 })
 export class AuthService {
 
-  private apiServerUrl = environment.apiBaseUrl;
+  private apiServerUrl: string;
 
   private subject = new BehaviorSubject<User>(null!);
   public user$ = this.subject.asObservable();
@@ -48,6 +48,7 @@ export class AuthService {
 
     this.redirectURL = '';
     this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
+    this.apiServerUrl = environment.apiBaseUrl;
 
     this.loadCurrentUser();
   }
