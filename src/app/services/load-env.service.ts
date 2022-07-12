@@ -13,7 +13,7 @@ const STATE_ENV_OBJECT = makeStateKey('env-value');
 })
 export class LoadEnvService {
 
-  public serverEnvObject!: any;
+  public envObject!: any;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -26,9 +26,11 @@ export class LoadEnvService {
 
   private loadEnvObject() {
 
-    this.serverEnvObject = this.state.get(STATE_ENV_OBJECT, <any>null);
+    this.envObject = this.state.get(STATE_ENV_OBJECT, <any>null);
 
-    if (!this.serverEnvObject) {
+    console.log('ENV_OBJECT: ', this.envObject);
+
+    if (this.envObject == null) {
 
       if (isPlatformServer(this.platformId)) {
         console.log('SSR RUNING...')
@@ -41,6 +43,7 @@ export class LoadEnvService {
         }
 
         this.state.set(STATE_ENV_OBJECT, envObj);
+
       } else {
         console.log('CSR RUNING...')
         // Define environment values here if App would run on CSR
@@ -48,14 +51,14 @@ export class LoadEnvService {
     }
     else {
 
-      if (isPlatformBrowser(this.platformId)) {
-        console.log('CSR READING SSR VALUES...')
+      console.log('CSR READING SSR VALUES...')
+      console.log('ENV_OBJECT_BEFORE: ', environment);
 
-        for (const key in this.serverEnvObject) {
-          environment[key] = this.serverEnvObject[key];
-        }
-
+      for (const key in this.envObject) {
+        environment[key] = this.envObject[key];
       }
+
+      console.log('ENV_OBJECT_AFTER: ', environment);
 
     }
 

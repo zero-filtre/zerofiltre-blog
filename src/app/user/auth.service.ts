@@ -60,7 +60,7 @@ export class AuthService {
         httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
       }
 
-      this.user$ = this.http.get<User>(`https://blog-api-uat.zerofiltre.tech/user`)
+      this.user$ = this.http.get<User>(`${environment.apiBaseUrl}/user`)
         .pipe(
           catchError(error => {
             console.log('ME ERROR: ', error);
@@ -217,6 +217,7 @@ export class AuthService {
   }
 
   public findUserProfile(userId: string): Observable<User> {
+    console.log('FIND_USER_PROFILE RUNING...', environment)
     return this.http.get<User>(`${environment.apiBaseUrl}/user/profile/${userId}`)
       .pipe(
         shareReplay()
