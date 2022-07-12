@@ -48,6 +48,8 @@ export class AuthService {
     this.redirectURL = '';
     this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
 
+    console.log(this.apiServerUrl)
+
     this.loadCurrentUser();
   }
 
