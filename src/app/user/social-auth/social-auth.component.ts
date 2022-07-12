@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class SocialAuthComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
+    private loadEnvService: LoadEnvService,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
