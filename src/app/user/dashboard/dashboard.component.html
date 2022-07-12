@@ -62,10 +62,10 @@
                     <div *ngFor="let article of articles">
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
                             <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
-                                class="article-preview group">
+                                class="article-preview hover:opacity-75">
                                 <div class="shadow-lg rounded-lg overflow-hidden aspect-w-3 aspect-h-2">
                                     <app-image
-                                        [classes]="'object-cover group-hover:opacity-75 transition-all duration-200'"
+                                        [classes]="'object-cover transition-all duration-200'"
                                         [sourceUrl]="article?.thumbnail!" [alt]="article?.title!">
                                     </app-image>
                                 </div>
@@ -97,7 +97,7 @@
                                                 <button [matMenuTriggerFor]="menu"
                                                     class="rounded-full p-3 group-hover:bg-gray-200 group-hover:text-secondary text-white"
                                                     aria-label="icon-button with a menu">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="2"
@@ -106,11 +106,7 @@
                                                 </button>
 
                                                 <mat-menu #menu="matMenu" class="mt-2 font-semibold text-skin-base">
-                                                    <a aria-labelledby="Back to article list page"
-                                                        routerLink="/articles"
-                                                        class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                                                        <span>{{ 'articleDetail.AllArticles' | translate }}</span>
-                                                    </a>
+                                                
                                                     <a aria-labelledby="Link to about page"
                                                         routerLink="/articles/{{article.id}}/edit"
                                                         class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
@@ -146,9 +142,9 @@
                                 </div>
                                 <div class="mt-2">
                                     <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
-                                        class="article-title group">
+                                        class="article-title">
                                         <h4
-                                            class="text-lg inline-block leading-6 font-semibold text-skin-inverted group-hover:text-primary-500 transition-all duration-200">
+                                            class="text-lg inline-block leading-6 font-semibold text-skin-inverted hover:text-primary-500 transition-all duration-200">
                                             {{capitalize(article?.title!)}}
                                         </h4>
                                     </a>
