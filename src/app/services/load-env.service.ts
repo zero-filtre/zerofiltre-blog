@@ -20,11 +20,11 @@ export class LoadEnvService {
     private state: TransferState,
   ) {
 
-    this.loadEnvObject();
+    // this.loadEnvObject();
 
   }
 
-  private loadEnvObject() {
+  loadEnvObject() {
 
     this.envObject = this.state.get(STATE_ENV_OBJECT, <any>null);
 
@@ -38,8 +38,13 @@ export class LoadEnvService {
         const envObj: any = {}
 
         for (const key in envTemplate) {
-          envObj[key] = process.env[(<any>envTemplate)[key]]
-          environment[key] = process.env[(<any>envTemplate)[key]];
+          if (key == 'production') {
+            envObj[key] = true;
+            environment[key] = true;
+          } else {
+            envObj[key] = process.env[(<any>envTemplate)[key]] || ''
+            environment[key] = process.env[(<any>envTemplate)[key]] || '';
+          }
         }
 
         this.state.set(STATE_ENV_OBJECT, envObj);
@@ -55,7 +60,11 @@ export class LoadEnvService {
       console.log('ENV_OBJECT_BEFORE: ', environment);
 
       for (const key in this.envObject) {
-        environment[key] = this.envObject[key];
+        if (key == 'production') {
+          environment[key] = true;
+        } else {
+          environment[key] = this.envObject[key];
+        }
       }
 
       console.log('ENV_OBJECT_AFTER: ', environment);

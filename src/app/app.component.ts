@@ -77,8 +77,8 @@ export class AppComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private loadEnvService: LoadEnvService
   ) {
-
-
+    console.log('APP CALLED!');
+    loadEnvService.loadEnvObject();
     this.setBrowserTranslationConfigs();
 
 
