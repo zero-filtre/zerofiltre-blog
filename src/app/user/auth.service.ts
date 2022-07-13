@@ -123,9 +123,6 @@ export class AuthService {
   }
 
   public login(credentials: FormData, redirectURL: any): Observable<any> {
-    // console.log('LOGIN ENV VALUES: ', environment);
-    console.log('LOGIN ENV_API_BASE_URL: ', environment.apiBaseUrl);
-    console.log('LOGIN SERVICE_API_BASE_URL: ', this.apiServerUrl);
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
       observe: 'response'
     }).pipe(

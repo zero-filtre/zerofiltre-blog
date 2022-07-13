@@ -60,8 +60,14 @@
             <div class="header-infos flex items-center gap-4">
                 <div
                     class="image-wrapper relative border border-skin-bgMuted rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
-                    <app-image *ngIf="user?.profilePicture" [classes]="'w-full h-full object-cover rounded-full'"
-                        [sourceUrl]="user?.profilePicture!" [alt]="user?.fullName!">
+                    <app-image *ngIf="user?.profilePicture && user?.fullName != loggedUser?.fullName"
+                        [classes]="'w-full h-full object-cover rounded-full'" [sourceUrl]="user?.profilePicture!"
+                        [alt]="user?.fullName!">
+                    </app-image>
+
+                    <app-image *ngIf="user?.profilePicture && user?.fullName == loggedUser?.fullName"
+                        [classes]="'w-full h-full object-cover rounded-full'" [sourceUrl]="loggedUser?.profilePicture!"
+                        [alt]="loggedUser?.fullName!">
                     </app-image>
 
                     <ng-container *ngIf="!user?.profilePicture">
