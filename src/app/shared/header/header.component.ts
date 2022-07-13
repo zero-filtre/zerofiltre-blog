@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { environment } from 'src/environments/environment';
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit {
   @Input() drawer!: any;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     public authService: AuthService,
     private router: Router,
     public seo: SeoService
@@ -30,7 +32,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 
 }

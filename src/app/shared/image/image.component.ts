@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { getUrlHost, getUrlLastElement } from 'src/app/services/utilities.service';
 
 @Component({
@@ -19,7 +20,9 @@ export class ImageComponent implements OnInit {
   browserRunning!: boolean;
   serverRunning!: boolean;
 
-  constructor() { }
+  constructor(
+    private loadEnvService: LoadEnvService
+  ) { }
 
   public imageKitSource(): string {
     const imageName = getUrlLastElement(this.sourceUrl);
