@@ -51,6 +51,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
         this.messageservice.loginError();
+        this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
       },
     })
   }
