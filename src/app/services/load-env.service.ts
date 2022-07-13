@@ -51,7 +51,7 @@ export class LoadEnvService {
         this.state.set(STATE_ENV_OBJECT, envObj);
 
       } else {
-        console.log('CSR RUNING...!')
+        console.log('CSR RUNING USING ENV.LOCALS...!')
         // Define environment values here if App would run on CSR
       }
     }
