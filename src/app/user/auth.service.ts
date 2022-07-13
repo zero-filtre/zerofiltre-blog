@@ -18,7 +18,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  apiServerUrl = environment.apiBaseUrl;
+  readonly apiServerUrl = environment.apiBaseUrl;
 
   private subject = new BehaviorSubject<User>(null!);
   public user$ = this.subject.asObservable();
@@ -60,7 +60,7 @@ export class AuthService {
         httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
       }
 
-      this.user$ = this.http.get<User>(`${environment.apiBaseUrl}/user`)
+      this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
         .pipe(
           catchError(error => {
             console.log('ME ERROR: ', error);
@@ -113,7 +113,7 @@ export class AuthService {
   }
 
   public sendRefreshToken(): Observable<any> {
-    return this.http.get<any>(`${environment.apiBaseUrl}/user/jwt/refreshToken?refreshToken=${this.refreshToken}`)
+    return this.http.get<any>(`${this.apiServerUrl}/user/jwt/refreshToken?refreshToken=${this.refreshToken}`)
       .pipe(
         tap(({ accessToken, refreshToken }) => {
           localStorage.setItem(this.TOKEN_NAME, accessToken);
@@ -124,9 +124,9 @@ export class AuthService {
 
   public login(credentials: FormData, redirectURL: any): Observable<any> {
     // console.log('LOGIN ENV VALUES: ', environment);
-    // console.log('ENV_API_BASE_URL: ', environment.apiBaseUrl);
-    // console.log('SERVICE_API_BASE_URL: ', this.apiServerUrl);
-    return this.http.post<any>(`${environment.apiBaseUrl}/auth`, credentials, {
+    console.log('LOGIN ENV_API_BASE_URL: ', environment.apiBaseUrl);
+    console.log('LOGIN SERVICE_API_BASE_URL: ', this.apiServerUrl);
+    return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
@@ -137,7 +137,7 @@ export class AuthService {
   }
 
   public signup(credentials: FormData): Observable<User> {
-    return this.http.post<User>(`${environment.apiBaseUrl}/user`, credentials, {
+    return this.http.post<User>(`${this.apiServerUrl}/user`, credentials, {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
@@ -153,24 +153,24 @@ export class AuthService {
   }
 
   public requestPasswordReset(email: string): Observable<any> {
-    return this.http.get<any>(`${environment.apiBaseUrl}/user/initPasswordReset?email=${email}`, {
+    return this.http.get<any>(`${this.apiServerUrl}/user/initPasswordReset?email=${email}`, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
   public verifyTokenForPasswordReset(token: string): Observable<any> {
-    return this.http.get<any>(`${environment.apiBaseUrl}/user/verifyTokenForPasswordReset?token=${token}`)
+    return this.http.get<any>(`${this.apiServerUrl}/user/verifyTokenForPasswordReset?token=${token}`)
       .pipe(shareReplay())
   }
 
   public savePasswordReset(values: FormData): Observable<any> {
-    return this.http.post<any>(`${environment.apiBaseUrl}/user/savePasswordReset`, values, {
+    return this.http.post<any>(`${this.apiServerUrl}/user/savePasswordReset`, values, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
   public registrationConfirm(token: string): Observable<any> {
-    return this.http.get<any>(`${environment.apiBaseUrl}/user/registrationConfirm?token=${token}`, {
+    return this.http.get<any>(`${this.apiServerUrl}/user/registrationConfirm?token=${token}`, {
       responseType: 'text' as 'json'
     }).pipe(
       tap(_ => this.refreshData = true),
@@ -179,13 +179,13 @@ export class AuthService {
   }
 
   public resendUserConfirm(email: string): Observable<any> {
-    return this.http.get<any>(`${environment.apiBaseUrl}/user/resendRegistrationConfirm?email=${email}`, {
+    return this.http.get<any>(`${this.apiServerUrl}/user/resendRegistrationConfirm?email=${email}`, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
   public getGithubAccessTokenFromCode(code: string): Observable<any> {
-    return this.http.post<any>(`${environment.apiBaseUrl}/user/github/accessToken?code=${code}`, {}, {
+    return this.http.post<any>(`${this.apiServerUrl}/user/github/accessToken?code=${code}`, {}, {
       observe: 'response'
     }).pipe(
       tap((response: any) => {
@@ -203,13 +203,13 @@ export class AuthService {
   // USER PROFILE SERVICES
 
   public updateUserPassword(passwords: FormData): Observable<any> {
-    return this.http.post<string>(`${environment.apiBaseUrl}/user/updatePassword`, passwords, {
+    return this.http.post<string>(`${this.apiServerUrl}/user/updatePassword`, passwords, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
   public updateUserProfile(profile: any): Observable<User> {
-    return this.http.patch<User>(`${environment.apiBaseUrl}/user`, profile)
+    return this.http.patch<User>(`${this.apiServerUrl}/user`, profile)
       .pipe(
         tap(_ => this.refreshData = true),
         shareReplay()
@@ -218,14 +218,14 @@ export class AuthService {
 
   public findUserProfile(userId: string): Observable<User> {
     console.log('FIND_USER_PROFILE RUNING...', environment)
-    return this.http.get<User>(`${environment.apiBaseUrl}/user/profile/${userId}`)
+    return this.http.get<User>(`${this.apiServerUrl}/user/profile/${userId}`)
       .pipe(
         shareReplay()
       )
   }
 
   public deleteUserAccount(userId: string): Observable<any> {
-    return this.http.delete<any>(`${environment.apiBaseUrl}/user/${userId}`, {
+    return this.http.delete<any>(`${this.apiServerUrl}/user/${userId}`, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
@@ -242,7 +242,7 @@ export class AuthService {
   private getUser(accessToken: string, tokenType: string): Observable<User> {
     httpOptions.headers = httpOptions.headers.set('Authorization', `${tokenType} ${accessToken}`);
 
-    return this.http.get<User>(`${environment.apiBaseUrl}/user`, httpOptions).pipe(
+    return this.http.get<User>(`${this.apiServerUrl}/user`, httpOptions).pipe(
       shareReplay()
     )
   }
