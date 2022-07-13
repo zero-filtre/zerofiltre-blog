@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { ArticleService } from '../articles/article.service';
+import { LoadEnvService } from '../services/load-env.service';
 import { MessageService } from '../services/message.service';
 import { AuthService } from './auth.service';
 
@@ -19,6 +20,7 @@ export class AuthorGuard implements CanActivate {
   isAdminUser!: boolean;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private authService: AuthService,
     private messageService: MessageService,
     private articleService: ArticleService

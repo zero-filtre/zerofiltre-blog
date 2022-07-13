@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
 import { DeleteArticlePopupComponent } from 'src/app/articles/delete-article-popup/delete-article-popup.component';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SeoService } from 'src/app/services/seo.service';
 import {
@@ -49,6 +50,7 @@ export class AdminDashboardComponent implements OnInit {
   status!: string;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private seo: SeoService,
     private articleService: ArticleService,
     private router: Router,

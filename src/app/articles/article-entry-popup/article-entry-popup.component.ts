@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
@@ -15,6 +16,7 @@ export class ArticleEntryPopupComponent implements OnInit {
   public article!: Article
 
   constructor(
+    private loadEnvService: LoadEnvService,
     public dialogRef: MatDialogRef<ArticleEntryPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private articleService: ArticleService,

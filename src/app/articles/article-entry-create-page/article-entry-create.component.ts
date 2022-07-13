@@ -15,6 +15,7 @@ import { FormArray } from '@angular/forms';
 import { Location } from '@angular/common';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { taggedTemplate } from '@angular/compiler/src/output/output_ast';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 
 @Component({
   selector: 'app-article-entry-create',
@@ -71,6 +72,7 @@ export class ArticleEntryCreateComponent implements OnInit {
 
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private fb: FormBuilder,
     private articleService: ArticleService,
     private router: Router,

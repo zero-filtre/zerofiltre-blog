@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
@@ -17,7 +18,10 @@ export class DddComponent implements OnInit, OnDestroy {
   public lessonGroupImage2 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
   public lessonGroupImage3 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
 
-  constructor(private seo: SeoService) { }
+  constructor(
+    private loadEnvService: LoadEnvService,
+    private seo: SeoService
+  ) { }
 
   ngOnInit(): void {
     // this.seo.enanableTransparentHeader();

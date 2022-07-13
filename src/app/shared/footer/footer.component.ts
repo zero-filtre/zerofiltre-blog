@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { capitalizeString, getCurrentYear } from 'src/app/services/utilities.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class FooterComponent implements OnInit {
   public recentArticles$!: Observable<Article[]>;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private articleService: ArticleService,
   ) { }
 

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
@@ -24,6 +25,7 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
   public savePasswordSub!: Subscription;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private authService: AuthService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,

@@ -5,6 +5,7 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { catchError, EMPTY, Observable } from 'rxjs';
+import { LoadEnvService } from '../services/load-env.service';
 import { MessageService } from '../services/message.service';
 import { AuthService } from './auth.service';
 import { User } from './user.model';
@@ -15,6 +16,7 @@ import { User } from './user.model';
 export class UserResolver implements Resolve<User> {
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private authService: AuthService,
     private router: Router,
     private messageService: MessageService

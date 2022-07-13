@@ -15,10 +15,10 @@ export class SocialAuthComponent implements OnInit {
   private accessToken!: string;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
-    private loadEnvService: LoadEnvService,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 

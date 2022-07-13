@@ -14,6 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-article-popup.component';
 import { MessageService } from 'src/app/services/message.service';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 
 // import "node_modules/prismjs/components/prism-rip.min";
 // import "node_modules/prismjs/components/prism-velocity.min";
@@ -305,6 +306,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg';
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private dialogRef: MatDialog,
     private route: ActivatedRoute,
     private articleService: ArticleService,

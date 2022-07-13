@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
@@ -23,6 +24,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   redirectURL: any;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private formbuilder: FormBuilder,
     private authService: AuthService,
     private messageservice: MessageService,

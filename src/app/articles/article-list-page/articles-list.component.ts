@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/user/auth.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-article-popup.component';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -56,6 +57,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   tag!: string;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private seo: SeoService,
     private articleService: ArticleService,
     private dialogEntryRef: MatDialog,
@@ -67,7 +69,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
-   }
+  }
 
   openArticleEntryDialog(): void {
     this.dialogEntryRef.open(ArticleEntryPopupComponent, {

@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../auth.service';
 import { User } from '../user.model';
@@ -17,6 +18,7 @@ export class DeleteAccountPopupComponent implements OnInit {
   public user!: User;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     public dialogRef: MatDialogRef<DeleteAccountPopupComponent>,
     private authService: AuthService,
     private messageService: MessageService,

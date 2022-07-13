@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { catchError, map, of, throwError } from 'rxjs';
 import { File } from 'src/app/articles/article.model';
 import { FileUploadService } from 'src/app/services/file-upload.service';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { AuthService } from '../auth.service';
 import { User } from '../user.model';
 
@@ -27,6 +28,7 @@ export class ProfileImagePopupComponent implements OnInit {
 
 
   constructor(
+    private loadEnvService: LoadEnvService,
     public fileUploadService: FileUploadService,
     public dialogRef: MatDialogRef<ProfileImagePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
