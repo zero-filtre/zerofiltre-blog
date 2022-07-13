@@ -11,6 +11,7 @@ import { SeoService } from 'src/app/services/seo.service';
 import { map, Observable, Subscription, tap } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 
 @Component({
   selector: 'app-profile',
@@ -27,6 +28,7 @@ export class ProfileComponent implements OnInit {
   public user$!: Observable<User>;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private dialogRef: MatDialog,
     private seo: SeoService,
     public authService: AuthService,

@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SeoService } from 'src/app/services/seo.service';
@@ -20,6 +21,7 @@ export class ProfileEntryEditComponent implements OnInit {
   private dataToSend!: User;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private fb: FormBuilder,
     private authService: AuthService,
     private messageService: MessageService,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { LoadEnvService } from '../services/load-env.service';
 import { SeoService } from '../services/seo.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { SeoService } from '../services/seo.service';
 export class HomePage2Component implements OnInit {
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private seo: SeoService,
     private translate: TranslateService
   ) { }

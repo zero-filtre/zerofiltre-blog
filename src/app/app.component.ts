@@ -68,17 +68,16 @@ export class AppComponent implements OnInit {
   public loading: boolean = true;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     @Inject(PLATFORM_ID) private platformId: any,
     private translate: TranslateService,
     private breakpointObserver: BreakpointObserver,
     private messageService: MessageService,
     private router: Router,
     public authService: AuthService,
-    private fileUploadService: FileUploadService,
-    private loadEnvService: LoadEnvService
+    private fileUploadService: FileUploadService
   ) {
-    console.log('APP CALLED!');
-    loadEnvService.loadEnvObject();
+    console.log('APP CTR RUNING...!');
     this.setBrowserTranslationConfigs();
 
 
@@ -175,8 +174,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
     this.activePage = this.MY_ACCOUNT;
 
 

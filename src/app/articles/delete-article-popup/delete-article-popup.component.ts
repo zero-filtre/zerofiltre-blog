@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
 import { ArticleService } from '../article.service';
 
@@ -15,6 +16,7 @@ export class DeleteArticlePopupComponent implements OnInit {
   public loading: boolean = false;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     public dialogRef: MatDialogRef<DeleteArticlePopupComponent>,
     private messageService: MessageService,
     private articleService: ArticleService,

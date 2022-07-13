@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
@@ -19,6 +20,7 @@ export class AccountConfirmationPageComponent implements OnInit {
   public successMessage!: boolean;
 
   constructor(
+    private loadEnvService: LoadEnvService,
     private authService: AuthService,
     private route: ActivatedRoute,
     private messageService: MessageService,

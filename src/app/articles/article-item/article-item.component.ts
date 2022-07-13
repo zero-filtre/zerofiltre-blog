@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 
 @Component({
   selector: 'app-article-item',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticleItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private loadEnvService: LoadEnvService
+  ) { }
 
   ngOnInit(): void {
   }
