@@ -166,7 +166,8 @@
 
                                     <div class="article-author mt-3 flex items-center">
                                         <div class="author-image flex-shrink-0">
-                                            <a aria-labelledby="Link to about page" href="">
+                                            <a aria-labelledby="Link to author profile"
+                                                routerLink="/user/profile/{{article?.author?.id}}">
                                                 <app-image [classes]="'h-10 w-10 rounded-full'"
                                                     [sourceUrl]="article.author?.profilePicture!"
                                                     [alt]="article?.author?.fullName!">
