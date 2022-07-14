@@ -1,7 +1,183 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  overflow-x: hidden;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Extends forms plugin styles with our custom styles in one place */
+@layer base {
+  [type="text"],
+  [type="email"],
+  [type="password"],
+  [type="search"],
+  [multiple],
+  select {
+    @apply shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full placeholder-skin-muted focus:outline-none focus:placeholder-skin-muted font-normal text-skin-base sm:text-sm border-skin-border rounded-md;
+  }
+
+  [type="checkbox"],
+  [type="radio"] {
+    @apply h-4 w-4 lg:h-5 lg:w-5 text-primary-500 bg-skin-card focus:ring-0 focus:ring-offset-0 border-skin-border rounded;
+  }
+}
+
+img {
+  @apply max-h-full text-xs text-transparent;
+  aspect-ratio: attr(width) / attr(height);
+  height: inherit;
+}
+
+.site-container {
+  max-width: 95rem;
+  @apply mx-auto px-4 xl:px-[5%];
+}
+
+.article-popup-panel {
+  max-width: 90vw !important;
+  @apply !h-[300px] sm:!h-[350px];
+}
+
+.article-popup-panel .mat-dialog-container {
+  @apply !rounded-2xl !flex bg-skin-bg justify-center items-center !p-4 sm:p-6;
+}
+
+.password-popup-panel .mat-dialog-container {
+  @apply !rounded-2xl bg-skin-bg;
+}
+
+.delete-account-popup-panel .mat-dialog-container {
+  @apply !rounded-2xl bg-skin-bg;
+}
+
+.profile-image-popup-panel .mat-dialog-container {
+  @apply !rounded-2xl bg-skin-bg sm:!min-w-[390px];
+}
+
+.delete-article-popup-panel .mat-dialog-container {
+  @apply !rounded-2xl bg-skin-bg;
+}
+
+/* Message Notification styles */
+.success-snackbar {
+  @apply bg-primary-500;
+}
+
+.error-snackbar {
+  @apply bg-error;
+}
+
+.warning-snackbar {
+  @apply bg-accent-400;
+}
+
+.info-snackbar {
+  @apply bg-secondary;
+}
+
+.success-snackbar,
+.error-snackbar,
+.warning-snackbar,
+.info-snackbar {
+  @apply text-skin-link;
+}
+
+.success-snackbar button,
+.error-snackbar button,
+.warning-snackbar button,
+.info-snackbar button {
+  @apply text-skin-link;
+}
+
+/* Block code styles */
+.code-toolbar {
+  @apply relative z-20 text-sm lg:text-lg;
+}
+
+.toolbar {
+  @apply flex absolute top-1.5 right-0 text-skin-muted hover:text-skin-border overflow-hidden;
+}
+
+.toolbar-item {
+  @apply first-of-type:z-10 last-of-type:z-0;
+  @apply first-of-type:w-6 first-of-type:lg:w-8;
+  @apply last-of-type:absolute inset-0;
+  @apply first-of-type:opacity-0;
+}
+
+.toolbar-item button {
+  @apply text-sm h-full w-full;
+}
+
+/* Markdown preview styles */
+.markdown-content {
+  @apply marker:text-primary-500;
+}
+
+.markdown-content li {
+  @apply pl-0 lg:pl-1;
+}
+
+.markdown-content li > p {
+  @apply m-0;
+}
+
+/* Cookie confirmation message container */
+#privacypolicies-com---nb {
+  @apply font-ubuntu w-screen h-auto shadow-2xl bg-skin-bg;
+}
+
+.privacypolicies-com---nb-simple {
+  @apply !max-w-[100vw] !left-0;
+}
+
+.cc-nb-main-container {
+  @apply !flex lg:items-center flex-col lg:flex-row gap-3 lg:gap-0 !py-4 !px-4 max-w-[95rem] mx-auto overflow-hidden;
+}
+
+.cc-nb-title-container .cc-nb-title {
+  display: none !important;
+}
+
+.cc-nb-text-container {
+  @apply flex-1;
+}
+.cc-nb-text-container .cc-nb-text {
+  @apply !m-0 !text-skin-art !text-base;
+}
+
+.cc-nb-buttons-container {
+  @apply !flex gap-2 lg:!ml-2;
+}
+
+.cc-nb-buttons-container .cc-nb-changep {
+  border: 1px solid !important;
+  @apply !bg-transparent !border-skin-border !rounded-md !font-normal !text-skin-art;
+}
+
+.cc-nb-buttons-container .cc-nb-okagree {
+  @apply !bg-skin-inverted !rounded-md !shadow-lg;
+}
+
+.cc-nb-buttons-container .cc-nb-reject {
+  display: none !important;
+}
+
+.cc-nb-buttons-container .cc-nb-okagree:hover,
+.cc-nb-buttons-container .cc-nb-reject:hover {
+  opacity: 0.9;
+}

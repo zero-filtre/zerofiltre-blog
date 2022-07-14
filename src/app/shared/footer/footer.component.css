@@ -1,0 +1,31 @@
+.useful-links {
+  @apply text-center md:text-left md:grid grid-cols-3 gap-5;
+}
+
+.useful-links .title {
+  @apply pb-4 text-sm lg:text-base;
+}
+
+.useful-links li {
+  @apply text-xs lg:text-sm mb-3;
+}
+
+.useful-links li > a:first-child {
+  @apply hover:text-skin-borderBold transition-all duration-200;
+}
+
+.services,
+.achievments,
+.articles,
+.legal,
+.contact {
+  @apply mt-10 md:mt-0;
+}
+
+.yellow-text {
+  @apply text-accent-400 font-bold;
+}
+
+.contact li:first-child {
+  @apply mb-0;
+}

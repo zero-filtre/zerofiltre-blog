@@ -1,0 +1,23 @@
+.sidenav {
+  @apply w-60 h-fit pt-24 pb-10 px-6;
+}
+
+.sidenav .sidenavLink div {
+  @apply text-sm py-2 font-normal font-ubuntu;
+}
+
+.link-active {
+  @apply bg-skin-bg text-skin-base shadow-md;
+}
+
+.link-inactive {
+  @apply text-skin-base;
+}
+
+.svg-active {
+  @apply text-skin-base;
+}
+
+.svg-inactive {
+  @apply text-skin-muted group-hover:text-skin-base;
+}

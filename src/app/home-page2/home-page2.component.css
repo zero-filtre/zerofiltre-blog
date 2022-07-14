@@ -1,0 +1,63 @@
+.text-secondary-600 {
+    color: #b77a18 !important;
+}
+
+.text-primary-600 {
+    color: #00737a;
+}
+
+.text-primary-ligth {
+    color: #a7eaed;
+}
+
+.btn {
+    @apply flex items-center inline-block px-5 py-3 text-sm font-semibold text-white uppercase transition duration-200 ease-in-out rounded-md cursor-pointer;
+}
+
+.btn-primary {
+    @apply bg-primary-500 hover:bg-primary-300;
+}
+
+.btn-secondary {
+    background-color: #ffe5bd;
+}
+
+.btn-secondary:hover {
+    background-color: #f5e8d4;
+}
+
+.from-primary-100 {
+    --tw-gradient-from: #d4f2f4;
+}
+
+.to-primary-100 {
+    --tw-gradient-to: #d4f2f4;
+}
+.to-primary-200 {
+    --tw-gradient-to: #81e2e7;
+}
+
+.from-primary-200 {
+    --tw-gradient-from: #81e2e7;
+}
+
+.bg-gradient {
+    background-image: linear-gradient(white 12%, #81e2e7 49%, #15b2bc 71%);
+}
+
+@media only screen and (min-width: 768px) {
+    .bg-gradient {
+        background-image: linear-gradient(white 12%, #81e2e7 49%, #15b2bc 71%);
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .bg-gradient {
+        background-image: linear-gradient(white 22%, #81e2e7 59%, #15b2bc 66%);
+    }
+}
+
+.text-white-broken{
+    color: #F7F8F3;
+}
+

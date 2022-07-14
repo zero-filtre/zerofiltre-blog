@@ -1,0 +1,7 @@
+.active-tab {
+  @apply text-primary-500 border-primary-500;
+}
+
+.active-tag {
+  @apply bg-skin-card transition-all duration-75;
+}

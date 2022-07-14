@@ -1,0 +1,201 @@
+<main class="relative site-container py-10 max-w-7xl mx-auto">
+    <div class="user-update-content">
+        <div class="user-update-content-container max-w-xl mx-auto w-full">
+            <div class="profile-edit-navigation-btns flex gap-1 lg:hidden">
+                <button (click)="navigate.back()" class="flex items-center gap-1 font-semibold"
+                    aria-label="Naviate back button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="text-primary-500"
+                        data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
+                        <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
+                    </svg>
+                    <span class="text-primary-500 hidden text-base">
+                        {{'profileEdit.backToProfileText' | translate}}
+                    </span>
+                </button>
+
+                <div class="flex-1">
+                    <h1 class="text-primary-500 font-semibold text-lg text-center">{{'profileEdit.title' | translate}}
+                    </h1>
+                </div>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="updateUserInfos()" class="profile-edit-form mt-10">
+                <div
+                    class="profile-edit-content flex flex-col space-y-4 px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md">
+                    <div>
+                        <label for="fullName" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            {{'profileEdit.fullName' | translate}}
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="fullName" type="text" id="fullName" formControlName="fullName" class=""
+                                    required placeholder="{{'profileEdit.fullName' | translate}}">
+                            </div>
+                            <div *ngIf="fullName?.invalid && fullName?.dirty" class="">
+                                <div *ngIf="fullName?.errors?.['required']"
+                                    class="mt-1 text-xs sm:text-sm text-error italic">
+                                    {{'profileEdit.missingfullName' | translate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="pseudo" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            {{'profileEdit.pseudo' | translate}}
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="pseudo" type="text" id="pseudo" formControlName="pseudo" class=""
+                                    placeholder="{{'profileEdit.pseudo' | translate}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="profession" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            {{'profileEdit.profession' | translate}}
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="profession" type="text" id="profession" formControlName="profession"
+                                    class="" autocomplete="profession"
+                                    placeholder="{{'profileEdit.profession' | translate}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="website" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            {{'profileEdit.website' | translate}}
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="website" type="text" id="website" formControlName="website" class=""
+                                    placeholder="Votre site web">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div formArrayName="socialLinks">
+
+                        <label for="reseaux sociaux" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            {{'profileEdit.socialLinks' | translate}}
+                        </label>
+
+                        <!-- <div *ngFor="let social of socialLinks.controls; let i=index"
+                            class="mt-2 flex flex-col space-y-1"> -->
+
+                        <!-- <div class="relative flex" [formGroupName]="i">
+                            <span
+                                class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
+                                {{social.value.platform}}
+                            </span>
+                            <input name="{{social.value.platform}}-link" type="text" id="{{social.value.platform}}-link"
+                                formControlName="link"
+                                placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                class="flex-1 rounded-none rounded-r-md" aria-label="Link Account">
+                        </div>
+
+                        <div *ngIf="invalidLink(social.value.link)" class="mt-1 text-xs sm:text-sm text-error italic">
+                            Votre lien doit etre precedé de <b>https://</b>
+                        </div> -->
+
+                        <div class="mt-2 flex flex-col space-y-1">
+
+                            <div class="relative" formGroupName="0">
+                                <div class="flex">
+                                    <span
+                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
+                                        Twitter
+                                    </span>
+                                    <input name="twitter-link" type="text" id="twitter-link" formControlName="link"
+                                        placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                        class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Twitter">
+                                </div>
+
+                                <div *ngIf="socialLinks.controls[0].dirty && socialLinks.controls[0].value.link &&
+                                    invalidLink(socialLinks.controls[0].value?.link)"
+                                    class="mt-1 text-xs sm:text-sm text-error italic"
+                                    [innerHTML]="'profileEdit.invalidSocialLinkError' | translate">
+                                </div>
+                            </div>
+
+                            <div class="relative" formGroupName="1">
+                                <div class="flex">
+                                    <span
+                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input bg-skin-card text-skin-base sm:text-sm">
+                                        Github
+                                    </span>
+                                    <input name="github-link" type="text" id="github-link" formControlName="link"
+                                        placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                        class="flex-1 rounded-none rounded-r-md" aria-label="Link Account Github">
+                                </div>
+
+                                <div *ngIf="socialLinks.controls[1].dirty && socialLinks.controls[1].value.link && invalidLink(socialLinks.controls[1].value?.link)"
+                                    class="mt-1 text-xs sm:text-sm text-error italic"
+                                    [innerHTML]="'profileEdit.invalidSocialLinkError' | translate">
+                                </div>
+                            </div>
+
+                            <div class="relative" formGroupName="2">
+                                <div class="flex">
+                                    <span
+                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 bg-skin-card text-skin-base sm:text-sm">
+                                        Stackoverflow
+                                    </span>
+                                    <input name="stackoverflow-link" type="text" id="stackoverflow-link"
+                                        formControlName="link"
+                                        placeholder="{{'profileEdit.socialLinksPlaceholder' | translate}}"
+                                        class="flex-1 rounded-none rounded-r-md"
+                                        aria-label="Link Account stackoverflow">
+                                </div>
+
+                                <div *ngIf="socialLinks.controls[2].dirty && socialLinks.controls[2].value.link && invalidLink(socialLinks.controls[2].value?.link)"
+                                    class="mt-1 text-xs sm:text-sm text-error italic"
+                                    [innerHTML]="'profileEdit.invalidSocialLinkError' | translate">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="bio" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            {{'profileEdit.bio' | translate}}
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <textarea name="fullName" type="text" id="bio" formControlName="bio" class=""
+                                    placeholder="{{'profileEdit.bio' | translate}}">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-btns-edit-profil mt-10">
+                    <button *ngIf="form.valid" type="submit" [disabled]="loading" [ngClass]="{'opacity-50': loading}"
+                        aria-labelledby="Update profile button"
+                        class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
+                        <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
+                            viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                            <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10" r="35"
+                                stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                                style="animation-play-state:paused"></circle>
+                        </svg>
+                        <span>{{'profileEdit.updateBtn' | translate}}</span>
+                    </button>
+
+                    <button *ngIf="form.invalid" [disabled]="form.invalid || loading"
+                        aria-labelledby="Update profile button"
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
+                        {{'profileEdit.updateBtn' | translate}}
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</main>

@@ -1,0 +1,185 @@
+<main class="relative site-container py-16 max-w-7xl mx-auto">
+    <div class="login-content-wrapper flex items-center justify-center">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="text-center text-3xl font-extrabold text-skin-inverted">
+                    {{'signup.title' | translate}}
+                </h2>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="signup()" class="space-y-6">
+                <div class="rounded-md space-y-4">
+                    <div>
+                        <label for="fullName" class="sr-only">Nom complet</label>
+                        <div class="">
+                            <div class="relative ">
+                                <input name="fullName" type="text" id="fullName" required formControlName="fullName"
+                                    class="" required placeholder="{{'signup.fullName' | translate}}">
+                            </div>
+                            <div *ngIf="fullName?.invalid && fullName?.dirty" class="">
+                                <div *ngIf="fullName?.errors?.['required']"
+                                    class="mt-1 text-xs sm:text-sm text-error italic">
+                                    {{'signup.missingfullName' | translate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="email" class="sr-only">{{'signup.emailAddress' | translate}}</label>
+                        <div class="">
+                            <div class="relative ">
+                                <input name="email" type="email" id="email" required formControlName="email" class=""
+                                    autocomplete="off" required placeholder="{{'signup.emailAddress' | translate}}">
+                            </div>
+                            <div *ngIf="email?.invalid && email?.dirty" class="">
+                                <div *ngIf="email?.errors?.['required']"
+                                    class="mt-1 text-xs sm:text-sm text-error italic">
+                                    {{'signup.missingEmail' | translate}}.
+                                </div>
+                                <div *ngIf="email?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
+                                    {{'signup.invalidEmail' | translate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="sr-only">{{'signup.password' | translate}}</label>
+                        <div class="">
+                            <div class="relative ">
+                                <input name="password" type="password" id="password" required minlength="6"
+                                    formControlName="password" class="" autocomplete="off"
+                                    placeholder="{{'signup.password' | translate}}">
+                            </div>
+                            <div *ngIf="password?.invalid && password?.dirty" class="">
+                                <div *ngIf="password?.errors?.['required']"
+                                    class="mt-1 text-xs sm:text-sm text-error italic">
+                                    {{'signup.missingPassword' | translate}}
+                                </div>
+                                <div *ngIf="password?.errors?.['minlength']"
+                                    class="mt-1 text-xs sm:text-sm text-error italic">
+                                    {{'signup.invalidPasswordLenght' | translate}}
+                                </div>
+                                <div *ngIf="password?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
+                                    {{'signup.invalidPassword' | translate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="matchingPassword" class="sr-only">Confirmation mot de passe</label>
+                        <div class="">
+                            <div class="relative ">
+                                <input name="matchingPassword" type="password" id="matchingPassword"
+                                    formControlName="matchingPassword" class="" autocomplete="off"
+                                    placeholder="{{'signup.matchingPassword' | translate}}">
+                            </div>
+                            <div *ngIf="matchingPassword?.dirty && !passwordDoesMatch"
+                                class="mt-1 text-xs sm:text-sm text-error italic">
+                                {{'signup.passwordDoesNotMatch' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!-- 
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember_me" name="remember_me" type="checkbox" class="">
+                        <label for="remember_me" class="ml-2 block text-sm text-skin-base font-normal cursor-pointer">
+                            {{'signup.newsletterInfo' | translate}}
+                        </label>
+                    </div>
+                </div> -->
+
+                <div>
+                    <button *ngIf="form.valid && passwordDoesMatch" type="submit" [disabled]="loading"
+                        aria-labelledby="Sign up button" [ngClass]="{'opacity-50': loading}"
+                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
+                        <span class="lock-btn absolute left-0 flex items-center pl-3">
+                            <svg class="h-5 w-5 fill-primary-500 group-hover:fill-primary-300"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </span>
+                        <span *ngIf="!loading">{{'signup.signup' | translate}}</span>
+                        <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
+                            viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                            <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10" r="35"
+                                stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                                style="animation-play-state:paused"></circle>
+                        </svg>
+                    </button>
+
+                    <button *ngIf="form.invalid || !passwordDoesMatch" aria-labelledby="Sign up button"
+                        [disabled]="form.invalid || loading || !passwordDoesMatch"
+                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
+                        <span class="lock-btn absolute left-0 flex items-center pl-3">
+                            <svg class="h-5 w-5 fill-primary-500 opacity-20" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </span>
+                        {{'signup.signup' | translate}}
+                    </button>
+                </div>
+            </form>
+
+            <div class="">
+                <a aria-labelledby="Link to about page" routerLink="/login"
+                    class="inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
+                    <span class="sr-only">{{'signup.login' | translate}}</span>
+                    {{'signup.signin' | translate}}
+                </a>
+            </div>
+
+            <div>
+                <div class="relative mt-5">
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 text-skin-base font-normal">
+                            {{'signup.continue' | translate}}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex gap-2">
+                    <div class="flex-1">
+                        <a aria-labelledby="Link to sign up with github"
+                            href="https://github.com/login/oauth/authorize?client_id={{GITHUB_CLIENT_ID}}&redirect_uri={{gitHubRedirectURL}}&scope=user:email"
+                            class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
+                            <span class="sr-only">Continuer avec Github</span>
+                            <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Github
+                        </a>
+                    </div>
+                    <div class="flex-1">
+                        <a aria-labelledby="Link to sign up with stacckoverflow"
+                            href="https://stackoverflow.com/oauth/dialog?client_id={{STACK_OVERFLOW_CLIENT_ID}}&redirect_uri={{stackOverflowRedirectURL}}&scope=no_expiry"
+                            class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-button text-sm text-skin-base hover:bg-skin-link focus:outline-none w-full font-normal">
+                            <span class="sr-only">Continuer avec StackOverflow</span>
+                            <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                                width="64" height="64">
+                                <path d="M28.16 32H2.475V20.58H5.32v8.575h19.956V20.58h2.884z" fill="#bcbbbb" />
+                                <path class="text-skin-muted"
+                                    d="M8.477 19.8l13.993 2.923.585-2.806-13.993-2.923zm1.832-6.704l12.94 6.04 1.208-2.572-12.94-6.08zm3.586-6.353l10.99 9.12 1.832-2.183-10.99-9.12zM20.99 0l-2.3 1.715 8.536 11.46 2.3-1.715zM8.166 26.27H22.43v-2.845H8.166v2.845z"
+                                    fill="#f48024" />
+                            </svg>
+                            StackOverflow
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
