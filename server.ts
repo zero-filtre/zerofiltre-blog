@@ -8,6 +8,9 @@ import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 
+import { createMiddleware, getContentType, getSummary, signalIsUp } from '@promster/express';
+
+
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
@@ -22,6 +25,20 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
+  server.use(createMiddleware({
+    app: server,
+    options:{
+      metricPrefix:'dev_'
+    }
+  }));
+
+  server.get('/metrics', async (req, res) => {
+    req.statusCode = 200;
+
+    res.setHeader('Content-Type', getContentType());
+    res.end(await getSummary());
+  });
+
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
@@ -34,6 +51,8 @@ export function app(): express.Express {
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
 
+
+
   return server;
 }
 
@@ -44,6 +63,7 @@ function run(): void {
   const server = app();
   server.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);
+    signalIsUp()
   });
 }
 
