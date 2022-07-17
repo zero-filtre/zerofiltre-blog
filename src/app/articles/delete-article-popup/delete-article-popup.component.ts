@@ -32,7 +32,6 @@ export class DeleteArticlePopupComponent implements OnInit {
 
   handleDeleteArticle(): void {
     this.loading = true;
-    console.log('ID: ', this.data.id)
 
     this.articleService.deleteArticle(this.data.id).subscribe({
       next: (response: any) => {

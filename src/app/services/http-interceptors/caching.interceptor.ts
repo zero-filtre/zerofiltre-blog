@@ -17,19 +17,16 @@ export class CachingInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!isCacheable(req)) {
-      console.log('NOT CACHEABLE: ', req)
       return next.handle(req)
     }
 
     //TODO: If prevReq was cacheable && prevReq.headers had x-refresh => curr req.headers set x-refresh, assuming curr req is cacheable
 
     if (req.headers.get('x-refresh')) {
-      console.log('UPDATING CACHE...!');
       return this.sendRequest(req, next);
     }
 
     const cachedResponse = this.cache.get(req.url);
-    console.log('CACHED VAL: ', cachedResponse)
     return cachedResponse ? of(cachedResponse) : this.sendRequest(req, next);
   }
 

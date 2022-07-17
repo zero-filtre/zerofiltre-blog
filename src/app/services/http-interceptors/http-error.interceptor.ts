@@ -81,11 +81,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     if (error.status === 0) {
       // Client side Error
       // if (error?.error?.type == 'error') return errorMessage = 'Connexion Instable !'
-      console.log('CLIENT ERROR: ', error);
       errorMessage = error.statusText;
     } else {
       // Server side error
-      console.log('SERVER ERROR: ', error);
       let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
 
       if (serverErrorExist) {

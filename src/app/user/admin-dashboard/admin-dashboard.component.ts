@@ -114,7 +114,6 @@ export class AdminDashboardComponent implements OnInit {
   public onScroll() {
 
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
-      console.log('HasMore Scroll...!');
       this.loadingMore = true;
       this.notScrolly = false;
       this.fetchMoreArticles();

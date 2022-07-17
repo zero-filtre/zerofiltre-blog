@@ -378,8 +378,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     const selectedArticles = <any>[]
     let filteredArticles = <any>[]
 
-    console.log('FIRST TAG: ', randomTagName);
-
     this.articleService.findAllArticlesByTag(0, 20, randomTagName)
       .subscribe(({ content, numberOfElements }: any) => {
         if (numberOfElements > 1) {
@@ -394,11 +392,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
             selectedArticles.push(filteredArticles[newRandomArticleIndex])
           }
 
-          console.log('SIMILAR ARTICLES: ', selectedArticles)
           this.similarArticles = [...selectedArticles]
         } else {
           if (this.article?.tags.length == 1) {
-            console.log('ARTICLE HAS ONLY ONE TAG AND NO SIMILAR ARTICLES')
             return;
           } else if ((this.article?.tags.length - 1) == randomTagIndex && randomTagIndex != 0) {
             randomTagIndex -= 1;
@@ -406,8 +402,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
             randomTagIndex += 1;
           }
           randomTagName = this.article?.tags[randomTagIndex]?.name!
-
-          console.log('SECOND TAG: ', randomTagName);
 
           this.articleService.findAllArticlesByTag(0, 20, randomTagName)
             .subscribe(({ content }: any) => {
@@ -423,7 +417,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
                   selectedArticles.push(filteredArticles[newRandomArticleIndex])
                 }
 
-                console.log('SIMILAR ARTICLES: ', selectedArticles)
                 this.similarArticles = [...selectedArticles]
               }
             })
