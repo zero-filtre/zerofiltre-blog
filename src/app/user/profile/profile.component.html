@@ -13,7 +13,7 @@
                 </span>
             </a>
 
-            <ng-container *ngIf="loggedUser$ | async as loggedUser">
+            <ng-container *ngIf="authService.currentUsr as loggedUser">
                 <ng-container *ngIf="user$ | async as user">
                     <h1 *ngIf="user?.fullName == loggedUser?.fullName"
                         class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">
@@ -65,18 +65,18 @@
                 <div
                     class="image-wrapper relative border border-skin-bgMuted rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
 
-                    <ng-container *ngIf="authService.currentUsr as currentUsr">
-                        <app-image *ngIf="user?.profilePicture && user?.fullName != currentUsr?.fullName"
+                    <ng-container *ngIf="authService.currentUsr as loggedUser">
+                        <app-image *ngIf="user?.profilePicture && user?.fullName != loggedUser?.fullName"
                             [classes]="'w-full h-full object-cover rounded-full'" [sourceUrl]="user?.profilePicture"
                             [alt]="user?.fullName!">
                         </app-image>
 
-                        <app-image *ngIf="currentUsr?.profilePicture && user?.fullName == currentUsr?.fullName"
+                        <app-image *ngIf="loggedUser?.profilePicture && user?.fullName == loggedUser?.fullName"
                             [classes]="'w-full h-full object-cover rounded-full'"
-                            [sourceUrl]="authService.currentUsr?.profilePicture!" [alt]="currentUsr?.fullName!">
+                            [sourceUrl]="loggedUser?.profilePicture!" [alt]="loggedUser?.fullName!">
                         </app-image>
 
-                        <ng-container *ngIf="!currentUsr?.profilePicture && user?.fullName == currentUsr?.fullName">
+                        <ng-container *ngIf="!loggedUser?.profilePicture && user?.fullName == loggedUser?.fullName">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 class="w-full h-full rounded-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white"
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -87,7 +87,7 @@
                     </ng-container>
 
 
-                    <ng-container *ngIf="loggedUser$ | async as loggedUser">
+                    <ng-container *ngIf="authService.currentUsr as loggedUser">
                         <div *ngIf="user?.fullName == loggedUser?.fullName"
                             class="profile-image-edit-btn absolute top-1 right-0 sm:right-4 border-2 border-skin-bgMuted rounded-full w-5 h-5 bg-skin-card hover:bg-skin-cardMuted">
                             <button (click)="openProfileImageDeleteDialog()" aria-label="Edit profile button">
@@ -106,7 +106,7 @@
                 <div class="user-text-wrapper flex flex-col gap-1 flex-1">
                     <span class="text-xl sm:text-2xl font-bold text-skin-base">{{user?.fullName}}</span>
 
-                    <ng-container *ngIf="loggedUser$ | async as loggedUser">
+                    <ng-container *ngIf="authService.currentUsr as loggedUser">
                         <div *ngIf="user?.fullName == loggedUser?.fullName"
                             class="account-verification-badge flex flex-wrap gap-1 items-center">
                             <span *ngIf="loggedUser?.active"
@@ -162,7 +162,7 @@
                     </ng-container>
                 </nav>
 
-                <ng-container *ngIf="loggedUser$ | async as loggedUser">
+                <ng-container *ngIf="authService.currentUsr as loggedUser">
                     <div class="full-name text-base">
                         <label class="text-skin-muted">{{'profile.fullName' | translate}}</label>
                         <div *ngIf="user?.fullName == loggedUser?.fullName; else userFullName" class="text-skin-base">
@@ -213,7 +213,7 @@
 
             </div>
 
-            <ng-container *ngIf="loggedUser$ | async as loggedUser">
+            <ng-container *ngIf="authService.currentUsr as loggedUser">
                 <div *ngIf="user?.fullName == loggedUser?.fullName"
                     class="user-password flex justify-between items-center px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md mt-5">
                     <div class="password text-base">
@@ -236,7 +236,8 @@
                     </button>
                 </div>
 
-                <div *ngIf="user?.fullName == loggedUser?.fullName" class="action-btns flex justify-end  mt-12">
+                <div *ngIf="user?.fullName == authService.currentUsr?.fullName"
+                    class="action-btns flex justify-end  mt-12">
                     <button (click)="openAccountDeleteDialog()" aria-labelledby="Delete account button"
                         class="px-4 py-2 shadow-lg text-white font-semibold text-xs sm:text-sm rounded-full bg-red-500 hover:bg-red-700 transition-all duration-200">
                         {{'profile.deleteMyAccount' | translate}}
