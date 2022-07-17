@@ -19,12 +19,10 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  public user!: User;
-  public loggedUser!: User;
   public userID!: string;
   public loading!: boolean;
 
-  public loggedUser$!: Subscription;
+  public loggedUser$!: Observable<User>;
   public user$!: Observable<User>;
 
   constructor(
@@ -55,9 +53,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  public resendConfirmationMail() {
+  public resendConfirmationMail(email: string) {
     this.loading = true;
-    this.authService.resendUserConfirm(this.user?.email!).subscribe({
+    this.authService.resendUserConfirm(email).subscribe({
       next: (_response: any) => {
         this.messageService.resendConfirmationSuccess();
         this.loading = false;
@@ -69,13 +67,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  public isConnectedUserProfile(user: any): boolean {
-    return this.loggedUser?.fullName == user?.fullName
-  }
-
   ngOnInit(): void {
-    this.loggedUser = this.authService?.currentUsr
-
     // this.route.paramMap.subscribe(
     //   params => {
     //     this.userID = params.get('userID')!;
@@ -83,17 +75,15 @@ export class ProfileComponent implements OnInit {
     //   }
     // );
 
-    this.user$ = this.route.data.pipe(
-      tap(({ user }: any) => {
-        if (this.isConnectedUserProfile(user)) {
-          console.log('FETCH LOGGED-IN USER!')
-          this.authService.user$.subscribe(
-            data => this.loggedUser = data
-          );
-        }
-      }),
-      map(data => data.user)
-    )
+    this.loggedUser$ = this.authService.user$
+      .pipe(
+        map(user => user)
+      )
+
+    this.user$ = this.route.data
+      .pipe(
+        map(data => data.user)
+      )
 
     this.seo.generateTags({
       title: this.translate.instant('meta.profileTitle'),

@@ -13,16 +13,20 @@
                 </span>
             </a>
 
-            <h1 *ngIf="user?.fullName == loggedUser?.fullName"
-                class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">
-                {{'profile.title' | translate}}
-                <span *ngIf="authService.isAdmin" class="text-sm">(Admin)</span>
-            </h1>
+            <ng-container *ngIf="loggedUser$ | async as loggedUser">
+                <ng-container *ngIf="user$ | async as user">
+                    <h1 *ngIf="user?.fullName == loggedUser?.fullName"
+                        class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">
+                        {{'profile.title' | translate}}
+                        <span *ngIf="authService.isAdmin" class="text-sm">(Admin)</span>
+                    </h1>
 
-            <h1 *ngIf="user?.fullName != loggedUser?.fullName"
-                class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">
-                Compte
-            </h1>
+                    <h1 *ngIf="user?.fullName != loggedUser?.fullName"
+                        class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">
+                        Compte
+                    </h1>
+                </ng-container>
+            </ng-container>
         </div>
 
         <div class="profile-menu flex items-center lg:hidden">
@@ -60,16 +64,20 @@
             <div class="header-infos flex items-center gap-4">
                 <div
                     class="image-wrapper relative border border-skin-bgMuted rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
-                    <app-image *ngIf="user?.profilePicture && user?.fullName != loggedUser?.fullName"
-                        [classes]="'w-full h-full object-cover rounded-full'" [sourceUrl]="user?.profilePicture!"
-                        [alt]="user?.fullName!">
-                    </app-image>
 
-                    <app-image *ngIf="user?.profilePicture && user?.fullName == loggedUser?.fullName"
-                        [classes]="'w-full h-full object-cover rounded-full'" [sourceUrl]="loggedUser?.profilePicture!"
-                        [alt]="loggedUser?.fullName!">
-                    </app-image>
+                    <ng-container *ngIf="loggedUser$ | async as loggedUser">
+                        <app-image *ngIf="user?.profilePicture && user?.fullName != loggedUser?.fullName"
+                            [classes]="'w-full h-full object-cover rounded-full'" [sourceUrl]="user?.profilePicture"
+                            [alt]="user?.fullName!">
+                        </app-image>
 
+                        <app-image *ngIf="user?.profilePicture && user?.fullName == loggedUser?.fullName"
+                            [classes]="'w-full h-full object-cover rounded-full'"
+                            [sourceUrl]="loggedUser?.profilePicture" [alt]="loggedUser?.fullName!">
+                        </app-image>
+                    </ng-container>
+
+                    PIC : {{user?.profilePicture}}
                     <ng-container *ngIf="!user?.profilePicture">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="w-full rounded-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white"
@@ -79,52 +87,57 @@
                         </svg>
                     </ng-container>
 
-                    <div *ngIf="user?.fullName == loggedUser?.fullName"
-                        class="profile-image-edit-btn absolute top-1 right-0 sm:right-4 border-2 border-skin-bgMuted rounded-full w-5 h-5 bg-skin-card hover:bg-skin-cardMuted">
-                        <button (click)="openProfileImageDeleteDialog()" aria-label="Edit profile button">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
-                                fill="currentColor" stroke="currentColor" class=" w-full p-0.5 -mx-[2px] text-primary-500 hover:fill-primary-500 transition-all
-                                duration-200">
-                                <path
-                                    d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
+                    <ng-container *ngIf="loggedUser$ | async as loggedUser">
+                        <div *ngIf="user?.fullName == loggedUser?.fullName"
+                            class="profile-image-edit-btn absolute top-1 right-0 sm:right-4 border-2 border-skin-bgMuted rounded-full w-5 h-5 bg-skin-card hover:bg-skin-cardMuted">
+                            <button (click)="openProfileImageDeleteDialog()" aria-label="Edit profile button">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
+                                    fill="currentColor" stroke="currentColor" class=" w-full p-0.5 -mx-[2px] text-primary-500 hover:fill-primary-500 transition-all
+                                    duration-200">
+                                    <path
+                                        d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </ng-container>
                 </div>
 
                 <div class="user-text-wrapper flex flex-col gap-1 flex-1">
                     <span class="text-xl sm:text-2xl font-bold text-skin-base">{{user?.fullName}}</span>
 
-                    <div *ngIf="user?.fullName == loggedUser?.fullName"
-                        class="account-verification-badge flex flex-wrap gap-1 items-center">
-                        <span *ngIf="loggedUser?.active"
-                            class="inline-block font-semibold px-2 py-0.5 text-xs text-skin-muted border-2 border-primary-500 rounded-lg">
-                            {{'profile.verifiedBadgeText' | translate}}
-                        </span>
-                        <svg *ngIf="loggedUser?.active" xmlns="http://www.w3.org/2000/svg"
-                            class="h-6 w-6 text-primary-500" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                clip-rule="evenodd" />
-                        </svg>
+                    <ng-container *ngIf="loggedUser$ | async as loggedUser">
+                        <div *ngIf="user?.fullName == loggedUser?.fullName"
+                            class="account-verification-badge flex flex-wrap gap-1 items-center">
+                            <span *ngIf="loggedUser?.active"
+                                class="inline-block font-semibold px-2 py-0.5 text-xs text-skin-muted border-2 border-primary-500 rounded-lg">
+                                {{'profile.verifiedBadgeText' | translate}}
+                            </span>
+                            <svg *ngIf="loggedUser?.active" xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 text-primary-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd" />
+                            </svg>
 
-                        <span *ngIf="loggedUser && !loggedUser?.active"
-                            class="inline-block font-semibold px-2 py-0.5 text-xs text-skin-muted border-2 border-yellow-400 rounded-lg">
-                            {{'profile.notVerifiedBadgeText' | translate}}
-                        </span>
-                        <svg *ngIf="loggedUser && !loggedUser?.active" xmlns="http://www.w3.org/2000/svg"
-                            class="h-6 w-6 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <button *ngIf="loggedUser && !loggedUser?.active" (click)="resendConfirmationMail()"
-                            aria-labelledby="Resend account confirmation button"
-                            class="sm:ml-2 mt-1 sm:mt-0 text-xs text-skin-muted hover:text-skin-base hover:underline">
-                            {{'profile.resendConfirmationText' | translate}}
-                        </button>
-                    </div>
+                            <span *ngIf="loggedUser && !loggedUser?.active"
+                                class="inline-block font-semibold px-2 py-0.5 text-xs text-skin-muted border-2 border-yellow-400 rounded-lg">
+                                {{'profile.notVerifiedBadgeText' | translate}}
+                            </span>
+                            <svg *ngIf="loggedUser && !loggedUser?.active" xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <button *ngIf="loggedUser && !loggedUser?.active"
+                                (click)="resendConfirmationMail(loggedUser?.email)"
+                                aria-labelledby="Resend account confirmation button"
+                                class="sm:ml-2 mt-1 sm:mt-0 text-xs text-skin-muted hover:text-skin-base hover:underline">
+                                {{'profile.resendConfirmationText' | translate}}
+                            </button>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
         </div>
@@ -134,75 +147,102 @@
                 <nav class="user-credentials-nav flex justify-between items-center">
                     <div class="text-xl sm:text-2xl text-skin-base font-bold">Infos</div>
 
-                    <div *ngIf="user?.fullName == loggedUser?.fullName" class="edit-action-btn">
-                        <a aria-labelledby="Link to about page" routerLink="edit"
-                            class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-border transition-all duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
-                                fill="currentColor" class="" width="24" height="24" focusable="false">
-                                <path
-                                    d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
-                                </path>
-                            </svg>
-                        </a>
-                    </div>
+                    <ng-container *ngIf="loggedUser$ | async as loggedUser">
+                        <div *ngIf="user?.fullName == loggedUser?.fullName" class="edit-action-btn">
+                            <a aria-labelledby="Link to about page" routerLink="edit"
+                                class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-border transition-all duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
+                                    fill="currentColor" class="" width="24" height="24" focusable="false">
+                                    <path
+                                        d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
+                                    </path>
+                                </svg>
+                            </a>
+                        </div>
+                    </ng-container>
                 </nav>
 
-                <div class="full-name text-base">
-                    <label class="text-skin-muted">{{'profile.fullName' | translate}}</label>
-                    <div class="text-skin-base">{{user?.fullName}}</div>
-                </div>
-
-                <div class="pseudo text-base">
-                    <label class="text-skin-muted">{{'profile.pseudo' | translate}}</label>
-                    <div class="text-skin-base">{{user?.pseudoName}}</div>
-                </div>
-
-                <div class="profession text-base">
-                    <label class="text-skin-muted">{{'profile.profession' | translate}}</label>
-                    <div class="text-skin-base">{{user?.profession}}</div>
-                </div>
-
-                <div class="email text-base">
-                    <label class="text-skin-muted">{{'profile.email' | translate}}</label>
-                    <div class="text-skin-base">{{user?.email}}</div>
-                </div>
-
-                <div class="flex justify-between items-center">
-                    <div class="bio text-base">
-                        <label class="text-skin-muted">{{'profile.bio' | translate}}</label>
-                        <div class="text-skin-base">{{user?.bio}}</div>
+                <ng-container *ngIf="loggedUser$ | async as loggedUser">
+                    <div class="full-name text-base">
+                        <label class="text-skin-muted">{{'profile.fullName' | translate}}</label>
+                        <div *ngIf="user?.fullName == loggedUser?.fullName; else userFullName" class="text-skin-base">
+                            {{loggedUser?.fullName}}</div>
+                        <ng-template #userFullName>
+                            <div class="text-skin-base">{{user?.fullName}}</div>
+                        </ng-template>
                     </div>
-                </div>
-            </div>
 
-            <div *ngIf="user?.fullName == loggedUser?.fullName"
-                class="user-password flex justify-between items-center px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md mt-5">
-                <div class="password text-base">
-                    <label class="text-skin-muted">{{'profile.password' | translate}}</label>
-                    <div class="space-x-1">
-                        <ng-container *ngFor="let elt of [].constructor(8)">
-                            <span class="h-2 w-2 inline-block bg-skin-base rounded-full"></span>
-                        </ng-container>
+                    <div class="pseudo text-base">
+                        <label class="text-skin-muted">{{'profile.pseudo' | translate}}</label>
+                        <div *ngIf="user?.fullName == loggedUser?.fullName; else userPseudo" class="text-skin-base">
+                            {{loggedUser?.pseudoName}}</div>
+                        <ng-template #userPseudo>
+                            <div class="text-skin-base">{{user?.pseudoName}}</div>
+                        </ng-template>
                     </div>
+
+                    <div class="profession text-base">
+                        <label class="text-skin-muted">{{'profile.profession' | translate}}</label>
+                        <div *ngIf="user?.fullName == loggedUser?.fullName; else userProfession" class="text-skin-base">
+                            {{loggedUser?.profession}}</div>
+                        <ng-template #userProfession>
+                            <div class="text-skin-base">{{user?.profession}}</div>
+                        </ng-template>
+                    </div>
+
+                    <div class="email text-base">
+                        <label class="text-skin-muted">{{'profile.email' | translate}}</label>
+                        <div *ngIf="user?.fullName == loggedUser?.fullName; else userEmail" class="text-skin-base">
+                            {{loggedUser?.email}}</div>
+                        <ng-template #userEmail>
+                            <div class="text-skin-base">{{user?.email}}</div>
+                        </ng-template>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <div class="bio text-base">
+                            <label class="text-skin-muted">{{'profile.bio' | translate}}</label>
+                            <div *ngIf="user?.fullName == loggedUser?.fullName; else userBio" class="text-skin-base">
+                                {{loggedUser?.bio}}</div>
+                            <ng-template #userBio>
+                                <div class="text-skin-base">{{user?.bio}}</div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+
+            <ng-container *ngIf="loggedUser$ | async as loggedUser">
+                <div *ngIf="user?.fullName == loggedUser?.fullName"
+                    class="user-password flex justify-between items-center px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md mt-5">
+                    <div class="password text-base">
+                        <label class="text-skin-muted">{{'profile.password' | translate}}</label>
+                        <div class="space-x-1">
+                            <ng-container *ngFor="let elt of [].constructor(8)">
+                                <span class="h-2 w-2 inline-block bg-skin-base rounded-full"></span>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <button (click)="openPasswordEntryDialog()" aria-label="Edit password button"
+                        class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-border transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
+                            fill="currentColor" class="" width="24" height="24" focusable="false">
+                            <path
+                                d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
+                            </path>
+                        </svg>
+                    </button>
                 </div>
 
-                <button (click)="openPasswordEntryDialog()" aria-label="Edit password button"
-                    class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-border transition-all duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
-                        fill="currentColor" class="" width="24" height="24" focusable="false">
-                        <path
-                            d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
-                        </path>
-                    </svg>
-                </button>
-            </div>
-
-            <div *ngIf="user?.fullName == loggedUser?.fullName" class="action-btns flex justify-end  mt-12">
-                <button (click)="openAccountDeleteDialog()" aria-labelledby="Delete account button"
-                    class="px-4 py-2 shadow-lg text-white font-semibold text-xs sm:text-sm rounded-full bg-red-500 hover:bg-red-700 transition-all duration-200">
-                    {{'profile.deleteMyAccount' | translate}}
-                </button>
-            </div>
+                <div *ngIf="user?.fullName == loggedUser?.fullName" class="action-btns flex justify-end  mt-12">
+                    <button (click)="openAccountDeleteDialog()" aria-labelledby="Delete account button"
+                        class="px-4 py-2 shadow-lg text-white font-semibold text-xs sm:text-sm rounded-full bg-red-500 hover:bg-red-700 transition-all duration-200">
+                        {{'profile.deleteMyAccount' | translate}}
+                    </button>
+                </div>
+            </ng-container>
         </div>
     </div>
 </main>
