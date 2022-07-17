@@ -56,7 +56,7 @@ export class ProfileImagePopupComponent implements OnInit {
     this.uploading = true;
 
     if (this.user?.profilePicture) {
-      this.deleteProfileImage()
+      // this.deleteProfileImage()
     }
 
     this.fileUploadService.uploadImage(fileName, this.file.data).pipe(
