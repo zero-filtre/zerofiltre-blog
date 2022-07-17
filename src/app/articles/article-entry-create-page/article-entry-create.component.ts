@@ -163,7 +163,6 @@ export class ArticleEntryCreateComponent implements OnInit {
       this.tags.push(tagItem)
       this.typeInTags();
     } else {
-      console.log('Already there !')
     }
   }
 

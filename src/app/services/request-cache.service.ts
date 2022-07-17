@@ -10,7 +10,6 @@ export class RequestCacheService {
   constructor() { }
 
   set(key: string, value: HttpResponse<any>, timeToLive: number | null = null) {
-    console.log(`Set cache key `, key);
 
     if (timeToLive) {
       const expiresIn = new Date();

@@ -63,11 +63,9 @@ export class AuthService {
       this.user$ = this.http.get<User>(`${this.apiServerUrl}/user`)
         .pipe(
           catchError(error => {
-            console.log('ME ERROR: ', error);
             return throwError(() => error);
           }),
           tap(usr => {
-            console.log('ME: ', usr);
             this.subject.next(usr);
             this.setUserData(usr);
             this.refreshData = false
@@ -214,7 +212,6 @@ export class AuthService {
   }
 
   public findUserProfile(userId: string): Observable<User> {
-    console.log('FIND_USER_PROFILE RUNING...', environment)
     return this.http.get<User>(`${this.apiServerUrl}/user/profile/${userId}`)
       .pipe(
         shareReplay()

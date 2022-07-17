@@ -271,7 +271,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
           if (!this.status) {
             this.activePage ||= this.RECENT;
-            console.log('ACTIVE: ', this.activePage);
             return this.fetchRecentArticles();
           }
 

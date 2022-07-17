@@ -20,7 +20,6 @@ export class NavigationService {
     if (this.hasHistory) {
       this.location.back();
     } else {
-      console.log('NO HISTORY')
       this.router.navigateByUrl(this.homeUrl);
     }
   }

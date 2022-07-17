@@ -25,16 +25,11 @@ export class LoadEnvService {
   }
 
   private _loadEnvObject() {
-    console.log('ENV SERVICE RUNING...!');
-
     this.envObject = this.state.get(STATE_ENV_OBJECT, <any>null);
-
-    console.log('ENV_OBJECT: ', this.envObject);
 
     if (this.envObject == null) {
 
       if (isPlatformServer(this.platformId)) {
-        console.log('SSR RUNING...!')
 
         const envObj: any = {}
 
@@ -51,14 +46,10 @@ export class LoadEnvService {
         this.state.set(STATE_ENV_OBJECT, envObj);
 
       } else {
-        console.log('CSR RUNING USING ENV.LOCALS...!')
         // Define environment values here if App would run on CSR
       }
     }
     else {
-
-      console.log('CSR READING SSR VALUES...!')
-      console.log('ENV_OBJECT_BEFORE: ', environment);
 
       for (const key in this.envObject) {
         if (key == 'production') {
@@ -67,8 +58,6 @@ export class LoadEnvService {
           environment[key] = this.envObject[key];
         }
       }
-
-      console.log('ENV_OBJECT_AFTER: ', environment);
 
     }
 
