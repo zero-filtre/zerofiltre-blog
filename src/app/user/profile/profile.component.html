@@ -65,27 +65,27 @@
                 <div
                     class="image-wrapper relative border border-skin-bgMuted rounded-full h-20 w-20 sm:h-36 sm:w-36 shadow-lg">
 
-                    <ng-container *ngIf="loggedUser$ | async as loggedUser">
-                        <app-image *ngIf="user?.profilePicture && user?.fullName != loggedUser?.fullName"
+                    <ng-container *ngIf="authService.currentUsr as currentUsr">
+                        <app-image *ngIf="user?.profilePicture && user?.fullName != currentUsr?.fullName"
                             [classes]="'w-full h-full object-cover rounded-full'" [sourceUrl]="user?.profilePicture"
                             [alt]="user?.fullName!">
                         </app-image>
 
-                        <app-image
-                            *ngIf="authService.currentUsr?.profilePicture && user?.fullName == authService.currentUsr?.fullName"
+                        <app-image *ngIf="currentUsr?.profilePicture && user?.fullName == currentUsr?.fullName"
                             [classes]="'w-full h-full object-cover rounded-full'"
-                            [sourceUrl]="authService.currentUsr?.profilePicture!" [alt]="loggedUser?.fullName!">
+                            [sourceUrl]="authService.currentUsr?.profilePicture!" [alt]="currentUsr?.fullName!">
                         </app-image>
+
+                        <ng-container *ngIf="!currentUsr?.profilePicture && user?.fullName == currentUsr?.fullName">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-full h-full rounded-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </ng-container>
                     </ng-container>
 
-                    <ng-container *ngIf="!user?.profilePicture">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-full h-full rounded-full p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                    </ng-container>
 
                     <ng-container *ngIf="loggedUser$ | async as loggedUser">
                         <div *ngIf="user?.fullName == loggedUser?.fullName"
