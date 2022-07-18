@@ -16,6 +16,7 @@ import { Location } from '@angular/common';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { taggedTemplate } from '@angular/compiler/src/output/output_ast';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { sortByNameAsc } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-article-entry-create',
@@ -102,7 +103,8 @@ export class ArticleEntryCreateComponent implements OnInit {
   public fetchListOfTags(): void {
     this.articleService.getListOfTags().subscribe(
       (response: Tag[]) => {
-        this.tagList = response
+        const sortedList = sortByNameAsc(response);
+        this.tagList = sortedList;
       }
     )
   }
