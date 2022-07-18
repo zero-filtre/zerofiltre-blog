@@ -13,23 +13,20 @@
                 </span>
             </a>
 
-            <<<<<<< HEAD <ng-container *ngIf="authService.currentUsr as loggedUser">
-                =======
-                <ng-container *ngIf="loggedUser$ | async as loggedUser">
-                    >>>>>>> efd1ec5 (Fix profile sync (#6))
-                    <ng-container *ngIf="user$ | async as user">
-                        <h1 *ngIf="user?.fullName == loggedUser?.fullName"
-                            class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">
-                            {{'profile.title' | translate}}
-                            <span *ngIf="authService.isAdmin" class="text-sm">(Admin)</span>
-                        </h1>
+            <ng-container *ngIf="authService.currentUsr as loggedUser">
+                <ng-container *ngIf="user$ | async as user">
+                    <h1 *ngIf="user?.fullName == loggedUser?.fullName"
+                        class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">
+                        {{'profile.title' | translate}}
+                        <span *ngIf="authService.isAdmin" class="text-sm">(Admin)</span>
+                    </h1>
 
-                        <h1 *ngIf="user?.fullName != loggedUser?.fullName"
-                            class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">
-                            Compte
-                        </h1>
-                    </ng-container>
+                    <h1 *ngIf="user?.fullName != loggedUser?.fullName"
+                        class="flex-1 -mb-2 text-primary-500 font-semibold text-xl sm:text-2xl">
+                        Compte
+                    </h1>
                 </ng-container>
+            </ng-container>
         </div>
 
         <div class="profile-menu flex items-center lg:hidden">
