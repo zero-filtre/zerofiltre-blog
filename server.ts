@@ -28,7 +28,7 @@ export function app(): express.Express {
   server.use(createMiddleware({
     app: server,
     options:{
-      metricPrefix:'dev_'
+      metricPrefix:'front_'
     }
   }));
 
