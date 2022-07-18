@@ -12,9 +12,7 @@ import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
 import { FormArray } from '@angular/forms';
-import { Location } from '@angular/common';
 import { NavigationService } from 'src/app/services/navigation.service';
-import { taggedTemplate } from '@angular/compiler/src/output/output_ast';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 
 @Component({
