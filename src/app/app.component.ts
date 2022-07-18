@@ -77,7 +77,6 @@ export class AppComponent implements OnInit {
     public authService: AuthService,
     private fileUploadService: FileUploadService
   ) {
-    console.log('APP CTR RUNING...!');
     this.setBrowserTranslationConfigs();
 
 

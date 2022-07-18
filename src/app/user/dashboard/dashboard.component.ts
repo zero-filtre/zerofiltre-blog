@@ -112,10 +112,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public onScroll() {
-    console.log('Normal Scroll...!');
-
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
-      console.log('HasMore Scroll...!');
       this.loadingMore = true;
       this.notScrolly = false;
       this.fetchMoreArticles();
