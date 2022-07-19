@@ -14,13 +14,14 @@ import { ArticleService } from '../article.service';
 import { FormArray } from '@angular/forms';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { BaseComponent } from 'src/app/Base.component';
 
 @Component({
   selector: 'app-article-entry-create',
   templateUrl: './article-entry-create.component.html',
   styleUrls: ['./article-entry-create.component.css']
 })
-export class ArticleEntryCreateComponent implements OnInit {
+export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   @HostListener('click', ['$event']) onClick(event: any) {
     if (
       event.target.classList.contains('tagItem')
@@ -82,10 +83,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     private translate: TranslateService,
     public navigate: NavigationService,
     private changeDetector: ChangeDetectorRef
-  ) {
-
-
-  }
+  ) { }
 
   public openTagsDropdown() {
     this.tagsDropdownOpened = true
@@ -397,6 +395,8 @@ export class ArticleEntryCreateComponent implements OnInit {
       })
   }
 
+  public isFormValid = () => this.isSaved || this.form.valid;
+
   public onChanges(element: Observable<any>): void {
     element.pipe(
       debounceTime(2000),
@@ -421,7 +421,8 @@ export class ArticleEntryCreateComponent implements OnInit {
               })
             ).subscribe();
         } else {
-          this.messageService.autoSaveAlert();
+          this.isSaved = false;
+          // this.messageService.autoSaveAlert();
         }
       }),
     ).subscribe()

@@ -87,7 +87,8 @@ export class MessageService {
 
   autoSaveAlert() {
     const msg = this.translate.instant('articleEntryEdit.autoSaveAlertMessage');
-    this.openSnackBarWarning(msg, "C'est noté !")
+    this.openSnackBarWarning(msg, "C'est noté !", 0)
+    return false;
   }
 
   saveArticleSuccess() {
