@@ -124,12 +124,15 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   }
 
   public InitForm(article: Article): void {
+    const articleSummary = article.summary || 'Veuillez indiquer ici le résume de votre article';
+    const articleContent = article.content || 'Saisir le contenu de votre article dans cet espace';
+
     this.form = this.fb.group({
       id: [+article.id!],
       title: [article.title, [Validators.required]],
-      summary: [article.summary, [Validators.required]],
+      summary: [articleSummary, [Validators.required]],
+      content: [articleContent, [Validators.required]],
       thumbnail: [article.thumbnail],
-      content: [article.content, [Validators.required]],
       tags: this.fb.array(article.tags.map(tag => this.buildTagItemFields(tag)))
     })
   }
