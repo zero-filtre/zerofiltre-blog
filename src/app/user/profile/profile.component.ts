@@ -8,7 +8,7 @@ import { PasswordUpdatePopupComponent } from '../password-update-popup/password-
 import { ProfileImagePopupComponent } from '../profile-image-popup/profile-image-popup.component';
 import { User } from '../user.model';
 import { SeoService } from 'src/app/services/seo.service';
-import { map, Observable, Subscription, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadEnvService } from 'src/app/services/load-env.service';
@@ -68,21 +68,9 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.route.paramMap.subscribe(
-    //   params => {
-    //     this.userID = params.get('userID')!;
-    //     this.getUserProfile(this.userID);
-    //   }
-    // );
-
     this.loggedUser$ = this.authService.user$
       .pipe(
         map(user => user)
-      )
-
-    this.user$ = this.route.data
-      .pipe(
-        map(data => data.user)
       )
 
     this.seo.generateTags({
