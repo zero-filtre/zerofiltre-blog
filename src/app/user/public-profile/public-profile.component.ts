@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { User } from '../user.model';
 import { SeoService } from 'src/app/services/seo.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 
 @Component({
@@ -24,6 +24,7 @@ export class PublicProfileComponent implements OnInit {
     public authService: AuthService,
     private translate: TranslateService,
     private route: ActivatedRoute,
+    private router: Router
   ) { }
 
 
@@ -37,6 +38,9 @@ export class PublicProfileComponent implements OnInit {
 
     this.user$ = this.route.data
       .pipe(
+        tap(data => {
+          if (data.user?.fullName == this.authService.currentUsr?.fullName) this.router.navigateByUrl('/user/profile')
+        }),
         map(data => data.user)
       )
 
