@@ -32,7 +32,6 @@ export class ProfileComponent implements OnInit {
     public authService: AuthService,
     private messageService: MessageService,
     private translate: TranslateService,
-    private route: ActivatedRoute,
   ) { }
 
   public openPasswordEntryDialog(): void {
