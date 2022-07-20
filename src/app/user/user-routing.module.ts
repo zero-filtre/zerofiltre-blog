@@ -24,14 +24,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: ':userID',
-    component: PublicProfileComponent,
-    resolve: {
-      user: UserResolver
-    },
-  },
-  {
-    path: 'profile/:userID/edit',
+    path: 'profile/edit',
     component: ProfileEntryEditComponent,
     canActivate: [AuthGuard]
   },
@@ -50,7 +43,14 @@ const routes: Routes = [
     data: {
       role: 'ROLE_ADMIN'
     }
-  }
+  },
+  {
+    path: ':userID',
+    component: PublicProfileComponent,
+    resolve: {
+      user: UserResolver
+    },
+  },
 ];
 
 @NgModule({
