@@ -398,7 +398,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
       })
   }
 
-  public isFormValid = () => this.isSaved || this.form.valid;
+  public isFormValid = () => this.isSaved || this.form?.valid;
 
   public onChanges(element: Observable<any>): void {
     element.pipe(
