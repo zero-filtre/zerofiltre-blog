@@ -23,7 +23,6 @@ spec:
             export OVH_AUTH_PASSWORD="{{ .Data.data.ovh_auth_password }}"
           {{- end -}}
     spec:
-      serviceAccountName: internal-app
       containers:
         - name: zerofiltretech-blog-front-${env_name}
           image: imzerofiltre/zerofiltretech-blog-front:0.0.1
