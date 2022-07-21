@@ -15,8 +15,6 @@ spec:
       labels:
         app: zerofiltretech-blog-front-${env_name}
       annotations:
-        vault.security.banzaicloud.io/vault-addr: "https://vault:8200"
-        vault.security.banzaicloud.io/vault-tls-secret: "vault-tls"
         vault.hashicorp.com/agent-inject: 'true'
         vault.hashicorp.com/role: 'internal-app'
         vault.hashicorp.com/agent-inject-secret-config: '${env_name}/data/zerofiltre-blog-front'
@@ -33,10 +31,6 @@ spec:
           ports:
             - containerPort: 4000
           env:
-
-            - name: OVH_AUTH_PASSWORD
-              value: "vault:${env_name}/data/zerofiltre-blog-front#ovh_auth_password"
-
             
             - name: GITHUB_CLIENT_ID
               valueFrom:
