@@ -24,6 +24,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './lang-switcher/translate-universal-loader';
 import { HeaderComponent } from './header/header.component';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 
 const components = [
   AppShellRenderDirective,
@@ -52,7 +53,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, HeaderComponent],
+  declarations: [...components, HeaderComponent, NotFoundPageComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
