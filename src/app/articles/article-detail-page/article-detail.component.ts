@@ -336,6 +336,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         tap(art => {
           if (art.status === 'PUBLISHED') {
             this.isPublished.next(true);
+            this.incrementNberOfViews(this.articleId);
           } else {
             this.isPublished.next(false);
           }
@@ -361,7 +362,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
 
-          this.incrementNberOfViews(this.articleId);
           this.fetchSimilarArticles();
           this.loading = false;
         },
