@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
 
-import { BehaviorSubject, of, Subscription } from 'rxjs';
+import { BehaviorSubject, of, Subscription, Observable } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -280,6 +280,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public isPublished$ = this.isPublished.asObservable();
   readonly blogUrl = environment.blogUrl;
 
+  public nberOfViews$: Observable<any>;
+
   private nberOfReactions = new BehaviorSubject<number>(0);
   public nberOfReactions$ = this.nberOfReactions.asObservable();
   public typesOfReactions = <any>[
@@ -358,6 +360,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
+
+          this.incrementNberOfViews(this.articleId);
           this.fetchSimilarArticles();
           this.loading = false;
         },
@@ -483,6 +487,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   public capitalize(str: string): string {
     return capitalizeString(str);
+  }
+
+  public incrementNberOfViews(aricleId: string) {
+    this.nberOfViews$ = this.articleService.incrementViews(aricleId)
   }
 
   ngOnInit(): void {
