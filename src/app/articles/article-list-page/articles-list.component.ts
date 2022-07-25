@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { calcReadingTime, capitalizeString, nFormatter } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-article-popup.component';
 import { LoadEnvService } from 'src/app/services/load-env.service';
@@ -55,6 +55,8 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public articles$!: Subscription;
   status!: string;
   tag!: string;
+
+  public nberOfViews: Observable<any>;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -122,6 +124,13 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.articles$ = this.articleService
       .findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
+      .subscribe(this.handleFetchedArticles)
+  }
+
+  public fetchTrendingArticles(): void {
+    this.loading = true;
+    this.articles$ = this.articleService
+      .findAllArticlesByTrend(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
@@ -215,7 +224,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     const newArticles = content;
     this.loadingMore = false;
     this.hasNext = hasNext;
+
     this.setArticlesReadingTime(newArticles);
+    this.setArticlesTotalViews(newArticles);
 
     if (newArticles.length === 0) {
       this.notEmptyArticles = false;
@@ -228,7 +239,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   private handleFetchedArticles = {
     next: ({ content, hasNext }: any) => {
       this.articles = content;
+
       this.setArticlesReadingTime(this.articles);
+      this.setArticlesTotalViews(content);
+
       this.loading = false;
       this.hasNext = hasNext;
       this.noArticlesAvailable = false;
@@ -251,6 +265,17 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   public capitalize(str: string): string {
     return capitalizeString(str);
+  }
+
+  public getTotalViewsOfArticle(article: Article) {
+    this.articleService.getNberOfViews(article.id)
+      .subscribe(val => article.totalViews = val)
+  }
+
+  public setArticlesTotalViews(articles: Article[]): void {
+    for (const article of articles) {
+      this.getTotalViewsOfArticle(article);
+    }
   }
 
 

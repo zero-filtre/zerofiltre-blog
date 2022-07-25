@@ -49,7 +49,7 @@ export class ArticleService {
       }))
   }
 
-  public getNberOfViews(articleId: string): Observable<any> {
+  public getNberOfViews(articleId: any): Observable<any> {
     if (isPlatformServer(this.platformID)) return EMPTY
 
     const total = +localStorage.getItem(`article-${articleId}-views`) || 0
@@ -87,12 +87,24 @@ export class ArticleService {
   }
 
   public findAllRecentArticles(page: number, limit: number): Observable<Article[]> {
-
-
     if (this.refreshData) {
       httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
     }
     return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`, httpOptions)
+      .pipe(
+        tap(_ => {
+          this.refreshData = false
+          httpOptions.headers = httpOptions.headers.delete('x-refresh');
+        }),
+        shareReplay()
+      );
+  }
+
+  public findAllArticlesByTrend(page: number, limit: number): Observable<Article[]> {
+    if (this.refreshData) {
+      httpOptions.headers = httpOptions.headers.set('xr-refresh', 'true');
+    }
+    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published&byPopularity=true`, httpOptions)
       .pipe(
         tap(_ => {
           this.refreshData = false
