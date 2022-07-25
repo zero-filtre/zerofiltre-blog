@@ -100,18 +100,14 @@ export class ArticleService {
       );
   }
 
-  public findAllArticlesByTrend(page: number, limit: number): Observable<Article[]> {
-    if (this.refreshData) {
-      httpOptions.headers = httpOptions.headers.set('xr-refresh', 'true');
-    }
-    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published&byPopularity=true`, httpOptions)
-      .pipe(
-        tap(_ => {
-          this.refreshData = false
-          httpOptions.headers = httpOptions.headers.delete('x-refresh');
-        }),
-        shareReplay()
-      );
+  public findAllArticlesByTrend(articles: Article[]): Observable<any> {
+    return of(articles)
+      .pipe(map(arr => {
+        const content = arr.sort((a, b) => b.totalViews - a.totalViews);
+        const hasNext = true;
+
+        return { content, hasNext }
+      }))
   }
 
   public findAllArticlesByPopularity(page: number, limit: number): Observable<Article[]> {

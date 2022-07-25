@@ -130,7 +130,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public fetchTrendingArticles(): void {
     this.loading = true;
     this.articles$ = this.articleService
-      .findAllArticlesByTrend(this.pageNumber, this.pageItemsLimit)
+      .findAllArticlesByTrend(this.articles)
       .subscribe(this.handleFetchedArticles)
   }
 
@@ -163,7 +163,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
     if (trendName === this.TRENDING) {
       this.activePage = this.TRENDING
-      this.router.navigateByUrl('/articles');
+      this.router.navigateByUrl(`/articles?sortBy=${trendName}`);
     }
 
     if (trendName === this.TAGS) {
@@ -302,6 +302,11 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           if (this.status == this.POPULAR) {
             this.activePage = this.status;
             return this.fetchPopularArticles();
+          }
+
+          if (this.status == this.TRENDING) {
+            this.activePage = this.status;
+            return this.fetchTrendingArticles();
           }
         }
       );
