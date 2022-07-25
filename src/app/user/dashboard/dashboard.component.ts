@@ -174,7 +174,9 @@ export class DashboardComponent implements OnInit {
     const newArticles = this.sortArticle(content);
     this.loadingMore = false;
     this.hasNext = hasNext;
+
     this.setArticlesReadingTime(newArticles);
+    this.setArticlesTotalViews(newArticles);
 
     if (newArticles.length === 0) {
       this.notEmptyArticles = false;
@@ -187,7 +189,10 @@ export class DashboardComponent implements OnInit {
   private handleFetchedArticles = {
     next: ({ content, hasNext }: any) => {
       this.articles = this.sortArticle(content);
+
       this.setArticlesReadingTime(this.articles);
+      this.setArticlesTotalViews(this.articles);
+
       this.loading = false;
       this.hasNext = hasNext;
 
@@ -209,6 +214,17 @@ export class DashboardComponent implements OnInit {
 
   public capitalize(str: string): string {
     return capitalizeString(str);
+  }
+
+  public getTotalViewsOfArticle(article: Article) {
+    this.articleService.getNberOfViews(article.id)
+      .subscribe(val => article.totalViews = val)
+  }
+
+  public setArticlesTotalViews(articles: Article[]): void {
+    for (const article of articles) {
+      this.getTotalViewsOfArticle(article);
+    }
   }
 
   ngOnInit(): void {
