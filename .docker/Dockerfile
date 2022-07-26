@@ -9,7 +9,7 @@ RUN npm install -g @angular/cli
 RUN npm install -f
 
 COPY . .
-RUN ng build --prod && ng run zerofiltre-blog:server
+RUN ng build configuration prod && ng run zerofiltre-blog:server
 
 FROM node:16-alpine as prod
 WORKDIR /app
