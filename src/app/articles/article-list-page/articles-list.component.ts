@@ -130,7 +130,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   public fetchTrendingArticles(): void {
     this.loading = true;
     this.articles$ = this.articleService
-      .findAllArticlesByTrend(this.articles)
+      .findAllArticlesByTrend(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
@@ -209,6 +209,12 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       return
     }
 
+    if (queryParamOne === this.TRENDING) {
+      this.articleService.findAllArticlesByTrend(this.scrollyPageNumber, this.pageItemsLimit)
+        .subscribe((response: any) => this.handleNewFetchedArticles(response));
+      return
+    }
+
     if (queryParamTwo) {
       this.articleService.findAllArticlesByTag(this.scrollyPageNumber, this.pageItemsLimit, queryParamTwo)
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
@@ -280,7 +286,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-
     if (isPlatformBrowser(this.platformId)) {
       this.fetchListOfTags()
 
