@@ -132,8 +132,6 @@ metadata:
   namespace: zerofiltretech-${env_name}
   name: zerofiltretech-blog-front-${env_name}
   annotations:
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      limit_req zone=default burst=10 nodelay;
     nginx.ingress.kubernetes.io/rewrite-target: /
     # add an annotation indicating the issuer to use.
     cert-manager.io/cluster-issuer: letsencrypt-prod
