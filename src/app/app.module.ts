@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -10,7 +10,6 @@ import { HomePageComponent } from './home-page/home-page.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import { LOCALE_ID } from '@angular/core';
 
 import { httpInterceptorProviders } from './services/http-interceptors';
 import { AuthInterceptor } from './services/http-interceptors/auth.interceptor';
