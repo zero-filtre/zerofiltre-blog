@@ -12,17 +12,16 @@ import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
 import { FormArray } from '@angular/forms';
-import { Location } from '@angular/common';
 import { NavigationService } from 'src/app/services/navigation.service';
-import { taggedTemplate } from '@angular/compiler/src/output/output_ast';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { BaseComponent } from 'src/app/Base.component';
 
 @Component({
   selector: 'app-article-entry-create',
   templateUrl: './article-entry-create.component.html',
   styleUrls: ['./article-entry-create.component.css']
 })
-export class ArticleEntryCreateComponent implements OnInit {
+export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   @HostListener('click', ['$event']) onClick(event: any) {
     if (
       event.target.classList.contains('tagItem')
@@ -84,10 +83,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     private translate: TranslateService,
     public navigate: NavigationService,
     private changeDetector: ChangeDetectorRef
-  ) {
-
-
-  }
+  ) { }
 
   public openTagsDropdown() {
     this.tagsDropdownOpened = true
@@ -128,12 +124,15 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public InitForm(article: Article): void {
+    const articleSummary = article.summary || 'Veuillez indiquer ici le résume de votre article';
+    const articleContent = article.content || 'Saisir le contenu de votre article dans cet espace';
+
     this.form = this.fb.group({
       id: [+article.id!],
       title: [article.title, [Validators.required]],
-      summary: [article.summary, [Validators.required]],
+      summary: [articleSummary, [Validators.required]],
+      content: [articleContent, [Validators.required]],
       thumbnail: [article.thumbnail],
-      content: [article.content, [Validators.required]],
       tags: this.fb.array(article.tags.map(tag => this.buildTagItemFields(tag)))
     })
   }
@@ -399,6 +398,8 @@ export class ArticleEntryCreateComponent implements OnInit {
       })
   }
 
+  public isFormValid = () => this.isSaved || this.form?.valid;
+
   public onChanges(element: Observable<any>): void {
     element.pipe(
       debounceTime(2000),
@@ -423,7 +424,8 @@ export class ArticleEntryCreateComponent implements OnInit {
               })
             ).subscribe();
         } else {
-          this.messageService.autoSaveAlert();
+          this.isSaved = false;
+          // this.messageService.autoSaveAlert();
         }
       }),
     ).subscribe()
