@@ -421,6 +421,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
               tap(() => {
                 this.isSaving = false;
                 this.isSaved = true;
+                this.saveFailed = false;
               })
             ).subscribe();
         } else {
