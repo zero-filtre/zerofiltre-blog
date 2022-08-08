@@ -13,6 +13,7 @@
     "prerender": "ng run zerofiltre-blog:prerender",
     "webdriver": "webdriver-manager start",
     "nw": "wait-on http://localhost:4444 && nightwatch"
+    "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner"
   },
   "private": true,
   "dependencies": {
@@ -31,10 +32,11 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "express": "^4.15.2",
+    "express-rate-limit": "^6.5.1",
     "imagekitio-angular": "^1.0.2",
     "ngx-markdown": "^13.0.0",
-    "prismjs": "^1.27.0",
     "ngx-skeleton-loader": "^4.0.0",
+    "prismjs": "^1.27.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -62,6 +64,7 @@
     "ngx-infinite-scroll": "^10.0.1",
     "postcss": "^8.4.7",
     "prismjs": "^1.27.0",
+    "sonar-scanner": "^3.1.0",
     "tailwindcss": "^3.0.23",
     "typescript": "~4.5.2",
     "@faker-js/faker": "^7.3.0",

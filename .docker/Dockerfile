@@ -20,4 +20,4 @@ COPY --from=deps /app/dist ./dist
 
 EXPOSE 4000
 
-ENTRYPOINT ["node", "dist/zerofiltre-blog/server/main.js"]
+ENTRYPOINT ["sh", "-c", "source /vault/secrets/config && node dist/zerofiltre-blog/server/main.js"]
