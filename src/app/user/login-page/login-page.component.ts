@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -31,6 +31,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private seo: SeoService,
     private translate: TranslateService,
     private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   public InitForm(): void {
@@ -51,7 +52,14 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
         this.messageservice.loginError();
-      },
+        this.router.navigate(
+          ['/login'],
+          {
+            relativeTo: this.route,
+            queryParams: { redirectURL: this.redirectURL },
+            queryParamsHandling: 'merge',
+          });
+      }
     })
   }
 

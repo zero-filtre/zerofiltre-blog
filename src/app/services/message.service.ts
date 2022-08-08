@@ -48,7 +48,14 @@ export class MessageService {
   authError(state: any) {
     const msg = this.translate.instant('login.authErrorMessage')
     this.openSnackBarError(msg, this.OK);
-    this.router.navigate(['/login'], { queryParams: { 'redirectURL': state.url } });
+
+    this.router.navigate(
+      ['/login'],
+      {
+        relativeTo: state,
+        queryParams: { redirectURL: state.url },
+        queryParamsHandling: 'merge',
+      });
   }
 
   // When user is already logged In
