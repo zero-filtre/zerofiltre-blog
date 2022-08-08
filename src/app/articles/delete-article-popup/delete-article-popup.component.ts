@@ -35,14 +35,9 @@ export class DeleteArticlePopupComponent implements OnInit {
 
     this.articleService.deleteArticle(this.data.id).subscribe({
       next: (response: any) => {
-        if (this.data.history.indexOf('/articles') != -1) {
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-            this.router.navigate(['/articles']))
-        }
-        if (this.data.history.indexOf('/user') != -1) {
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-            this.router.navigate(['/user/dashboard']))
-        }
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+          this.router.navigateByUrl(`${this.data.history}`))
+
         this.messageService.openSnackBarSuccess(response, 'OK');
         this.loading = false;
         this.dialogRef.close();
