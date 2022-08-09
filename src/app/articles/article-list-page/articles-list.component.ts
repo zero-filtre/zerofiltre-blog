@@ -6,6 +6,7 @@ import { ArticleService } from '../article.service';
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { calcReadingTime, capitalizeString, nFormatter, sortByNameAsc } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription, Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -67,7 +68,8 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
       .getListOfTags()
       .subscribe({
         next: (response: Tag[]) => {
-          this.tagList = response
+          const sortedList = sortByNameAsc(response);
+          this.tagList = sortedList
           this.loading = false;
         },
         error: (_error: HttpErrorResponse) => {

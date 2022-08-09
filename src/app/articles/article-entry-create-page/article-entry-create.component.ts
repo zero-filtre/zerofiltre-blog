@@ -14,6 +14,7 @@ import { ArticleService } from '../article.service';
 import { FormArray } from '@angular/forms';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { sortByNameAsc } from 'src/app/services/utilities.service';
 import { BaseComponent } from 'src/app/Base.component';
 
 @Component({
@@ -98,7 +99,8 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   public fetchListOfTags(): void {
     this.articleService.getListOfTags().subscribe(
       (response: Tag[]) => {
-        this.tagList = response
+        const sortedList = sortByNameAsc(response);
+        this.tagList = sortedList;
       }
     )
   }
