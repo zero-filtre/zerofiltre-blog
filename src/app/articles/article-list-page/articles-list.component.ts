@@ -1,26 +1,25 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
-import { Article, Tag } from '../article.model';
+import { Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 import { MatDialog } from '@angular/material/dialog'
-import { ArticleEntryPopupComponent } from '../article-entry-popup/article-entry-popup.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { calcReadingTime, capitalizeString, nFormatter, sortByNameAsc } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-article-popup.component';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { BaseArticleListComponent } from '../../shared/base-article-list/base-article-list.component';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-articles-list',
   templateUrl: './articles-list.component.html',
   styleUrls: ['./articles-list.component.css'],
 })
-export class ArticlesListComponent implements OnInit, OnDestroy {
-  public articles!: Article[];
+export class ArticlesListComponent extends BaseArticleListComponent implements OnInit, OnDestroy {
   public tagList!: Tag[];
 
   RECENT = 'recent';
@@ -28,72 +27,37 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   TRENDING = 'trending';
   TAGS = 'tags';
 
-  // dddSponsorContentSourceUrl = 'assets/images/Frame DDD (2).svg';
   dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg'
 
-  public notEmptyArticles = true;
-  public notScrolly = true;
-  public lastPage!: number;
-  public loadingMore = false;
-  public hasNext!: boolean;
-  public scrollyPageNumber = 0;
-
-  public pageNumber: number = 0;
-  public pageItemsLimit: number = 5;
-
-  public loading = false;
   public noArticlesAvailable!: boolean;
   public loadArticlesErrorMessage!: boolean;
 
   public activePage: string = this.RECENT;
   public mainPage = true;
+
   public openedTagsDropdown = false;
   public activeTag!: string;
 
 
   public tags$!: Subscription;
   public articles$!: Subscription;
-  status!: string;
-  tag!: string;
+  public status!: string;
+  public tag!: string;
 
   constructor(
-    private loadEnvService: LoadEnvService,
-    private seo: SeoService,
-    private articleService: ArticleService,
-    private dialogEntryRef: MatDialog,
-    private dialogDeleteRef: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
+    public loadEnvService: LoadEnvService,
+    public seo: SeoService,
+    public articleService: ArticleService,
+    public dialogEntryRef: MatDialog,
+    public dialogDeleteRef: MatDialog,
+    public router: Router,
+    public route: ActivatedRoute,
     public authService: AuthService,
-    private translate: TranslateService,
-    private changeDetectorRef: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) private platformId: any
+    public translate: TranslateService,
+    public navigate: NavigationService,
+    @Inject(PLATFORM_ID) public platformId: any
   ) {
-  }
-
-  openArticleEntryDialog(): void {
-    this.dialogEntryRef.open(ArticleEntryPopupComponent, {
-      width: '850px',
-      height: '350px',
-      panelClass: 'article-popup-panel',
-      data: {
-        router: this.router
-      }
-    });
-  }
-
-  public isAuthor(user: any, article: Article): boolean {
-    return user?.id === article?.author?.id
-  }
-
-  public openArticleDeleteDialog(articleId: number | undefined): void {
-    this.dialogDeleteRef.open(DeleteArticlePopupComponent, {
-      panelClass: 'delete-article-popup-panel',
-      data: {
-        id: articleId,
-        history: this.router.url
-      }
-    });
+    super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, platformId)
   }
 
   public fetchListOfTags(): void {
@@ -110,6 +74,16 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           this.loading = false;
         }
       })
+  }
+
+  public sortByTag(tagName: any): void {
+    this.openedTagsDropdown = false;
+    this.activeTag = tagName;
+
+    this.router.navigateByUrl(`/articles?tag=${tagName}`)
+
+    this.scrollyPageNumber = 0;
+    this.notEmptyArticles = true;
   }
 
   public fetchRecentArticles(): void {
@@ -133,14 +107,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
       .subscribe(this.handleFetchedArticles)
   }
 
-  public setArticlesReadingTime(articles: Article[]): void {
-    for (const article of articles) {
-      calcReadingTime(article);
-    }
-  }
-
   public sortBy(trendName: string): void {
-    // this.articles = [];
     this.activeTag = '';
 
     if (trendName === this.RECENT) {
@@ -169,27 +136,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     this.notEmptyArticles = true;
   }
 
-
-  public sortByTag(tagName: any): void {
-    this.openedTagsDropdown = false;
-    this.activeTag = tagName;
-
-    this.router.navigateByUrl(`/articles?tag=${tagName}`)
-
-    this.scrollyPageNumber = 0;
-    this.notEmptyArticles = true;
-  }
-
-  public onScroll() {
-
-    if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
-
-      this.loadingMore = true;
-      this.notScrolly = false;
-      this.fetchMoreArticles();
-    }
-  }
-
   public fetchMoreArticles() {
     this.scrollyPageNumber += 1;
     const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
@@ -209,54 +155,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
     this.articleService.findAllRecentArticles(this.scrollyPageNumber, this.pageItemsLimit)
       .subscribe((response: any) => this.handleNewFetchedArticles(response));
-
-  }
-
-  private handleNewFetchedArticles({ content, hasNext }: any) {
-    const newArticles = content;
-    this.loadingMore = false;
-    this.hasNext = hasNext;
-    this.setArticlesReadingTime(newArticles);
-
-    if (newArticles.length === 0) {
-      this.notEmptyArticles = false;
-    }
-
-    this.articles = this.articles.concat(newArticles);
-    this.notScrolly = true;
-  }
-
-  private handleFetchedArticles = {
-    next: ({ content, hasNext }: any) => {
-      this.articles = content;
-      this.setArticlesReadingTime(this.articles);
-      this.loading = false;
-      this.hasNext = hasNext;
-      this.noArticlesAvailable = false;
-
-      if (this.articles.length === 0) {
-        this.noArticlesAvailable = true;
-      }
-    },
-    error: (_error: HttpErrorResponse) => {
-      this.loading = false;
-      this.hasNext = false;
-      this.articles = [];
-      this.loadArticlesErrorMessage = true;
-    }
-  }
-
-  public nFormater(totalReactions: number): string {
-    return nFormatter(totalReactions)
-  }
-
-  public capitalize(str: string): string {
-    return capitalizeString(str);
   }
 
 
   ngOnInit(): void {
-
     if (isPlatformBrowser(this.platformId)) {
       this.fetchListOfTags()
 
@@ -266,7 +168,6 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
           this.tag = query.get('tag')!;
 
           if (this.tag) {
-            // this.activePage = this.TAGS;
             return this.fetchArticlesByTag(this.tag);
           }
 
