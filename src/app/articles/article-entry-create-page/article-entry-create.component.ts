@@ -124,8 +124,35 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   }
 
   public InitForm(article: Article): void {
-    const articleSummary = article.summary || 'Veuillez indiquer ici le résume de votre article';
-    const articleContent = article.content || 'Saisir le contenu de votre article dans cet espace';
+  
+    const summaryTemplate =
+      `Veuillez indiquer ici le résume de votre article. Ex: Mettre en place un serveur de messagerie n'a jamais été aussi simple. Voici comment faire.`;
+
+    const contentTemplate = `
+      ## Introduction
+      Ici vous dites ce que vous allez faire de façon objective.
+      Ex: Nous allons voir comment déployer un serveur de messagerie en 2 mins, puis le déployer.
+
+      ## 1/ Contenu 1
+      Votre premier paragraphe
+      ## 2/ Contenu 2
+      Votre second paragraphe
+      ## 3/ Contenu 3
+      Votre troisieme paragraphe
+
+      etc...
+
+      ...
+      N'hésitez pas à rajouter des sous-titres au besoin 🤗
+      ### 3-1/ Sous-contenu 3
+
+
+      ## Conclustion
+      Ici rappelez ce que vous avez fait !
+      `;
+
+    const articleSummary = article.summary || summaryTemplate;
+    const articleContent = article.content || contentTemplate;
 
     this.form = this.fb.group({
       id: [+article.id!],
