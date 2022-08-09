@@ -12,17 +12,17 @@ import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
 import { FormArray } from '@angular/forms';
-import { Location } from '@angular/common';
 import { NavigationService } from 'src/app/services/navigation.service';
-import { taggedTemplate } from '@angular/compiler/src/output/output_ast';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { sortByNameAsc } from 'src/app/services/utilities.service';
+import { BaseComponent } from 'src/app/Base.component';
 
 @Component({
   selector: 'app-article-entry-create',
   templateUrl: './article-entry-create.component.html',
   styleUrls: ['./article-entry-create.component.css']
 })
-export class ArticleEntryCreateComponent implements OnInit {
+export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   @HostListener('click', ['$event']) onClick(event: any) {
     if (
       event.target.classList.contains('tagItem')
@@ -84,10 +84,7 @@ export class ArticleEntryCreateComponent implements OnInit {
     private translate: TranslateService,
     public navigate: NavigationService,
     private changeDetector: ChangeDetectorRef
-  ) {
-
-
-  }
+  ) { }
 
   public openTagsDropdown() {
     this.tagsDropdownOpened = true
@@ -102,7 +99,8 @@ export class ArticleEntryCreateComponent implements OnInit {
   public fetchListOfTags(): void {
     this.articleService.getListOfTags().subscribe(
       (response: Tag[]) => {
-        this.tagList = response
+        const sortedList = sortByNameAsc(response);
+        this.tagList = sortedList;
       }
     )
   }
@@ -128,12 +126,42 @@ export class ArticleEntryCreateComponent implements OnInit {
   }
 
   public InitForm(article: Article): void {
+  
+    const summaryTemplate =
+      `Veuillez indiquer ici le résume de votre article. Ex: Mettre en place un serveur de messagerie n'a jamais été aussi simple. Voici comment faire.`;
+
+    const contentTemplate = `
+      ## Introduction
+      Ici vous dites ce que vous allez faire de façon objective.
+      Ex: Nous allons voir comment déployer un serveur de messagerie en 2 mins, puis le déployer.
+
+      ## 1/ Contenu 1
+      Votre premier paragraphe
+      ## 2/ Contenu 2
+      Votre second paragraphe
+      ## 3/ Contenu 3
+      Votre troisieme paragraphe
+
+      etc...
+
+      ...
+      N'hésitez pas à rajouter des sous-titres au besoin 🤗
+      ### 3-1/ Sous-contenu 3
+
+
+      ## Conclustion
+      Ici rappelez ce que vous avez fait !
+      `;
+
+    const articleSummary = article.summary || summaryTemplate;
+    const articleContent = article.content || contentTemplate;
+
     this.form = this.fb.group({
       id: [+article.id!],
       title: [article.title, [Validators.required]],
-      summary: [article.summary, [Validators.required]],
+      summary: [articleSummary, [Validators.required]],
+      content: [articleContent, [Validators.required]],
       thumbnail: [article.thumbnail],
-      content: [article.content, [Validators.required]],
       tags: this.fb.array(article.tags.map(tag => this.buildTagItemFields(tag)))
     })
   }
@@ -399,6 +427,8 @@ export class ArticleEntryCreateComponent implements OnInit {
       })
   }
 
+  public isFormValid = () => this.isSaved || this.form?.valid;
+
   public onChanges(element: Observable<any>): void {
     element.pipe(
       debounceTime(2000),
@@ -420,10 +450,12 @@ export class ArticleEntryCreateComponent implements OnInit {
               tap(() => {
                 this.isSaving = false;
                 this.isSaved = true;
+                this.saveFailed = false;
               })
             ).subscribe();
         } else {
-          this.messageService.autoSaveAlert();
+          this.isSaved = false;
+          // this.messageService.autoSaveAlert();
         }
       }),
     ).subscribe()

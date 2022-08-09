@@ -62,6 +62,7 @@ export class AdminDashboardComponent extends BaseArticleListComponent implements
     this.notEmptyArticles = true;
   }
 
+
   ngOnInit(): void {
 
     if (isPlatformBrowser(this.platformId)) {

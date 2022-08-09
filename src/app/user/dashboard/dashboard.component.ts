@@ -62,6 +62,7 @@ export class DashboardComponent extends BaseArticleListComponent implements OnIn
     this.notEmptyArticles = true;
   }
 
+
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.route.queryParamMap.subscribe(
