@@ -65,6 +65,17 @@ export class BaseArticleListComponent implements OnInit {
     }
   }
 
+  private getTotalViewsOfArticle(article: Article) {
+    this.articleService.getNberOfViews(article.id)
+      .subscribe(val => article.totalViews = val)
+  }
+
+  public setArticlesTotalViews(articles: Article[]): void {
+    for (const article of articles) {
+      this.getTotalViewsOfArticle(article);
+    }
+  }
+
   public isAuthor(user: any, article: Article): boolean {
     return user?.id === article?.author?.id
   }
@@ -155,6 +166,7 @@ export class BaseArticleListComponent implements OnInit {
     this.loadingMore = false;
     this.hasNext = hasNext;
     this.setArticlesReadingTime(newArticles);
+    this.setArticlesTotalViews(newArticles);
 
     if (newArticles.length === 0) {
       this.notEmptyArticles = false;
@@ -169,6 +181,7 @@ export class BaseArticleListComponent implements OnInit {
       // this.articles = this.sortArticle(content);
       this.articles = content;
       this.setArticlesReadingTime(this.articles);
+      this.setArticlesTotalViews(this.articles);
       this.loading = false;
       this.hasNext = hasNext;
 

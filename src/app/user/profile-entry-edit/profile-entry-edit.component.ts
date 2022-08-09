@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -28,6 +29,7 @@ export class ProfileEntryEditComponent implements OnInit {
     private seo: SeoService,
     private translate: TranslateService,
     public navigate: NavigationService,
+    private router: Router
   ) { }
 
   public InitForm(): void {
@@ -120,6 +122,7 @@ export class ProfileEntryEditComponent implements OnInit {
         this.loading = false;
         this.messageService.updateProfileSuccess();
         this.authService.setUserData(response)
+        this.router.navigateByUrl('/user/profile');
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;

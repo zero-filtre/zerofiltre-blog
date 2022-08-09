@@ -86,7 +86,7 @@ export function nFormatter(num: number): string {
   if (num >= 1000) {
     return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
   }
-  return num.toString();
+  return num?.toString();
 }
 
 export function AddTargetToExternalLinks(): void {
@@ -117,4 +117,13 @@ export function getUrlHost(url: string): string {
 
 export function capitalizeString(str: string): string {
   return str.trim().toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
+}
+
+export function sortByNameAsc(array: any) {
+  return array.sort(function (a: any, b: any) {
+    var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
+    return 0; //default return value (no sorting)
+  });
 }
