@@ -122,9 +122,7 @@ export class ProfileEntryEditComponent implements OnInit {
         this.loading = false;
         this.messageService.updateProfileSuccess();
         this.authService.setUserData(response)
-        setTimeout(() => {
-          this.router.navigateByUrl(`/user/profile/${this.user?.id}`)
-        }, 500);
+        this.router.navigateByUrl('/user/profile');
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;

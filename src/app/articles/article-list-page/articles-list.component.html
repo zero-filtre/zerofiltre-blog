@@ -46,19 +46,6 @@
                                 class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
                         </button>
                     </ng-container>
-
-                    <!-- <ng-container *ngFor="let tag of [].constructor(10)">
-                        <button (click)="sortByTag('un-super-tag')" type="button" aria-current="false"
-                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                            <svg [ngStyle]="{'color': '#ddd'}" class="mr-1 h-2 w-2" fill="currentColor"
-                                viewBox="0 0 8 8">
-                                <circle cx="4" cy="4" r="3"></circle>
-                            </svg>
-                            <span class="truncate lowercase font-semibold group-hover:text-primary-500">
-                                un super tag
-                            </span>
-                        </button>
-                    </ng-container> -->
                 </div>
 
                 <div *ngIf="authService.currentUsr">
@@ -167,7 +154,7 @@
                                     <div class="article-author mt-3 flex items-center">
                                         <div class="author-image flex-shrink-0">
                                             <a aria-labelledby="Link to author profile"
-                                                routerLink="/user/profile/{{article?.author?.id}}">
+                                                [routerLink]="authService.currentUsr.id == article?.author?.id ? ['/user/profile'] : ['/user/' + article?.author?.id]">
                                                 <app-image [classes]="'h-10 w-10 rounded-full'"
                                                     [sourceUrl]="article.author?.profilePicture!"
                                                     [alt]="article?.author?.fullName!">
@@ -178,7 +165,7 @@
                                         <div class="author-text ml-3">
                                             <p class="text-sm font-semibold text-skin-inverted">
                                                 <a aria-labelledby="Link to about page"
-                                                    routerLink="/user/profile/{{article?.author?.id}}"
+                                                    [routerLink]="authService.currentUsr.id == article?.author?.id ? ['/user/profile'] : ['/user/' + article?.author?.id]"
                                                     class="hover:underline">
                                                     {{article?.author?.fullName}}
                                                 </a>
