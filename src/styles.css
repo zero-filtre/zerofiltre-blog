@@ -136,6 +136,10 @@ img {
   @apply m-0;
 }
 
+:not(pre) > code {
+  @apply inline-block px-1 m-0.5
+}
+
 /* Cookie confirmation message container */
 #privacypolicies-com---nb {
   @apply font-ubuntu w-screen h-auto shadow-2xl bg-skin-bg;

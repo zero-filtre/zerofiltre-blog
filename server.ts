@@ -7,6 +7,16 @@ import { join } from 'path';
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
+import rateLimit from 'express-rate-limit'
+
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  keyGenerator: (request, response) => String(request.headers['x-forwarded-for'])
+})
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -31,8 +41,11 @@ export function app(): express.Express {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
+    console.log('IP: ', req.headers['x-forwarded-for'])
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
+
+  server.use(limiter)
 
   return server;
 }

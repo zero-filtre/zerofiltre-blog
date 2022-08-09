@@ -25,6 +25,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './lang-switcher/translate-universal-loader';
 import { HeaderComponent } from './header/header.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { BaseArticleListComponent } from './base-article-list/base-article-list.component';
 
 const components = [
   AppShellRenderDirective,
@@ -53,7 +54,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, HeaderComponent, NotFoundPageComponent],
+  declarations: [...components, HeaderComponent, BaseArticleListComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),

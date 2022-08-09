@@ -3,7 +3,7 @@ def label = "worker-${UUID.randomUUID()}"
 podTemplate(label: label, containers: [
         containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'kubectl', image: 'roffe/kubectl', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'node', image: 'node:12-alpine', command: 'cat', ttyEnabled: true)
+        containerTemplate(name: 'node', image: 'timbru31/java-node', command: 'cat', ttyEnabled: true)
 ],
         volumes: [
                 hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
@@ -18,11 +18,13 @@ podTemplate(label: label, containers: [
             withEnv(["api_image_tag=${getTag(env.BUILD_NUMBER, env.BRANCH_NAME)}",
                                 "env_name=${getEnvName(env.BRANCH_NAME)}",
                                 "domain_name=${getDomainName(env.BRANCH_NAME)}",
+                                "requests_cpu=${getRequestsCPU(env.BRANCH_NAME)}",
+                                "requests_memory=${getRequestsMemory(env.BRANCH_NAME)}",
+                                "limits_cpu=${getLimitsCPU(env.BRANCH_NAME)}",
+                                "limits_memory=${getLimitsMemory(env.BRANCH_NAME)}"
 
                         ]) {
-                            // stage('Build with test') {
-                            //     buildAndTest()
-                            // }
+
 
                 stage('Build and push to docker registry') {
                     withCredentials([usernamePassword(credentialsId: 'DockerHubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -33,6 +35,22 @@ podTemplate(label: label, containers: [
 
                 stage('Deploy on k8s') {
                     runApp()
+                }
+
+                stage('SonarQube analysis') {
+                    withSonarQubeEnv('SonarQubeServer') {
+                        container('node') {
+                            sh 'npm install sonar-scanner --save-dev'
+                            sh 'chmod +x node_modules/sonar-scanner/bin/sonar-scanner'
+                            sh 'npm run sonar-scanner'
+                        }
+                    }
+                    timeout(time: 1, unit: 'MINUTES') {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }
                 }
                         }
                 } catch (exc) {
@@ -83,22 +101,6 @@ String getTag(String buildNumber, String branchName) {
     return tag + '-unstable'
 }
 
-// def buildAndTest() {
-//     container('node') {
-//         sh """
-//             npm install -g @angular/cli
-//             npm install
-//             ng build --configuration=${env_name} && ng run zerofiltre-blog:server --configuration=${env_name}
-//         """
-//     }
-// }
-
-// def injectEnv(envFile){
-
-//     sh "cp $envFile src/environments/environment.ts"
-
-// }
-
 def deleteImages() {
     container('docker') {
         def images = sh(returnStdout: true, script: 'docker images -q -f "label=autodelete=true"')
@@ -111,7 +113,6 @@ def deleteImages() {
 
 def buildDockerImageAndPush(dockerUser, dockerPassword) {
     container('docker') {
-
         sh("""
                 docker build -f .docker/Dockerfile -t ${api_image_tag} --pull --target prod .
                 echo "Image build complete"
@@ -119,7 +120,6 @@ def buildDockerImageAndPush(dockerUser, dockerPassword) {
                 docker push ${api_image_tag}
                 echo "Image push complete"
          """)
-
     }
 }
 
@@ -143,6 +143,38 @@ def runApp() {
                     exit 1
                 fi
             """
+    }
+}
+
+String getRequestsCPU(String branchName) {
+    if (branchName == 'main') {
+        return '1'
+    } else {
+        return '0.5'
+    }
+}
+
+String getRequestsMemory(String branchName) {
+    if (branchName == 'main') {
+        return '1Gi'
+    } else {
+        return '0.5Gi'
+    }
+}
+
+String getLimitsCPU(String branchName) {
+    if (branchName == 'main') {
+        return '2'
+    } else {
+        return '1'
+    }
+}
+
+String getLimitsMemory(String branchName) {
+    if (branchName == 'main') {
+        return '4Gi'
+    } else {
+        return '1Gi'
     }
 }
 
