@@ -1,12 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { calcReadingTime, capitalizeString, nFormatter, sortByNameAsc } from 'src/app/services/utilities.service';
+import { sortByNameAsc } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Subscription, Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -173,16 +173,6 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
   }
 
-  public getTotalViewsOfArticle(article: Article) {
-    this.articleService.getNberOfViews(article.id)
-      .subscribe(val => article.totalViews = val)
-  }
-
-  public setArticlesTotalViews(articles: Article[]): void {
-    for (const article of articles) {
-      this.getTotalViewsOfArticle(article);
-    }
-  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
