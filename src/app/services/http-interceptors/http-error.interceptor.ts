@@ -88,8 +88,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
       if (serverErrorExist) {
         errorMessage = error.error.error.message;
-      } else {
-        errorMessage = errorMessage;
       }
 
       if (error.status === 401) {
