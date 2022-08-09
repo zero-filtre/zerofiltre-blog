@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from 'src/app/user/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { BaseArticleListComponent } from '../../shared/base-article-list/base-article-list.component';
@@ -42,6 +42,8 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
   public articles$!: Subscription;
   public status!: string;
   public tag!: string;
+
+  public nberOfViews: Observable<any>;
 
   constructor(
     public loadEnvService: LoadEnvService,
@@ -98,6 +100,13 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
       .subscribe(this.handleFetchedArticles)
   }
 
+  public fetchTrendingArticles(): void {
+    this.loading = true;
+    this.articles$ = this.articleService
+      .findAllArticlesByTrend(this.pageNumber, this.pageItemsLimit)
+      .subscribe(this.handleFetchedArticles)
+  }
+
   public fetchArticlesByTag(tagName: string): void {
     this.loading = true;
     this.articles$ = this.articleService
@@ -120,7 +129,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
     if (trendName === this.TRENDING) {
       this.activePage = this.TRENDING
-      this.router.navigateByUrl('/articles');
+      this.router.navigateByUrl(`/articles?sortBy=${trendName}`);
     }
 
     if (trendName === this.TAGS) {
@@ -145,6 +154,12 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
       return
     }
 
+    if (queryParamOne === this.TRENDING) {
+      this.articleService.findAllArticlesByTrend(this.scrollyPageNumber, this.pageItemsLimit)
+        .subscribe((response: any) => this.handleNewFetchedArticles(response));
+      return
+    }
+
     if (queryParamTwo) {
       this.articleService.findAllArticlesByTag(this.scrollyPageNumber, this.pageItemsLimit, queryParamTwo)
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
@@ -153,8 +168,19 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
     this.articleService.findAllRecentArticles(this.scrollyPageNumber, this.pageItemsLimit)
       .subscribe((response: any) => this.handleNewFetchedArticles(response));
+
   }
 
+  public getTotalViewsOfArticle(article: Article) {
+    this.articleService.getNberOfViews(article.id)
+      .subscribe(val => article.totalViews = val)
+  }
+
+  public setArticlesTotalViews(articles: Article[]): void {
+    for (const article of articles) {
+      this.getTotalViewsOfArticle(article);
+    }
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -177,6 +203,11 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
           if (this.status == this.POPULAR) {
             this.activePage = this.status;
             return this.fetchPopularArticles();
+          }
+
+          if (this.status == this.TRENDING) {
+            this.activePage = this.status;
+            return this.fetchTrendingArticles();
           }
         }
       );

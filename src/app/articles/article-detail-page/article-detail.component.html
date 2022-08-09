@@ -61,6 +61,9 @@
                                         <span aria-hidden="true">·</span>
                                         <span>{{article?.readingTime}} {{ 'articleDetail.ofReadTime' | translate
                                             }}</span>
+
+                                        <span *ngIf="nberOfViews$ | async as nberOfViews"
+                                            class="inline-block text-accent-400 opacity-0">{{nberOfViews}}</span>
                                     </div>
                                 </div>
                             </div>
