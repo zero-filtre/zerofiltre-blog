@@ -40,7 +40,7 @@ podTemplate(label: label, containers: [
                 stage('SonarQube analysis') {
                     withSonarQubeEnv('SonarQubeServer') {
                         container('node') {
-                            sh 'npm install sonar-scanner --save-dev'
+                            sh 'npm install sonar-scanner --save-dev -f'
                             sh 'chmod +x node_modules/sonar-scanner/bin/sonar-scanner'
                             sh 'npm run sonar-scanner'
                         }
@@ -150,7 +150,7 @@ String getRequestsCPU(String branchName) {
     if (branchName == 'main') {
         return '1'
     } else {
-        return '0.5'
+        return '0.01'
     }
 }
 
@@ -166,7 +166,7 @@ String getLimitsCPU(String branchName) {
     if (branchName == 'main') {
         return '2'
     } else {
-        return '1'
+        return '0.01'
     }
 }
 
