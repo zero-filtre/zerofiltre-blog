@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsFormValidGuard } from '../is-form-valid.guard';
 import { AuthGuard } from '../user/auth.guard';
 import { AuthorGuard } from '../user/author.guard';
 import { ArticleDetailComponent } from './article-detail-page/article-detail.component';
@@ -13,6 +14,7 @@ const routes: Routes = [
     path: ':id/edit',
     component: ArticleEntryCreateComponent,
     canActivate: [AuthGuard, AuthorGuard],
+    canDeactivate: [IsFormValidGuard]
   },
 ];
 
