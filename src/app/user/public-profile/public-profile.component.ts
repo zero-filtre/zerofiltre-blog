@@ -39,7 +39,7 @@ export class PublicProfileComponent implements OnInit {
     this.user$ = this.route.data
       .pipe(
         // tap(data => {
-        //   if (data.user?.fullName == this.authService.currentUsr?.fullName) this.router.navigateByUrl('/user/profile')
+        //   if (data.user?.fullName == this.authService?.currentUsr?.fullName) this.router.navigateByUrl('/user/profile')
         // }),
         map(data => data.user)
       )
