@@ -11,8 +11,6 @@
     "serve:ssr": "node dist/zerofiltre-blog/server/main.js",
     "build:ssr": "ng build && ng run zerofiltre-blog:server",
     "prerender": "ng run zerofiltre-blog:prerender",
-    "webdriver": "webdriver-manager start",
-    "nw": "wait-on http://localhost:4444 && nightwatch"
     "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner"
   },
   "private": true,
@@ -69,9 +67,6 @@
     "sonar-scanner": "^3.1.0",
     "tailwindcss": "^3.0.23",
     "typescript": "~4.5.2",
-    "@faker-js/faker": "^7.3.0",
-    "geckodriver": "^3.0.2",
-    "nightwatch": "^2.2.2"
     "@promster/types": "^3.2.4"
   }
 }
