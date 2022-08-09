@@ -48,7 +48,14 @@ export class MessageService {
   authError(state: any) {
     const msg = this.translate.instant('login.authErrorMessage')
     this.openSnackBarError(msg, this.OK);
-    this.router.navigate(['/login'], { queryParams: { 'redirectURL': state.url } });
+
+    this.router.navigate(
+      ['/login'],
+      {
+        relativeTo: state,
+        queryParams: { redirectURL: state.url },
+        queryParamsHandling: 'merge',
+      });
   }
 
   // When user is already logged In
@@ -85,9 +92,20 @@ export class MessageService {
     this.openSnackBarError(msg, this.OK);
   }
 
-  autoSaveAlert() {
-    const msg = this.translate.instant('articleEntryEdit.autoSaveAlertMessage');
-    this.openSnackBarWarning(msg, "C'est noté !")
+  autoSaveAlert(arg = false) {
+    // const msg = this.translate.instant('articleEntryEdit.autoSaveAlertMessage');
+    // this.openSnackBarWarning("Vos changement seront perdu !, souhaittez vous quiter cette page ?", "Quitter", 0)
+    // return false;
+
+    if (arg == false) {
+      let snackBarRef = this.snackBar.open("Vos changement seront perdu ! souhaittez vous quiter cette page ?", "Quitter", { duration: 0 });
+
+      snackBarRef.onAction().subscribe(() => {
+        this.autoSaveAlert(true);
+      });
+    }
+
+    return arg;
   }
 
   saveArticleSuccess() {
