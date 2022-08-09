@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
+import { NotFoundPageComponent } from './shared/not-found-page/not-found-page.component';
 import { LoggedInAuthGuard } from './user/logged-in-auth.guard';
 import { LoginPageComponent } from './user/login-page/login-page.component';
 import { PasswordResetPageComponent } from './user/password-reset-page/password-reset-page.component';
@@ -46,10 +47,11 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'articles',
+    component: NotFoundPageComponent,
+    // redirectTo: '/',
   },
 
-  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -47,6 +47,10 @@ Run `npm run serve:ssr` and navigate to `http://localhost:4000/` to browse the a
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## Running End 2 End tests
+
+Run `npm run nw` to launch e2e test
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

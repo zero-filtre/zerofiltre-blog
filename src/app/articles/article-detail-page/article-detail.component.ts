@@ -7,8 +7,7 @@ import { calcReadingTime, capitalizeString, formatDate } from 'src/app/services/
 import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
-
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, of, Subscription, Observable } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-article-popup.component';
@@ -29,6 +28,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   private isPublished = new BehaviorSubject<any>(null);
   public isPublished$ = this.isPublished.asObservable();
   readonly blogUrl = environment.blogUrl;
+
+  public nberOfViews$: Observable<any>;
 
   private nberOfReactions = new BehaviorSubject<number>(0);
   public nberOfReactions$ = this.nberOfReactions.asObservable();
@@ -84,6 +85,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         tap(art => {
           if (art.status === 'PUBLISHED') {
             this.isPublished.next(true);
+            this.incrementNberOfViews(this.articleId);
           } else {
             this.isPublished.next(false);
           }
@@ -108,6 +110,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
+
           this.fetchSimilarArticles();
           this.loading = false;
         },
@@ -235,6 +238,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   public capitalize(str: string): string {
     return capitalizeString(str);
+  }
+
+  public incrementNberOfViews(aricleId: string) {
+    this.nberOfViews$ = this.articleService.incrementViews(aricleId)
   }
 
   ngOnInit(): void {
