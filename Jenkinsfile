@@ -150,7 +150,7 @@ String getRequestsCPU(String branchName) {
     if (branchName == 'main') {
         return '1'
     } else {
-        return '0.1'
+        return '0.2'
     }
 }
 
@@ -166,7 +166,7 @@ String getLimitsCPU(String branchName) {
     if (branchName == 'main') {
         return '2'
     } else {
-        return '0.1'
+        return '0.2'
     }
 }
 
