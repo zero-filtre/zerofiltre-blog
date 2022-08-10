@@ -136,7 +136,7 @@
                                     <div class="article-author mt-3 flex items-center">
                                         <div class="author-image flex-shrink-0">
                                             <a aria-labelledby="Link to about page"
-                                                [routerLink]="authService.currentUsr.id == article?.author?.id ? ['/user/profile'] : ['/user/' + article?.author?.id]">
+                                                [routerLink]="authService?.currentUsr?.id == article?.author?.id ? ['/user/profile'] : ['/user/' + article?.author?.id]">
                                                 <app-image [classes]="'h-10 w-10 rounded-full'"
                                                     [sourceUrl]="article.author?.profilePicture!"
                                                     [alt]="article?.author?.fullName!">
@@ -147,7 +147,7 @@
                                         <div class="author-text ml-3">
                                             <p class="text-sm font-semibold text-skin-inverted">
                                                 <a aria-labelledby="Link to about page"
-                                                    [routerLink]="authService.currentUsr.id == article?.author?.id ? ['/user/profile'] : ['/user/' + article?.author?.id]"
+                                                    [routerLink]="authService?.currentUsr?.id == article?.author?.id ? ['/user/profile'] : ['/user/' + article?.author?.id]"
                                                     class="hover:underline">
                                                     {{article?.author?.fullName}}
                                                 </a>

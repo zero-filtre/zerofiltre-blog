@@ -104,7 +104,7 @@
     <div class="profile-sidebar-container py-32 px-10 text-skin-base">
 
       <div class="flex flex-col space-y-1">
-        <a aria-labelledby="Link to about page" routerLink="/user/profile" (click)="seeMyInfos()"
+        <a aria-labelledby="Link to profile page" routerLink="/user/profile" (click)="seeMyInfos()"
           [ngClass]="activePage === MY_ACCOUNT ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg" [ngClass]="activePage === MY_ACCOUNT ? 'svg-active' : 'svg-inactive'"
@@ -118,7 +118,7 @@
           </span>
         </a>
 
-        <a aria-labelledby="Link to about page" *ngIf="authService?.isAdmin" routerLink="/user/dashboard"
+        <a aria-labelledby="Link to my dashboard" routerLink="/user/dashboard"
           (click)="fetchAllArticlesAsUser()" [ngClass]="activePage === MY_ARTICLES ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg" [ngClass]="activePage === MY_ARTICLES ? 'svg-active' : 'svg-inactive'"

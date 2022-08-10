@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (isPlatformBrowser(this.platformId)) {
-      const user = this.authService.currentUsr;
+      const user = this.authService?.currentUsr;
       const isLoggedIn = !!user;
       if (!isLoggedIn) {
         this.messageService.authError(state)
