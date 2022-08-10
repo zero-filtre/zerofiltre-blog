@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
     */
 
     const authToken = this.authService.token;
-    const userOrigin = this.authService.currentUsr?.loginFrom;
+    const userOrigin = this.authService?.currentUsr?.loginFrom;
 
     if (request.url.indexOf(this.apiServerUrl) === 0) {
       switch (userOrigin) {

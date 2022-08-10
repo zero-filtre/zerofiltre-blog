@@ -30,7 +30,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const authToken = this.authService.token;
-    const userOrigin = this.authService.currentUsr?.loginFrom;
+    const userOrigin = this.authService?.currentUsr?.loginFrom;
 
     if (request.url.indexOf(this.apiServerUrl) === 0) {
       return next.handle(request)
