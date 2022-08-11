@@ -183,17 +183,23 @@
                                         <div
                                             class="reactions-total flex items-center justify-end text-skin-inverted gap-2 flex-1 self-end text-right text-sm font-semibold">
                                             <span class="inline-flex items-center gap-1">
-                                                <!-- svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="inline w-4 text-accent-400" fill="none"
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="inline w-5 text-accent-300" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                </svg -->
-                                                <span>👁‍🗨 {{nFormater(article.totalViews)}}</span>
+                                                </svg>
+                                                <span>{{nFormater(article.totalViews)}}</span>
                                             </span>
-                                            <span>⚡ {{nFormater(article?.reactions?.length)}}</span>
+
+                                            <span class="inline-flex items-center gap-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 text-accent-300" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span>{{nFormater(article?.reactions?.length)}}</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
