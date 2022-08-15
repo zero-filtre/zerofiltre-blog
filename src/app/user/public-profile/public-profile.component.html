@@ -121,11 +121,6 @@
                     <div class="text-skin-base">{{user?.profession}}</div>
                 </div>
 
-                <div class="email text-base">
-                    <label class="text-skin-muted">{{'profile.email' | translate}}</label>
-                    <div class="text-skin-base">{{user?.email}}</div>
-                </div>
-
                 <div class="flex justify-between items-center">
                     <div class="bio text-base">
                         <label class="text-skin-muted">{{'profile.bio' | translate}}</label>
@@ -133,6 +128,10 @@
                     </div>
                 </div>
 
+                <div class="registeredOn text-base">
+                    <label class="text-skin-muted">{{'profile.registeredOn' | translate}}</label>
+                    <div class="text-skin-base">{{user?.registeredOn | date}}</div>
+                </div> 
             </div>
 
         </div>
