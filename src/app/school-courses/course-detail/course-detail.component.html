@@ -1,0 +1,109 @@
+<div class="flex h-screen z-96">
+    <div class="drawer">
+        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content p-5 no-scrollbar">
+            <div>
+
+                <div class="flex justify-center ">
+
+                    <div class="text-xl font-bold breadcrumbs mb-5 mx-auto">
+                        <ul>
+                            <li><a>Module 1</a></li>
+                            <li><a>Chapitre 1</a></li>
+                            <li>Introduction</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="flex justify-center mb-5">
+                    <label for="my-drawer" class="btn btn-primary drawer-button text-white">Programme</label>
+                </div>
+
+
+                <div class="mb-5 mx-auto">
+                    <progress class="progress progress-primary w-full ld:max-w-[500px] h-12" value="40"
+                        max="100"></progress>
+                </div>
+
+                <div class="flex justify-center mb-5">
+                    <div class="mb-5 lg:max-w-[800px] w-full">
+                        <vm-player controls style="height: 100px !important;">
+                            <vm-vimeo cookies="true" video-id="355927009"></vm-vimeo>
+                        </vm-player>
+                    </div>
+                </div>
+
+
+                <div class="p-5">
+                    <markdown
+                        class="prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-ul:list-disc prose-ol:list-disc"
+                        [data]="article">
+                    </markdown>
+                </div>
+
+                <div class="flex justify-center mb-5">
+                    <pdf-viewer src="https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf" [render-text]="true" [original-size]="false"
+                        class="lg:max-h-[800px] h-[500px] w-[500px] no-scrollbar"></pdf-viewer>
+                </div>
+
+                <div class="mb-5">
+                    <iframe [src]="url" class="w-full h-[500px]" frameborder="0"></iframe>
+
+                </div>
+
+            </div>
+
+           
+        </div>
+        <div class="drawer-side">
+            <label for="my-drawer" class="drawer-overlay"></label>
+            <ul class="menu p-4 overflow-y-auto w-80 bg-white text-base-content">
+                <!-- Sidebar content here -->
+                <li>
+                    <a>Module 1</a>
+                    <div class="hover:bg-white">
+                        <ul class="menu w-56">
+                            <li>
+                                <a>Chapitre 1</a>
+                                <div class="hover:bg-white">
+                                    <ul class="menu w-56">
+                                        <li><a class="active">Introduction</a></li>
+                                        <li><a>Part 2</a></li>
+                                        <li><a>Conclusion 3</a></li>
+                                    </ul>
+                                </div>
+
+                            </li>
+                            <li>
+                                <a>Chapitre 2</a>
+                                <div class="hover:bg-white">
+                                    <ul class="menu w-56">
+                                        <li><a>Introduction</a></li>
+                                        <li><a>Part 2</a></li>
+                                        <li><a>Conclusion 3</a></li>
+                                    </ul>
+                                </div>
+
+                            </li>
+                            <li>
+                                <a>Chapitre 3</a>
+                                <div class="hover:bg-white">
+                                    <ul class="menu w-56">
+                                        <li><a>Introduction</a></li>
+                                        <li><a>Part 2</a></li>
+                                        <li><a>Conclusion 3</a></li>
+                                    </ul>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+
+                </li>
+                <li><a>Module 2</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>

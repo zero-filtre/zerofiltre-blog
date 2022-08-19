@@ -59,10 +59,37 @@ module.exports = {
       }
     },
   },
+  daisyui: {
+    themes: [
+      {
+        zerofiltre: {
+
+          "primary": "#15B2BC",
+
+          "secondary": "#052b5d",
+
+          "accent": "#ECAA47",
+
+          "neutral": "#151623",
+
+          "base-100": "#e5e7eb",
+
+          "info": "#35A7D4",
+
+          "success": "#79E7DE",
+
+          "warning": "#E9AD20",
+
+          "error": "#f55f44",
+        },
+      },
+    ],
+  },
   plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/aspect-ratio'),
+    require("daisyui")
   ],
 }
