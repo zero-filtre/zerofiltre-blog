@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, HostListener, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap, tap, throwError } from 'rxjs';
@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/user/auth.service';
 import { Article, File, Tag } from '../article.model';
 import { ArticleService } from '../article.service';
 
-import { FormArray } from '@angular/forms';
+import { UntypedFormArray } from '@angular/forms';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { sortByNameAsc } from 'src/app/services/utilities.service';
@@ -44,7 +44,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
 
   public uploading = false;
 
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
 
   public activeTab: string = 'editor';
   public article!: Article
@@ -73,7 +73,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
 
   constructor(
     private loadEnvService: LoadEnvService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private articleService: ArticleService,
     private router: Router,
     private route: ActivatedRoute,
@@ -170,13 +170,13 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   get summary() { return this.form.get('summary'); }
   get content() { return this.form.get('content'); }
   get thumbnail() { return this.form.get('thumbnail'); }
-  get tags() { return this.form.get('tags') as FormArray; }
+  get tags() { return this.form.get('tags') as UntypedFormArray; }
 
-  public buildTagItemFields(tag: Tag): FormGroup {
-    return new FormGroup({
-      id: new FormControl(tag.id),
-      name: new FormControl(tag.name),
-      colorCode: new FormControl(tag.colorCode),
+  public buildTagItemFields(tag: Tag): UntypedFormGroup {
+    return new UntypedFormGroup({
+      id: new UntypedFormControl(tag.id),
+      name: new UntypedFormControl(tag.name),
+      colorCode: new UntypedFormControl(tag.colorCode),
     });
   }
 

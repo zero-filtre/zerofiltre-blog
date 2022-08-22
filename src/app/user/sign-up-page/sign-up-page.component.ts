@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -14,7 +14,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./sign-up-page.component.css']
 })
 export class SignUpPageComponent implements OnInit, OnDestroy {
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
   public loading: boolean = false;
   public readonly GITHUB_CLIENT_ID = environment.GITHUB_CLIENT_ID;
   public readonly STACK_OVERFLOW_CLIENT_ID = environment.STACK_OVERFLOW_CLIENT_ID;
@@ -24,7 +24,7 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private loadEnvService: LoadEnvService,
-    private formuilder: FormBuilder,
+    private formuilder: UntypedFormBuilder,
     private authService: AuthService,
     private messageService: MessageService,
     private seo: SeoService,

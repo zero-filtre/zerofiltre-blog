@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -19,7 +19,7 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
   public loading = false;
   public isTokenValid = false;
   public token!: string;
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
   public successMessage!: boolean;
   public tokenSub!: Subscription;
   public savePasswordSub!: Subscription;
@@ -28,7 +28,7 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
     private loadEnvService: LoadEnvService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private messageService: MessageService,
     private seo: SeoService,
     private translate: TranslateService,
