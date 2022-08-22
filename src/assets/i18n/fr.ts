@@ -172,6 +172,7 @@ export const fr = {
         pseudo: 'Pseudo',
         profession: 'Profession',
         email: 'Email',
+        registeredOn: 'Inscrit le',
         website: 'Site web',
         bio: 'Bio',
         password: 'Mot de passe',
