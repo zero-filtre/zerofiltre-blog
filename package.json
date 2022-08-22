@@ -62,7 +62,6 @@
     "@types/node": "^12.11.1",
     "@types/prismjs": "^1.26.0",
     "autoprefixer": "^10.4.2",
-    "daisyui": "^2.24.0",
     "geckodriver": "^3.0.2",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
