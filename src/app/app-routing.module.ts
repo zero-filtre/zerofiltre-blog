@@ -46,6 +46,10 @@ const routes: Routes = [
     loadChildren: () => import('./courses/courses.module').then((m) => m.CoursesModule),
   },
   {
+    path: 'school',
+    loadChildren: () => import('./school-courses/school-courses.module').then((m) => m.SchoolCoursesModule),
+  },
+  {
     path: '**',
     component: NotFoundPageComponent,
     // redirectTo: '/',

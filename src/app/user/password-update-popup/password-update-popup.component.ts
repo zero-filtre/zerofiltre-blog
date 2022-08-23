@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -17,13 +17,13 @@ export class PasswordUpdatePopupComponent implements OnInit {
   public placeholder!: string
   public loading: boolean = false;
 
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
 
   constructor(
     private loadEnvService: LoadEnvService,
     public dialogRef: MatDialogRef<PasswordUpdatePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formbuilder: FormBuilder,
+    private formbuilder: UntypedFormBuilder,
     private authService: AuthService,
     private messageService: MessageService
   ) {

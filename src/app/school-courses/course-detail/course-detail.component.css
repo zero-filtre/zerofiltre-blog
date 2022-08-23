@@ -1,0 +1,22 @@
+@import '~@vime/core/themes/default.css';
+@import '~@vime/core/themes/light.css';
+
+.active{
+    color: white;
+    font-weight: bold;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+vm-player {
+    --vm-control-scale: 0.5 !important;
+    height: 100px;
+}
