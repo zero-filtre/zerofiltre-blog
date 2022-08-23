@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadEnvService } from 'src/app/services/load-env.service';
@@ -17,13 +17,13 @@ import { User } from '../user.model';
 })
 export class ProfileEntryEditComponent implements OnInit {
   public user!: User;
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
   public loading: boolean = false;
   private dataToSend!: User;
 
   constructor(
     private loadEnvService: LoadEnvService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private authService: AuthService,
     private messageService: MessageService,
     private seo: SeoService,
@@ -70,7 +70,7 @@ export class ProfileEntryEditComponent implements OnInit {
   get fullName() { return this.form.get('fullName'); }
   get bio() { return this.form.get('bio'); }
   get website() { return this.form.get('website'); }
-  get socialLinks() { return this.form.get('socialLinks') as FormArray }
+  get socialLinks() { return this.form.get('socialLinks') as UntypedFormArray }
 
   public invalidLink(link: string): boolean {
     if (!link?.match(/^https:\/\//)) return true;
