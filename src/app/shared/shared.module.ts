@@ -34,7 +34,9 @@ const components = [
   FooterComponent,
   ImageComponent,
   HeaderComponent,
-  NotFoundPageComponent
+  NotFoundPageComponent,
+  HeaderComponent,
+  BaseArticleListComponent
 ];
 
 const modules = [
@@ -56,7 +58,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, HeaderComponent, BaseArticleListComponent],
+  declarations: [...components],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
