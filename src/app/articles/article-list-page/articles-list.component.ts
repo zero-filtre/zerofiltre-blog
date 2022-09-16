@@ -98,15 +98,16 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
   public fetchPopularArticles(): void {
     this.loading = true;
     this.articles$ = this.articleService
-      .findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
+      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit, "popular")
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchTrendingArticles(): void {
     this.loading = true;
     this.articles$ = this.articleService
-      .findAllArticlesByTrend(this.pageNumber, this.pageItemsLimit)
+      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit, "most_viewed")
       .subscribe(this.handleFetchedArticles)
+
   }
 
   public fetchArticlesByTag(tagName: string): void {

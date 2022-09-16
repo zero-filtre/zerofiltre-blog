@@ -86,15 +86,44 @@ export class ArticleService {
       );
   }
 
+  public findAllArticleByFilter(page: number, limit: number, filter:string): Observable<Article[]> {
+    if (this.refreshData) {
+      httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
+    }
+    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published&filter=${filter}`, httpOptions)
+      .pipe(
+        tap(_ => {
+          this.refreshData = false
+          httpOptions.headers = httpOptions.headers.delete('x-refresh');
+        }),
+        shareReplay()
+      );
+  }
+
+
   public findAllRecentArticles(page: number, limit: number): Observable<Article[]> {
     if (this.refreshData) {
       httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
     }
     return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`, httpOptions)
       .pipe(
-        tap(_ => {
+        tap(data => {
           this.refreshData = false
           httpOptions.headers = httpOptions.headers.delete('x-refresh');
+
+          const { content } = data;
+
+          content.map(article => {
+            this.getNberOfViews(article.id)
+              .subscribe(val => article.totalViews = val)
+          })
+
+          const sortedContent = content.sort((a, b) =>  Date.parse(b.createdAt)-Date.parse(a.createdAt));
+
+          return {
+            ...data,
+            content: sortedContent
+          }
         }),
         shareReplay()
       );
