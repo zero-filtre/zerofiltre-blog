@@ -119,7 +119,7 @@ export class BaseArticleListComponent implements OnInit {
 
     this.scrollyPageNumber += 1;
 
-    const queryParam = this.route.snapshot.queryParamMap.get('sortBy')!;
+    const queryParam = this.route.snapshot.queryParamMap.get('filter')!;
 
     if (queryParam === this.DRAFT) {
       return this.articleService
