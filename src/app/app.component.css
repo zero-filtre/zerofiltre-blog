@@ -2,6 +2,11 @@
   @apply w-60 h-fit pt-24 pb-10 px-6;
 }
 
+.sidenav .sidenavLink {
+  -webkit-transform: translateZ(0);
+  @apply hover:bg-skin-link hover:text-primary-500 transition-all duration-200;
+}
+
 .sidenav .sidenavLink div {
   @apply text-sm py-2 font-normal font-ubuntu;
 }
