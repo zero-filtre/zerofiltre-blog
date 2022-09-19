@@ -67,7 +67,7 @@ export class BaseArticleListComponent implements OnInit {
 
   private getTotalViewsOfArticle(article: Article) {
     this.articleService.getNberOfViews(article.id)
-      .subscribe(val => article.totalViews = val)
+      .subscribe(val => article.viewsCount = val)
   }
 
   public setArticlesTotalViews(articles: Article[]): void {
@@ -166,7 +166,7 @@ export class BaseArticleListComponent implements OnInit {
     this.loadingMore = false;
     this.hasNext = hasNext;
     this.setArticlesReadingTime(newArticles);
-    this.setArticlesTotalViews(newArticles);
+    // this.setArticlesTotalViews(newArticles);
 
     if (newArticles.length === 0) {
       this.notEmptyArticles = false;
@@ -181,7 +181,7 @@ export class BaseArticleListComponent implements OnInit {
       // this.articles = this.sortArticle(content);
       this.articles = content;
       this.setArticlesReadingTime(this.articles);
-      this.setArticlesTotalViews(this.articles);
+      // this.setArticlesTotalViews(this.articles);
       this.loading = false;
       this.hasNext = hasNext;
 

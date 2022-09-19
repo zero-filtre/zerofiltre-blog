@@ -115,7 +115,7 @@ export class ArticleService {
 
           content.map(article => {
             this.getNberOfViews(article.id)
-              .subscribe(val => article.totalViews = val)
+              .subscribe(val => article.viewsCount = val)
           })
 
           const sortedContent = content.sort((a, b) =>  Date.parse(b.createdAt)-Date.parse(a.createdAt));
@@ -140,10 +140,10 @@ export class ArticleService {
 
           content.map(article => {
             this.getNberOfViews(article.id)
-              .subscribe(val => article.totalViews = val)
+              .subscribe(val => article.viewsCount = val)
           })
 
-          const sortedContent = content.sort((a, b) => b.totalViews - a.totalViews);
+          const sortedContent = content.sort((a, b) => b.viewsCount - a.viewsCount);
 
           return {
             ...data,
