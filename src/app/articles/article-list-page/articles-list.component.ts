@@ -24,7 +24,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
   RECENT = 'recent';
   POPULAR = 'popular';
-  TRENDING = 'trending';
+  TRENDING = 'most_viewed';
   TAGS = 'tags';
 
   dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg'
@@ -127,12 +127,12 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
     if (trendName === this.POPULAR) {
       this.activePage = this.POPULAR
-      this.router.navigateByUrl(`/articles?sortBy=${trendName}`);
+      this.router.navigateByUrl(`/articles?filter=${trendName}`);
     }
 
     if (trendName === this.TRENDING) {
       this.activePage = this.TRENDING
-      this.router.navigateByUrl(`/articles?sortBy=${trendName}`);
+      this.router.navigateByUrl(`/articles?filter=${trendName}`);
     }
 
     if (trendName === this.TAGS) {
@@ -148,7 +148,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
   public fetchMoreArticles() {
     this.scrollyPageNumber += 1;
-    const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
+    const queryParamOne = this.route.snapshot.queryParamMap.get('filter')!;
     const queryParamTwo = this.route.snapshot.queryParamMap.get('tag')!;
 
     if (queryParamOne === this.POPULAR) {
@@ -181,7 +181,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
       this.route.queryParamMap.subscribe(
         query => {
-          this.status = query.get('sortBy')!;
+          this.status = query.get('filter')!;
           this.tag = query.get('tag')!;
 
           if (this.tag) {
