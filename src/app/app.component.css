@@ -3,11 +3,14 @@
 }
 
 .sidenav .sidenavLink {
-  -webkit-transform: translateZ(0);
   @apply hover:bg-skin-link hover:text-primary-500 transition-all duration-200;
 }
 
 .sidenav .sidenavLink div {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  min-height: 30px;
+  visibility: visible !important;
   @apply text-sm py-2 font-normal font-ubuntu;
 }
 
