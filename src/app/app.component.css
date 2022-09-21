@@ -1,6 +1,15 @@
 .sidenav {
-  @apply w-60 h-fit pt-24 pb-10 px-6;
+  /* @apply w-60  pt-24 pb-10 px-6 rounded-bl-lg; */
+  @apply w-full pt-24 pb-10 px-6;
 }
+
+.sidenav .sidenavLink {
+  @apply hover:bg-skin-link hover:text-primary-500 transition-all duration-200;
+}
+
+/* .sidenav .sidenavLink.login_btn {
+  @apply flex items-center my-2 justify-center gap-2 shadow-md text-base bg-primary-600 text-white py-2.5 px-4 rounded-md hover:bg-primary-700 focus:outline-none transition-all duration-300;
+} */
 
 .sidenav .sidenavLink div {
   @apply text-sm py-2 font-normal font-ubuntu;
