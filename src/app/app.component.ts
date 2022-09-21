@@ -25,6 +25,7 @@ import {
 } from '@angular/router';
 
 import { LoadEnvService } from './services/load-env.service';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -41,8 +42,8 @@ export class AppComponent implements OnInit {
     this.logCopySuccessMessage(event);
   }
 
-  public servicesUrl!: string;
-  public coursesUrl!: string;
+  readonly servicesUrl = environment.servicesUrl
+  readonly coursesUrl = environment.coursesUrl
 
   public appLogoUrl = 'assets/logoblue.svg';
 
