@@ -24,7 +24,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
   RECENT = 'recent';
   POPULAR = 'popular';
-  TRENDING = 'trending';
+  TRENDING = 'most_viewed';
   TAGS = 'tags';
 
   dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg'
@@ -91,21 +91,21 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
   public fetchRecentArticles(): void {
     this.loading = true;
     this.articles$ = this.articleService
-      .findAllRecentArticles(this.pageNumber, this.pageItemsLimit)
+      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchPopularArticles(): void {
     this.loading = true;
     this.articles$ = this.articleService
-      .findAllArticlesByPopularity(this.pageNumber, this.pageItemsLimit)
+      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit, this.POPULAR)
       .subscribe(this.handleFetchedArticles)
   }
 
   public fetchTrendingArticles(): void {
     this.loading = true;
     this.articles$ = this.articleService
-      .findAllArticlesByTrend(this.pageNumber, this.pageItemsLimit)
+      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit, this.TRENDING)
       .subscribe(this.handleFetchedArticles)
   }
 
@@ -126,12 +126,12 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
     if (trendName === this.POPULAR) {
       this.activePage = this.POPULAR
-      this.router.navigateByUrl(`/articles?sortBy=${trendName}`);
+      this.router.navigateByUrl(`/articles?filter=${trendName}`);
     }
 
     if (trendName === this.TRENDING) {
       this.activePage = this.TRENDING
-      this.router.navigateByUrl(`/articles?sortBy=${trendName}`);
+      this.router.navigateByUrl(`/articles?filter=${trendName}`);
     }
 
     if (trendName === this.TAGS) {
@@ -147,17 +147,17 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
   public fetchMoreArticles() {
     this.scrollyPageNumber += 1;
-    const queryParamOne = this.route.snapshot.queryParamMap.get('sortBy')!;
+    const queryParamOne = this.route.snapshot.queryParamMap.get('filter')!;
     const queryParamTwo = this.route.snapshot.queryParamMap.get('tag')!;
 
     if (queryParamOne === this.POPULAR) {
-      this.articleService.findAllArticlesByPopularity(this.scrollyPageNumber, this.pageItemsLimit)
+      this.articleService.findAllArticleByFilter(this.scrollyPageNumber, this.pageItemsLimit, this.POPULAR)
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
       return
     }
 
     if (queryParamOne === this.TRENDING) {
-      this.articleService.findAllArticlesByTrend(this.scrollyPageNumber, this.pageItemsLimit)
+      this.articleService.findAllArticleByFilter(this.scrollyPageNumber, this.pageItemsLimit, this.TRENDING)
         .subscribe((response: any) => this.handleNewFetchedArticles(response));
       return
     }
@@ -168,7 +168,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
       return
     }
 
-    this.articleService.findAllRecentArticles(this.scrollyPageNumber, this.pageItemsLimit)
+    this.articleService.findAllArticleByFilter(this.scrollyPageNumber, this.pageItemsLimit)
       .subscribe((response: any) => this.handleNewFetchedArticles(response));
 
   }
@@ -180,7 +180,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
       this.route.queryParamMap.subscribe(
         query => {
-          this.status = query.get('sortBy')!;
+          this.status = query.get('filter')!;
           this.tag = query.get('tag')!;
 
           if (this.tag) {

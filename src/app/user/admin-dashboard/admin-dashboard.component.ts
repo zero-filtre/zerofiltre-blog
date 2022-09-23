@@ -50,12 +50,12 @@ export class AdminDashboardComponent extends BaseArticleListComponent implements
 
     if (tab === this.DRAFT) {
       this.activePage = this.DRAFT;
-      this.router.navigateByUrl(`/user/dashboard/admin?sortBy=${tab}`);
+      this.router.navigateByUrl(`/user/dashboard/admin?filter=${tab}`);
     }
 
     if (tab === this.IN_REVIEW) {
       this.activePage = this.IN_REVIEW;
-      this.router.navigateByUrl(`/user/dashboard/admin?sortBy=${tab}`);
+      this.router.navigateByUrl(`/user/dashboard/admin?filter=${tab}`);
     }
 
     this.scrollyPageNumber = 0;
@@ -68,7 +68,7 @@ export class AdminDashboardComponent extends BaseArticleListComponent implements
     if (isPlatformBrowser(this.platformId)) {
       this.route.queryParamMap.subscribe(
         query => {
-          this.status = query.get('sortBy')!;
+          this.status = query.get('filter')!;
           if (!this.status) {
             this.activePage = this.PUBLISHED;
             return this.fetchAllArticlesAsAdmin(this.PUBLISHED);
