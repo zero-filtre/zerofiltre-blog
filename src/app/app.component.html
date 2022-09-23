@@ -1,8 +1,8 @@
 <mat-sidenav-container class="sidenav-container !overflow-visible bg-skin-bg">
 
   <!-- APP MOBILE SIDENAV -->
-  <mat-sidenav #drawer class="sidenav mobile-sidebar-menu lg:!hidden relative rounded-bl-lg" position="end"
-    fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'over'" [opened]="false">
+  <mat-sidenav #drawer class="sidenav mobile-sidebar-menu lg:!hidden relative" position="end" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'over'" [opened]="false">
 
     <div class="absolute top-6 right-6 w-fit" (click)="drawer.close()">
       <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()">
@@ -13,7 +13,7 @@
       </button>
     </div>
 
-    <ul>
+    <div>
       <a aria-labelledby="Link to about page" (click)="drawer.close()" class="sidenavLink"
         href="{{servicesUrl}}/#about">
         <div>{{'navbar.about' | translate}}</div>
@@ -33,12 +33,12 @@
       </a>
 
       <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" (click)="drawer.close()"
-        class="sidenavLink" routerLink="/login">
+        class="sidenavLink login_btn" routerLink="/login">
         <div class="!font-medium text-primary-500">{{'navbar.login' | translate}}</div>
       </a>
 
       <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" (click)="drawer.close()"
-        class="sidenavLink" routerLink="/register">
+        class="sidenavLink signup_btn" routerLink="/register">
         <div>{{'navbar.register' | translate}}</div>
       </a>
 
@@ -75,7 +75,7 @@
           </button>
         </div>
       </div>
-    </ul>
+    </div>
 
   </mat-sidenav>
   <!-- END APP MOBILE SIDENAV  -->
