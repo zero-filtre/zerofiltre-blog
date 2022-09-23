@@ -13,7 +13,7 @@ export interface Article {
   status?: string;
   tags: Tag[];
   readingTime: number;
-  totalViews: number;
+  viewsCount: number;
 }
 
 export interface File {
