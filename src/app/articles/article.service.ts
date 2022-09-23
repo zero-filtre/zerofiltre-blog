@@ -86,11 +86,11 @@ export class ArticleService {
       );
   }
 
-  public findAllRecentArticles(page: number, limit: number): Observable<Article[]> {
+  public findAllArticleByFilter(page: number, limit: number, filter:string=""): Observable<Article[]> {
     if (this.refreshData) {
       httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
     }
-    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`, httpOptions)
+    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`+(filter!=""?`&filter=${filter}`:``), httpOptions)
       .pipe(
         tap(_ => {
           this.refreshData = false
@@ -100,44 +100,6 @@ export class ArticleService {
       );
   }
 
-  public findAllArticlesByTrend(page: number, limit: number): Observable<any> {
-    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`, httpOptions)
-      .pipe(
-        tap(data => {
-          this.refreshData = false
-          httpOptions.headers = httpOptions.headers.delete('x-refresh');
-
-          const { content } = data;
-
-          content.map(article => {
-            this.getNberOfViews(article.id)
-              .subscribe(val => article.totalViews = val)
-          })
-
-          const sortedContent = content.sort((a, b) => b.totalViews - a.totalViews);
-
-          return {
-            ...data,
-            content: sortedContent
-          }
-        }),
-        shareReplay()
-      );
-  }
-
-  public findAllArticlesByPopularity(page: number, limit: number): Observable<Article[]> {
-    if (this.refreshData) {
-      httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
-    }
-    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published&byPopularity=true`, httpOptions)
-      .pipe(
-        tap(_ => {
-          this.refreshData = false
-          httpOptions.headers = httpOptions.headers.delete('x-refresh');
-        }),
-        shareReplay()
-      );
-  }
 
   public findAllArticlesByTag(page: number, limit: number, tagName: string): Observable<Article[]> {
     if (this.refreshData) {

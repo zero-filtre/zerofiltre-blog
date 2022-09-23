@@ -31,7 +31,7 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
     this.loadCurrentYear();
 
-    this.recentArticles$ = this.articleService.findAllRecentArticles(0, 5)
+    this.recentArticles$ = this.articleService.findAllArticleByFilter(0, 5)
       .pipe(
         map(({ content }: any) => {
           return content;

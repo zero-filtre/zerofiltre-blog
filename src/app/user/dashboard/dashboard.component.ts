@@ -50,12 +50,12 @@ export class DashboardComponent extends BaseArticleListComponent implements OnIn
 
     if (tab === this.DRAFT) {
       this.activePage = this.DRAFT;
-      this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
+      this.router.navigateByUrl(`/user/dashboard?filter=${tab}`);
     }
 
     if (tab === this.IN_REVIEW) {
       this.activePage = this.IN_REVIEW;
-      this.router.navigateByUrl(`/user/dashboard?sortBy=${tab}`);
+      this.router.navigateByUrl(`/user/dashboard?filter=${tab}`);
     }
 
     this.scrollyPageNumber = 0;
@@ -67,7 +67,7 @@ export class DashboardComponent extends BaseArticleListComponent implements OnIn
     if (isPlatformBrowser(this.platformId)) {
       this.route.queryParamMap.subscribe(
         query => {
-          this.status = query.get('sortBy')!;
+          this.status = query.get('filter')!;
           if (!this.status) {
             this.activePage = this.PUBLISHED;
             return this.fetchMyArticlesByStatus(this.PUBLISHED);
