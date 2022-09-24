@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, mergeMap, Observable, of, shareReplay, tap } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, mergeMap, Observable, of, shareReplay, tap, map, EMPTY } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Article, Author, Tag } from './article.model';
+import { isPlatformServer } from '@angular/common';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,11 +26,35 @@ export class ArticleService {
 
   private refreshData!: boolean
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformID: any
+  ) { }
 
   private sortByDate(list: Article[]): Article[] {
     return list
       ?.sort((a: any, b: any) => new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf())
+  }
+
+  public incrementViews(articleId: string): Observable<any> {
+    if (isPlatformServer(this.platformID)) return EMPTY
+
+    let total = +localStorage.getItem(`article-${articleId}-views`) || 0;
+
+    return of(total)
+      .pipe(map(val => {
+        total = val + 1
+        localStorage.setItem(`article-${articleId}-views`, JSON.stringify(total))
+        return total
+      }))
+  }
+
+  public getNberOfViews(articleId: any): Observable<any> {
+    if (isPlatformServer(this.platformID)) return EMPTY
+
+    const total = +localStorage.getItem(`article-${articleId}-views`) || 0
+
+    return of(total);
   }
 
   public findAllArticles(page: number, limit: number, status: string): Observable<Article[]> {
@@ -61,13 +86,11 @@ export class ArticleService {
       );
   }
 
-  public findAllRecentArticles(page: number, limit: number): Observable<Article[]> {
-
-
+  public findAllArticleByFilter(page: number, limit: number, filter:string=""): Observable<Article[]> {
     if (this.refreshData) {
       httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
     }
-    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`, httpOptions)
+    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`+(filter!=""?`&filter=${filter}`:``), httpOptions)
       .pipe(
         tap(_ => {
           this.refreshData = false
@@ -77,19 +100,6 @@ export class ArticleService {
       );
   }
 
-  public findAllArticlesByPopularity(page: number, limit: number): Observable<Article[]> {
-    if (this.refreshData) {
-      httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
-    }
-    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published&byPopularity=true`, httpOptions)
-      .pipe(
-        tap(_ => {
-          this.refreshData = false
-          httpOptions.headers = httpOptions.headers.delete('x-refresh');
-        }),
-        shareReplay()
-      );
-  }
 
   public findAllArticlesByTag(page: number, limit: number, tagName: string): Observable<Article[]> {
     if (this.refreshData) {

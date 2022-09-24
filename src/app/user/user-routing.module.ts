@@ -9,6 +9,7 @@ import { LoggedInAuthGuard } from './logged-in-auth.guard';
 import { PasswordRenewalPageComponent } from './password-renewal-page/password-renewal-page.component';
 import { ProfileEntryEditComponent } from './profile-entry-edit/profile-entry-edit.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PublicProfileComponent } from './public-profile/public-profile.component';
 import { SocialAuthComponent } from './social-auth/social-auth.component';
 import { UserResolver } from './user.resolver';
 
@@ -18,15 +19,12 @@ const routes: Routes = [
   { path: 'social-auth', component: SocialAuthComponent, canActivate: [LoggedInAuthGuard] },
 
   {
-    path: 'profile/:userID',
+    path: 'profile',
     component: ProfileComponent,
-    resolve: {
-      user: UserResolver
-    },
     canActivate: [AuthGuard]
   },
   {
-    path: 'profile/:userID/edit',
+    path: 'profile/edit',
     component: ProfileEntryEditComponent,
     canActivate: [AuthGuard]
   },
@@ -45,7 +43,14 @@ const routes: Routes = [
     data: {
       role: 'ROLE_ADMIN'
     }
-  }
+  },
+  {
+    path: ':userID',
+    component: PublicProfileComponent,
+    resolve: {
+      user: UserResolver
+    },
+  },
 ];
 
 @NgModule({

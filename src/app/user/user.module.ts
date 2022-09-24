@@ -17,6 +17,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileEntryEditComponent } from './profile-entry-edit/profile-entry-edit.component';
 import { ProfileImagePopupComponent } from './profile-image-popup/profile-image-popup.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { PublicProfileComponent } from './public-profile/public-profile.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
     DashboardComponent,
     ProfileEntryEditComponent,
     ProfileImagePopupComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    PublicProfileComponent
   ],
   imports: [
     CommonModule,

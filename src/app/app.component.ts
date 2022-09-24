@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
 
     router.events.pipe(filter(event => event instanceof NavigationStart))
       .subscribe(({ url }: any) => {
-        if (url.startsWith('/user/profile/')) this.activePage = this.MY_ACCOUNT;
+        if (url.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
         if (url.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
         if (url.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
       });
@@ -145,6 +145,7 @@ export class AppComponent implements OnInit {
 
   public fetchAllArticlesAsUser() {
     this.activePage = this.MY_ARTICLES;
+    this.router.navigateByUrl('/user/dashboard');
   }
 
   public logCopySuccessMessage(event: any) {

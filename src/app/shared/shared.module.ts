@@ -6,7 +6,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatDialogModule } from '@angular/material/dialog'
@@ -15,7 +14,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppShellRenderDirective } from '../directives/app-shell-render.directive';
 import { AppShellNoRenderDirective } from '../directives/app-shell-no-render.directive';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { ImageComponent } from './image/image.component';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -23,14 +21,20 @@ import { MarkdownModule } from 'ngx-markdown';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './lang-switcher/translate-universal-loader';
+
 import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { ImageComponent } from './image/image.component';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { BaseArticleListComponent } from './base-article-list/base-article-list.component';
 
 const components = [
   AppShellRenderDirective,
   AppShellNoRenderDirective,
   FooterComponent,
   ImageComponent,
-  HeaderComponent
+  HeaderComponent,
+  NotFoundPageComponent
 ];
 
 const modules = [
@@ -52,7 +56,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, HeaderComponent],
+  declarations: [...components, HeaderComponent, BaseArticleListComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
