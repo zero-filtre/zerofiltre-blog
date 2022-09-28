@@ -10,8 +10,8 @@ import { AuthService } from '../../user/auth.service';
   styleUrls: ['./course-list-page.component.css']
 })
 export class CourseListPageComponent implements OnInit {
-  tagList!: Tag[];
-  courses!: any[];
+  tagList: Tag[] = [];
+  courses: any[] = [];
   pageSize: number = 5;
 
   RECENT = 'recent';
@@ -65,23 +65,38 @@ export class CourseListPageComponent implements OnInit {
 
   loadData() {
     this.loading = true;
+    this.activePage == this.RECENT
 
-    setTimeout(() => {
-      this.courses = [
-        ...this.courses,
-        {},
-      ]
+    const courses$ = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const data = [
+          ...this.courses,
+          { id: 1, title: 'mon premier cours', summary: 'un magnifique cours' },
+        ]
+        resolve(data);
+      }, 1000);
+    });
 
-      this.tagList = [
-        ...this.tagList,
-        {},
-      ]
-
+    courses$.then((data: any[]) => {
+      console.log('DATA: ', data)
       this.loading = false;
-    }, 3000)
+      this.courses = data;
+    })
+
+    const tagList$ = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve([
+          ...this.tagList,
+          { id: 1, name: 'js', colorCode: '#ccc' },
+        ]);
+
+        this.loading = false;
+      }, 1000);
+    });
   }
 
   ngOnInit(): void {
+    this.loadData();
   }
 
 }
