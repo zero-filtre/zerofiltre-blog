@@ -152,7 +152,7 @@
                                 </div>
 
                                 <div class="mt-2">
-                                    <a aria-labelledby="Link to about page" routerLink="/articles/{{course.id}}"
+                                    <a aria-labelledby="Link to about page" routerLink="{{course.id}}"
                                         class="article-title">
                                         <h4
                                             class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
@@ -170,7 +170,7 @@
                                         <div class="author-image flex-shrink-0">
                                             <a aria-labelledby="Link to author profile"
                                                 [routerLink]="authService?.currentUsr?.id == course?.author?.id ? ['/user/profile'] : ['/user/' + course?.author?.id]">
-                                                <app-image [classes]="'h-10 w-10 rounded-full'"
+                                                <app-image [classes]="'h-10 w-10 rounded-full object-cover'"
                                                     [sourceUrl]="course.author?.profilePicture!"
                                                     [alt]="course?.author?.fullName!">
                                                 </app-image>
