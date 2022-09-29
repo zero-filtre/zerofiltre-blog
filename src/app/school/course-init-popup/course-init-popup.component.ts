@@ -28,7 +28,12 @@ export class CourseInitPopupComponent implements OnInit {
     if (!this.title.trim()) return;
 
     this.loading = true;
-    this.router.navigateByUrl(`cours/1/edit`);
+
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigateByUrl(`cours/1/edit`);
+      this.loading = false;
+      this.dialogRef.close();
+    })
   }
 
   ngOnInit(): void {
