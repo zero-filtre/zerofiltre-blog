@@ -19,6 +19,15 @@
                 {{'app.resendAccountConfirmationLinkText' | translate}}
             </a>
         </div>
+
+        <div class="back_to_article_message text-sm md:text-2xl mt-5 space-x-1">
+            <span>Cependant, vous pouvez dors et déjà rediger de nouveaux articles et confirmer votre compte plutard
+                😌.</span>
+            <a aria-labelledby="Link to about page" routerLink="/"
+                class="font-medium cursor-pointer text-primary-500 hover:text-primary-300 underline transition-all">
+                {{'app.home' | translate}}
+            </a>
+        </div>
     </div>
 
     <div *ngIf="successMessage" class="max-w-3xl mx-auto">
