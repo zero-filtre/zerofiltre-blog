@@ -10,7 +10,7 @@ export class CurriculumSidebarComponent implements OnInit {
   constructor() { }
 
   course: any = {
-    name: 'Apprenez le DDD',
+    name: 'Mettez (enfin) en place le Domain Driven Design',
     chapters: [
       {
         title: 'Titre du chapitre 1',

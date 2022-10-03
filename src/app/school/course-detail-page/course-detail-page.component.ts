@@ -18,7 +18,7 @@ export class CourseDetailPageComponent implements OnInit {
   public lessonGroupImage2 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
   public lessonGroupImage3 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
 
-  showSidebar: boolean = false;
+  showSidebar: boolean = true;
 
   toggleSideBar() {
     this.showSidebar = !this.showSidebar

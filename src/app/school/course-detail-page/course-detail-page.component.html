@@ -126,7 +126,7 @@
                 <div class="curriculum_wrapper max-w-3xl m-auto">
                     <div class="curriculum_chapters_wrapper">
                         <div *ngFor="let chapter of course.chapters" class="curriculum_chapter mb-2">
-                            <div class="curriculum_chapter_title bg-primary-100 text-secondary p-3 font-bold">
+                            <div class="curriculum_chapter_title bg-primary-100 text-secondary p-3 font-semibold">
                                 {{chapter.title}}</div>
                             <ul class="curriculum_chapter_lessons space-y-0.5">
                                 <li *ngFor="let lesson of chapter.lessons"
@@ -152,12 +152,12 @@
                                             <span
                                                 class="lesson_name font-light line-clamp-2 lg:line-clamp-none">{{lesson.name}}</span>
                                             <span
-                                                class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-semibold">{{lesson.duration}}</span>
+                                                class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-normal">{{lesson.duration}}</span>
                                         </div>
                                         <button *ngIf="lesson.free"
-                                            class="lesson_button bg-primary-400 text-white px-2 py-1 rounded-md text-sm font-semibold">Aperçu</button>
+                                            class="lesson_button bg-primary-400 text-white px-2 py-1 rounded-md text-sm font-medium">Aperçu</button>
                                         <button *ngIf="!lesson.free" disabled
-                                            class="lesson_button bg-primary-400 text-white px-2 py-1 rounded-md text-sm font-semibold opacity-40">Commencer</button>
+                                            class="lesson_button bg-primary-400 text-white px-2 py-1 rounded-md text-sm font-medium opacity-40">Commencer</button>
                                     </a>
                                 </li>
                             </ul>
