@@ -17,7 +17,7 @@ export class CurriculumSidebarComponent implements OnInit {
         lessons: [
           {
             type: 'video',
-            name: 'lesson numero 1 lesson numero 1 lesson numero 1 lesson numero 1 lesson numero 1 lesson numero 1 lesson numero 1 lesson numero 1 lesson numero 1 lesson numero 1',
+            name: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure',
             duration: '3:15',
             free: true
           },
