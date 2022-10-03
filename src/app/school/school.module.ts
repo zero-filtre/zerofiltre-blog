@@ -4,11 +4,15 @@ import { CommonModule } from '@angular/common';
 import { SchoolRoutingModule } from './school-routing.module';
 import { CourseListPageComponent } from './course-list-page/course-list-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { CourseContentComponent } from './course-content/course-content.component';
+import { CurriculumSidebarComponent } from './curriculum-sidebar/curriculum-sidebar.component';
 
 
 @NgModule({
   declarations: [
-    CourseListPageComponent
+    CourseListPageComponent,
+    CourseContentComponent,
+    CurriculumSidebarComponent
   ],
   imports: [
     CommonModule,
