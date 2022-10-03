@@ -1,5 +1,5 @@
 <main class="flex flex-col lg:flex-row">
-    <aside class="order-2 lg:order-none">
+    <aside class="order-2 lg:order-none flex-1">
         <!-- DEMO SIDEBAR -->
         <ng-container *ngIf="showSidebar">
             <app-curriculum-sidebar></app-curriculum-sidebar>
@@ -44,7 +44,7 @@
                     </p>
 
                     <a href="https://sso.teachable.com/secure/1336335/checkout/4117601/mettez-enfin-en-place-le-ddd"
-                        class="mt-5 w-fit mx-auto lg:mx-0 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-semibold hover:bg-primary-700 transition-all duration-300">
+                        class="mt-5 w-fit mx-auto lg:mx-0 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
                         <span class="text-center">{{'ddd.buyButtonText' | translate}}</span>
 
                         <span class="mt-1">
@@ -108,7 +108,7 @@
                 </iframe>
 
                 <a href="https://sso.teachable.com/secure/1336335/checkout/4117601/mettez-enfin-en-place-le-ddd"
-                    class="mt-8 lg:mt-14 w-fit flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-semibold hover:bg-primary-700 transition-all duration-300">
+                    class="mt-8 lg:mt-14 w-fit flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
                     <span class="text-center">{{'ddd.buyButtonText' | translate}}</span>
 
                     <span class="mt-1">
@@ -130,9 +130,9 @@
                                 {{chapter.title}}</div>
                             <ul class="curriculum_chapter_lessons space-y-0.5">
                                 <li *ngFor="let lesson of chapter.lessons"
-                                    class="curriculum_chapter_lesson_elt p-3 hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
+                                    class="curriculum_chapter_lesson_elt hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
                                     <a routerLink="/cours/1"
-                                        class="lesson_link flex justify-between items-center gap-2">
+                                        class="lesson_link p-3 flex justify-between items-center gap-2">
                                         <div class="left_content flex items-center gap-2">
                                             <span class="lesson_small_icon">
                                                 <svg *ngIf="lesson.type === 'video'" xmlns="http://www.w3.org/2000/svg"
