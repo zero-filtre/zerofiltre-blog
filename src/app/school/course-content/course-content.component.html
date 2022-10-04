@@ -1,10 +1,10 @@
-<div class="">
+<div class="flex flex-col">
 
-    <aside class="text-skin-art">
+    <aside class="text-skin-art order-2 lg:order-none">
         <app-curriculum-sidebar></app-curriculum-sidebar>
     </aside>
 
-    <main class="w-[calc(100%-350px)] ml-auto py-5 text-skin-art">
+    <main class="lg:w-[calc(100%-350px)] ml-auto py-5 text-skin-art">
         <div class="site-container px-[6%]">
             <div class="progress_bar mb-5 mx-auto">
                 <!-- <progress class="progress w-full ld:max-w-[500px] h-10" value="40" max="100"></progress> -->
@@ -29,8 +29,8 @@
             </div>
 
             <div class="course_content p-5">
-                <div *ngIf="lesson" class="markdown-content mt-6 lg:mt-8">
-                    <div class="lesson_name mb-10 text-lg lg:text-5xl font-extrabold text-primary-600">
+                <div *ngIf="lesson" class="markdown-content mt-2 lg:mt-8">
+                    <div class="lesson_name mb-6 lg:mb-10 text-lg lg:text-5xl font-extrabold text-primary-600">
                         <h1>{{lesson.name}}</h1>
                     </div>
                     <markdown
