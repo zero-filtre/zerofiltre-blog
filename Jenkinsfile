@@ -148,7 +148,7 @@ def runApp() {
 
 String getRequestsCPU(String branchName) {
     if (branchName == 'main') {
-        return '1'
+        return '0.5'
     } else {
         return '0.2'
     }
@@ -156,7 +156,7 @@ String getRequestsCPU(String branchName) {
 
 String getRequestsMemory(String branchName) {
     if (branchName == 'main') {
-        return '1Gi'
+        return '0.5Gi'
     } else {
         return '0.5Gi'
     }
@@ -164,7 +164,7 @@ String getRequestsMemory(String branchName) {
 
 String getLimitsCPU(String branchName) {
     if (branchName == 'main') {
-        return '2'
+        return '0.5'
     } else {
         return '0.2'
     }
@@ -172,7 +172,7 @@ String getLimitsCPU(String branchName) {
 
 String getLimitsMemory(String branchName) {
     if (branchName == 'main') {
-        return '4Gi'
+        return '1Gi'
     } else {
         return '1Gi'
     }

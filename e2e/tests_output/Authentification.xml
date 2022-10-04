@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="0">
+
+  <testsuite name="Authentification"
+    errors="1" failures="0" hostname="" id="" package="Authentification" skipped="10"
+    tests="0" time="0.000" timestamp="">
+  
+
+  
+    <system-err>
+      
+┌──────────────────────────────────────────────────────────────────────────────┐│                                                                              ││   GeckoDriver cannot be found in the current project.                        ││                                                                              ││   You can either install geckodriver from NPM with:                          ││                                                                              ││   npm install geckodriver --save-dev                                         ││                                                                              ││   or download it from https://github.com/mozilla/geckodriver/releases,       ││   extract the archive and set &#34;webdriver.server_path&#34; config option to       ││   point to the binary file.                                                  ││                                                                              ││                                                                              ││                                                                              │└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐│                                                                              ││   GeckoDriver cannot be found in the current project.                        ││                                                                              ││   You can either install geckodriver from NPM with:                          ││                                                                              ││   npm install geckodriver --save-dev                                         ││                                                                              ││   or download it from https://github.com/mozilla/geckodriver/releases,       ││   extract the archive and set &#34;webdriver.server_path&#34; config option to       ││   point to the binary file.                                                  ││                                                                              ││                                                                              ││                                                                              │└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐│                                                                              ││   GeckoDriver cannot be found in the current project.                        ││                                                                              ││   You can either install geckodriver from NPM with:                          ││                                                                              ││   npm install geckodriver --save-dev                                         ││                                                                              ││   or download it from https://github.com/mozilla/geckodriver/releases,       ││   extract the archive and set &#34;webdriver.server_path&#34; config option to       ││   point to the binary file.                                                  ││                                                                              ││                                                                              ││                                                                              │└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐│                                                                              ││   GeckoDriver cannot be found in the current project.                        ││                                                                              ││   You can either install geckodriver from NPM with:                          ││                                                                              ││   npm install geckodriver --save-dev                                         ││                                                                              ││   or download it from https://github.com/mozilla/geckodriver/releases,       ││   extract the archive and set &#34;webdriver.server_path&#34; config option to       ││   point to the binary file.                                                  ││                                                                              ││                                                                              ││                                                                              │└──────────────────────────────────────────────────────────────────────────────┘
+
+    </system-err>
+  
+
+    
+    <error message=""><![CDATA[
+      
+      ]]></error>  
+
+  
+    
+    <testcase
+      name="Register a new account with mandatory fields (fullname, email, password, password confirmation)" classname="Authentification">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Confirmation message" classname="Authentification">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Signin User" classname="Authentification">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Redirect to articles page" classname="Authentification">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Sign out" classname="Authentification">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Register a new account with an already registered email" classname="Authentification">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Eror notification message on used email" classname="Authentification">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Sign in with mandatory fields (email and password) and correct values" classname="Authentification">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Sign in with mandatory fields (email and password) and wrong values" classname="Authentification">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Eror notification message credentials incorrect" classname="Authentification">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

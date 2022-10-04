@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="1"
+            tests="3">
+
+  <testsuite name="ArticleDetails"
+    errors="1" failures="1" hostname="" id="" package="ArticleDetails" skipped="2"
+    tests="3" time="22.96" timestamp="">
+  
+    <testcase name="Sign in with mandatory fields (email and password) and correct values" classname="ArticleDetails" time="11.29" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Redirect to articles page" classname="ArticleDetails" time="1.183" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Get the article details" classname="ArticleDetails" time="10.49" assertions="3">
+
+    
+
+      <failure message="Timed out while waiting for element &lt;markdown&gt; to be present for 5000 milliseconds. - expected &#34;visible&#34; but got: &#34;not found&#34; (5294ms)">    at Object.Get the article details (/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/tests/ArticleDetails.js:35:14)</failure>
+
+    
+    <error message="Timed out while waiting for element &lt;markdown&gt; to be present for 5000 milliseconds. - expected [0;32m&#34;visible&#34;[0m but got: [0;31m&#34;not found&#34;[0m [0;90m(5294ms)[0m" type="error"><![CDATA[
+    Error
+    at Object.Get the article details (/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/tests/ArticleDetails.js:35:14)
+    at Context.call (/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/node_modules/nightwatch/lib/testsuite/context.js:433:35)
+    at TestCase.run (/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/node_modules/nightwatch/lib/testsuite/testcase.js:58:31)
+    at Runnable.__runFn (/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/node_modules/nightwatch/lib/testsuite/index.js:694:80)
+    at Runnable.run (/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/node_modules/nightwatch/lib/testsuite/runnable.js:126:21)
+    at TestSuite.createRunnable (/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/node_modules/nightwatch/lib/testsuite/index.js:801:33)
+    at TestSuite.handleRunnable (/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/node_modules/nightwatch/lib/testsuite/index.js:806:33)
+    at /home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/node_modules/nightwatch/lib/testsuite/index.js:694:21
+    at async DefaultRunner.runTestSuite (/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/node_modules/nightwatch/lib/runner/test-runners/default.js:76:7)
+    at async DefaultRunner.promiseFn (/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/node_modules/nightwatch/lib/runner/test-runners/default.js:94:7)
+    ]]></error>
+    
+    </testcase>
+  
+
+  
+    <system-err>
+       → TimeoutError
+
+    An error occurred while running .click() command on &lt;.article-title&gt;: element click intercepted: Element &lt;a _ngcontent-serverapp-c66=&#34;&#34; aria-labelledby=&#34;Link to about page&#34; class=&#34;article-title&#34; href=&#34;/articles/172&#34;&gt;...&lt;/a&gt; is not clickable at point (408, 681). Other element would receive the click: &lt;div class=&#34;cc-nb-main-container&#34;&gt;...&lt;/div&gt;
+  (Session info: chrome=106.0.5249.91)
+    {&#34;error&#34;:{&#34;name&#34;:&#34;ElementClickInterceptedError&#34;,&#34;remoteStacktrace&#34;:&#34;&#34;},&#34;status&#34;:-1,&#34;value&#34;:null}
+
+    Error location:
+/home/newgenius/dev/zerofiltre/zerofiltre-blog/e2e/tests/ArticleDetails.js:
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ 32 |             .waitForElementVisible(&#39;.article-title&#39;, 5000)
+ 33 |             .assert.visible(&#39;.article-title&#39;)
+ 34 |             .click(&#34;.article-title&#34;) 
+ 35 |             .waitForElementVisible(&#39;markdown&#39;, 5000)
+ 36 |             .assert.visible(&#39;markdown&#39;)
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+    </system-err>
+  
+
+    
+
+  
+    
+    <testcase
+      name="Add reactions to the article" classname="ArticleDetails">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Open a similar article" classname="ArticleDetails">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

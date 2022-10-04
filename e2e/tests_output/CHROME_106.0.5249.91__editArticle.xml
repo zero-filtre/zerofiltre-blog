@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="7">
+
+  <testsuite name="editArticle"
+    errors="0" failures="0" hostname="" id="" package="editArticle" skipped="0"
+    tests="7" time="24.54" timestamp="">
+  
+    <testcase name="Sign in with mandatory fields (email and password) and correct values" classname="editArticle" time="12.04" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Redirect to articles page" classname="editArticle" time="3.420" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Add article" classname="editArticle" time="4.550" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="success publication" classname="editArticle" time="1.181" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="edit article" classname="editArticle" time="1.954" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="success modification" classname="editArticle" time="0.7170" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="delete article" classname="editArticle" time="0.6790" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>

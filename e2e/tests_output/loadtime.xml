@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="0">
+
+  <testsuite name="loadtime"
+    errors="1" failures="0" hostname="" id="" package="loadtime" skipped="1"
+    tests="0" time="0.000" timestamp="">
+  
+
+  
+    <system-err>
+      
+┌──────────────────────────────────────────────────────────────────────────────┐│                                                                              ││   GeckoDriver cannot be found in the current project.                        ││                                                                              ││   You can either install geckodriver from NPM with:                          ││                                                                              ││   npm install geckodriver --save-dev                                         ││                                                                              ││   or download it from https://github.com/mozilla/geckodriver/releases,       ││   extract the archive and set &#34;webdriver.server_path&#34; config option to       ││   point to the binary file.                                                  ││                                                                              ││                                                                              ││                                                                              │└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐│                                                                              ││   GeckoDriver cannot be found in the current project.                        ││                                                                              ││   You can either install geckodriver from NPM with:                          ││                                                                              ││   npm install geckodriver --save-dev                                         ││                                                                              ││   or download it from https://github.com/mozilla/geckodriver/releases,       ││   extract the archive and set &#34;webdriver.server_path&#34; config option to       ││   point to the binary file.                                                  ││                                                                              ││                                                                              ││                                                                              │└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐│                                                                              ││   GeckoDriver cannot be found in the current project.                        ││                                                                              ││   You can either install geckodriver from NPM with:                          ││                                                                              ││   npm install geckodriver --save-dev                                         ││                                                                              ││   or download it from https://github.com/mozilla/geckodriver/releases,       ││   extract the archive and set &#34;webdriver.server_path&#34; config option to       ││   point to the binary file.                                                  ││                                                                              ││                                                                              ││                                                                              │└──────────────────────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐│                                                                              ││   GeckoDriver cannot be found in the current project.                        ││                                                                              ││   You can either install geckodriver from NPM with:                          ││                                                                              ││   npm install geckodriver --save-dev                                         ││                                                                              ││   or download it from https://github.com/mozilla/geckodriver/releases,       ││   extract the archive and set &#34;webdriver.server_path&#34; config option to       ││   point to the binary file.                                                  ││                                                                              ││                                                                              ││                                                                              │└──────────────────────────────────────────────────────────────────────────────┘
+
+    </system-err>
+  
+
+    
+    <error message=""><![CDATA[
+      
+      ]]></error>  
+
+  
+    
+    <testcase
+      name="Load home page after 3 seconds max" classname="loadtime">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>
