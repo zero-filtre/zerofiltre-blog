@@ -1,0 +1,46 @@
+<section class="curriculum py-8 bg-white">
+    <div class="site-container">
+        <div class="curriculum_wrapper max-w-3xl m-auto">
+            <h2 class="pb-5 text-center lg:!text-3xl text-secondary">Sommaire</h2>
+            <div class="curriculum_chapters_wrapper">
+                <div *ngFor="let chapter of course.chapters" class="curriculum_chapter mb-2">
+                    <div class="curriculum_chapter_title bg-primary-100 text-secondary p-3 font-semibold">
+                        {{chapter.title}}</div>
+                    <ul class="curriculum_chapter_lessons space-y-0.5">
+                        <li *ngFor="let lesson of chapter.lessons"
+                            class="curriculum_chapter_lesson_elt hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
+                            <a routerLink="/cours/1" class="lesson_link p-3 flex justify-between items-center gap-2">
+                                <div class="left_content flex items-center gap-2">
+                                    <span class="lesson_small_icon">
+                                        <svg *ngIf="lesson.type === 'video'" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                            class="w-5 h-5 text-primary-600">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125z" />
+                                        </svg>
+
+                                        <svg *ngIf="lesson.type === 'doc'" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                            class="w-5 h-5 text-primary-600">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+                                        </svg>
+                                    </span>
+                                    <span
+                                        class="lesson_name font-light line-clamp-2 lg:line-clamp-none">{{lesson.name}}</span>
+                                    <span
+                                        class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-normal">{{lesson.duration}}</span>
+                                </div>
+                                <button *ngIf="lesson.free"
+                                    class="lesson_button bg-primary-400 text-white px-2 py-1 rounded-md text-sm font-medium">Aperçu</button>
+                                <button *ngIf="!lesson.free" disabled
+                                    class="lesson_button bg-primary-400 text-white px-2 py-1 rounded-md text-sm font-medium opacity-40">Commencer</button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

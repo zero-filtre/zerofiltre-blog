@@ -76,7 +76,10 @@
                 <ng-template [ngIf]="courses" *appShellNoRender>
                     <div *ngFor="let course of courses; let i=index" class="space-y-11">
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
-                            <a aria-labelledby="Link to about page" routerLink="{{course.id}}"
+
+                            <a aria-labelledby="Link to course detail page"
+                                routerLink="{{authService.currentUsr ? course.id : course.id}}"
+
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -139,7 +142,8 @@
                                             <mat-menu #menu="matMenu" class="-mt-7 font-semibold text-skin-base">
                                                 <a aria-labelledby="Link to about page" routerLink="{{course.id}}/edit"
                                                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                                                    <span>{{ 'articleDetail.edit' | translate }}</span>
+                                                    <!-- <span>{{ 'articleDetail.edit' | translate }}</span> -->
+                                                    <span>Editer ce cours</span>
                                                 </a>
                                                 <button (click)="openCourseDeleteDialog(course.id)"
                                                     aria-labelledby="Delete article button"
@@ -152,8 +156,10 @@
                                 </div>
 
                                 <div class="mt-2">
-                                    <a aria-labelledby="Link to about page" routerLink="{{course.id}}"
-                                        class=" article-title">
+
+                                    <a aria-labelledby="Link to about page"
+                                        routerLink="{{authService.currentUsr ? course.id : course.id}}"
+                                        class="article-title">
                                         <h4
                                             class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
                                             <!-- {{capitalize(article?.title!)}} -->
@@ -170,7 +176,7 @@
                                         <div class="author-image flex-shrink-0">
                                             <a aria-labelledby="Link to author profile"
                                                 [routerLink]="authService?.currentUsr?.id == course?.author?.id ? ['/user/profile'] : ['/user/' + course?.author?.id]">
-                                                <app-image [classes]="'h-10 w-10 rounded-full'"
+                                                <app-image [classes]="'h-10 w-10 rounded-full object-cover'"
                                                     [sourceUrl]="course.author?.profilePicture!"
                                                     [alt]="course?.author?.fullName!">
                                                 </app-image>
@@ -198,13 +204,23 @@
 
                                         <div
                                             class="flex items-center justify-end text-skin-inverted gap-2 flex-1 self-end text-right text-sm font-semibold">
-                                            <span class="enrol-total relative inline-flex items-center gap-1">
+                                            <span class="enrol-total relative inline-flex items-end gap-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor"
                                                     class="w-6 h-6 inline text-accent-300">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+                                                        d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                                                 </svg>
+
+                                                <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    fill="currentColor" class="w-6 h-6 inline text-accent-300">
+                                                    <path fill-rule="evenodd"
+                                                        d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z"
+                                                        clip-rule="evenodd" />
+                                                    <path
+                                                        d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
+                                                </svg> -->
+
 
                                                 <!-- <span>{{nFormater(article.viewsCount)}}</span> -->
                                                 <span>155</span>
