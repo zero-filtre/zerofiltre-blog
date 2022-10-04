@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-course-content',
   templateUrl: './lesson.component.html',
   styleUrls: ['./lesson.component.css']
 })
-export class lessonComponent implements OnInit {
+export class lessonComponent implements OnInit, OnDestroy {
   course!: any;
   lesson!: any;
   loading: boolean = false;
@@ -67,7 +68,9 @@ export class lessonComponent implements OnInit {
   Vos requêtes seront toutes redirigées vers Oauthkeeper qui se chargera de leurs authentifications`
   };
 
-  constructor() { }
+  constructor(
+    private seo: SeoService
+  ) { }
 
   loadLessonData() {
     this.loading = true;
@@ -86,7 +89,12 @@ export class lessonComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.seo.unmountFooter();
     this.loadLessonData();
+  }
+
+  ngOnDestroy(): void {
+    this.seo.mountFooter();
   }
 
 }
