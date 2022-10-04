@@ -6,6 +6,7 @@ import { CourseListPageComponent } from './course-list-page/course-list-page.com
 import { SharedModule } from '../shared/shared.module';
 import { CourseContentComponent } from './course-content/course-content.component';
 import { CurriculumSidebarComponent } from './curriculum-sidebar/curriculum-sidebar.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { CurriculumSidebarComponent } from './curriculum-sidebar/curriculum-side
   imports: [
     CommonModule,
     SchoolRoutingModule,
-    SharedModule
+    SharedModule,
+    MarkdownModule.forChild(),
   ]
 })
 export class SchoolModule { }
