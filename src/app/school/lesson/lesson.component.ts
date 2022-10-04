@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-course-content',
-  templateUrl: './course-content.component.html',
-  styleUrls: ['./course-content.component.css']
+  templateUrl: './lesson.component.html',
+  styleUrls: ['./lesson.component.css']
 })
-export class CourseContentComponent implements OnInit {
+export class lessonComponent implements OnInit {
   course!: any;
   lesson!: any;
   loading: boolean = false;

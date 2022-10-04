@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CourseContentComponent } from './course-content/course-content.component';
+import { lessonComponent } from './lesson/lesson.component';
 import { CourseListPageComponent } from './course-list-page/course-list-page.component';
 
 const routes: Routes = [
@@ -9,8 +9,8 @@ const routes: Routes = [
     component: CourseListPageComponent,
   },
   {
-    path: '1',
-    component: CourseContentComponent,
+    path: ':lesson_id',
+    component: lessonComponent,
   },
 ];
 
