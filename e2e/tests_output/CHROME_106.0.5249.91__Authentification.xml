@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="10">
+
+  <testsuite name="Authentification"
+    errors="0" failures="0" hostname="" id="" package="Authentification" skipped="0"
+    tests="10" time="33.54" timestamp="">
+  
+    <testcase name="Register a new account with mandatory fields (fullname, email, password, password confirmation)" classname="Authentification" time="8.463" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Confirmation message" classname="Authentification" time="2.785" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Redirect to articles page" classname="Authentification" time="1.213" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Sign out 1" classname="Authentification" time="0.2030" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Register a new account with an already registered email" classname="Authentification" time="5.706" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Eror notification message on used email" classname="Authentification" time="1.669" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Sign in with mandatory fields (email and password) and correct values" classname="Authentification" time="6.701" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Sign out 2" classname="Authentification" time="0.1950" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Sign in with mandatory fields (email and password) and wrong values" classname="Authentification" time="4.963" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Eror notification message credentials incorrect" classname="Authentification" time="1.638" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>
