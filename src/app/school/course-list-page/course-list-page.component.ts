@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Tag } from 'src/app/articles/article.model';
 import { AuthService } from '../../user/auth.service';
+import { CourseInitPopupComponent } from '../course-init-popup/course-init-popup.component';
+import { CourseDeletePopupComponent } from '../course-delete-popup/course-delete-popup.component';
 
 @Component({
   selector: 'app-course-list-page',
@@ -46,21 +48,21 @@ export class CourseListPageComponent implements OnInit {
   }
 
   openCourseEntryDialog(): void {
-    // this.dialogEntryRef.open(CourseInitPopup, {
-    //   width: '850px',
-    //   height: '350px',
-    //   panelClass: 'article-popup-panel',
-    // });
+    this.dialogEntryRef.open(CourseInitPopupComponent, {
+      width: '850px',
+      height: '350px',
+      panelClass: 'article-popup-panel',
+    });
   }
 
   openCourseDeleteDialog(courseId: number | undefined): void {
-    // this.dialogDeleteRef.open(CourseDeletePopup, {
-    //   panelClass: 'delete-article-popup-panel',
-    //   data: {
-    //     id: courseId,
-    //     history: this.router.url
-    //   }
-    // });
+    this.dialogDeleteRef.open(CourseDeletePopupComponent, {
+      panelClass: 'delete-article-popup-panel',
+      data: {
+        id: courseId,
+        history: this.router.url
+      }
+    });
   }
 
   loadData() {
