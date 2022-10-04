@@ -137,7 +137,7 @@ img {
 }
 
 :not(pre) > code {
-  @apply inline-block px-1 m-0.5
+  @apply inline-block px-1 m-0.5;
 }
 
 /* Cookie confirmation message container */
