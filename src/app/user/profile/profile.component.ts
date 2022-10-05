@@ -72,6 +72,8 @@ export class ProfileComponent implements OnInit {
         map(user => user)
       )
 
+    this.authService.refreshUser().subscribe()
+
     this.seo.generateTags({
       title: this.translate.instant('meta.profileTitle'),
       description: this.translate.instant('meta.profileDescription'),

@@ -66,6 +66,7 @@ export class AuthService {
             return throwError(() => error);
           }),
           tap(usr => {
+            console.log('LOADING CURR USER...')
             this.subject.next(usr);
             this.setUserData(usr);
             this.refreshData = false
@@ -74,6 +75,23 @@ export class AuthService {
           shareReplay()
         )
     }
+  }
+
+  refreshUser(): Observable<any> {
+    return this.http.get<User>(`${this.apiServerUrl}/user`)
+      .pipe(
+        catchError(error => {
+          return throwError(() => error);
+        }),
+        tap(usr => {
+          console.log('LOADING CURR USER...')
+          this.subject.next(usr);
+          this.setUserData(usr);
+          this.refreshData = false
+          httpOptions.headers = httpOptions.headers.delete('x-refresh');
+        }),
+        shareReplay()
+      )
   }
 
   get token(): any {
