@@ -1,9 +1,4 @@
 <main class="site-container relative py-10 lg:py-14 min-h-screen">
-    <div *ngIf="!isFormValid()"
-        class="fixed top-20 z-30 inset-x-0 p-4 mb-5 text-sm text-center bg-accent-200 text-gray-800">
-        <div class="site-container">Vous avez des changements non sauvegardés !</div>
-    </div>
-
     <form *ngIf="form" [formGroup]="form">
         <div class="article-data-container flex flex-col lg:grid grid-cols-7 gap-10 lg:gap-14 items-stretch">
             <main class="col-span-5 order-2 lg:order-none">

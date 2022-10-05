@@ -17,7 +17,7 @@ export const fr = {
         email: 'Email',
         missingEmail: "L'email est obligatoire",
         invalidEmail: 'Vous devez entrer une adresse email valide',
-        invalidToken: "Votre jeton n'est plus valide 😢. Veuillez-en demander un autre et réessayer !",
+        invalidToken: "Votre jeton n'est plus valide 😢. Vous avez la possibilité d'en demander un autre et réessayer !",
         myArticles: 'Mes articles',
         allArticles: 'Tous les articles',
         tags: 'Tags',
