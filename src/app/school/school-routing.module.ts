@@ -17,7 +17,8 @@ const routes: Routes = [
     path: ':lesson_id',
     component: lessonComponent,
   },
-    path: ':course_id',
+  {
+    path: ':course_id/presentation',
     component: CourseDetailPageComponent
   },
   {

@@ -20,7 +20,7 @@ import { CourseEditPageComponent } from './course-edit-page/course-edit-page.com
   declarations: [
     CourseListPageComponent,
     lessonComponent,
-    CurriculumSidebarComponent
+    CurriculumSidebarComponent,
     CourseDetailPageComponent,
     CurriculumComponent,
     CourseInitPopupComponent,
