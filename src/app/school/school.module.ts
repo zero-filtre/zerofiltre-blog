@@ -14,6 +14,10 @@ import { CurriculumComponent } from './curriculum/curriculum.component';
 import { CourseInitPopupComponent } from './course-init-popup/course-init-popup.component';
 import { CourseDeletePopupComponent } from './course-delete-popup/course-delete-popup.component';
 import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
+import { ChapterInitPopupComponent } from './chapter-init-popup/chapter-init-popup.component';
+import { ChapterDeletePopupComponent } from './chapter-delete-popup/chapter-delete-popup.component';
+import { LessonDeletePopupComponent } from './lesson-delete-popup/lesson-delete-popup.component';
+import { LessonInitPopupComponent } from './lesson-init-popup/lesson-init-popup.component';
 
 
 @NgModule({
@@ -25,7 +29,11 @@ import { CourseEditPageComponent } from './course-edit-page/course-edit-page.com
     CurriculumComponent,
     CourseInitPopupComponent,
     CourseDeletePopupComponent,
-    CourseEditPageComponent
+    CourseEditPageComponent,
+    ChapterInitPopupComponent,
+    ChapterDeletePopupComponent,
+    LessonDeletePopupComponent,
+    LessonInitPopupComponent
   ],
   imports: [
     CommonModule,
