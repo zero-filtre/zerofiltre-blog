@@ -12,6 +12,9 @@ module.exports = {
 
         browser
             .navigateTo('/login')
+            .waitForElementVisible(".cc-nb-okagree")
+            .click(".cc-nb-okagree")
+            .waitForElementNotVisible(".cc-nb-okagree")
             .waitForElementVisible("#username", 5000)
             .assert.visible("#username")
             .sendKeys("#username", email)

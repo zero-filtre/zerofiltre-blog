@@ -41,10 +41,13 @@ module.exports = {
         browserName: 'chrome',
         "chromeOptions" : {
           "args" : [
+            
             '--no-sandbox',
             '--ignore-certificate-errors',
             '--allow-insecure-localhost',
+         
             '--headless',
+       
             '--disable-setuid-sandbox',
             '--disable-dev-shm-usage'
           ]
@@ -71,6 +74,7 @@ module.exports = {
             '--ignore-certificate-errors',
             '--allow-insecure-localhost',
             '--headless',
+           
             '--disable-setuid-sandbox',
             '--disable-dev-shm-usage',
             '--remote-debugging-port=5005'
@@ -86,6 +90,7 @@ module.exports = {
           '--ignore-certificate-errors',
           '--allow-insecure-localhost',
           '--headless',
+         
           '--disable-setuid-sandbox',
           '--disable-dev-shm-usage',
           '--remote-debugging-port=5005'

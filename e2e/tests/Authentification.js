@@ -10,6 +10,9 @@ module.exports = {
 
         browser
             .navigateTo('/register')
+            .waitForElementVisible(".cc-nb-okagree")
+            .click(".cc-nb-okagree")
+            .waitForElementNotVisible(".cc-nb-okagree")
             .waitForElementVisible("#fullName", 5000)
             .assert.visible("#fullName")
             .sendKeys("#fullName", fullname)

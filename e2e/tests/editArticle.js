@@ -24,11 +24,11 @@ module.exports = {
 
     },
 
-    'Redirect to articles page': (browser) => {
-        browser
-            .waitForElementVisible('.article-card', 5000)
-            .assert.visible('.article-card')
-    },
+    // 'Redirect to articles page': (browser) => {
+    //     browser
+    //         .waitForElementVisible('.article-card', 10000)
+    //         .assert.visible('.article-card')
+    // },
 
     'Add article': (browser) => {
         browser
@@ -46,7 +46,13 @@ module.exports = {
             .waitForElementVisible(".tagItem", 5000)
             .click(".tagItem")
             .sendKeys("#content", "Contenu mon super article de test")
-            .click("button[aria-labelledby='button to publish or submit an article']")
+            .waitForElementVisible("button[aria-labelledby='button to publish or submit an article']")
+            .execute(
+                function () {
+                    document.querySelector("button[aria-labelledby='button to publish or submit an article']").click();
+                }, []
+            )
+            // .click("button[aria-labelledby='button to publish or submit an article']")
     },
 
     'success publication': (browser) => {
@@ -54,7 +60,7 @@ module.exports = {
         browser
             .waitForElementVisible(".mat-simple-snack-bar-content", 5000)
             .assert.visible(".mat-simple-snack-bar-content")
-            .assert.textContains('.mat-simple-snack-bar-content', "Article publié avec success");
+            .assert.textContains('.mat-simple-snack-bar-content', "success");
 
     },
 
@@ -78,7 +84,7 @@ module.exports = {
         browser
             .waitForElementVisible(".mat-simple-snack-bar-content", 5000)
             .assert.visible(".mat-simple-snack-bar-content")
-            .assert.textContains('.mat-simple-snack-bar-content', "Article publié avec success");
+            .assert.textContains('.mat-simple-snack-bar-content', "success");
 
     },
 
