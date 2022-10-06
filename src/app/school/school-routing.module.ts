@@ -7,6 +7,7 @@ import { CourseDetailPageComponent } from './course-detail-page/course-detail-pa
 import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
 
 import { CourseListPageComponent } from './course-list-page/course-list-page.component';
+import { LessonEditPageComponent } from './lesson-edit-page/lesson-edit-page.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: ':course_id/edit',
     component: CourseEditPageComponent,
+  },
+  {
+    path: ':course_id/:lesson_id/edit',
+    component: LessonEditPageComponent,
   },
 ];
 

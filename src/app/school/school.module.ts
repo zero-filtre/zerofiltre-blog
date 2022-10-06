@@ -18,6 +18,7 @@ import { ChapterInitPopupComponent } from './chapter-init-popup/chapter-init-pop
 import { ChapterDeletePopupComponent } from './chapter-delete-popup/chapter-delete-popup.component';
 import { LessonDeletePopupComponent } from './lesson-delete-popup/lesson-delete-popup.component';
 import { LessonInitPopupComponent } from './lesson-init-popup/lesson-init-popup.component';
+import { LessonEditPageComponent } from './lesson-edit-page/lesson-edit-page.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { LessonInitPopupComponent } from './lesson-init-popup/lesson-init-popup.
     ChapterInitPopupComponent,
     ChapterDeletePopupComponent,
     LessonDeletePopupComponent,
-    LessonInitPopupComponent
+    LessonInitPopupComponent,
+    LessonEditPageComponent
   ],
   imports: [
     CommonModule,
