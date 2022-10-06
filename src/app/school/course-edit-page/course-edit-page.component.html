@@ -1,3 +1,305 @@
 <main class="site-container relative py-10 lg:py-14 min-h-screen">
-    Page d'edition du cours
+    <form [formGroup]="course" class="lg:max-w-4xl mx-auto">
+
+        <div class="mb-8">
+            <input type="text" placeholder="Entrez le titre du cours"
+                class="input transition-none shadow-none bg-skin-bg focus:outline-none focus:ring-0 border-0 border-b-2 rounded-none w-full" />
+        </div>
+
+        <div class="mb-5">
+            <textarea type="text" placeholder="Entrez la description"
+                class="textarea h-24 transition-none bg-skin-bg focus:outline-none focus:ring-0  w-full"></textarea>
+        </div>
+
+
+        <div class="mb-8">
+            <label for="cover" class="block text-base font-semibold leading-5 text-skin-base mt-5 lg:mt-14 ml-3">
+                Thumbnail
+            </label>
+
+
+            <div id="cover" class="w-full border-2 border-dashed rounded  mt-[-10px]">
+
+                <div class="course-video-preview-wrapper relative mt-5">
+                    <div class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden ng-star-inserted">
+                        <label for="file"
+                            class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden ng-star-inserted">
+                            <div class="text-center">
+
+                                <svg stroke="currentColor" fill="none" viewBox="0 0 48 48"
+                                    class="mx-auto h-10 w-10 text-skin-muted">
+                                    <path
+                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                                <p class="mt-1 text-xs text-skin-base leading-6">
+                                    <span
+                                        class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                                        Charger une image </span>
+                                </p>
+                                <p class="mt-1 text-xs text-skin-muted"> PNG, JPEG up to 55MB </p>
+                                <input type="file" id="fileUpload" name="fileUpload" accept="image/*" class="sr-only">
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <label for="cover_video" class="block text-base font-semibold leading-5 text-skin-base mt-5 lg:mt-14 ml-3">
+                Vidéo
+                récapitulative
+            </label>
+
+
+            <div id="cover_video" class="w-full border-2 border-dashed rounded  mt-[-10px]">
+
+                <div class="course-video-preview-wrapper relative mt-5">
+                    <div class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden ng-star-inserted">
+                        <label for="file"
+                            class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden ng-star-inserted">
+                            <div class="text-center">
+
+                                <svg stroke="currentColor" fill="none" viewBox="0 0 48 48"
+                                    class="mx-auto h-10 w-10 text-skin-muted">
+                                    <path
+                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                                <p class="mt-1 text-xs text-skin-base leading-6">
+                                    <span
+                                        class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                                        Charger la vidéo </span>
+                                </p>
+                                <p class="mt-1 text-xs text-skin-muted"> MP4 up to 55MB </p>
+                                <input type="file" id="fileUpload" name="fileUpload" accept="video/*" class="sr-only">
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="mb-5">
+            <div class="article-content shadow-md mt-4 lg:mt-8">
+                <div
+                    class="editor-header mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
+                    <div class="flex items-center w-full">
+                        <div (click)="setActiveTab('editor')"
+                            class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer  sm:text-base">
+                            <svg [ngClass]="activeTab == 'editor' ? 'text-primary-500' : ''" class="w-4 h-4"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
+                                fill="currentColor" stroke="currentColor">
+                                <path
+                                    d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
+                                </path>
+                            </svg>
+                            <span [ngClass]="activeTab == 'editor' ? 'text-primary-500' : ''">
+                                {{ 'articleEntryEdit.editTabText' | translate }}
+                            </span>
+                            <div [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
+                                class="green-border bg-primary-500 h-0.5 w-full absolute -inset-x-1 bottom-0 scale-0">
+                            </div>
+                        </div>
+
+                        <div (click)="setActiveTab('preview')"
+                            class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
+                            <svg [ngClass]="activeTab == 'preview' ? 'text-primary-500' : ''" class="w-4 h-4"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                </path>
+                            </svg>
+                            <span [ngClass]="activeTab == 'preview' ? 'text-primary-500' : ''">
+                                {{ 'articleEntryEdit.previewTabText' | translate }}
+                            </span>
+                            <div [ngClass]="activeTab == 'preview' ? 'active-tab' : ''"
+                                class="green-border bg-primary-500 h-0.5 w-full absolute -inset-x-1 bottom-0 scale-0">
+                            </div>
+                        </div>
+
+                        <div (click)="setActiveTab('help')"
+                            class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''" class="h-4 w-4" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''">
+                                {{ 'articleEntryEdit.helpTabText' | translate }}
+                            </span>
+                            <div [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
+                                class="green-border bg-primary-500 h-0.5 w-full absolute -inset-x-1 bottom-0 scale-0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="activeTab === 'editor'"
+                        class="relative cursor-pointer inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-link transition-all duration-200">
+                        <input class="sr-only" type="file" id="editorFileUpload" name="editorFileUpload"
+                            #editorFileUpload accept="image/*">
+                        <svg (click)="editorFileUpload.click()" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 ">
+                            <path
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="tabs-content-wrapper">
+                    <div *ngIf="course.value['content'] && course.value['content']" class="">
+                        <div *ngIf="course.value['content']" class="p-4 bg-white text-xs sm:text-sm text-error italic">
+                            {{ 'articleEntryEdit.missingArticleContent' | translate }}
+                        </div>
+                    </div>
+
+                    <div *ngIf="activeTab === 'editor'">
+                        <textarea #editor id="content" required
+                            class="editor-textarea bg-white text-lg text-[#111] p-4 w-full min-h-screen border-0 focus:outline-none focus:ring-0"
+                            placeholder="Entrez le sommaire ici">
+                        </textarea>
+                    </div>
+
+                    <div *ngIf="activeTab === 'preview'"
+                        class="markdown-preview-container markdown-content bg-skin-bg w-full p-4">
+                        <markdown [data]=""
+                            class="prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-ul:list-disc prose-ol:list-disc">
+                        </markdown>
+                    </div>
+
+                    <div *ngIf="activeTab === 'help'"
+                        class="help-container bg-skin-card p-4 prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:p-1 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-code:mx-1 prose-ul:list-disc prose-ol:list-disc">
+                        <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
+                        <p>
+                            {{'articleEntryEdit.helpSubTitle' | translate}}
+                            <a aria-labelledby="Link to about page" class="text-primary-500 font-semibold no-underline"
+                                href="https://commonmark.org/help/" target="_blank"> Aide-mémoire
+                            </a>
+                        </p>
+                        <hr>
+                        <h3>Gras &amp; Italique</h3>
+                        <p><span class="mr-2 italic">Italique</span> <span class="p-1">*asterisks*</span><br><span
+                                class="mr-2 font-bold">Gras</span>
+                            <span class="p-1">**double asterisks**</span>
+                        </p>
+                        <hr>
+                        <h3>Code</h3>
+                        <p>
+                            <span class="mr-2">Code en ligne</span>
+                            <br>
+                            <span class="flex items-center bg-primary-100 space-x-4">
+                                <span class="bg-primary-100 p-1 text-primary-500 rounded-md">`backtick`</span>
+                                <markdown ngPreserveWhitespaces class="">
+                                    `backtick`
+                                </markdown>
+                            </span>
+                            <span class="block mt-2 mr-2">Bloc de code</span>
+                            <span class="block p-1  text-primary-500 bg-primary-100">
+                                ```ext<br>Trois backticks suivi de l'extension de votre langage de
+                                programmation puis entrez vos blocs de code ici.<br>```
+                                <br>
+                                ```java<br>String lang = "java"<br>```
+                                <br>
+                                ```js<br>const lang = 'javascript'<br>```
+                                <br>
+                                ```ts<br>const lang: string = 'typescript'<br>```
+
+                                <div class="p-2">
+                                    <markdown ngPreserveWhitespaces>
+                                        ```java
+                                        String lang = "java"
+                                        ```
+                                        ```js
+                                        const lang = 'javascript'
+                                        ```
+                                        ```ts
+                                        const lang: string = 'typescript'
+                                        ```
+                                    </markdown>
+                                </div>
+                            </span>
+                        </p>
+                        <hr>
+                        <h3>En-têtes</h3>
+                        <p># Ceci est un Heading 1<br>## Ceci est un Heading 2<br>### Ceci est un Heading 3<br>
+                        </p>
+                        <hr>
+                        <h3>Quotes</h3>
+                        <blockquote> &gt; tapez un signe supérieur à et commencez à taper votre devis.
+                        </blockquote>
+                        <hr>
+                        <h3>Liens</h3>
+                        <p>Vous pouvez ajouter <a aria-labelledby="Example markdown link" href="#_">des
+                                liens</a> en ajoutant du texte à l'intérieur de
+                            <span class="p-1  text-primary-500 bg-primary-100">[]</span> et le lien à
+                            l'intérieur de <span class="p-1  text-primary-500 bg-primary-100">()</span>,
+                            ainsi:
+                        </p>
+                        <div class="p-1 font-semibold  text-primary-500 bg-primary-100">
+                            [link_text](https://google.com)</div>
+                        <hr>
+                        <h3>Listes</h3>
+                        <p>Pour ajouter une liste numérotée, vous pouvez simplement commencer par un nombre et
+                            un <span class="p-1  text-primary-500 bg-primary-100">.</span>, ainsi:<br><span
+                                class="block p-1 pl-5  text-primary-500 bg-primary-100"> 1.
+                                Le premier élément de ma liste</span></p>
+                        <p>Pour une liste non ordonnée, vous pouvez ajouter un tiret <span
+                                class="p-1  text-primary-500 bg-primary-100">-</span>, ainsi:<br><span
+                                class="block p-1 pl-5  text-primary-500 bg-primary-100"> - Le début de ma
+                                liste</span></p>
+                        <hr>
+                        <h3>Images</h3>
+                        <p>Vous pouvez ajouter des images en sélectionnant l'icône d'image, qui téléchargera et
+                            ajoutera une image à l'éditeur, ou
+                            vous pouvez ajouter manuellement l'image en ajoutant un point d'exclamation <span
+                                class="p-1  text-primary-500 bg-primary-100">!</span>, suivi du texte alternatif
+                            à l'intérieur de <span class="p-1  text-primary-500 bg-primary-100">[]</span>, et
+                            l'URL de l'image à l'intérieur de <span
+                                class="p-1  text-primary-500 bg-primary-100">()</span>,
+                            ainsi:</p>
+                        <div class="p-1 font-semibold  text-primary-500 bg-primary-100">
+                            ![texte alternatif pour l'image](url_vers_image.png)
+                            <div class="mt-5 break-words font-normal">
+                                <span>
+                                    ![American airline](https://images.bfmtv.
+                                    com/6h3mL8pJzAWIfwvsgUSo7TOGnbI=/3x2:1251x704/640x0/images/-158966.jpg)
+                                </span>
+                            </div>
+                            <div class="max-w-md mx-auto">
+                                <markdown ngPreserveWhitespaces>
+                                    ![American
+                                    airline](https://images.bfmtv.com/6h3mL8pJzAWIfwvsgUSo7TOGnbI=/3x2:1251x704/640x0/images/-158966.jpg)
+                                </markdown>
+                            </div>
+                        </div>
+                        <hr>
+                        <h3>Séparateur</h3>
+                        <p>Pour ajouter un séparateur, vous pouvez ajouter trois tirets ou trois
+                            astérisques:<br><span class="block p-1 pl-5  text-primary-500 bg-primary-100">--- or
+                                ***</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end mb-5">
+            <button (click)="handleCreateCourse()" class="btn btn-primary text-white">Continuer</button>
+        </div>
+    </form>
 </main>
