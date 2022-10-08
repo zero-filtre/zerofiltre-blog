@@ -4,11 +4,11 @@
         <app-curriculum-sidebar></app-curriculum-sidebar>
     </aside>
 
-    <main class="lg:w-[calc(100%-350px)] ml-auto py-5 text-skin-art">
-        <div class="site-container px-[6%]">
+    <main class="py-5 text-skin-art">
+        <div class="lesson_content site-container">
             <div class="progress_bar mb-5 mx-auto">
-                <!-- <progress class="progress w-full ld:max-w-[500px] h-10" value="40" max="100"></progress> -->
-                <mat-progress-bar class="bg-primary-500" mode="determinate" value="40"></mat-progress-bar>
+                <progress id="bluebar" class="progress w-full ld:max-w-[500px] h-10" value="40" max="100"></progress>
+                <!-- <mat-progress-bar class="" mode="determinate" value="40"></mat-progress-bar> -->
             </div>
 
             <div
@@ -30,7 +30,8 @@
 
             <div class="course_content p-5">
                 <div *ngIf="lesson" class="markdown-content mt-2 lg:mt-8">
-                    <div class="lesson_name mb-6 lg:mb-10 text-lg lg:text-5xl font-extrabold text-primary-600">
+                    <div
+                        class="lesson_name mb-6 lg:mb-10 text-3xl w-full font-black text-primary-600 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
                         <h1>{{lesson.name}}</h1>
                     </div>
                     <markdown
