@@ -33,6 +33,8 @@ export class CourseListPageComponent implements OnInit {
   openedTagsDropdown = false;
   activeTag!: string;
 
+  canAccess: boolean = false;
+
 
   constructor(
     public authService: AuthService,
@@ -45,6 +47,11 @@ export class CourseListPageComponent implements OnInit {
 
   isAuthor(user: any, cours: any): boolean {
     return user?.id === cours?.author?.id
+  }
+
+  canAccessCourse() {
+    console.log('CAN ACCESS: ', this.authService.isAdmin)
+    this.canAccess = this.authService.isAdmin
   }
 
   openCourseEntryDialog(): void {
@@ -73,7 +80,7 @@ export class CourseListPageComponent implements OnInit {
       setTimeout(() => {
         const data = [
           ...this.courses,
-          { id: 1, title: 'mon premier cours', summary: 'un magnifique cours' },
+          { id: 1, title: 'mon premier cours', summary: 'un magnifique cours', firstLessonId: 1 },
         ]
         resolve(data);
       }, 1000);
@@ -99,6 +106,7 @@ export class CourseListPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+    this.canAccessCourse()
   }
 
 }

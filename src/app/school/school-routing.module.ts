@@ -15,20 +15,20 @@ const routes: Routes = [
     component: CourseListPageComponent,
   },
   {
-    path: ':lesson_id',
+    path: ':course_id',
+    component: CourseDetailPageComponent,
+  },
+  {
+    path: ':course_id/:lesson_id',
     component: lessonComponent,
-  },
-  {
-    path: ':course_id/presentation',
-    component: CourseDetailPageComponent
-  },
-  {
-    path: ':course_id/edit',
-    component: CourseEditPageComponent,
   },
   {
     path: ':course_id/:lesson_id/edit',
     component: LessonEditPageComponent,
+  },
+  {
+    path: ':course_id/edit',
+    component: CourseEditPageComponent,
   },
 ];
 
