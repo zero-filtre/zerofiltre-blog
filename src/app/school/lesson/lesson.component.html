@@ -11,21 +11,21 @@
                 <!-- <mat-progress-bar class="" mode="determinate" value="40"></mat-progress-bar> -->
             </div>
 
-            <div
-                class="vimeo_video justify-center shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
-                <ng-container *ngIf="lesson" class="">
-                    <div class="mb-5 w-full">
-                        Vimeo video content goes here!
-                    </div>
-                </ng-container>
+            <div class="vimeo_video shadow-lg rounded-sm overflow-hidden mt-6 lg:mt-8 mx-auto">
+                <div class="vid_wrapper w-full h-full">
+                    <ng-container *ngIf="lesson">
+                        <iframe [src]="lessonVideo$ | async | vimeoUrl" class="" frameborder="0" webkitallowfullscreen
+                            mozallowfullscreen allowfullscreen width="100%" height="100%"></iframe>
+                    </ng-container>
 
-                <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
-                    <ngx-skeleton-loader class="shadow-lg rounded-lg" count="1" appearance="line" [theme]="{ 
-                                                'height.%': 100,
-                                                'width.%': 100
-                                            }">
-                    </ngx-skeleton-loader>
-                </ng-container>
+                    <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
+                        <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                                                        'height.%': 100,
+                                                                        'width.%': 100
+                                                                    }">
+                        </ngx-skeleton-loader>
+                    </ng-container>
+                </div>
             </div>
 
             <div class="course_content p-5">

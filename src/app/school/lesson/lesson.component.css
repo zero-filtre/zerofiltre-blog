@@ -1,5 +1,5 @@
 progress {
-  @apply border border-primary-500 rounded-lg overflow-hidden;
+  @apply border border-primary-500 rounded-md overflow-hidden;
 }
 progress::-webkit-progress-bar {
   @apply bg-primary-100;
@@ -14,4 +14,10 @@ progress::-moz-progress-bar {
   .lesson_content {
     @apply w-[calc(100%-350px)] m-0 ml-auto;
   }
+}
+
+.vimeo_video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
 }

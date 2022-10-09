@@ -1,5 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
+import { Observable } from 'rxjs';
+import { VimeoService } from '../../services/vimeo.service';
+
 
 @Component({
   selector: 'app-course-content',
@@ -10,6 +13,9 @@ export class lessonComponent implements OnInit, OnDestroy {
   course!: any;
   lesson!: any;
   loading: boolean = false;
+
+  courseVideos$: Observable<any[]>;
+  lessonVideo$: Observable<any>;
 
   fakeLesson = {
     name: 'Sécuriser vos micro-services sur kubernetes avec Nginx et Ory Oathkeeper',
@@ -69,7 +75,8 @@ export class lessonComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private seo: SeoService
+    private seo: SeoService,
+    private vimeoService: VimeoService
   ) { }
 
   loadLessonData() {
@@ -91,6 +98,8 @@ export class lessonComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.seo.unmountFooter();
     this.loadLessonData();
+
+    this.lessonVideo$ = this.vimeoService.getOneVideo();
   }
 
   ngOnDestroy(): void {
