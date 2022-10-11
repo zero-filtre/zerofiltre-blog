@@ -48,3 +48,7 @@ Thumbs.db
 .env
 /src/environments/environment.locals.ts
 devlaunch.sh
+
+/e2e/node_modules
+/e2e/logs
+/e2e/tests_output
