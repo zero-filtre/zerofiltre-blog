@@ -81,7 +81,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     if (error.status === 0) {
       // Client side Error
       // if (error?.error?.type == 'error') return errorMessage = 'Connexion Instable !'
-      errorMessage = error.statusText;
+      errorMessage = 'Une erreur est survenue. Veuillez essayer de nouveau ou contacter le support Zerofiltre (info@zerofiltre.tech)';
     } else {
       // Server side error
       let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
