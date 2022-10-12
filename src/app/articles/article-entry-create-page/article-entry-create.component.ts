@@ -449,8 +449,10 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
               catchError((error: HttpErrorResponse) => {
                 this.isSaving = false;
                 this.isSaved = false;
-                this.savingMessage = 'Oops erreur!'
+                this.savingMessage = "Oops problème de connexion! Vos modifications n'ont pas pu être enregistrées.";
                 this.saveFailed = true;
+                window.alert("Vos changements seront perdus si vous quittez cette page!");
+                // this.messageService.openSnackBarError("", '');
                 return throwError(() => error);
               }),
               tap(() => {

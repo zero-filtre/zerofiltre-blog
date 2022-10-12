@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { BaseArticleListComponent } from '../../shared/base-article-list/base-article-list.component';
 import { NavigationService } from '../../services/navigation.service';
+import { NoNetworkComponent } from '../no-network/no-network.component';
 
 @Component({
   selector: 'app-articles-list',
@@ -52,6 +53,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
     public articleService: ArticleService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
+    public dialogNoNetworkRef: MatDialog,
     public router: Router,
     public route: ActivatedRoute,
     public authService: AuthService,
@@ -210,6 +212,12 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
       description: this.translate.instant('meta.articlesDescription'),
       author: 'Zerofiltre.tech',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
+
+    this.dialogNoNetworkRef.open(NoNetworkComponent, {
+      panelClass: 'delete-article-popup-panel',
+      disableClose: true,
+      autoFocus: true  
     });
   }
 
