@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { RouteGuard } from './shared/guard/route.guard';
+import { TokenExpiredGuard } from './shared/guard/token-expired.guard';
 import { NotFoundPageComponent } from './shared/not-found-page/not-found-page.component';
 import { LoggedInAuthGuard } from './user/logged-in-auth.guard';
 import { LoginPageComponent } from './user/login-page/login-page.component';
@@ -28,10 +29,12 @@ const routes: Routes = [
   {
     path: 'resendConfirmation',
     component: ResendConfirmationPageComponent,
+    canActivate: [TokenExpiredGuard],
   },
   {
     path: '',
     component: HomePageComponent,
+    canActivate: [TokenExpiredGuard]
   },
   {
     path: 'user',

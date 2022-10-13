@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TokenExpiredGuard } from '../shared/guard/token-expired.guard';
 import { AccountConfirmationPageComponent } from './account-confirmation-page/account-confirmation-page.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './auth.guard';
@@ -21,17 +22,17 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard]
+    canActivate: [TokenExpiredGuard, AuthGuard]
   },
   {
     path: 'profile/edit',
     component: ProfileEntryEditComponent,
-    canActivate: [AuthGuard]
+    canActivate: [TokenExpiredGuard, AuthGuard]
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard, HasRoleGuard],
+    canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
     data: {
       role: 'ROLE_USER'
     }
@@ -39,7 +40,7 @@ const routes: Routes = [
   {
     path: 'dashboard/admin',
     component: AdminDashboardComponent,
-    canActivate: [AuthGuard, HasRoleGuard],
+    canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
     data: {
       role: 'ROLE_ADMIN'
     }
@@ -50,6 +51,7 @@ const routes: Routes = [
     resolve: {
       user: UserResolver
     },
+    canActivate: [TokenExpiredGuard]
   },
 ];
 

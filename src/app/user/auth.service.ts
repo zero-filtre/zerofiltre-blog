@@ -84,7 +84,6 @@ export class AuthService {
           return throwError(() => error);
         }),
         tap(usr => {
-          console.log('LOADING CURR USER...')
           this.subject.next(usr);
           this.setUserData(usr);
           this.refreshData = false
@@ -103,6 +102,24 @@ export class AuthService {
   get refreshToken(): any {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem(this.REFRESH_TOKEN_NAME);
+    }
+  }
+
+  get tokenExpiryDate(): any {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('_tokenExpiryDate');
+    }
+  }
+
+  get refreshTokenExpiryDate(): any {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('_refreshExpiryDate');
+    }
+  }
+
+  get lastLoggedDate(): any {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('_lastLoggedDate');
     }
   }
 
@@ -246,7 +263,12 @@ export class AuthService {
   // HELPER SERVICES
 
   private handleJWTauth(response: any, tokenType: string, redirectURL = '') {
-    const { refreshToken, accessToken } = response.body
+    const { refreshToken, accessToken, accessTokenExpiryDateInSeconds, refreshTokenExpiryDateInSeconds } = response.body
+
+    localStorage.setItem('_lastLoggedDate', Date.now().toString());
+    localStorage.setItem('_tokenExpiryDate', accessTokenExpiryDateInSeconds);
+    localStorage.setItem('_refreshExpiryDate', refreshTokenExpiryDateInSeconds);
+
     this.redirectURL = redirectURL;
     this.loadLoggedInUser(accessToken, tokenType, refreshToken);
   }

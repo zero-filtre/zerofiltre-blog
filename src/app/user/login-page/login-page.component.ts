@@ -1,10 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadEnvService } from 'src/app/services/load-env.service';
-import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
@@ -27,7 +25,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private loadEnvService: LoadEnvService,
     private formbuilder: FormBuilder,
     private authService: AuthService,
-    private messageservice: MessageService,
     private seo: SeoService,
     private translate: TranslateService,
     private route: ActivatedRoute,
@@ -49,9 +46,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.authService.login(this.form.value, this.redirectURL).subscribe({
       next: (_response: any) => {
       },
-      error: (_error: HttpErrorResponse) => {
+      error: (_error: any) => {
         this.loading = false;
-        this.messageservice.loginError();
         this.router.navigate(
           ['/login'],
           {
