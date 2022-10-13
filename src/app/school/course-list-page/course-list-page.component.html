@@ -78,8 +78,7 @@
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
 
                             <a aria-labelledby="Link to course detail page"
-                                routerLink="{{authService.currentUsr ? course.id : course.id}}"
-
+                                routerLink="{{canAccess ? course.id + '/' + course.firstLessonId : course.id}}"
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -126,39 +125,38 @@
                                     </div>
 
                                     <!-- Contextuel menu for editing -->
-                                    <div *ngIf="authService.currentUsr as currentUsr">
-                                        <div *ngIf="isAuthor(currentUsr, course) || authService.isAdmin">
-                                            <button [matMenuTriggerFor]="menu"
-                                                class="rounded-full p-2 opacity-0 group-hover:opacity-100 hover:bg-skin-link transition-all duration-500"
-                                                aria-label="icon-button with a menu">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-secondary"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                                                </svg>
-                                            </button>
+                                    <!-- <div *ngIf="authService.currentUsr as currentUsr"> -->
+                                    <div *ngIf="canAccess">
+                                        <button [matMenuTriggerFor]="menu"
+                                            class="rounded-full p-2 opacity-0 group-hover:opacity-100 hover:bg-skin-link transition-all duration-500"
+                                            aria-label="icon-button with a menu">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-secondary"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                            </svg>
+                                        </button>
 
-                                            <mat-menu #menu="matMenu" class="-mt-7 font-semibold text-skin-base">
-                                                <a aria-labelledby="Link to about page" routerLink="{{course.id}}/edit"
-                                                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                                                    <!-- <span>{{ 'articleDetail.edit' | translate }}</span> -->
-                                                    <span>Editer ce cours</span>
-                                                </a>
-                                                <button (click)="openCourseDeleteDialog(course.id)"
-                                                    aria-labelledby="Delete article button"
-                                                    class="block font-semibold text-skin-base w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                                                    <span>{{ 'articleDetail.delete' | translate }}</span>
-                                                </button>
-                                            </mat-menu>
-                                        </div>
+                                        <mat-menu #menu="matMenu" class="-mt-7 font-semibold text-skin-base">
+                                            <a aria-labelledby="Link to about page" routerLink="{{course.id}}/edit/"
+                                                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                                <!-- <span>{{ 'articleDetail.edit' | translate }}</span> -->
+                                                <span>Editer ce cours</span>
+                                            </a>
+                                            <button (click)="openCourseDeleteDialog(course.id)"
+                                                aria-labelledby="Delete article button"
+                                                class="block font-semibold text-skin-base w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                                <span>{{ 'articleDetail.delete' | translate }}</span>
+                                            </button>
+                                        </mat-menu>
                                     </div>
+                                    <!-- </div> -->
                                 </div>
 
                                 <div class="mt-2">
 
                                     <a aria-labelledby="Link to about page"
-                                        routerLink="{{authService.currentUsr ? course.id : course.id}}"
+                                        routerLink="{{canAccess ? course.id + '/' + course.firstLessonId : course.id}}"
                                         class="article-title">
                                         <h4
                                             class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
