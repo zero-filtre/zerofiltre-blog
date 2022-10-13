@@ -1,3 +1,23 @@
 progress {
-  @apply !bg-primary-600;
+  @apply border border-primary-500 rounded-md overflow-hidden;
+}
+progress::-webkit-progress-bar {
+  @apply bg-primary-100;
+}
+progress::-webkit-progress-value {
+  @apply bg-primary-500;
+}
+progress::-moz-progress-bar {
+}
+
+@media (min-width: 64em) and (max-width: 130em) {
+  .lesson_content {
+    @apply w-[calc(100%-350px)] m-0 ml-auto;
+  }
+}
+
+.vimeo_video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
 }
