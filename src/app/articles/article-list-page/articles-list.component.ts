@@ -53,7 +53,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
     public articleService: ArticleService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
-    public dialogNoNetworkRef: MatDialog,
+    
     public router: Router,
     public route: ActivatedRoute,
     public authService: AuthService,
@@ -214,11 +214,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
 
-    this.dialogNoNetworkRef.open(NoNetworkComponent, {
-      panelClass: 'delete-article-popup-panel',
-      disableClose: true,
-      autoFocus: true  
-    });
+   
   }
 
   ngOnDestroy(): void {

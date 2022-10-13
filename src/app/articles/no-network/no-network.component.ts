@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -8,6 +8,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class NoNetworkComponent implements OnInit {
 
+  @Output() submitClicked = new EventEmitter<any>();
+
+
+
   constructor(
     public dialogRef: MatDialogRef<NoNetworkComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -16,8 +20,11 @@ export class NoNetworkComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onRetry(){
+  onRetry() {
+    this.submitClicked.emit('RETRY');
     this.dialogRef.close();
+    window.location.reload();
+
   }
 
 }

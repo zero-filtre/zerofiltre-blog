@@ -6,13 +6,15 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { catchError, Observable, retryWhen, switchMap, throwError } from 'rxjs';
+import { catchError, finalize, Observable, retryWhen, switchMap, throwError } from 'rxjs';
 import { MessageService } from '../message.service';
 import { genericRetryPolicy } from '../utilities.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/user/auth.service';
 import { AuthInterceptor } from './auth.interceptor';
 import { environment } from 'src/environments/environment';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { NoNetworkComponent } from 'src/app/articles/no-network/no-network.component';
 
 
 @Injectable({
@@ -21,11 +23,14 @@ import { environment } from 'src/environments/environment';
 export class HttpErrorInterceptor implements HttpInterceptor {
   readonly apiServerUrl = environment.apiBaseUrl;
 
+  dialogRef = null
+
   constructor(
     private messageService: MessageService,
     private router: Router,
     private authService: AuthService,
-    private authInterceptor: AuthInterceptor
+    private authInterceptor: AuthInterceptor,
+    public dialogNoNetworkRef: MatDialog,
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -43,7 +48,31 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               return this.handleRefrehToken(request, next);
             }
 
-            const errorMessage = this.setError(error);
+            console.log(error);
+
+            console.log(navigator.onLine);
+
+
+
+            if (error.status === 0 && error.error instanceof ProgressEvent) {
+
+              if (!this.dialogRef) {
+                this.dialogRef = this.dialogNoNetworkRef.open(NoNetworkComponent, {
+                  panelClass: 'delete-article-popup-panel',
+                  disableClose: true,
+                  autoFocus: true
+                });
+
+                this.dialogRef.afterClosed().pipe(
+                  finalize(() => this.dialogRef = undefined)
+                );
+              }
+
+
+              return throwError(() => errorMessage);
+            }
+
+            const errorMessage = this.setError(error)
             this.messageService.openSnackBarError(errorMessage, '');
             return throwError(() => errorMessage);
           })
@@ -76,6 +105,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    */
   setError(error: HttpErrorResponse): string {
     let errorMessage = "Un problème est survenu, merci d'essayer de nouveau plus tard ou de contacter un administrateur de l'API";
+
 
     if (error.status === 0) {
       // Client side Error
