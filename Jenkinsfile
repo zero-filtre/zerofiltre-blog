@@ -37,21 +37,21 @@ podTemplate(label: label, containers: [
                     runApp()
                 }
 
-                stage('SonarQube analysis') {
-                    withSonarQubeEnv('SonarQubeServer') {
-                        container('node') {
-                            sh 'npm install sonar-scanner --save-dev -f'
-                            sh 'chmod +x node_modules/sonar-scanner/bin/sonar-scanner'
-                            sh 'npm run sonar-scanner'
-                        }
-                    }
-                    timeout(time: 1, unit: 'MINUTES') {
-                        def qg = waitForQualityGate()
-                        if (qg.status != 'OK') {
-                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                        }
-                    }
-                }
+                // stage('SonarQube analysis') {
+                //     withSonarQubeEnv('SonarQubeServer') {
+                //         container('node') {
+                //             sh 'npm install sonar-scanner --save-dev -f'
+                //             sh 'chmod +x node_modules/sonar-scanner/bin/sonar-scanner'
+                //             sh 'npm run sonar-scanner'
+                //         }
+                //     }
+                //     timeout(time: 1, unit: 'MINUTES') {
+                //         def qg = waitForQualityGate()
+                //         if (qg.status != 'OK') {
+                //             error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                //         }
+                //     }
+                // }
                         }
                 } catch (exc) {
             currentBuild.result = 'FAILURE'
