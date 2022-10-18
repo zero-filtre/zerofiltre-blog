@@ -11,4 +11,5 @@ export default {
     gitHubRedirectURL: 'GITHUB_REDIRECT_URL',
     stackOverflowRedirectURL: 'STACK_OVERFLOW_REDIRECT_URL',
     ovhAuthName: 'OVH_AUTH_NAME',
+    courseRoutesActive: 'COURSE_ROUTES_ACTIVE',
 }

@@ -1,0 +1,118 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+h1,
+h3 {
+  @apply text-primary-500;
+}
+
+h1 {
+  @apply text-3xl lg:text-[40px] lg:leading-10 font-medium;
+}
+
+h2 {
+  @apply text-xl lg:text-[1.7rem] lg:leading-10 font-light;
+}
+
+h3 {
+  @apply text-2xl lg:text-3xl font-medium mb-12 relative after:absolute after:w-32 lg:after:w-20 after:h-1.5 after:bg-accent-400 after:-bottom-6 after:left-[calc(50%-4rem)] lg:after:left-0 after:rounded-sm;
+  @apply text-center lg:text-left;
+}
+
+p {
+  @apply text-lg lg:text-xl font-normal !mb-5 last:!mb-0 text-center lg:text-left;
+}
+
+.green-divider {
+  @apply bg-primary-500 py-10 space-y-8;
+}
+
+@media (min-width: 1024px) {
+  .green-divider.triangle {
+    --mask: linear-gradient(#000 0 0) top/100% calc(100% - 25px) no-repeat,
+      conic-gradient(
+          from -70deg at bottom,
+          #0000,
+          #000 1deg 139deg,
+          #0000 140deg
+        )
+        bottom/60vw 25px repeat-x;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+
+    @apply pb-16;
+  }
+}
+
+/* SHAPE DIVIDERS */
+
+/* OVALE */
+.custom-shape-divider-top-1654551278 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-top-1654551278 svg {
+  position: relative;
+  display: block;
+  @apply h-[440px] md:h-[350px] w-[279%] md:w-[300%];
+}
+
+.custom-shape-divider-top-1654551278 .shape-fill {
+  @apply fill-primary-500;
+}
+
+.master-class-section {
+  @apply text-secondary;
+}
+
+.master-class-section h3 {
+  @apply text-primary-500 after:bg-accent-400;
+}
+
+h3.master-class-title {
+  @apply text-4xl;
+}
+
+h3.lesson-group-title {
+  @apply text-xl lg:text-2xl mb-10 after:left-0 text-left font-bold;
+}
+
+.master-class-section .nber-of-lessons {
+  @apply text-lg uppercase font-medium;
+  /* font-style: oblique; */
+}
+
+.master-class-section ol {
+  @apply pl-10 mt-5 space-y-2;
+}
+
+.master-class-section li {
+  @apply text-lg lg:text-lg font-normal;
+}
+
+/* ol auto increment */
+ol {
+  list-style: none;
+  counter-reset: item;
+}
+
+ol > li:before {
+  content: counters(item, ".") ". ";
+  counter-increment: item;
+  font-weight: 500;
+  /* font-style: oblique; */
+}
+
+/* CURRICULUM STYLES */
