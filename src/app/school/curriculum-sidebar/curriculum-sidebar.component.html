@@ -1,13 +1,26 @@
 <section
-    class="sidebar_curriculum py-5 lg:pb-24 bg-white scrollbar lg:fixed top-20 mt-1 lg:h-screen overflow-auto min-w-[350px] lg:max-w-[350px]">
+    class="sidebar_curriculum pb-5 lg:pb-24 lg:pt-5 bg-white scrollbar lg:fixed top-20 mt-1 lg:h-screen overflow-auto min-w-[350px] lg:max-w-[350px]">
     <div class="px-1.5">
+        <div class="lg:hidden site-container flex flex-col">
+            <button mat-raised-button class="toogle-curriculum flex items-center gap-3 mb-5 mt-2 -mr-1 self-end"
+                (click)="drawer.toggle()">
+                <span class="text-primary-400 text-sm mt-0.5">Retourner à la leçon</span>
+                <div class="shadow-md h-8 w-8 grid place-items-center rounded-full bg-primary-500 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-4 h-4 mr-0.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                </div>
+            </button>
+        </div>
+
         <div class="curriculum_wrapper max-w-3xl m-auto">
-            <h2 class="pb-6 pl-2 font-medium lg:text-2xl text-primary-700">{{course.name}}</h2>
+            <h2 class="pb-4 lg:pb-6 lg:pl-2 font-medium text-xl lg:text-2xl text-primary-700">{{course.name}}</h2>
 
             <ng-container *ngIf="authService.currentUsr as currentUsr">
                 <ng-container *ngIf="isAuthor(currentUsr, course) || authService.isAdmin">
                     <button (click)="openChapterInitDialog()"
-                        class="flex items-center gap-1 mb-4 border shadow-md rounded-md p-2 text-primary-500 hover:bg-skin-link transition-all duration-300">
+                        class="flex items-center gap-1 mb-4 border shadow-sm rounded-md p-2 text-primary-500 hover:bg-skin-link transition-all duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -21,7 +34,7 @@
             <div class="curriculum_chapters_wrapper">
                 <div *ngFor="let chapter of course.chapters" class="curriculum_chapter mb-2">
                     <div
-                        class="curriculum_chapter_title group flex items-center justify-between bg-primary-100 text-secondary p-3 font-semibold">
+                        class="curriculum_chapter_title shadow-md rounded-sm group flex items-center justify-between bg-primary-100 text-secondary p-3 font-semibold">
                         <span>{{chapter.title}}</span>
 
                         <!-- Contextuel menu for editing Chapter -->

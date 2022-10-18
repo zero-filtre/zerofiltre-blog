@@ -1,5 +1,5 @@
 progress {
-  @apply border border-primary-500 rounded-md overflow-hidden;
+  @apply border border-primary-500 rounded-sm overflow-hidden shadow-md;
 }
 progress::-webkit-progress-bar {
   @apply bg-primary-100;
@@ -20,4 +20,13 @@ progress::-moz-progress-bar {
   position: relative;
   aspect-ratio: 16 / 9;
   width: 100%;
+}
+
+iframe {
+  border: none;
+}
+
+.example-container {
+  width: 100%;
+  height: 100vh;
 }

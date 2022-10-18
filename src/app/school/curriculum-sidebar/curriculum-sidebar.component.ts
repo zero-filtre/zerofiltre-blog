@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../user/auth.service';
@@ -13,6 +13,7 @@ import { LessonDeletePopupComponent } from '../lesson-delete-popup/lesson-delete
   styleUrls: ['./curriculum-sidebar.component.css']
 })
 export class CurriculumSidebarComponent implements OnInit {
+  @Input() drawer!: any;
 
   constructor(
     public authService: AuthService,
