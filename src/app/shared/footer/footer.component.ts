@@ -5,6 +5,7 @@ import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { capitalizeString, getCurrentYear } from 'src/app/services/utilities.service';
+import { environment } from 'src/environments/environment';
 import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
@@ -15,6 +16,8 @@ import { SeoService } from 'src/app/services/seo.service';
 export class FooterComponent implements OnInit {
   public currentYear!: number;
   public recentArticles$!: Observable<Article[]>;
+
+  readonly servicesUrl = environment.servicesUrl;
 
   constructor(
     private loadEnvService: LoadEnvService,
