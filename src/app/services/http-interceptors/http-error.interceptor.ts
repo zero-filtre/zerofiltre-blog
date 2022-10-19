@@ -6,15 +6,15 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { catchError, finalize, Observable, retryWhen, switchMap, throwError } from 'rxjs';
+import { catchError, Observable, retryWhen, switchMap, throwError } from 'rxjs';
 import { MessageService } from '../message.service';
 import { genericRetryPolicy } from '../utilities.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/user/auth.service';
 import { AuthInterceptor } from './auth.interceptor';
 import { environment } from 'src/environments/environment';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { NoNetworkComponent } from 'src/app/articles/no-network/no-network.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NoNetworkComponent } from 'src/app/shared/no-network/no-network.component';
 
 
 @Injectable({
@@ -23,7 +23,7 @@ import { NoNetworkComponent } from 'src/app/articles/no-network/no-network.compo
 export class HttpErrorInterceptor implements HttpInterceptor {
   readonly apiServerUrl = environment.apiBaseUrl;
 
-  dialogRef = null
+  dialogRef!: any;
 
   constructor(
     private messageService: MessageService,
@@ -48,31 +48,23 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               return this.handleRefrehToken(request, next);
             }
 
-            console.log(error);
-
-            console.log(navigator.onLine);
-
-
-
-            if (error.status === 0 && error.error instanceof ProgressEvent) {
-
+            if (error.status === 0 && !navigator.onLine) {
+              console.log('WE CAN LOAD THE NO NETWORK PAGE HERE');
               if (!this.dialogRef) {
                 this.dialogRef = this.dialogNoNetworkRef.open(NoNetworkComponent, {
                   panelClass: 'delete-article-popup-panel',
-                  disableClose: true,
-                  autoFocus: true
+                  autoFocus: true,
+                  // disableClose: true,
                 });
 
-                this.dialogRef.afterClosed().pipe(
-                  finalize(() => this.dialogRef = undefined)
-                );
+                this.dialogRef.afterClosed()
+                  .subscribe(() => this.dialogRef = null)
               }
 
-
-              return throwError(() => errorMessage);
+              return throwError(() => 'Connexion internet perdue!');
             }
 
-            const errorMessage = this.setError(error)
+            const errorMessage = this.setError(error);
             this.messageService.openSnackBarError(errorMessage, '');
             return throwError(() => errorMessage);
           })
@@ -105,7 +97,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    */
   setError(error: HttpErrorResponse): string {
     let errorMessage = "Un problème est survenu, merci d'essayer de nouveau plus tard ou de contacter un administrateur de l'API";
-
 
     if (error.status === 0) {
       // Client side Error

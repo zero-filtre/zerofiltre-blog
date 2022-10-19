@@ -451,8 +451,6 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
                 this.isSaved = false;
                 this.savingMessage = "Oops problème de connexion! Vos modifications n'ont pas pu être enregistrées.";
                 this.saveFailed = true;
-                window.alert("Vos changements seront perdus si vous quittez cette page!");
-                // this.messageService.openSnackBarError("", '');
                 return throwError(() => error);
               }),
               tap(() => {
@@ -463,7 +461,6 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
             ).subscribe();
         } else {
           this.isSaved = false;
-          // this.messageService.autoSaveAlert();
         }
       }),
     ).subscribe()

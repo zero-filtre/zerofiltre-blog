@@ -10,21 +10,19 @@ export class NoNetworkComponent implements OnInit {
 
   @Output() submitClicked = new EventEmitter<any>();
 
-
-
   constructor(
     public dialogRef: MatDialogRef<NoNetworkComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
   ngOnInit(): void {
+    console.log('NONETWORK MODAL DATA: ', this.data);
   }
 
   onRetry() {
     this.submitClicked.emit('RETRY');
     this.dialogRef.close();
     window.location.reload();
-
   }
 
 }

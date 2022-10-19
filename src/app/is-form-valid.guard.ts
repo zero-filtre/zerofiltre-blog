@@ -15,7 +15,6 @@ export class IsFormValidGuard implements CanDeactivate<BaseComponent> {
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // return component.isFormValid() ? true : this.messageService.autoSaveAlert();
 
     return component.isFormValid() ? true : window.confirm("Vos changements seront perdus ! souhaittez-vous quitter cette page ?")
   }
