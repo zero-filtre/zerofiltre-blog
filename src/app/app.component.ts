@@ -26,6 +26,7 @@ import {
 
 import { LoadEnvService } from './services/load-env.service';
 import { environment } from 'src/environments/environment';
+import { NavigationService } from './services/navigation.service';
 
 
 
@@ -76,7 +77,8 @@ export class AppComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     public authService: AuthService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private navigation: NavigationService
   ) {
     this.setBrowserTranslationConfigs();
 
@@ -176,7 +178,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.activePage = this.MY_ACCOUNT;
-
 
     if (isPlatformBrowser(this.platformId)) {
       this.loadCopyToClipboardSvg();

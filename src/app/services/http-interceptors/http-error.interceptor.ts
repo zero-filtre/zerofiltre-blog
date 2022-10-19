@@ -43,7 +43,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               return this.handleRefrehToken(request, next);
             }
 
-            const errorMessage = this.setError(error)
+            const errorMessage = this.setError(error);
             this.messageService.openSnackBarError(errorMessage, '');
             return throwError(() => errorMessage);
           })
@@ -62,7 +62,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }),
         catchError(errordata => {
           this.authService.logout();
-          this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
           return throwError(() => errordata)
         })
       );
@@ -80,11 +79,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     if (error.status === 0) {
       // Client side Error
-      // if (error?.error?.type == 'error') return errorMessage = 'Connexion Instable !'
       errorMessage = 'Une erreur est survenue. Veuillez essayer de nouveau ou contacter le support Zerofiltre (info@zerofiltre.tech)';
     } else {
       // Server side error
-      let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
+      let serverErrorExist = !!error?.error?.error;
 
       if (serverErrorExist) {
         errorMessage = error.error.error.message;
@@ -92,7 +90,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
       if (error.status === 401) {
         this.authService.logout();
-        this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
+        this.messageService.authError(this.router)
       }
     }
 
