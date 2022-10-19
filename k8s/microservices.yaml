@@ -15,9 +15,9 @@ spec:
       labels:
         app: zerofiltretech-blog-front-${env_name}
       annotations:
-        vault.hashicorp.com/agent-inject: 'true'
-        vault.hashicorp.com/role: 'internal-app'
-        vault.hashicorp.com/agent-inject-secret-config: '${env_name}/data/zerofiltre-blog-front'
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "internal-app"
+        vault.hashicorp.com/agent-inject-secret-config: "${env_name}/data/zerofiltre-blog-front"
         vault.hashicorp.com/agent-inject-template-config: |
           {{- with secret "${env_name}/data/zerofiltre-blog-front" -}}
             export OVH_AUTH_PASSWORD="{{ .Data.data.ovh_auth_password }}"
@@ -30,15 +30,14 @@ spec:
           imagePullPolicy: IfNotPresent
           resources:
             requests:
-                cpu: ${requests_cpu}
-                memory: ${requests_memory}
+              cpu: ${requests_cpu}
+              memory: ${requests_memory}
             limits:
-                cpu: ${limits_cpu}
-                memory: ${limits_memory}
+              cpu: ${limits_cpu}
+              memory: ${limits_memory}
           ports:
             - containerPort: 4000
           env:
-            
             - name: GITHUB_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
@@ -104,14 +103,19 @@ spec:
                 configMapKeyRef:
                   name: zerofiltre-blog-front
                   key: courses_url
+
+            - name: COURSE_ROUTES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-front
+                  key: course_routes_active
           livenessProbe:
             httpGet:
               path: /
               port: 4000
-            initialDelaySeconds:  100000
+            initialDelaySeconds: 100000
             periodSeconds: 10
 
-          
 ---
 apiVersion: v1
 kind: Service

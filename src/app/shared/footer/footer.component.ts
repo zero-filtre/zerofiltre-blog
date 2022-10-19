@@ -6,6 +6,7 @@ import { ArticleService } from 'src/app/articles/article.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { capitalizeString, getCurrentYear } from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
+import { SeoService } from 'src/app/services/seo.service';
 
 @Component({
   selector: 'app-footer',
@@ -21,6 +22,7 @@ export class FooterComponent implements OnInit {
   constructor(
     private loadEnvService: LoadEnvService,
     private articleService: ArticleService,
+    private seo: SeoService
   ) { }
 
   public loadCurrentYear() {
@@ -31,7 +33,12 @@ export class FooterComponent implements OnInit {
     return capitalizeString(str);
   }
 
+  isMounted(): boolean {
+    return this.seo.isFooterMounted
+  }
+
   ngOnInit(): void {
+    this.isMounted();
     this.loadCurrentYear();
 
     this.recentArticles$ = this.articleService.findAllArticleByFilter(0, 5)
