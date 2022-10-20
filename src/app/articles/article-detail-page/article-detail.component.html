@@ -7,18 +7,18 @@
     </svg>
 </div>
 
-<main class="article-container site-container py-10 lg:py-14" *appShellNoRender>
+<main class="article-container site-container py-8 lg:py-14" *appShellNoRender>
 
     <article class="flex flex-col lg:grid lg:grid-cols-7 gap-10 lg:gap-20 lg:items-stretch">
         <main class="col-span-5 order-1 lg:order-none">
             <div class="main-side-container">
                 <header class="article-header space-y-6 lg:space-y-4">
                     <ng-container *ngIf="article && !loading">
-                        <div class="flex items-start lg:items-start justify-between gap-5">
+                        <div class="flex items-start lg:items-start justify-between lg:gap-5">
 
-                            <div class="flex flex-col gap-4">
-
-                                <div class="hidden mb-3" [ngClass]="{'hidden': !authService.currentUsr}">
+                            <div class="tags-nav flex flex-col gap-4">
+                                <div class="hidden mb-3"
+                                    [ngClass]="{'hidden': !authService.currentUsr || (!isAuthor(authService.currentUsr, article) && !authService.isAdmin)}">
                                     <a aria-label="Back to article list page" routerLink="/articles"
                                         class="text-skin-base group flex w-full items-center gap-3">
                                         <svg xmlns="http://www.w3.org/2000/svg" aria-label="Back to article list page"
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
 
-                            <div class="">
+                            <div class="back-menu-btn">
                                 <div *ngIf="!authService.currentUsr">
                                     <a aria-label="Back to article list page" routerLink="/articles"
                                         class="text-skin-base group flex w-full items-center gap-3">
@@ -103,31 +103,33 @@
                                     </a>
                                 </div>
 
-                                <div *ngIf="authService.currentUsr as currentUsr">
-                                    <div *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
-                                        <button [matMenuTriggerFor]="menu"
-                                            class="relative top-[-10px] rounded-full p-3 hover:bg-skin-link transition-all duration-300"
-                                            aria-label="icon-button with a menu">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 text-secondary"
-                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                                            </svg>
-                                        </button>
-
-
-                                        <mat-menu #menu="matMenu" class="mt-2 font-semibold text-skin-base">
-                                            <a aria-labelledby="Link to about page" routerLink="edit"
-                                                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                                                <span>{{ 'articleDetail.edit' | translate }}</span>
-                                            </a>
-                                            <button (click)="openArticleDeleteDialog()"
-                                                aria-labelledby="Delete article button"
-                                                class="block font-semibold text-skin-base w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                                                <span>{{ 'articleDetail.delete' | translate }}</span>
+                                <ng-container *ngIf="authService.currentUsr as currentUsr">
+                                    <ng-container *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
+                                        <div class="action-btns flex items-center gap-4">
+                                            <button [matMenuTriggerFor]="menu"
+                                                class="relative rounded-full lg:w-10 lg:h-10 lg:-mr-2.5 mt-1 lg:-mt-1 flex items-center justify-center lg:hover:bg-skin-link transition-all duration-300"
+                                                aria-label="icon-button with a menu">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 text-secondary"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                                </svg>
                                             </button>
-                                        </mat-menu>
-                                    </div>
+
+                                            <mat-menu #menu="matMenu" class="mt-2 font-semibold text-skin-base">
+                                                <a aria-labelledby="Link to about page" routerLink="edit"
+                                                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                                    <span>{{ 'articleDetail.edit' | translate }}</span>
+                                                </a>
+                                                <button (click)="openArticleDeleteDialog()"
+                                                    aria-labelledby="Delete article button"
+                                                    class="block font-semibold text-skin-base w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                                    <span>{{ 'articleDetail.delete' | translate }}</span>
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+                                    </ng-container>
 
                                     <div *ngIf="!isAuthor(currentUsr, article) && !authService.isAdmin">
                                         <a aria-label="Back to article list page link" routerLink="/articles"
@@ -144,7 +146,7 @@
                                             </span>
                                         </a>
                                     </div>
-                                </div>
+                                </ng-container>
                             </div>
                         </div>
 
