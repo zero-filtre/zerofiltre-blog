@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { Component, HostListener, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, HostListener, OnInit, ChangeDetectorRef, ViewChild, ElementRef, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,6 +16,7 @@ import { NavigationService } from 'src/app/services/navigation.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { sortByNameAsc } from 'src/app/services/utilities.service';
 import { BaseComponent } from 'src/app/Base.component';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-article-entry-create',
@@ -83,7 +84,8 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
     public authService: AuthService,
     private translate: TranslateService,
     public navigate: NavigationService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    @Inject(DOCUMENT) private document: any
   ) { }
 
   public openTagsDropdown() {
@@ -94,6 +96,10 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
     if (tabName === 'editor') this.activeTab = 'editor'
     if (tabName === 'preview') this.activeTab = 'preview'
     if (tabName === 'help') this.activeTab = 'help'
+
+    setTimeout(() => {
+      if (this.editor && this.fullScreenOn) this.editor.nativeElement.style.height = '100vh';
+    }, 0);
   }
 
   public fetchListOfTags(): void {
@@ -126,7 +132,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   }
 
   public InitForm(article: Article): void {
-  
+
     const summaryTemplate =
       `Veuillez indiquer ici le résume de votre article. Ex: Mettre en place un serveur de messagerie n'a jamais été aussi simple. Voici comment faire.`;
 
@@ -461,7 +467,78 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
     ).subscribe()
   }
 
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
+  fullscreenmodes(event: any) {
+    this.checkScreenMode();
+  }
+
+  checkScreenMode() {
+    if (document.fullscreenElement) {
+      this.fullScreenOn = true;
+    } else {
+      this.fullScreenOn = false;
+    }
+    console.log('FULLSCREN: ', this.fullScreenOn);
+  }
+
+  toggleFullScreen() {
+    this.elem = (document as any).querySelector('.editor_sticky_wrapper');
+    const textarea = (document as any).querySelector('#content');
+    const editotheader = (document as any).querySelector('.editor-header');
+
+    this.elem.addEventListener('fullscreenchange', this.fullscreenchanged);
+
+    if (!this.document.fullscreenElement) {
+      if (this.elem.requestFullscreen) {
+        this.elem.requestFullscreen();
+      } else if (this.elem.mozRequestFullScreen) {
+        /* Firefox */
+        this.elem.mozRequestFullScreen();
+      } else if (this.elem.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        this.elem.webkitRequestFullscreen();
+      } else if (this.elem.msRequestFullscreen) {
+        /* IE/Edge */
+        this.elem.msRequestFullscreen();
+      }
+
+      textarea.style.height = '100vh';
+      editotheader.style.marginTop = '0';
+
+    } else {
+      if (this.document.exitFullscreen) {
+        this.document.exitFullscreen();
+      } else if (this.document.mozCancelFullScreen) {
+        /* Firefox */
+        this.document.mozCancelFullScreen();
+      } else if (this.document.webkitExitFullscreen) {
+        /* Chrome, Safari and Opera */
+        this.document.webkitExitFullscreen();
+      } else if (this.document.msExitFullscreen) {
+        /* IE/Edge */
+        this.document.msExitFullscreen();
+      }
+    }
+  }
+
+  fullscreenchanged() {
+    if (document.fullscreenElement) {
+      console.log(`Entered fullscreen mode.`);
+    } else {
+      console.log('Exit fullscreen mode.');
+    }
+  };
+
+  fullScreenOn = false;
+  elem: any;
+
   ngOnInit(): void {
+    this.checkScreenMode();
+    this.elem = document.documentElement;
+
     this.articleId = this.route.snapshot.paramMap.get('id')!;
     this.getArticle();
     this.fetchListOfTags();

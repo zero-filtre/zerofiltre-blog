@@ -152,7 +152,7 @@ export class AppComponent implements OnInit {
     if (
       event.target.innerText === 'Copy' ||
       event.target.className === 'copy-to-clipboard-button' ||
-      event.target.parentElement.className === 'copy-to-clipboard-button'
+      event.target.parentElement?.className === 'copy-to-clipboard-button'
     ) {
       this.messageService.codeCopied();
     }
