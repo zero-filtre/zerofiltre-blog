@@ -2,104 +2,102 @@
     <form *ngIf="form" [formGroup]="form">
         <div class="article-data-container flex flex-col lg:grid grid-cols-7 gap-10 lg:gap-14 items-stretch">
             <main class="col-span-5 order-2 lg:order-none">
-                <div class="main-side-container">
-                    <nav class="top-nav items-center justify-between hidden lg:flex">
-                        <div
-                            class="nav-links flex justify-between sm:justify-start items-center sm:gap-10 font-semibold">
-                            <button (click)="navigate.back()" class="text-primary-500 group flex items-center gap-1"
-                                aria-label="navigate back button">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    class="text-primary-500 group-hover:text-primary-300" data-supported-dps="24x24"
-                                    fill="currentColor" width="24" height="24" focusable="false">
-                                    <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
+                <nav class="top-nav items-center justify-between hidden lg:flex">
+                    <div class="nav-links flex justify-between sm:justify-start items-center sm:gap-10 font-semibold">
+                        <button (click)="navigate.back()" class="text-primary-500 group flex items-center gap-1"
+                            aria-label="navigate back button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                class="text-primary-500 group-hover:text-primary-300" data-supported-dps="24x24"
+                                fill="currentColor" width="24" height="24" focusable="false">
+                                <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
+                            </svg>
+                        </button>
+                        <h2>
+                            <a aria-labelledby="Link to about page" routerLink="/user/dashboard"
+                                class="text-lg text-primary-500 hover:text-primary-300">
+                                {{ 'app.myArticles' | translate }}
+                            </a>
+                        </h2>
+                    </div>
+                </nav>
+
+                <label for="cover_photo" class="block text-base font-semibold leading-5 text-skin-base mt-5 lg:mt-14">
+                    {{ 'articleEntryEdit.coverImageTitle' | translate }}
+                </label>
+
+                <div class="article-image-preview-wrapper relative mt-5">
+                    <div *ngIf="!thumbnail?.value"
+                        class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden">
+                        <label *ngIf="!uploading" for="file" (click)="fileUpload.click()"
+                            class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
+                            <div class="text-center">
+                                <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
+                                    viewBox="0 0 48 48">
+                                    <path
+                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
-                            </button>
-                            <h2>
-                                <a aria-labelledby="Link to about page" routerLink="/user/dashboard"
-                                    class="text-lg text-primary-500 hover:text-primary-300">
-                                    {{ 'app.myArticles' | translate }}
-                                </a>
-                            </h2>
-                        </div>
-                    </nav>
+                                <p class="mt-1 text-xs text-skin-base leading-6">
+                                    <span
+                                        class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                                        Upload a file
+                                    </span>
+                                </p>
+                                <p class="mt-1 text-xs text-skin-muted">
+                                    PNG, JPG, GIF up to 5MB
+                                </p>
 
-                    <label for="cover_photo"
-                        class="block text-base font-semibold leading-5 text-skin-base mt-5 lg:mt-14">
-                        {{ 'articleEntryEdit.coverImageTitle' | translate }}
-                    </label>
-
-                    <div class="article-image-preview-wrapper relative mt-5">
-                        <div *ngIf="!thumbnail?.value"
-                            class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden">
-                            <label *ngIf="!uploading" for="file" (click)="fileUpload.click()"
-                                class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
-                                <div class="text-center">
-                                    <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
-                                        viewBox="0 0 48 48">
-                                        <path
-                                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-                                    <p class="mt-1 text-xs text-skin-base leading-6">
-                                        <span
-                                            class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                            Upload a file
-                                        </span>
-                                    </p>
-                                    <p class="mt-1 text-xs text-skin-muted">
-                                        PNG, JPG, GIF up to 5MB
-                                    </p>
-
-                                    <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
-                                        (change)="onFileSelected($event, 'coverImage')" accept="image/*">
-                                </div>
-                            </label>
-
-                            <div *ngIf="uploading" class="flex items-center justify-center shadow-lg rounded-lg border">
-                                <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
-                                    viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                                    <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
-                                        stroke-dasharray="164.93361431346415 56.97787143782138"
-                                        transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused"></circle>
-                                </svg>
+                                <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
+                                    (change)="onFileSelected($event, 'coverImage')" accept="image/*">
                             </div>
-                        </div>
+                        </label>
 
-
-                        <div *ngIf="thumbnail?.value"
-                            class="image-wrapper shadow-lg overflow-hidden rounded-lg aspect-w-4 aspect-h-2">
-                            <app-image [classes]="'object-cover'" [sourceUrl]="thumbnail?.value!"
-                                [alt]="article?.title!">
-                            </app-image>
-                        </div>
-
-                        <div *ngIf="thumbnail?.value"
-                            class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
-                            (click)="removeFile()">x
+                        <div *ngIf="uploading" class="flex items-center justify-center shadow-lg rounded-lg border">
+                            <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
+                                viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                                    stroke-dasharray="164.93361431346415 56.97787143782138"
+                                    transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused"></circle>
+                            </svg>
                         </div>
                     </div>
 
-                    <div class="article-title mt-10">
-                        <input (keyup)="typeInTitle(getValue($event))" id="title" required minlength="4"
-                            formControlName="title"
-                            class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
-                            placeholder="{{ 'articleEntryEdit.titlePlaceholder' | translate }}" autocomplete="off" />
 
-                        <div *ngIf="title?.invalid && title?.dirty" class="">
-                            <div *ngIf="title?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
-                                {{ 'articleEntryEdit.missingTitle' | translate }}
-                            </div>
-                            <div *ngIf="title?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
-                                {{ 'articleEntryEdit.invalidTitleLenght' | translate }}
-                            </div>
-                        </div>
+                    <div *ngIf="thumbnail?.value"
+                        class="image-wrapper shadow-lg overflow-hidden rounded-lg aspect-w-4 aspect-h-2">
+                        <app-image [classes]="'object-cover'" [sourceUrl]="thumbnail?.value!" [alt]="article?.title!">
+                        </app-image>
                     </div>
 
-                    <div class="article-content !shadow-md mt-4 sm:mt-2">
+                    <div *ngIf="thumbnail?.value"
+                        class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
+                        (click)="removeFile()">x
+                    </div>
+                </div>
+
+                <div class="article-title mt-10">
+                    <input (keyup)="typeInTitle(getValue($event))" id="title" required minlength="4"
+                        formControlName="title"
+                        class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
+                        placeholder="{{ 'articleEntryEdit.titlePlaceholder' | translate }}" autocomplete="off" />
+
+                    <div *ngIf="title?.invalid && title?.dirty" class="">
+                        <div *ngIf="title?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
+                            {{ 'articleEntryEdit.missingTitle' | translate }}
+                        </div>
+                        <div *ngIf="title?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
+                            {{ 'articleEntryEdit.invalidTitleLenght' | translate }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article-content min-h-[3000px] mt-4 sm:mt-2">
+                    <div class="editor_sticky_wrapper !shadow-md sticky top-20">
+
                         <div
-                            class="editor-header mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
-                            <div class="flex items-center w-full">
+                            class="editor-header overflow-x-auto shadow-sm mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
+                            <div class="flex items-center">
                                 <div (click)="setActiveTab('editor')"
                                     class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer hover:bg-skin-muted sm:text-base">
                                     <svg [ngClass]="activeTab == 'editor' ? 'text-primary-500' : ''" class="w-4 h-4"
@@ -109,17 +107,18 @@
                                             d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
                                         </path>
                                     </svg>
-                                    <span [ngClass]="activeTab == 'editor' ? 'text-primary-500' : ''">
+                                    <span class="hidden sm:block"
+                                        [ngClass]="{'text-primary-500' : activeTab == 'editor', fullScreenOn : 'hidden sm:block'}">
                                         {{ 'articleEntryEdit.editTabText' | translate }}
                                     </span>
                                     <div [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
-                                        class="green-border bg-primary-500 h-0.5 w-full absolute -inset-x-1 bottom-0 scale-0">
+                                        class="green-border bg-primary-500 h-1 w-full absolute -inset-x-1 -bottom-0.5 scale-0">
                                     </div>
                                 </div>
 
                                 <div (click)="setActiveTab('preview')"
                                     class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
-                                    <svg [ngClass]="activeTab == 'preview' ? 'text-primary-500' : ''" class="w-4 h-4"
+                                    <svg [ngClass]="activeTab == 'preview' ? 'text-primary-500' : ''" class="w-5 h-5"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -128,70 +127,166 @@
                                             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
                                         </path>
                                     </svg>
-                                    <span [ngClass]="activeTab == 'preview' ? 'text-primary-500' : ''">
+                                    <span class="hidden sm:block"
+                                        [ngClass]="{'text-primary-500' : activeTab == 'preview', fullScreenOn : 'hidden sm:block'}">
                                         {{ 'articleEntryEdit.previewTabText' | translate }}
                                     </span>
                                     <div [ngClass]="activeTab == 'preview' ? 'active-tab' : ''"
-                                        class="green-border bg-primary-500 h-0.5 w-full absolute -inset-x-1 bottom-0 scale-0">
+                                        class="green-border bg-primary-500 h-1 w-full absolute -inset-x-1 -bottom-0.5 scale-0">
                                     </div>
                                 </div>
 
                                 <div (click)="setActiveTab('help')"
                                     class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
                                     <svg xmlns="http://www.w3.org/2000/svg"
-                                        [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''" class="h-4 w-4"
+                                        [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''" class="h-5 w-5"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <span [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''">
+                                    <span class="hidden sm:block"
+                                        [ngClass]="{'text-primary-500' : activeTab == 'help', fullScreenOn : 'hidden sm:block'}">
                                         {{ 'articleEntryEdit.helpTabText' | translate }}
                                     </span>
                                     <div [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
-                                        class="green-border bg-primary-500 h-0.5 w-full absolute -inset-x-1 bottom-0 scale-0">
+                                        class="green-border bg-primary-500 h-1 w-full absolute -inset-x-1 -bottom-0.5 scale-0">
                                     </div>
                                 </div>
                             </div>
 
-                            <div *ngIf="activeTab === 'editor'"
-                                class="relative cursor-pointer inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-link transition-all duration-200">
-                                <input class="sr-only" (change)="onFileSelected($event, 'editorImage')" type="file"
-                                    id="editorFileUpload" name="editorFileUpload" #editorFileUpload accept="image/*">
-                                <svg (click)="editorFileUpload.click()" fill="none" stroke="currentColor"
-                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
-                                    class="w-6 h-6 ">
-                                    <path
-                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
+                            <div *ngIf="activeTab === 'editor'; else exitFullScreenBtn"
+                                class="flex lg:gap-2 lg:mr-1 items-center">
+                                <div *ngIf="fullScreenOn"
+                                    class="action-buttons mr-1 lg:!mt-0 flex gap-2 items-center justify-between">
+                                    <ng-container *ngIf="form.invalid; else validBtn">
+                                        <button [disabled]="form.invalid || loading"
+                                            aria-labelledby="button to publish or submit an artticle"
+                                            class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
+                                            <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">
+                                                {{ 'articleEntryEdit.publishBtn' | translate }}</span>
+                                            <span *ngIf="!isPublishing && !isPublished && !authService.isAdmin">
+                                                {{ 'articleEntryEdit.submitBtn' | translate }}</span>
+                                        </button>
+                                    </ng-container>
+
+                                    <ng-template #validBtn>
+                                        <button type="submit" aria-labelledby="button to publish or submit an article"
+                                            (click)="publishArticle()" [disabled]="isSaving || isPublishing"
+                                            [ngClass]="{'opacity-50': isSaving || isPublishing }"
+                                            class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
+                                            <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">
+                                                {{ 'articleEntryEdit.publishBtn' | translate }}
+                                            </span>
+                                            <span *ngIf="!isPublishing && !isPublished && !authService.isAdmin">
+                                                {{ 'articleEntryEdit.submitBtn' | translate }}
+                                            </span>
+                                            <svg *ngIf="isPublishing" class="w-5 h-5 animate-spin"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
+                                                viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                                <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10"
+                                                    r="35" stroke-dasharray="164.93361431346415 56.97787143782138"
+                                                    transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused">
+                                                </circle>
+                                            </svg>
+                                        </button>
+                                    </ng-template>
+
+                                    <button *ngIf="isSaving" class="relative group" aria-label="saving article">
+                                        <svg class="w-6 h-6 animate-spin text-primary-500"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
+                                            viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                            <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8"
+                                                r="35" stroke-dasharray="164.93361431346415 56.97787143782138"
+                                                transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused">
+                                            </circle>
+                                        </svg>
+                                        <span class="save-tooltip group-hover:scale-100">
+                                            {{ 'articleEntryEdit.savingText' | translate }}
+                                        </span>
+                                    </button>
+
+                                    <button *ngIf="isSaved && !isSaving" class="relative group"
+                                        aria-label="successfully saved">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="save-tooltip group-hover:scale-100">
+                                            {{ 'articleEntryEdit.saveSuccessText' | translate }}
+                                        </span>
+                                    </button>
+
+                                    <button *ngIf="saveFailed && !isSaving" class="relative group"
+                                        aria-label="saving failed">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-error" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                                        </svg>
+                                        <span class="save-tooltip !bg-error group-hover:scale-100">
+                                            {{ 'articleEntryEdit.saveFailedText' | translate }}
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <button aria-label="click here to enter full screen" (click)="toggleFullScreen()"
+                                    class="toggle_fullScreen_btn inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+                                    <mat-icon *ngIf="!fullScreenOn" class="">fullscreen</mat-icon>
+                                    <mat-icon *ngIf="fullScreenOn" class="">fullscreen_exit</mat-icon>
+                                </button>
+
+                                <div
+                                    class="add_image_btn relative cursor-pointer inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+                                    <input class="sr-only" (change)="onFileSelected($event, 'editorImage')" type="file"
+                                        id="editorFileUpload" name="editorFileUpload" #editorFileUpload
+                                        accept="image/*">
+                                    <svg (click)="editorFileUpload.click()" fill="none" stroke="currentColor"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        viewBox="0 0 24 24" class="w-6 ">
+                                        <path
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                </div>
                             </div>
+
+                            <ng-template #exitFullScreenBtn>
+                                <button aria-label="click here to enter full screen" (click)="toggleFullScreen()"
+                                    class="toggle_fullScreen_btn inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+                                    <mat-icon *ngIf="!fullScreenOn" class="">fullscreen</mat-icon>
+                                    <mat-icon *ngIf="fullScreenOn" class="">fullscreen_exit</mat-icon>
+                                </button>
+                            </ng-template>
                         </div>
 
                         <div class="tabs-content-wrapper">
-                            <div *ngIf="content?.invalid && content?.dirty" class="">
+                            <ng-container *ngIf="content?.invalid && content?.dirty" class="">
                                 <div *ngIf="content?.errors?.['required']"
                                     class="p-4 bg-white text-xs sm:text-sm text-error italic">
                                     {{ 'articleEntryEdit.missingArticleContent' | translate }}
                                 </div>
-                            </div>
+                            </ng-container>
 
-                            <div *ngIf="activeTab === 'editor'">
+                            <ng-container *ngIf="activeTab === 'editor'">
                                 <textarea #editor (keydown)="handleTab($event, false);" formControlName="content"
                                     id="content" required
-                                    class="editor-textarea bg-white text-lg text-[#111] p-4 w-full min-h-screen"
+                                    class="editor-textarea bg-white text-lg text-[#111] p-4 pb-24 w-full h-[80vh]"
                                     placeholder="{{ 'articleEntryEdit.articleContentPlaceholder' | translate }}">
                                 </textarea>
-                            </div>
+                            </ng-container>
 
                             <div *ngIf="activeTab === 'preview'"
-                                class="markdown-preview-container markdown-content bg-skin-bg w-full p-4">
+                                class="markdown-preview-container markdown-content h-screen overflow-y-scroll bg-skin-bg w-full p-4 pb-24">
                                 <markdown [data]="content?.value"
                                     class="prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-ul:list-disc prose-ol:list-disc">
                                 </markdown>
                             </div>
 
                             <div *ngIf="activeTab === 'help'"
-                                class="help-container bg-skin-card p-4 prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:p-1 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-code:mx-1 prose-ul:list-disc prose-ol:list-disc">
+                                class="help-container h-screen overflow-y-scroll bg-skin-card p-4 pb-24 prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:p-1 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-code:mx-1 prose-ul:list-disc prose-ol:list-disc">
                                 <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
                                 <p>
                                     {{'articleEntryEdit.helpSubTitle' | translate}}
@@ -304,6 +399,7 @@
                                 </p>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </main>
@@ -453,20 +549,23 @@
                                     </p>
                                 </ng-container>
 
-                                <ul *ngIf="tagsDropdownOpened"
-                                    class="multiselect-tags-dropdown absolute top-full inset-x-0 mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
-                                    <ng-container *ngFor="let tag of tagList; let i = index">
-                                        <li class="tagItem flex items-center gap-2 text-skin-base hover:bg-slate-100 px-4 py-2 cursor-pointer"
-                                            (click)="addtag(tag)">
-                                            <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
-                                                fill="currentColor" viewBox="0 0 8 8">
-                                                <circle cx="4" cy="4" r="3"></circle>
-                                            </svg>
-                                            {{tag?.name}}
-                                        </li>
-                                    </ng-container>
-                                </ul>
+                                <!-- absolute top-full inset-x-0 -->
                             </div>
+
+                            <ul *ngIf="tagsDropdownOpened"
+                                class="multiselect-tags-dropdown mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
+                                <ng-container *ngFor="let tag of tagList; let i = index">
+                                    <li class="tagItem flex items-center gap-2 text-skin-base hover:bg-slate-100 px-4 py-2 cursor-pointer"
+                                        (click)="addtag(tag)">
+                                        <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
+                                            fill="currentColor" viewBox="0 0 8 8">
+                                            <circle cx="4" cy="4" r="3"></circle>
+                                        </svg>
+                                        {{tag?.name}}
+                                    </li>
+                                </ng-container>
+                            </ul>
+
                         </div>
                     </div>
                 </div>
