@@ -58,6 +58,11 @@ export class MessageService {
       });
   }
 
+  // When a route/module is not allowed
+  loadModuleError() {
+    this.router.navigateByUrl('**');
+  }
+
   // When user is already logged In
   loggedInAuthError() {
     this.router.navigateByUrl('/');

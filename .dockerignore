@@ -52,3 +52,4 @@ Thumbs.db
 /k8s
 Jenkinsfile
 .dockerignore
+/e2e/node_modules

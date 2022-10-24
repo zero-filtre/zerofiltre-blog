@@ -27,6 +27,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ImageComponent } from './image/image.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { BaseArticleListComponent } from './base-article-list/base-article-list.component';
+import { VimeoUrlPipe } from './pipes/vimeo-url.pipe';
 
 const components = [
   AppShellRenderDirective,
@@ -34,7 +35,8 @@ const components = [
   FooterComponent,
   ImageComponent,
   HeaderComponent,
-  NotFoundPageComponent
+  NotFoundPageComponent,
+  VimeoUrlPipe
 ];
 
 const modules = [
