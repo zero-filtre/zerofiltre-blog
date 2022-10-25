@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth.service';
 import { Tag } from 'src/app/articles/article.model';
-import { AuthService } from '../../user/auth.service';
-import { CourseInitPopupComponent } from '../course-init-popup/course-init-popup.component';
-import { CourseDeletePopupComponent } from '../course-delete-popup/course-delete-popup.component';
+import { CourseInitPopupComponent } from '../../../school/course-init-popup/course-init-popup.component';
+import { CourseDeletePopupComponent } from '../../../school/course-delete-popup/course-delete-popup.component';
 
 @Component({
-  selector: 'app-course-list-page',
-  templateUrl: './course-list-page.component.html',
-  styleUrls: ['./course-list-page.component.css']
+  selector: 'app-student-courses-list',
+  templateUrl: './student-courses-list.component.html',
+  styleUrls: ['./student-courses-list.component.css']
 })
-export class CourseListPageComponent implements OnInit {
+export class StudentCoursesListComponent implements OnInit {
   tagList: Tag[] = [];
   courses: any[] = [];
   pageSize: number = 5;

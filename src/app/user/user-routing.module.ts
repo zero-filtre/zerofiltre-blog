@@ -4,6 +4,7 @@ import { TokenExpiredGuard } from '../shared/guard/token-expired.guard';
 import { AccountConfirmationPageComponent } from './account-confirmation-page/account-confirmation-page.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './auth.guard';
+import { StudentCoursesListComponent } from './courses/student-courses-list/student-courses-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HasRoleGuard } from './has-role.guard';
 import { LoggedInAuthGuard } from './logged-in-auth.guard';
@@ -43,6 +44,14 @@ const routes: Routes = [
     canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
     data: {
       role: 'ROLE_ADMIN'
+    }
+  },
+  {
+    path: 'dashboard/courses',
+    component: StudentCoursesListComponent,
+    canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
+    data: {
+      role: 'ROLE_USER'
     }
   },
   {

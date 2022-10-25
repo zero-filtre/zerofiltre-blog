@@ -18,6 +18,7 @@ import { ProfileEntryEditComponent } from './profile-entry-edit/profile-entry-ed
 import { ProfileImagePopupComponent } from './profile-image-popup/profile-image-popup.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { PublicProfileComponent } from './public-profile/public-profile.component';
+import { StudentCoursesListComponent } from './courses/student-courses-list/student-courses-list.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { PublicProfileComponent } from './public-profile/public-profile.componen
     ProfileEntryEditComponent,
     ProfileImagePopupComponent,
     AdminDashboardComponent,
-    PublicProfileComponent
+    PublicProfileComponent,
+    StudentCoursesListComponent
   ],
   imports: [
     CommonModule,
