@@ -60,6 +60,8 @@ export const fr = {
         myArticles: 'Mes articles',
         allArticles: 'Tous les articles',
         myCourses: 'Mes cours',
+        myTrainings: 'Mes formations',
+        allTrainings: 'Toutes nos formations'
     },
     login: {
         title: 'Connexion',

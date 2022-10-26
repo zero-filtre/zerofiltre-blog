@@ -5,6 +5,7 @@ import { AccountConfirmationPageComponent } from './account-confirmation-page/ac
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { StudentCoursesListComponent } from './courses/student-courses-list/student-courses-list.component';
+import { TeacherCoursesListComponent } from './courses/teacher-courses-list/teacher-courses-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HasRoleGuard } from './has-role.guard';
 import { LoggedInAuthGuard } from './logged-in-auth.guard';
@@ -49,6 +50,22 @@ const routes: Routes = [
   {
     path: 'dashboard/courses',
     component: StudentCoursesListComponent,
+    canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
+    data: {
+      role: 'ROLE_USER'
+    }
+  },
+  {
+    path: 'dashboard/courses/teacher',
+    component: TeacherCoursesListComponent,
+    canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
+    data: {
+      role: 'ROLE_USER'
+    }
+  },
+  {
+    path: 'dashboard/courses/teacher/all',
+    component: TeacherCoursesListComponent,
     canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
     data: {
       role: 'ROLE_USER'

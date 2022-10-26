@@ -58,6 +58,8 @@ export class AppComponent implements OnInit {
   public MY_ARTICLES = 'Mes articles';
   public ALL_ARTICLES = 'Tous nos articles';
   public MY_COURSES = 'Mes cours';
+  public MY_TRAININGS = 'Mes formations';
+  public ALL_TRAININGS = 'Toutes nos formations';
 
   public changingRoute!: boolean;
 
@@ -133,6 +135,7 @@ export class AppComponent implements OnInit {
 
   public fetchAllArticlesAsAdmin() {
     this.activePage = this.ALL_ARTICLES;
+    this.router.navigateByUrl('/user/dashboard/admin');
   }
 
   public fetchAllArticlesAsUser() {
@@ -143,6 +146,16 @@ export class AppComponent implements OnInit {
   public fetchAllCoursesAsUser() {
     this.activePage = this.MY_COURSES;
     this.router.navigateByUrl('/user/dashboard/courses');
+  }
+
+  public fetchAllCoursesAsTeacher() {
+    this.activePage = this.MY_TRAININGS;
+    this.router.navigateByUrl('/user/dashboard/courses/teacher');
+  }
+
+  public fetchAllCoursesAsAdmin() {
+    this.activePage = this.ALL_TRAININGS;
+    this.router.navigateByUrl('/user/dashboard/courses/teacher/all');
   }
 
   public logCopySuccessMessage(event: any) {
@@ -176,6 +189,8 @@ export class AppComponent implements OnInit {
     if (url.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
     if (url.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
     if (url.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
+    if (url.startsWith('/user/dashboard/courses/teacher')) this.activePage = this.MY_TRAININGS;
+    if (url.startsWith('/user/dashboard/courses/teacher/all')) this.activePage = this.ALL_TRAININGS;
   }
 
   ngOnInit(): void {

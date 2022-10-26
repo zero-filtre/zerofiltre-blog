@@ -1,0 +1,381 @@
+<main class="articles-list-container site-container py-5">
+    <div class="max-w-2xl mx-auto">
+        <div class="main-side-container">
+            <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
+                <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
+                    <button type="button" aria-current="page" aria-labelledby="Toggle to published articles tab"
+                        [ngClass]="activePage === PUBLISHED ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'dashboard.published' | translate}}</span>
+                        <!-- (click)="sortBy(PUBLISHED)" -->
+                    </button>
+
+                    <button type=" button" aria-current="false" aria-labelledby="Toggle to draft articles tab"
+                        [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'dashboard.draft' | translate}}</span>
+                        <!-- (click)="sortBy(DRAFT)" -->
+                    </button>
+
+                    <button type="button" aria-current="false" aria-labelledby="Toggle to in-review articles tab"
+                        [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'dashboard.inReview' | translate}}</span>
+                        <!-- (click)="sortBy(IN_REVIEW)" -->
+                    </button>
+                </nav>
+
+                <div *ngIf="authService.currentUsr">
+                    <button aria-label="Button to create a new article" (click)="openCourseEntryDialog()" type="button"
+                        class="">
+                        <span class="sr-only">Nouveau cours</span>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-10 w-10 text-white fill-primary-500 border-primary-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"
+                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="articles-wrapper articles-scrollable-list-panel py-12 space-y-12 lg:space-y-11 min-h-screen"
+                infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+
+                <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
+                    <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="10" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                </div>
+
+                <ng-template [ngIf]="courses" *appShellNoRender>
+                    <div *ngFor="let course of courses; let i=index" class="space-y-11">
+                        <div class="article-card lg:grid grid-cols-3 gap-6 group">
+
+                            <a aria-labelledby="Link to course detail page"
+                                routerLink="{{canAccess ? '/cours/' + course.id + '/' + course.firstLessonId : course.id}}"
+                                class="article-preview hover:opacity-75">
+                                <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
+                                    <app-image [classes]="'object-cover transition-all duration-200'"
+                                        [sourceUrl]="course?.thumbnail!" [alt]="course?.title!">
+                                    </app-image>
+                                </div>
+                            </a>
+
+                            <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
+
+                                <div class="flex justify-between items-start">
+                                    <!-- Liste des tags du cours -->
+                                    <div class="article-tags-container flex flex-wrap items-center gap-1">
+                                        <!-- <a *ngFor="let tag of course?.tags" routerLink='/articles'
+                                            [queryParams]="{tag:tag.name}"
+                                            class="tag-item flex items-center space-x-2 group">
+                                            <span
+                                                class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
+                                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
+                                                    fill="currentColor" viewBox="0 0 8 8">
+                                                    <circle cx="4" cy="4" r="3"></circle>
+                                                </svg>
+                                                <span class="hover:text-primary-500">
+                                                    {{tag.name}}
+                                                </span>
+                                            </span>
+                                        </a> -->
+
+                                        <a class="tag-item flex items-center space-x-2 group">
+                                            <span
+                                                class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
+                                                <svg [ngStyle]="{'color': ''}" class="mr-1 h-2 w-2" fill="currentColor"
+                                                    viewBox="0 0 8 8">
+                                                    <circle cx="4" cy="4" r="3"></circle>
+                                                </svg>
+                                                <span class="hover:text-primary-500">
+                                                    tag du cours
+                                                </span>
+
+                                            </span>
+                                        </a>
+
+                                    </div>
+
+                                    <!-- Contextuel menu for editing -->
+                                    <!-- <div *ngIf="authService.currentUsr as currentUsr"> -->
+                                    <div *ngIf="canAccess">
+                                        <button [matMenuTriggerFor]="menu"
+                                            class="rounded-full p-2 opacity-0 group-hover:opacity-100 hover:bg-skin-link transition-all duration-500"
+                                            aria-label="icon-button with a menu">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-secondary"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                                            </svg>
+                                        </button>
+
+                                        <mat-menu #menu="matMenu" class="-mt-7 font-semibold text-skin-base">
+                                            <a aria-labelledby="Link to about page"
+                                                routerLink="/cours/{{course.id}}/edit/"
+                                                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                                <!-- <span>{{ 'articleDetail.edit' | translate }}</span> -->
+                                                <span>Editer ce cours</span>
+                                            </a>
+                                            <button (click)="openCourseDeleteDialog(course.id)"
+                                                aria-labelledby="Delete article button"
+                                                class="block font-semibold text-skin-base w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                                <span>{{ 'articleDetail.delete' | translate }}</span>
+                                            </button>
+                                        </mat-menu>
+                                    </div>
+                                    <!-- </div> -->
+                                </div>
+
+                                <div class="mt-2">
+
+                                    <a aria-labelledby="Link to about page"
+                                        routerLink="{{canAccess ? '/cours/' +course.id + '/' + course.firstLessonId : course.id}}"
+                                        class="article-title">
+                                        <h4
+                                            class="text-lg inline-block leading-6 font-semibold text-skin-inverted hover:text-primary-500 transition-all duration-200">
+                                            <!-- {{capitalize(article?.title!)}} -->
+                                            Titre de mon premier cours en tant que prof
+                                        </h4>
+                                    </a>
+
+                                    <p
+                                        class="article-description mt-1 text-sm lg:text-base tracking-wide font-light text-skin-text leading-5 line-clamp-2">
+                                        <ng-container *ngIf="course?.summary">{{course?.summary}}</ng-container>
+                                    </p>
+
+                                    <div class="article-author mt-3 flex items-end">
+                                        <div class="author-image flex-shrink-0">
+                                            <a aria-labelledby="Link to author profile"
+                                                [routerLink]="authService?.currentUsr?.id == course?.author?.id ? ['/user/profile'] : ['/user/' + course?.author?.id]">
+                                                <app-image [classes]="'h-10 w-10 rounded-full object-cover'"
+                                                    [sourceUrl]="course.author?.profilePicture!"
+                                                    [alt]="course?.author?.fullName!">
+                                                </app-image>
+                                            </a>
+                                        </div>
+
+                                        <div class="author-text ml-3">
+                                            <p class="text-sm font-semibold text-skin-inverted">
+                                                <a aria-labelledby="Link to about page"
+                                                    [routerLink]="authService?.currentUsr?.id == course?.author?.id ? ['/user/profile'] : ['/user/' + course?.author?.id]"
+                                                    class="hover:underline">
+                                                    {{course?.author?.fullName}}
+                                                </a>
+                                            </p>
+                                            <div class="flex space-x-1 text-sm text-skin-muted">
+                                                <time [dateTime]="course?.publishedAt | date">{{course?.publishedAt |
+                                                    date}}</time>
+                                                <span aria-hidden="true">·</span>
+                                                <span>
+                                                    <!-- {{article?.readingTime}}{{ 'articles.ofReadTime' | translate}} -->
+                                                    15{{ 'articles.ofReadTime' | translate}}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="flex items-center justify-end text-skin-inverted gap-2 flex-1 self-end text-right text-sm font-semibold">
+                                            <span class="enrol-total relative inline-flex items-end gap-1">
+                                                <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor"
+                                                    class="w-6 h-6 inline text-accent-300">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                                                </svg> -->
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    class="w-6 h-6 inline text-accent-300" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                                    <path fill-rule="evenodd"
+                                                        d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+                                                    <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                                                </svg>
+
+                                                <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    fill="currentColor" class="w-6 h-6 inline text-accent-300">
+                                                    <path fill-rule="evenodd"
+                                                        d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z"
+                                                        clip-rule="evenodd" />
+                                                    <path
+                                                        d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
+                                                </svg> -->
+
+
+                                                <!-- <span>{{nFormater(article.viewsCount)}}</span> -->
+                                                <span>140</span>
+
+                                                <span class="enrol-tooltip">
+                                                    <!-- {{ 'articleEntryEdit.savingText' | translate }} -->
+                                                    suivent ce cours
+                                                </span>
+                                            </span>
+
+                                            <!-- <span class="inline-flex items-center gap-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="inline w-4 text-accent-300" viewBox="0 0 20 20"
+                                                    fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                                <span>{{nFormater(article?.reactions?.length)}}</span>
+                                                <span>12</span>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Sponsor Content -->
+                        <ng-container *ngIf="(i+1)%3 === 0">
+                            <div class="sponsor-content overflow-hidden shadow-lg rounded-lg bg-skin-card group">
+                                <a routerLink="/courses/learn-ddd" class="flex flex-col lg:flex-row items-center">
+                                    <div class="card-image flex-1 p-4">
+                                        <app-image [classes]="'object-cover w-[250px] lg:w-[52%] m-auto'"
+                                            [alt]="'apprener le DDD'" [sourceUrl]="dddSponsorContentSourceUrl">
+                                        </app-image>
+                                    </div>
+                                    <div class="card-body flex-1 p-4 flex flex-col gap-4">
+                                        <h3 class="text-secondary">Apprenez et implémentez des modèles de conception
+                                            simples pour satisfaire
+                                            des besoins complexes
+                                        </h3>
+                                        <button
+                                            class="flex items-center justify-between lg:w-fit gap-2 px-4 py-2.5 rounded-md shadow-sm border border-primary-500 text-primary-500 group-hover:bg-primary-500 group-hover:text-white transition-all duration-300">
+                                            <span>En savoir plus</span>
+
+                                            <span class="mt-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                </svg>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </a>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-template>
+
+                <!-- Loading courses skeletons -->
+                <ng-template [ngIf]="loading">
+                    <div *ngFor="let elt of [].constructor(pageSize)">
+                        <div class="skeleton-container lg:grid grid-cols-3 gap-6 items-start">
+                            <div class="aspect-w-3 aspect-h-2">
+                                <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                    'border-radius': '8px',
+                                     'height.%': 100,
+                                     'width.%': 100
+                                    }">
+                                </ngx-skeleton-loader>
+                            </div>
+
+                            <div class="col-span-2 mt-4 lg:mt-0">
+                                <div class="tags-container flex space-x-3">
+                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                    'border-radius': '9999px',
+                                        height: '30px',
+                                        width: '100px',
+                                        display: 'block'
+                                    }">
+                                    </ngx-skeleton-loader>
+                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                        'border-radius': '9999px',
+                                            height: '30px',
+                                            width: '100px',
+                                            display: 'block'
+                                        }">
+                                    </ngx-skeleton-loader>
+                                </div>
+
+                                <div class="content-container mt-2">
+                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                    'border-radius': '5px',
+                                        height: '40px',
+                                        display: 'block'
+                                    }">
+                                    </ngx-skeleton-loader>
+                                    <ngx-skeleton-loader count="2" appearance="line" [theme]="{ 
+                                            'border-radius': '5px',
+                                                height: '15px',
+                                                display: 'block'
+                                            }">
+                                    </ngx-skeleton-loader>
+
+                                    <div class="flex items-center space-x-2">
+                                        <div class="">
+                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '9999px',
+                                                'width.px': 50,
+                                                'height.px': 50
+                                            }">
+                                            </ngx-skeleton-loader>
+                                        </div>
+                                        <div class="flex-1">
+                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '5px',
+                                                height: '10px',
+                                                display: 'block'
+                                            }">
+                                            </ngx-skeleton-loader>
+                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                            'border-radius': '5px',
+                                                height: '10px',
+                                                 display: 'block'
+                                            }">
+                                            </ngx-skeleton-loader>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <!-- No Content Found Message -->
+                <ng-template [ngIf]="noArticlesAvailable">
+                    <div class="flex flex-col justify-center items-center h-96 space-y-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-primary-500" fill="currentColor"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
+                        </svg>
+                        <div class="text-sm font-semibold text-skin-base">
+                            {{ 'articles.noArticlesAvailable' | translate }}
+                        </div>
+                    </div>
+                </ng-template>
+
+                <!-- Loading More Spinner -->
+                <div *ngIf="loadingMore" class="flex justify-center py-5">
+                    <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                </div>
+
+                <!-- Alert no more Courses -->
+                <div *ngIf="notEmptyArticles" class="py-5">
+                    <div class="flex justify-center">
+                        <div class="text-skin-base text-sm font-bold">{{ 'articles.noMoreArticles' | translate }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>

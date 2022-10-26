@@ -19,6 +19,7 @@ import { ProfileImagePopupComponent } from './profile-image-popup/profile-image-
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { PublicProfileComponent } from './public-profile/public-profile.component';
 import { StudentCoursesListComponent } from './courses/student-courses-list/student-courses-list.component';
+import { TeacherCoursesListComponent } from './courses/teacher-courses-list/teacher-courses-list.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { StudentCoursesListComponent } from './courses/student-courses-list/stud
     ProfileImagePopupComponent,
     AdminDashboardComponent,
     PublicProfileComponent,
-    StudentCoursesListComponent
+    StudentCoursesListComponent,
+    TeacherCoursesListComponent
   ],
   imports: [
     CommonModule,
