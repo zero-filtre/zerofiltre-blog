@@ -26,8 +26,6 @@ import {
 
 import { LoadEnvService } from './services/load-env.service';
 import { environment } from 'src/environments/environment';
-import { NavigationService } from './services/navigation.service';
-
 
 
 declare var Prism: any;
@@ -59,10 +57,11 @@ export class AppComponent implements OnInit {
   public MY_ACCOUNT = 'Mon compte';
   public MY_ARTICLES = 'Mes articles';
   public ALL_ARTICLES = 'Tous nos articles';
+  public MY_COURSES = 'Mes cours';
 
   public changingRoute!: boolean;
 
-  public activePage = this.MY_ACCOUNT;
+  public activePage = '';
 
 
   public envValue!: any;
@@ -78,17 +77,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     public authService: AuthService,
     private fileUploadService: FileUploadService,
-    private navigation: NavigationService
   ) {
     this.setBrowserTranslationConfigs();
-
-
-    router.events.pipe(filter(event => event instanceof NavigationStart))
-      .subscribe(({ url }: any) => {
-        if (url.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
-        if (url.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
-        if (url.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
-      });
 
     router.events.pipe(filter((event): event is RouterEvent => event instanceof RouterEvent))
       .subscribe(e => this.checkRouteChange(e))
@@ -150,6 +140,11 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl('/user/dashboard');
   }
 
+  public fetchAllCoursesAsUser() {
+    this.activePage = this.MY_COURSES;
+    this.router.navigateByUrl('/user/dashboard/courses');
+  }
+
   public logCopySuccessMessage(event: any) {
     if (
       event.target.innerText === 'Copy' ||
@@ -176,8 +171,18 @@ export class AppComponent implements OnInit {
     });
   }
 
+  setActiveLinkFromActiveRoute(url: string) {
+    if (url.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
+    if (url.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
+    if (url.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
+    if (url.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
+  }
+
   ngOnInit(): void {
-    this.activePage = this.MY_ACCOUNT;
+    this.router.events
+      .subscribe(({ url }: any) => {
+        this.setActiveLinkFromActiveRoute(url);
+      });
 
     if (isPlatformBrowser(this.platformId)) {
       this.loadCopyToClipboardSvg();

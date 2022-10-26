@@ -58,7 +58,8 @@ export const fr = {
     sidebar: {
         myInfos: 'Mon compte',
         myArticles: 'Mes articles',
-        allArticles: 'Tous les articles'
+        allArticles: 'Tous les articles',
+        myCourses: 'Mes cours',
     },
     login: {
         title: 'Connexion',
