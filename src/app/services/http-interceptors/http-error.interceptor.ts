@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/user/auth.service';
 import { AuthInterceptor } from './auth.interceptor';
 import { environment } from 'src/environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { NoNetworkComponent } from 'src/app/shared/no-network/no-network.component';
 
 
 @Injectable({
@@ -21,11 +23,14 @@ import { environment } from 'src/environments/environment';
 export class HttpErrorInterceptor implements HttpInterceptor {
   readonly apiServerUrl = environment.apiBaseUrl;
 
+  dialogRef!: any;
+
   constructor(
     private messageService: MessageService,
     private router: Router,
     private authService: AuthService,
-    private authInterceptor: AuthInterceptor
+    private authInterceptor: AuthInterceptor,
+    public dialogNoNetworkRef: MatDialog,
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -41,6 +46,22 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           catchError((error: HttpErrorResponse) => {
             if (error.status === 401 && authToken && userOrigin === null) {
               return this.handleRefrehToken(request, next);
+            }
+
+            if (error.status === 0 && !navigator.onLine) {
+              console.log('WE CAN LOAD THE NO NETWORK PAGE HERE');
+              if (!this.dialogRef) {
+                this.dialogRef = this.dialogNoNetworkRef.open(NoNetworkComponent, {
+                  panelClass: 'delete-article-popup-panel',
+                  autoFocus: true,
+                  // disableClose: true,
+                });
+
+                this.dialogRef.afterClosed()
+                  .subscribe(() => this.dialogRef = null)
+              }
+
+              return throwError(() => 'Connexion internet perdue!');
             }
 
             const errorMessage = this.setError(error);

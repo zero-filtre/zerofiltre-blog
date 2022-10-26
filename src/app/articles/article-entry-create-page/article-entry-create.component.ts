@@ -449,7 +449,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
               catchError((error: HttpErrorResponse) => {
                 this.isSaving = false;
                 this.isSaved = false;
-                this.savingMessage = 'Oops erreur!'
+                this.savingMessage = "Oops problème de connexion! Vos modifications n'ont pas pu être enregistrées.";
                 this.saveFailed = true;
                 return throwError(() => error);
               }),
@@ -461,7 +461,6 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
             ).subscribe();
         } else {
           this.isSaved = false;
-          // this.messageService.autoSaveAlert();
         }
       }),
     ).subscribe()
