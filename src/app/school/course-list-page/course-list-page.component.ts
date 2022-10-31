@@ -5,6 +5,9 @@ import { Tag } from 'src/app/articles/article.model';
 import { AuthService } from '../../user/auth.service';
 import { CourseInitPopupComponent } from '../course-init-popup/course-init-popup.component';
 import { CourseDeletePopupComponent } from '../course-delete-popup/course-delete-popup.component';
+import * as courseList from '../fakeData/courses.json'
+import { User } from 'src/app/user/user.model';
+import { Course } from '../course';
 
 @Component({
   selector: 'app-course-list-page',
@@ -34,6 +37,7 @@ export class CourseListPageComponent implements OnInit {
   activeTag!: string;
 
   canAccess: boolean = false;
+  canEdit: boolean = false;
 
 
   constructor(
@@ -49,9 +53,15 @@ export class CourseListPageComponent implements OnInit {
     return user?.id === cours?.author?.id
   }
 
-  canAccessCourse() {
-    console.log('CAN ACCESS: ', this.authService.isAdmin)
-    this.canAccess = this.authService.isAdmin
+  canAccessCourse(courseId: any) {
+    this.canAccess = !!(this.authService?.currentUsr as User)?.courseIds.includes(courseId) || this.authService.isAdmin;
+    return this.canAccess;
+  }
+
+  canEditCourse(course: Course) {
+    const userId = (this.authService?.currentUsr as User)?.id
+    this.canEdit = course?.author?.id === userId || course?.editorIds?.includes(userId) || this.authService.isAdmin;
+    return this.canEdit;
   }
 
   openCourseEntryDialog(): void {
@@ -78,16 +88,12 @@ export class CourseListPageComponent implements OnInit {
 
     const courses$ = new Promise((resolve, reject) => {
       setTimeout(() => {
-        const data = [
-          ...this.courses,
-          { id: 1, title: 'mon premier cours', summary: 'un magnifique cours', firstLessonId: 1 },
-        ]
+        const data = (courseList as any).default
         resolve(data);
       }, 1000);
     });
 
     courses$.then((data: any[]) => {
-      console.log('DATA: ', data)
       this.loading = false;
       this.courses = data;
     })
@@ -96,17 +102,21 @@ export class CourseListPageComponent implements OnInit {
       setTimeout(() => {
         resolve([
           ...this.tagList,
-          { id: 1, name: 'js', colorCode: '#ccc' },
+          { id: 1, name: 'js', colorCode: '#111' },
         ]);
 
         this.loading = false;
       }, 1000);
     });
+
+    tagList$.then((data: any[]) => {
+      this.loading = false;
+      this.tagList = data;
+    })
   }
 
   ngOnInit(): void {
     this.loadData();
-    this.canAccessCourse()
   }
 
 }
