@@ -1,6 +1,8 @@
 <div class="hidden lg:flex flex-col">
     <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art order-2 hidden lg:block lg:order-none">
-        <app-curriculum-sidebar></app-curriculum-sidebar>
+        <app-curriculum-sidebar [canEdit]="canEditCourse(course)" [course]="course" [lessons]="lessons$ | async"
+            [chapters]="chapters$ | async">
+        </app-curriculum-sidebar>
     </aside>
 
     <main class="py-5 text-skin-art">
@@ -89,11 +91,11 @@
 </div>
 
 
-
 <mat-drawer-container class="example-container lg:!hidden relative" [hasBackdrop]="true">
     <mat-drawer #drawer [mode]="'over'">
         <aside aria-labelledby="course-curriculum-sidebar-mobile" class="text-skin-art">
-            <app-curriculum-sidebar [drawer]="drawer"></app-curriculum-sidebar>
+            <app-curriculum-sidebar [drawer]="drawer" [canEdit]="canEditCourse(course)" [course]="course"
+                [lessons]="lessons$ | async" [chapters]="chapters$ | async"></app-curriculum-sidebar>
         </aside>
     </mat-drawer>
 

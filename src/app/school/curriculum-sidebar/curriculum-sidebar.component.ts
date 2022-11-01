@@ -6,6 +6,9 @@ import { ChapterInitPopupComponent } from '../chapter-init-popup/chapter-init-po
 import { ChapterDeletePopupComponent } from '../chapter-delete-popup/chapter-delete-popup.component';
 import { LessonInitPopupComponent } from '../lesson-init-popup/lesson-init-popup.component';
 import { LessonDeletePopupComponent } from '../lesson-delete-popup/lesson-delete-popup.component';
+import { Course } from '../course';
+import { Lesson } from '../lesson';
+import { Chapter } from '../chapter';
 
 @Component({
   selector: 'app-curriculum-sidebar',
@@ -14,6 +17,10 @@ import { LessonDeletePopupComponent } from '../lesson-delete-popup/lesson-delete
 })
 export class CurriculumSidebarComponent implements OnInit {
   @Input() drawer!: any;
+  @Input() canEdit!: boolean;
+  @Input() course!: Course;
+  @Input() lessons!: Lesson[];
+  @Input() chapters!: Chapter[];
 
   constructor(
     public authService: AuthService,
@@ -24,162 +31,46 @@ export class CurriculumSidebarComponent implements OnInit {
     private router: Router
   ) { }
 
-  isAuthor(user: any, cours: any): boolean {
-    return user?.id === cours?.author?.id
-  }
-
-  course: any = {
-    name: 'Exemple de titre du cours, Apprenez le DDD',
-    chapters: [
-      {
-        title: 'Titre du chapitre 1',
-        lessons: [
-          {
-            type: 'video',
-            name: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure',
-            duration: '3:15',
-            free: true
-          },
-          {
-            type: 'video',
-            name: 'lesson numero 2',
-            duration: '1:15',
-            free: false
-          },
-          {
-            type: 'doc',
-            name: 'lesson numero 3',
-            duration: '0:15',
-            free: true
-          },
-        ]
-      },
-      {
-        title: 'Titre du chapitre 2',
-        lessons: [
-          {
-            type: 'video',
-            name: 'lesson numero 1',
-            duration: '3:15',
-            free: true
-          },
-          {
-            type: 'doc',
-            name: 'lesson numero 2',
-            duration: '1:15',
-            free: false
-          },
-          {
-            type: 'video',
-            name: 'lesson numero 3',
-            duration: '0:15',
-            free: false
-          },
-        ]
-      },
-      {
-        title: 'Titre du chapitre 3',
-        lessons: [
-          {
-            type: 'video',
-            name: 'lesson numero 1',
-            duration: '3:15',
-            free: true
-          },
-          {
-            type: 'doc',
-            name: 'lesson numero 2',
-            duration: '1:15',
-            free: false
-          },
-          {
-            type: 'video',
-            name: 'lesson numero 3',
-            duration: '0:15',
-            free: false
-          },
-        ]
-      },
-      {
-        title: 'Titre du chapitre 4',
-        lessons: [
-          {
-            type: 'video',
-            name: 'lesson numero 1',
-            duration: '3:15',
-            free: true
-          },
-          {
-            type: 'doc',
-            name: 'lesson numero 2',
-            duration: '1:15',
-            free: false
-          },
-          {
-            type: 'video',
-            name: 'lesson numero 3',
-            duration: '0:15',
-            free: false
-          },
-        ]
-      },
-      {
-        title: 'Titre du chapitre 5',
-        lessons: [
-          {
-            type: 'video',
-            name: 'lesson numero 1',
-            duration: '3:15',
-            free: true
-          },
-          {
-            type: 'doc',
-            name: 'lesson numero 2',
-            duration: '1:15',
-            free: false
-          },
-          {
-            type: 'video',
-            name: 'lesson numero 3',
-            duration: '0:15',
-            free: false
-          },
-        ]
-      }
-    ]
-  }
-
-  openChapterInitDialog(): void {
+  openChapterInitDialog(courseId: any): void {
     this.dialogNewChapterRef.open(ChapterInitPopupComponent, {
       width: '850px',
       height: '350px',
       panelClass: 'article-popup-panel',
-    });
-  }
-
-  openChapterDeleteDialog(chapterId: number | undefined): void {
-    this.dialogDeleteChapterRef.open(ChapterDeletePopupComponent, {
-      panelClass: 'delete-article-popup-panel',
       data: {
-        id: chapterId,
+        courseId,
         history: this.router.url
       }
     });
   }
 
-  openLessonInitDialog(): void {
+  openChapterDeleteDialog(chapterId: any): void {
+    this.dialogDeleteChapterRef.open(ChapterDeletePopupComponent, {
+      panelClass: 'delete-article-popup-panel',
+      data: {
+        chapterId,
+        history: this.router.url
+      }
+    });
+  }
+
+  openLessonInitDialog(chapterId: any, courseId: any): void {
     this.dialogNewLessonRef.open(LessonInitPopupComponent, {
       width: '850px',
       height: '350px',
       panelClass: 'article-popup-panel',
+      data: {
+        chapterID: chapterId,
+        courseID: courseId,
+        history: this.router.url
+      }
     });
   }
 
-  openLessonDeleteDialog(lessonId: number | undefined): void {
+  openLessonDeleteDialog(lessonId: any | undefined): void {
     this.dialogDeleteLessonRef.open(LessonDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
-        id: lessonId,
+        lessonId,
         history: this.router.url
       }
     });

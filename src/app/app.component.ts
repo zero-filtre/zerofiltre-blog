@@ -185,12 +185,12 @@ export class AppComponent implements OnInit {
   }
 
   setActiveLinkFromActiveRoute(url: string) {
-    if (url.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
-    if (url.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
-    if (url.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
-    if (url.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
-    if (url.startsWith('/user/dashboard/courses/teacher')) this.activePage = this.MY_TRAININGS;
-    if (url.startsWith('/user/dashboard/courses/teacher/all')) this.activePage = this.ALL_TRAININGS;
+    if (url?.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
+    if (url?.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
+    if (url?.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
+    if (url?.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
+    if (url?.startsWith('/user/dashboard/courses/teacher')) this.activePage = this.MY_TRAININGS;
+    if (url?.startsWith('/user/dashboard/courses/teacher/all')) this.activePage = this.ALL_TRAININGS;
   }
 
   ngOnInit(): void {

@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MessageService } from '../../services/message.service';
+import { LessonService } from '../lesson.service';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-lesson-delete-popup',
@@ -16,6 +18,7 @@ export class LessonDeletePopupComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private lessonService: LessonService
   ) { }
 
   onNoClick(): void {
@@ -26,11 +29,22 @@ export class LessonDeletePopupComponent implements OnInit {
   handleDeleteChapter(): void {
     this.loading = true;
 
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigateByUrl(`${this.data.history}`);
-      this.loading = false;
-      this.dialogRef.close();
-    })
+    this.lessonService.deleteLesson(this.data.lessonId)
+      .pipe(
+        catchError(err => {
+          this.loading = false;
+          this.dialogRef.close();
+          this.messageService.openSnackBarError("Une erreur s'est produite !", '');
+          return throwError(() => err?.message)
+        })
+      )
+      .subscribe(_data => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigateByUrl(`${this.data.history}`);
+          this.loading = false;
+          this.dialogRef.close();
+        })
+      })
   }
 
   ngOnInit(): void {

@@ -1,0 +1,73 @@
+{
+  "courses": [
+    {
+      "title": "endalousie",
+      "summary": "La description du cours...",
+      "thumbnail": "",
+      "firstLessonId": 1,
+      "tags": [
+        {
+          "name": "tag 1"
+        },
+        {
+          "name": "tag 2"
+        }
+      ],
+      "enrolledCount": 0,
+      "duration": 0,
+      "chapterCount": 0,
+      "lessonCount": 0,
+      "editorIds": [],
+      "id": 1
+    },
+    {
+      "title": "sd cours",
+      "summary": "La description du cours...",
+      "thumbnail": "",
+      "firstLessonId": 1,
+      "tags": [
+        {
+          "name": "tag 1"
+        },
+        {
+          "name": "tag 2"
+        }
+      ],
+      "enrolledCount": 0,
+      "duration": 0,
+      "chapterCount": 0,
+      "lessonCount": 0,
+      "editorIds": [],
+      "id": 2
+    }
+  ],
+  "lessons": [
+    {
+      "title": "Lesson 3",
+      "content": "Un petit contenu de la lecon",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 1,
+      "courseId": 2,
+      "id": 3
+    },
+    {
+      "title": "Lesson 4",
+      "content": "Un petit contenu de la lecon",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 1,
+      "courseId": 2,
+      "id": 4
+    }
+  ],
+  "chapters": [
+    {
+      "title": "chap one",
+      "courseId": 2,
+      "id": 1
+    }
+  ]
+}

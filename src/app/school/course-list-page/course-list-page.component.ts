@@ -5,9 +5,9 @@ import { Tag } from 'src/app/articles/article.model';
 import { AuthService } from '../../user/auth.service';
 import { CourseInitPopupComponent } from '../course-init-popup/course-init-popup.component';
 import { CourseDeletePopupComponent } from '../course-delete-popup/course-delete-popup.component';
-import * as courseList from '../fakeData/courses.json'
 import { User } from 'src/app/user/user.model';
 import { Course } from '../course';
+import { CourseService } from '../course.service';
 
 @Component({
   selector: 'app-course-list-page',
@@ -44,7 +44,8 @@ export class CourseListPageComponent implements OnInit {
     public authService: AuthService,
     private dialogDeleteRef: MatDialog,
     public dialogEntryRef: MatDialog,
-    private router: Router
+    private router: Router,
+    private courseService: CourseService
   ) { }
 
   onScroll() { }
@@ -69,14 +70,17 @@ export class CourseListPageComponent implements OnInit {
       width: '850px',
       height: '350px',
       panelClass: 'article-popup-panel',
+      data: {
+        history: this.router.url
+      }
     });
   }
 
-  openCourseDeleteDialog(courseId: number | undefined): void {
+  openCourseDeleteDialog(courseId: any): void {
     this.dialogDeleteRef.open(CourseDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
-        id: courseId,
+        courseId,
         history: this.router.url
       }
     });
@@ -84,35 +88,13 @@ export class CourseListPageComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.activePage = this.RECENT
 
-    const courses$ = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const data = (courseList as any).default
-        resolve(data);
-      }, 1000);
-    });
-
-    courses$.then((data: any[]) => {
-      this.loading = false;
-      this.courses = data;
-    })
-
-    const tagList$ = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve([
-          ...this.tagList,
-          { id: 1, name: 'js', colorCode: '#111' },
-        ]);
-
+    this.courseService.fetchAllCourses()
+      .subscribe(data => {
         this.loading = false;
-      }, 1000);
-    });
+        this.courses = data;
+      });
 
-    tagList$.then((data: any[]) => {
-      this.loading = false;
-      this.tagList = data;
-    })
   }
 
   ngOnInit(): void {
