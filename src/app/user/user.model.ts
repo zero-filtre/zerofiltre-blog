@@ -14,4 +14,5 @@ export interface User {
     loginFrom?: string;
     expired?: boolean;
     language?: string;
+    courseIds?: any[];
 }

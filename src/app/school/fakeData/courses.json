@@ -1,0 +1,110 @@
+[
+    {
+        "id": 1,
+        "title": "apprenez le ddd",
+        "summary": "Le ddd est super...",
+        "thumbnail": "",
+        "firstLessonId": 1,
+        "tags": [
+            {
+                "name": "java"
+            },
+            {
+                "name": "programming"
+            }
+        ],
+        "chapters": [],
+        "lessons": [],
+        "enrolledCount": 20,
+        "duration": 130,
+        "chapterCount": 4,
+        "lessonCount": 8,
+        "editorIds": [
+            100
+        ]
+    },
+    {
+        "id": 2,
+        "title": "apprenez le ddd",
+        "summary": "Le ddd est super...",
+        "thumbnail": "",
+        "firstLessonId": 1,
+        "tags": [
+            {
+                "name": "js"
+            },
+            {
+                "name": "git"
+            }
+        ],
+        "chapters": [],
+        "lessons": [],
+        "enrolledCount": 40,
+        "duration": 60,
+        "chapterCount": 4,
+        "lessonCount": 8
+    },
+    {
+        "id": 3,
+        "title": "apprenez le ddd",
+        "summary": "Le ddd est super...",
+        "thumbnail": "",
+        "firstLessonId": 1,
+        "tags": [
+            {
+                "name": "dart"
+            },
+            {
+                "name": "programming"
+            }
+        ],
+        "chapters": [],
+        "lessons": [],
+        "enrolledCount": 200,
+        "duration": 30,
+        "chapterCount": 4,
+        "lessonCount": 8
+    },
+    {
+        "id": 4,
+        "title": "apprenez le ddd",
+        "summary": "Le ddd est super...",
+        "thumbnail": "",
+        "firstLessonId": 1,
+        "tags": [
+            {
+                "name": "sql"
+            },
+            {
+                "name": "db"
+            }
+        ],
+        "chapters": [],
+        "lessons": [],
+        "enrolledCount": 310,
+        "duration": 30,
+        "chapterCount": 4,
+        "lessonCount": 8
+    },
+    {
+        "id": 5,
+        "title": "apprenez le ddd",
+        "summary": "Le ddd est super...",
+        "thumbnail": "",
+        "firstLessonId": 1,
+        "tags": [
+            {
+                "name": "react"
+            },
+            {
+                "name": "js"
+            }
+        ],
+        "chapters": [],
+        "lessons": [],
+        "enrolledCount": 270,
+        "duration": 50,
+        "chapterCount": 4,
+        "lessonCount": 8
+    }
+]

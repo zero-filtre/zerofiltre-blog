@@ -2,6 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Observable } from 'rxjs';
 import { VimeoService } from '../../services/vimeo.service';
+import { Course } from '../course';
+import { AuthService } from '../../user/auth.service';
+import { User } from '../../user/user.model';
+import * as courseList from '../fakeData/courses.json'
 
 
 @Component({
@@ -10,9 +14,11 @@ import { VimeoService } from '../../services/vimeo.service';
   styleUrls: ['./lesson.component.css']
 })
 export class lessonComponent implements OnInit, OnDestroy {
-  course!: any;
+  course!: Course;
   lesson!: any;
   loading: boolean = false;
+
+  canEdit: boolean = false;
 
   courseVideos$: Observable<any[]>;
   lessonVideo$: Observable<any>;
@@ -76,11 +82,31 @@ export class lessonComponent implements OnInit, OnDestroy {
 
   constructor(
     private seo: SeoService,
-    private vimeoService: VimeoService
+    private vimeoService: VimeoService,
+    public authService: AuthService
   ) { }
+
+  canEditCourse() {
+    const userId = (this.authService?.currentUsr as User)?.id
+    this.canEdit = this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin;
+    return this.canEdit;
+  }
 
   loadLessonData() {
     this.loading = true;
+
+    const course$ = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const data = (courseList as any).default[0]
+        resolve(data);
+      }, 1000);
+    });
+
+    course$.then((data: Course) => {
+      this.loading = false;
+      this.course = data;
+      console.log('COURSE: ', this.course);
+    })
 
     const lesson$ = new Promise((resolve, reject) => {
       setTimeout(() => {

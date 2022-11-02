@@ -14,6 +14,8 @@ const httpOptions = {
   })
 };
 
+const fakeCourseIds = [1, 2, 3];
+
 @Injectable({
   providedIn: 'root'
 })
@@ -137,7 +139,7 @@ export class AuthService {
 
   public setUserData(user: User) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('user_data', JSON.stringify(user));
+      localStorage.setItem('user_data', JSON.stringify({ ...user, courseIds: fakeCourseIds }));
     }
   }
 
