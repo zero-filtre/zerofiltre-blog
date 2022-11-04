@@ -61,6 +61,8 @@ export class CourseListPageComponent implements OnInit {
 
   canEditCourse(course: Course) {
     const userId = (this.authService?.currentUsr as User)?.id
+    if (!userId) return false;
+
     this.canEdit = course?.author?.id === userId || course?.editorIds?.includes(userId) || this.authService.isAdmin;
     return this.canEdit;
   }

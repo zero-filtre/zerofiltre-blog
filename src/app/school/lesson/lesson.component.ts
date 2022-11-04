@@ -19,7 +19,7 @@ import { ChapterService } from '../chapter.service';
   templateUrl: './lesson.component.html',
   styleUrls: ['./lesson.component.css']
 })
-export class lessonComponent implements OnInit, OnDestroy {
+export class LessonComponent implements OnInit, OnDestroy {
   course!: Course;
   lesson!: any;
   loading: boolean = false;
@@ -48,6 +48,8 @@ export class lessonComponent implements OnInit, OnDestroy {
 
   canEditCourse(course: Course) {
     const userId = (this.authService?.currentUsr as User)?.id
+    if (!userId) return false;
+
     this.canEdit = course?.author?.id === userId || course?.editorIds?.includes(userId) || this.authService.isAdmin;
     return this.canEdit;
   }

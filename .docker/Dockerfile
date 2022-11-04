@@ -22,7 +22,4 @@ COPY db.json .
 RUN npm install -g json-server
 
 
-RUN source vault/secrets/config
-
-
-ENTRYPOINT ["sh", "-c", "node dist/zerofiltre-blog/server/main.js & json-server -H 0.0.0.0 --watch db.json"]
+ENTRYPOINT ["sh", "-c", "source /vault/secrets/config && node dist/zerofiltre-blog/server/main.js & json-server -H 0.0.0.0 --watch db.json"]

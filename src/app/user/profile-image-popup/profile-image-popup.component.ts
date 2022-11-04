@@ -51,31 +51,20 @@ export class ProfileImagePopupComponent implements OnInit {
 
 
   public uploadProfileImage(): void {
-    const fileName = this.file.data.name
-    this.file.inProgress = true;
-    this.uploading = true;
-
     if (this.user?.profilePicture) {
       // this.deleteProfileImage()
     }
 
-    this.fileUploadService.uploadImage(fileName, this.file.data).pipe(
-      map((event) => {
-        switch (event.type) {
-          case HttpEventType.UploadProgress:
-            this.file.progress = Math.round(event.loaded * 100 / event.total);
-            break;
-          case HttpEventType.Response:
-            return event;
-        }
-      }),
-      catchError((_error: HttpErrorResponse) => {
-        this.file.inProgress = false;
-        this.uploading = false;
-        this.dialogRef.close();
-        return of('Upload failed');
+    this.uploading = true;
 
-      })).subscribe((event: any) => {
+    this.fileUploadService.uploadFile(this.file)
+      .pipe(
+        catchError(() => {
+          this.dialogRef.close();
+          return throwError(() => 'Failed !')
+        })
+      )
+      .subscribe((event: any) => {
         if (typeof (event) === 'object') {
           const formData = { ...this.profileData, profilePicture: event.url }
           this.authService.updateUserProfile(formData)

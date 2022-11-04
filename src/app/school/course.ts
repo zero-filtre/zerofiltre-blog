@@ -5,6 +5,7 @@ export interface Course {
     id: string;
     title: string;
     summary: string;
+    content: string;
     thumbnail: string;
     firstLessonId: string;
     tags: Tag[];

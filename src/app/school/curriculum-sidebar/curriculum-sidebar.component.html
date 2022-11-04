@@ -3,7 +3,7 @@
     <div class="px-1.5">
         <div class="lg:hidden site-container flex flex-col">
             <button mat-raised-button class="toogle-curriculum flex items-center gap-3 mb-5 mt-2 -mr-1 self-end"
-                (click)="drawer.toggle()">
+                (click)="drawer?.toggle()">
                 <span class="text-primary-400 text-sm mt-0.5">Retourner à la leçon</span>
                 <div class="shadow-md h-8 w-8 grid place-items-center rounded-full bg-primary-500 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -79,7 +79,7 @@
                                 <div class="lesson_link group p-3 flex justify-between items-center gap-2">
                                     <div class="w-full flex items-center gap-2">
                                         <a routerLink="/cours/{{course?.id}}/{{lesson?.id}}"
-                                            class="w-full flex items-center gap-2" (click)="drawer.toggle()">
+                                            class="w-full flex items-center gap-2" (click)="drawer?.toggle()">
                                             <span class="lesson_small_icon">
                                                 <svg *ngIf="lesson?.type === 'video'" xmlns="http://www.w3.org/2000/svg"
                                                     fill="none" viewBox="0 0 24 24" stroke-width="1.5"

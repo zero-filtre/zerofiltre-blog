@@ -40,7 +40,7 @@ export class CourseService {
   }
 
   updateCourse(course: any): Observable<any> {
-    return this.http.patch<any>(`${this.schoolApi}/courses`, course, httpOptions)
+    return this.http.patch<any>(`${this.schoolApi}/courses/${course.id}`, course, httpOptions)
       .pipe(shareReplay());
   }
 

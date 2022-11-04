@@ -12,5 +12,5 @@ export default {
     stackOverflowRedirectURL: 'STACK_OVERFLOW_REDIRECT_URL',
     ovhAuthName: 'OVH_AUTH_NAME',
     courseRoutesActive: 'COURSE_ROUTES_ACTIVE',
-    schoolApi: 'SCHOOL_API',
+    schoolApi: 'SCHOOL_API_BASE',
 }

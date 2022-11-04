@@ -1,9 +1,9 @@
 {
   "courses": [
     {
-      "title": "endalousie",
-      "summary": "La description du cours...",
-      "thumbnail": "",
+      "title": "Ce cours",
+      "summary": "La description du cours a ete modifié...",
+      "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/rouge.jpeg",
       "firstLessonId": 1,
       "tags": [
         {
@@ -21,7 +21,27 @@
       "id": 1
     },
     {
-      "title": "sd cours",
+      "title": "Autre cours",
+      "summary": "La description de ce cours est claire",
+      "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_vert.jpeg",
+      "firstLessonId": 1,
+      "tags": [
+        {
+          "name": "tag 1"
+        },
+        {
+          "name": "tag 2"
+        }
+      ],
+      "enrolledCount": 0,
+      "duration": 0,
+      "chapterCount": 0,
+      "lessonCount": 0,
+      "editorIds": [],
+      "id": 2
+    },
+    {
+      "title": "router",
       "summary": "La description du cours...",
       "thumbnail": "",
       "firstLessonId": 1,
@@ -38,35 +58,35 @@
       "chapterCount": 0,
       "lessonCount": 0,
       "editorIds": [],
-      "id": 2
+      "id": 3
     }
   ],
   "lessons": [
     {
-      "title": "Lesson 3",
+      "title": "lesson 1",
       "content": "Un petit contenu de la lecon",
       "free": true,
       "type": "video",
       "duration": "9:20",
       "chapterId": 1,
-      "courseId": 2,
-      "id": 3
+      "courseId": 1,
+      "id": 1
     },
     {
-      "title": "Lesson 4",
+      "title": "lesson 2",
       "content": "Un petit contenu de la lecon",
       "free": true,
       "type": "video",
       "duration": "9:20",
       "chapterId": 1,
-      "courseId": 2,
-      "id": 4
+      "courseId": 1,
+      "id": 2
     }
   ],
   "chapters": [
     {
-      "title": "chap one",
-      "courseId": 2,
+      "title": "Chap 1",
+      "courseId": 1,
       "id": 1
     }
   ]
