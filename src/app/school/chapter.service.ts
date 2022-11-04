@@ -30,6 +30,11 @@ export class ChapterService {
       .pipe(shareReplay());
   }
 
+  updateChapter(chapter: any): Observable<any> {
+    return this.http.patch<any>(`${this.schoolApi}/chapters`, chapter, httpOptions)
+      .pipe(shareReplay());
+  }
+
   deleteChapter(chapterId: any): Observable<any> {
     return this.http.delete<any>(`${this.schoolApi}/chapters/${chapterId}`, httpOptions)
       .pipe(shareReplay());

@@ -38,6 +38,11 @@ export class LessonService {
       .pipe(shareReplay());
   }
 
+  updateLesson(lesson: any): Observable<any> {
+    return this.http.patch<any>(`${this.schoolApi}/lessons`, lesson, httpOptions)
+      .pipe(shareReplay());
+  }
+
   deleteLesson(lessonId: any): Observable<any> {
     return this.http.delete<any>(`${this.schoolApi}/lessons/${lessonId}`, httpOptions)
       .pipe(shareReplay());
