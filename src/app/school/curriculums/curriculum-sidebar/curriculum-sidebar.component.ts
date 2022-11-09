@@ -1,14 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { AuthService } from '../../user/auth.service';
-import { ChapterInitPopupComponent } from '../chapter-init-popup/chapter-init-popup.component';
-import { ChapterDeletePopupComponent } from '../chapter-delete-popup/chapter-delete-popup.component';
-import { LessonInitPopupComponent } from '../lesson-init-popup/lesson-init-popup.component';
-import { LessonDeletePopupComponent } from '../lesson-delete-popup/lesson-delete-popup.component';
-import { Course } from '../course';
-import { Lesson } from '../lesson';
-import { Chapter } from '../chapter';
+import { AuthService } from '../../../user/auth.service';
+import { ChapterInitPopupComponent } from '../../chapters/chapter-init-popup/chapter-init-popup.component';
+import { ChapterDeletePopupComponent } from '../../chapters/chapter-delete-popup/chapter-delete-popup.component';
+import { LessonInitPopupComponent } from '../../lessons/lesson-init-popup/lesson-init-popup.component';
+import { LessonDeletePopupComponent } from '../../lessons/lesson-delete-popup/lesson-delete-popup.component';
+import { Course } from '../../courses/course';
+import { Lesson } from '../../lessons/lesson';
+import { Chapter } from '../../chapters/chapter';
+import { ChapterUpdatePopupComponent } from '../../chapters/chapter-update-popup/chapter-update-popup.component';
 
 @Component({
   selector: 'app-curriculum-sidebar',
@@ -26,6 +27,7 @@ export class CurriculumSidebarComponent implements OnInit {
     public authService: AuthService,
     public dialogNewChapterRef: MatDialog,
     private dialogDeleteChapterRef: MatDialog,
+    private dialogUpdateChapterRef: MatDialog,
     private dialogNewLessonRef: MatDialog,
     private dialogDeleteLessonRef: MatDialog,
     private router: Router
@@ -38,6 +40,19 @@ export class CurriculumSidebarComponent implements OnInit {
       panelClass: 'article-popup-panel',
       data: {
         courseId,
+        history: this.router.url
+      }
+    });
+  }
+
+  openChapterUpdateDialog(chapterId: any, chapterTitle: string): void {
+    this.dialogUpdateChapterRef.open(ChapterUpdatePopupComponent, {
+      width: '850px',
+      height: '350px',
+      panelClass: 'article-popup-panel',
+      data: {
+        chapterId,
+        chapterTitle,
         history: this.router.url
       }
     });

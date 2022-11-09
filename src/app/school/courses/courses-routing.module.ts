@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CourseDetailPageComponent } from '../course-detail-page/course-detail-page.component';
-import { CourseEditPageComponent } from '../course-edit-page/course-edit-page.component';
-import { CourseListPageComponent } from '../course-list-page/course-list-page.component';
+import { CourseDetailPageComponent } from './course-detail-page/course-detail-page.component';
+import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
+import { CourseListPageComponent } from './course-list-page/course-list-page.component';
 
 const routes: Routes = [
   {

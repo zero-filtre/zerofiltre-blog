@@ -1,23 +1,22 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { MessageService } from '../../services/message.service';
-import { ChapterService } from '../chapter.service';
 import { catchError, throwError } from 'rxjs';
+import { MessageService } from '../../../services/message.service';
+import { ChapterService } from '../chapter.service';
 
 @Component({
-  selector: 'app-chapter-init-popup',
-  templateUrl: './chapter-init-popup.component.html',
-  styleUrls: ['./chapter-init-popup.component.css']
+  selector: 'app-chapter-delete-popup',
+  templateUrl: './chapter-delete-popup.component.html',
+  styleUrls: ['./chapter-delete-popup.component.css']
 })
-export class ChapterInitPopupComponent implements OnInit {
-  public title: string = '';
+export class ChapterDeletePopupComponent implements OnInit {
   public loading: boolean = false;
 
   constructor(
-    public dialogRef: MatDialogRef<ChapterInitPopupComponent>,
-    private router: Router,
+    public dialogRef: MatDialogRef<ChapterDeletePopupComponent>,
     private messageService: MessageService,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private chapterService: ChapterService
   ) { }
@@ -26,18 +25,11 @@ export class ChapterInitPopupComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  handleChapterInit(): void {
-    if (!this.title.trim()) return;
 
-    const payload =
-    {
-      "title": this.title,
-      "courseId": this.data.courseId
-    }
-
+  handleDeleteChapter(): void {
     this.loading = true;
 
-    this.chapterService.AddChapter(payload)
+    this.chapterService.deleteChapter(this.data.chapterId)
       .pipe(
         catchError(err => {
           this.loading = false;
@@ -53,7 +45,6 @@ export class ChapterInitPopupComponent implements OnInit {
           this.dialogRef.close();
         })
       })
-
   }
 
   ngOnInit(): void {

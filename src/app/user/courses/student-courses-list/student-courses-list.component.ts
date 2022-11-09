@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { Tag } from 'src/app/articles/article.model';
-import { CourseInitPopupComponent } from '../../../school/course-init-popup/course-init-popup.component';
-import { CourseDeletePopupComponent } from '../../../school/course-delete-popup/course-delete-popup.component';
+import { CourseInitPopupComponent } from '../../../school/courses/course-init-popup/course-init-popup.component';
+import { CourseDeletePopupComponent } from '../../../school/courses/course-delete-popup/course-delete-popup.component';
 
 @Component({
   selector: 'app-student-courses-list',

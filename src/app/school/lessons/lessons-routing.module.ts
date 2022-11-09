@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LessonEditPageComponent } from '../lesson-edit-page/lesson-edit-page.component';
-import { LessonComponent } from '../lesson/lesson.component';
+import { LessonEditPageComponent } from './lesson-edit-page/lesson-edit-page.component';
+import { LessonComponent } from './lesson/lesson.component';
 
 const routes: Routes = [
   {

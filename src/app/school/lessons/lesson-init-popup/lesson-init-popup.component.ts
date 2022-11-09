@@ -1,22 +1,23 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { MessageService } from '../../services/message.service';
-import { LessonService } from '../lesson.service';
 import { catchError, throwError } from 'rxjs';
+import { MessageService } from '../../../services/message.service';
+import { LessonService } from '../lesson.service';
 
 @Component({
-  selector: 'app-lesson-delete-popup',
-  templateUrl: './lesson-delete-popup.component.html',
-  styleUrls: ['./lesson-delete-popup.component.css']
+  selector: 'app-lesson-init-popup',
+  templateUrl: './lesson-init-popup.component.html',
+  styleUrls: ['./lesson-init-popup.component.css']
 })
-export class LessonDeletePopupComponent implements OnInit {
+export class LessonInitPopupComponent implements OnInit {
+  public title: string = '';
   public loading: boolean = false;
 
   constructor(
-    public dialogRef: MatDialogRef<LessonDeletePopupComponent>,
-    private messageService: MessageService,
+    public dialogRef: MatDialogRef<LessonInitPopupComponent>,
     private router: Router,
+    private messageService: MessageService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private lessonService: LessonService
   ) { }
@@ -25,11 +26,23 @@ export class LessonDeletePopupComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  handleLessonInit(): void {
+    if (!this.title.trim()) return;
 
-  handleDeleteChapter(): void {
     this.loading = true;
 
-    this.lessonService.deleteLesson(this.data.lessonId)
+    const payload =
+    {
+      "title": this.title,
+      "content": "Un petit contenu de la lecon",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": this.data.chapterID,
+      "courseId": this.data.courseID,
+    }
+
+    this.lessonService.AddLesson(payload)
       .pipe(
         catchError(err => {
           this.loading = false;
@@ -46,7 +59,6 @@ export class LessonDeletePopupComponent implements OnInit {
         })
       })
   }
-
   ngOnInit(): void {
   }
 

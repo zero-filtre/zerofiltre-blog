@@ -85,9 +85,65 @@
   ],
   "chapters": [
     {
-      "title": "Chap 1",
+      "title": "update du chap suivant",
       "courseId": 1,
       "id": 1
+    },
+    {
+      "title": "update chapitre",
+      "id": 2
+    },
+    {
+      "title": "hello",
+      "id": 3
+    },
+    {
+      "title": "cccd",
+      "id": 4
+    },
+    {
+      "title": "dscdfd",
+      "id": 5
+    },
+    {
+      "title": "sdsdds",
+      "id": 6
+    },
+    {
+      "title": "sdsdsdsd",
+      "id": 7
+    },
+    {
+      "title": "dsdsds",
+      "id": 8
+    },
+    {
+      "title": "dsdsds",
+      "id": 9
+    },
+    {
+      "title": "dsdfdsd",
+      "id": 10
+    },
+    {
+      "title": "sdsdsds",
+      "id": 11
+    },
+    {
+      "title": "sdsdsds",
+      "id": 12
+    },
+    {
+      "title": "ssxqsx",
+      "id": 13
+    },
+    {
+      "title": "dcscsdc",
+      "id": 14
+    },
+    {
+      "title": "csqdsqd",
+      "id": 15
     }
   ]
 }

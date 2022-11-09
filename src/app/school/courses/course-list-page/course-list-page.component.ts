@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Tag } from 'src/app/articles/article.model';
-import { AuthService } from '../../user/auth.service';
+import { AuthService } from '../../../user/auth.service';
 import { CourseInitPopupComponent } from '../course-init-popup/course-init-popup.component';
 import { CourseDeletePopupComponent } from '../course-delete-popup/course-delete-popup.component';
 import { User } from 'src/app/user/user.model';

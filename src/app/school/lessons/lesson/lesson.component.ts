@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Observable, catchError, throwError } from 'rxjs';
-import { VimeoService } from '../../services/vimeo.service';
-import { Course } from '../course';
-import { AuthService } from '../../user/auth.service';
-import { User } from '../../user/user.model';
+import { VimeoService } from '../../../services/vimeo.service';
+import { Course } from '../../courses/course';
+import { AuthService } from '../../../user/auth.service';
+import { User } from '../../../user/user.model';
 import { LessonService } from '../lesson.service';
-import { MessageService } from '../../services/message.service';
+import { MessageService } from '../../../services/message.service';
 import { ActivatedRoute } from '@angular/router';
-import { CourseService } from '../course.service';
-import { Chapter } from '../chapter';
+import { CourseService } from '../../courses/course.service';
+import { Chapter } from '../../chapters/chapter';
 import { Lesson } from '../lesson';
-import { ChapterService } from '../chapter.service';
+import { ChapterService } from '../../chapters/chapter.service';
 
 
 @Component({

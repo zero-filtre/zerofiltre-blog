@@ -4,10 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { catchError, Observable, Subject, throwError, tap, switchMap } from 'rxjs';
 import { Course } from '../course';
 import { CourseService } from '../course.service';
-import { MessageService } from '../../services/message.service';
-import { NavigationService } from '../../services/navigation.service';
+import { MessageService } from '../../../services/message.service';
+import { NavigationService } from '../../../services/navigation.service';
 import { File } from 'src/app/articles/article.model';
-import { FileUploadService } from '../../services/file-upload.service';
+import { FileUploadService } from '../../../services/file-upload.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

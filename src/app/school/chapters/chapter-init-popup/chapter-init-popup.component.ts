@@ -1,22 +1,23 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
-import { MessageService } from '../../services/message.service';
+import { MessageService } from '../../../services/message.service';
 import { ChapterService } from '../chapter.service';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
-  selector: 'app-chapter-delete-popup',
-  templateUrl: './chapter-delete-popup.component.html',
-  styleUrls: ['./chapter-delete-popup.component.css']
+  selector: 'app-chapter-init-popup',
+  templateUrl: './chapter-init-popup.component.html',
+  styleUrls: ['./chapter-init-popup.component.css']
 })
-export class ChapterDeletePopupComponent implements OnInit {
+export class ChapterInitPopupComponent implements OnInit {
+  public title: string = '';
   public loading: boolean = false;
 
   constructor(
-    public dialogRef: MatDialogRef<ChapterDeletePopupComponent>,
-    private messageService: MessageService,
+    public dialogRef: MatDialogRef<ChapterInitPopupComponent>,
     private router: Router,
+    private messageService: MessageService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private chapterService: ChapterService
   ) { }
@@ -25,11 +26,18 @@ export class ChapterDeletePopupComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  handleChapterInit(): void {
+    if (!this.title.trim()) return;
 
-  handleDeleteChapter(): void {
+    const payload =
+    {
+      "title": this.title,
+      "courseId": this.data.courseId
+    }
+
     this.loading = true;
 
-    this.chapterService.deleteChapter(this.data.chapterId)
+    this.chapterService.AddChapter(payload)
       .pipe(
         catchError(err => {
           this.loading = false;
@@ -45,6 +53,7 @@ export class ChapterDeletePopupComponent implements OnInit {
           this.dialogRef.close();
         })
       })
+
   }
 
   ngOnInit(): void {

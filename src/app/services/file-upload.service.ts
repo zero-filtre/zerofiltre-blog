@@ -148,7 +148,7 @@ export class FileUploadService {
   private uploadImage(fileName: string, file: File): Observable<any> {
     if (!this.validateImage(file)) return throwError(() => new Error('Invalid file'))
 
-    const xToken = this.xTokenObj?.xToken || "gAAAAABjaTITICZmuf19ax-l4h4E6Wi_C8FJJsFTUw_ORjguCAzCTWNQ_pRei7BOImNxn6U1xw8b9UQI2oB1jLpCNccIVjeHYh6dEyA2JroxMf2Sy_dCPT361_7RFD_Dy-OITI0n2-c-KFuDuTXXIJrL4pLKsYxAGbGUAi36aR0XEeQtRYBuj3w";
+    const xToken = this.xTokenObj?.xToken || "";
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
@@ -168,7 +168,7 @@ export class FileUploadService {
   }
 
   public removeImage(fileName: string): Observable<any> {
-    const xToken = this.xTokenObj?.xToken || "gAAAAABjaTITICZmuf19ax-l4h4E6Wi_C8FJJsFTUw_ORjguCAzCTWNQ_pRei7BOImNxn6U1xw8b9UQI2oB1jLpCNccIVjeHYh6dEyA2JroxMf2Sy_dCPT361_7RFD_Dy-OITI0n2-c-KFuDuTXXIJrL4pLKsYxAGbGUAi36aR0XEeQtRYBuj3w";
+    const xToken = this.xTokenObj?.xToken || "";
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')

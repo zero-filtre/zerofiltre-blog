@@ -1,5 +1,5 @@
-import { Tag } from "../articles/article.model";
-import { User } from "../user/user.model";
+import { Tag } from "../../articles/article.model";
+import { User } from "../../user/user.model";
 
 export interface Course {
     id: string;
