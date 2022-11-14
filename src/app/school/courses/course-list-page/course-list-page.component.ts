@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { AuthService } from '../../auth.service';
 import { Tag } from 'src/app/articles/article.model';
-import { CourseInitPopupComponent } from '../../../school/courses/course-init-popup/course-init-popup.component';
-import { CourseDeletePopupComponent } from '../../../school/courses/course-delete-popup/course-delete-popup.component';
+import { AuthService } from '../../../user/auth.service';
+import { CourseInitPopupComponent } from '../course-init-popup/course-init-popup.component';
+import { CourseDeletePopupComponent } from '../course-delete-popup/course-delete-popup.component';
+import { User } from 'src/app/user/user.model';
+import { Course } from '../course';
+import { CourseService } from '../course.service';
 
 @Component({
-  selector: 'app-student-courses-list',
-  templateUrl: './student-courses-list.component.html',
-  styleUrls: ['./student-courses-list.component.css']
+  selector: 'app-course-list-page',
+  templateUrl: './course-list-page.component.html',
+  styleUrls: ['./course-list-page.component.css']
 })
-export class StudentCoursesListComponent implements OnInit {
+export class CourseListPageComponent implements OnInit {
   tagList: Tag[] = [];
   courses: any[] = [];
   pageSize: number = 5;
@@ -34,13 +37,15 @@ export class StudentCoursesListComponent implements OnInit {
   activeTag!: string;
 
   canAccess: boolean = false;
+  canEdit: boolean = false;
 
 
   constructor(
     public authService: AuthService,
     private dialogDeleteRef: MatDialog,
     public dialogEntryRef: MatDialog,
-    private router: Router
+    private router: Router,
+    private courseService: CourseService
   ) { }
 
   onScroll() { }
@@ -49,9 +54,17 @@ export class StudentCoursesListComponent implements OnInit {
     return user?.id === cours?.author?.id
   }
 
-  canAccessCourse() {
-    console.log('CAN ACCESS: ', this.authService.isAdmin)
-    this.canAccess = this.authService.isAdmin
+  canAccessCourse(courseId: any) {
+    this.canAccess = !!(this.authService?.currentUsr as User)?.courseIds.includes(courseId) || this.authService.isAdmin;
+    return this.canAccess;
+  }
+
+  canEditCourse(course: Course) {
+    const userId = (this.authService?.currentUsr as User)?.id
+    if (!userId) return false;
+
+    this.canEdit = course?.author?.id === userId || course?.editorIds?.includes(userId) || this.authService.isAdmin;
+    return this.canEdit;
   }
 
   openCourseEntryDialog(): void {
@@ -59,14 +72,17 @@ export class StudentCoursesListComponent implements OnInit {
       width: '850px',
       height: '350px',
       panelClass: 'article-popup-panel',
+      data: {
+        history: this.router.url
+      }
     });
   }
 
-  openCourseDeleteDialog(courseId: number | undefined): void {
+  openCourseDeleteDialog(courseId: any): void {
     this.dialogDeleteRef.open(CourseDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
-        id: courseId,
+        courseId,
         history: this.router.url
       }
     });
@@ -74,39 +90,17 @@ export class StudentCoursesListComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.activePage = this.RECENT
 
-    const courses$ = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const data = [
-          ...this.courses,
-          { id: 1, title: 'mon premier cours', summary: 'un magnifique cours', firstLessonId: 1 },
-        ]
-        resolve(data);
-      }, 1000);
-    });
-
-    courses$.then((data: any[]) => {
-      console.log('DATA: ', data)
-      this.loading = false;
-      this.courses = data;
-    })
-
-    const tagList$ = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve([
-          ...this.tagList,
-          { id: 1, name: 'js', colorCode: '#ccc' },
-        ]);
-
+    this.courseService.fetchAllCourses()
+      .subscribe(data => {
         this.loading = false;
-      }, 1000);
-    });
+        this.courses = data;
+      });
+
   }
 
   ngOnInit(): void {
     this.loadData();
-    this.canAccessCourse()
   }
 
 }

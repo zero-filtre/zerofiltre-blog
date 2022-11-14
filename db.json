@@ -1,0 +1,149 @@
+{
+  "courses": [
+    {
+      "title": "Ce cours",
+      "summary": "La description du cours a ete modifié...",
+      "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/rouge.jpeg",
+      "firstLessonId": 1,
+      "tags": [
+        {
+          "name": "tag 1"
+        },
+        {
+          "name": "tag 2"
+        }
+      ],
+      "enrolledCount": 0,
+      "duration": 0,
+      "chapterCount": 0,
+      "lessonCount": 0,
+      "editorIds": [],
+      "id": 1
+    },
+    {
+      "title": "Autre cours",
+      "summary": "La description de ce cours est claire",
+      "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_vert.jpeg",
+      "firstLessonId": 1,
+      "tags": [
+        {
+          "name": "tag 1"
+        },
+        {
+          "name": "tag 2"
+        }
+      ],
+      "enrolledCount": 0,
+      "duration": 0,
+      "chapterCount": 0,
+      "lessonCount": 0,
+      "editorIds": [],
+      "id": 2
+    },
+    {
+      "title": "router",
+      "summary": "La description du cours...",
+      "thumbnail": "",
+      "firstLessonId": 1,
+      "tags": [
+        {
+          "name": "tag 1"
+        },
+        {
+          "name": "tag 2"
+        }
+      ],
+      "enrolledCount": 0,
+      "duration": 0,
+      "chapterCount": 0,
+      "lessonCount": 0,
+      "editorIds": [],
+      "id": 3
+    }
+  ],
+  "lessons": [
+    {
+      "title": "lesson 1",
+      "content": "Un petit contenu de la lecon",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 1,
+      "courseId": 1,
+      "id": 1
+    },
+    {
+      "title": "lesson 2",
+      "content": "Un petit contenu de la lecon",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 1,
+      "courseId": 1,
+      "id": 2
+    }
+  ],
+  "chapters": [
+    {
+      "title": "update du chap suivant",
+      "courseId": 1,
+      "id": 1
+    },
+    {
+      "title": "update chapitre",
+      "id": 2
+    },
+    {
+      "title": "hello",
+      "id": 3
+    },
+    {
+      "title": "cccd",
+      "id": 4
+    },
+    {
+      "title": "dscdfd",
+      "id": 5
+    },
+    {
+      "title": "sdsdds",
+      "id": 6
+    },
+    {
+      "title": "sdsdsdsd",
+      "id": 7
+    },
+    {
+      "title": "dsdsds",
+      "id": 8
+    },
+    {
+      "title": "dsdsds",
+      "id": 9
+    },
+    {
+      "title": "dsdfdsd",
+      "id": 10
+    },
+    {
+      "title": "sdsdsds",
+      "id": 11
+    },
+    {
+      "title": "sdsdsds",
+      "id": 12
+    },
+    {
+      "title": "ssxqsx",
+      "id": 13
+    },
+    {
+      "title": "dcscsdc",
+      "id": 14
+    },
+    {
+      "title": "csqdsqd",
+      "id": 15
+    }
+  ]
+}

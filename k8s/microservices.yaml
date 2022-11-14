@@ -109,6 +109,12 @@ spec:
                 configMapKeyRef:
                   name: zerofiltre-blog-front
                   key: course_routes_active
+
+            - name: SCHOOL_API_BASE
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-front
+                  key: school_api_base
           livenessProbe:
             httpGet:
               path: /

@@ -1,10 +1,11 @@
 import { Inject, Injectable, isDevMode, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, shareReplay, Subject, tap, throwError, map, EMPTY } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { MessageService } from './message.service';
+import { FormControl } from '@angular/forms';
 
 
 const httpOptions = {
@@ -37,11 +38,7 @@ export class FileUploadService {
     private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
-
-
     this.loadxToken();
-
-
   }
 
 
@@ -63,8 +60,6 @@ export class FileUploadService {
     if (isPlatformServer(this.platformId)) {
       ovhPass = process.env.OVH_AUTH_PASSWORD || '';
     }
-
-
 
     if (!this.xTokenServerValue) {
 
@@ -129,7 +124,7 @@ export class FileUploadService {
     }
   }
 
-  public validateFile(file: File): boolean {
+  private validateImage(file: File): boolean {
     let isValid = false;
     const maxSize = 5;
 
@@ -150,10 +145,10 @@ export class FileUploadService {
     return isValid;
   }
 
-  public uploadImage(fileName: string, file: File): Observable<any> {
-    if (!this.validateFile(file)) return throwError(() => new Error('Invalid file'))
+  private uploadImage(fileName: string, file: File): Observable<any> {
+    if (!this.validateImage(file)) return throwError(() => new Error('Invalid file'))
 
-    const xToken = this.xTokenObj?.xToken || 'my-x-token';
+    const xToken = this.xTokenObj?.xToken || "";
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
@@ -173,7 +168,7 @@ export class FileUploadService {
   }
 
   public removeImage(fileName: string): Observable<any> {
-    const xToken = this.xTokenObj?.xToken || 'my-x-token';
+    const xToken = this.xTokenObj?.xToken || "";
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
@@ -188,9 +183,85 @@ export class FileUploadService {
       )
   }
 
-  public handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       this.messageService.fileUploadAuthError();
     }
+  }
+
+  public insertAtCursor(myField: any, myValue: string) {
+    //IE support
+    if ((document as any).selection) {
+      myField.focus();
+      const sel = (document as any).selection.createRange();
+      sel.text = myValue;
+    }
+    // Microsoft Edge
+    else if (window.navigator.userAgent.indexOf("Edge") > -1) {
+      var startPos = myField.selectionStart;
+      var endPos = myField.selectionEnd;
+
+      myField.value = myField.value.substring(0, startPos) + myValue
+        + myField.value.substring(endPos, myField.value.length);
+
+      var pos = startPos + myValue.length;
+      myField.focus();
+      myField.setSelectionRange(pos, pos);
+    }
+    //MOZILLA and others
+    else if (myField.selectionStart || myField.selectionStart == '0') {
+      var startPos = myField.selectionStart;
+      var endPos = myField.selectionEnd;
+      myField.value = myField.value.substring(0, startPos)
+        + myValue
+        + myField.value.substring(endPos, myField.value.length);
+    } else {
+      myField.value += myValue;
+    }
+  }
+
+  public deleteFile(
+    fileFormControl: FormControl,
+    formControlSub?: Subject<any>): Observable<any> {
+
+    const fileName = fileFormControl.value.split('/')[6];
+    const fileNameUrl = fileFormControl.value.split('/')[2];
+
+    if (fileNameUrl !== 'storage.gra.cloud.ovh.net') {
+      fileFormControl.setValue('');
+      formControlSub.next('');
+      return EMPTY;
+    }
+
+    return this.removeImage(fileName)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            fileFormControl.setValue('');
+            formControlSub.next('');
+          }
+          return throwError(() => error)
+        })
+      )
+  }
+
+  public uploadFile(file: any): Observable<any> {
+    const fileName = file.data.name
+    file.inProgress = true;
+
+    return this.uploadImage(fileName, file.data).pipe(
+      map((event) => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            file.progress = Math.round(event.loaded * 100 / event.total);
+            break;
+          case HttpEventType.Response:
+            return event;
+        }
+      }),
+      catchError((_error: HttpErrorResponse) => {
+        file.inProgress = false;
+        return throwError(() => 'Upload failed');
+      }))
   }
 }

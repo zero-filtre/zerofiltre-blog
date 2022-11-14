@@ -155,7 +155,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
       ### 3-1/ Sous-contenu 3
 
 
-      ## Conclustion
+      ## Conclusion
       Ici rappelez ce que vous avez fait !
       `;
 
@@ -206,13 +206,9 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   }
 
   public handleTab(event: Event, isUp: Boolean = false) {
-
-
-
     if ((event as KeyboardEvent).key === "Tab") {
 
       event.preventDefault();
-
 
       let start = (event.target as HTMLTextAreaElement).selectionStart;
       var end = (event.target as HTMLTextAreaElement).selectionEnd;
@@ -220,7 +216,6 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
       (event.target as HTMLTextAreaElement).selectionStart = (event.target as HTMLTextAreaElement).selectionEnd = start + 4;
 
       let value = (event.target as HTMLTextAreaElement).value;
-
 
       this.changeDetector.detectChanges();
       this.editor.nativeElement.focus();
@@ -237,38 +232,26 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
 
     let value = (event.target as HTMLTextAreaElement).value;
     this.EditorText$.next(value);
-
   }
 
   public getValue(event: Event): string {
-
     event.preventDefault();
 
-
-
     if ((event as KeyboardEvent).key === "Tab") {
-
 
       event.preventDefault();
 
       let start = this.editor.nativeElement.selectionStart;
       let end = this.editor.nativeElement.selectionEnd;
 
-
       this.editor.nativeElement.value = this.editor.nativeElement.value.substring(0, start) +
         "\t" + this.editor.nativeElement.value.substring(end);
 
-
       this.changeDetector.detectChanges();
       this.editor.nativeElement.focus()
-
-
     }
 
-
     return (event.target as HTMLTextAreaElement).value
-
-
   }
 
   public typeInEditor(content: string) {
@@ -323,7 +306,6 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
     });
   }
 
-
   public onFileSelected(event: any, host: string) {
     this.file = {
       data: <File>event.target.files[0],
@@ -334,28 +316,11 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
     this.uploadFile(host);
   }
 
-
   public uploadFile(host: string) {
-    const fileName = this.file.data.name
-    this.file.inProgress = true;
     this.uploading = true;
 
-    this.fileUploadService.uploadImage(fileName, this.file.data).pipe(
-      map((event) => {
-        switch (event.type) {
-          case HttpEventType.UploadProgress:
-            this.file.progress = Math.round(event.loaded * 100 / event.total);
-            break;
-          case HttpEventType.Response:
-            return event;
-        }
-      }),
-      catchError((_error: HttpErrorResponse) => {
-        this.file.inProgress = false;
-        this.uploading = false;
-
-        return of('Upload failed');
-      })).subscribe((event: any) => {
+    this.fileUploadService.uploadFile(this.file)
+      .subscribe((event: any) => {
         if (typeof (event) === 'object') {
           this.uploading = false;
 
@@ -366,7 +331,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
             const editorContent = (<HTMLInputElement>document.getElementById('content'));
             const editorContentImgSrcValue = '![alt](' + event.url + ')'
 
-            this.insertAtCursor(editorContent, editorContentImgSrcValue);
+            this.fileUploadService.insertAtCursor(editorContent, editorContentImgSrcValue);
             this.form.patchValue({ content: editorContent?.value });
             this.EditorText$.next(editorContent?.value);
           }
@@ -374,62 +339,11 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
       })
   }
 
-  private insertAtCursor(myField: any, myValue: string) {
-    //IE support
-    if ((document as any).selection) {
-      myField.focus();
-      const sel = (document as any).selection.createRange();
-      sel.text = myValue;
-    }
-    // Microsoft Edge
-    else if (window.navigator.userAgent.indexOf("Edge") > -1) {
-      var startPos = myField.selectionStart;
-      var endPos = myField.selectionEnd;
-
-      myField.value = myField.value.substring(0, startPos) + myValue
-        + myField.value.substring(endPos, myField.value.length);
-
-      var pos = startPos + myValue.length;
-      myField.focus();
-      myField.setSelectionRange(pos, pos);
-    }
-    //MOZILLA and others
-    else if (myField.selectionStart || myField.selectionStart == '0') {
-      var startPos = myField.selectionStart;
-      var endPos = myField.selectionEnd;
-      myField.value = myField.value.substring(0, startPos)
-        + myValue
-        + myField.value.substring(endPos, myField.value.length);
-    } else {
-      myField.value += myValue;
-    }
-  }
-
   public removeFile(): any {
-    const fileName = this.thumbnail?.value.split('/')[6];
-    const fileNameUrl = this.thumbnail?.value.split('/')[2];
-
-    if (fileNameUrl !== 'storage.gra.cloud.ovh.net') {
-      this.thumbnail?.setValue('');
-      this.ThumbnailText$.next('');
-      return;
-    }
-
-    return this.fileUploadService.removeImage(fileName)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          if (error.status === 404) {
-            this.thumbnail?.setValue('');
-            this.ThumbnailText$.next('');
-          }
-          return throwError(() => error)
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.thumbnail?.setValue('');
-          this.ThumbnailText$.next('');
-        }
+    this.fileUploadService.deleteFile(this.thumbnail as any, this.ThumbnailText$)
+      .subscribe(() => {
+        this.thumbnail?.setValue('');
+        this.ThumbnailText$.next('');
       })
   }
 

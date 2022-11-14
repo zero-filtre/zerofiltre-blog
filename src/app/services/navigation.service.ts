@@ -17,6 +17,8 @@ export class NavigationService {
   }
 
   back() {
+    this.hasHistory = this.router.navigated;
+
     if (this.hasHistory) {
       this.location.back();
     } else {
