@@ -39,7 +39,7 @@ export class LessonService {
   }
 
   updateLesson(lesson: any): Observable<any> {
-    return this.http.patch<any>(`${this.schoolApi}/lessons`, lesson, httpOptions)
+    return this.http.patch<any>(`${this.schoolApi}/lessons/${lesson.id}`, lesson, httpOptions)
       .pipe(shareReplay());
   }
 

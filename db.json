@@ -63,14 +63,59 @@
   ],
   "lessons": [
     {
-      "title": "lesson 1",
-      "content": "Un petit contenu de la lecon",
+      "title": "lesson 1 modifiée leçon",
+      "content": "Un petit contenu de la leco",
       "free": true,
       "type": "video",
       "duration": "9:20",
       "chapterId": 1,
       "courseId": 1,
-      "id": 1
+      "id": 1,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": null,
+      "ressources": [
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/vert.jpeg",
+          "type": "jpeg",
+          "name": "vert.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_blanc.jpeg",
+          "type": "jpeg",
+          "name": "p_blanc.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/DV-2024-Instructions.pdf",
+          "type": "pdf",
+          "name": "DV-2024-Instructions.pdf"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_vert.jpeg",
+          "type": "jpeg",
+          "name": "p_vert.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/rouge.jpeg",
+          "type": "jpeg",
+          "name": "rouge.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/vert.jpeg",
+          "type": "jpeg",
+          "name": "vert.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/blanc.jpeg",
+          "type": "jpeg",
+          "name": "blanc.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/blanc.jpeg",
+          "type": "jpeg",
+          "name": "blanc.jpeg"
+        }
+      ]
     },
     {
       "title": "lesson 2",
