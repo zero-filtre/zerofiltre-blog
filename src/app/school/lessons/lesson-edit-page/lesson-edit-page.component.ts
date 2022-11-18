@@ -36,7 +36,11 @@ export class LessonEditPageComponent implements OnInit {
   courseID!: string;
 
   isLoading: boolean;
+  isPublishing: boolean;
+  isPublished: boolean;
   isSaving: boolean;
+  isSaved: boolean;
+  saveFailed: boolean;
   uploading: boolean;
   resUploading: boolean;
 
@@ -53,10 +57,10 @@ export class LessonEditPageComponent implements OnInit {
     private route: ActivatedRoute,
     private lessonService: LessonService,
     private messageService: MessageService,
-    private navigate: NavigationService,
     private fileService: FileUploadService,
     private changeDetector: ChangeDetectorRef,
-    @Inject(DOCUMENT) private document: any
+    @Inject(DOCUMENT) private document: any,
+    public navigate: NavigationService,
   ) { }
 
   setActiveTab(tabName: string): void {
@@ -242,15 +246,37 @@ export class LessonEditPageComponent implements OnInit {
 
   updateLesson() {
     this.isSaving = true;
+
     this.lessonService.updateLesson(this.form.value)
       .subscribe({
         next: (_res: Lesson) => {
-          this.isSaving = false;
-          this.messageService.openSnackBarSuccess('Enregistrement de la leçon réussie !', '');
+          setTimeout(() => {
+            this.isSaving = false;
+            this.isSaved = true;
+            this.saveFailed = false;
+          }, 1000);
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
-          this.messageService.openSnackBarError('Une erreur est survenue lors de la sauvegarde de la leçon', 'OK')
+          this.isSaved = false;
+          this.saveFailed = true;
+        }
+      })
+  }
+
+  publishLesson() {
+    this.isSaving = true;
+    this.lessonService.updateLesson(this.form.value)
+      .subscribe({
+        next: (_res: Lesson) => {
+          setTimeout(() => {
+            this.isSaving = false;
+            this.messageService.openSnackBarSuccess('Publication de la leçon réussie !', '');
+          }, 1000);
+        },
+        error: (_error: HttpErrorResponse) => {
+          this.isSaving = false;
+          this.messageService.openSnackBarError('Une erreur est survenue lors de la publication de la leçon', 'OK')
         }
       })
   }
@@ -263,8 +289,6 @@ export class LessonEditPageComponent implements OnInit {
         if (this.form.valid) {
           this.isSaving = true;
           this.updateLesson();
-        } else {
-          console.log('LESSON FORM NOT VALID')
         }
       }),
     ).subscribe()
