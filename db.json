@@ -91,11 +91,6 @@
           "name": "DV-2024-Instructions.pdf"
         },
         {
-          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_vert.jpeg",
-          "type": "jpeg",
-          "name": "p_vert.jpeg"
-        },
-        {
           "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/rouge.jpeg",
           "type": "jpeg",
           "name": "rouge.jpeg"
@@ -114,6 +109,11 @@
           "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/blanc.jpeg",
           "type": "jpeg",
           "name": "blanc.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/DV-2024-Instructions.pdf",
+          "type": "pdf",
+          "name": "DV-2024-Instructions.pdf"
         }
       ]
     },

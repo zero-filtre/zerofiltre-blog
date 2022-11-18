@@ -28,6 +28,8 @@ import { ImageComponent } from './image/image.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { BaseArticleListComponent } from './base-article-list/base-article-list.component';
 import { VimeoUrlPipe } from './pipes/vimeo-url.pipe';
+import { TextEditorComponent } from './ui/text-editor/text-editor.component';
+import { AutoSaveButtonComponent } from './ui/buttons/auto-save-button/auto-save-button.component';
 
 const components = [
   AppShellRenderDirective,
@@ -35,6 +37,9 @@ const components = [
   FooterComponent,
   ImageComponent,
   HeaderComponent,
+  BaseArticleListComponent,
+  TextEditorComponent,
+  AutoSaveButtonComponent,
   NotFoundPageComponent,
   VimeoUrlPipe
 ];
@@ -58,7 +63,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, HeaderComponent, BaseArticleListComponent],
+  declarations: [...components],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
