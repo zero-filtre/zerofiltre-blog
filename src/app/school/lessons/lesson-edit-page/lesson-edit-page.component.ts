@@ -19,9 +19,6 @@ import { DOCUMENT } from '@angular/common';
 export class LessonEditPageComponent implements OnInit {
   form!: FormGroup;
 
-  activeTab: string = 'editor';
-  @ViewChild("editor") editor!: ElementRef;
-
   file: File = {
     data: null,
     inProgress: false,
@@ -49,7 +46,7 @@ export class LessonEditPageComponent implements OnInit {
   private TitleText$ = new Subject<string>();
   private SummaryText$ = new Subject<string>();
   private ThumbnailText$ = new Subject<string>();
-  private EditorText$ = new Subject<string>();
+  public EditorText$ = new Subject<string>();
   private RessourcesText$ = new Subject<string>();
 
   constructor(
@@ -62,12 +59,6 @@ export class LessonEditPageComponent implements OnInit {
     @Inject(DOCUMENT) private document: any,
     public navigate: NavigationService,
   ) { }
-
-  setActiveTab(tabName: string): void {
-    if (tabName === 'editor') this.activeTab = 'editor'
-    if (tabName === 'preview') this.activeTab = 'preview'
-    if (tabName === 'help') this.activeTab = 'help'
-  }
 
   initForm(lesson: Lesson) {
     const summaryTemplate = 'Un petit resume de la lesson ici';
@@ -167,6 +158,25 @@ export class LessonEditPageComponent implements OnInit {
 
     this.fileType = this.file.data.type.split('/')[1]
     this.fileName = this.file.data.name
+  }
+
+  uploadImageInEditor(event: any) {
+    this.onFileSelected(event);
+
+    this.fileService.uploadFile(this.file)
+      .pipe(catchError(err => {
+        return throwError(() => err.message);
+      }))
+      .subscribe((event: any) => {
+        if (typeof (event) === 'object') {
+          const editorContent = (<HTMLInputElement>document.getElementById('content'));
+          const editorContentImgSrcValue = '![alt](' + event.url + ')'
+
+          this.fileService.insertAtCursor(editorContent, editorContentImgSrcValue);
+          this.form.patchValue({ content: editorContent?.value });
+          this.EditorText$.next(editorContent?.value);
+        }
+      })
   }
 
   uploadVideo(event: any) {
@@ -308,105 +318,6 @@ export class LessonEditPageComponent implements OnInit {
     })
   }
 
-  // EDITOR CODE ------------------------------------------ //
-
-  handleTab(event: Event, isUp: Boolean = false) {
-    if ((event as KeyboardEvent).key === "Tab") {
-
-      event.preventDefault();
-
-      let start = (event.target as HTMLTextAreaElement).selectionStart;
-      var end = (event.target as HTMLTextAreaElement).selectionEnd;
-      (event.target as HTMLTextAreaElement).value = (event.target as HTMLTextAreaElement).value.substring(0, start) + '    ' + (event.target as HTMLTextAreaElement).value.substring(end);
-      (event.target as HTMLTextAreaElement).selectionStart = (event.target as HTMLTextAreaElement).selectionEnd = start + 4;
-
-      let value = (event.target as HTMLTextAreaElement).value;
-
-      this.changeDetector.detectChanges();
-      this.editor.nativeElement.focus();
-
-      this.EditorText$.next(value);
-    }
-
-    if ((event as KeyboardEvent).key === "Tab" && isUp) {
-
-      event.preventDefault();
-      this.changeDetector.detectChanges();
-      this.editor.nativeElement.focus();
-    }
-
-    let value = (event.target as HTMLTextAreaElement).value;
-    this.EditorText$.next(value);
-  }
-
-  @HostListener('document:fullscreenchange', ['$event'])
-  @HostListener('document:webkitfullscreenchange', ['$event'])
-  @HostListener('document:mozfullscreenchange', ['$event'])
-  @HostListener('document:MSFullscreenChange', ['$event'])
-  fullscreenmodes(event: any) {
-    this.checkScreenMode();
-  }
-
-  checkScreenMode() {
-    if (document.fullscreenElement) {
-      this.fullScreenOn = true;
-    } else {
-      this.fullScreenOn = false;
-    }
-    console.log('FULLSCREN: ', this.fullScreenOn);
-  }
-
-  toggleFullScreen() {
-    this.elem = (document as any).querySelector('.editor_sticky_wrapper');
-    const textarea = (document as any).querySelector('#content');
-    const editotheader = (document as any).querySelector('.editor-header');
-
-    this.elem.addEventListener('fullscreenchange', this.fullscreenchanged);
-
-    if (!this.document.fullscreenElement) {
-      if (this.elem.requestFullscreen) {
-        this.elem.requestFullscreen();
-      } else if (this.elem.mozRequestFullScreen) {
-        /* Firefox */
-        this.elem.mozRequestFullScreen();
-      } else if (this.elem.webkitRequestFullscreen) {
-        /* Chrome, Safari and Opera */
-        this.elem.webkitRequestFullscreen();
-      } else if (this.elem.msRequestFullscreen) {
-        /* IE/Edge */
-        this.elem.msRequestFullscreen();
-      }
-
-      textarea.style.height = '100vh';
-      editotheader.style.marginTop = '0';
-
-    } else {
-      if (this.document.exitFullscreen) {
-        this.document.exitFullscreen();
-      } else if (this.document.mozCancelFullScreen) {
-        /* Firefox */
-        this.document.mozCancelFullScreen();
-      } else if (this.document.webkitExitFullscreen) {
-        /* Chrome, Safari and Opera */
-        this.document.webkitExitFullscreen();
-      } else if (this.document.msExitFullscreen) {
-        /* IE/Edge */
-        this.document.msExitFullscreen();
-      }
-    }
-  }
-
-  fullscreenchanged() {
-    if (document.fullscreenElement) {
-      console.log(`Entered fullscreen mode.`);
-    } else {
-      console.log('Exit fullscreen mode.');
-    }
-  };
-
-  fullScreenOn = false;
-  elem: any;
-
   ngOnInit(): void {
     this.lesson$ = this.route.paramMap.pipe(
       switchMap(params => {
@@ -417,8 +328,5 @@ export class LessonEditPageComponent implements OnInit {
     );
 
     this.triggerAutoSave();
-
-    this.checkScreenMode();
-    this.elem = document.documentElement;
   }
 }
