@@ -1,13 +1,14 @@
-import { Component, Input, OnInit, Output, EventEmitter, HostListener, Inject, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, HostListener, Inject, ChangeDetectorRef, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
+import { SeoService } from '../../../services/seo.service';
 
 @Component({
   selector: 'app-text-editor',
   templateUrl: './text-editor.component.html',
   styleUrls: ['./text-editor.component.css']
 })
-export class TextEditorComponent implements OnInit {
+export class TextEditorComponent implements OnInit, OnDestroy {
   @Input() editorSub$!: any;
 
   @Input() form!: FormGroup;
@@ -30,6 +31,7 @@ export class TextEditorComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: any,
     private changeDetector: ChangeDetectorRef,
+    private seo: SeoService
   ) { }
 
   setActiveTab(tabName: string): void {
@@ -139,8 +141,13 @@ export class TextEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.seo.unmountFooter()
     this.checkScreenMode();
     this.elem = document.documentElement;
+  }
+
+  ngOnDestroy(): void {
+    this.seo.mountFooter();
   }
 
 }

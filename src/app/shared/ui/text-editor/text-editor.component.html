@@ -102,7 +102,7 @@
 
         <ng-container *ngIf="activeTab === 'editor'">
             <textarea #editor (keydown)="handleTab($event, false);" formControlName="content" id="content" required
-                class="editor-textarea bg-white text-lg text-[#111] p-4 pb-24 w-full h-[80vh]"
+                class="editor-textarea bg-white text-lg text-[#111] p-4 pb-24 w-full h-[100vh]"
                 placeholder="{{ 'articleEntryEdit.articleContentPlaceholder' | translate }}">
             </textarea>
         </ng-container>
