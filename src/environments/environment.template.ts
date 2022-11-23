@@ -13,4 +13,7 @@ export default {
     ovhAuthName: 'OVH_AUTH_NAME',
     courseRoutesActive: 'COURSE_ROUTES_ACTIVE',
     schoolApi: 'SCHOOL_API_BASE',
+    vimeoToken: 'VIMEO_TOKEN',
+    vimeoClientID: 'VIMEO_CLIENT_ID',
+    vimeoClientSecret: 'VIMEO_CLIENT_SECRET',
 }

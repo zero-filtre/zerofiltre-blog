@@ -9,9 +9,13 @@ body {
 }
 
 /* Always shox Snackbar popup on top of other elements */
-.cdk-overlay-pane {
-  z-index: 999;
+.cdk-overlay-pane:has(> .mat-snack-bar-container) {
+  @apply !mt-[72px] lg:!mt-16;
 }
+.mat-snack-bar-container {
+  @apply lg:!max-w-none;
+}
+
 #privacypolicies-com---nb {
   z-index: 888;
 }
@@ -102,7 +106,6 @@ img {
 .warning-snackbar,
 .info-snackbar {
   @apply text-skin-link;
-  margin-top: 100px !important;
 }
 
 .success-snackbar button,

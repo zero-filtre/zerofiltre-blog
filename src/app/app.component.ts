@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   HostListener,
   Inject,
@@ -9,7 +10,7 @@ import {
 } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
-import { filter, map, Observable, shareReplay } from 'rxjs';
+import { map, Observable, shareReplay, filter } from 'rxjs';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
@@ -27,16 +28,14 @@ import {
 import { LoadEnvService } from './services/load-env.service';
 import { environment } from 'src/environments/environment';
 
-
 declare var Prism: any;
-
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   @HostListener('click', ['$event']) onClick(event: any) {
     this.logCopySuccessMessage(event);
   }
@@ -45,31 +44,30 @@ export class AppComponent implements OnInit {
   readonly coursesUrl = environment.coursesUrl
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
-  public appLogoUrl = 'assets/logoblue.svg';
+  appLogoUrl = 'assets/logoblue.svg';
 
-  public isHandset$: Observable<boolean> = this.breakpointObserver
+  isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])
     .pipe(
       map((result) => result.matches),
       shareReplay()
     );
 
-  public userBrowserLanguage!: string;
-  public MY_ACCOUNT = 'Mon compte';
-  public MY_ARTICLES = 'Mes articles';
-  public ALL_ARTICLES = 'Tous nos articles';
-  public MY_COURSES = 'Mes cours';
-  public MY_TRAININGS = 'Mes formations';
-  public ALL_TRAININGS = 'Toutes nos formations';
+  userBrowserLanguage!: string;
+  MY_ACCOUNT = 'Mon compte';
+  MY_ARTICLES = 'Mes articles';
+  ALL_ARTICLES = 'Tous nos articles';
+  MY_COURSES = 'Mes cours';
+  MY_TRAININGS = 'Mes formations';
+  ALL_TRAININGS = 'Toutes nos formations';
 
-  public changingRoute!: boolean;
+  changingRoute: boolean;
 
-  public activePage = '';
+  activePage = '';
 
+  envValue!: any;
 
-  public envValue!: any;
-
-  public loading: boolean = true;
+  loading: boolean = true;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -82,12 +80,9 @@ export class AppComponent implements OnInit {
     private fileUploadService: FileUploadService,
   ) {
     this.setBrowserTranslationConfigs();
-
-    router.events.pipe(filter((event): event is RouterEvent => event instanceof RouterEvent))
-      .subscribe(e => this.checkRouteChange(e))
   }
 
-  public checkRouteChange(routerEvent: RouterEvent) {
+  checkRouteChange(routerEvent: RouterEvent) {
     if (routerEvent instanceof NavigationStart) {
       this.changingRoute = true;
     }
@@ -101,7 +96,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public checkRouteUrl(): boolean {
+  checkRouteUrl(): boolean {
     const componentsPrefix = [
       '/user/profile',
       '/user/profile/edit',
@@ -111,7 +106,7 @@ export class AppComponent implements OnInit {
     return componentsPrefix.some((route: string) => currentUrl.includes(route));
   }
 
-  public setBrowserTranslationConfigs() {
+  setBrowserTranslationConfigs() {
     if (isPlatformBrowser(this.platformId)) {
       this.userBrowserLanguage = (window.navigator as any).language;
     }
@@ -120,46 +115,46 @@ export class AppComponent implements OnInit {
     this.translate.use('fr');
   }
 
-  public logout() {
+  logout() {
     this.authService.logout();
     this.router.navigateByUrl('/');
   }
 
   // Use to set the language on a btn click for example
-  public useLanguage(language: string) {
+  useLanguage(language: string) {
     this.translate.use(language);
   }
 
-  public seeMyInfos() {
+  seeMyInfos() {
     this.activePage = this.MY_ACCOUNT;
   }
 
-  public fetchAllArticlesAsAdmin() {
+  fetchAllArticlesAsAdmin() {
     this.activePage = this.ALL_ARTICLES;
     this.router.navigateByUrl('/user/dashboard/admin');
   }
 
-  public fetchAllArticlesAsUser() {
+  fetchAllArticlesAsUser() {
     this.activePage = this.MY_ARTICLES;
     this.router.navigateByUrl('/user/dashboard');
   }
 
-  public fetchAllCoursesAsUser() {
+  fetchAllCoursesAsUser() {
     this.activePage = this.MY_COURSES;
     this.router.navigateByUrl('/user/dashboard/courses');
   }
 
-  public fetchAllCoursesAsTeacher() {
+  fetchAllCoursesAsTeacher() {
     this.activePage = this.MY_TRAININGS;
     this.router.navigateByUrl('/user/dashboard/courses/teacher');
   }
 
-  public fetchAllCoursesAsAdmin() {
+  fetchAllCoursesAsAdmin() {
     this.activePage = this.ALL_TRAININGS;
     this.router.navigateByUrl('/user/dashboard/courses/teacher/all');
   }
 
-  public logCopySuccessMessage(event: any) {
+  logCopySuccessMessage(event: any) {
     if (
       event.target.innerText === 'Copy' ||
       event.target.className === 'copy-to-clipboard-button' ||
@@ -169,7 +164,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public loadCopyToClipboardSvg() {
+  loadCopyToClipboardSvg() {
     Prism.plugins.toolbar.registerButton('copy-code', function (_env: any) {
       const svgButton = document.createElement('button');
       svgButton.classList.add('copy-to-clipboard-svg');
@@ -192,6 +187,16 @@ export class AppComponent implements OnInit {
     if (url?.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
     if (url?.startsWith('/user/dashboard/courses/teacher')) this.activePage = this.MY_TRAININGS;
     if (url?.startsWith('/user/dashboard/courses/teacher/all')) this.activePage = this.ALL_TRAININGS;
+  }
+
+  ngAfterViewInit(): void {
+    this.router.events
+      .pipe(filter((event): event is RouterEvent => event instanceof RouterEvent))
+      .subscribe(e => {
+        setTimeout(() => {
+          this.checkRouteChange(e);
+        }, 0);
+      })
   }
 
   ngOnInit(): void {

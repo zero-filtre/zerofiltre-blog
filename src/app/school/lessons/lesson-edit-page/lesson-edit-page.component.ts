@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, Subject, switchMap, throwError, tap, debounceTime, distinctUntilChanged } from 'rxjs';
 import { File } from 'src/app/articles/article.model';
 import { Lesson, Ressource } from '../lesson';
@@ -9,7 +9,9 @@ import { MessageService } from '../../../services/message.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DOCUMENT } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { VimeoService } from '../../../services/vimeo.service';
+import { UploadFormComponent } from '../../../shared/upload-form/upload-form.component';
 
 @Component({
   selector: 'app-lesson-edit-page',
@@ -27,8 +29,10 @@ export class LessonEditPageComponent implements OnInit {
 
   fileType!: string;
   fileName!: string;
+  fileSize!: number;
 
   lesson$: Observable<Lesson>;
+  lessonVideo$: Observable<any>;
   lessonID!: string;
   courseID!: string;
 
@@ -46,6 +50,7 @@ export class LessonEditPageComponent implements OnInit {
   private TitleText$ = new Subject<string>();
   private SummaryText$ = new Subject<string>();
   private ThumbnailText$ = new Subject<string>();
+  private VideoText$ = new Subject<string>();
   public EditorText$ = new Subject<string>();
   private RessourcesText$ = new Subject<string>();
 
@@ -55,9 +60,10 @@ export class LessonEditPageComponent implements OnInit {
     private lessonService: LessonService,
     private messageService: MessageService,
     private fileService: FileUploadService,
-    private changeDetector: ChangeDetectorRef,
-    @Inject(DOCUMENT) private document: any,
     public navigate: NavigationService,
+    private router: Router,
+    private vimeo: VimeoService,
+    private dialogUploadRef: MatDialog
   ) { }
 
   initForm(lesson: Lesson) {
@@ -94,8 +100,23 @@ export class LessonEditPageComponent implements OnInit {
       thumbnail: [lesson.thumbnail],
       video: [lesson.video],
       content: [lessonContent],
-      ressources: this.fb.array(lesson.ressources.map(res => this.buildRessourceItem(res)))
+      ressources: this.fb.array(this.loadFormRessources(lesson))
     })
+  }
+
+  isArray(obj: any) {
+    return obj?.hasOwnProperty('length');
+  }
+  loadFormRessources(lesson: Lesson) {
+    if (!this.isArray(lesson.ressources)) return [];
+    return lesson.ressources.map(res => this.buildRessourceItem(res));
+  }
+  buildRessourceItem(res: Ressource): FormGroup {
+    return new FormGroup({
+      url: new FormControl(res.url),
+      type: new FormControl(res.type),
+      name: new FormControl(res.name),
+    });
   }
 
   get title() { return this.form.get('title'); }
@@ -118,19 +139,14 @@ export class LessonEditPageComponent implements OnInit {
   typeInThumbnail(content: string) {
     this.ThumbnailText$.next(content);
   }
+  typeInVideo(content: string) {
+    this.VideoText$.next(content);
+  }
   typeInEditor(content: string) {
     this.EditorText$.next(content);
   }
   typeInRessourse() {
     this.RessourcesText$.next(this.ressources.value);
-  }
-
-  buildRessourceItem(res: Ressource): FormGroup {
-    return new FormGroup({
-      url: new FormControl(res.url),
-      type: new FormControl(res.type),
-      name: new FormControl(res.name),
-    });
   }
 
   addRessource(res: Ressource) {
@@ -156,8 +172,9 @@ export class LessonEditPageComponent implements OnInit {
       progress: 0
     };
 
-    this.fileType = this.file.data.type.split('/')[1]
-    this.fileName = this.file.data.name
+    this.fileType = this.file.data.type.split('/')[1];
+    this.fileName = this.file.data.name;
+    this.fileSize = this.file.data.size;
   }
 
   uploadImageInEditor(event: any) {
@@ -177,15 +194,6 @@ export class LessonEditPageComponent implements OnInit {
           this.EditorText$.next(editorContent?.value);
         }
       })
-  }
-
-  uploadVideo(event: any) {
-    this.onFileSelected(event);
-    this.uploading = true;
-  }
-
-  deleteVideo() {
-    // do nothing.
   }
 
   uploadRessource(event: any) {
@@ -252,7 +260,10 @@ export class LessonEditPageComponent implements OnInit {
           }
           return throwError(() => err?.message)
         }),
-        tap(data => this.initForm(data))
+        tap((data: Lesson) => {
+          this.initForm(data)
+          this.lessonVideo$ = this.vimeo.getOneVideo(data?.video);
+        })
       )
   }
 
@@ -293,6 +304,72 @@ export class LessonEditPageComponent implements OnInit {
       })
   }
 
+  uploadVideo($event: any) {
+    this.onFileSelected($event);
+
+    this.uploading = true;
+    this.vimeo.postVideo(this.file.data)
+      .pipe(catchError(err => {
+        this.uploading = false;
+        this.messageService.openSnackBarError('Un probleme est survenu lors du chargement!', 'OK')
+        return throwError(() => err.message)
+      }))
+      .subscribe(
+        data => {
+          this.uploading = false;
+          this.openUploadFormDialog(
+            data.upload.upload_link,
+            this.file.data,
+            this.fileName,
+            data.link,
+            this.fileSize,
+            this.video,
+            this.VideoText$
+          );
+        }
+      )
+  }
+
+  deleteVideo(lesson: Lesson) {
+    const videoID = lesson.video.split('/')[3];
+
+    this.vimeo.deleteVideoFile(videoID)
+      .pipe(catchError(err => {
+        this.uploading = false;
+        this.messageService.openSnackBarError('Un problème est survenu lors de la suppression!', 'OK')
+        return throwError(() => err.message)
+      }))
+      .subscribe(_data => {
+        this.video.setValue('');
+        this.typeInVideo('');
+        this.messageService.openSnackBarSuccess('La vidéo a bien été supprimée!', 'OK')
+      });
+  }
+
+  openUploadFormDialog(
+    uploadLink: any,
+    videoFile: any,
+    fileName: any,
+    uri: string,
+    fileSize: number,
+    videoField: any,
+    videoFieldSub: any
+  ): void {
+    this.dialogUploadRef.open(UploadFormComponent, {
+      data: {
+        history: this.router.url,
+        uploadLink,
+        videoFile,
+        fileName,
+        fileSize,
+        uri,
+        videoField,
+        videoFieldSub,
+      },
+      disableClose: true
+    });
+  }
+
   onChanges(element: Observable<any>): void {
     element.pipe(
       debounceTime(2000),
@@ -312,7 +389,8 @@ export class LessonEditPageComponent implements OnInit {
       this.TitleText$,
       this.EditorText$,
       this.SummaryText$,
-      this.ThumbnailText$
+      this.ThumbnailText$,
+      this.VideoText$
     ]
 
     fields.forEach((el: Observable<any>) => {
@@ -325,7 +403,7 @@ export class LessonEditPageComponent implements OnInit {
       switchMap(params => {
         this.lessonID = params.get('lesson_id');
         this.courseID = params.get('course_id');
-        return this.getLesson();;
+        return this.getLesson();
       })
     );
 

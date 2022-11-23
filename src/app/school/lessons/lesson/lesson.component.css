@@ -1,14 +1,16 @@
 progress {
-  @apply border border-primary-500 rounded-sm overflow-hidden shadow-md;
+  @apply border border-primary-500 bg-primary-100 rounded-sm overflow-hidden shadow-md;
+  border: none;
+  -webkit-appearance: none;
+}
+progress::-moz-progress-bar {
+  @apply bg-primary-500;
 }
 progress::-webkit-progress-bar {
-  @apply bg-primary-100;
+  background: transparent;
 }
 progress::-webkit-progress-value {
   @apply bg-primary-500;
-}
-progress::-moz-progress-bar {
-  /* do nothing. */
 }
 
 @media (min-width: 64em) and (max-width: 130em) {
