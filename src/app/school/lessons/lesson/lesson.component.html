@@ -8,14 +8,22 @@
     <main class="py-5 text-skin-art">
         <div class="lesson_content site-container">
             <div class="progress_bar mb-5 mx-auto">
-                <progress id="bluebar" class="progress w-full ld:max-w-[500px] h-10" value="40" max="100"></progress>
+                <progress id="bluebar" class="progress w-full h-10" value="40" max="100"></progress>
             </div>
 
             <div class="vimeo_video shadow-lg rounded-sm overflow-hidden mt-6 lg:mt-8 mx-auto">
                 <div class="vid_wrapper w-full h-full">
                     <ng-container *ngIf="lesson">
-                        <iframe [src]="lessonVideo$ | async | vimeoUrl" class="" webkitallowfullscreen
-                            mozallowfullscreen allowfullscreen width="100%" height="100%" title="Lesson video"></iframe>
+                        <ng-container *ngIf="lesson.video">
+                            <iframe [src]="lessonVideo$ | async | vimeoUrl" class="" webkitallowfullscreen
+                                mozallowfullscreen allowfullscreen width="100%" height="100%"
+                                title="Lesson video"></iframe>
+                        </ng-container>
+                        <ng-container *ngIf="!lesson.video">
+                            <div class="text-lg lg:text-2xl h-full flex items-center justify-center">
+                                Aucun contenu video
+                            </div>
+                        </ng-container>
                     </ng-container>
 
                     <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
@@ -24,6 +32,7 @@
                                                                         'width.%': 100
                                                                     }">
                         </ngx-skeleton-loader>
+                        <div>Loading...</div>
                     </ng-container>
                 </div>
             </div>

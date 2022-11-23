@@ -11,7 +11,7 @@ export class VimeoUrlPipe implements PipeTransform {
   ) { }
 
   transform(value: string, ...args: any[]): any {
-    let url = value.replace("vimeo.com/", "player.vimeo.com/video/");
+    let url = value?.replace("vimeo.com/", "player.vimeo.com/video/");
 
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }

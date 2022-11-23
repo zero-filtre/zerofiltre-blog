@@ -19,11 +19,11 @@
         <div>{{'navbar.about' | translate}}</div>
       </a>
 
-      <a *ngIf="activeCourseModule" aria-labelledby="Link to courses page" click)="drawer.close()" class="sidenavLink"
+      <a *ngIf="activeCourseModule" aria-labelledby="Link to courses page" (click)="drawer.close()" class="sidenavLink"
         routerLink="cours">
         <div>{{'navbar.courses' | translate}}</div>
       </a>
-      <a *ngIf="!activeCourseModule" aria-labelledby="Link to courses page" click)="drawer.close()" class="sidenavLink"
+      <a *ngIf="!activeCourseModule" aria-labelledby="Link to courses page" (click)="drawer.close()" class="sidenavLink"
         href="{{coursesUrl}}">
         <div>{{'navbar.courses' | translate}}</div>
       </a>
