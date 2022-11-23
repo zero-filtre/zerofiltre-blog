@@ -42,7 +42,7 @@ export class CourseEditPageComponent implements OnInit {
     private courseService: CourseService,
     private messageService: MessageService,
     private navigate: NavigationService,
-    private fileUploadService: FileUploadService
+    private fileService: FileUploadService
   ) { }
 
   ngOnInit(): void {
@@ -139,7 +139,7 @@ export class CourseEditPageComponent implements OnInit {
 
   uploadCoverImage() {
     this.uploading = true;
-    this.fileUploadService.uploadFile(this.file)
+    this.fileService.uploadFile(this.file)
       .pipe(catchError(err => {
         this.uploading = false;
         return throwError(() => err.message);
@@ -155,7 +155,7 @@ export class CourseEditPageComponent implements OnInit {
 
   removeCoverImage() {
     this.uploading = true;
-    this.fileUploadService.deleteFile(this.thumbnail as any, this.ThumbnailText$)
+    this.fileService.deleteFile(this.thumbnail as any, this.ThumbnailText$)
       .pipe(catchError(err => {
         this.uploading = false;
         return throwError(() => err.message);

@@ -25,6 +25,8 @@ export class FileUploadService {
   readonly apiServerUrl = environment.apiBaseUrl;
   readonly ovhServerUrl = environment.ovhServerUrl;
   readonly ovhTokenUrl = environment.ovhTokenUrl;
+  readonly ovhToken = environment.ovhToken;
+
   private XTOKEN_NAME = 'x_token';
 
   private subject = new BehaviorSubject<any>(null!);
@@ -130,9 +132,14 @@ export class FileUploadService {
 
     const sizeUnit = 1024 * 1024;
     const fileSize = Math.round(file.size / sizeUnit);
-    const fileType = file.type.split('/')[0]
+    const fileType = file.type.split('/')[1]
 
-    if (fileType !== 'image') {
+    if (
+      fileType !== 'jpeg' &&
+      fileType !== 'png' &&
+      fileType !== 'jpg' &&
+      fileType !== 'svg' &&
+      fileType !== 'pdf') {
       isValid = false
       this.messageService.fileTypeWarning();
     } else if (fileSize > maxSize) {
@@ -148,7 +155,7 @@ export class FileUploadService {
   private uploadImage(fileName: string, file: File): Observable<any> {
     if (!this.validateImage(file)) return throwError(() => new Error('Invalid file'))
 
-    const xToken = this.xTokenObj?.xToken || "";
+    const xToken = this.xTokenObj?.xToken || this.ovhToken;
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
@@ -168,7 +175,7 @@ export class FileUploadService {
   }
 
   public removeImage(fileName: string): Observable<any> {
-    const xToken = this.xTokenObj?.xToken || "";
+    const xToken = this.xTokenObj?.xToken || this.ovhToken;
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')

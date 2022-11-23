@@ -1,0 +1,21 @@
+.preview-label {
+  border: 2px dashed #e5e7eb;
+}
+.editor-textarea {
+  border: none;
+  outline-color: transparent;
+  @apply focus:ring-0;
+}
+
+.active-tab {
+  @apply scale-100 transition-all duration-200;
+}
+
+.tab {
+  @apply hover:bg-skin-link;
+}
+
+.save-tooltip {
+  @apply absolute w-auto p-2 m-2 min-w-max top-8 right-0 rounded-md shadow-md
+    text-white bg-secondary text-xs font-bold transition-all duration-100 scale-0 origin-right;
+}

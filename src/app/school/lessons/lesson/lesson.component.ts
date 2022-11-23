@@ -35,6 +35,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
 
+  imageTypes = ['png', 'jpeg', 'jpg', 'svg'];
+
   constructor(
     private seo: SeoService,
     private vimeoService: VimeoService,
