@@ -92,6 +92,7 @@ export class CurriculumSidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // do nothing.
   }
 
 }

@@ -57,6 +57,7 @@ export class ChapterInitPopupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // do nothing.
   }
 
 }

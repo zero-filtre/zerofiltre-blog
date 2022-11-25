@@ -59,9 +59,12 @@ export class CurriculumComponent implements OnInit {
     ]
   }
 
-  constructor() { }
+  constructor() {
+    // do nothing.
+  }
 
   ngOnInit(): void {
+    // do nothing.
   }
 
 }

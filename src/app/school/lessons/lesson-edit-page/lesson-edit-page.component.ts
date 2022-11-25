@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, Observable, Subject, switchMap, throwError, tap, debounceTime, distinctUntilChanged } from 'rxjs';
@@ -88,7 +88,7 @@ export class LessonEditPageComponent implements OnInit {
     const lessonContent = lesson.content || contentTemplate;
 
     this.form = this.fb.group({
-      id: [lesson.id!],
+      id: [lesson.id],
       title: [lesson.title, [Validators.required]],
       summary: [lessonSummary, [Validators.required]],
       thumbnail: [lesson.thumbnail],
@@ -184,7 +184,9 @@ export class LessonEditPageComponent implements OnInit {
     this.uploading = true;
   }
 
-  deleteVideo() { }
+  deleteVideo() {
+    // do nothing.
+  }
 
   uploadRessource(event: any) {
     this.onFileSelected(event);

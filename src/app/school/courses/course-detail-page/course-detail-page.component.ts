@@ -76,6 +76,7 @@ export class CourseDetailPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // do nothing.
   }
 
 }

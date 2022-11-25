@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Article } from '../articles/article.model';
 
 import { Observable, throwError, timer } from 'rxjs';
-import { mergeMap, finalize, delay, catchError } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
+import { mergeMap, finalize, delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

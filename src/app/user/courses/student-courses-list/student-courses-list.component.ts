@@ -50,7 +50,6 @@ export class StudentCoursesListComponent implements OnInit {
   }
 
   canAccessCourse() {
-    console.log('CAN ACCESS: ', this.authService.isAdmin)
     this.canAccess = this.authService.isAdmin
   }
 
@@ -87,21 +86,9 @@ export class StudentCoursesListComponent implements OnInit {
     });
 
     courses$.then((data: any[]) => {
-      console.log('DATA: ', data)
       this.loading = false;
       this.courses = data;
     })
-
-    const tagList$ = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve([
-          ...this.tagList,
-          { id: 1, name: 'js', colorCode: '#ccc' },
-        ]);
-
-        this.loading = false;
-      }, 1000);
-    });
   }
 
   ngOnInit(): void {

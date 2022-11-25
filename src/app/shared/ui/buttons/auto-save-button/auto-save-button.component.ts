@@ -27,6 +27,7 @@ export class AutoSaveButtonComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // do nothing.
   }
 
 }

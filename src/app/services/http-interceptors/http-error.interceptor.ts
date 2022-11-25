@@ -49,7 +49,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             }
 
             if (error.status === 0 && !navigator.onLine) {
-              console.log('WE CAN LOAD THE NO NETWORK PAGE HERE');
               if (!this.dialogRef) {
                 this.dialogRef = this.dialogNoNetworkRef.open(NoNetworkComponent, {
                   panelClass: 'delete-article-popup-panel',

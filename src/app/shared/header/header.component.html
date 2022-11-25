@@ -17,8 +17,10 @@
                 <div>{{'navbar.about' | translate}}</div>
             </a>
 
-            <a aria-labelledby="Link to about page" class="navLink" routerLink="cours">
-                <!-- href="{{coursesUrl}}" -->
+            <a *ngIf="activeCourseModule" aria-labelledby="Link to about page" class="navLink" routerLink="cours">
+                <div>{{'navbar.courses' | translate}}</div>
+            </a>
+            <a *ngIf="!activeCourseModule" aria-labelledby="Link to about page" class="navLink" href="{{coursesUrl}}">
                 <div>{{'navbar.courses' | translate}}</div>
             </a>
 

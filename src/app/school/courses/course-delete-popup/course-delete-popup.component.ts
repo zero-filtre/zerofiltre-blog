@@ -48,6 +48,7 @@ export class CourseDeletePopupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // do nothing.
   }
 
 }

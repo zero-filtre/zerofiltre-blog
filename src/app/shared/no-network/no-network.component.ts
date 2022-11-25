@@ -16,8 +16,9 @@ export class NoNetworkComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('NONETWORK MODAL DATA: ', this.data);
+    // do nothing.
   }
+
 
   onRetry() {
     this.submitClicked.emit('RETRY');

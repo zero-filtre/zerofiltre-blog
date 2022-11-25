@@ -6,7 +6,6 @@
                     <button type="button" aria-current="page" aria-labelledby="Toggle to recent articles tab"
                         [ngClass]="activePage === RECENT ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <!-- (click)="sortBy(RECENT)" -->
                         <span>{{'articles.new' | translate}}</span>
                     </button>
 
@@ -35,7 +34,6 @@
                         <button type="button" aria-current="false" aria-labelledby="a tag"
                             [ngClass]="{'active-tag': activeTag == tag.name}"
                             class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                            <!-- (click)="sortByTag(tag.name)" -->
                             <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
                                 viewBox="0 0 8 8">
                                 <circle cx="4" cy="4" r="3"></circle>
@@ -374,7 +372,6 @@
                 <ng-template [ngIf]="tagList?.length">
                     <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
                         <ng-container *ngFor="let tag of tagList">
-                            <!-- [ngClass]="{'active-tag': activeTag == tag.name}" -->
                             <button type="button" aria-labelledby="A tag"
                                 class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
                                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"

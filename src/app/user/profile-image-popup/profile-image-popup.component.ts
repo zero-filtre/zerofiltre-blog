@@ -1,7 +1,7 @@
-import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { catchError, map, of, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { File } from 'src/app/articles/article.model';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';

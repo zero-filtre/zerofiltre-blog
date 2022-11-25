@@ -15,6 +15,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { PublicProfileComponent } from './public-profile/public-profile.component';
 import { SocialAuthComponent } from './social-auth/social-auth.component';
 import { UserResolver } from './user.resolver';
+import { SingleRouteGuard } from '../shared/guard/single-route.guard';
+
+
 
 const routes: Routes = [
   { path: 'passwordReset', component: PasswordRenewalPageComponent, canActivate: [LoggedInAuthGuard] },
@@ -50,7 +53,7 @@ const routes: Routes = [
   {
     path: 'dashboard/courses',
     component: StudentCoursesListComponent,
-    canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
+    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
     data: {
       role: 'ROLE_USER'
     }
@@ -58,7 +61,7 @@ const routes: Routes = [
   {
     path: 'dashboard/courses/teacher',
     component: TeacherCoursesListComponent,
-    canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
+    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
     data: {
       role: 'ROLE_USER'
     }
@@ -66,9 +69,9 @@ const routes: Routes = [
   {
     path: 'dashboard/courses/teacher/all',
     component: TeacherCoursesListComponent,
-    canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
+    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
     data: {
-      role: 'ROLE_USER'
+      role: 'ROLE_ADMIN'
     }
   },
   {

@@ -63,6 +63,7 @@ export class CourseInitPopupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // do nothing.
   }
 
 }

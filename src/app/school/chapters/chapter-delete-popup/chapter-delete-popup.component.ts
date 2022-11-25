@@ -48,6 +48,7 @@ export class ChapterDeletePopupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // do nothing.
   }
 
 }

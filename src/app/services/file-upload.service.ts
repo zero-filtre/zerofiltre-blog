@@ -205,20 +205,20 @@ export class FileUploadService {
     }
     // Microsoft Edge
     else if (window.navigator.userAgent.indexOf("Edge") > -1) {
-      var startPos = myField.selectionStart;
-      var endPos = myField.selectionEnd;
+      const startPos = myField.selectionStart;
+      const endPos = myField.selectionEnd;
 
       myField.value = myField.value.substring(0, startPos) + myValue
         + myField.value.substring(endPos, myField.value.length);
 
-      var pos = startPos + myValue.length;
+      const pos = startPos + myValue.length;
       myField.focus();
       myField.setSelectionRange(pos, pos);
     }
     //MOZILLA and others
     else if (myField.selectionStart || myField.selectionStart == '0') {
-      var startPos = myField.selectionStart;
-      var endPos = myField.selectionEnd;
+      const startPos = myField.selectionStart;
+      const endPos = myField.selectionEnd;
       myField.value = myField.value.substring(0, startPos)
         + myValue
         + myField.value.substring(endPos, myField.value.length);

@@ -33,6 +33,10 @@ p {
   @apply bg-primary-500 py-10 space-y-8;
 }
 
+iframe {
+  border: none;
+}
+
 @media (min-width: 1024px) {
   .green-divider.triangle {
     --mask: linear-gradient(#000 0 0) top/100% calc(100% - 25px) no-repeat,

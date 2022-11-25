@@ -68,7 +68,6 @@ export class AuthService {
             return throwError(() => error);
           }),
           tap(usr => {
-            console.log('LOADING CURR USER...')
             this.subject.next(usr);
             this.setUserData(usr);
             this.refreshData = false

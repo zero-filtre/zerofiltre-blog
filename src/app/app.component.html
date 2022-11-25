@@ -118,8 +118,8 @@
           </span>
         </a>
 
-        <a aria-labelledby="Link to my dashboard" routerLink="/user/dashboard" (click)="fetchAllArticlesAsUser()"
-          [ngClass]="activePage === MY_ARTICLES ? 'link-active' : 'link-inactive'"
+        <a aria-labelledby="Link to my articles dashboard" routerLink="/user/dashboard"
+          (click)="fetchAllArticlesAsUser()" [ngClass]="activePage === MY_ARTICLES ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg" [ngClass]="activePage === MY_ARTICLES ? 'svg-active' : 'svg-inactive'"
             class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
@@ -132,8 +132,9 @@
           </span>
         </a>
 
-        <a aria-labelledby="Link to my courses dashboard" routerLink="/user/dashboard/courses"
-          (click)="fetchAllCoursesAsUser()" [ngClass]="activePage === MY_COURSES ? 'link-active' : 'link-inactive'"
+        <a aria-labelledby="Link to my student courses dashboard" *ngIf="activeCourseModule"
+          routerLink="/user/dashboard/courses" (click)="fetchAllCoursesAsUser()"
+          [ngClass]="activePage === MY_COURSES ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg" [ngClass]="activePage === MY_COURSES ? 'svg-active' : 'svg-inactive'"
             class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
@@ -146,8 +147,9 @@
           </span>
         </a>
 
-        <a aria-labelledby="Link to my dashboard" routerLink="/user/dashboard/courses/teacher"
-          (click)="fetchAllCoursesAsTeacher()" [ngClass]="activePage === MY_TRAININGS ? 'link-active' : 'link-inactive'"
+        <a aria-labelledby="Link to my teacher courses dashboard" *ngIf="activeCourseModule"
+          routerLink="/user/dashboard/courses/teacher" (click)="fetchAllCoursesAsTeacher()"
+          [ngClass]="activePage === MY_TRAININGS ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg"
             [ngClass]="activePage === MY_TRAININGS ? 'svg-active' : 'svg-inactive'"
@@ -161,8 +163,9 @@
           </span>
         </a>
 
-        <a aria-labelledby="Link to my dashboard" routerLink="/user/dashboard/courses/teacher/all"
-          (click)="fetchAllCoursesAsAdmin()" [ngClass]="activePage === ALL_TRAININGS ? 'link-active' : 'link-inactive'"
+        <a aria-labelledby="Link to all courses dashboard" *ngIf="activeCourseModule"
+          routerLink="/user/dashboard/courses/teacher/all" (click)="fetchAllCoursesAsAdmin()"
+          [ngClass]="activePage === ALL_TRAININGS ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg"
             [ngClass]="activePage === ALL_TRAININGS ? 'svg-active' : 'svg-inactive'"
@@ -176,8 +179,9 @@
           </span>
         </a>
 
-        <a aria-labelledby="Link to about page" *ngIf="authService?.isAdmin" routerLink="/user/dashboard/admin"
-          (click)="fetchAllArticlesAsAdmin()" [ngClass]="activePage === ALL_ARTICLES ? 'link-active' : 'link-inactive'"
+        <a aria-labelledby="Link to all articles dashboard" *ngIf="authService?.isAdmin"
+          routerLink="/user/dashboard/admin" (click)="fetchAllArticlesAsAdmin()"
+          [ngClass]="activePage === ALL_ARTICLES ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg"
             [ngClass]="activePage === ALL_ARTICLES ? 'svg-active' : 'svg-inactive'"

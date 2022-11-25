@@ -40,13 +40,13 @@ export class TextEditorComponent implements OnInit, OnDestroy {
     if (tabName === 'help') this.activeTab = 'help'
   }
 
-  handleTab(event: Event, isUp: Boolean = false) {
+  handleTab(event: Event, isUp = false) {
     if ((event as KeyboardEvent).key === "Tab") {
 
       event.preventDefault();
 
-      let start = (event.target as HTMLTextAreaElement).selectionStart;
-      var end = (event.target as HTMLTextAreaElement).selectionEnd;
+      const start = (event.target as HTMLTextAreaElement).selectionStart;
+      const end = (event.target as HTMLTextAreaElement).selectionEnd;
       (event.target as HTMLTextAreaElement).value = (event.target as HTMLTextAreaElement).value.substring(0, start) + '    ' + (event.target as HTMLTextAreaElement).value.substring(end);
       (event.target as HTMLTextAreaElement).selectionStart = (event.target as HTMLTextAreaElement).selectionEnd = start + 4;
 

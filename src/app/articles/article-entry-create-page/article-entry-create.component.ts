@@ -180,7 +180,6 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
     if (!this.tags.value.some((el: Tag) => el.id === tag.id)) {
       this.tags.push(tagItem)
       this.typeInTags();
-    } else {
     }
   }
 
@@ -321,78 +320,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
     ).subscribe()
   }
 
-  @HostListener('document:fullscreenchange', ['$event'])
-  @HostListener('document:webkitfullscreenchange', ['$event'])
-  @HostListener('document:mozfullscreenchange', ['$event'])
-  @HostListener('document:MSFullscreenChange', ['$event'])
-  fullscreenmodes(event: any) {
-    this.checkScreenMode();
-  }
-
-  checkScreenMode() {
-    if (document.fullscreenElement) {
-      this.fullScreenOn = true;
-    } else {
-      this.fullScreenOn = false;
-    }
-    console.log('FULLSCREN: ', this.fullScreenOn);
-  }
-
-  toggleFullScreen() {
-    this.elem = (document as any).querySelector('.editor_sticky_wrapper');
-    const textarea = (document as any).querySelector('#content');
-    const editotheader = (document as any).querySelector('.editor-header');
-
-    this.elem.addEventListener('fullscreenchange', this.fullscreenchanged);
-
-    if (!this.document.fullscreenElement) {
-      if (this.elem.requestFullscreen) {
-        this.elem.requestFullscreen();
-      } else if (this.elem.mozRequestFullScreen) {
-        /* Firefox */
-        this.elem.mozRequestFullScreen();
-      } else if (this.elem.webkitRequestFullscreen) {
-        /* Chrome, Safari and Opera */
-        this.elem.webkitRequestFullscreen();
-      } else if (this.elem.msRequestFullscreen) {
-        /* IE/Edge */
-        this.elem.msRequestFullscreen();
-      }
-
-      textarea.style.height = '100vh';
-      editotheader.style.marginTop = '0';
-
-    } else {
-      if (this.document.exitFullscreen) {
-        this.document.exitFullscreen();
-      } else if (this.document.mozCancelFullScreen) {
-        /* Firefox */
-        this.document.mozCancelFullScreen();
-      } else if (this.document.webkitExitFullscreen) {
-        /* Chrome, Safari and Opera */
-        this.document.webkitExitFullscreen();
-      } else if (this.document.msExitFullscreen) {
-        /* IE/Edge */
-        this.document.msExitFullscreen();
-      }
-    }
-  }
-
-  fullscreenchanged() {
-    if (document.fullscreenElement) {
-      console.log(`Entered fullscreen mode.`);
-    } else {
-      console.log('Exit fullscreen mode.');
-    }
-  };
-
-  fullScreenOn = false;
-  elem: any;
-
   ngOnInit(): void {
-    this.checkScreenMode();
-    this.elem = document.documentElement;
-
     this.articleId = this.route.snapshot.paramMap.get('id')!;
     this.getArticle();
     this.fetchListOfTags();

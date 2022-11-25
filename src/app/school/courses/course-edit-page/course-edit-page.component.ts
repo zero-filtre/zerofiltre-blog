@@ -101,7 +101,7 @@ export class CourseEditPageComponent implements OnInit {
     const courseSummary = course.summary || courseSummaryTemplate;
 
     this.form = this.fb.group({
-      id: [course.id!],
+      id: [course.id],
       title: [course.title, [Validators.required]],
       summary: [courseSummary, [Validators.required]],
       thumbnail: [course.thumbnail],

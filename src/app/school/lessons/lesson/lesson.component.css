@@ -8,6 +8,7 @@ progress::-webkit-progress-value {
   @apply bg-primary-500;
 }
 progress::-moz-progress-bar {
+  /* do nothing. */
 }
 
 @media (min-width: 64em) and (max-width: 130em) {

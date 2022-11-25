@@ -59,7 +59,9 @@ export class LessonInitPopupComponent implements OnInit {
         })
       })
   }
+
   ngOnInit(): void {
+    // do nothing.
   }
 
 }
