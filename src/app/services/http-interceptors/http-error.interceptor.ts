@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/user/auth.service';
 import { AuthInterceptor } from './auth.interceptor';
 import { environment } from 'src/environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { NoNetworkComponent } from 'src/app/shared/no-network/no-network.component';
 
 
 @Injectable({
@@ -21,11 +23,14 @@ import { environment } from 'src/environments/environment';
 export class HttpErrorInterceptor implements HttpInterceptor {
   readonly apiServerUrl = environment.apiBaseUrl;
 
+  dialogRef!: any;
+
   constructor(
     private messageService: MessageService,
     private router: Router,
     private authService: AuthService,
-    private authInterceptor: AuthInterceptor
+    private authInterceptor: AuthInterceptor,
+    public dialogNoNetworkRef: MatDialog,
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -43,7 +48,22 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               return this.handleRefrehToken(request, next);
             }
 
-            const errorMessage = this.setError(error)
+            if (error.status === 0 && !navigator.onLine) {
+              if (!this.dialogRef) {
+                this.dialogRef = this.dialogNoNetworkRef.open(NoNetworkComponent, {
+                  panelClass: 'delete-article-popup-panel',
+                  autoFocus: true,
+                  // disableClose: true,
+                });
+
+                this.dialogRef.afterClosed()
+                  .subscribe(() => this.dialogRef = null)
+              }
+
+              return throwError(() => 'Connexion internet perdue!');
+            }
+
+            const errorMessage = this.setError(error);
             this.messageService.openSnackBarError(errorMessage, '');
             return throwError(() => errorMessage);
           })
@@ -62,7 +82,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }),
         catchError(errordata => {
           this.authService.logout();
-          this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
           return throwError(() => errordata)
         })
       );
@@ -80,11 +99,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     if (error.status === 0) {
       // Client side Error
-      // if (error?.error?.type == 'error') return errorMessage = 'Connexion Instable !'
-      errorMessage = error.statusText;
+      errorMessage = 'Une erreur est survenue. Veuillez essayer de nouveau ou contacter le support Zerofiltre (info@zerofiltre.tech)';
     } else {
       // Server side error
-      let serverErrorExist = !!error?.error?.error   // if the assigned obj is null or undefined => return false else => return true
+      let serverErrorExist = !!error?.error?.error;
 
       if (serverErrorExist) {
         errorMessage = error.error.error.message;
@@ -92,7 +110,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
       if (error.status === 401) {
         this.authService.logout();
-        this.router.navigate(['/login'], { queryParams: { 'redirectURL': this.router.url } });
+        this.messageService.authError(this.router)
       }
     }
 

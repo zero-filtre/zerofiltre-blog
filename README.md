@@ -36,6 +36,15 @@ Run `ng serve` for a **client-side** dev server.
 Run `npm run dev:ssr` for a **server-side** dev server.  
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Run Development JSON server
+
+Run the following
+
+```ts
+mpm install -g json-server
+npm run json:server
+```
+
 ## Build
 
 Run `ng build` to build the **client-side project** bundle. The build artifacts will be stored in the `dist/` directory.

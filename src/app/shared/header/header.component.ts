@@ -11,8 +11,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  readonly servicesUrl = environment.servicesUrl
-  readonly coursesUrl = environment.coursesUrl
+  readonly servicesUrl = environment.servicesUrl;
+  readonly coursesUrl = environment.coursesUrl;
+  readonly activeCourseModule = environment.courseRoutesActive;
 
   public appLogoUrl = 'https://ik.imagekit.io/lfegvix1p/logoblue_6whym-RBD.svg'
 

@@ -11,12 +11,14 @@ export class NavigationService {
 
   constructor(
     private location: Location,
-    private router: Router
+    private router: Router,
   ) {
     this.hasHistory = router.navigated;
   }
 
-  public back() {
+  back() {
+    this.hasHistory = this.router.navigated;
+
     if (this.hasHistory) {
       this.location.back();
     } else {

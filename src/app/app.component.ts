@@ -28,7 +28,6 @@ import { LoadEnvService } from './services/load-env.service';
 import { environment } from 'src/environments/environment';
 
 
-
 declare var Prism: any;
 
 
@@ -44,6 +43,7 @@ export class AppComponent implements OnInit {
 
   readonly servicesUrl = environment.servicesUrl
   readonly coursesUrl = environment.coursesUrl
+  readonly activeCourseModule = environment.courseRoutesActive
 
   public appLogoUrl = 'assets/logoblue.svg';
 
@@ -58,10 +58,13 @@ export class AppComponent implements OnInit {
   public MY_ACCOUNT = 'Mon compte';
   public MY_ARTICLES = 'Mes articles';
   public ALL_ARTICLES = 'Tous nos articles';
+  public MY_COURSES = 'Mes cours';
+  public MY_TRAININGS = 'Mes formations';
+  public ALL_TRAININGS = 'Toutes nos formations';
 
   public changingRoute!: boolean;
 
-  public activePage = this.MY_ACCOUNT;
+  public activePage = '';
 
 
   public envValue!: any;
@@ -76,17 +79,9 @@ export class AppComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     public authService: AuthService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
   ) {
     this.setBrowserTranslationConfigs();
-
-
-    router.events.pipe(filter(event => event instanceof NavigationStart))
-      .subscribe(({ url }: any) => {
-        if (url.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
-        if (url.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
-        if (url.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
-      });
 
     router.events.pipe(filter((event): event is RouterEvent => event instanceof RouterEvent))
       .subscribe(e => this.checkRouteChange(e))
@@ -141,11 +136,27 @@ export class AppComponent implements OnInit {
 
   public fetchAllArticlesAsAdmin() {
     this.activePage = this.ALL_ARTICLES;
+    this.router.navigateByUrl('/user/dashboard/admin');
   }
 
   public fetchAllArticlesAsUser() {
     this.activePage = this.MY_ARTICLES;
     this.router.navigateByUrl('/user/dashboard');
+  }
+
+  public fetchAllCoursesAsUser() {
+    this.activePage = this.MY_COURSES;
+    this.router.navigateByUrl('/user/dashboard/courses');
+  }
+
+  public fetchAllCoursesAsTeacher() {
+    this.activePage = this.MY_TRAININGS;
+    this.router.navigateByUrl('/user/dashboard/courses/teacher');
+  }
+
+  public fetchAllCoursesAsAdmin() {
+    this.activePage = this.ALL_TRAININGS;
+    this.router.navigateByUrl('/user/dashboard/courses/teacher/all');
   }
 
   public logCopySuccessMessage(event: any) {
@@ -174,9 +185,20 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.activePage = this.MY_ACCOUNT;
+  setActiveLinkFromActiveRoute(url: string) {
+    if (url?.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
+    if (url?.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
+    if (url?.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
+    if (url?.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
+    if (url?.startsWith('/user/dashboard/courses/teacher')) this.activePage = this.MY_TRAININGS;
+    if (url?.startsWith('/user/dashboard/courses/teacher/all')) this.activePage = this.ALL_TRAININGS;
+  }
 
+  ngOnInit(): void {
+    this.router.events
+      .subscribe(({ url }: any) => {
+        this.setActiveLinkFromActiveRoute(url);
+      });
 
     if (isPlatformBrowser(this.platformId)) {
       this.loadCopyToClipboardSvg();

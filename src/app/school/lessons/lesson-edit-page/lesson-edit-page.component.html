@@ -1,0 +1,197 @@
+<main class="site-container py-8">
+    <form *ngIf="lesson$ |async " [formGroup]="form" class="">
+        <div class="article-data-container flex flex-col lg:grid grid-cols-7 gap-10 lg:gap-14 items-stretch">
+            <main class="col-span-5 order-2 lg:order-none">
+                <div class="mb-5">
+                    <input (keyup)="typeInTitle(getValue($event))" id="title" required minlength="4"
+                        formControlName="title"
+                        class="w-full bg-transparent border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
+                        placeholder="{{ 'articleEntryEdit.titlePlaceholder' | translate }}" autocomplete="off" />
+
+                    <div *ngIf="title?.invalid && title?.dirty" class="">
+                        <div *ngIf="title?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
+                            {{ 'articleEntryEdit.missingTitle' | translate }}
+                        </div>
+                        <div *ngIf="title?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
+                            {{ 'articleEntryEdit.invalidTitleLenght' | translate }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <div class="lesson-video-preview-wrapper relative mt-10">
+                        <div *ngIf="!video?.value" class="label-image-preview relative aspect-w-4 aspect-h-2">
+                            <label *ngIf="!uploading" for="file" (click)="fileUpload.click()"
+                                class="preview-label group flex items-center justify-center rounded-md cursor-pointer">
+
+                                <div
+                                    class="label absolute -top-3 left-2.5 text-base font-semibold leading-5 text-skin-base">
+                                    Video
+                                </div>
+
+                                <div class="text-center">
+                                    <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
+                                        viewBox="0 0 48 48">
+                                        <path
+                                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <p class="mt-1 text-xs text-skin-base leading-6">
+                                        <span
+                                            class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                                            Upload a file
+                                        </span>
+                                    </p>
+                                    <p class="mt-1 text-xs text-skin-muted">
+                                        MP4, Webm up to MB
+                                    </p>
+
+                                    <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
+                                        (change)="uploadVideo($event)" accept="video/*">
+                                </div>
+                            </label>
+
+                            <div *ngIf="uploading" class="flex items-center justify-center shadow-lg rounded-lg border">
+                                <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
+                                    viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                    <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                                        stroke-dasharray="164.93361431346415 56.97787143782138"
+                                        transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused"></circle>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div *ngIf="video?.value"
+                            class="video-wrapper shadow-lg overflow-hidden rounded-lg aspect-w-4 aspect-h-2">
+                            <app-image [classes]="'object-cover'" [sourceUrl]="video?.value!" [alt]="title.value">
+                            </app-image>
+                        </div>
+
+                        <div *ngIf="video?.value"
+                            class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
+                            (click)="deleteVideo()">x
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <label for="ressources"
+                        class="block text-base font-semibold leading-5 text-skin-base lg:mt-14 ml-3">
+                        Ressources
+                    </label>
+
+                    <div formArrayName="ressources"
+                        class="w-full border-2 border-dashed rounded p-5 flex justify-center lg:justify-start flex-wrap mt-[-10px]">
+                        <ng-container *ngFor="let res of ressources?.value; let i = index">
+                            <div *ngIf="imageTypes.includes(res.type)"
+                                class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1" viewBox="0 0 24 24"
+                                    class="mx-auto h-8 w-8 group-hover:text-primary-500">
+                                    <path
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                <span class="group-hover:text-primary-500">{{res.name}}</span>
+                                <div class="ressource-remove-btn flex justify-center items-center w-5 h-5 mt-4 text-sm text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
+                                    (click)="deleteRessource(res, i)">
+                                    <span class="-mt-0.5">x</span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="res.type == 'pdf'"
+                                class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded">
+                                <svg class="mx-auto h-8 w-8 group-hover:text-primary-500"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path
+                                        d="M416 221.25V416a48 48 0 01-48 48H144a48 48 0 01-48-48V96a48 48 0 0148-48h98.75a32 32 0 0122.62 9.37l141.26 141.26a32 32 0 019.37 22.62z"
+                                        fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="20" />
+                                    <path d="M256 56v120a32 32 0 0032 32h120" fill="none" stroke="currentColor"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="20" />
+                                </svg>
+
+                                <span class="group-hover:text-primary-500">{{res.name}}</span>
+                                <div class="ressource-remove-btn flex justify-center items-center w-5 h-5 mt-4 text-sm text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
+                                    (click)="deleteRessource(res, i)">
+                                    <span class="-mt-0.5">x</span>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <label *ngIf="!resUploading" for="file" (click)="fileUpload.click()"
+                            class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-8 w-8 group-hover:text-primary-500"
+                                viewBox="0 0 512 512">
+                                <path
+                                    d="M320 367.79h76c55 0 100-29.21 100-83.6s-53-81.47-96-83.6c-8.89-85.06-71-136.8-144-136.8-69 0-113.44 45.79-128 91.2-60 5.7-112 43.88-112 106.4s54 106.4 120 106.4h56"
+                                    fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="20" />
+                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="20" d="M320 255.79l-64-64-64 64M256 448.21V207.79" />
+                            </svg>
+
+                            <span class="group-hover:text-primary-500">Ajouter un fichier</span>
+
+                            <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
+                                (change)="uploadRessource($event)" accept="image/*,.pdf" />
+                        </label>
+
+                        <div *ngIf="resUploading" class="flex items-center justify-center">
+                            <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
+                                viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                                    stroke-dasharray="164.93361431346415 56.97787143782138"
+                                    transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <div class="article-content min-h-[3000px] mt-4 sm:mt-2">
+                        <div class="editor_sticky_wrapper sticky top-20">
+                            <app-text-editor [form]="form" [content]="content" [isLoading]="isLoading"
+                                [isPublishing]="isPublishing" [isPublished]="isPublished" [isSaving]="isSaving"
+                                [isSaved]="isSaved" [saveFailed]="saveFailed" [editorSub$]="EditorText$"
+                                (onFileSelectedEvent)="uploadImageInEditor($event)" (publishEvent)="publishLesson()">
+                            </app-text-editor>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="col-span-2 order-1 lg:order-none">
+                <div class="sticky top-36 z-20 space-y-10">
+                    <nav class="top-nav font-semibold flex items-center justify-between lg:hidden">
+                        <button (click)="navigate.back()" class="text-primary-500 group flex items-center gap-1"
+                            aria-label="navigate back button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                class="text-primary-500 group-hover:text-primary-300" data-supported-dps="24x24"
+                                fill="currentColor" width="24" height="24" focusable="false">
+                                <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
+                            </svg>
+                        </button>
+
+                        <h2>
+                            <a aria-labelledby="Link to about page" routerLink="/user/dashboard"
+                                class="text-lg text-primary-500 hover:text-primary-300">
+                                <span>{{ 'app.myArticles' | translate }}</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="inline ml-1 h-6 w-6" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </h2>
+                    </nav>
+
+                    <app-auto-save-button [form]="form" [loading]="isLoading" [isPublishing]="isPublishing"
+                        [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
+                        (publishEvent)="publishLesson()">
+                    </app-auto-save-button>
+                </div>
+            </aside>
+        </div>
+    </form>
+</main>

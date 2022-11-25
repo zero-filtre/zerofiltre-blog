@@ -52,6 +52,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
     public articleService: ArticleService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
+
     public router: Router,
     public route: ActivatedRoute,
     public authService: AuthService,
@@ -211,6 +212,8 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
       author: 'Zerofiltre.tech',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
+
+
   }
 
   ngOnDestroy(): void {

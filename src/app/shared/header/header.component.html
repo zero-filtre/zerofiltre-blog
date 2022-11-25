@@ -1,4 +1,4 @@
-<div *ngIf="seo.transparentHeader" class="min-h-[5px]">
+<div *ngIf="seo.transparentHeader" class="min-h-[4px]">
     <mat-progress-bar *ngIf="changingRoute" class="bg-primary-500" mode="indeterminate"></mat-progress-bar>
 </div>
 
@@ -17,11 +17,14 @@
                 <div>{{'navbar.about' | translate}}</div>
             </a>
 
-            <a aria-labelledby="Link to about page" class="navLink" href="{{coursesUrl}}">
+            <a *ngIf="activeCourseModule" aria-labelledby="Link to about page" class="navLink" routerLink="cours">
+                <div>{{'navbar.courses' | translate}}</div>
+            </a>
+            <a *ngIf="!activeCourseModule" aria-labelledby="Link to about page" class="navLink" href="{{coursesUrl}}">
                 <div>{{'navbar.courses' | translate}}</div>
             </a>
 
-            <a aria-labelledby="Link to about page" class="navLink" routerLink="/articles">
+            <a aria-labelledby="Link to about page" class="navLink" routerLink="articles">
                 <div>{{'navbar.blog' | translate}}</div>
             </a>
 

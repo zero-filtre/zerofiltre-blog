@@ -1,7 +1,7 @@
-import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { catchError, map, of, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { File } from 'src/app/articles/article.model';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
@@ -51,31 +51,20 @@ export class ProfileImagePopupComponent implements OnInit {
 
 
   public uploadProfileImage(): void {
-    const fileName = this.file.data.name
-    this.file.inProgress = true;
-    this.uploading = true;
-
     if (this.user?.profilePicture) {
       // this.deleteProfileImage()
     }
 
-    this.fileUploadService.uploadImage(fileName, this.file.data).pipe(
-      map((event) => {
-        switch (event.type) {
-          case HttpEventType.UploadProgress:
-            this.file.progress = Math.round(event.loaded * 100 / event.total);
-            break;
-          case HttpEventType.Response:
-            return event;
-        }
-      }),
-      catchError((_error: HttpErrorResponse) => {
-        this.file.inProgress = false;
-        this.uploading = false;
-        this.dialogRef.close();
-        return of('Upload failed');
+    this.uploading = true;
 
-      })).subscribe((event: any) => {
+    this.fileUploadService.uploadFile(this.file)
+      .pipe(
+        catchError(() => {
+          this.dialogRef.close();
+          return throwError(() => 'Failed !')
+        })
+      )
+      .subscribe((event: any) => {
         if (typeof (event) === 'object') {
           const formData = { ...this.profileData, profilePicture: event.url }
           this.authService.updateUserProfile(formData)

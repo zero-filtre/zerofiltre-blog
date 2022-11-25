@@ -14,6 +14,8 @@ const httpOptions = {
   })
 };
 
+const fakeCourseIds = [1, 2, 3];
+
 @Injectable({
   providedIn: 'root'
 })
@@ -66,7 +68,6 @@ export class AuthService {
             return throwError(() => error);
           }),
           tap(usr => {
-            console.log('LOADING CURR USER...')
             this.subject.next(usr);
             this.setUserData(usr);
             this.refreshData = false
@@ -84,7 +85,6 @@ export class AuthService {
           return throwError(() => error);
         }),
         tap(usr => {
-          console.log('LOADING CURR USER...')
           this.subject.next(usr);
           this.setUserData(usr);
           this.refreshData = false
@@ -106,6 +106,24 @@ export class AuthService {
     }
   }
 
+  get tokenExpiryDate(): any {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('_tokenExpiryDate');
+    }
+  }
+
+  get refreshTokenExpiryDate(): any {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('_refreshExpiryDate');
+    }
+  }
+
+  get lastLoggedDate(): any {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('_lastLoggedDate');
+    }
+  }
+
   get userData(): any {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem('user_data');
@@ -120,7 +138,7 @@ export class AuthService {
 
   public setUserData(user: User) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('user_data', JSON.stringify(user));
+      localStorage.setItem('user_data', JSON.stringify({ ...user, courseIds: fakeCourseIds }));
     }
   }
 
@@ -246,7 +264,12 @@ export class AuthService {
   // HELPER SERVICES
 
   private handleJWTauth(response: any, tokenType: string, redirectURL = '') {
-    const { refreshToken, accessToken } = response.body
+    const { refreshToken, accessToken, accessTokenExpiryDateInSeconds, refreshTokenExpiryDateInSeconds } = response.body
+
+    localStorage.setItem('_lastLoggedDate', Date.now().toString());
+    localStorage.setItem('_tokenExpiryDate', accessTokenExpiryDateInSeconds);
+    localStorage.setItem('_refreshExpiryDate', refreshTokenExpiryDateInSeconds);
+
     this.redirectURL = redirectURL;
     this.loadLoggedInUser(accessToken, tokenType, refreshToken);
   }

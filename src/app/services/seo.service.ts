@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 export class SeoService {
   readonly blogUrl = environment.blogUrl
   transparentHeader!: boolean;
+  isFooterMounted = true;
 
   constructor(private title: Title, private meta: Meta, private router: Router) { }
 
@@ -39,5 +40,13 @@ export class SeoService {
 
   disableTransparentHeader() {
     this.transparentHeader = false;
+  }
+
+  mountFooter() {
+    this.isFooterMounted = true;
+  }
+
+  unmountFooter() {
+    this.isFooterMounted = false
   }
 }

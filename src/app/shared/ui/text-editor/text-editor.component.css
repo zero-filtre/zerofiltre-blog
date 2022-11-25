@@ -1,0 +1,13 @@
+.editor-textarea {
+  border: none;
+  outline-color: transparent;
+  @apply focus:ring-0;
+}
+
+.active-tab {
+  @apply scale-100 transition-all duration-200;
+}
+
+.tab {
+  @apply hover:bg-skin-link;
+}
