@@ -163,7 +163,7 @@
           </span>
         </a>
 
-        <a aria-labelledby="Link to all courses dashboard" *ngIf="activeCourseModule"
+        <a aria-labelledby="Link to all courses dashboard" *ngIf="activeCourseModule && authService?.isAdmin"
           routerLink="/user/dashboard/courses/teacher/all" (click)="fetchAllCoursesAsAdmin()"
           [ngClass]="activePage === ALL_TRAININGS ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
