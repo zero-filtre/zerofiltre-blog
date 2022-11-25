@@ -17,18 +17,22 @@
                 <div>{{'navbar.about' | translate}}</div>
             </a>
 
-            <a *ngIf="activeCourseModule" aria-labelledby="Link to about page" class="navLink" routerLink="cours">
+            <a aria-labelledby="Link to courses page" class="navLink" href="{{coursesUrl}}">
+                <div>{{'navbar.courses' | translate}}</div>
+            </a>
+
+            <!-- <a *ngIf="activeCourseModule" aria-labelledby="Link to about page" class="navLink" routerLink="cours">
                 <div>{{'navbar.courses' | translate}}</div>
             </a>
             <a *ngIf="!activeCourseModule" aria-labelledby="Link to about page" class="navLink" href="{{coursesUrl}}">
                 <div>{{'navbar.courses' | translate}}</div>
-            </a>
+            </a> -->
 
-            <a aria-labelledby="Link to about page" class="navLink" routerLink="articles">
+            <a aria-labelledby="Link to articles page" class="navLink" routerLink="articles">
                 <div>{{'navbar.blog' | translate}}</div>
             </a>
 
-            <a aria-labelledby="Link to about page" class="navLink" href="{{servicesUrl}}">
+            <a aria-labelledby="Link to services page" class="navLink" href="{{servicesUrl}}">
                 <div>{{'navbar.portfolio' | translate}}</div>
             </a>
 

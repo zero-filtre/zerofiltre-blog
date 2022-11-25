@@ -33,7 +33,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    console.log('ENV 1: ', this.servicesUrl);
+    console.log('ENV 2: ', this.coursesUrl);
+    console.log('ENV 3: ', this.activeCourseModule);
   }
 
 }
