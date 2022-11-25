@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
 
   readonly servicesUrl = environment.servicesUrl
   readonly coursesUrl = environment.coursesUrl
-  readonly activeCourseModule = environment.courseRoutesActive
+  readonly activeCourseModule = false;
 
   public appLogoUrl = 'assets/logoblue.svg';
 

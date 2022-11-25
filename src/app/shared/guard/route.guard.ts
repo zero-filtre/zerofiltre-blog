@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Route, UrlSegment } from '@angular/router';
 import { LoadEnvService } from '../../services/load-env.service';
 import { MessageService } from '../../services/message.service';
-import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RouteGuard implements CanLoad {
-  readonly isActive = environment.courseRoutesActive;
+  readonly isActive = false;
 
   constructor(
     private loadEnvService: LoadEnvService,
