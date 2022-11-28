@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { LoadEnvService } from '../../services/load-env.service';
 import { MessageService } from '../../services/message.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SingleRouteGuard implements CanActivate {
-  readonly isActive = environment.courseRoutesActive;
+  readonly isActive = environment.courseRoutesActive === 'true';
 
   constructor(
     private loadEnvService: LoadEnvService,

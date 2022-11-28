@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class RouteGuard implements CanLoad {
-  readonly isActive = environment.courseRoutesActive;
+  readonly isActive = environment.courseRoutesActive === 'true';
 
   constructor(
     private loadEnvService: LoadEnvService,
