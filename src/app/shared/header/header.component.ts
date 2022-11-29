@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 export class HeaderComponent implements OnInit {
   readonly servicesUrl = environment.servicesUrl;
   readonly coursesUrl = environment.coursesUrl;
-  readonly activeCourseModule = false;
+  readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
   public appLogoUrl = 'https://ik.imagekit.io/lfegvix1p/logoblue_6whym-RBD.svg'
 
@@ -33,9 +33,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('ENV 1: ', this.servicesUrl);
-    console.log('ENV 2: ', this.coursesUrl);
-    console.log('ENV 3: ', this.activeCourseModule);
+    // do nothing.
+    console.log('ENV: ---> ', environment.courseRoutesActive, typeof environment.courseRoutesActive, this.activeCourseModule)
   }
 
 }
