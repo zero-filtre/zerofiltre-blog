@@ -14,8 +14,9 @@ import { SeoService } from 'src/app/services/seo.service';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
-  public currentYear!: number;
-  public recentArticles$!: Observable<Article[]>;
+  currentYear!: number;
+  recentArticles$!: Observable<Article[]>;
+  PUBLISHED = 'published';
 
   readonly servicesUrl = environment.servicesUrl;
 
@@ -25,11 +26,11 @@ export class FooterComponent implements OnInit {
     private seo: SeoService
   ) { }
 
-  public loadCurrentYear() {
+  loadCurrentYear() {
     this.currentYear = getCurrentYear();
   }
 
-  public capitalize(str: string): string {
+  capitalize(str: string): string {
     return capitalizeString(str);
   }
 
@@ -41,7 +42,8 @@ export class FooterComponent implements OnInit {
     this.isMounted();
     this.loadCurrentYear();
 
-    this.recentArticles$ = this.articleService.findAllArticleByFilter(0, 5)
+    this.recentArticles$ = this.articleService
+      .findAllArticleByFilter(0, 5, this.PUBLISHED)
       .pipe(
         map(({ content }: any) => {
           return content;
