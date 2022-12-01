@@ -31,9 +31,9 @@ export class ArticleService {
     @Inject(PLATFORM_ID) private platformID: any
   ) { }
 
-  private sortByDate(list: Article[]): Article[] {
+  public sortByDate(list: Article[]): Article[] {
     return list
-      ?.sort((a: any, b: any) => new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf())
+      ?.sort((a: any, b: any) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
   }
 
   public incrementViews(articleId: string): Observable<any> {
@@ -86,11 +86,11 @@ export class ArticleService {
       );
   }
 
-  public findAllArticleByFilter(page: number, limit: number, filter:string=""): Observable<Article[]> {
+  public findAllArticleByFilter(page: number, limit: number, status: string, filter = ''): Observable<Article[]> {
     if (this.refreshData) {
       httpOptions.headers = httpOptions.headers.set('x-refresh', 'true');
     }
-    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=published`+(filter!=""?`&filter=${filter}`:``), httpOptions)
+    return this.http.get<any>(`${this.apiServerUrl}/article?pageNumber=${page}&pageSize=${limit}&status=${status}` + (filter != "" ? `&filter=${filter}` : ``), httpOptions)
       .pipe(
         tap(_ => {
           this.refreshData = false
