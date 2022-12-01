@@ -33,14 +33,14 @@ export class DashboardComponent extends BaseArticleListComponent implements OnIn
     super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, platformId)
   }
 
-  public fetchMyArticlesByStatus(status: string) {
+  fetchMyArticlesByStatus(status: string) {
     this.loading = true;
     this.subscription$ = this.articleService
       .findAllMyArticles(this.pageNumber, this.pageItemsLimit, status)
       .subscribe(this.handleFetchedArticles);
   }
 
-  public sortBy(tab: string): void {
+  sortBy(tab: string): void {
     this.articles = [];
 
     if (tab === this.PUBLISHED) {
@@ -62,6 +62,39 @@ export class DashboardComponent extends BaseArticleListComponent implements OnIn
     this.notEmptyArticles = true;
   }
 
+  fetchMoreArticles(): any {
+    this.scrollyPageNumber += 1;
+
+    const queryParam = this.route.snapshot.queryParamMap.get('filter')!;
+
+    if (queryParam === this.DRAFT) {
+      return this.articleService
+        .findAllMyArticles(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          this.DRAFT
+        )
+        .subscribe((response: any) => this.handleFetchNewArticles(response));
+    }
+
+    if (queryParam === 'in-review') {
+      return this.articleService
+        .findAllMyArticles(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          this.IN_REVIEW
+        )
+        .subscribe((response: any) => this.handleFetchNewArticles(response));
+    }
+
+    this.articleService
+      .findAllMyArticles(
+        this.scrollyPageNumber,
+        this.pageItemsLimit,
+        this.PUBLISHED
+      )
+      .subscribe((response: any) => this.handleFetchNewArticles(response));
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {

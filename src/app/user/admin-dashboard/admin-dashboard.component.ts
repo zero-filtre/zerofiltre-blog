@@ -33,14 +33,14 @@ export class AdminDashboardComponent extends BaseArticleListComponent implements
     super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, platformId)
   }
 
-  public fetchAllArticlesAsAdmin(status: string) {
+  fetchAllArticlesAsAdmin(status: string) {
     this.loading = true;
     this.subscription$ = this.articleService
       .findAllArticles(this.pageNumber, this.pageItemsLimit, status)
       .subscribe(this.handleFetchedArticles);
   }
 
-  public sortBy(tab: string): void {
+  sortBy(tab: string): void {
     this.articles = [];
 
     if (tab === this.PUBLISHED) {
@@ -62,9 +62,42 @@ export class AdminDashboardComponent extends BaseArticleListComponent implements
     this.notEmptyArticles = true;
   }
 
+  fetchMoreArticles(): any {
+    this.scrollyPageNumber += 1;
+
+    const queryParam = this.route.snapshot.queryParamMap.get('filter')!;
+
+    if (queryParam === this.DRAFT) {
+      return this.articleService
+        .findAllArticleByFilter(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          this.DRAFT
+        )
+        .subscribe((response: any) => this.handleFetchNewArticles(response));
+    }
+
+    if (queryParam === 'in-review') {
+      return this.articleService
+        .findAllArticleByFilter(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          this.IN_REVIEW
+        )
+        .subscribe((response: any) => this.handleFetchNewArticles(response));
+    }
+
+    this.articleService
+      .findAllArticleByFilter(
+        this.scrollyPageNumber,
+        this.pageItemsLimit,
+        this.PUBLISHED
+      )
+      .subscribe((response: any) => this.handleFetchNewArticles(response));
+  }
+
 
   ngOnInit(): void {
-
     if (isPlatformBrowser(this.platformId)) {
       this.route.queryParamMap.subscribe(
         query => {

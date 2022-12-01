@@ -20,27 +20,27 @@ import { ArticleEntryPopupComponent } from '../../articles/article-entry-popup/a
   styleUrls: ['./base-article-list.component.css']
 })
 export class BaseArticleListComponent implements OnInit {
-  public articles!: Article[];
+  articles!: Article[];
 
   PUBLISHED = 'published';
   DRAFT = 'draft';
   IN_REVIEW = 'in_review';
 
-  public notEmptyArticles = true;
-  public notScrolly = true;
-  public lastPage!: number;
-  public loadingMore = false;
-  public hasNext!: boolean;
-  public scrollyPageNumber = 0;
+  notEmptyArticles = true;
+  notScrolly = true;
+  lastPage!: number;
+  loadingMore = false;
+  hasNext!: boolean;
+  scrollyPageNumber = 0;
 
-  public pageNumber: number = 0;
-  public pageItemsLimit: number = 5;
+  pageNumber: number = 0;
+  pageItemsLimit: number = 5;
 
-  public loading = false;
-  public errorMessage = '';
+  loading = false;
+  errorMessage = '';
 
-  public activePage: string = this.PUBLISHED;
-  public mainPage = true;
+  activePage: string = this.PUBLISHED;
+  mainPage = true;
 
   subscription$!: Subscription;
   status!: string;
@@ -59,18 +59,17 @@ export class BaseArticleListComponent implements OnInit {
     @Inject(PLATFORM_ID) public platformId: any
   ) { }
 
-  public setArticlesReadingTime(articles: Article[]): void {
+  setArticlesReadingTime(articles: Article[]): void {
     for (const article of articles) {
       calcReadingTime(article);
     }
   }
 
-
-  public isAuthor(user: any, article: Article): boolean {
+  isAuthor(user: any, article: Article): boolean {
     return user?.id === article?.author?.id
   }
 
-  public openArticleEntryDialog(): void {
+  openArticleEntryDialog(): void {
     this.dialogEntryRef.open(ArticleEntryPopupComponent, {
       width: '850px',
       height: '350px',
@@ -81,7 +80,7 @@ export class BaseArticleListComponent implements OnInit {
     });
   }
 
-  public openArticleDeleteDialog(articleId: number | undefined): void {
+  openArticleDeleteDialog(articleId: number | undefined): void {
     this.dialogDeleteRef.open(DeleteArticlePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
@@ -91,7 +90,7 @@ export class BaseArticleListComponent implements OnInit {
     });
   }
 
-  public onScroll() {
+  onScroll() {
     if (this.notScrolly && this.notEmptyArticles && this.hasNext) {
       this.loadingMore = true;
       this.notScrolly = false;
@@ -99,59 +98,11 @@ export class BaseArticleListComponent implements OnInit {
     }
   }
 
-  public fetchMoreArticles(): any {
-    if (!this.hasNext) {
-      this.loadingMore = false;
-      this.notScrolly = true;
-      this.notEmptyArticles = false;
-      return;
-    }
-
-    this.scrollyPageNumber += 1;
-
-    const queryParam = this.route.snapshot.queryParamMap.get('filter')!;
-
-    if (queryParam === this.DRAFT) {
-      return this.articleService
-        .findAllMyArticles(
-          this.scrollyPageNumber,
-          this.pageItemsLimit,
-          this.DRAFT
-        )
-        .subscribe((response: any) => this.handleNewFetchedArticles(response));
-    }
-
-    if (queryParam === 'in-review') {
-      return this.articleService
-        .findAllMyArticles(
-          this.scrollyPageNumber,
-          this.pageItemsLimit,
-          this.IN_REVIEW
-        )
-        .subscribe((response: any) => this.handleNewFetchedArticles(response));
-    }
-
-    this.articleService
-      .findAllMyArticles(
-        this.scrollyPageNumber,
-        this.pageItemsLimit,
-        this.PUBLISHED
-      )
-      .subscribe((response: any) => this.handleNewFetchedArticles(response));
+  fetchMoreArticles(): any {
+    // do nothing
   }
 
-  public sortArticle(list: Article[]): Article[] {
-    return list
-      ?.sort((a: any, b: any) => {
-        if (a.status != "PUBLISHED") {
-          return new Date(b.lastSavedAt).valueOf() - new Date(a.lastSavedAt).valueOf()
-        }
-        return new Date(b.publishedAt).valueOf() - new Date(a.publishedAt).valueOf()
-      })
-  }
-
-  public handleNewFetchedArticles({ content, hasNext }: any) {
-    // const newArticles = this.sortArticle(content);
+  handleFetchNewArticles({ content, hasNext }: any) {
     const newArticles = [...content];
     this.loadingMore = false;
     this.hasNext = hasNext;
@@ -165,9 +116,8 @@ export class BaseArticleListComponent implements OnInit {
     this.notScrolly = true;
   }
 
-  public handleFetchedArticles = {
+  handleFetchedArticles = {
     next: ({ content, hasNext }: any) => {
-      // this.articles = this.sortArticle(content);
       this.articles = content;
       this.setArticlesReadingTime(this.articles);
 
@@ -182,19 +132,20 @@ export class BaseArticleListComponent implements OnInit {
       this.loading = false;
       this.hasNext = false;
       this.articles = [];
-      this.errorMessage = 'Oops...!';
+      this.errorMessage = "Oops... une erreur s'est produite!";
     },
   };
 
-  public nFormater(totalReactions: number): string {
+  nFormater(totalReactions: number): string {
     return nFormatter(totalReactions);
   }
 
-  public capitalize(str: string): string {
+  capitalize(str: string): string {
     return capitalizeString(str);
   }
 
   ngOnInit(): void {
+    // do nothing.
   }
 
 }

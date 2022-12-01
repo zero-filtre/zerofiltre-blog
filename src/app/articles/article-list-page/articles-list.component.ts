@@ -20,7 +20,7 @@ import { NavigationService } from '../../services/navigation.service';
   styleUrls: ['./articles-list.component.css'],
 })
 export class ArticlesListComponent extends BaseArticleListComponent implements OnInit, OnDestroy {
-  public tagList!: Tag[];
+  tagList!: Tag[];
 
   RECENT = 'recent';
   POPULAR = 'popular';
@@ -29,22 +29,22 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
   dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg'
 
-  public noArticlesAvailable!: boolean;
-  public loadArticlesErrorMessage!: boolean;
+  noArticlesAvailable!: boolean;
+  loadArticlesErrorMessage!: boolean;
 
-  public activePage: string = this.RECENT;
-  public mainPage = true;
+  activePage: string = this.RECENT;
+  mainPage = true;
 
-  public openedTagsDropdown = false;
-  public activeTag!: string;
+  openedTagsDropdown = false;
+  activeTag!: string;
 
 
-  public tags$!: Subscription;
-  public articles$!: Subscription;
-  public status!: string;
-  public tag!: string;
+  tags$!: Subscription;
+  articles$!: Subscription;
+  status!: string;
+  tag!: string;
 
-  public nberOfViews: Observable<any>;
+  nberOfViews: Observable<any>;
 
   constructor(
     public loadEnvService: LoadEnvService,
@@ -63,7 +63,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
     super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, platformId)
   }
 
-  public fetchListOfTags(): void {
+  fetchListOfTags(): void {
     this.loading = true;
     this.tags$ = this.articleService
       .getListOfTags()
@@ -79,7 +79,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
       })
   }
 
-  public sortByTag(tagName: any): void {
+  sortByTag(tagName: any): void {
     this.openedTagsDropdown = false;
     this.activeTag = tagName;
 
@@ -89,35 +89,35 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
     this.notEmptyArticles = true;
   }
 
-  public fetchRecentArticles(): void {
+  fetchRecentArticles(): void {
     this.loading = true;
     this.articles$ = this.articleService
-      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit)
+      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit, this.PUBLISHED)
       .subscribe(this.handleFetchedArticles)
   }
 
-  public fetchPopularArticles(): void {
+  fetchPopularArticles(): void {
     this.loading = true;
     this.articles$ = this.articleService
-      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit, this.POPULAR)
+      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit, this.PUBLISHED, this.POPULAR)
       .subscribe(this.handleFetchedArticles)
   }
 
-  public fetchTrendingArticles(): void {
+  fetchTrendingArticles(): void {
     this.loading = true;
     this.articles$ = this.articleService
-      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit, this.TRENDING)
+      .findAllArticleByFilter(this.pageNumber, this.pageItemsLimit, this.PUBLISHED, this.TRENDING)
       .subscribe(this.handleFetchedArticles)
   }
 
-  public fetchArticlesByTag(tagName: string): void {
+  fetchArticlesByTag(tagName: string): void {
     this.loading = true;
     this.articles$ = this.articleService
       .findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName)
       .subscribe(this.handleFetchedArticles)
   }
 
-  public sortBy(trendName: string): void {
+  sortBy(trendName: string): void {
     this.activeTag = '';
 
     if (trendName === this.RECENT) {
@@ -146,31 +146,51 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
     this.notEmptyArticles = true;
   }
 
-  public fetchMoreArticles() {
+  fetchMoreArticles(): any {
     this.scrollyPageNumber += 1;
+
     const queryParamOne = this.route.snapshot.queryParamMap.get('filter')!;
     const queryParamTwo = this.route.snapshot.queryParamMap.get('tag')!;
 
     if (queryParamOne === this.POPULAR) {
-      this.articleService.findAllArticleByFilter(this.scrollyPageNumber, this.pageItemsLimit, this.POPULAR)
-        .subscribe((response: any) => this.handleNewFetchedArticles(response));
-      return
+      return this.articleService
+        .findAllArticleByFilter(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          this.PUBLISHED,
+          this.POPULAR
+        )
+        .subscribe((response: any) => this.handleFetchNewArticles(response));
     }
 
     if (queryParamOne === this.TRENDING) {
-      this.articleService.findAllArticleByFilter(this.scrollyPageNumber, this.pageItemsLimit, this.TRENDING)
-        .subscribe((response: any) => this.handleNewFetchedArticles(response));
-      return
+      return this.articleService
+        .findAllArticleByFilter(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          this.PUBLISHED,
+          this.TRENDING
+        )
+        .subscribe((response: any) => this.handleFetchNewArticles(response));
     }
 
     if (queryParamTwo) {
-      this.articleService.findAllArticlesByTag(this.scrollyPageNumber, this.pageItemsLimit, queryParamTwo)
-        .subscribe((response: any) => this.handleNewFetchedArticles(response));
-      return
+      return this.articleService
+        .findAllArticlesByTag(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          queryParamTwo
+        )
+        .subscribe((response: any) => this.handleFetchNewArticles(response));
     }
 
-    this.articleService.findAllArticleByFilter(this.scrollyPageNumber, this.pageItemsLimit)
-      .subscribe((response: any) => this.handleNewFetchedArticles(response));
+    this.articleService
+      .findAllArticleByFilter(
+        this.scrollyPageNumber,
+        this.pageItemsLimit,
+        this.PUBLISHED,
+      )
+      .subscribe((response: any) => this.handleFetchNewArticles(response));
 
   }
 
