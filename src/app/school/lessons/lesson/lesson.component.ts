@@ -22,7 +22,7 @@ import { ChapterService } from '../../chapters/chapter.service';
 export class LessonComponent implements OnInit, OnDestroy {
   course!: Course;
   lesson!: any;
-  loading: boolean = false;
+  loading: boolean;
 
   lessonID!: any;
   courseID!: any;
@@ -65,25 +65,24 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.messageService.openSnackBarError(err?.statusText, '');
         return throwError(() => err?.message)
       }))
-      .subscribe(data => {
-        this.lesson = data;
-        this.loading = false;
+      .subscribe((data: Lesson) => {
+        setTimeout(() => {
+          this.lesson = data;
+          this.lessonVideo$ = this.vimeoService.getOneVideo(data.video);
+          this.loading = false;
+        }, 1000);
       })
 
   }
 
   loadCourseData(courseId: any) {
-    this.loading = true;
-
     this.courseService.findCourseById(courseId)
       .pipe(catchError(err => {
-        this.loading = false;
         this.messageService.openSnackBarError(err?.statusText, '');
         return throwError(() => err?.message)
       }))
       .subscribe(data => {
         this.course = data;
-        this.loading = false;
       })
   }
 
@@ -106,7 +105,6 @@ export class LessonComponent implements OnInit, OnDestroy {
       params => {
         this.lessonID = params.get('lesson_id')!;
         this.loadLessonData(this.lessonID, this.courseID);
-        this.lessonVideo$ = this.vimeoService.getOneVideo();
       }
     );
 

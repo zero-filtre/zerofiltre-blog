@@ -10,7 +10,7 @@ body {
 
 /* Always shox Snackbar popup on top of other elements */
 .cdk-overlay-pane {
-  z-index: 999;
+  @apply !mt-20 lg:!mt-16;
 }
 #privacypolicies-com---nb {
   z-index: 888;
@@ -102,7 +102,6 @@ img {
 .warning-snackbar,
 .info-snackbar {
   @apply text-skin-link;
-  margin-top: 100px !important;
 }
 
 .success-snackbar button,

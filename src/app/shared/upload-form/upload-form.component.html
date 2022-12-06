@@ -1,0 +1,39 @@
+<div class="upload flex items-center justify-center p-2">
+    <form class="w-full space-y-8">
+        <div class="progress flex items-center gap-2">
+            <mat-progress-bar class="progress-bar !h-4 rounded-lg" mode="determinate" [value]="uploadProgress"
+                *ngIf="uploadProgress">
+            </mat-progress-bar>
+            <mat-icon aria-label="cancel upload"
+                class="cancel-upload text-primary-200 cursor-pointer hover:text-error transition-colors duration-300"
+                (click)="cancelUpload()" *ngIf="uploadProgress">
+                delete_forever</mat-icon>
+        </div>
+
+        <div class="name text-center">
+            <span class="text-xl text-skin-base">{{fileName}}</span>
+        </div>
+
+        <div class="action-buttons flex justify-center gap-1 sm:gap-3">
+            <button aria-labelledby="cancel"
+                class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200"
+                (click)="onNoClick()">
+                {{'app.cancel' | translate}}
+            </button>
+
+            <button type="submit" [disabled]="loading" (click)="uploadVideoFile(0)" [ngClass]="{'opacity-50': loading}"
+                aria-labelledby="Login button"
+                class="px-4 py-2 border-2 border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-white hover:text-white hover:bg-primary-600 hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
+
+                <span *ngIf="!loading">Charger la video</span>
+                <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                    preserveAspectRatio="xMidYMid">
+                    <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10" r="35"
+                        stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                        style="animation-play-state:paused"></circle>
+                </svg>
+            </button>
+        </div>
+    </form>
+</div>
