@@ -125,7 +125,11 @@
       "duration": "9:20",
       "chapterId": 1,
       "courseId": 1,
-      "id": 2
+      "id": 2,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": "https://vimeo.com/778448877",
+      "ressources": []
     },
     {
       "title": "lesson 3",
@@ -135,7 +139,11 @@
       "duration": "9:20",
       "chapterId": 1,
       "courseId": 1,
-      "id": 3
+      "id": 3,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": "",
+      "ressources": []
     },
     {
       "title": "lesson 3",

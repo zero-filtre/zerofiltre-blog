@@ -9,9 +9,13 @@ body {
 }
 
 /* Always shox Snackbar popup on top of other elements */
-.cdk-overlay-pane {
-  @apply !mt-20 lg:!mt-16;
+.cdk-overlay-pane:has(> .mat-snack-bar-container) {
+  @apply !mt-[72px] lg:!mt-16;
 }
+.mat-snack-bar-container {
+  @apply lg:!max-w-none;
+}
+
 #privacypolicies-com---nb {
   z-index: 888;
 }

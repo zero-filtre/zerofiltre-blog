@@ -21,7 +21,7 @@ import { ChapterService } from '../../chapters/chapter.service';
 })
 export class LessonComponent implements OnInit, OnDestroy {
   course!: Course;
-  lesson!: any;
+  lesson!: Lesson;
   loading: boolean;
 
   lessonID!: any;
@@ -68,7 +68,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       .subscribe((data: Lesson) => {
         setTimeout(() => {
           this.lesson = data;
-          this.lessonVideo$ = this.vimeoService.getOneVideo(data.video);
+          this.lessonVideo$ = this.vimeoService.getOneVideo(data?.video);
           this.loading = false;
         }, 1000);
       })
@@ -104,6 +104,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe(
       params => {
         this.lessonID = params.get('lesson_id')!;
+        this.courseID = params.get('course_id')!;
         this.loadLessonData(this.lessonID, this.courseID);
       }
     );

@@ -38,22 +38,6 @@ export class VimeoService {
       )
   }
 
-  getRandomVideo(): Observable<any> {
-    const ramdomurls = [
-      "https://vimeo.com/355927009",
-      "https://vimeo.com/76979871?h=8272103f6e",
-      "https://vimeo.com/59569869",
-    ]
-
-    const url = ramdomurls[Math.floor(Math.random() * ramdomurls.length)];
-
-    return of(url)
-      .pipe(
-        map(data => data),
-        shareReplay()
-      )
-  }
-
   getAllVideos(user: any): Observable<any[]> {
     return this.http.get<any[]>('https://vimeo.com/api/v2/' + user + '/videos.json')
       .pipe(
@@ -87,11 +71,6 @@ export class VimeoService {
     return this.http.post<any>(`${apiBase}/me/videos`, body, httpOptions)
   }
 
-  uploadVideoFile(url: string, fileData: any): Observable<any> {
-    return this.http.post<any>(url, fileData)
-      .pipe(shareReplay())
-  }
-
   uploadVideoFileTus(url: string, fileData: any, offset: number): Observable<any> {
     httpOptions.headers = httpOptions.headers
       .set('Tus-Resumable', '1.0.0')
@@ -103,6 +82,14 @@ export class VimeoService {
       reportProgress: true,
       observe: 'events',
     })
+      .pipe(shareReplay())
+  }
+
+  deleteVideoFile(videoID: string): Observable<any> {
+    httpOptions.headers = httpOptions.headers
+      .set('Authorization', `bearer ${this.accessToken}`)
+
+    return this.http.delete<any>(`${apiBase}/videos/${videoID}`, httpOptions)
       .pipe(shareReplay())
   }
 

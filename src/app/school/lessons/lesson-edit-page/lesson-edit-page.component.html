@@ -1,5 +1,5 @@
 <main class="site-container py-8">
-    <form *ngIf="lesson$ |async " [formGroup]="form" class="">
+    <form *ngIf="lesson$ |async as lesson" [formGroup]="form" class="">
         <div class="article-data-container flex flex-col lg:grid grid-cols-7 gap-10 lg:gap-14 items-stretch">
             <main class="col-span-5 order-2 lg:order-none">
                 <div class="mb-5">
@@ -83,7 +83,7 @@
 
                         <div *ngIf="video?.value"
                             class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
-                            (click)="deleteVideo()">x
+                            (click)="deleteVideo(lesson)">x
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class MessageService {
-  private durationLimit = 4;
+  private durationLimit = 5;
   private defaultHorizontalPosition = 'right'
   private defaultVerticalPosition = 'top'
   private OK = 'OK';

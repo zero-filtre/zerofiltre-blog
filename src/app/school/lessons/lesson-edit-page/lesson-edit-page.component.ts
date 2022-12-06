@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, Subject, switchMap, throwError, tap, debounceTime, distinctUntilChanged } from 'rxjs';
 import { File } from 'src/app/articles/article.model';
 import { Lesson, Ressource } from '../lesson';
@@ -10,7 +10,6 @@ import { NavigationService } from '../../../services/navigation.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { VimeoService } from '../../../services/vimeo.service';
 import { UploadFormComponent } from '../../../shared/upload-form/upload-form.component';
 
@@ -331,9 +330,20 @@ export class LessonEditPageComponent implements OnInit {
       )
   }
 
-  deleteVideo() {
-    this.video.setValue('');
-    this.typeInVideo('');
+  deleteVideo(lesson: Lesson) {
+    const videoID = lesson.video.split('/')[3];
+
+    this.vimeo.deleteVideoFile(videoID)
+      .pipe(catchError(err => {
+        this.uploading = false;
+        this.messageService.openSnackBarError('Un problème est survenu lors de la suppression!', 'OK')
+        return throwError(() => err.message)
+      }))
+      .subscribe(_data => {
+        this.video.setValue('');
+        this.typeInVideo('');
+        this.messageService.openSnackBarSuccess('La vidéo a bien été supprimée!', 'OK')
+      });
   }
 
   openUploadFormDialog(
