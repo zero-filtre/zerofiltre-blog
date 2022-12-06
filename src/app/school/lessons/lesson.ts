@@ -5,7 +5,7 @@ export interface Lesson {
     summary: string;
     thumbnail: string;
     video: string;
-    free: boolean;
+    private: boolean;
     type: any;
     duration: string;
     chapterId: string;

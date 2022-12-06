@@ -1,5 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
+import { Observable, switchMap, catchError, tap, throwError } from 'rxjs';
+import { Course } from '../course';
+import { ActivatedRoute } from '@angular/router';
+import { CourseService } from '../course.service';
+import { MessageService } from '../../../services/message.service';
+import { NavigationService } from '../../../services/navigation.service';
+import { Lesson } from '../../lessons/lesson';
+import { Chapter } from '../../chapters/chapter';
+import { ChapterService } from '../../chapters/chapter.service';
+import { LessonService } from '../../lessons/lesson.service';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -7,76 +17,56 @@ import { SeoService } from '../../../services/seo.service';
   styleUrls: ['./course-detail-page.component.css']
 })
 export class CourseDetailPageComponent implements OnInit {
+  courseID: string;
+  course$: Observable<Course>;
+  chapters$: Observable<Chapter[]>
+  lessons$: Observable<Lesson[]>;
 
-  public whySectionImage = 'https://ik.imagekit.io/lfegvix1p/inspiration__1__x-J3qi03A.svg';
-  public learnSectionImage = 'https://ik.imagekit.io/lfegvix1p/Meza-3_a9TUXnmba.svg';
-  public stepSectionImage = 'https://ik.imagekit.io/lfegvix1p/a_jWE-ysuJM.svg';
-  public practiceSectionImage = 'https://ik.imagekit.io/lfegvix1p/Mesa-1_rxodYJjzE.svg';
-  public masterSectionImage = 'https://ik.imagekit.io/lfegvix1p/inspiration_EkvzNOIP2U.svg';
-
-  public lessonGroupImage1 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
-  public lessonGroupImage2 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
-  public lessonGroupImage3 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
-
-
-  course: any = {
-    name: 'Apprenez le DDD',
-    chapters: [
-      {
-        title: 'Titre du chapitre 1',
-        lessons: [
-          {
-            type: 'video',
-            name: 'lesson numero 1',
-            duration: '3:15',
-            free: true
-          },
-          {
-            type: 'video',
-            name: 'lesson numero 2',
-            duration: '1:15',
-            free: false
-          },
-          {
-            type: 'doc',
-            name: 'lesson numero 3',
-            duration: '0:15',
-            free: true
-          },
-        ]
-      },
-      {
-        title: 'Titre du chapitre 2',
-        lessons: [
-          {
-            type: 'video',
-            name: 'lesson numero 1',
-            duration: '3:15',
-            free: true
-          },
-          {
-            type: 'doc',
-            name: 'lesson numero 2',
-            duration: '1:15',
-            free: false
-          },
-          {
-            type: 'video',
-            name: 'lesson numero 3',
-            duration: '0:15',
-            free: false
-          },
-        ]
-      }
-    ]
-  }
 
   constructor(
-    private seo: SeoService
+    private seo: SeoService,
+    private route: ActivatedRoute,
+    private courseService: CourseService,
+    private chapterService: ChapterService,
+    private lessonService: LessonService,
+    private notify: MessageService,
+    private navigate: NavigationService,
   ) { }
 
-  ngOnInit(): void {
-    // do nothing.
+  getCourse(): Observable<any> {
+    return this.courseService.findCourseById(this.courseID)
+      .pipe(
+        catchError(err => {
+          if (err.status === 404) {
+            this.notify.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
+            this.navigate.back();
+          }
+          return throwError(() => err?.message)
+        }),
+        tap(_ => {
+          // do nothing.
+        })
+      )
   }
 
+  ngOnInit(): void {
+    this.course$ = this.route.paramMap
+      .pipe(
+        switchMap(params => {
+          this.courseID = params.get('course_id');
+
+          this.chapters$ = this.chapterService
+            .fetchAllChapters(this.courseID)
+            .pipe(tap(data => console.log('CHAPTERS: ', data)))
+
+          this.lessons$ = this.lessonService
+            .fetchAllLessons(this.courseID)
+            .pipe(tap(data => console.log('LESSONS: ', data)))
+
+          return this.getCourse();;
+        })
+      );
+
+
+  }
 }

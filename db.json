@@ -2,8 +2,8 @@
   "courses": [
     {
       "title": "Ce cours",
-      "summary": "La description du cours a ete modifié...",
-      "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/rouge.jpeg",
+      "summary": "La description du cours a été modifié!",
+      "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_vert.jpeg",
       "firstLessonId": 1,
       "tags": [
         {
@@ -18,7 +18,29 @@
       "chapterCount": 0,
       "lessonCount": 0,
       "editorIds": [],
-      "id": 1
+      "id": 1,
+      "subTitle": "un premier sous titre",
+      "video": "https://www.youtube.com/embed/Zlryaon9iZM",
+      "sections": [
+        {
+          "position": "3",
+          "title": "Pourquoi choisir les modèles du DDD pour développer un logiciel?",
+          "content": "Le but d’un logiciel est de satisfaire au maximum le besoin du client.\n\nLe DDD (Domain-Driven Design) , en français, conception orientée par le métier, propose un ensemble de pratiques et méthodes aidant les concepteurs logiciels à se focaliser plus facilement, sur la conception d’une solution qui s’aligne aux besoins fonctionnels.\n\nL’application de ces méthodes intensifie la collaboration des experts métiers et techniques; facilitant ainsi la compréhension du problème et la mise en place de la résolution.\n\nDe plus, ces méthodes poussent les concepteurs à intégrer plus naturellement l’architecture en microservices, facteur capital de l’extensibilité d’un produit logiciel.\n\nTout ceci fait du DDD **une philosophie de conception pour réaliser de puissantes solutions pour le métier et par le métier**. Et ce, en ayant un produit parfaitement extensible.",
+          "image": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/Screenshot%202022-12-10%20at%2012.35.15%20PM.png"
+        },
+        {
+          "position": "1",
+          "title": "Apprenez le DDD par la pratique",
+          "content": "La philosophie DDD a été présentée au monde il y a plus de 15 ans. Cependant, sa perception demeure encore beaucoup trop théorique, sinon mal appliquée, d’où sa faible adoption.\n\nPour en saisir la quintessence, il faut se lancer dans une phase de réapprentissage avec application à des projets et besoins du monde réel. C’est ce que je vous propose pour ce parcours.\n\nBien sûr, nous allons commencer par présenter les grandes catégories de méthodes proposées par le DDD, puis, en sélectionner quelques-unes, pour rapidement les mettre en pratique en construisant une application de qualité, servant un métier délicat.",
+          "image": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/Screenshot%202022-12-10%20at%2012.46.55%20AM.png"
+        },
+        {
+          "position": "2",
+          "title": "Implémentez les méthodes du DDD étape par étapes",
+          "content": "Durant chaque module, vous réalisez un livrable.\n\nLes leçons débutent par de la théorie suivie d’exercices pratiques qui participent, peu à peu, à la réalisation du livrable.\n\nÀ la fin des 3 modules, vous aurez alors 3 livrables qui forment ensemble la pièce maîtresse de votre maîtrise du DDD.",
+          "image": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/Screen%20Shot%202022-11-02%20at%205.01.28%20PM.png"
+        }
+      ]
     },
     {
       "title": "Autre cours",
@@ -65,7 +87,6 @@
     {
       "title": "lesson 1 modifiée leçon",
       "content": "Let's do it well!\n\n![alt](https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/Screen%20Shot%202022-11-02%20at%205.01.28%20PM.png)\n",
-      "free": true,
       "type": "video",
       "duration": "9:20",
       "chapterId": 1,
@@ -115,12 +136,12 @@
           "name": "DV-2024-Instructions.pdf"
         }
       ],
-      "video": "https://vimeo.com/778254627"
+      "video": "https://vimeo.com/778254627",
+      "private": false
     },
     {
       "title": "lesson 2",
       "content": "Un petit contenu de la lecon",
-      "free": true,
       "type": "video",
       "duration": "9:20",
       "chapterId": 1,
@@ -129,12 +150,12 @@
       "summary": "Un petit resume de la lesson ici",
       "thumbnail": null,
       "video": "https://vimeo.com/778448877",
-      "ressources": []
+      "ressources": [],
+      "private": false
     },
     {
       "title": "lesson 3",
       "content": "Un petit contenu de la lecon",
-      "free": true,
       "type": "video",
       "duration": "9:20",
       "chapterId": 1,
@@ -143,17 +164,74 @@
       "summary": "Un petit resume de la lesson ici",
       "thumbnail": null,
       "video": "",
-      "ressources": []
+      "ressources": [],
+      "private": true
     },
     {
-      "title": "lesson 3",
+      "title": "lesson 4",
       "content": "Un petit contenu de la lecon",
-      "free": true,
       "type": "video",
       "duration": "9:20",
       "chapterId": 16,
       "courseId": 1,
-      "id": 4
+      "id": 4,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": null,
+      "ressources": [],
+      "private": true
+    },
+    {
+      "title": "Une autre lecon",
+      "content": "Un petit contenu de la lecon",
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 16,
+      "courseId": 1,
+      "id": 5,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": null,
+      "private": false,
+      "ressources": []
+    },
+    {
+      "title": "do it ",
+      "content": "Un petit contenu de la lecon",
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 17,
+      "courseId": 1,
+      "id": 6,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": null,
+      "private": true,
+      "ressources": []
+    },
+    {
+      "title": "Lesson 1",
+      "content": "Un petit contenu de la lecon",
+      "private": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 18,
+      "courseId": 2,
+      "id": 7,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": null,
+      "ressources": []
+    },
+    {
+      "title": "first lesson",
+      "content": "Un petit contenu de la lecon",
+      "private": false,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 19,
+      "courseId": 3,
+      "id": 8
     }
   ],
   "chapters": [
@@ -222,6 +300,21 @@
       "title": "chap 2",
       "courseId": 1,
       "id": 16
+    },
+    {
+      "title": "chap 3",
+      "courseId": 1,
+      "id": 17
+    },
+    {
+      "title": "chap 1",
+      "courseId": 2,
+      "id": 18
+    },
+    {
+      "title": "One chapter",
+      "courseId": 3,
+      "id": 19
     }
   ]
 }

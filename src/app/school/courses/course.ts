@@ -4,8 +4,8 @@ import { User } from "../../user/user.model";
 export interface Course {
     id: string;
     title: string;
+    subTitle: string;
     summary: string;
-    content: string;
     thumbnail: string;
     firstLessonId: string;
     tags: Tag[];
@@ -15,4 +15,14 @@ export interface Course {
     author: User;
     duration: string;
     editorIds: any[];
+    price: string;
+    video: string;
+    sections: Section[];
+}
+
+export interface Section {
+    position: string;
+    title: string;
+    content: string;
+    image: string;
 }

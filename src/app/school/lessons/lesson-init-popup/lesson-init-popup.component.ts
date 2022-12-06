@@ -35,7 +35,7 @@ export class LessonInitPopupComponent implements OnInit {
     {
       "title": this.title,
       "content": "Un petit contenu de la lecon",
-      "free": true,
+      "private": false,
       "type": "video",
       "duration": "9:20",
       "chapterId": this.data.chapterID,
