@@ -8,14 +8,22 @@
     <main class="py-5 text-skin-art">
         <div class="lesson_content site-container">
             <div class="progress_bar mb-5 mx-auto">
-                <progress id="bluebar" class="progress w-full ld:max-w-[500px] h-10" value="40" max="100"></progress>
+                <progress id="bluebar" class="progress w-full h-10" value="40" max="100"></progress>
             </div>
 
             <div class="vimeo_video shadow-lg rounded-sm overflow-hidden mt-6 lg:mt-8 mx-auto">
                 <div class="vid_wrapper w-full h-full">
                     <ng-container *ngIf="lesson">
-                        <iframe [src]="lessonVideo$ | async | vimeoUrl" class="" webkitallowfullscreen
-                            mozallowfullscreen allowfullscreen width="100%" height="100%" title="Lesson video"></iframe>
+                        <ng-container *ngIf="lesson.video">
+                            <iframe [src]="lessonVideo$ | async | vimeoUrl" class="" webkitallowfullscreen
+                                mozallowfullscreen allowfullscreen width="100%" height="100%"
+                                title="Lesson video"></iframe>
+                        </ng-container>
+                        <ng-container *ngIf="!lesson.video">
+                            <div class="text-lg lg:text-2xl h-full flex items-center justify-center">
+                                Aucun contenu video
+                            </div>
+                        </ng-container>
                     </ng-container>
 
                     <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
@@ -24,6 +32,7 @@
                                                                         'width.%': 100
                                                                     }">
                         </ngx-skeleton-loader>
+                        <div>Loading...</div>
                     </ng-container>
                 </div>
             </div>
@@ -32,7 +41,7 @@
                 <div *ngIf="lesson" class="markdown-content mt-2 lg:mt-8">
                     <div
                         class="lesson_name mb-6 lg:mb-10 text-3xl w-full font-black text-primary-600 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
-                        <h1>{{lesson.name}}</h1>
+                        <h1>{{lesson.title}}</h1>
                     </div>
                     <markdown
                         class="prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-ul:list-disc prose-ol:list-disc"
@@ -139,7 +148,7 @@
                     <div *ngIf="lesson" class="markdown-content mt-2 lg:mt-8">
                         <div
                             class="lesson_name mb-6 lg:mb-10 text-3xl w-full font-black text-primary-600 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
-                            <h1>{{lesson.name}}</h1>
+                            <h1>{{lesson.title}}</h1>
                         </div>
                         <markdown
                             class="prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-ul:list-disc prose-ol:list-disc"

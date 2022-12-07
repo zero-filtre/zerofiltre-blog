@@ -64,7 +64,7 @@
   "lessons": [
     {
       "title": "lesson 1 modifiée leçon",
-      "content": "L'echo de Dieu....!!!!!!!\n![alt](https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/Screen%20Shot%202022-11-02%20at%205.01.28%20PM.png)\n",
+      "content": "Let's do it well!\n\n![alt](https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/Screen%20Shot%202022-11-02%20at%205.01.28%20PM.png)\n",
       "free": true,
       "type": "video",
       "duration": "9:20",
@@ -73,7 +73,6 @@
       "id": 1,
       "summary": "Un petit resume de la lesson ici",
       "thumbnail": null,
-      "video": null,
       "ressources": [
         {
           "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/vert.jpeg",
@@ -115,7 +114,8 @@
           "type": "pdf",
           "name": "DV-2024-Instructions.pdf"
         }
-      ]
+      ],
+      "video": "https://vimeo.com/778254627"
     },
     {
       "title": "lesson 2",
@@ -125,7 +125,35 @@
       "duration": "9:20",
       "chapterId": 1,
       "courseId": 1,
-      "id": 2
+      "id": 2,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": "https://vimeo.com/778448877",
+      "ressources": []
+    },
+    {
+      "title": "lesson 3",
+      "content": "Un petit contenu de la lecon",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 1,
+      "courseId": 1,
+      "id": 3,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": "",
+      "ressources": []
+    },
+    {
+      "title": "lesson 3",
+      "content": "Un petit contenu de la lecon",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 16,
+      "courseId": 1,
+      "id": 4
     }
   ],
   "chapters": [
@@ -189,6 +217,11 @@
     {
       "title": "csqdsqd",
       "id": 15
+    },
+    {
+      "title": "chap 2",
+      "courseId": 1,
+      "id": 16
     }
   ]
 }

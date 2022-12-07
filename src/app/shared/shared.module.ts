@@ -30,6 +30,7 @@ import { BaseArticleListComponent } from './base-article-list/base-article-list.
 import { VimeoUrlPipe } from './pipes/vimeo-url.pipe';
 import { TextEditorComponent } from './ui/text-editor/text-editor.component';
 import { AutoSaveButtonComponent } from './ui/buttons/auto-save-button/auto-save-button.component';
+import { UploadFormComponent } from './upload-form/upload-form.component';
 
 const components = [
   AppShellRenderDirective,
@@ -41,7 +42,8 @@ const components = [
   TextEditorComponent,
   AutoSaveButtonComponent,
   NotFoundPageComponent,
-  VimeoUrlPipe
+  VimeoUrlPipe,
+  UploadFormComponent
 ];
 
 const modules = [

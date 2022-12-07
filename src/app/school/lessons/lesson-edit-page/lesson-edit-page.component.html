@@ -1,5 +1,5 @@
 <main class="site-container py-8">
-    <form *ngIf="lesson$ |async " [formGroup]="form" class="">
+    <form *ngIf="lesson$ |async as lesson" [formGroup]="form" class="">
         <div class="article-data-container flex flex-col lg:grid grid-cols-7 gap-10 lg:gap-14 items-stretch">
             <main class="col-span-5 order-2 lg:order-none">
                 <div class="mb-5">
@@ -62,15 +62,28 @@
                             </div>
                         </div>
 
-                        <div *ngIf="video?.value"
-                            class="video-wrapper shadow-lg overflow-hidden rounded-lg aspect-w-4 aspect-h-2">
-                            <app-image [classes]="'object-cover'" [sourceUrl]="video?.value!" [alt]="title.value">
-                            </app-image>
+                        <div *ngIf="video.value"
+                            class="vimeo_video shadow-lg rounded-sm overflow-hidden mt-6 lg:mt-8 mx-auto">
+                            <div class="vid_wrapper w-full h-full">
+                                <ng-container *ngIf="video.value">
+                                    <iframe [src]="lessonVideo$ | async | vimeoUrl" class="" webkitallowfullscreen
+                                        mozallowfullscreen allowfullscreen width="100%" height="100%"
+                                        title="Lesson video"></iframe>
+                                </ng-container>
+
+                                <ng-container *ngIf="isLoading" class="articleCoverImageSkeletonLoader">
+                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                                                                                'height.%': 100,
+                                                                                                'width.%': 100
+                                                                                            }">
+                                    </ngx-skeleton-loader>
+                                </ng-container>
+                            </div>
                         </div>
 
                         <div *ngIf="video?.value"
                             class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center w-5 h-5 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
-                            (click)="deleteVideo()">x
+                            (click)="deleteVideo(lesson)">x
                         </div>
                     </div>
                 </div>
@@ -164,7 +177,7 @@
 
             <aside class="col-span-2 order-1 lg:order-none">
                 <div class="sticky top-36 z-20 space-y-10">
-                    <nav class="top-nav font-semibold flex items-center justify-between lg:hidden">
+                    <nav class="top-nav mb-8 font-semibold flex items-center justify-between lg:hidden">
                         <button (click)="navigate.back()" class="text-primary-500 group flex items-center gap-1"
                             aria-label="navigate back button">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"

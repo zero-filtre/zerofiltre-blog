@@ -34,7 +34,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     // do nothing.
-    console.log('ENV: ---> ', environment.courseRoutesActive, typeof environment.courseRoutesActive, this.activeCourseModule)
   }
 
 }

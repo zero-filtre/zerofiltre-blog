@@ -10,7 +10,7 @@ export interface Lesson {
     duration: string;
     chapterId: string;
     courseId: string;
-    ressources?: Ressource[];
+    ressources: Ressource[];
 }
 
 export interface Ressource {

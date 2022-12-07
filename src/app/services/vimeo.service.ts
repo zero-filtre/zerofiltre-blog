@@ -1,33 +1,37 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, shareReplay, of } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  }),
+};
+
+const apiBase = 'https://api.vimeo.com';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VimeoService {
+  readonly accessToken = environment.vimeoToken;
+  readonly clientID = environment.vimeoClientID;
+  readonly clientSecret = environment.vimeoClientSecret;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getOneVideo(): Observable<any> {
-    const ramdomurls = [
-      "https://vimeo.com/355927009",
-      "https://vimeo.com/76979871?h=8272103f6e",
-      "https://vimeo.com/59569869",
-      // "https://vimeo.com/137307669",
-      // "https://vimeo.com/59295969",
-      // "https://vimeo.com/53170050",
-      // "https://vimeo.com/52431946",
-    ]
+  getVideo(videoID: string): Observable<any> {
+    httpOptions.headers = httpOptions.headers
+      .set('Authorization', `bearer ${this.accessToken}`)
 
-    const url =
-      ramdomurls[
-      Math.floor(Math.random() * ramdomurls.length)
-      ];
+    return this.http.get<any>(`${apiBase}/videos/${videoID}`, httpOptions)
+  }
 
-    return of(url)
+  getOneVideo(link: string): Observable<any> {
+    return of(link)
       .pipe(
         map(data => data),
         shareReplay()
@@ -49,4 +53,44 @@ export class VimeoService {
         shareReplay()
       )
   }
+
+  postVideo(file: File): Observable<any> {
+    const fileSize = file.size;
+
+    httpOptions.headers = httpOptions.headers
+      .set('Authorization', `bearer ${this.accessToken}`)
+      .set('Accept', 'application/vnd.vimeo.*+json;version=3.4')
+
+    const body = {
+      "upload": {
+        "approach": "tus",
+        "size": fileSize,
+      }
+    }
+
+    return this.http.post<any>(`${apiBase}/me/videos`, body, httpOptions)
+  }
+
+  uploadVideoFileTus(url: string, fileData: any, offset: number): Observable<any> {
+    httpOptions.headers = httpOptions.headers
+      .set('Tus-Resumable', '1.0.0')
+      .set('Upload-Offset', `${offset}`)
+      .set('Content-Type', 'application/offset+octet-stream')
+
+    return this.http.patch<any>(url, fileData, {
+      ...httpOptions,
+      reportProgress: true,
+      observe: 'events',
+    })
+      .pipe(shareReplay())
+  }
+
+  deleteVideoFile(videoID: string): Observable<any> {
+    httpOptions.headers = httpOptions.headers
+      .set('Authorization', `bearer ${this.accessToken}`)
+
+    return this.http.delete<any>(`${apiBase}/videos/${videoID}`, httpOptions)
+      .pipe(shareReplay())
+  }
+
 }
