@@ -9,6 +9,7 @@ import { LoadEnvService } from '../services/load-env.service';
 import { MessageService } from '../services/message.service';
 import { AuthService } from './auth.service';
 import { User } from './user.model';
+import { NavigationService } from '../services/navigation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,15 +19,16 @@ export class UserResolver implements Resolve<User> {
   constructor(
     private loadEnvService: LoadEnvService,
     private authService: AuthService,
-    private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private navigate: NavigationService
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
-    return this.authService.findUserProfile(route.params?.userID)
+    return this.authService
+      .findUserProfile(route.params?.userID)
       .pipe(
         catchError(_ => {
-          this.router.navigateByUrl('/articles');
+          this.navigate.back();
           this.messageService.openSnackBarError("Oops ce profil n'existe pas 😣!", '');
           return EMPTY;
         })

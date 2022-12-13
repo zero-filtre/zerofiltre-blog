@@ -24,23 +24,12 @@ export class PublicProfileComponent implements OnInit {
     public authService: AuthService,
     private translate: TranslateService,
     private route: ActivatedRoute,
-    private router: Router
   ) { }
 
 
   ngOnInit(): void {
-    // this.route.paramMap.subscribe(
-    //   params => {
-    //     this.userID = params.get('userID')!;
-    //     this.getUserProfile(this.userID);
-    //   }
-    // );
-
     this.user$ = this.route.data
       .pipe(
-        // tap(data => {
-        //   if (data.user?.fullName == this.authService?.currentUsr?.fullName) this.router.navigateByUrl('/user/profile')
-        // }),
         map(data => data.user)
       )
 

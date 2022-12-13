@@ -15,6 +15,8 @@ import { AppShellRenderDirective } from '../directives/app-shell-render.directiv
 import { AppShellNoRenderDirective } from '../directives/app-shell-no-render.directive';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MarkdownModule } from 'ngx-markdown';
@@ -31,6 +33,7 @@ import { VimeoUrlPipe } from './pipes/vimeo-url.pipe';
 import { TextEditorComponent } from './ui/text-editor/text-editor.component';
 import { AutoSaveButtonComponent } from './ui/buttons/auto-save-button/auto-save-button.component';
 import { UploadFormComponent } from './upload-form/upload-form.component';
+import { UrlPipe } from './pipes/url.pipe';
 
 const components = [
   AppShellRenderDirective,
@@ -43,6 +46,7 @@ const components = [
   AutoSaveButtonComponent,
   NotFoundPageComponent,
   VimeoUrlPipe,
+  UrlPipe,
   UploadFormComponent
 ];
 
@@ -61,7 +65,9 @@ const modules = [
   ReactiveFormsModule,
   InfiniteScrollModule,
   TranslateModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatSelectModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

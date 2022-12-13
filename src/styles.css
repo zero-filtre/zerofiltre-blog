@@ -59,6 +59,10 @@ img {
   @apply mx-auto px-4 xl:px-[5%];
 }
 
+.edit-section-popup-panel {
+  @apply !overflow-y-scroll;
+}
+
 .article-popup-panel {
   max-width: 90vw !important;
   @apply !h-[300px] sm:!h-[350px];

@@ -142,7 +142,7 @@
                                 class="editor-textarea rounded-xl shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
                                 rows="5" cols="33" placeholder="{{ 'articleEntryEdit.summaryPlaceholder' | translate }}"
                                 id="summary" formControlName="summary" required minlength="20" maxlength="250">
-                                </textarea>
+                            </textarea>
                             <div *ngIf="summary?.invalid && summary?.dirty" class="">
                                 <div *ngIf="summary?.errors?.['required']"
                                     class="mt-2 text-xs sm:text-sm text-error italic">
@@ -184,8 +184,6 @@
                                         pour ajouter des tags
                                     </p>
                                 </ng-container>
-
-                                <!-- absolute top-full inset-x-0 -->
                             </div>
 
                             <ul *ngIf="tagsDropdownOpened"

@@ -21,12 +21,12 @@ h2 {
 }
 
 h3 {
-  @apply text-2xl lg:text-3xl font-medium mb-12 relative after:absolute after:w-32 lg:after:w-20 after:h-1.5 after:bg-accent-400 after:-bottom-6 after:left-[calc(50%-4rem)] lg:after:left-0 after:rounded-sm;
-  @apply text-center lg:text-left;
+  @apply text-2xl lg:text-3xl font-medium mb-12 relative after:absolute after:w-32 lg:after:w-24 after:h-1.5 after:bg-accent-400 after:-bottom-6 after:left-[calc(50%-4rem)] after:rounded-sm;
+  @apply text-center;
 }
 
 p {
-  @apply text-lg lg:text-xl font-normal !mb-5 last:!mb-0 text-center lg:text-left;
+  @apply text-lg lg:text-xl font-normal !mb-5 last:!mb-0 text-center;
 }
 
 .green-divider {
@@ -35,6 +35,10 @@ p {
 
 iframe {
   border: none;
+}
+
+.section:nth-of-type(even) {
+  @apply bg-white;
 }
 
 @media (min-width: 1024px) {

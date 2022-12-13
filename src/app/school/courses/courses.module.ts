@@ -3,10 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { CoursesRoutingModule } from './courses-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CourseSectionEditComponent } from './course-section-edit/course-section-edit.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CourseSectionEditComponent
+  ],
   imports: [
     CommonModule,
     CoursesRoutingModule,

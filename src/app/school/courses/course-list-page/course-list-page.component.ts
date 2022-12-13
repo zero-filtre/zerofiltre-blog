@@ -36,10 +36,6 @@ export class CourseListPageComponent implements OnInit {
   openedTagsDropdown = false;
   activeTag!: string;
 
-  canAccess: boolean = false;
-  canEdit: boolean = false;
-
-
   constructor(
     public authService: AuthService,
     private dialogDeleteRef: MatDialog,
@@ -50,21 +46,18 @@ export class CourseListPageComponent implements OnInit {
 
   onScroll() { }
 
-  isAuthor(user: any, cours: any): boolean {
-    return user?.id === cours?.author?.id
-  }
-
   canAccessCourse(courseId: any) {
-    this.canAccess = !!(this.authService?.currentUsr as User)?.courseIds.includes(courseId) || this.authService.isAdmin;
-    return this.canAccess;
+    const user = this.authService?.currentUsr as User
+    if (!user) return false;
+
+    return user?.courseIds.includes(courseId) || this.authService.isAdmin;
   }
 
   canEditCourse(course: Course) {
     const userId = (this.authService?.currentUsr as User)?.id
     if (!userId) return false;
 
-    this.canEdit = course?.author?.id === userId || course?.editorIds?.includes(userId) || this.authService.isAdmin;
-    return this.canEdit;
+    return course?.author?.id === userId || course?.editorIds?.includes(userId) || this.authService.isAdmin;
   }
 
   openCourseEntryDialog(): void {

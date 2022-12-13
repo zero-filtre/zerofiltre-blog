@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { catchError, Observable, Subject, throwError, tap, switchMap } from 'rxjs';
-import { Course } from '../course';
+import { Course, Section } from '../course';
 import { CourseService } from '../course.service';
 import { MessageService } from '../../../services/message.service';
 import { NavigationService } from '../../../services/navigation.service';
 import { File } from 'src/app/articles/article.model';
 import { FileUploadService } from '../../../services/file-upload.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CourseSectionEditComponent } from '../course-section-edit/course-section-edit.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-course-edit-page',
@@ -24,6 +26,7 @@ export class CourseEditPageComponent implements OnInit {
 
   course$: Observable<Course>;
   courseID!: string;
+  course: Course;
 
   form!: FormGroup;
 
@@ -32,27 +35,21 @@ export class CourseEditPageComponent implements OnInit {
   uploading: boolean;
 
   private TitleText$ = new Subject<string>();
+  private SubTitleText$ = new Subject<string>();
   private SummaryText$ = new Subject<string>();
   private ThumbnailText$ = new Subject<string>();
+  private VideoText$ = new Subject<string>();
+  private SectionsText$ = new Subject<string>();
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private route: ActivatedRoute,
     private courseService: CourseService,
     private messageService: MessageService,
     private navigate: NavigationService,
-    private fileService: FileUploadService
+    private fileService: FileUploadService,
+    private dialogSectionRef: MatDialog
   ) { }
-
-  ngOnInit(): void {
-    this.course$ = this.route.paramMap.pipe(
-      switchMap(params => {
-        this.courseID = params.get('course_id');
-        return this.getCourse();;
-      })
-    );
-  }
 
   getCourse(): Observable<any> {
     return this.courseService.findCourseById(this.courseID)
@@ -64,7 +61,10 @@ export class CourseEditPageComponent implements OnInit {
           }
           return throwError(() => err?.message)
         }),
-        tap(data => this.initForm(data))
+        tap(data => {
+          this.initForm(data);
+          this.course = data;
+        })
       )
   }
 
@@ -73,8 +73,10 @@ export class CourseEditPageComponent implements OnInit {
     this.courseService.updateCourse(this.form.value)
       .subscribe({
         next: (_res: Course) => {
-          this.isSaving = false;
-          this.messageService.openSnackBarSuccess('Enregistrement réussie !', '');
+          setTimeout(() => {
+            this.isSaving = false;
+            this.messageService.openSnackBarSuccess('Enregistrement réussi !', '');
+          }, 1000);
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
@@ -83,8 +85,8 @@ export class CourseEditPageComponent implements OnInit {
       })
   }
 
-  updateCourseCoverImage() {
-    const course = { id: this.courseID, thumbnail: this.thumbnail.value }
+  updateImageValue() {
+    const course = { ...this.course, thumbnail: this.thumbnail.value };
     this.courseService.updateCourse(course)
       .subscribe({
         next: (_res: Course) => {
@@ -103,28 +105,82 @@ export class CourseEditPageComponent implements OnInit {
     this.form = this.fb.group({
       id: [course.id],
       title: [course.title, [Validators.required]],
+      subTitle: [course.subTitle],
       summary: [courseSummary, [Validators.required]],
       thumbnail: [course.thumbnail],
+      video: [course.video],
+      sections: this.fb.array(this.loadFormSections(course))
     })
   }
 
+  isArray(obj: any) {
+    return obj?.hasOwnProperty('length');
+  }
+  loadFormSections(course: Course) {
+    if (!this.isArray(course.sections)) return [];
+    return course.sections.map(section => this.buildSectionItem(section));
+  }
+  buildSectionItem(section: Section): FormGroup {
+    return new FormGroup({
+      position: new FormControl(section.position),
+      title: new FormControl(section.title),
+      content: new FormControl(section.content),
+      image: new FormControl(section.image),
+    });
+  }
+
   get title() { return this.form.get('title'); }
+  get subTitle() { return this.form.get('subTitle'); }
   get summary() { return this.form.get('summary'); }
   get thumbnail() { return this.form.get('thumbnail'); }
+  get video() { return this.form.get('video'); }
+  get sections() { return this.form.get('sections') as FormArray; }
 
   getValue(event: Event): string {
     event.preventDefault();
     return (event.target as HTMLTextAreaElement).value
   }
-
   typeInTitle(content: string) {
     this.TitleText$.next(content);
+  }
+  typeInSubTitle(content: string) {
+    this.SubTitleText$.next(content);
   }
   typeInSummary(content: string) {
     this.SummaryText$.next(content);
   }
   typeInThumbnail(content: string) {
     this.ThumbnailText$.next(content);
+  }
+  typeInVideo(content: string) {
+    this.VideoText$.next(content);
+  }
+  typeInSections() {
+    this.SectionsText$.next(this.sections.value);
+  }
+
+  addSection(section: Section, prevPos: string) {
+    const existingIndex = this.sections.value.findIndex((sect: Section) => sect.position == prevPos);
+
+    if (existingIndex >= 0) {
+      this.removeSection(existingIndex);
+    }
+
+    const sectionItem = this.fb.group({
+      position: section.position,
+      title: section.title,
+      content: section.content,
+      image: section.image,
+    })
+
+    this.sections.push(sectionItem)
+    this.messageService.openSnackBarSuccess('Section ajoutée!', 'OK');
+    this.typeInSections();
+  }
+
+  removeSection(index: number) {
+    this.sections.removeAt(index);
+    this.typeInSections();
   }
 
   onFileSelected(event: any) {
@@ -133,11 +189,11 @@ export class CourseEditPageComponent implements OnInit {
       inProgress: false,
       progress: 0
     };
-
-    this.uploadCoverImage();
   }
 
-  uploadCoverImage() {
+  uploadImage(event: any, imageField: any) {
+    this.onFileSelected(event);
+
     this.uploading = true;
     this.fileService.uploadFile(this.file)
       .pipe(catchError(err => {
@@ -147,24 +203,50 @@ export class CourseEditPageComponent implements OnInit {
       .subscribe((event: any) => {
         if (typeof (event) === 'object') {
           this.uploading = false;
-          this.thumbnail?.setValue(event.url);
-          this.updateCourseCoverImage();
+          imageField?.setValue(event.url);
+          this.updateImageValue();
         }
       })
   }
 
-  removeCoverImage() {
+  removeImage(imageField: any) {
     this.uploading = true;
-    this.fileService.deleteFile(this.thumbnail as any, this.ThumbnailText$)
+    this.fileService.deleteFile(imageField)
       .pipe(catchError(err => {
         this.uploading = false;
         return throwError(() => err.message);
       }))
       .subscribe(() => {
         this.uploading = false;
-        this.thumbnail?.setValue('');
-        this.updateCourseCoverImage();
+        imageField?.setValue('');
+        this.updateImageValue();
       })
+  }
+
+  openSectionEditDialog(section: Section = null): void {
+    this.dialogSectionRef.open(CourseSectionEditComponent, {
+      panelClass: 'edit-section-popup-panel',
+      data: {
+        section,
+        sections: this.sections.value,
+        uploading: this.uploading,
+        onSave: (section: Section, prevPos: string) => this.addSection(section, prevPos),
+        uploadImage: (event: any, field: any) => this.uploadImage(event, field),
+        removeImage: (field: any) => this.removeImage(field)
+      },
+      width: '100%',
+      disableClose: true
+    });
+  }
+
+  ngOnInit(): void {
+    this.course$ = this.route.paramMap
+      .pipe(
+        switchMap(params => {
+          this.courseID = params.get('course_id');
+          return this.getCourse();;
+        })
+      );
   }
 
 }

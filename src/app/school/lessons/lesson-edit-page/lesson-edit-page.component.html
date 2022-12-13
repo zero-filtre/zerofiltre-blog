@@ -203,6 +203,14 @@
                         [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
                         (publishEvent)="publishLesson()">
                     </app-auto-save-button>
+
+                    <div class="mb-10">
+                        <label for="content" class="block text-base font-medium leading-5 text-skin-base mb-5">
+                            Visibilité:
+                        </label>
+                        <mat-slide-toggle [color]="color" [checked]="private.value" (change)="typeInPrivacy($event)"
+                            formControlName="private">Privée</mat-slide-toggle>
+                    </div>
                 </div>
             </aside>
         </div>

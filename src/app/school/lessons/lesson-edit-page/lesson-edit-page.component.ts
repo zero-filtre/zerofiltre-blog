@@ -12,6 +12,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { VimeoService } from '../../../services/vimeo.service';
 import { UploadFormComponent } from '../../../shared/upload-form/upload-form.component';
+import { ThemePalette } from '@angular/material/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-lesson-edit-page',
@@ -20,6 +22,7 @@ import { UploadFormComponent } from '../../../shared/upload-form/upload-form.com
 })
 export class LessonEditPageComponent implements OnInit {
   form!: FormGroup;
+  color: ThemePalette = 'accent';
 
   file: File = {
     data: null,
@@ -52,6 +55,7 @@ export class LessonEditPageComponent implements OnInit {
   private ThumbnailText$ = new Subject<string>();
   private VideoText$ = new Subject<string>();
   public EditorText$ = new Subject<string>();
+  public PrivacyText$ = new Subject<boolean>();
   private RessourcesText$ = new Subject<string>();
 
   constructor(
@@ -99,6 +103,7 @@ export class LessonEditPageComponent implements OnInit {
       summary: [lessonSummary, [Validators.required]],
       thumbnail: [lesson.thumbnail],
       video: [lesson.video],
+      private: [lesson.private],
       content: [lessonContent],
       ressources: this.fb.array(this.loadFormRessources(lesson))
     })
@@ -124,6 +129,7 @@ export class LessonEditPageComponent implements OnInit {
   get summary() { return this.form.get('summary'); }
   get thumbnail() { return this.form.get('thumbnail'); }
   get video() { return this.form.get('video'); }
+  get private() { return this.form.get('private'); }
   get ressources() { return this.form.get('ressources') as FormArray; }
 
   getValue(event: Event): string {
@@ -138,6 +144,9 @@ export class LessonEditPageComponent implements OnInit {
   }
   typeInThumbnail(content: string) {
     this.ThumbnailText$.next(content);
+  }
+  typeInPrivacy(event: MatSlideToggleChange) {
+    this.PrivacyText$.next(event.checked);
   }
   typeInVideo(content: string) {
     this.VideoText$.next(content);
@@ -390,7 +399,8 @@ export class LessonEditPageComponent implements OnInit {
       this.EditorText$,
       this.SummaryText$,
       this.ThumbnailText$,
-      this.VideoText$
+      this.VideoText$,
+      this.PrivacyText$
     ]
 
     fields.forEach((el: Observable<any>) => {
