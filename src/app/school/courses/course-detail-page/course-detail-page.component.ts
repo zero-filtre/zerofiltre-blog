@@ -10,6 +10,8 @@ import { Lesson } from '../../lessons/lesson';
 import { Chapter } from '../../chapters/chapter';
 import { ChapterService } from '../../chapters/chapter.service';
 import { LessonService } from '../../lessons/lesson.service';
+import { AuthService } from '../../../user/auth.service';
+import { User } from '../../../user/user.model';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -21,6 +23,7 @@ export class CourseDetailPageComponent implements OnInit {
   course$: Observable<Course>;
   chapters$: Observable<Chapter[]>
   lessons$: Observable<Lesson[]>;
+  course: Course;
 
 
   constructor(
@@ -31,7 +34,16 @@ export class CourseDetailPageComponent implements OnInit {
     private lessonService: LessonService,
     private notify: MessageService,
     private navigate: NavigationService,
+    private authService: AuthService
   ) { }
+
+  get canAccessCourse() {
+    const userId = (this.authService?.currentUsr as User)?.id
+    if (!userId) return false;
+
+    // TODO: We would add the course's subscriber as well here to make it different from the canEditCourse function
+    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin;
+  }
 
   getCourse(): Observable<any> {
     return this.courseService.findCourseById(this.courseID)
@@ -43,9 +55,7 @@ export class CourseDetailPageComponent implements OnInit {
           }
           return throwError(() => err?.message)
         }),
-        tap(_ => {
-          // do nothing.
-        })
+        tap(data => this.course = data)
       )
   }
 

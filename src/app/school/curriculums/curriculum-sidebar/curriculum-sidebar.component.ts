@@ -21,7 +21,11 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() canEdit!: boolean;
   @Input() course!: Course;
   @Input() lessons!: Lesson[];
+  @Input() activeLessonID: string;
   @Input() chapters!: Chapter[];
+  @Input() canAccessCourse!: boolean;
+
+  currentRoute: string;
 
   constructor(
     public authService: AuthService,
@@ -32,6 +36,10 @@ export class CurriculumSidebarComponent implements OnInit {
     private dialogDeleteLessonRef: MatDialog,
     private router: Router
   ) { }
+
+  isActiveLesson(lessonID: string) {
+    return lessonID == this.activeLessonID
+  }
 
   openChapterInitDialog(courseId: any): void {
     this.dialogNewChapterRef.open(ChapterInitPopupComponent, {
@@ -92,7 +100,7 @@ export class CurriculumSidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // do nothing.
+    this.currentRoute = this.router.url;
   }
 
 }

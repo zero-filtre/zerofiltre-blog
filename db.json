@@ -1,7 +1,7 @@
 {
   "courses": [
     {
-      "title": "Ce cours",
+      "title": "Initiation à l'outil Git",
       "summary": "La description du cours a été modifié!",
       "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_vert.jpeg",
       "firstLessonId": 1,
@@ -19,7 +19,7 @@
       "lessonCount": 0,
       "editorIds": [],
       "id": 1,
-      "subTitle": "un premier sous titre",
+      "subTitle": "Un essentiel pour le versioning de code et la gestion des branche",
       "video": "https://www.youtube.com/embed/Zlryaon9iZM",
       "sections": [
         {
@@ -85,7 +85,7 @@
   ],
   "lessons": [
     {
-      "title": "lesson 1 modifiée leçon",
+      "title": "C'est quoi Git?",
       "content": "Let's do it well!\n\n![alt](https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/Screen%20Shot%202022-11-02%20at%205.01.28%20PM.png)\n",
       "type": "video",
       "duration": "9:20",
@@ -137,7 +137,7 @@
         }
       ],
       "video": "https://vimeo.com/778254627",
-      "private": false
+      "private": true
     },
     {
       "title": "lesson 2",

@@ -14,7 +14,7 @@ const httpOptions = {
   })
 };
 
-const fakeCourseIds = [1, 2, 3];
+const fakeCourseIds = [1];
 
 @Injectable({
   providedIn: 'root'
