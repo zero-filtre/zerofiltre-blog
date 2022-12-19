@@ -1,7 +1,7 @@
 <div class="hidden lg:flex flex-col">
     <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art order-2 hidden lg:block lg:order-none">
-        <app-curriculum-sidebar [canEdit]="canEditCourse(course)" [course]="course" [lessons]="lessons$ | async"
-            [chapters]="chapters$ | async">
+        <app-curriculum-sidebar [canEdit]="canEditCourse" [course]="course" [lessons]="lessons$ | async"
+            [chapters]="chapters$ | async" [activeLessonID]="lessonID" [canAccessCourse]="canAccessCourse">
         </app-curriculum-sidebar>
     </aside>
 
@@ -12,15 +12,38 @@
             </div>
 
             <div class="vimeo_video shadow-lg rounded-sm overflow-hidden mt-6 lg:mt-8 mx-auto">
-                <div class="vid_wrapper w-full h-full">
+                <div class="vid_wrapper w-full h-full bg-gray-900">
                     <ng-container *ngIf="lesson">
                         <ng-container *ngIf="lesson.video">
-                            <iframe [src]="lessonVideo$ | async | vimeoUrl" class="" webkitallowfullscreen
-                                mozallowfullscreen allowfullscreen width="100%" height="100%"
-                                title="Lesson video"></iframe>
+                            <iframe *ngIf="canAccessCourse || !lesson.private" [src]="lessonVideo$ | async | vimeoUrl"
+                                class="" webkitallowfullscreen mozallowfullscreen allowfullscreen width="100%"
+                                height="100%" title="Lesson video">
+                            </iframe>
+
+                            <div *ngIf="lesson?.private && !canAccessCourse"
+                                class="h-full flex items-center justify-center">
+                                <div class="upgrade-required text-center text-skin-base">
+                                    <h5 class="text-base mb-7 font-semibold text-error">Permission refusée</h5>
+                                    <div class="buy-box p-6 border border-primary-500 rounded-lg">
+                                        <span class="text-xl text-primary-500 uppercase font-semibold mr-2">
+                                            <a href="#">Achetez ce cours</a>
+                                        </span>
+                                        <span class="text-xl font-medium">pour {{course.price}} €</span>
+                                        <p class="text-sm">Accès à vie pour un prix incroyablement bas</p>
+                                    </div>
+                                    <h3 class="my-5 font-bold text-2xl">OU</h3>
+                                    <div class="buy-box p-6 border border-accent-400 rounded-lg">
+                                        <p><a href="#" class="text-xl text-accent-400 uppercase font-semibold">Passer à
+                                                Pro</a>
+                                        </p>
+                                        <p class="text-sm">Débloquez tout le contenu Zerofiltre &amp;&amp; avantages
+                                            bonus</p>
+                                    </div>
+                                </div>
+                            </div>
                         </ng-container>
                         <ng-container *ngIf="!lesson?.video">
-                            <div class="text-lg lg:text-2xl h-full flex items-center justify-center">
+                            <div class="text-lg lg:text-2xl text-skin-base h-full flex items-center justify-center">
                                 Aucun contenu video
                             </div>
                         </ng-container>
@@ -103,7 +126,7 @@
 <mat-drawer-container class="example-container lg:!hidden relative" [hasBackdrop]="true">
     <mat-drawer #drawer [mode]="'over'">
         <aside aria-labelledby="course-curriculum-sidebar-mobile" class="text-skin-art">
-            <app-curriculum-sidebar [drawer]="drawer" [canEdit]="canEditCourse(course)" [course]="course"
+            <app-curriculum-sidebar [drawer]="drawer" [canEdit]="canEditCourse" [course]="course"
                 [lessons]="lessons$ | async" [chapters]="chapters$ | async"></app-curriculum-sidebar>
         </aside>
     </mat-drawer>

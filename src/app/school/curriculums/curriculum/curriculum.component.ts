@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Course } from '../../courses/course';
 import { Lesson } from '../../lessons/lesson';
 import { Chapter } from '../../chapters/chapter';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-curriculum',
@@ -12,13 +13,16 @@ export class CurriculumComponent implements OnInit {
   @Input() course!: Course;
   @Input() lessons!: Lesson[];
   @Input() chapters!: Chapter[];
+  @Input() canAccessCourse!: boolean;
 
-  constructor() {
+  currentRoute: string
+
+  constructor(private router: Router) {
     // do nothing.
   }
 
   ngOnInit(): void {
-    // do nothing.
+    this.currentRoute = this.router.url
   }
 
 }

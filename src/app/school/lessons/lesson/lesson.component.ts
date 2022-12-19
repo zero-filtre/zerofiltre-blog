@@ -27,8 +27,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   lessonID!: any;
   courseID!: any;
 
-  canEdit: boolean = false;
-
   courseVideos$: Observable<any[]>;
   lessonVideo$: Observable<any>;
 
@@ -48,12 +46,18 @@ export class LessonComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
-  canEditCourse(course: Course) {
+  get canAccessCourse() {
     const userId = (this.authService?.currentUsr as User)?.id
     if (!userId) return false;
 
-    this.canEdit = course?.author?.id === userId || course?.editorIds?.includes(userId) || this.authService.isAdmin;
-    return this.canEdit;
+    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin || this.authService?.currentUsr.courseIds.includes(this.course.id);
+  }
+
+  get canEditCourse() {
+    const userId = (this.authService?.currentUsr as User)?.id
+    if (!userId) return false;
+
+    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin;
   }
 
   loadLessonData(lessonId: any, courseId: any) {

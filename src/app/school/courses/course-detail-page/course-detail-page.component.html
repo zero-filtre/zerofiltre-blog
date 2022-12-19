@@ -35,8 +35,8 @@
             </section>
 
             <section class="section py-6 lg:py-12" *ngIf="i==course?.sections.length-1">
-                <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async"
-                    [course]="course"></app-curriculum>
+                <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
+                    [canAccessCourse]="canAccessCourse"></app-curriculum>
             </section>
         </ng-container>
 
