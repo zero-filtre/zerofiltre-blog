@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AuthService } from 'src/app/user/auth.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,7 +18,27 @@ export class CourseService {
 
   constructor(
     private http: HttpClient,
+    private auth: AuthService
   ) { }
+
+  get canCreateCourse(): boolean {
+    return this.auth.isAdmin;
+  }
+
+  subscribeCourse(data: any) {
+    return this.http.post<any>(`${this.schoolApi}/courseSubscriptions`, data, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  getSubscribedCourse(courseId: any, userId: any) {
+    return this.http.get<any>(`${this.schoolApi}/courseSubscriptions?courseId=${courseId}&userId=${userId}`, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  getAllSubscribedCourse(userId: any) {
+    return this.http.get<any>(`${this.schoolApi}/courseSubscriptions?userId=${userId}`, httpOptions)
+      .pipe(shareReplay());
+  }
 
   fetchAllCourses(): Observable<any[]> {
     return this.http.get<any[]>(`${this.schoolApi}/courses`)

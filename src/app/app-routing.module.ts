@@ -46,10 +46,6 @@ const routes: Routes = [
       import('./articles/articles.module').then((m) => m.ArticlesModule),
   },
   {
-    path: 'courses',
-    loadChildren: () => import('./courses/courses.module').then((m) => m.CoursesModule),
-  },
-  {
     path: 'cours',
     loadChildren: () => import('./school/school.module').then((m) => m.SchoolModule),
     canLoad: [RouteGuard]

@@ -50,7 +50,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     const userId = (this.authService?.currentUsr as User)?.id
     if (!userId) return false;
 
-    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin || this.authService?.currentUsr.courseIds.includes(this.course.id);
+    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin || this.authService?.currentUsr?.courseIds?.includes(this.course.id);
   }
 
   get canEditCourse() {

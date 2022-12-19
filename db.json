@@ -316,5 +316,13 @@
       "courseId": 3,
       "id": 19
     }
+  ],
+  "courseSubscriptions": [
+    {
+      "courseId": 1,
+      "userId": 100,
+      "completedLessons": [],
+      "id": 1
+    }
   ]
 }

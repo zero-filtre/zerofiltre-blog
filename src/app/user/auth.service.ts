@@ -14,7 +14,7 @@ const httpOptions = {
   })
 };
 
-const fakeCourseIds = [1];
+const fakeCourseIds = [];
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class AuthService {
 
   private redirectURL: string;
 
-  public isAdmin!: boolean;
+  public isAdmin: boolean;
 
   private refreshData!: boolean
 
@@ -48,7 +48,7 @@ export class AuthService {
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.redirectURL = '';
-    this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
+    this.isAdmin = this.currentUsr ? this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN') : false;
 
     this.loadCurrentUser();
   }
@@ -138,7 +138,7 @@ export class AuthService {
 
   public setUserData(user: User) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('user_data', JSON.stringify({ ...user, courseIds: fakeCourseIds }));
+      localStorage.setItem('user_data', JSON.stringify(user));
     }
   }
 
@@ -181,6 +181,7 @@ export class AuthService {
   public logout() {
     this.subject.next(null!);
     this.clearLSwithoutExcludedKey()
+    this.isAdmin = false;
   }
 
   public requestPasswordReset(email: string): Observable<any> {
@@ -319,7 +320,6 @@ export class AuthService {
   }
 
   private checkRole(roles: string[], role: string): boolean {
-    // return roles?.some((role: string) => role === role);
     return roles?.includes(role);
   }
 

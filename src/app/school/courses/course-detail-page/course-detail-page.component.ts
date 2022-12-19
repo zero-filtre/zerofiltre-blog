@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
 import { Observable, switchMap, catchError, tap, throwError } from 'rxjs';
 import { Course } from '../course';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
 import { MessageService } from '../../../services/message.service';
 import { NavigationService } from '../../../services/navigation.service';
@@ -29,6 +29,7 @@ export class CourseDetailPageComponent implements OnInit {
   constructor(
     private seo: SeoService,
     private route: ActivatedRoute,
+    private router: Router,
     private courseService: CourseService,
     private chapterService: ChapterService,
     private lessonService: LessonService,
@@ -41,8 +42,30 @@ export class CourseDetailPageComponent implements OnInit {
     const userId = (this.authService?.currentUsr as User)?.id
     if (!userId) return false;
 
-    // TODO: We would add the course's subscriber as well here to make it different from the canEditCourse function
-    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin;
+    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin || this.authService?.currentUsr?.courseIds?.includes(this.course.id);
+  }
+
+  subscribeToCourse() {
+    const currUser = this.authService.currentUsr as User;
+    const loggedIn = !!currUser;
+
+    if (!loggedIn) {
+      this.router.navigate(
+        ['/login'],
+        {
+          relativeTo: this.route,
+          queryParams: { redirectURL: this.router.url },
+          queryParamsHandling: 'merge',
+        });
+    }
+
+    const newIds = currUser.courseIds ? [...currUser?.courseIds, this.course.id] : [this.course.id]
+
+    this.courseService.subscribeCourse({ courseId: this.course.id, userId: currUser.id, completedLessons: [] })
+      .subscribe(_data => {
+        this.authService.setUserData({ ...currUser, courseIds: newIds })
+      })
+
   }
 
   getCourse(): Observable<any> {
