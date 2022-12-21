@@ -42,6 +42,7 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private messageService: MessageService,
+    private courseService: CourseService,
     @Inject(PLATFORM_ID) private platformId: any,
   ) {
     this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
@@ -290,14 +291,23 @@ export class AuthService {
 
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
 
-          this.setUserData(usr);
-          this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
+          const userId = usr.id
 
-          if (this.redirectURL) {
-            this.router.navigateByUrl(this.redirectURL)
-          } else {
-            this.router.navigateByUrl('/articles');
-          }
+          this.courseService.getAllSubscribedCourseIds(userId)
+            .pipe(tap(data => {
+              console.log('MY SUBSCRIPTIONS IDs: ', data)
+              this.setUserData({ ...usr, courseIds: [...new Set(data)] })
+              this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
+
+              if (this.redirectURL) {
+                this.router.navigateByUrl(this.redirectURL)
+              } else {
+                this.router.navigateByUrl('/articles');
+              }
+            })).subscribe()
+
+          this.courseService.getAllSubscribedCourse(userId)
+            .subscribe(data => console.log('MY SUBSCRIPTIONS: ', data))
         },
         error: (_err: HttpErrorResponse) => {
           this.messageService.loadUserFailed();

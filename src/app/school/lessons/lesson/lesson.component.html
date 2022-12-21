@@ -7,14 +7,14 @@
 
     <main class="py-5 text-skin-art">
         <div class="lesson_content site-container">
-            <div class="progress_bar mb-5 mx-auto">
+            <div *ngIf="isSubscriber" class="progress_bar mb-5 mx-auto">
                 <progress *ngIf="completedLessonsIds$|async" id="bluebar" class="progress w-full h-10"
                     [value]="completeProgressVal" max="100"></progress>
                 <progress *ngIf="!(completedLessonsIds$|async)" id="bluebar" class="progress w-full h-10" [value]="0"
                     max="100"></progress>
             </div>
 
-            <div class="vimeo_video shadow-lg rounded-sm overflow-hidden mt-6 lg:mt-8 mx-auto">
+            <div class="vimeo_video shadow-lg rounded-sm overflow-hidden mx-auto">
                 <div class="vid_wrapper w-full h-full bg-gray-900">
                     <ng-container *ngIf="lesson">
                         <ng-container *ngIf="lesson.video">
@@ -62,17 +62,10 @@
                 </div>
             </div>
 
-            <div *ngIf="lesson" [formGroup]="form" class="mt-5 float-right">
-                <mat-slide-toggle [color]="color" [checked]="completed.value" formControlName="completed"
-                    (change)="typeInCompleted($event)">
-                    Leçon terminée
-                </mat-slide-toggle>
-            </div>
-
             <div class="course_content p-5">
                 <div *ngIf="lesson" class="markdown-content mt-2 lg:mt-8">
                     <div
-                        class="lesson_name mb-6 lg:mb-10 text-3xl w-full font-black text-primary-600 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
+                        class="lesson_name mb-6 lg:mb-10 text-3xl w-full font-black text-primary-500 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
                         <h1>{{lesson.title}}</h1>
                     </div>
                     <markdown
@@ -126,6 +119,48 @@
                             <span class="group-hover:text-primary-500">{{res.name}}</span>
                         </div>
                     </ng-container>
+                </div>
+            </div>
+
+            <div class="lesson_pagination my-10">
+                <div *ngIf="lesson" class="flex justify-center font-semibold">
+                    <button *ngIf="!completed" (click)="toggleCompleted()"
+                        class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">
+                        <span>Marquer cette leçon terminée</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                            stroke="currentColor" class="w-5 h-5 mt-0.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                    <button *ngIf="completed" (click)="toggleCompleted()"
+                        class="shadow-xl rounded-md p-4 py-3 text-white  bg-error hover:bg-red-500 transition-all duration-300">
+                        Marquer cette leçon non terminée
+                    </button>
+                </div>
+            </div>
+
+            <div class="lesson_pagination my-10">
+                <div *ngIf="lesson" class="flex gap-10 font-semibold">
+                    <a routerLink="{{'/cours/'+ course.id + '/' + (+lesson.position > 1 ? (+lesson.position - 1) : '')}}"
+                        class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                            stroke="currentColor" class="w-5 h-5 mt-0.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                        <span *ngIf="+lesson.position > 1" class="w-full text-center">{{prevLesson$|async}}</span>
+                        <span *ngIf="+lesson.position == 1" class="w-full text-center">{{course.title}}</span>
+                    </a>
+                    <a routerLink="{{'/cours/'+ course.id + '/' + (+lesson.position < lessonsTotal ? (+lesson.position + 1) : +lesson.position)}}"
+                        class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
+                        <span *ngIf="+lesson.position < lessonsTotal"
+                            class="w-full text-center">{{nextLesson$|async}}</span>
+                        <span *ngIf="+lesson.position == lessonsTotal"
+                            class="w-full text-center">{{lesson.title}}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                            stroke="currentColor" class="w-5 h-5 mt-0.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>

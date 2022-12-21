@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, shareReplay, map, tap } from 'rxjs';
+import { Observable, shareReplay, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { AuthService } from 'src/app/user/auth.service';
 import { Course } from './course';
 import { CourseSubscription } from '../studentCourse';
+import { User } from 'src/app/user/user.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,11 +20,11 @@ export class CourseService {
 
   constructor(
     private http: HttpClient,
-    private auth: AuthService
+    // private auth: AuthService
   ) { }
 
-  get canCreateCourse(): boolean {
-    return this.auth.isAdmin;
+  canCreateCourse(user: User): boolean {
+    return user.roles.includes("ROLE_ADMIN");
   }
 
   canAccessCourse(course: Course): boolean {

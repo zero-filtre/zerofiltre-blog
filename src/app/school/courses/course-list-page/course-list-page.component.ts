@@ -47,7 +47,8 @@ export class CourseListPageComponent implements OnInit {
   onScroll() { }
 
   get canCreateCourse() {
-    return this.courseService.canCreateCourse;
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canCreateCourse(user);
   }
 
   canAccessCourse(courseId: any) {

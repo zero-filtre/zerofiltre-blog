@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
-import { map, Observable, shareReplay, filter, tap } from 'rxjs';
+import { map, Observable, shareReplay, filter } from 'rxjs';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
@@ -214,18 +214,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
       this.loadCopyToClipboardSvg();
       (window as any).onload = AddTargetToExternalLinks();
-
-
-      // TODO: IMPL IT AFTER LOGIN IN SUCCESS - REMOVE IT HERE
-      this.subscribedCourses$ = this.courseService.getAllSubscribedCourseIds(this.authService.currentUsr.id)
-        .pipe(tap(data => {
-          console.log('MY SUBSCRIPTIONS IDs: ', data)
-          this.authService.setUserData({ ...this.authService.currentUsr, courseIds: [...new Set(data)] })
-        }))
-
-      const userId = this.authService?.currentUsr?.id
-      this.courseService.getAllSubscribedCourse(userId)
-        .subscribe(data => console.log('MY SUBSCRIPTIONS: ', data))
     }
 
     if (isPlatformServer(this.platformId)) {

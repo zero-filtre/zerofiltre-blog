@@ -165,7 +165,8 @@
         }
       ],
       "video": "https://vimeo.com/778254627",
-      "private": true
+      "private": true,
+      "position": 1
     },
     {
       "title": "lesson 2",
@@ -179,6 +180,7 @@
       "thumbnail": null,
       "video": "https://vimeo.com/778448877",
       "ressources": [],
+      "position": 2,
       "private": false
     },
     {
@@ -193,7 +195,8 @@
       "thumbnail": null,
       "video": "",
       "ressources": [],
-      "private": true
+      "private": true,
+      "position": 3
     },
     {
       "title": "lesson 4",
@@ -207,7 +210,8 @@
       "thumbnail": null,
       "video": null,
       "ressources": [],
-      "private": true
+      "private": true,
+      "position": 4
     },
     {
       "title": "Une autre lecon",
@@ -221,6 +225,7 @@
       "thumbnail": null,
       "video": null,
       "private": false,
+      "position": 5,
       "ressources": []
     },
     {
@@ -235,12 +240,14 @@
       "thumbnail": null,
       "video": null,
       "private": true,
+      "position": 6,
       "ressources": []
     },
     {
       "title": "Lesson 1",
       "content": "Un petit contenu de la lecon",
       "private": true,
+      "position": 1,
       "type": "video",
       "duration": "9:20",
       "chapterId": 18,
@@ -255,6 +262,7 @@
       "title": "first lesson",
       "content": "Un petit contenu de la lecon",
       "private": false,
+      "position": 1,
       "type": "video",
       "duration": "9:20",
       "chapterId": 19,
@@ -265,6 +273,7 @@
       "title": "Lesson 2",
       "content": "Un petit contenu de la lecon",
       "private": false,
+      "position": 2,
       "type": "video",
       "duration": "9:20",
       "chapterId": 18,
@@ -275,6 +284,7 @@
       "title": "Lesson 3",
       "content": "Un petit contenu de la lecon",
       "private": false,
+      "position": 3,
       "type": "video",
       "duration": "9:20",
       "chapterId": 18,
@@ -285,6 +295,7 @@
       "title": "Lesson 4",
       "content": "Un petit contenu de la lecon",
       "private": false,
+      "position": 4,
       "type": "video",
       "duration": "9:20",
       "chapterId": 20,
@@ -295,6 +306,7 @@
       "title": "Lesson 5",
       "content": "Un petit contenu de la lecon",
       "private": false,
+      "position": 5,
       "type": "video",
       "duration": "9:20",
       "chapterId": 20,
@@ -395,6 +407,10 @@
       "courseId": 1,
       "userId": 100,
       "completedLessons": [
+        6,
+        3,
+        4,
+        5,
         1
       ],
       "id": 1
@@ -403,10 +419,11 @@
       "courseId": 2,
       "userId": 100,
       "completedLessons": [
-        9,
         11,
         12,
-        7
+        7,
+        9,
+        10
       ],
       "id": 2
     }

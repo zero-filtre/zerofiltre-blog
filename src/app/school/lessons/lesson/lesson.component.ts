@@ -1,20 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
-import { Observable, catchError, throwError, Subject, tap, map, filter } from 'rxjs';
+import { Observable, catchError, throwError, Subject, tap, map } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
 import { Course } from '../../courses/course';
 import { AuthService } from '../../../user/auth.service';
 import { User } from '../../../user/user.model';
 import { LessonService } from '../lesson.service';
 import { MessageService } from '../../../services/message.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
 import { Lesson } from '../lesson';
 import { ChapterService } from '../../chapters/chapter.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { CourseSubscription } from '../../studentCourse';
 
 
@@ -44,8 +43,12 @@ export class LessonComponent implements OnInit, OnDestroy {
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
   completedLessonsIds$: Observable<any>;
+  prevLesson$: Observable<any>;
+  nextLesson$: Observable<any>;
 
   imageTypes = ['png', 'jpeg', 'jpg', 'svg'];
+
+  completed: boolean;
 
 
   constructor(
@@ -57,7 +60,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     private chapterService: ChapterService,
     private courseService: CourseService,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   CompletedText$ = new Subject<boolean>();
@@ -68,42 +72,37 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   isLessonCompleted(lesson: Lesson): boolean {
-    return this.completedLessonsIds.includes(lesson.id);
+    return this.completedLessonsIds.includes(lesson?.id);
   }
 
-  initForm(lesson: Lesson) {
-    this.form = this.fb.group({
-      id: [lesson.id],
-      completed: [this.isLessonCompleted(lesson)]
-    })
-  }
-  get completed() { return this.form.get('completed'); }
-
-  typeInCompleted(event: MatSlideToggleChange) {
-    const value = event.checked
-    this.CompletedText$.next(value);
-
-    console.log('COMPLETED: ', this.completedLessonsIds);
-
-    if (value) {
+  toggleCompleted() {
+    if (!this.completed) {
       this.courseService.toggleCourseLessonProgressComplete({ subscriptionId: this.courseSubscriptionID, payload: { completedLessons: [...this.completedLessonsIds, this.lesson.id] } })
         .pipe(catchError(err => {
-          this.completed.setValue(false);
           return throwError(() => err)
         }))
         .subscribe(data => {
-          this.completeProgressVal = Math.round(100 * (data.completedLessons.length / this.lessonsTotal));
+          this.completed = true;
+          this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsTotal));
+          this.router.navigateByUrl(`/cours/${this.courseID}/${+this.lessonID < this.lessonsTotal ? +this.lessonID + 1 : this.lessonID}`)
         })
     } else {
       this.courseService.toggleCourseLessonProgressComplete({ subscriptionId: this.courseSubscriptionID, payload: { completedLessons: this.completedLessonsIds.filter(d => d != this.lesson.id) } })
         .pipe(catchError(err => {
-          this.completed.setValue(false);
           return throwError(() => err)
         }))
         .subscribe(data => {
-          this.completeProgressVal = Math.round(100 * (data.completedLessons.length / this.lessonsTotal));
+          this.completed = false;
+          this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsTotal));
         })
     }
+  }
+
+  get isSubscriber() {
+    const userId = (this.authService?.currentUsr as User)?.id
+    if (!userId) return false;
+
+    return this.authService?.currentUsr?.courseIds?.includes(this.course?.id);
   }
 
   get canAccessCourse() {
@@ -118,6 +117,13 @@ export class LessonComponent implements OnInit, OnDestroy {
     if (!userId) return false;
 
     return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin;
+  }
+
+  loadSiblingTitles(lessonPos: any, courseId: any) {
+    this.prevLesson$ = this.lessonService.findLessonByPosition(+lessonPos - 1, courseId)
+      .pipe(map((data: Lesson) => data.title))
+    this.nextLesson$ = this.lessonService.findLessonByPosition(+lessonPos + 1, courseId)
+      .pipe(map((data: Lesson) => data.title))
   }
 
   loadCourseCompletedLessonsIds(): Observable<any> {
@@ -136,15 +142,15 @@ export class LessonComponent implements OnInit, OnDestroy {
   loadLessonData(lessonId: any, courseId: any) {
     this.loading = true;
 
-    this.lessonService.findLessonById(lessonId, courseId)
+    this.lessonService.findLessonByPosition(lessonId, courseId)
       .pipe(catchError(err => {
         this.loading = false;
         this.messageService.openSnackBarError(err?.statusText, '');
         return throwError(() => err?.message)
-      }),
-        tap(data => this.initForm(data)))
+      }))
       .subscribe((data: Lesson) => {
         setTimeout(() => {
+          this.completed = this.isLessonCompleted(data)
           this.lesson = data;
           this.lessonVideo$ = this.vimeoService.getOneVideo(data?.video);
           this.loading = false;
@@ -185,6 +191,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.lessonID = params.get('lesson_id')!;
         this.courseID = params.get('course_id')!;
         this.loadLessonData(this.lessonID, this.courseID);
+        this.loadSiblingTitles(this.lessonID, this.courseID);
         this.completedLessonsIds$ = this.loadCourseCompletedLessonsIds();
       }
     );
