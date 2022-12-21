@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError, Subject, tap, map, filter } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
 import { Course } from '../../courses/course';
 import { AuthService } from '../../../user/auth.service';
@@ -12,6 +12,10 @@ import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
 import { Lesson } from '../lesson';
 import { ChapterService } from '../../chapters/chapter.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ThemePalette } from '@angular/material/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { CourseSubscription } from '../../studentCourse';
 
 
 @Component({
@@ -20,22 +24,32 @@ import { ChapterService } from '../../chapters/chapter.service';
   styleUrls: ['./lesson.component.css']
 })
 export class LessonComponent implements OnInit, OnDestroy {
+  form!: FormGroup;
+  color: ThemePalette = 'accent';
+
   course!: Course;
   lesson!: Lesson;
   loading: boolean;
+  completedLessonsIds = <any>[];
+  lessonsTotal: number;
+  completeProgressVal: number;
 
   lessonID!: any;
   courseID!: any;
+  courseSubscriptionID: any;
 
   courseVideos$: Observable<any[]>;
   lessonVideo$: Observable<any>;
 
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
+  completedLessonsIds$: Observable<any>;
 
   imageTypes = ['png', 'jpeg', 'jpg', 'svg'];
 
+
   constructor(
+    private fb: FormBuilder,
     private seo: SeoService,
     private vimeoService: VimeoService,
     public authService: AuthService,
@@ -46,11 +60,57 @@ export class LessonComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
+  CompletedText$ = new Subject<boolean>();
+
+  loadCompleteProgressBar(data: []) {
+    const completed = data?.length;
+    this.completeProgressVal = Math.round(100 * (completed / this.lessonsTotal)) || 0
+  }
+
+  isLessonCompleted(lesson: Lesson): boolean {
+    return this.completedLessonsIds.includes(lesson.id);
+  }
+
+  initForm(lesson: Lesson) {
+    this.form = this.fb.group({
+      id: [lesson.id],
+      completed: [this.isLessonCompleted(lesson)]
+    })
+  }
+  get completed() { return this.form.get('completed'); }
+
+  typeInCompleted(event: MatSlideToggleChange) {
+    const value = event.checked
+    this.CompletedText$.next(value);
+
+    console.log('COMPLETED: ', this.completedLessonsIds);
+
+    if (value) {
+      this.courseService.toggleCourseLessonProgressComplete({ subscriptionId: this.courseSubscriptionID, payload: { completedLessons: [...this.completedLessonsIds, this.lesson.id] } })
+        .pipe(catchError(err => {
+          this.completed.setValue(false);
+          return throwError(() => err)
+        }))
+        .subscribe(data => {
+          this.completeProgressVal = Math.round(100 * (data.completedLessons.length / this.lessonsTotal));
+        })
+    } else {
+      this.courseService.toggleCourseLessonProgressComplete({ subscriptionId: this.courseSubscriptionID, payload: { completedLessons: this.completedLessonsIds.filter(d => d != this.lesson.id) } })
+        .pipe(catchError(err => {
+          this.completed.setValue(false);
+          return throwError(() => err)
+        }))
+        .subscribe(data => {
+          this.completeProgressVal = Math.round(100 * (data.completedLessons.length / this.lessonsTotal));
+        })
+    }
+  }
+
   get canAccessCourse() {
     const userId = (this.authService?.currentUsr as User)?.id
     if (!userId) return false;
 
-    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin || this.authService?.currentUsr?.courseIds?.includes(this.course.id);
+    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin || this.authService?.currentUsr?.courseIds?.includes(this.course?.id);
   }
 
   get canEditCourse() {
@@ -58,6 +118,19 @@ export class LessonComponent implements OnInit, OnDestroy {
     if (!userId) return false;
 
     return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin;
+  }
+
+  loadCourseCompletedLessonsIds(): Observable<any> {
+    const userId = (this.authService?.currentUsr as User)?.id
+    return this.courseService.findSubscribedByCourseId(this.courseID, userId)
+      .pipe(
+        map((data: CourseSubscription) => {
+          this.courseSubscriptionID = data.id;
+          this.completedLessonsIds = data.completedLessons;
+          this.loadCompleteProgressBar(this.completedLessonsIds);
+          return data;
+        }),
+      )
   }
 
   loadLessonData(lessonId: any, courseId: any) {
@@ -68,7 +141,8 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.loading = false;
         this.messageService.openSnackBarError(err?.statusText, '');
         return throwError(() => err?.message)
-      }))
+      }),
+        tap(data => this.initForm(data)))
       .subscribe((data: Lesson) => {
         setTimeout(() => {
           this.lesson = data;
@@ -91,7 +165,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   loadAllLessons(courseId: any) {
-    this.lessons$ = this.lessonService.fetchAllLessons(courseId);
+    this.lessons$ = this.lessonService.fetchAllLessons(courseId)
+      .pipe(tap(data => this.lessonsTotal = data.length))
   }
   loadAllChapters(courseId: any) {
     this.chapters$ = this.chapterService.fetchAllChapters(courseId);
@@ -110,9 +185,9 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.lessonID = params.get('lesson_id')!;
         this.courseID = params.get('course_id')!;
         this.loadLessonData(this.lessonID, this.courseID);
+        this.completedLessonsIds$ = this.loadCourseCompletedLessonsIds();
       }
     );
-
   }
 
   ngOnDestroy(): void {

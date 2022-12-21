@@ -90,11 +90,11 @@ export class CourseDetailPageComponent implements OnInit {
 
           this.chapters$ = this.chapterService
             .fetchAllChapters(this.courseID)
-            .pipe(tap(data => console.log('CHAPTERS: ', data)))
+          // .pipe(tap(data => console.log('CHAPTERS: ', data)))
 
           this.lessons$ = this.lessonService
             .fetchAllLessons(this.courseID)
-            .pipe(tap(data => console.log('LESSONS: ', data)))
+          // .pipe(tap(data => console.log('LESSONS: ', data)))
 
           return this.getCourse();;
         })

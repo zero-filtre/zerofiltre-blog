@@ -43,9 +43,9 @@
       ]
     },
     {
-      "title": "Autre cours",
+      "title": "Angular - premiers pas",
       "summary": "La description de ce cours est claire",
-      "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_vert.jpeg",
+      "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/rouge.jpeg",
       "firstLessonId": 1,
       "tags": [
         {
@@ -60,7 +60,35 @@
       "chapterCount": 0,
       "lessonCount": 0,
       "editorIds": [],
-      "id": 2
+      "id": 2,
+      "subTitle": "Construisons une app angular de bout en bout",
+      "video": "https://www.youtube.com/embed/DTIYVffhJuU",
+      "sections": [
+        {
+          "position": "1",
+          "title": "Intro",
+          "content": "Hello",
+          "image": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/blanc.jpeg"
+        },
+        {
+          "position": "2",
+          "title": "Premier composant",
+          "content": "un composant",
+          "image": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_blanc_v.jpeg"
+        },
+        {
+          "position": "3",
+          "title": "Modules",
+          "content": "les modules",
+          "image": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_vert.jpeg"
+        },
+        {
+          "position": "4",
+          "title": "Les services",
+          "content": "Les services top",
+          "image": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_blanc.jpeg"
+        }
+      ]
     },
     {
       "title": "router",
@@ -232,6 +260,46 @@
       "chapterId": 19,
       "courseId": 3,
       "id": 8
+    },
+    {
+      "title": "Lesson 2",
+      "content": "Un petit contenu de la lecon",
+      "private": false,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 18,
+      "courseId": 2,
+      "id": 9
+    },
+    {
+      "title": "Lesson 3",
+      "content": "Un petit contenu de la lecon",
+      "private": false,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 18,
+      "courseId": 2,
+      "id": 10
+    },
+    {
+      "title": "Lesson 4",
+      "content": "Un petit contenu de la lecon",
+      "private": false,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 20,
+      "courseId": 2,
+      "id": 11
+    },
+    {
+      "title": "Lesson 5",
+      "content": "Un petit contenu de la lecon",
+      "private": false,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 20,
+      "courseId": 2,
+      "id": 12
     }
   ],
   "chapters": [
@@ -315,14 +383,32 @@
       "title": "One chapter",
       "courseId": 3,
       "id": 19
+    },
+    {
+      "title": "Chap 2",
+      "courseId": 2,
+      "id": 20
     }
   ],
   "courseSubscriptions": [
     {
       "courseId": 1,
       "userId": 100,
-      "completedLessons": [],
+      "completedLessons": [
+        1
+      ],
       "id": 1
+    },
+    {
+      "courseId": 2,
+      "userId": 100,
+      "completedLessons": [
+        9,
+        11,
+        12,
+        7
+      ],
+      "id": 2
     }
   ]
 }
