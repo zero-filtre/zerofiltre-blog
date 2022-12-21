@@ -26,7 +26,7 @@ spec:
       serviceAccountName: internal-app
       containers:
         - name: zerofiltretech-blog-front-${env_name}
-          image: imzerofiltre/zerofiltretech-blog-front:${api_image_tag}
+          image: imzerofiltre/zerofiltretech-blog-front:0.0.1
           imagePullPolicy: IfNotPresent
           resources:
             requests:

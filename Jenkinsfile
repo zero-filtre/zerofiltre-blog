@@ -2,7 +2,7 @@ def label = "worker-${UUID.randomUUID()}"
 
 podTemplate(label: label, containers: [
         containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'kubectl', image: 'roffe/kubectl', command: 'cat', ttyEnabled: true),
+        containerTemplate(name: 'kubectl', image: 'uselagoon/kubectl', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'node', image: 'timbru31/java-node', command: 'cat', ttyEnabled: true)
 ],
         volumes: [
