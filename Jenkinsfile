@@ -2,7 +2,7 @@ def label = "worker-${UUID.randomUUID()}"
 
 podTemplate(label: label, containers: [
         containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'kubectl', image: 'roffe/kubectl', command: 'cat', ttyEnabled: true),
+        containerTemplate(name: 'kubectl', image: 'uselagoon/kubectl', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'node', image: 'timbru31/java-node', command: 'cat', ttyEnabled: true)
 ],
         volumes: [
@@ -94,7 +94,7 @@ String getDomainName(String branchName) {
 }
 
 String getTag(String buildNumber, String branchName) {
-    String tag = 'imzerofiltre/zerofiltretech-blog-front:' + buildNumber
+    String tag = 'imzerofiltre/zerofiltretech-blog-front:' + UUID.randomUUID().toString() + '-' + buildNumber
     if (branchName == 'main') {
         return tag + '-stable'
     }
@@ -135,7 +135,7 @@ def runApp() {
                """
         }
         sh """
-                kubectl set image deployment/zerofiltretech-blog-front-${env_name} zerofiltretech-blog-front-${env_name}=${api_image_tag} -n zerofiltretech-${env_name}
+                kubectl set image deployment/zerofiltretech-blog-front-${env_name} zerofiltretech-blog-front-${env_name}=${api_image_tag} -n zerofiltretech-${env_name} --record
                 kubectl get deploy zerofiltretech-blog-front-${env_name} -o yaml -n zerofiltretech-${env_name}
                 if ! kubectl rollout status -w deployment/zerofiltretech-blog-front-${env_name} -n zerofiltretech-${env_name}; then
                     kubectl rollout undo deployment.v1.apps/zerofiltretech-blog-front-${env_name} -n zerofiltretech-${env_name}
