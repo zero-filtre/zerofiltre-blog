@@ -11,6 +11,7 @@ export interface Lesson {
     chapterId: string;
     courseId: string;
     ressources: Ressource[];
+    position: any;
 }
 
 export interface Ressource {

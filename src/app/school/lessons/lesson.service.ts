@@ -33,6 +33,14 @@ export class LessonService {
       );
   }
 
+  findLessonByPosition(posId: any, courseId: any): Observable<any> {
+    return this.http.get<any>(`${this.schoolApi}/lessons?position=${posId}&courseId=${courseId}`)
+      .pipe(
+        map(data => data[0]),
+        shareReplay()
+      );
+  }
+
   AddLesson(lesson: any): Observable<any> {
     return this.http.post<any>(`${this.schoolApi}/lessons`, lesson, httpOptions)
       .pipe(shareReplay());

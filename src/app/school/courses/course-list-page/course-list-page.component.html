@@ -44,7 +44,7 @@
                     </ng-container>
                 </div>
 
-                <div *ngIf="authService.isAdmin">
+                <div *ngIf="canCreateCourse">
                     <button aria-label="Button to create a new article" (click)="openCourseEntryDialog()" type="button"
                         class="">
                         <span class="sr-only">Nouveau cours</span>

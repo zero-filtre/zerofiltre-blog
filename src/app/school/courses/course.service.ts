@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, shareReplay } from 'rxjs';
+import { Observable, shareReplay, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { Course } from './course';
+import { CourseSubscription } from '../studentCourse';
+import { User } from 'src/app/user/user.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,7 +20,61 @@ export class CourseService {
 
   constructor(
     private http: HttpClient,
+    // private auth: AuthService
   ) { }
+
+  canCreateCourse(user: User): boolean {
+    return user.roles.includes("ROLE_ADMIN");
+  }
+
+  canAccessCourse(course: Course): boolean {
+    return true;
+  }
+
+  canEditCourse(course: Course): boolean {
+    return true;
+  }
+
+  subscribeCourse(data: any): Observable<any> {
+    return this.http.post<any>(`${this.schoolApi}/CourseSubscriptions`, data, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  deleteSubscriptionCourse(courseId: any, userId: any): Observable<any> {
+    return this.http.delete<any>(`${this.schoolApi}/CourseSubscriptions/course/${courseId}/user/${userId}`, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  findSubscribedByCourseId(courseId: any, userId: any): Observable<any> {
+    return this.http.get<any>(`${this.schoolApi}/CourseSubscriptions?courseId=${courseId}&userId=${userId}`, httpOptions)
+      .pipe(
+        map(data => data[0]),
+        shareReplay()
+      );
+  }
+
+  getAllSubscribedCourse(userId: any): Observable<any> {
+    return this.http.get<any>(`${this.schoolApi}/CourseSubscriptions?userId=${userId}`, httpOptions)
+      .pipe(
+        shareReplay()
+      );
+  }
+
+  getAllSubscribedCourseIds(userId: any): Observable<any> {
+    return this.http.get<any>(`${this.schoolApi}/CourseSubscriptions?userId=${userId}`, httpOptions)
+      .pipe(
+        map((data: CourseSubscription[]) => data.map(d => d.courseId)),
+        shareReplay()
+      );
+  }
+
+  toggleCourseLessonProgressComplete(data: any): Observable<any> {
+    const { subscriptionId, payload } = data
+    return this.http.patch<any>(`${this.schoolApi}/courseSubscriptions/${subscriptionId}`, payload, httpOptions)
+      .pipe(shareReplay());
+  }
+
+
 
   fetchAllCourses(): Observable<any[]> {
     return this.http.get<any[]>(`${this.schoolApi}/courses`)

@@ -1,4 +1,4 @@
-<main class="site-container py-8">
+<main class="site-container min-h-screen py-8">
     <form *ngIf="lesson$ |async as lesson" [formGroup]="form" class="">
         <div class="article-data-container flex flex-col lg:grid grid-cols-7 gap-10 lg:gap-14 items-stretch">
             <main class="col-span-5 order-2 lg:order-none">
@@ -205,11 +205,8 @@
                     </app-auto-save-button>
 
                     <div class="mb-10">
-                        <label for="content" class="block text-base font-medium leading-5 text-skin-base mb-5">
-                            Visibilité:
-                        </label>
                         <mat-slide-toggle [color]="color" [checked]="private.value" (change)="typeInPrivacy($event)"
-                            formControlName="private">Privée</mat-slide-toggle>
+                            formControlName="private">Leçon privée</mat-slide-toggle>
                     </div>
                 </div>
             </aside>

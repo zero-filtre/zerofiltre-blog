@@ -4,6 +4,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CourseService } from '../school/courses/course.service';
 import { MessageService } from '../services/message.service';
 import { User } from './user.model';
 
@@ -14,7 +15,7 @@ const httpOptions = {
   })
 };
 
-const fakeCourseIds = [1];
+const fakeCourseIds = [];
 
 @Injectable({
   providedIn: 'root'
@@ -33,28 +34,26 @@ export class AuthService {
 
   private redirectURL: string;
 
-  public isAdmin!: boolean;
+  public isAdmin: boolean;
 
   private refreshData!: boolean
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private courseService: CourseService,
+    @Inject(PLATFORM_ID) private platformId: any,
   ) {
-    // this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
     this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.redirectURL = '';
-    this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
+    this.isAdmin = this.currentUsr ? this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN') : false;
 
     this.loadCurrentUser();
   }
 
-
-  // AUTH SERVICES
 
   private loadCurrentUser() {
     if (isPlatformBrowser(this.platformId)) {
@@ -136,17 +135,17 @@ export class AuthService {
     }
   }
 
-  public setUserData(user: User) {
+  setUserData(user: User) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('user_data', JSON.stringify({ ...user, courseIds: fakeCourseIds }));
+      localStorage.setItem('user_data', JSON.stringify(user));
     }
   }
 
-  public setRedirectUrlValue(redirectURL: string) {
+  setRedirectUrlValue(redirectURL: string) {
     this.redirectURL = redirectURL;
   }
 
-  public sendRefreshToken(): Observable<any> {
+  sendRefreshToken(): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/jwt/refreshToken?refreshToken=${this.refreshToken}`)
       .pipe(
         tap(({ accessToken, refreshToken }) => {
@@ -156,7 +155,7 @@ export class AuthService {
       )
   }
 
-  public login(credentials: FormData, redirectURL: any): Observable<any> {
+  login(credentials: FormData, redirectURL: any): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
       observe: 'response'
     }).pipe(
@@ -167,7 +166,7 @@ export class AuthService {
     );
   }
 
-  public signup(credentials: FormData): Observable<User> {
+  signup(credentials: FormData): Observable<User> {
     return this.http.post<User>(`${this.apiServerUrl}/user`, credentials, {
       observe: 'response'
     }).pipe(
@@ -178,29 +177,30 @@ export class AuthService {
     )
   }
 
-  public logout() {
+  logout() {
     this.subject.next(null!);
     this.clearLSwithoutExcludedKey()
+    this.isAdmin = false;
   }
 
-  public requestPasswordReset(email: string): Observable<any> {
+  requestPasswordReset(email: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/initPasswordReset?email=${email}`, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
-  public verifyTokenForPasswordReset(token: string): Observable<any> {
+  verifyTokenForPasswordReset(token: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/verifyTokenForPasswordReset?token=${token}`)
       .pipe(shareReplay())
   }
 
-  public savePasswordReset(values: FormData): Observable<any> {
+  savePasswordReset(values: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/user/savePasswordReset`, values, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
-  public registrationConfirm(token: string): Observable<any> {
+  registrationConfirm(token: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/registrationConfirm?token=${token}`, {
       responseType: 'text' as 'json'
     }).pipe(
@@ -209,13 +209,13 @@ export class AuthService {
     );
   }
 
-  public resendUserConfirm(email: string): Observable<any> {
+  resendUserConfirm(email: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/resendRegistrationConfirm?email=${email}`, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
-  public getGithubAccessTokenFromCode(code: string): Observable<any> {
+  getGithubAccessTokenFromCode(code: string): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/user/github/accessToken?code=${code}`, {}, {
       observe: 'response'
     }).pipe(
@@ -226,20 +226,20 @@ export class AuthService {
     )
   }
 
-  public InitSOLoginWithAccessToken(accessToken: string) {
+  InitSOLoginWithAccessToken(accessToken: string) {
     this.loadLoggedInUser(accessToken, 'stack');
   }
 
 
   // USER PROFILE SERVICES
 
-  public updateUserPassword(passwords: FormData): Observable<any> {
+  updateUserPassword(passwords: FormData): Observable<any> {
     return this.http.post<string>(`${this.apiServerUrl}/user/updatePassword`, passwords, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
-  public updateUserProfile(profile: any): Observable<User> {
+  updateUserProfile(profile: any): Observable<User> {
     return this.http.patch<User>(`${this.apiServerUrl}/user`, profile)
       .pipe(
         tap(_ => this.refreshData = true),
@@ -247,14 +247,14 @@ export class AuthService {
       );
   }
 
-  public findUserProfile(userId: string): Observable<User> {
+  findUserProfile(userId: string): Observable<User> {
     return this.http.get<User>(`${this.apiServerUrl}/user/profile/${userId}`)
       .pipe(
         shareReplay()
       )
   }
 
-  public deleteUserAccount(userId: string): Observable<any> {
+  deleteUserAccount(userId: string): Observable<any> {
     return this.http.delete<any>(`${this.apiServerUrl}/user/${userId}`, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
@@ -288,15 +288,26 @@ export class AuthService {
         next: usr => {
           this.subject.next(usr);
           localStorage.setItem(this.TOKEN_NAME, accessToken);
-          if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
-          this.setUserData(usr);
-          this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
 
-          if (this.redirectURL) {
-            this.router.navigateByUrl(this.redirectURL)
-          } else {
-            this.router.navigateByUrl('/articles');
-          }
+          if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
+
+          const userId = usr.id
+
+          this.courseService.getAllSubscribedCourseIds(userId)
+            .pipe(tap(data => {
+              console.log('MY SUBSCRIPTIONS IDs: ', data)
+              this.setUserData({ ...usr, courseIds: [...new Set(data)] })
+              this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
+
+              if (this.redirectURL) {
+                this.router.navigateByUrl(this.redirectURL)
+              } else {
+                this.router.navigateByUrl('/articles');
+              }
+            })).subscribe()
+
+          this.courseService.getAllSubscribedCourse(userId)
+            .subscribe(data => console.log('MY SUBSCRIPTIONS: ', data))
         },
         error: (_err: HttpErrorResponse) => {
           this.messageService.loadUserFailed();
@@ -319,7 +330,6 @@ export class AuthService {
   }
 
   private checkRole(roles: string[], role: string): boolean {
-    // return roles?.some((role: string) => role === role);
     return roles?.includes(role);
   }
 

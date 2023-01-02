@@ -27,6 +27,7 @@ import {
 
 import { LoadEnvService } from './services/load-env.service';
 import { environment } from 'src/environments/environment';
+import { CourseService } from './school/courses/course.service';
 
 declare var Prism: any;
 
@@ -78,6 +79,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private router: Router,
     public authService: AuthService,
     private fileUploadService: FileUploadService,
+    private courseService: CourseService
   ) {
     this.setBrowserTranslationConfigs();
   }
@@ -199,6 +201,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       })
   }
 
+  subscribedCourses$: Observable<any[]>;
+
   ngOnInit(): void {
     this.router.events
       .subscribe(({ url }: any) => {
@@ -206,6 +210,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       });
 
     if (isPlatformBrowser(this.platformId)) {
+      console.log('APP MOUNTED!');
+
       this.loadCopyToClipboardSvg();
       (window as any).onload = AddTargetToExternalLinks();
     }

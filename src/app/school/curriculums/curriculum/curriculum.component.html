@@ -11,7 +11,7 @@
                         <ng-container *ngFor="let lesson of lessons">
                             <li *ngIf="lesson?.chapterId === chapter?.id"
                                 class="curriculum_chapter_lesson_elt hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
-                                <a routerLink="{{'/cours/'+course?.id+'/'+lesson?.id}}"
+                                <a routerLink="{{'/cours/'+course?.id+'/'+lesson?.position}}"
                                     [style.pointer-events]="lesson?.private && !canAccessCourse ? 'auto' : 'auto'"
                                     class="lesson_link p-3 pr-0 flex justify-between items-center gap-2">
                                     <div class="left_content flex items-center gap-2">

@@ -1,4 +1,5 @@
 <mat-sidenav-container class="sidenav-container !overflow-visible bg-skin-bg">
+  <ng-container *ngIf="subscribedCourses$ | async"></ng-container>
 
   <!-- APP MOBILE SIDENAV -->
   <mat-sidenav #drawer class="sidenav mobile-sidebar-menu lg:!hidden relative" position="end" fixedInViewport
