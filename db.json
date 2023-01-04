@@ -408,10 +408,10 @@
       "userId": 100,
       "completedLessons": [
         6,
-        1,
         2,
         5,
-        5
+        4,
+        3
       ],
       "id": 1,
       "completed": false

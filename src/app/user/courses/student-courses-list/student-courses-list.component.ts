@@ -63,14 +63,25 @@ export class StudentCoursesListComponent implements OnInit {
     return this.courseService.canEditCourse(user, course);
   }
 
-  loadData() {
+  sortByTab(tab: string) {
+    this.courses = [];
+
+    if (tab === this.IN_PROGRESS) {
+      this.activePage = this.IN_PROGRESS;
+      this.loadInProgressCourses();
+    }
+
+    if (tab === this.COMPLETED) {
+      this.activePage = this.COMPLETED;
+      this.loadCompletedCourses();
+    }
+  }
+
+  loadInProgressCourses() {
     this.loading = true;
 
-    this.courseService.getAllSubscribedCourseIds(this.authService.currentUsr.id)
+    this.courseService.getAllSubscribedCourseInProgressIds(this.authService.currentUsr.id)
       .pipe(
-        tap(data => {
-          console.log('IDS: ', data)
-        }),
         switchMap(ids => {
           const data = ids.map(id => this.courseService.findCourseById(id))
           this.loading = false;
@@ -78,7 +89,26 @@ export class StudentCoursesListComponent implements OnInit {
             tap(d => {
               this.loading = false;
               this.courses = d;
-              console.log('VAL:', d)
+            }),
+            map(values => values)
+          )
+        })
+      ).subscribe()
+
+  }
+
+  loadCompletedCourses() {
+    this.loading = true;
+
+    this.courseService.getAllSubscribedCourseCompletedIds(this.authService.currentUsr.id)
+      .pipe(
+        switchMap(ids => {
+          const data = ids.map(id => this.courseService.findCourseById(id))
+          this.loading = false;
+          return forkJoin(data).pipe(
+            tap(d => {
+              this.loading = false;
+              this.courses = d;
             }),
             map(values => values)
           )
@@ -88,7 +118,7 @@ export class StudentCoursesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadData();
+    this.loadInProgressCourses();
   }
 
 }

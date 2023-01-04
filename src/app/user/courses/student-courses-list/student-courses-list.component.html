@@ -3,13 +3,15 @@
         <div class="main-side-container">
             <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
                 <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
-                    <button type="button" aria-current="page" aria-labelledby="Toggle to recent articles tab"
+                    <button type="button" (click)="sortByTab(IN_PROGRESS)" aria-current="page"
+                        aria-labelledby="Toggle to recent articles tab"
                         [ngClass]="activePage === IN_PROGRESS ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>En cours</span>
                     </button>
 
-                    <button type=" button" aria-current="false" aria-labelledby="Toggle to pupular articles tab"
+                    <button type=" button" (click)="sortByTab(COMPLETED)" aria-current="false"
+                        aria-labelledby="Toggle to pupular articles tab"
                         [ngClass]="activePage === COMPLETED ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>Achevés</span>

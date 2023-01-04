@@ -77,6 +77,22 @@ export class CourseService {
       );
   }
 
+  getAllSubscribedCourseCompletedIds(userId: any): Observable<any> {
+    return this.http.get<any>(`${this.schoolApi}/CourseSubscriptions?userId=${userId}`, httpOptions)
+      .pipe(
+        map((data: CourseSubscription[]) => data.filter(d => d.completed).map(d => d.courseId)),
+        shareReplay()
+      );
+  }
+
+  getAllSubscribedCourseInProgressIds(userId: any): Observable<any> {
+    return this.http.get<any>(`${this.schoolApi}/CourseSubscriptions?userId=${userId}`, httpOptions)
+      .pipe(
+        map((data: CourseSubscription[]) => data.filter(d => !d.completed).map(d => d.courseId)),
+        shareReplay()
+      );
+  }
+
   toggleCourseLessonProgressComplete(data: any): Observable<any> {
     const { subscriptionId, payload } = data
     return this.http.patch<any>(`${this.schoolApi}/courseSubscriptions/${subscriptionId}`, payload, httpOptions)
