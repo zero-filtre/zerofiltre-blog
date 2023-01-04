@@ -18,6 +18,7 @@ export interface Course {
     price: string;
     video: string;
     sections: Section[];
+    publishedAt: string;
 }
 
 export interface Section {

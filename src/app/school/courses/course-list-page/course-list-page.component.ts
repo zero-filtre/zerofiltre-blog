@@ -53,16 +53,12 @@ export class CourseListPageComponent implements OnInit {
 
   canAccessCourse(courseId: any) {
     const user = this.authService?.currentUsr as User
-    if (!user) return false;
-
-    return user?.courseIds?.includes(courseId) || this.authService.isAdmin;
+    return this.courseService.canAccessCourse(user, courseId);
   }
 
   canEditCourse(course: Course) {
-    const userId = (this.authService?.currentUsr as User)?.id
-    if (!userId) return false;
-
-    return course?.author?.id === userId || course?.editorIds?.includes(userId) || this.authService.isAdmin;
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canEditCourse(user, course);
   }
 
   openCourseEntryDialog(): void {

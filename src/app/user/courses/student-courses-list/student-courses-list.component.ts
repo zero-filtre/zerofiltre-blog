@@ -3,8 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { Tag } from 'src/app/articles/article.model';
-import { CourseInitPopupComponent } from '../../../school/courses/course-init-popup/course-init-popup.component';
 import { CourseDeletePopupComponent } from '../../../school/courses/course-delete-popup/course-delete-popup.component';
+import { CourseService } from 'src/app/school/courses/course.service';
+import { forkJoin, map, Observable, switchMap, tap } from 'rxjs';
+import { Course } from 'src/app/school/courses/course';
+import { User } from '../../user.model';
 
 @Component({
   selector: 'app-student-courses-list',
@@ -12,56 +15,35 @@ import { CourseDeletePopupComponent } from '../../../school/courses/course-delet
   styleUrls: ['./student-courses-list.component.css']
 })
 export class StudentCoursesListComponent implements OnInit {
+  courses$: Observable<any>;
+
   tagList: Tag[] = [];
-  courses: any[] = [];
+  courses: any = [];
   pageSize: number = 5;
 
-  RECENT = 'recent';
-  POPULAR = 'popular';
-  TRENDING = 'most_viewed';
-  TAGS = 'tags';
+  IN_PROGRESS = 'en cours';
+  COMPLETED = 'achevés';
 
-  dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg'
-  noArticlesAvailable: boolean = false;
+  noCoursesAvailable: boolean = false;
   loadingMore: boolean = false;
-  notEmptyArticles: boolean = false;
+  notEmptyCourses: boolean = false;
   loading: boolean = false;
 
-  activePage: string = this.RECENT;
+  activePage: string = this.IN_PROGRESS;
   mainPage = true;
-
-  openedTagsDropdown = false;
-  activeTag!: string;
-
-  canAccess: boolean = false;
 
 
   constructor(
     public authService: AuthService,
     private dialogDeleteRef: MatDialog,
     public dialogEntryRef: MatDialog,
-    private router: Router
+    private router: Router,
+    private courseService: CourseService
   ) { }
 
   onScroll() { }
 
-  isAuthor(user: any, cours: any): boolean {
-    return user?.id === cours?.author?.id
-  }
-
-  canAccessCourse() {
-    this.canAccess = this.authService.isAdmin
-  }
-
-  openCourseEntryDialog(): void {
-    this.dialogEntryRef.open(CourseInitPopupComponent, {
-      width: '850px',
-      height: '350px',
-      panelClass: 'article-popup-panel',
-    });
-  }
-
-  openCourseDeleteDialog(courseId: number | undefined): void {
+  openCourseDeleteDialog(courseId: any): void {
     this.dialogDeleteRef.open(CourseDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
@@ -71,29 +53,42 @@ export class StudentCoursesListComponent implements OnInit {
     });
   }
 
+  canAccessCourse(courseId: any) {
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canAccessCourse(user, courseId);
+  }
+
+  canEditCourse(course: Course) {
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canEditCourse(user, course);
+  }
+
   loadData() {
     this.loading = true;
-    this.activePage = this.RECENT
 
-    const courses$ = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const data = [
-          ...this.courses,
-          { id: 1, title: 'mon premier cours', summary: 'un magnifique cours', firstLessonId: 1 },
-        ]
-        resolve(data);
-      }, 1000);
-    });
+    this.courseService.getAllSubscribedCourseIds(this.authService.currentUsr.id)
+      .pipe(
+        tap(data => {
+          console.log('IDS: ', data)
+        }),
+        switchMap(ids => {
+          const data = ids.map(id => this.courseService.findCourseById(id))
+          this.loading = false;
+          return forkJoin(data).pipe(
+            tap(d => {
+              this.loading = false;
+              this.courses = d;
+              console.log('VAL:', d)
+            }),
+            map(values => values)
+          )
+        })
+    ).subscribe()
 
-    courses$.then((data: any[]) => {
-      this.loading = false;
-      this.courses = data;
-    })
   }
 
   ngOnInit(): void {
     this.loadData();
-    this.canAccessCourse()
   }
 
 }

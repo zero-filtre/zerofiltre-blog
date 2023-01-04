@@ -4,13 +4,13 @@
             <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
                 <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
                     <button type="button" aria-current="page" aria-labelledby="Toggle to recent articles tab"
-                        [ngClass]="activePage === RECENT ? 'active-tab' : ''"
+                        [ngClass]="activePage === IN_PROGRESS ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>En cours</span>
                     </button>
 
                     <button type=" button" aria-current="false" aria-labelledby="Toggle to pupular articles tab"
-                        [ngClass]="activePage === POPULAR ? 'active-tab' : ''"
+                        [ngClass]="activePage === COMPLETED ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>Achevés</span>
                     </button>
@@ -35,7 +35,7 @@
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
 
                             <a aria-labelledby="Link to course detail page"
-                                routerLink="{{canAccess ? '/cours/' + course.id + '/' + course.firstLessonId : course.id}}"
+                                routerLink="{{'/cours/' + course.id + '/' + course.firstLessonId}}"
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -66,7 +66,7 @@
                                     </div>
 
                                     <!-- Contextuel menu for editing -->
-                                    <div *ngIf="canAccess">
+                                    <div *ngIf="canEditCourse(course)">
                                         <button [matMenuTriggerFor]="menu"
                                             class="rounded-full p-2 opacity-0 group-hover:opacity-100 hover:bg-skin-link transition-all duration-500"
                                             aria-label="icon-button with a menu">
@@ -106,12 +106,11 @@
                                 <div class="mt-2">
 
                                     <a aria-labelledby="Link to about page"
-                                        routerLink="{{canAccess ? '/cours/' +course.id + '/' + course.firstLessonId : course.id}}"
-                                        class="article-title">
+                                        routerLink="{{'/cours/' +course.id + '/' + course.firstLessonId}}"
+                                        class="course-title">
                                         <h4
                                             class="text-lg inline-block leading-6 font-semibold text-skin-inverted hover:text-primary-500 transition-all duration-200">
-                                            <!-- {{capitalize(article?.title!)}} -->
-                                            Titre de mon premier cours
+                                            {{course?.title}}
                                         </h4>
                                     </a>
 
@@ -120,7 +119,7 @@
                                         <ng-container *ngIf="course?.summary">{{course?.summary}}</ng-container>
                                     </p>
 
-                                    <div class="article-author mt-3 flex items-end">
+                                    <div class="course-author mt-3 flex items-end">
                                         <div class="author-image flex-shrink-0">
                                             <a aria-labelledby="Link to author profile"
                                                 [routerLink]="authService?.currentUsr?.id == course?.author?.id ? ['/user/profile'] : ['/user/' + course?.author?.id]">
@@ -180,7 +179,7 @@
                                 <a routerLink="/courses/learn-ddd" class="flex flex-col lg:flex-row items-center">
                                     <div class="card-image flex-1 p-4">
                                         <app-image [classes]="'object-cover w-[250px] lg:w-[52%] m-auto'"
-                                            [alt]="'apprener le DDD'" [sourceUrl]="dddSponsorContentSourceUrl">
+                                            [alt]="'apprener le DDD'" [sourceUrl]="''">
                                         </app-image>
                                     </div>
                                     <div class="card-body flex-1 p-4 flex flex-col gap-4">
@@ -283,7 +282,7 @@
                 </ng-template>
 
                 <!-- No Content Found Message -->
-                <ng-template [ngIf]="noArticlesAvailable">
+                <ng-template [ngIf]="noCoursesAvailable">
                     <div class="flex flex-col justify-center items-center h-96 space-y-5">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-primary-500" fill="currentColor"
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -308,7 +307,7 @@
                 </div>
 
                 <!-- Alert no more Courses -->
-                <div *ngIf="notEmptyArticles" class="py-5">
+                <div *ngIf="notEmptyCourses" class="py-5">
                     <div class="flex justify-center">
                         <div class="text-skin-base text-sm font-bold">{{ 'articles.noMoreArticles' | translate }}</div>
                     </div>

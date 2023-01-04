@@ -77,7 +77,10 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   toggleCompleted() {
     if (!this.completed) {
-      this.courseService.toggleCourseLessonProgressComplete({ subscriptionId: this.courseSubscriptionID, payload: { completedLessons: [...this.completedLessonsIds, this.lesson.id] } })
+      const courseCompleted = this.completeProgressVal == Math.round(100 * ((this.lessonsTotal - 1) / this.lessonsTotal)) ? true : false
+      console.log('BAR2: ', Math.round(100 * ((this.lessonsTotal - 1) / this.lessonsTotal)))
+
+      this.courseService.toggleCourseLessonProgressComplete({ subscriptionId: this.courseSubscriptionID, payload: { completedLessons: [...this.completedLessonsIds, this.lesson.id], completed: courseCompleted } })
         .pipe(catchError(err => {
           return throwError(() => err)
         }))
@@ -87,7 +90,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl(`/cours/${this.courseID}/${+this.lessonID < this.lessonsTotal ? +this.lessonID + 1 : this.lessonID}`)
         })
     } else {
-      this.courseService.toggleCourseLessonProgressComplete({ subscriptionId: this.courseSubscriptionID, payload: { completedLessons: this.completedLessonsIds.filter(d => d != this.lesson.id) } })
+      this.courseService.toggleCourseLessonProgressComplete({ subscriptionId: this.courseSubscriptionID, payload: { completedLessons: this.completedLessonsIds.filter(d => d != this.lesson.id), completed: false } })
         .pipe(catchError(err => {
           return throwError(() => err)
         }))
@@ -99,10 +102,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   get isSubscriber() {
-    const userId = (this.authService?.currentUsr as User)?.id
-    if (!userId) return false;
-
-    return this.authService?.currentUsr?.courseIds?.includes(this.course?.id);
+    const user = this.authService?.currentUsr as User
+    return this.courseService.isSubscriber(user, this.course);
   }
 
   get canAccessCourse() {
@@ -113,17 +114,15 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   get canEditCourse() {
-    const userId = (this.authService?.currentUsr as User)?.id
-    if (!userId) return false;
-
-    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin;
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canEditCourse(user, this.course);
   }
 
   loadSiblingTitles(lessonPos: any, courseId: any) {
     this.prevLesson$ = this.lessonService.findLessonByPosition(+lessonPos - 1, courseId)
-      .pipe(map((data: Lesson) => data.title))
+      .pipe(map((data: Lesson) => data?.title))
     this.nextLesson$ = this.lessonService.findLessonByPosition(+lessonPos + 1, courseId)
-      .pipe(map((data: Lesson) => data.title))
+      .pipe(map((data: Lesson) => data?.title))
   }
 
   loadCourseCompletedLessonsIds(): Observable<any> {
@@ -132,7 +131,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       .pipe(
         map((data: CourseSubscription) => {
           this.courseSubscriptionID = data.id;
-          this.completedLessonsIds = data.completedLessons;
+          this.completedLessonsIds = [...new Set(data.completedLessons)];
           this.loadCompleteProgressBar(this.completedLessonsIds);
           return data;
         }),

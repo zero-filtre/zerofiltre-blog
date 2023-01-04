@@ -122,7 +122,7 @@
                 </div>
             </div>
 
-            <div class="lesson_pagination my-10">
+            <div *ngIf="isSubscriber" class="lesson_complete_btn my-10">
                 <div *ngIf="lesson" class="flex justify-center font-semibold">
                     <button *ngIf="!completed" (click)="toggleCompleted()"
                         class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">

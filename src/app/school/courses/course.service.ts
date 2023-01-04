@@ -23,17 +23,26 @@ export class CourseService {
     // private auth: AuthService
   ) { }
 
+  isSubscriber(user: User, course: Course) {
+    if (!user) return false;
+    return user?.courseIds?.includes(course?.id);
+  }
+
   canCreateCourse(user: User): boolean {
+    if (!user) return false;
     return user.roles.includes("ROLE_ADMIN");
   }
 
-  canAccessCourse(course: Course): boolean {
-    return true;
+  canAccessCourse(user: User, courseId: any): boolean {
+    if (!user) return false;
+    return user?.courseIds?.includes(courseId) || this.canCreateCourse(user)
   }
 
-  canEditCourse(course: Course): boolean {
-    return true;
+  canEditCourse(user: User, course: Course): boolean {
+    if (!user) return false;
+    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.canCreateCourse(user);
   }
+
 
   subscribeCourse(data: any): Observable<any> {
     return this.http.post<any>(`${this.schoolApi}/CourseSubscriptions`, data, httpOptions)

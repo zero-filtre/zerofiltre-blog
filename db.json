@@ -408,12 +408,13 @@
       "userId": 100,
       "completedLessons": [
         6,
-        3,
-        4,
+        1,
+        2,
         5,
-        1
+        5
       ],
-      "id": 1
+      "id": 1,
+      "completed": false
     },
     {
       "courseId": 2,
