@@ -17,16 +17,12 @@ const httpOptions = {
 })
 export class CourseService {
   readonly schoolApi = environment.schoolApi;
+  readonly apiServerUrl = environment.apiBaseUrl;
 
   constructor(
     private http: HttpClient,
-    // private auth: AuthService
   ) { }
 
-  isSubscriber(user: User, course: Course) {
-    if (!user) return false;
-    return user?.courseIds?.includes(course?.id);
-  }
 
   canCreateCourse(user: User): boolean {
     if (!user) return false;
@@ -43,6 +39,12 @@ export class CourseService {
     return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.canCreateCourse(user);
   }
 
+  // STUDENT START
+
+  isSubscriber(user: User, course: Course) {
+    if (!user) return false;
+    return user?.courseIds?.includes(course?.id);
+  }
 
   subscribeCourse(data: any): Observable<any> {
     return this.http.post<any>(`${this.schoolApi}/CourseSubscriptions`, data, httpOptions)
@@ -100,6 +102,24 @@ export class CourseService {
   }
 
 
+  // TEACHER START
+
+  isAuthor(user: User, course: Course) {
+    if (!user) return false;
+    return course?.author?.id == user.id;
+  }
+
+  getAllCreatedCourses(user: User) {
+    return this.http.get<any[]>(`${this.schoolApi}/courses?author.id=${user.id}`)
+      .pipe(shareReplay());
+  }
+
+  getAllCreatedCoursesByStatus(user: User, status: string) {
+    return this.http.get<any[]>(`${this.schoolApi}/courses?author.id=${user.id}&status=${status}`)
+      .pipe(shareReplay());
+  }
+
+  // COMMON START
 
   fetchAllCourses(): Observable<any[]> {
     return this.http.get<any[]>(`${this.schoolApi}/courses`)

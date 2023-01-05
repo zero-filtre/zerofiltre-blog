@@ -16,6 +16,7 @@ export interface Course {
     duration: string;
     editorIds: any[];
     price: string;
+    status: string;
     video: string;
     sections: Section[];
     publishedAt: string;
@@ -26,4 +27,12 @@ export interface Section {
     title: string;
     content: string;
     image: string;
+}
+
+export enum STATUS {
+    'DRAFT',
+    'PUBLISHED',
+    'IN_REVIEW',
+    'COMPLETED',
+    'IN_PROGRESS'
 }

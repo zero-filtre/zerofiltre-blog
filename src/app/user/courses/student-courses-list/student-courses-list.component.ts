@@ -15,9 +15,8 @@ import { User } from '../../user.model';
   styleUrls: ['./student-courses-list.component.css']
 })
 export class StudentCoursesListComponent implements OnInit {
-  courses$: Observable<any>;
+  courses$: Observable<Course[]>;
 
-  tagList: Tag[] = [];
   courses: any = [];
   pageSize: number = 5;
 
@@ -80,40 +79,44 @@ export class StudentCoursesListComponent implements OnInit {
   loadInProgressCourses() {
     this.loading = true;
 
-    this.courseService.getAllSubscribedCourseInProgressIds(this.authService.currentUsr.id)
-      .pipe(
-        switchMap(ids => {
-          const data = ids.map(id => this.courseService.findCourseById(id))
-          this.loading = false;
-          return forkJoin(data).pipe(
-            tap(d => {
-              this.loading = false;
-              this.courses = d;
-            }),
-            map(values => values)
-          )
-        })
-      ).subscribe()
+    setTimeout(() => {
+      this.courseService.getAllSubscribedCourseInProgressIds(this.authService.currentUsr.id)
+        .pipe(
+          switchMap(ids => {
+            const data = ids.map(id => this.courseService.findCourseById(id))
+            this.loading = false;
+            return forkJoin(data).pipe(
+              tap(d => {
+                this.loading = false;
+                this.courses = d;
+              }),
+              map(values => values)
+            )
+          })
+        ).subscribe()
+    }, 1000);
 
   }
 
   loadCompletedCourses() {
     this.loading = true;
 
-    this.courseService.getAllSubscribedCourseCompletedIds(this.authService.currentUsr.id)
-      .pipe(
-        switchMap(ids => {
-          const data = ids.map(id => this.courseService.findCourseById(id))
-          this.loading = false;
-          return forkJoin(data).pipe(
-            tap(d => {
-              this.loading = false;
-              this.courses = d;
-            }),
-            map(values => values)
-          )
-        })
-    ).subscribe()
+    setTimeout(() => {
+      this.courseService.getAllSubscribedCourseCompletedIds(this.authService.currentUsr.id)
+        .pipe(
+          switchMap(ids => {
+            const data = ids.map(id => this.courseService.findCourseById(id))
+            this.loading = false;
+            return forkJoin(data).pipe(
+              tap(d => {
+                this.loading = false;
+                this.courses = d;
+              }),
+              map(values => values)
+            )
+          })
+        ).subscribe()
+    }, 1000);
 
   }
 

@@ -5,6 +5,10 @@ import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { CourseInitPopupComponent } from 'src/app/school/courses/course-init-popup/course-init-popup.component';
 import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
+import { Course } from 'src/app/school/courses/course';
+import { CourseService } from 'src/app/school/courses/course.service';
+import { User } from '../../user.model';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-teacher-courses-list',
@@ -12,45 +16,47 @@ import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete
   styleUrls: ['./teacher-courses-list.component.css']
 })
 export class TeacherCoursesListComponent implements OnInit {
-  tagList: Tag[] = [];
-  courses: any[] = [];
+  courses$: Observable<Course[]>;
+
+  courses: Course[] = [];
   pageSize: number = 5;
 
   PUBLISHED = 'published';
   DRAFT = 'draft';
   IN_REVIEW = 'in_review';
-  TAGS = 'tags';
 
-  dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg'
-  noArticlesAvailable: boolean = false;
+
+  noCourseAvailable: boolean = false;
   loadingMore: boolean = false;
-  notEmptyArticles: boolean = false;
+  notEmptyCourses: boolean = false;
   loading: boolean = false;
 
   activePage: string = this.PUBLISHED;
   mainPage = true;
-
-  openedTagsDropdown = false;
-  activeTag!: string;
-
-  canAccess: boolean = false;
 
 
   constructor(
     public authService: AuthService,
     private dialogDeleteRef: MatDialog,
     public dialogEntryRef: MatDialog,
-    private router: Router
+    private router: Router,
+    private courseService: CourseService
   ) { }
 
   onScroll() { }
 
-  isAuthor(user: any, cours: any): boolean {
-    return user?.id === cours?.author?.id
+  isAuthor(course: Course): boolean {
+    return this.courseService.isAuthor(this.authService.currentUsr, course);
   }
 
-  canAccessCourse() {
-    this.canAccess = this.authService.isAdmin
+  canAccessCourse(courseId: any) {
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canAccessCourse(user, courseId);
+  }
+
+  canEditCourse(course: Course) {
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canEditCourse(user, course);
   }
 
   openCourseEntryDialog(): void {
@@ -61,7 +67,7 @@ export class TeacherCoursesListComponent implements OnInit {
     });
   }
 
-  openCourseDeleteDialog(courseId: number | undefined): void {
+  openCourseDeleteDialog(courseId: any): void {
     this.dialogDeleteRef.open(CourseDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
@@ -71,29 +77,69 @@ export class TeacherCoursesListComponent implements OnInit {
     });
   }
 
-  loadData() {
+  sortByTab(tab: string) {
+    this.courses = [];
+
+    if (tab === this.PUBLISHED) {
+      this.activePage = this.PUBLISHED;
+      this.loadInPublishedCourses();
+    }
+
+    if (tab === this.DRAFT) {
+      this.activePage = this.DRAFT;
+      this.loadDraftCourses();
+    }
+
+    if (tab === this.IN_REVIEW) {
+      this.activePage = this.IN_REVIEW;
+      this.loadInReviewCourses();
+    }
+  }
+
+  loadInReviewCourses() {
     this.loading = true;
-    this.activePage = this.PUBLISHED
 
-    const courses$ = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const data = [
-          ...this.courses,
-          { id: 1, title: 'mon premier cours', summary: 'un magnifique cours', firstLessonId: 1 },
-        ]
-        resolve(data);
-      }, 1000);
-    });
+    setTimeout(() => {
+      this.courses$ = this.courseService.getAllCreatedCoursesByStatus(this.authService.currentUsr, this.IN_REVIEW)
+        .pipe(
+          tap(data => {
+            this.loading = false;
+            this.courses = data;
+          })
+        )
+    }, 1000);
+  }
 
-    courses$.then((data: any[]) => {
-      this.loading = false;
-      this.courses = data;
-    })
+  loadDraftCourses() {
+    this.loading = true;
+
+    setTimeout(() => {
+      this.courses$ = this.courseService.getAllCreatedCoursesByStatus(this.authService.currentUsr, this.DRAFT)
+        .pipe(
+          tap(data => {
+            this.loading = false;
+            this.courses = data;
+          })
+        )
+    }, 1000);
+  }
+
+  loadInPublishedCourses() {
+    this.loading = true;
+
+    setTimeout(() => {
+      this.courses$ = this.courseService.getAllCreatedCoursesByStatus(this.authService.currentUsr, this.PUBLISHED)
+        .pipe(
+          tap(data => {
+            this.loading = false;
+            this.courses = data;
+          })
+      )
+    }, 1000);
   }
 
   ngOnInit(): void {
-    this.loadData();
-    this.canAccessCourse()
+    this.loadInPublishedCourses();
   }
 
 }
