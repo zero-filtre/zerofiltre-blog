@@ -14,7 +14,7 @@ export class CourseSectionEditComponent implements OnInit {
   form!: FormGroup;
   uploading: boolean;
   loading: boolean
-  prevPos: string;
+  prevPos: number;
   sections: Section[];
 
   public EditorText$ = new Subject<string>();
@@ -34,16 +34,18 @@ export class CourseSectionEditComponent implements OnInit {
     })
   }
 
+  get id() { return this.form.get('id'); }
   get position() { return this.form.get('position'); }
   get title() { return this.form.get('title'); }
   get content() { return this.form.get('content'); }
   get image() { return this.form.get('image'); }
+  get courseId() { return this.form.get('courseId'); }
 
-  get SelectedPositions(): string[] {
+  get SelectedPositions(): number[] {
     return this.sections.map(sect => sect.position);
   }
 
-  isUnavailable(id: string): boolean {
+  isUnavailable(id: number): boolean {
     return this.SelectedPositions.includes(id);
   }
 

@@ -23,10 +23,12 @@ export interface Course {
 }
 
 export interface Section {
-    position: string;
+    id: string;
+    position: number;
     title: string;
     content: string;
     image: string;
+    courseId: number;
 }
 
 export enum STATUS {

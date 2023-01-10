@@ -86,7 +86,7 @@ export class CourseEditPageComponent implements OnInit {
   }
 
   updateImageValue() {
-    const course = { ...this.course, thumbnail: this.thumbnail.value };
+    const course = { ...this.course, summary: this.form.value.summary, thumbnail: this.thumbnail.value };
     this.courseService.updateCourse(course)
       .subscribe({
         next: (_res: Course) => {
@@ -159,7 +159,7 @@ export class CourseEditPageComponent implements OnInit {
     this.SectionsText$.next(this.sections.value);
   }
 
-  addSection(section: Section, prevPos: string) {
+  addSection(section: Section, prevPos: number) {
     const existingIndex = this.sections.value.findIndex((sect: Section) => sect.position == prevPos);
 
     if (existingIndex >= 0) {
@@ -204,7 +204,7 @@ export class CourseEditPageComponent implements OnInit {
         if (typeof (event) === 'object') {
           this.uploading = false;
           imageField?.setValue(event.url);
-          this.updateImageValue();
+          // this.updateImageValue();
         }
       })
   }
@@ -219,7 +219,7 @@ export class CourseEditPageComponent implements OnInit {
       .subscribe(() => {
         this.uploading = false;
         imageField?.setValue('');
-        this.updateImageValue();
+        // this.updateImageValue();
       })
   }
 
@@ -230,7 +230,7 @@ export class CourseEditPageComponent implements OnInit {
         section,
         sections: this.sections.value,
         uploading: this.uploading,
-        onSave: (section: Section, prevPos: string) => this.addSection(section, prevPos),
+        onSave: (section: Section, prevPos: number) => this.addSection(section, prevPos),
         uploadImage: (event: any, field: any) => this.uploadImage(event, field),
         removeImage: (field: any) => this.removeImage(field)
       },

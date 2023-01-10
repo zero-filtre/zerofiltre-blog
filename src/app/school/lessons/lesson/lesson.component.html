@@ -6,7 +6,7 @@
     </aside>
 
     <main class="py-5 text-skin-art">
-        <div class="lesson_content site-container">
+        <div class="lesson_content site-container min-h-screen">
             <div *ngIf="isSubscriber" class="progress_bar mb-5 mx-auto">
                 <progress *ngIf="completedLessonsIds$|async" id="bluebar" class="progress w-full h-10"
                     [value]="completeProgressVal" max="100"></progress>

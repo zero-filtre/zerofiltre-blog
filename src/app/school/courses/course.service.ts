@@ -121,33 +121,31 @@ export class CourseService {
 
   // COMMON START
 
-  fetchAllCourses(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.schoolApi}/courses`)
+  fetchAllCourses(pageNumber: any, limit: any, status: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiServerUrl}/course?pageNumber=${pageNumber}&pageSize=${limit}&status=${status}`)
       .pipe(shareReplay());
   }
 
   findCourseById(courseId: any): Observable<any> {
-    return this.http.get<any>(`${this.schoolApi}/courses/${courseId}`)
+    return this.http.get<any>(`${this.apiServerUrl}/course/${courseId}`)
       .pipe(shareReplay());
   }
 
-  initCourse(course: any): Observable<any> {
-    return this.http.post<any>(`${this.schoolApi}/courses`, course, httpOptions)
-      .pipe(shareReplay());
-  }
-
-  AddCourse(course: any): Observable<any> {
-    return this.http.post<any>(`${this.schoolApi}/courses`, course, httpOptions)
+  initCourse(courseTitle: string): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/course?title=${courseTitle}`, httpOptions)
       .pipe(shareReplay());
   }
 
   updateCourse(course: any): Observable<any> {
-    return this.http.patch<any>(`${this.schoolApi}/courses/${course.id}`, course, httpOptions)
+    return this.http.patch<any>(`${this.apiServerUrl}/course`, course, httpOptions)
       .pipe(shareReplay());
   }
 
   deleteCourse(courseId: any): Observable<any> {
-    return this.http.delete<any>(`${this.schoolApi}/courses/${courseId}`, httpOptions)
+    return this.http.delete<any>(`${this.apiServerUrl}/course/${courseId}`, {
+      ...httpOptions,
+      responseType: 'text' as 'json'
+    })
       .pipe(shareReplay());
   }
 }

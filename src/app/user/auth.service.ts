@@ -297,18 +297,20 @@ export class AuthService {
 
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
 
-          const userId = usr.id
+          // TODO: Should probably run after subcriptions request succeed
+          this.setUserData(usr)
+          this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
 
-          this.courseService.getAllSubscribedCourseIds(userId)
+          if (this.redirectURL) {
+            this.router.navigateByUrl(this.redirectURL)
+          } else {
+            this.router.navigateByUrl('/articles');
+          }
+          // End
+
+          this.courseService.getAllSubscribedCourseIds(usr.id)
             .pipe(tap(data => {
               this.setUserData({ ...usr, courseIds: [...new Set(data)] })
-              this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
-
-              if (this.redirectURL) {
-                this.router.navigateByUrl(this.redirectURL)
-              } else {
-                this.router.navigateByUrl('/articles');
-              }
             })).subscribe()
         },
         error: (_err: HttpErrorResponse) => {

@@ -1,4 +1,11 @@
-<main class="w-full min-h-screen overflow-y-scroll">
+<main class="w-full relative min-h-screen overflow-y-scroll lg:p-10">
+    <button aria-labelledby="cancel" (click)="onNoClick()" class="absolute top-0 right-0">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+
     <h1 class="mb-10 text-center text-xl lg:text-4xl text-secondary underline underline-offset-4">Edition de la section
     </h1>
 
@@ -9,7 +16,7 @@
             </label>
 
             <input id="title" required minlength="4" formControlName="title"
-                class="w-full bg-transparent border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-semibold placeholder:font-extrabold placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
+                class="w-full bg-transparent border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
                 placeholder="Entrez le titre de la section..." autocomplete="off" />
 
             <div *ngIf="title?.invalid && title?.dirty" class="">
@@ -93,10 +100,10 @@
             <mat-form-field appearance="fill">
                 <mat-label>Choisir la position</mat-label>
                 <mat-select formControlName="position">
-                    <mat-option value="1" [disabled]="isUnavailable('1')">1</mat-option>
-                    <mat-option value="2" [disabled]="isUnavailable('2')">2</mat-option>
-                    <mat-option value="3" [disabled]="isUnavailable('3')">3</mat-option>
-                    <mat-option value="4" [disabled]="isUnavailable('4')">4</mat-option>
+                    <mat-option value="1" [disabled]="isUnavailable(1)">1</mat-option>
+                    <mat-option value="2" [disabled]="isUnavailable(2)">2</mat-option>
+                    <mat-option value="3" [disabled]="isUnavailable(3)">3</mat-option>
+                    <mat-option value="4" [disabled]="isUnavailable(4)">4</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

@@ -8,6 +8,7 @@ import { CourseDeletePopupComponent } from '../course-delete-popup/course-delete
 import { User } from 'src/app/user/user.model';
 import { Course } from '../course';
 import { CourseService } from '../course.service';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-course-list-page',
@@ -84,11 +85,16 @@ export class CourseListPageComponent implements OnInit {
 
   loadData() {
     this.loading = true;
+    const status = 'draft'
 
-    this.courseService.fetchAllCourses()
-      .subscribe(data => {
+    this.courseService.fetchAllCourses(0, 5, status)
+      .pipe(catchError(err => {
+        this.loading = false
+        return throwError(() => err)
+      }))
+      .subscribe(({ content }: any) => {
         this.loading = false;
-        this.courses = data;
+        this.courses = content;
       });
 
   }
