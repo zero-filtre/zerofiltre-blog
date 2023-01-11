@@ -126,8 +126,18 @@ export class CourseService {
       .pipe(shareReplay());
   }
 
+  fetchAllCoursesByFilter(pageNumber: any, limit: any, status: string, filter = ''): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiServerUrl}/course?pageNumber=${pageNumber}&pageSize=${limit}&status=${status}` + (filter != '' ? `&filter=${filter}` : ``), httpOptions)
+      .pipe(shareReplay());
+  }
+
+  findAllArticlesByTag(page: number, limit: number, tagName: string): Observable<Course[]> {
+    return this.http.get<any>(`${this.apiServerUrl}/course?pageNumber=${page}&pageSize=${limit}&status=published&tag=${tagName}`, httpOptions)
+      .pipe(shareReplay());
+  }
+
   findCourseById(courseId: any): Observable<any> {
-    return this.http.get<any>(`${this.apiServerUrl}/course/${courseId}`)
+    return this.http.get<any>(`${this.apiServerUrl}/course/${courseId}`, httpOptions)
       .pipe(shareReplay());
   }
 
