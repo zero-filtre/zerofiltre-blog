@@ -37,7 +37,6 @@ export class SectionService {
   }
 
   updateSection(section: Section): Observable<any> {
-    // return this.http.patch<any>(`${this.apiServerUrl}/section/${section.id}`, section, httpOptions)
     return this.http.patch<any>(`${this.apiServerUrl}/section`, section, httpOptions)
       .pipe(shareReplay());
   }

@@ -2,7 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Section } from '../course';
-import { Subject } from 'rxjs';
+import { catchError, Subject, throwError } from 'rxjs';
+import { SectionService } from '../../sections/section.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-course-section-edit',
@@ -16,6 +18,7 @@ export class CourseSectionEditComponent implements OnInit {
   loading: boolean
   prevPos: number;
   sections: Section[];
+  courseID: number;
 
   public EditorText$ = new Subject<string>();
 
@@ -23,15 +26,29 @@ export class CourseSectionEditComponent implements OnInit {
     public dialogRef: MatDialogRef<CourseSectionEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
+    private sectionService: SectionService,
+    private messageService: MessageService
   ) { }
 
   initForm(section: Section) {
-    this.form = this.fb.group({
-      position: [section?.position, [Validators.required]],
-      title: [section?.title, [Validators.required]],
-      content: [section?.content, [Validators.required]],
-      image: [section?.image, [Validators.required]],
-    })
+    if (section == null) {
+      this.form = this.fb.group({
+        position: [section?.position, [Validators.required]],
+        title: [section?.title, [Validators.required]],
+        content: [section?.content, [Validators.required]],
+        image: [section?.image, [Validators.required]],
+        courseId: [this.courseID],
+      })
+    } else {
+      this.form = this.fb.group({
+        id: [section?.id],
+        position: [section?.position, [Validators.required]],
+        title: [section?.title, [Validators.required]],
+        content: [section?.content, [Validators.required]],
+        image: [section?.image, [Validators.required]],
+        courseId: [section?.courseId],
+      })
+    }
   }
 
   get id() { return this.form.get('id'); }
@@ -66,14 +83,47 @@ export class CourseSectionEditComponent implements OnInit {
   }
 
   onCreateSection(): void {
-    this.data.onSave(this.form.value, this.prevPos);
-    this.dialogRef.close();
+    if (this.sectionData == null) {
+      this.addSection(this.form.value);
+    } else {
+      this.updateSection(this.form.value);
+    }
+  }
+
+  addSection(section: Section) {
+    this.sectionService.AddSection(section)
+      .pipe(catchError(err => {
+        this.messageService.openSnackBarError('Echec ajout de la section', 'OK')
+        return throwError(() => err.message);
+      }))
+      .subscribe(data => {
+        this.sections.push(data)
+        this.messageService.openSnackBarSuccess('Section ajoutée!', 'OK');
+        this.dialogRef.close();
+      })
+  }
+
+  updateSection(section: Section) {
+    this.sectionService.updateSection(section)
+      .pipe(catchError(err => {
+        this.messageService.openSnackBarError('Echec mise à jour de la section', 'OK')
+        return throwError(() => err.message);
+      }))
+      .subscribe(data => {
+        const id = this.sections.findIndex(sect => sect.id == section.id)
+        if (id !== -1) {
+          this.sections[id] = data;
+        }
+        this.messageService.openSnackBarSuccess('Section modifiée!', 'OK');
+        this.dialogRef.close();
+      })
   }
 
   ngOnInit(): void {
     this.uploading = this.data.uploading
     this.sectionData = this.data.section
     this.sections = this.data.sections
+    this.courseID = this.data.courseId
     this.prevPos = this.sectionData?.position;
 
     this.initSection();
