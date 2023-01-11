@@ -207,9 +207,12 @@ export class CourseEditPageComponent implements OnInit {
         this.uploading = false;
         return throwError(() => err.message);
       }))
-      .subscribe(() => {
-        this.uploading = false;
-        imageField?.setValue('');
+      .subscribe({
+        next: _data => {
+          this.uploading = false;
+          imageField?.setValue('');
+        },
+        complete: () => this.uploading = false
       })
   }
 

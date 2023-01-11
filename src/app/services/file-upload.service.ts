@@ -236,7 +236,7 @@ export class FileUploadService {
 
     if (fileNameUrl !== 'storage.gra.cloud.ovh.net') {
       fileFormControl.setValue('');
-      formControlSub.next('');
+      formControlSub?.next('');
       return EMPTY;
     }
 
@@ -245,7 +245,7 @@ export class FileUploadService {
         catchError((error: HttpErrorResponse) => {
           if (error.status === 404) {
             fileFormControl.setValue('');
-            formControlSub.next('');
+            formControlSub?.next('');
           }
           return throwError(() => error)
         })

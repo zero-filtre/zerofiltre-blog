@@ -85,7 +85,7 @@ export class CourseListPageComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    const status = 'draft'
+    const status = 'published'
 
     this.courseService.fetchAllCourses(0, 5, status)
       .pipe(catchError(err => {
