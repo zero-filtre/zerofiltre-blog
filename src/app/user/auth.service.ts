@@ -86,8 +86,14 @@ export class AuthService {
         tap(usr => {
           this.subject.next(usr);
           this.setUserData(usr);
-          this.refreshData = false
+          this.refreshData = false;
           httpOptions.headers = httpOptions.headers.delete('x-refresh');
+
+          this.courseService.getAllSubscribedCourseIds(usr.id)
+            .pipe(tap(data => {
+              this.setUserData({ ...usr, courseIds: [...new Set(data)] })
+              this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
+            })).subscribe()
         }),
         shareReplay()
       )
@@ -291,23 +297,19 @@ export class AuthService {
 
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
 
-          const userId = usr.id
+          this.setUserData(usr)
+          this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
 
-          this.courseService.getAllSubscribedCourseIds(userId)
+          if (this.redirectURL) {
+            this.router.navigateByUrl(this.redirectURL)
+          } else {
+            this.router.navigateByUrl('/articles');
+          }
+
+          this.courseService.getAllSubscribedCourseIds(usr.id)
             .pipe(tap(data => {
-              console.log('MY SUBSCRIPTIONS IDs: ', data)
               this.setUserData({ ...usr, courseIds: [...new Set(data)] })
-              this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
-
-              if (this.redirectURL) {
-                this.router.navigateByUrl(this.redirectURL)
-              } else {
-                this.router.navigateByUrl('/articles');
-              }
             })).subscribe()
-
-          this.courseService.getAllSubscribedCourse(userId)
-            .subscribe(data => console.log('MY SUBSCRIPTIONS: ', data))
         },
         error: (_err: HttpErrorResponse) => {
           this.messageService.loadUserFailed();

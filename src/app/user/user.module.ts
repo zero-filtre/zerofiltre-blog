@@ -20,6 +20,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { PublicProfileComponent } from './public-profile/public-profile.component';
 import { StudentCoursesListComponent } from './courses/student-courses-list/student-courses-list.component';
 import { TeacherCoursesListComponent } from './courses/teacher-courses-list/teacher-courses-list.component';
+import { AdminCoursesListComponent } from './courses/admin-courses-list/admin-courses-list.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { TeacherCoursesListComponent } from './courses/teacher-courses-list/teac
     AdminDashboardComponent,
     PublicProfileComponent,
     StudentCoursesListComponent,
-    TeacherCoursesListComponent
+    TeacherCoursesListComponent,
+    AdminCoursesListComponent
   ],
   imports: [
     CommonModule,

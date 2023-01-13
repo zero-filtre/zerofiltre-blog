@@ -34,6 +34,7 @@ import { TextEditorComponent } from './ui/text-editor/text-editor.component';
 import { AutoSaveButtonComponent } from './ui/buttons/auto-save-button/auto-save-button.component';
 import { UploadFormComponent } from './upload-form/upload-form.component';
 import { UrlPipe } from './pipes/url.pipe';
+import { BaseCourseListComponent } from './base-course-list/base-course-list.component';
 
 const components = [
   AppShellRenderDirective,
@@ -71,7 +72,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, BaseCourseListComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),

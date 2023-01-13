@@ -3,4 +3,5 @@ export interface CourseSubscription {
     userId: any;
     courseId: any;
     completedLessons: any[]
+    completed: boolean;
 }

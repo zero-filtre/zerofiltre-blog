@@ -1,24 +1,24 @@
+import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from '../../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CourseInitPopupComponent } from 'src/app/school/courses/course-init-popup/course-init-popup.component';
-import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
-import { Course } from 'src/app/school/courses/course';
-import { CourseService } from 'src/app/school/courses/course.service';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { BaseCourseListComponent } from 'src/app/shared/base-course-list/base-course-list.component';
+import { Course } from 'src/app/school/courses/course';
+import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
+import { CourseInitPopupComponent } from 'src/app/school/courses/course-init-popup/course-init-popup.component';
+import { CourseService } from 'src/app/school/courses/course.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { SeoService } from 'src/app/services/seo.service';
-import { TranslateService } from '@ngx-translate/core';
-import { isPlatformBrowser } from '@angular/common';
+import { BaseCourseListComponent } from 'src/app/shared/base-course-list/base-course-list.component';
+import { AuthService } from '../../auth.service';
 
 @Component({
-  selector: 'app-teacher-courses-list',
-  templateUrl: './teacher-courses-list.component.html',
-  styleUrls: ['./teacher-courses-list.component.css']
+  selector: 'app-admin-courses-list',
+  templateUrl: './admin-courses-list.component.html',
+  styleUrls: ['./admin-courses-list.component.css']
 })
-export class TeacherCoursesListComponent extends BaseCourseListComponent implements OnInit, OnDestroy {
+export class AdminCoursesListComponent extends BaseCourseListComponent implements OnInit, OnDestroy {
   courses$: Subscription;
 
   courses: Course[] = [];
@@ -75,33 +75,32 @@ export class TeacherCoursesListComponent extends BaseCourseListComponent impleme
     });
   }
 
-
   sortByTab(tab: string): void {
     this.courses = [];
 
     if (tab === this.PUBLISHED) {
       this.activePage = this.PUBLISHED;
-      this.router.navigateByUrl('/user/dashboard/teacher/courses');
+      this.router.navigateByUrl('/user/dashboard/courses/all');
     }
 
     if (tab === this.DRAFT) {
       this.activePage = this.DRAFT;
-      this.router.navigateByUrl(`/user/dashboard/teacher/courses?filter=${tab}`);
+      this.router.navigateByUrl(`/user/dashboard/courses/all?filter=${tab}`);
     }
 
     if (tab === this.IN_REVIEW) {
       this.activePage = this.IN_REVIEW;
-      this.router.navigateByUrl(`/user/dashboard/teacher/courses?filter=${tab}`);
+      this.router.navigateByUrl(`/user/dashboard/courses/all?filter=${tab}`);
     }
 
     this.scrollyPageNumber = 0;
     this.notEmptyCourses = true;
   }
 
-  fetchMyCoursesByStatus(status: string) {
+  fetchAllCoursesByStatus(status: string) {
     this.loading = true;
     this.subscription$ = this.courseService
-      .getAllMyCreatedCoursesByStatus(this.pageNumber, this.pageItemsLimit, status)
+      .fetchAllCourses(this.pageNumber, this.pageItemsLimit, status)
       .subscribe(this.handleFetchedCourses);
   }
 
@@ -147,11 +146,11 @@ export class TeacherCoursesListComponent extends BaseCourseListComponent impleme
           this.status = query.get('filter')!;
           if (!this.status) {
             this.activePage = this.PUBLISHED;
-            return this.fetchMyCoursesByStatus(this.PUBLISHED);
+            return this.fetchAllCoursesByStatus(this.PUBLISHED);
           }
 
           this.activePage = this.status;
-          this.fetchMyCoursesByStatus(this.status);
+          this.fetchAllCoursesByStatus(this.status);
         }
       );
     }

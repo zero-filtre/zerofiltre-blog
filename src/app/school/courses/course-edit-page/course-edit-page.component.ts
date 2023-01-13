@@ -11,6 +11,7 @@ import { FileUploadService } from '../../../services/file-upload.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CourseSectionEditComponent } from '../course-section-edit/course-section-edit.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SectionService } from '../../sections/section.service';
 
 @Component({
   selector: 'app-course-edit-page',
@@ -45,6 +46,7 @@ export class CourseEditPageComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private courseService: CourseService,
+    private sectionService: SectionService,
     private messageService: MessageService,
     private navigate: NavigationService,
     private fileService: FileUploadService,
@@ -73,10 +75,8 @@ export class CourseEditPageComponent implements OnInit {
     this.courseService.updateCourse(this.form.value)
       .subscribe({
         next: (_res: Course) => {
-          setTimeout(() => {
-            this.isSaving = false;
-            this.messageService.openSnackBarSuccess('Enregistrement réussi !', '');
-          }, 1000);
+          this.isSaving = false;
+          this.messageService.openSnackBarSuccess('Enregistrement réussi !', '');
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
@@ -86,7 +86,7 @@ export class CourseEditPageComponent implements OnInit {
   }
 
   updateImageValue() {
-    const course = { ...this.course, thumbnail: this.thumbnail.value };
+    const course = { ...this.course, summary: this.form.value.summary, thumbnail: this.thumbnail.value };
     this.courseService.updateCourse(course)
       .subscribe({
         next: (_res: Course) => {
@@ -109,7 +109,8 @@ export class CourseEditPageComponent implements OnInit {
       summary: [courseSummary, [Validators.required]],
       thumbnail: [course.thumbnail],
       video: [course.video],
-      sections: this.fb.array(this.loadFormSections(course))
+      sections: this.fb.array(this.loadFormSections(course)),
+      tags: this.fb.array([])
     })
   }
 
@@ -122,6 +123,8 @@ export class CourseEditPageComponent implements OnInit {
   }
   buildSectionItem(section: Section): FormGroup {
     return new FormGroup({
+      id: new FormControl(section.id),
+      courseId: new FormControl(section.courseId),
       position: new FormControl(section.position),
       title: new FormControl(section.title),
       content: new FormControl(section.content),
@@ -159,28 +162,17 @@ export class CourseEditPageComponent implements OnInit {
     this.SectionsText$.next(this.sections.value);
   }
 
-  addSection(section: Section, prevPos: string) {
-    const existingIndex = this.sections.value.findIndex((sect: Section) => sect.position == prevPos);
-
-    if (existingIndex >= 0) {
-      this.removeSection(existingIndex);
-    }
-
-    const sectionItem = this.fb.group({
-      position: section.position,
-      title: section.title,
-      content: section.content,
-      image: section.image,
-    })
-
-    this.sections.push(sectionItem)
-    this.messageService.openSnackBarSuccess('Section ajoutée!', 'OK');
-    this.typeInSections();
-  }
-
-  removeSection(index: number) {
-    this.sections.removeAt(index);
-    this.typeInSections();
+  removeSection(sectionId: number, index: number) {
+    this.sectionService.deleteSection(sectionId)
+      .pipe(catchError(err => {
+        this.isLoading = false;
+        return throwError(() => err.message);
+      }))
+      .subscribe(_data => {
+        this.messageService.openSnackBarSuccess('Section supprimée!', 'OK');
+        this.sections.removeAt(index);
+        this.typeInSections();
+      })
   }
 
   onFileSelected(event: any) {
@@ -204,7 +196,6 @@ export class CourseEditPageComponent implements OnInit {
         if (typeof (event) === 'object') {
           this.uploading = false;
           imageField?.setValue(event.url);
-          this.updateImageValue();
         }
       })
   }
@@ -216,10 +207,12 @@ export class CourseEditPageComponent implements OnInit {
         this.uploading = false;
         return throwError(() => err.message);
       }))
-      .subscribe(() => {
-        this.uploading = false;
-        imageField?.setValue('');
-        this.updateImageValue();
+      .subscribe({
+        next: _data => {
+          this.uploading = false;
+          imageField?.setValue('');
+        },
+        complete: () => this.uploading = false
       })
   }
 
@@ -230,7 +223,7 @@ export class CourseEditPageComponent implements OnInit {
         section,
         sections: this.sections.value,
         uploading: this.uploading,
-        onSave: (section: Section, prevPos: string) => this.addSection(section, prevPos),
+        courseId: this.courseID,
         uploadImage: (event: any, field: any) => this.uploadImage(event, field),
         removeImage: (field: any) => this.removeImage(field)
       },

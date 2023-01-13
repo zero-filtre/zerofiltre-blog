@@ -40,7 +40,13 @@
           "content": "Durant chaque module, vous réalisez un livrable.\n\nLes leçons débutent par de la théorie suivie d’exercices pratiques qui participent, peu à peu, à la réalisation du livrable.\n\nÀ la fin des 3 modules, vous aurez alors 3 livrables qui forment ensemble la pièce maîtresse de votre maîtrise du DDD.",
           "image": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/Screen%20Shot%202022-11-02%20at%205.01.28%20PM.png"
         }
-      ]
+      ],
+      "status": "published",
+      "author": {
+        "id": 21,
+        "fullName": "Mbouwe Eric",
+        "email": "ericmbouwe@gmail.com"
+      }
     },
     {
       "title": "Angular - premiers pas",
@@ -88,7 +94,13 @@
           "content": "Les services top",
           "image": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_blanc.jpeg"
         }
-      ]
+      ],
+      "status": "draft",
+      "author": {
+        "id": 21,
+        "fullName": "Mbouwe Eric",
+        "email": "ericmbouwe@gmail.com"
+      }
     },
     {
       "title": "router",
@@ -108,7 +120,13 @@
       "chapterCount": 0,
       "lessonCount": 0,
       "editorIds": [],
-      "id": 3
+      "id": 3,
+      "status": "in_review",
+      "author": {
+        "id": 21,
+        "fullName": "Mbouwe Eric",
+        "email": "ericmbouwe@gmail.com"
+      }
     }
   ],
   "lessons": [
@@ -408,12 +426,13 @@
       "userId": 100,
       "completedLessons": [
         6,
-        3,
-        4,
+        2,
         5,
-        1
+        4,
+        3
       ],
-      "id": 1
+      "id": 1,
+      "completed": false
     },
     {
       "courseId": 2,

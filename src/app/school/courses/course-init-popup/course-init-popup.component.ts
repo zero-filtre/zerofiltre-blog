@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
 import { MessageService } from '../../../services/message.service';
 import { CourseService } from '../course.service';
 
@@ -31,33 +32,15 @@ export class CourseInitPopupComponent implements OnInit {
 
     this.loading = true;
 
-    const payload = {
-      "title": this.title,
-      "summary": "La description du cours...",
-      "thumbnail": "",
-      "firstLessonId": 1,
-      "tags": [
-        {
-          "name": "tag 1"
-        },
-        {
-          "name": "tag 2"
-        }
-      ],
-      "enrolledCount": 0,
-      "duration": 0,
-      "chapterCount": 0,
-      "lessonCount": 0,
-      "editorIds": []
-    }
-
-    this.courseService.AddCourse(payload)
+    this.courseService.initCourse(this.title)
+      .pipe(catchError(err => {
+        this.loading = false
+        return throwError(() => err)
+      }))
       .subscribe(_data => {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigateByUrl(`${this.data.history}`);
-          this.loading = false;
-          this.dialogRef.close();
-        })
+        this.dialogRef.close();
+        this.loading = false;
+        location.reload();
       });
 
   }

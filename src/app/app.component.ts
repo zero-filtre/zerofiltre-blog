@@ -133,27 +133,22 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   fetchAllArticlesAsAdmin() {
     this.activePage = this.ALL_ARTICLES;
-    this.router.navigateByUrl('/user/dashboard/admin');
   }
 
   fetchAllArticlesAsUser() {
     this.activePage = this.MY_ARTICLES;
-    this.router.navigateByUrl('/user/dashboard');
   }
 
   fetchAllCoursesAsUser() {
     this.activePage = this.MY_COURSES;
-    this.router.navigateByUrl('/user/dashboard/courses');
   }
 
   fetchAllCoursesAsTeacher() {
     this.activePage = this.MY_TRAININGS;
-    this.router.navigateByUrl('/user/dashboard/courses/teacher');
   }
 
   fetchAllCoursesAsAdmin() {
     this.activePage = this.ALL_TRAININGS;
-    this.router.navigateByUrl('/user/dashboard/courses/teacher/all');
   }
 
   logCopySuccessMessage(event: any) {
@@ -187,8 +182,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (url?.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
     if (url?.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
     if (url?.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
-    if (url?.startsWith('/user/dashboard/courses/teacher')) this.activePage = this.MY_TRAININGS;
-    if (url?.startsWith('/user/dashboard/courses/teacher/all')) this.activePage = this.ALL_TRAININGS;
+    if (url?.startsWith('/user/dashboard/teacher/courses')) this.activePage = this.MY_TRAININGS;
+    if (url?.startsWith('/user/dashboard/courses/all')) this.activePage = this.ALL_TRAININGS;
   }
 
   ngAfterViewInit(): void {

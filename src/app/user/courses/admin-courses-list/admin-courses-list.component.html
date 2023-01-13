@@ -1,51 +1,32 @@
-<main class="articles-list-container site-container lg:grid grid-cols-7 gap-10 lg:gap-20 py-5 lg:py-10 items-stretch">
-    <main class="col-span-5">
-        <div class="main-side-container max-w-xl mx-auto lg:max-w-none">
+<main class="articles-list-container site-container py-5">
+    <div class="max-w-2xl mx-auto">
+        <div class="main-side-container">
             <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
                 <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
-                    <button type="button" (click)="sortBy(RECENT)" aria-current="page" aria-labelledby="Toggle to recent articles tab"
-                        [ngClass]="activePage === RECENT ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>{{'articles.new' | translate}}</span>
+                    <button type="button" (click)="sortByTab(PUBLISHED)" aria-current="page"
+                        aria-labelledby="Toggle to published articles tab"
+                        [ngClass]="activePage === PUBLISHED ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'dashboard.published' | translate}}</span>
                     </button>
 
-                    <button type=" button" (click)="sortBy(POPULAR)" aria-current="false" aria-labelledby="Toggle to pupular articles tab"
-                        [ngClass]="activePage === POPULAR ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>{{'articles.famous' | translate}}</span>
+                    <button type=" button" (click)="sortByTab(DRAFT)" aria-current="false"
+                        aria-labelledby="Toggle to draft articles tab"
+                        [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'dashboard.draft' | translate}}</span>
                     </button>
 
-                    <button type="button" (click)="sortBy(TRENDING)" aria-current="false" aria-labelledby="Toggle to trending articles tab"
-                        [ngClass]="activePage === TRENDING ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>{{'articles.modish' | translate}}</span>
-                    </button>
-
-                    <button type="button" (click)="sortBy(TAGS)" aria-current="false" aria-labelledby="Toggle to the tag articles tab"
-                        [ngClass]="activePage === TAGS ? 'active-tab' : ''"
-                        class="lg:hidden relative text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>{{'app.tags' | translate}}</span>
+                    <button type="button" (click)="sortByTab(IN_REVIEW)" aria-current="false"
+                        aria-labelledby="Toggle to in-review articles tab"
+                        [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'dashboard.inReview' | translate}}</span>
                     </button>
                 </nav>
 
-                <div *ngIf="openedTagsDropdown"
-                    class="tagList-container lg:hidden flex flex-wrap justify-center absolute z-30 top-full gap-1.5 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%] bg-skin-bgMuted border shadow-2xl rounded-2xl overflow-y-scroll no-scrollbar">
-                    <ng-container *ngFor="let tag of tagList">
-                        <button type="button" (click)="sortByTag(tag?.name)" aria-current="false" aria-labelledby="a tag"
-                            [ngClass]="{'active-tag': activeTag == tag?.name}"
-                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                            <svg [ngStyle]="{'color': tag?.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
-                                viewBox="0 0 8 8">
-                                <circle cx="4" cy="4" r="3"></circle>
-                            </svg>
-                            <span
-                                class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
-                        </button>
-                    </ng-container>
-                </div>
-
-                <div *ngIf="canCreateCourse">
-                    <button aria-label="Button to create a new article" (click)="openCourseEntryDialog()" type="button"
+                <div *ngIf="authService.currentUsr">
+                    <button aria-label="Button to create a new course" (click)="openCourseEntryDialog()" type="button"
                         class="">
                         <span class="sr-only">Nouveau cours</span>
                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -73,10 +54,10 @@
 
                 <ng-template [ngIf]="courses" *appShellNoRender>
                     <div *ngFor="let course of courses; let i=index" class="space-y-11">
-
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
+
                             <a aria-labelledby="Link to course detail page"
-                                routerLink="{{canAccessCourse(course?.id) ? course.id + '/' + (course.firstLessonId || 1) : course.id}}"
+                                routerLink="{{'/cours/' + course.id + '/' + course.firstLessonId}}"
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -86,22 +67,24 @@
                             </a>
 
                             <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
+
                                 <div class="flex justify-between items-start">
+                                    <!-- Liste des tags du cours -->
                                     <div class="article-tags-container flex flex-wrap items-center gap-1">
-                                        <a *ngFor="let tag of course?.tags" routerLink='/articles'
-                                            [queryParams]="{tag:tag.name}"
-                                            class="tag-item flex items-center space-x-2 group">
+                                        <a class="tag-item flex items-center space-x-2 group">
                                             <span
                                                 class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
-                                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
-                                                    fill="currentColor" viewBox="0 0 8 8">
+                                                <svg [ngStyle]="{'color': ''}" class="mr-1 h-2 w-2" fill="currentColor"
+                                                    viewBox="0 0 8 8">
                                                     <circle cx="4" cy="4" r="3"></circle>
                                                 </svg>
                                                 <span class="hover:text-primary-500">
-                                                    {{tag.name}}
+                                                    tag du cours
                                                 </span>
+
                                             </span>
                                         </a>
+
                                     </div>
 
                                     <!-- Contextuel menu for editing -->
@@ -116,38 +99,28 @@
                                             </svg>
                                         </button>
 
-                                        <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
-                                            <a aria-labelledby="Link to lesson edit page"
+                                        <mat-menu #menu="matMenu" class="-mt-7 font-semibold text-skin-base">
+                                            <a aria-labelledby="Link to about page"
                                                 routerLink="/cours/{{course.id}}/edit/"
-                                                class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                                                </svg>
-
+                                                class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                                                 <span>Editer ce cours</span>
                                             </a>
-                                            <button (click)="openCourseDeleteDialog(course?.id)"
+                                            <button (click)="openCourseDeleteDialog(course.id)"
                                                 aria-labelledby="Delete article button"
-                                                class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                                </svg>
-                                                <span>Supprimer ce cours</span>
+                                                class="block font-semibold text-skin-base w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                                                <span>{{ 'articleDetail.delete' | translate }}</span>
                                             </button>
                                         </mat-menu>
                                     </div>
                                 </div>
 
                                 <div class="mt-2">
-                                    <a aria-labelledby="Link to course detail page"
-                                        routerLink="{{canAccessCourse(course?.id) ? course.id + '/' + (course.firstLessonId || 1) : course.id}}"
+
+                                    <a aria-labelledby="Link to about page"
+                                        routerLink="{{'/cours/' + course.id + '/' + course.firstLessonId}}"
                                         class="article-title">
                                         <h4
-                                            class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
+                                            class="text-lg inline-block leading-6 font-semibold text-skin-inverted hover:text-primary-500 transition-all duration-200">
                                             {{course?.title}}
                                         </h4>
                                     </a>
@@ -181,7 +154,7 @@
                                                     date}}</time>
                                                 <span aria-hidden="true">·</span>
                                                 <span>
-                                                    {{course?.duration}}{{ 'articles.ofReadTime' | translate}}
+                                                    15{{ 'articles.ofReadTime' | translate}}
                                                 </span>
                                             </div>
                                         </div>
@@ -197,8 +170,7 @@
                                                         d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
                                                     <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
                                                 </svg>
-
-                                                <span>{{course?.enrolledCount}}</span>
+                                                <span>140</span>
 
                                                 <span class="enrol-tooltip">
                                                     suivent ce cours
@@ -208,6 +180,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
                         <!-- Sponsor Content -->
@@ -216,7 +189,7 @@
                                 <a routerLink="/courses/learn-ddd" class="flex flex-col lg:flex-row items-center">
                                     <div class="card-image flex-1 p-4">
                                         <app-image [classes]="'object-cover w-[250px] lg:w-[52%] m-auto'"
-                                            [alt]="'apprener le DDD'" [sourceUrl]="dddSponsorContentSourceUrl">
+                                            [alt]="'apprener le DDD'" [sourceUrl]="''">
                                         </app-image>
                                     </div>
                                     <div class="card-body flex-1 p-4 flex flex-col gap-4">
@@ -351,81 +324,6 @@
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
-    <aside class="col-span-2 hidden lg:block space-y-6 lg:space-y-10">
-        <div class="tags space-y-6">
-            <span
-                class="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
-                <svg class="mr-1.5 h-2 w-2 text-skin-base" fill="currentColor" viewBox="0 0 8 8">
-                    <circle cx="4" cy="4" r="3"></circle>
-                </svg>
-                {{ 'articles.tagTitle' | translate }}
-            </span>
-
-            <div class="" aria-labelledby="article-tags">
-                <ng-template [ngIf]="tagList?.length">
-                    <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
-                        <ng-container *ngFor="let tag of tagList">
-                            <button type="button" aria-labelledby="A tag"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span
-                                    class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
-                            </button>
-                        </ng-container>
-                    </div>
-                </ng-template>
-
-                <ng-template [ngIf]="loading && !tagList?.length">
-                    <div class="tags-skeleton-container">
-                        <ngx-skeleton-loader class="flex space-x-1" count="3" appearance="line" [theme]="{ 
-                                'border-radius': '9999px',
-                                 width: '80px',
-                                 height: '30px',
-                                 display: 'block'
-                                }">
-                        </ngx-skeleton-loader>
-                        <ngx-skeleton-loader class="flex space-x-1" count="2" appearance="line" [theme]="{ 
-                                'border-radius': '9999px',
-                                 width: '100px',
-                                 height: '30px',
-                                 display: 'block'
-                                }">
-                        </ngx-skeleton-loader>
-                    </div>
-                </ng-template>
-            </div>
-        </div>
-
-        <div
-            class="sponsor-content overflow-hidden max-w-md mx-auto sticky top-28 shadow-lg rounded-lg bg-skin-card group">
-            <a routerLink="/courses/learn-ddd" class="">
-                <div class="card-image p-4">
-                    <app-image [classes]="'object-cover m-auto w-[250px]'" [alt]="'apprener le DDD'"
-                        [sourceUrl]="dddSponsorContentSourceUrl">
-                    </app-image>
-                </div>
-                <div class="card-body p-4 flex flex-col gap-4">
-                    <h3 class="text-secondary">Apprenez et implémentez des modèles de conception simples pour satisfaire
-                        des besoins complexes
-                    </h3>
-                    <button
-                        class="flex items-center justify-between gap-2 px-4 py-2.5 rounded-md shadow-sm border border-primary-500 text-primary-500 group-hover:bg-primary-500 group-hover:text-white transition-all duration-300">
-                        <span>En savoir plus</span>
-
-                        <span class="hidden md:block mt-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </span>
-                    </button>
-                </div>
-            </a>
-        </div>
-    </aside>
 </main>
