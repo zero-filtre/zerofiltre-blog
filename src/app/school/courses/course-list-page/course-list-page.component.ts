@@ -47,8 +47,8 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
     public courseService: CourseService,
     public authService: AuthService,
     public translate: TranslateService,
-    public dialogDeleteRef: MatDialog,
     public dialogEntryRef: MatDialog,
+    public dialogDeleteRef: MatDialog,
     @Inject(PLATFORM_ID) public platformId: any
   ) {
     super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)

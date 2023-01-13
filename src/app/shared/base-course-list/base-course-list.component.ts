@@ -55,8 +55,8 @@ export class BaseCourseListComponent implements OnInit {
     public courseService: CourseService,
     public authService: AuthService,
     public translate: TranslateService,
-    public dialogDeleteRef: MatDialog,
     public dialogEntryRef: MatDialog,
+    public dialogDeleteRef: MatDialog,
   ) { }
 
   onScroll() {

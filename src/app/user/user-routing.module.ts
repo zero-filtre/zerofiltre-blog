@@ -16,6 +16,7 @@ import { PublicProfileComponent } from './public-profile/public-profile.componen
 import { SocialAuthComponent } from './social-auth/social-auth.component';
 import { UserResolver } from './user.resolver';
 import { SingleRouteGuard } from '../shared/guard/single-route.guard';
+import { AdminCoursesListComponent } from './courses/admin-courses-list/admin-courses-list.component';
 
 
 
@@ -59,7 +60,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'dashboard/courses/teacher',
+    path: 'dashboard/teacher/courses',
     component: TeacherCoursesListComponent,
     canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
     data: {
@@ -67,8 +68,8 @@ const routes: Routes = [
     }
   },
   {
-    path: 'dashboard/courses/teacher/all',
-    component: TeacherCoursesListComponent,
+    path: 'dashboard/courses/all',
+    component: AdminCoursesListComponent,
     canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
     data: {
       role: 'ROLE_ADMIN'

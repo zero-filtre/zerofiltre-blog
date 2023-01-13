@@ -297,7 +297,6 @@ export class AuthService {
 
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
 
-          // TODO: Should probably run after subcriptions request succeed
           this.setUserData(usr)
           this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
 
@@ -306,7 +305,6 @@ export class AuthService {
           } else {
             this.router.navigateByUrl('/articles');
           }
-          // End
 
           this.courseService.getAllSubscribedCourseIds(usr.id)
             .pipe(tap(data => {
