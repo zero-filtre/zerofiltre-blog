@@ -233,7 +233,6 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   }
 
 
-
   ngOnDestroy(): void {
     // do nothing
   }

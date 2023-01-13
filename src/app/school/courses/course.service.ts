@@ -109,13 +109,8 @@ export class CourseService {
     return course?.author?.id == user.id;
   }
 
-  getAllCreatedCourses(user: User) {
-    return this.http.get<any[]>(`${this.schoolApi}/courses?author.id=${user.id}`)
-      .pipe(shareReplay());
-  }
-
-  getAllCreatedCoursesByStatus(user: User, status: string) {
-    return this.http.get<any[]>(`${this.schoolApi}/courses?author.id=${user.id}&status=${status}`)
+  getAllMyCreatedCoursesByStatus(pageNumber: any, limit: any, status: string) {
+    return this.http.get<any[]>(`${this.apiServerUrl}/user/courses?pageNumber=${pageNumber}&pageSize=${limit}&status=${status}`)
       .pipe(shareReplay());
   }
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
-import { Tag } from 'src/app/articles/article.model';
 import { CourseDeletePopupComponent } from '../../../school/courses/course-delete-popup/course-delete-popup.component';
 import { CourseService } from 'src/app/school/courses/course.service';
 import { forkJoin, map, Observable, switchMap, tap } from 'rxjs';

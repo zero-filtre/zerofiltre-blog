@@ -51,7 +51,7 @@
                     </svg>
                 </div>
 
-                <ng-template [ngIf]="courses$|async" *appShellNoRender>
+                <ng-template [ngIf]="courses" *appShellNoRender>
                     <div *ngFor="let course of courses; let i=index" class="space-y-11">
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
 
