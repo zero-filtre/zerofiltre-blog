@@ -1,4 +1,13 @@
 <main class="site-container relative py-10 lg:py-14 min-h-screen">
+    <div *ngIf="isLoading" class="flex items-center justify-center h-[50vh]">
+        <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+            preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                style="animation-play-state:paused"></circle>
+        </svg>
+    </div>
     <form *ngIf="course$ |async " [formGroup]="form" class="lg:max-w-4xl mx-auto">
 
         <div class="mb-10">
@@ -130,7 +139,7 @@
             </div>
         </div>
 
-        <div class="mt-10">
+        <div class="mb-10">
             <label for="fileUpload" class="block text-base font-medium leading-5 text-skin-base mb-5">
                 Sections: <br><br>
                 <span class="font-normal">Ajouter au moins 4 sections. Un exemple est fourni <span><a
@@ -183,7 +192,54 @@
             </button>
         </div>
 
-        <div class="flex justify-end my-20">
+        <div class="tag-list" formArrayName="tags">
+            <label for="tags" class="block text-base font-medium leading-5 text-skin-base mb-5">
+                Tags:
+            </label>
+        
+            <div class="mt-5">
+                <div (click)="openTagsDropdown()"
+                    class="selected-tags-container bg-skin-cardMuted cursor-pointer relative flex flex-wrap p-2 min-h-[50px] gap-1 rounded-xl shadow-md">
+                    <ng-container *ngFor="let tag of tags.controls; let i = index">
+                        <span [formGroupName]="i"
+                            class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border">
+                            <svg [ngStyle]="{'color': tag.value.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span>{{tag.value.name}}</span>
+                            <button aria-label="remove the tag" (click)="removeTag(i)"
+                                class="remove-tag-btn cursor-pointer text-skin-muted flex items-center justify-center ml-2 border rounded-full h-4 w-4 justify-self-end">
+                                <span class="remove-tag-btn text-xs">x</span>
+                            </button>
+                        </span>
+                    </ng-container>
+        
+                    <ng-container *ngIf="!tags.length">
+                        <p class="selected-tags-container text-skin-muted leading-9">Cliquez ici
+                            pour ajouter des tags
+                        </p>
+                    </ng-container>
+                </div>
+        
+                <ul *ngIf="tagsDropdownOpened"
+                    class="multiselect-tags-dropdown mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
+                    <ng-container *ngFor="let tag of tagList; let i = index">
+                        <li class="tagItem flex items-center gap-2 text-skin-base hover:bg-slate-100 px-4 py-2 cursor-pointer"
+                            (click)="addtag(tag)">
+                            <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
+                                viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            {{tag?.name}}
+                        </li>
+                    </ng-container>
+                </ul>
+        
+            </div>
+        </div>
+        
+        <div class="save-course flex justify-end my-20">
             <ng-container *ngIf="form.invalid; else validBtn">
                 <button [disabled]="form.invalid || isLoading" aria-labelledby="button to update or submit a course"
                     class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
