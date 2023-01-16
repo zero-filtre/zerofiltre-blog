@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { BaseArticleListComponent } from '../../shared/base-article-list/base-article-list.component';
 import { NavigationService } from '../../services/navigation.service';
+import { TagService } from 'src/app/services/tag.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -58,6 +59,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
     public authService: AuthService,
     public translate: TranslateService,
     public navigate: NavigationService,
+    private tagService: TagService,
     @Inject(PLATFORM_ID) public platformId: any
   ) {
     super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, platformId)
@@ -65,7 +67,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
 
   fetchListOfTags(): void {
     this.loading = true;
-    this.tags$ = this.articleService
+    this.tags$ = this.tagService
       .getListOfTags()
       .subscribe({
         next: (response: Tag[]) => {

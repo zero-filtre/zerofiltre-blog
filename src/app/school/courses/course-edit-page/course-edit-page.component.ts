@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, Observable, Subject, throwError, tap, switchMap } from 'rxjs';
@@ -6,12 +6,14 @@ import { Course, Section } from '../course';
 import { CourseService } from '../course.service';
 import { MessageService } from '../../../services/message.service';
 import { NavigationService } from '../../../services/navigation.service';
-import { File } from 'src/app/articles/article.model';
+import { File, Tag } from 'src/app/articles/article.model';
 import { FileUploadService } from '../../../services/file-upload.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CourseSectionEditComponent } from '../course-section-edit/course-section-edit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SectionService } from '../../sections/section.service';
+import { TagService } from 'src/app/services/tag.service';
+import { sortByNameAsc } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-course-edit-page',
@@ -19,6 +21,19 @@ import { SectionService } from '../../sections/section.service';
   styleUrls: ['./course-edit-page.component.css']
 })
 export class CourseEditPageComponent implements OnInit {
+  @HostListener('click', ['$event']) onClick(event: any) {
+    if (
+      event.target.classList.contains('tagItem')
+      || event.target.classList.contains('selected-tags-container')
+    ) {
+      this.tagsDropdownOpened = true
+    } else {
+      this.tagsDropdownOpened = false
+    }
+  }
+
+  tagList: Tag[];
+
   public file: File = {
     data: null,
     inProgress: false,
@@ -31,9 +46,11 @@ export class CourseEditPageComponent implements OnInit {
 
   form!: FormGroup;
 
-  isLoading: boolean;
+  isLoading = true;
   isSaving: boolean;
   uploading: boolean;
+
+  tagsDropdownOpened!: boolean;
 
   private TitleText$ = new Subject<string>();
   private SubTitleText$ = new Subject<string>();
@@ -50,7 +67,8 @@ export class CourseEditPageComponent implements OnInit {
     private messageService: MessageService,
     private navigate: NavigationService,
     private fileService: FileUploadService,
-    private dialogSectionRef: MatDialog
+    private dialogSectionRef: MatDialog,
+    private tagService: TagService
   ) { }
 
   getCourse(): Observable<any> {
@@ -58,12 +76,14 @@ export class CourseEditPageComponent implements OnInit {
       .pipe(
         catchError(err => {
           if (err.status === 404) {
+            this.isLoading = false;
             this.messageService.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
             this.navigate.back();
           }
           return throwError(() => err?.message)
         }),
         tap(data => {
+          this.isLoading = false;
           this.initForm(data);
           this.course = data;
         })
@@ -110,7 +130,7 @@ export class CourseEditPageComponent implements OnInit {
       thumbnail: [course.thumbnail],
       video: [course.video],
       sections: this.fb.array(this.loadFormSections(course)),
-      tags: this.fb.array([])
+      tags: this.fb.array(course.tags.map(tag => this.buildTagItem(tag)))
     })
   }
 
@@ -132,12 +152,37 @@ export class CourseEditPageComponent implements OnInit {
     });
   }
 
+  buildTagItem(tag: Tag): FormGroup {
+    return new FormGroup({
+      id: new FormControl(tag.id),
+      name: new FormControl(tag.name),
+      colorCode: new FormControl(tag.colorCode),
+    });
+  }
+  addtag(tag: Tag) {
+    const tagItem = this.fb.group({
+      id: tag.id,
+      name: tag.name,
+      colorCode: tag.colorCode
+    })
+
+    if (!this.tags.value.some((el: Tag) => el.id === tag.id)) {
+      this.tags.push(tagItem)
+      // this.typeInTags();
+    }
+  }
+  removeTag(tagIndex: number) {
+    this.tags.removeAt(tagIndex);
+    // this.typeInTags();
+  }
+
   get title() { return this.form.get('title'); }
   get subTitle() { return this.form.get('subTitle'); }
   get summary() { return this.form.get('summary'); }
   get thumbnail() { return this.form.get('thumbnail'); }
   get video() { return this.form.get('video'); }
   get sections() { return this.form.get('sections') as FormArray; }
+  get tags() { return this.form.get('tags') as FormArray; }
 
   getValue(event: Event): string {
     event.preventDefault();
@@ -232,7 +277,21 @@ export class CourseEditPageComponent implements OnInit {
     });
   }
 
+  openTagsDropdown() {
+    this.tagsDropdownOpened = true
+  }
+
+  fetchListOfTags(): void {
+    this.tagService.getListOfTags().subscribe(
+      (response: Tag[]) => {
+        const sortedList = sortByNameAsc(response);
+        this.tagList = sortedList;
+      }
+    )
+  }
+
   ngOnInit(): void {
+
     this.course$ = this.route.paramMap
       .pipe(
         switchMap(params => {

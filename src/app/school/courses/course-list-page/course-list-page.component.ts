@@ -10,6 +10,9 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
+import { sortByNameAsc } from 'src/app/services/utilities.service';
+import { TagService } from 'src/app/services/tag.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-course-list-page',
@@ -49,30 +52,28 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
     public translate: TranslateService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
+    private tagService: TagService,
     @Inject(PLATFORM_ID) public platformId: any
   ) {
     super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
   }
 
 
-
-  // fetchListOfTags(): void {
-  //   this.loading = true;
-  //   this.tags$ = this.articleService
-  //     .getListOfTags()
-  //     .subscribe({
-  //       next: (response: Tag[]) => {
-  //         const sortedList = sortByNameAsc(response);
-  //         this.tagList = sortedList
-  //         this.loading = false;
-  //       },
-  //       error: (_error: HttpErrorResponse) => {
-  //         this.loading = false;
-  //       }
-  //     })
-  // }
-
-
+  fetchListOfTags(): void {
+    this.loading = true;
+    this.tags$ = this.tagService
+      .getListOfTags()
+      .subscribe({
+        next: (response: Tag[]) => {
+          const sortedList = sortByNameAsc(response);
+          this.tagList = sortedList
+          this.loading = false;
+        },
+        error: (_error: HttpErrorResponse) => {
+          this.loading = false;
+        }
+      })
+  }
 
   sortByTag(tagName: any): void {
     this.openedTagsDropdown = false;
@@ -190,11 +191,10 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   }
 
 
-
   ngOnInit(): void {
 
     if (isPlatformBrowser(this.platformId)) {
-      // this.fetchListOfTags()
+      this.fetchListOfTags()
 
       this.route.queryParamMap.subscribe(
         query => {

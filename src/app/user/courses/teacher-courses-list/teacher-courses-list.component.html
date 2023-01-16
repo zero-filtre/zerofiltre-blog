@@ -70,17 +70,17 @@
                                 <div class="flex justify-between items-start">
                                     <!-- Liste des tags du cours -->
                                     <div class="article-tags-container flex flex-wrap items-center gap-1">
-                                        <a class="tag-item flex items-center space-x-2 group">
+                                        <a *ngFor="let tag of course?.tags" routerLink='/articles' [queryParams]="{tag:tag.name}"
+                                            class="tag-item flex items-center space-x-2 group">
                                             <span
                                                 class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
-                                                <svg [ngStyle]="{'color': ''}" class="mr-1 h-2 w-2" fill="currentColor"
-                                                    viewBox="0 0 8 8">
+                                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
                                                     <circle cx="4" cy="4" r="3"></circle>
                                                 </svg>
                                                 <span class="hover:text-primary-500">
-                                                    tag du cours
+                                                    {{tag.name}}
                                                 </span>
-
+                                        
                                             </span>
                                         </a>
 

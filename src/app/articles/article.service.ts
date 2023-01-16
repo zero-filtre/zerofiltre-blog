@@ -21,9 +21,6 @@ export class ArticleService {
   private articleSubject$ = new BehaviorSubject<Article[]>([]);
   public articles$: Observable<Article[]> = this.articleSubject$.asObservable();
 
-  private tagSubject$ = new BehaviorSubject<Tag[]>([]);
-  public tags$: Observable<Tag[]> = this.tagSubject$.asObservable();
-
   private refreshData!: boolean
 
   constructor(
@@ -125,13 +122,6 @@ export class ArticleService {
           this.refreshData = false
           httpOptions.headers = httpOptions.headers.delete('x-refresh');
         }),
-        shareReplay()
-      );
-  }
-
-  public getListOfTags(): Observable<Tag[]> {
-    return this.http.get<Tag[]>(`${this.apiServerUrl}/tag`)
-      .pipe(
         shareReplay()
       );
   }
