@@ -70,7 +70,7 @@
                                 <div class="flex justify-between items-start">
                                     <!-- Liste des tags du cours -->
                                     <div class="article-tags-container flex flex-wrap items-center gap-1">
-                                        <a *ngFor="let tag of course?.tags" routerLink='/articles' [queryParams]="{tag:tag.name}"
+                                        <a *ngFor="let tag of course?.tags" routerLink='/cours' [queryParams]="{tag:tag.name}"
                                             class="tag-item flex items-center space-x-2 group">
                                             <span
                                                 class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
