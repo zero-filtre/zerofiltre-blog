@@ -12,6 +12,7 @@ import { ChapterService } from '../../chapters/chapter.service';
 import { LessonService } from '../../lessons/lesson.service';
 import { AuthService } from '../../../user/auth.service';
 import { User } from '../../../user/user.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -19,11 +20,15 @@ import { User } from '../../../user/user.model';
   styleUrls: ['./course-detail-page.component.css']
 })
 export class CourseDetailPageComponent implements OnInit {
+  STRIPE_PUBLIC_KEY = environment.stripePublicKey;
+
   courseID: string;
   course$: Observable<Course>;
   chapters$: Observable<Chapter[]>
   lessons$: Observable<Lesson[]>;
   course: Course;
+
+  paymentHandler: any = null;
 
   public loading!: boolean;
   private isPublished = new BehaviorSubject<any>(null);
@@ -117,11 +122,12 @@ export class CourseDetailPageComponent implements OnInit {
     this.loveReactions.next(this.findTotalReactionByAction('LOVE', reactions));
     this.likeReactions.next(this.findTotalReactionByAction('LIKE', reactions));
   }
+
   findTotalReactionByAction(action: string, reactions: Reaction[]): number {
     return reactions.filter((reaction: Reaction) => reaction.action === action).length;
   }
 
-  public addReaction(action: string): any {
+  addReaction(action: string): any {
     // const currentUsr = this.authService?.currentUsr;
 
     // if (!currentUsr) {
@@ -139,7 +145,45 @@ export class CourseDetailPageComponent implements OnInit {
       });
   }
 
+  makePayment(amount: any) {
+    const paymentHandler = (<any>window).StripeCheckout.configure({
+      key: this.STRIPE_PUBLIC_KEY,
+      locale: 'auto',
+      token: function (stripeToken: any) {
+        console.log('TOKEN: ', stripeToken);
+        alert('Stripe token generated!');
+      },
+    });
+    paymentHandler.open({
+      name: 'ZEROFILTRE',
+      description: 'Changez vos finances grace au code',
+      amount: amount * 100,
+    });
+  }
+
+  invokeStripe() {
+    if (!window.document.getElementById('stripe-script')) {
+      const script = window.document.createElement('script');
+      script.id = 'stripe-script';
+      script.type = 'text/javascript';
+      script.src = 'https://checkout.stripe.com/checkout.js';
+      script.onload = () => {
+        this.paymentHandler = (<any>window).StripeCheckout.configure({
+          key: this.STRIPE_PUBLIC_KEY,
+          locale: 'auto',
+          token: function (stripeToken: any) {
+            console.log(stripeToken);
+            alert('Payment connection has been successfull!');
+          },
+        });
+      };
+      window.document.body.appendChild(script);
+    }
+  }
+
   ngOnInit(): void {
+    this.invokeStripe();
+
     this.course$ = this.route.paramMap
       .pipe(
         switchMap(params => {
@@ -154,7 +198,6 @@ export class CourseDetailPageComponent implements OnInit {
           return this.getCourse();;
         })
       );
-
 
   }
 }

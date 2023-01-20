@@ -30,7 +30,7 @@
                     <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
                         class="group flex items-center justify-center transition-all duration-300"
                         attr.aria-label="{{reaction.action}} button">
-            
+
                         <div
                             class="reaction-wrapper flex flex-col gap-5 group-hover:-translate-y-2 transition-all ease-in duration-200">
                             <ng-container *ngIf="reaction.action === 'clap'">
@@ -68,7 +68,7 @@
                         </div>
                     </button>
                 </div>
-            
+
                 <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
                     <ngx-skeleton-loader class="space-x-2" count="4" appearance="line"
                         [theme]="{ 
@@ -78,7 +78,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                     }">
                     </ngx-skeleton-loader>
                 </ng-container>
-            
+
                 <!-- <div *ngIf="loginToAddReaction"
                                                                                                                                                                                                                                                                                                                                                                                                         class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
                                                                                                                                                                                                                                                                                                                                                                                                         {{ 'articleDetail.loginToReactText' | translate }}
@@ -105,7 +105,7 @@
             </section>
         </ng-container>
 
-        <button (click)="subscribeToCourse()"
+        <button (click)="makePayment(15)"
             class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
             <span class="text-center">Acheter ce cours</span>
 
