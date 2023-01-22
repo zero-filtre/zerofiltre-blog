@@ -260,7 +260,7 @@ export class LessonEditPageComponent implements OnInit {
   }
 
   getLesson(): Observable<any> {
-    return this.lessonService.findLessonById(this.lessonID, this.courseID)
+    return this.lessonService.findLessonById(this.lessonID)
       .pipe(
         catchError(err => {
           if (err.status === 404) {

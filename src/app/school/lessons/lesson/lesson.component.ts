@@ -138,10 +138,10 @@ export class LessonComponent implements OnInit, OnDestroy {
       )
   }
 
-  loadLessonData(lessonId: any, courseId: any) {
+  loadLessonData(lessonId: any) {
     this.loading = true;
 
-    this.lessonService.findLessonByPosition(lessonId, courseId)
+    this.lessonService.findLessonById(lessonId)
       .pipe(catchError(err => {
         this.loading = false;
         this.messageService.openSnackBarError(err?.statusText, '');
@@ -195,7 +195,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       params => {
         this.lessonID = params.get('lesson_id')!;
         this.courseID = params.get('course_id')!;
-        this.loadLessonData(this.lessonID, this.courseID);
+        this.loadLessonData(this.lessonID);
         this.loadSiblingTitles(this.lessonID, this.courseID);
         this.completedLessonsIds$ = this.loadCourseCompletedLessonsIds();
       }

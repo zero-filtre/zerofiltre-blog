@@ -33,16 +33,11 @@ export class LessonInitPopupComponent implements OnInit {
 
     const payload =
     {
-      "title": this.title,
-      "content": "Un petit contenu de la lecon",
-      "private": false,
-      "type": "video",
-      "duration": "9:20",
-      "chapterId": this.data.chapterID,
-      "courseId": this.data.courseID,
+      title: this.title,
+      chapterId: this.data.chapterID,
     }
 
-    this.lessonService.AddLesson(payload)
+    this.lessonService.initLesson(payload)
       .pipe(
         catchError(err => {
           this.loading = false;
