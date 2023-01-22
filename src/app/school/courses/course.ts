@@ -9,6 +9,7 @@ export interface Course {
     thumbnail: string;
     firstLessonId: string;
     tags: Tag[];
+    reactions: Reaction[];
     enrolledCount: number;
     chapterCount: number;
     lessonCount: number;
@@ -29,6 +30,12 @@ export interface Section {
     content: string;
     image: string;
     courseId: number;
+}
+
+export interface Reaction {
+    articleId: string;
+    courseId: string;
+    action: string
 }
 
 export enum STATUS {

@@ -44,6 +44,17 @@ export class MessageService {
     this.snackBar.dismiss();
   }
 
+  // For expired session
+  sessionExpired(state: any) {
+    this.router.navigate(
+      ['/login'],
+      {
+        relativeTo: state,
+        queryParams: { redirectURL: state.url },
+        queryParamsHandling: 'merge',
+      });
+  }
+
   // For non authenticated requests
   authError(state: any) {
     const msg = this.translate.instant('login.authErrorMessage')

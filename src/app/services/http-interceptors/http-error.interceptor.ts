@@ -82,6 +82,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }),
         catchError(errordata => {
           this.authService.logout();
+          this.messageService.sessionExpired(this.router)
           return throwError(() => errordata)
         })
       );
