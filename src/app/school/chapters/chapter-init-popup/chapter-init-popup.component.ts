@@ -31,8 +31,8 @@ export class ChapterInitPopupComponent implements OnInit {
 
     const payload =
     {
-      "title": this.title,
-      "courseId": this.data.courseId
+      title: this.title,
+      courseId: this.data.courseId
     }
 
     this.loading = true;

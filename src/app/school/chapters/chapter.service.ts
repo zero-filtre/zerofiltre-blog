@@ -15,28 +15,30 @@ const httpOptions = {
 })
 export class ChapterService {
   readonly schoolApi = environment.schoolApi;
+  readonly apiServerUrl = environment.apiBaseUrl;
 
   constructor(
     private http: HttpClient,
   ) { }
 
   fetchAllChapters(courseId: any): Observable<Chapter[]> {
-    return this.http.get<Chapter[]>(`${this.schoolApi}/chapters?courseId=${courseId}`)
+    return this.http.get<Chapter[]>(`${this.apiServerUrl}/chapters?courseId=${courseId}`)
       .pipe(shareReplay());
   }
 
-  AddChapter(chapter: any): Observable<any> {
-    return this.http.post<any>(`${this.schoolApi}/chapters`, chapter, httpOptions)
+  AddChapter(data: any): Observable<any> {
+    const { title, courseId } = data
+    return this.http.post<any>(`${this.apiServerUrl}/chapter?title=${title}&courseId=${courseId}`, httpOptions)
       .pipe(shareReplay());
   }
 
   updateChapter(chapter: any): Observable<any> {
-    return this.http.patch<any>(`${this.schoolApi}/chapters/${chapter.id}`, chapter, httpOptions)
+    return this.http.patch<any>(`${this.apiServerUrl}/chapter/${chapter.id}`, chapter, httpOptions)
       .pipe(shareReplay());
   }
 
   deleteChapter(chapterId: any): Observable<any> {
-    return this.http.delete<any>(`${this.schoolApi}/chapters/${chapterId}`, httpOptions)
+    return this.http.delete<any>(`${this.apiServerUrl}/chapter/${chapterId}`, httpOptions)
       .pipe(shareReplay());
   }
 
