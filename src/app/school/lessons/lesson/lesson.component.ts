@@ -169,9 +169,15 @@ export class LessonComponent implements OnInit, OnDestroy {
       })
   }
 
-  loadAllLessons(courseId: any) {
-    this.lessons$ = this.lessonService.fetchAllLessons(courseId)
-      .pipe(tap(data => this.lessonsTotal = data.length))
+  loadAllLessons(chapterId: any) {
+    this.lessons$ = this.chapterService.fetchChapterById(chapterId)
+      .pipe(
+        map(data => {
+          const res = data.lessons;
+          this.lessonsTotal = res.length;
+          return res;
+        }),
+      )
   }
   loadAllChapters(courseId: any) {
     this.chapters$ = this.chapterService.fetchAllChapters(courseId);

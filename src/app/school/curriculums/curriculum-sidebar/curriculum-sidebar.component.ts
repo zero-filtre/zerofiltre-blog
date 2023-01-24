@@ -53,14 +53,13 @@ export class CurriculumSidebarComponent implements OnInit {
     });
   }
 
-  openChapterUpdateDialog(chapterId: any, chapterTitle: string): void {
+  openChapterUpdateDialog(chapter: Chapter): void {
     this.dialogUpdateChapterRef.open(ChapterUpdatePopupComponent, {
       width: '850px',
       height: '350px',
       panelClass: 'article-popup-panel',
       data: {
-        chapterId,
-        chapterTitle,
+        chapter,
         history: this.router.url
       }
     });

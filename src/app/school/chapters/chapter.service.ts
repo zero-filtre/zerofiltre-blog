@@ -22,7 +22,12 @@ export class ChapterService {
   ) { }
 
   fetchAllChapters(courseId: any): Observable<Chapter[]> {
-    return this.http.get<Chapter[]>(`${this.apiServerUrl}/chapters?courseId=${courseId}`)
+    return this.http.get<Chapter[]>(`${this.apiServerUrl}/chapter/course/${courseId}`)
+      .pipe(shareReplay());
+  }
+
+  fetchChapterById(id: any): Observable<Chapter> {
+    return this.http.get<Chapter>(`${this.apiServerUrl}/chapter/${id}`)
       .pipe(shareReplay());
   }
 
@@ -32,8 +37,8 @@ export class ChapterService {
       .pipe(shareReplay());
   }
 
-  updateChapter(chapter: any): Observable<any> {
-    return this.http.patch<any>(`${this.apiServerUrl}/chapter/${chapter.id}`, chapter, httpOptions)
+  updateChapter(chapter: Chapter): Observable<any> {
+    return this.http.patch<any>(`${this.apiServerUrl}/chapter`, chapter, httpOptions)
       .pipe(shareReplay());
   }
 
