@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
-import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject } from 'rxjs';
+import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map } from 'rxjs';
 import { Course, Reaction } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
@@ -192,10 +192,10 @@ export class CourseDetailPageComponent implements OnInit {
           this.chapters$ = this.chapterService
             .fetchAllChapters(this.courseID)
 
-          this.lessons$ = this.lessonService
-            .fetchAllLessons(this.courseID)
+          this.lessons$ = this.chapterService.fetchChapterById(this.courseID)
+            .pipe(map(data => data.lessons))
 
-          return this.getCourse();;
+          return this.getCourse();
         })
       );
 

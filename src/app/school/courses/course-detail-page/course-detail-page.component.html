@@ -72,21 +72,12 @@
                 <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
                     <ngx-skeleton-loader class="space-x-2" count="4" appearance="line"
                         [theme]="{ 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    'border-radius': '5px',
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: '20px',
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: '20px'
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    }">
+                            'border-radius': '5px',
+                                height: '20px',
+                                width: '20px'
+                            }">
                     </ngx-skeleton-loader>
                 </ng-container>
-
-                <!-- <div *ngIf="loginToAddReaction"
-                                                                                                                                                                                                                                                                                                                                                                                                        class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
-                                                                                                                                                                                                                                                                                                                                                                                                        {{ 'articleDetail.loginToReactText' | translate }}
-                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                    <div *ngIf="!loading && !(isPublished$ | async)"
-                                                                                                                                                                                                                                                                                                                                                                                                        class="mt-4 text-sm font-medium px-4 py-2 text-secondary text-center">
-                                                                                                                                                                                                                                                                                                                                                                                                        {{ 'articleDetail.publishToReactText' | translate }}
-                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
             </div>
 
             <section *ngIf="i==0" class="practical-video-section section py-6 lg:py-12">
@@ -99,7 +90,7 @@
                 </div>
             </section>
 
-            <section class="section py-6 lg:py-12" *ngIf="i==course?.sections.length-1">
+            <section class="section curriculum py-6 lg:py-12" *ngIf="i==course?.sections.length-1">
                 <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
                     [canAccessCourse]="canAccessCourse"></app-curriculum>
             </section>

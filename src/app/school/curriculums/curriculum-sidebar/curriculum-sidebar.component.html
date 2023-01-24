@@ -60,7 +60,7 @@
                                     </svg>
                                     <span>Ajouter une leçon</span>
                                 </button>
-                                <button (click)="openChapterUpdateDialog(chapter?.id, chapter?.title)"
+                                <button (click)="openChapterUpdateDialog(chapter)"
                                     aria-labelledby="Delete chapter button"
                                     class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -85,7 +85,7 @@
                     </div>
 
                     <ul class="curriculum_chapter_lessons mt-1 space-y-0.5">
-                        <ng-container *ngFor="let lesson of lessons">
+                        <ng-container *ngFor="let lesson of chapter.lessons">
                             <li *ngIf="lesson?.chapterId === chapter?.id"
                                 [ngClass]="{'!bg-skin-link': isActiveLesson(lesson.id), '!text-skin-base opacity-80': lesson?.private && !canAccessCourse}"
                                 class="curriculum_chapter_lesson_elt text-primary-500 hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">

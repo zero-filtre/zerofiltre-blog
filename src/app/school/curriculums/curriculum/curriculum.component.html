@@ -8,7 +8,7 @@
                         class="curriculum_chapter_title uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold">
                         {{chapter.title}}</div>
                     <ul class="curriculum_chapter_lessons space-y-0.5">
-                        <ng-container *ngFor="let lesson of lessons">
+                        <ng-container *ngFor="let lesson of chapter.lessons">
                             <li *ngIf="lesson?.chapterId === chapter?.id"
                                 class="curriculum_chapter_lesson_elt hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
                                 <a routerLink="{{'/cours/'+course?.id+'/'+lesson?.position}}"
