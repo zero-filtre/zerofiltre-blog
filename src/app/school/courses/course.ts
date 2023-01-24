@@ -2,7 +2,7 @@ import { Tag } from "../../articles/article.model";
 import { User } from "../../user/user.model";
 
 export interface Course {
-    id: string;
+    id: number;
     title: string;
     subTitle: string;
     summary: string;
@@ -16,7 +16,7 @@ export interface Course {
     author: User;
     duration: string;
     editorIds: any[];
-    price: string;
+    price: number;
     status: string;
     video: string;
     sections: Section[];
@@ -24,7 +24,7 @@ export interface Course {
 }
 
 export interface Section {
-    id: string;
+    id: number;
     position: number;
     title: string;
     content: string;

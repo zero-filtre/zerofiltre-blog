@@ -192,8 +192,8 @@ export class CourseDetailPageComponent implements OnInit {
           this.chapters$ = this.chapterService
             .fetchAllChapters(this.courseID)
 
-          this.lessons$ = this.chapterService.fetchChapterById(this.courseID)
-            .pipe(map(data => data.lessons))
+          // this.lessons$ = this.chapterService.fetchChapterById(this.courseID)
+          //   .pipe(map(data => data.lessons))
 
           return this.getCourse();
         })

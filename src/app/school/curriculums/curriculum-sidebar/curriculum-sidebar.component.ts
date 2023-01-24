@@ -10,6 +10,7 @@ import { Course } from '../../courses/course';
 import { Lesson } from '../../lessons/lesson';
 import { Chapter } from '../../chapters/chapter';
 import { ChapterUpdatePopupComponent } from '../../chapters/chapter-update-popup/chapter-update-popup.component';
+import { capitalizeString } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-curriculum-sidebar',
@@ -21,7 +22,7 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() canEdit!: boolean;
   @Input() course!: Course;
   @Input() lessons!: Lesson[];
-  @Input() activeLessonID: string;
+  @Input() activeLessonID: number;
   @Input() chapters!: Chapter[];
   @Input() canAccessCourse!: boolean;
 
@@ -37,11 +38,11 @@ export class CurriculumSidebarComponent implements OnInit {
     private router: Router
   ) { }
 
-  isActiveLesson(lessonID: string) {
+  isActiveLesson(lessonID: number) {
     return lessonID == this.activeLessonID
   }
 
-  openChapterInitDialog(courseId: any): void {
+  openChapterInitDialog(courseId: number): void {
     this.dialogNewChapterRef.open(ChapterInitPopupComponent, {
       width: '850px',
       height: '350px',
@@ -65,7 +66,7 @@ export class CurriculumSidebarComponent implements OnInit {
     });
   }
 
-  openChapterDeleteDialog(chapterId: any): void {
+  openChapterDeleteDialog(chapterId: number): void {
     this.dialogDeleteChapterRef.open(ChapterDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
@@ -75,7 +76,7 @@ export class CurriculumSidebarComponent implements OnInit {
     });
   }
 
-  openLessonInitDialog(chapterId: any, courseId: any): void {
+  openLessonInitDialog(chapterId: number, courseId: number): void {
     this.dialogNewLessonRef.open(LessonInitPopupComponent, {
       width: '850px',
       height: '350px',
@@ -88,7 +89,7 @@ export class CurriculumSidebarComponent implements OnInit {
     });
   }
 
-  openLessonDeleteDialog(lessonId: any | undefined): void {
+  openLessonDeleteDialog(lessonId: number): void {
     this.dialogDeleteLessonRef.open(LessonDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
@@ -96,6 +97,10 @@ export class CurriculumSidebarComponent implements OnInit {
         history: this.router.url
       }
     });
+  }
+
+  public capitalize(str: string): string {
+    return capitalizeString(str);
   }
 
   ngOnInit(): void {

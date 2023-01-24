@@ -87,16 +87,16 @@
                     <ul class="curriculum_chapter_lessons mt-1 space-y-0.5">
                         <ng-container *ngFor="let lesson of chapter.lessons">
                             <li *ngIf="lesson?.chapterId === chapter?.id"
-                                [ngClass]="{'!bg-skin-link': isActiveLesson(lesson.id), '!text-skin-base opacity-80': lesson?.private && !canAccessCourse}"
+                                [ngClass]="{'!bg-skin-link': isActiveLesson(lesson.id), '!text-skin-base opacity-80': lesson?.free && !canAccessCourse}"
                                 class="curriculum_chapter_lesson_elt text-primary-500 hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
                                 <div class="lesson_link group flex justify-between items-center gap-2">
                                     <div class="w-full flex items-center gap-2 pr-3">
-                                        <a routerLink="{{'/cours/'+course?.id+'/'+lesson?.position}}"
-                                            [style.pointer-events]="lesson?.private && !canAccessCourse ? 'auto' : 'auto'"
+                                        <a routerLink="{{'/cours/'+course?.id+'/'+lesson?.id}}"
+                                            [style.pointer-events]="lesson?.free && !canAccessCourse ? 'auto' : 'auto'"
                                             class="w-full flex items-center p-3 gap-2" (click)="drawer?.toggle()">
 
                                             <span class="lesson_small_icon">
-                                                <svg *ngIf="lesson?.type === 'video' && canAccessCourse || !lesson?.private"
+                                                <svg *ngIf="lesson?.type === 'video' && (lesson?.free || canAccessCourse)"
                                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor"
                                                     class="w-5 h-5 text-primary-600">
@@ -104,14 +104,14 @@
                                                         d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125z" />
                                                 </svg>
 
-                                                <svg *ngIf="lesson?.type === 'doc'" xmlns="http://www.w3.org/2000/svg"
+                                                <svg *ngIf="lesson?.type === 'doc' && (lesson?.free || canAccessCourse)" xmlns="http://www.w3.org/2000/svg"
                                                     fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                                     stroke="currentColor" class="w-5 h-5 text-primary-600">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
                                                 </svg>
 
-                                                <svg *ngIf="lesson?.private && !canAccessCourse "
+                                                <svg *ngIf="!lesson?.free && !canAccessCourse "
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                     fill="currentColor" class="w-5 h-5 text-secondary">
                                                     <path fill-rule="evenodd"
@@ -121,9 +121,9 @@
                                             </span>
 
                                             <span
-                                                [ngClass]="{'font-bold lg:text-lg text-primary-500': isActiveLesson(lesson.id), 'text-secondary':isActiveLesson(lesson.id) && lesson.private && !canAccessCourse}"
+                                                [ngClass]="{'font-bold lg:text-lg text-primary-500': isActiveLesson(lesson.id), 'text-secondary':isActiveLesson(lesson.id) && lesson.free && !canAccessCourse}"
                                                 class="lesson_name font-normal line-clamp-2 lg:line-clamp-none">
-                                                {{lesson?.title}}
+                                                {{capitalize(lesson?.title)}}
                                             </span>
                                         </a>
 
@@ -169,7 +169,7 @@
                                             </ng-container>
 
                                             <span
-                                                [ngClass]="{'!text-white !bg-skin-base !opacity-50': lesson?.private && !canAccessCourse}"
+                                                [ngClass]="{'!text-white !bg-skin-base !opacity-50': lesson?.free && !canAccessCourse}"
                                                 class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-normale">
                                                 {{lesson.duration}}
                                             </span>

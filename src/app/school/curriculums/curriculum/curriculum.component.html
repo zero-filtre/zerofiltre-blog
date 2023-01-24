@@ -11,8 +11,8 @@
                         <ng-container *ngFor="let lesson of chapter.lessons">
                             <li *ngIf="lesson?.chapterId === chapter?.id"
                                 class="curriculum_chapter_lesson_elt hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
-                                <a routerLink="{{'/cours/'+course?.id+'/'+lesson?.position}}"
-                                    [style.pointer-events]="lesson?.private && !canAccessCourse ? 'auto' : 'auto'"
+                                <a routerLink="{{'/cours/'+course?.id+'/'+lesson?.id}}"
+                                    [style.pointer-events]="lesson?.number && !canAccessCourse ? 'auto' : 'auto'"
                                     class="lesson_link p-3 pr-0 flex justify-between items-center gap-2">
                                     <div class="left_content flex items-center gap-2">
                                         <span class="lesson_small_icon">
@@ -31,13 +31,13 @@
                                             </svg>
                                         </span>
                                         <span
-                                            class="lesson_name font-normal line-clamp-2 lg:line-clamp-none">{{lesson.title}}</span>
+                                            class="lesson_name font-normal line-clamp-2 lg:line-clamp-none">{{capitalize(lesson.title)}}</span>
                                         <span
                                             class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-normal">{{lesson.duration}}</span>
                                     </div>
-                                    <button *ngIf="!lesson.private || canAccessCourse"
+                                    <button *ngIf="lesson.free || canAccessCourse"
                                         class="lesson_button bg-primary-400 text-white px-2 py-1 rounded text-sm font-medium">Aperçu</button>
-                                    <button *ngIf="lesson?.private && !canAccessCourse" disabled
+                                    <button *ngIf="!lesson?.free && !canAccessCourse" disabled
                                         class="lesson_button bg-primary-400 text-white px-2 py-1 rounded text-sm font-medium opacity-50">Commencer</button>
                                 </a>
                             </li>

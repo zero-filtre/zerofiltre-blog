@@ -24,19 +24,23 @@ export class CourseService {
   ) { }
 
 
-  canCreateCourse(user: User): boolean {
+  isAdminUser(user: User){
     if (!user) return false;
     return user.roles.includes("ROLE_ADMIN");
   }
 
-  canAccessCourse(user: User, courseId: any): boolean {
+  canCreateCourse(user: User): boolean {
+    return this.isAdminUser(user);
+  }
+
+  canAccessCourse(user: User, course: Course): boolean {
     if (!user) return false;
-    return user?.courseIds?.includes(courseId) || this.canCreateCourse(user)
+    return user?.courseIds?.includes(course.id) || course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) 
   }
 
   canEditCourse(user: User, course: Course): boolean {
     if (!user) return false;
-    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.canCreateCourse(user);
+    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) 
   }
 
   // STUDENT START

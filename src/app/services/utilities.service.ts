@@ -116,7 +116,8 @@ export function getUrlHost(url: string): string {
 }
 
 export function capitalizeString(str: string): string {
-  return str.trim().toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
+  // return str.trim().toLowerCase().replace(/^\w/, (c) => c.toUpperCase());
+  return str.trim().replace(/^\w/, (c) => c.toUpperCase());
 }
 
 export function sortByNameAsc(array: any) {

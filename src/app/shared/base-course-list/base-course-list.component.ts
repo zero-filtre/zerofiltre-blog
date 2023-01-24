@@ -25,7 +25,7 @@ export class BaseCourseListComponent implements OnInit {
   DRAFT = 'draft';
   IN_REVIEW = 'in_review';
 
-  notEmptyCourses = true;
+  notEmptyCourses = false;
   noCourseAvailable: boolean = false;
 
   notScrolly = true;
@@ -59,6 +59,19 @@ export class BaseCourseListComponent implements OnInit {
     public dialogDeleteRef: MatDialog,
   ) { }
 
+  get canCreateCourse() {
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canCreateCourse(user);
+  }
+  canAccessCourse(course: Course) {
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canAccessCourse(user, course);
+  }
+  canEditCourse(course: Course) {
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canEditCourse(user, course);
+  }
+
   onScroll() {
     if (this.notScrolly && this.notEmptyCourses && this.hasNext) {
       this.loadingMore = true;
@@ -75,6 +88,7 @@ export class BaseCourseListComponent implements OnInit {
     const newCourses = [...content];
     this.loadingMore = false;
     this.hasNext = hasNext;
+    this.notEmptyCourses = hasNext;
 
     if (newCourses.length === 0) {
       this.notEmptyCourses = false;
@@ -90,6 +104,7 @@ export class BaseCourseListComponent implements OnInit {
 
       this.loading = false;
       this.hasNext = hasNext;
+      this.notEmptyCourses = hasNext;
 
       if (this.courses.length === 0) {
         this.errorMessage = 'Aucun cours trouvé 😊!';
@@ -102,22 +117,6 @@ export class BaseCourseListComponent implements OnInit {
       this.errorMessage = "Oops... une erreur s'est produite!";
     },
   };
-
-
-  get canCreateCourse() {
-    const user = this.authService?.currentUsr as User
-    return this.courseService.canCreateCourse(user);
-  }
-
-  canAccessCourse(courseId: any) {
-    const user = this.authService?.currentUsr as User
-    return this.courseService.canAccessCourse(user, courseId);
-  }
-
-  canEditCourse(course: Course) {
-    const user = this.authService?.currentUsr as User
-    return this.courseService.canEditCourse(user, course);
-  }
 
   openCourseEntryDialog(): void {
     this.dialogEntryRef.open(CourseInitPopupComponent, {

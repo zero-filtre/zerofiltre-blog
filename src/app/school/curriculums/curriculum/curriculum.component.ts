@@ -3,6 +3,7 @@ import { Course } from '../../courses/course';
 import { Lesson } from '../../lessons/lesson';
 import { Chapter } from '../../chapters/chapter';
 import { Router } from '@angular/router';
+import { capitalizeString } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-curriculum',
@@ -19,6 +20,10 @@ export class CurriculumComponent implements OnInit {
 
   constructor(private router: Router) {
     // do nothing.
+  }
+
+  public capitalize(str: string): string {
+    return capitalizeString(str);
   }
 
   ngOnInit(): void {

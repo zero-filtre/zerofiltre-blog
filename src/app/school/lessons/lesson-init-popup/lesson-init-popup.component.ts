@@ -46,12 +46,10 @@ export class LessonInitPopupComponent implements OnInit {
           return throwError(() => err?.message)
         })
       )
-      .subscribe(_data => {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigateByUrl(`${this.data.history}`);
-          this.loading = false;
-          this.dialogRef.close();
-        })
+      .subscribe(lesson => {
+        this.loading = false;
+        this.dialogRef.close();
+        this.router.navigateByUrl(`/cours/${this.data.courseID}/${lesson.id}/edit`)
       })
   }
 

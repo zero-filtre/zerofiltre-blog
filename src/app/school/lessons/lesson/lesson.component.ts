@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
-import { Observable, catchError, throwError, Subject, tap, map } from 'rxjs';
+import { Observable, catchError, throwError, Subject, tap, map, of } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
 import { Course } from '../../courses/course';
 import { AuthService } from '../../../user/auth.service';
@@ -15,6 +15,7 @@ import { ChapterService } from '../../chapters/chapter.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { CourseSubscription } from '../../studentCourse';
+import { capitalizeString } from 'src/app/services/utilities.service';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   courseVideos$: Observable<any[]>;
   lessonVideo$: Observable<any>;
+  lesson$: Observable<Lesson>;
 
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
@@ -105,14 +107,10 @@ export class LessonComponent implements OnInit, OnDestroy {
     const user = this.authService?.currentUsr as User
     return this.courseService.isSubscriber(user, this.course);
   }
-
   get canAccessCourse() {
-    const userId = (this.authService?.currentUsr as User)?.id
-    if (!userId) return false;
-
-    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin || this.authService?.currentUsr?.courseIds?.includes(this.course?.id);
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canAccessCourse(user, this.course)
   }
-
   get canEditCourse() {
     const user = this.authService?.currentUsr as User
     return this.courseService.canEditCourse(user, this.course);
@@ -139,22 +137,22 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   loadLessonData(lessonId: any) {
+    if (lessonId == '?') return;
     this.loading = true;
 
-    this.lessonService.findLessonById(lessonId)
-      .pipe(catchError(err => {
+    this.lesson$ = this.lessonService.findLessonById(lessonId)
+      .pipe(
+        catchError(err => {
         this.loading = false;
-        this.messageService.openSnackBarError(err?.statusText, '');
         return throwError(() => err?.message)
-      }))
-      .subscribe((data: Lesson) => {
-        setTimeout(() => {
-          this.completed = this.isLessonCompleted(data)
+      }),
+        tap((data: Lesson) => {
           this.lesson = data;
+          this.completed = this.isLessonCompleted(data)
           this.lessonVideo$ = this.vimeoService.getOneVideo(data?.video);
           this.loading = false;
-        }, 1000);
-      })
+        })
+      )
 
   }
 
@@ -180,7 +178,18 @@ export class LessonComponent implements OnInit, OnDestroy {
       )
   }
   loadAllChapters(courseId: any) {
-    this.chapters$ = this.chapterService.fetchAllChapters(courseId);
+    this.loading = true;
+    this.chapters$ = this.chapterService.fetchAllChapters(courseId)
+    .pipe(tap(data => {
+      this.loading = false;
+      this.lesson = data[0]?.lessons[0];
+      this.lesson$ = of(this.lesson);
+      this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
+    }))
+  }
+
+  public capitalize(str: string): string {
+    return capitalizeString(str);
   }
 
   ngOnInit(): void {
@@ -189,15 +198,15 @@ export class LessonComponent implements OnInit, OnDestroy {
 
     this.loadCourseData(this.courseID);
     this.loadAllChapters(this.courseID);
-    this.loadAllLessons(this.courseID);
 
     this.route.paramMap.subscribe(
       params => {
         this.lessonID = params.get('lesson_id')!;
         this.courseID = params.get('course_id')!;
-        this.loadLessonData(this.lessonID);
-        this.loadSiblingTitles(this.lessonID, this.courseID);
         this.completedLessonsIds$ = this.loadCourseCompletedLessonsIds();
+        this.loadLessonData(this.lessonID);
+
+        // this.loadSiblingTitles(this.lessonID, this.courseID);
       }
     );
   }

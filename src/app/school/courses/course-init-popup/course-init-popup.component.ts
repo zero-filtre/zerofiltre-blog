@@ -37,10 +37,10 @@ export class CourseInitPopupComponent implements OnInit {
         this.loading = false
         return throwError(() => err)
       }))
-      .subscribe(_data => {
+      .subscribe(course => {
         this.dialogRef.close();
         this.loading = false;
-        location.reload();
+        this.router.navigateByUrl(`/cours/${course.id}/edit`)
       });
 
   }
