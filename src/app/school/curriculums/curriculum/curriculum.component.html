@@ -36,9 +36,9 @@
                                             class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-normal">{{lesson.duration}}</span>
                                     </div>
                                     <button *ngIf="lesson.free || canAccessCourse"
-                                        class="lesson_button bg-primary-400 text-white px-2 py-1 rounded text-sm font-medium">Aperçu</button>
+                                        class="lesson_button bg-primary-400 text-white px-2 py-1 rounded text-sm font-medium mr-3">Aperçu</button>
                                     <button *ngIf="!lesson?.free && !canAccessCourse" disabled
-                                        class="lesson_button bg-primary-400 text-white px-2 py-1 rounded text-sm font-medium opacity-50">Commencer</button>
+                                        class="lesson_button bg-primary-400 text-white px-2 py-1 rounded text-sm font-medium mr-3 opacity-50">Commencer</button>
                                 </a>
                             </li>
                         </ng-container>

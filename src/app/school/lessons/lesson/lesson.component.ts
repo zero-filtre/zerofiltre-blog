@@ -146,10 +146,10 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.loading = false;
         return throwError(() => err?.message)
       }),
-        tap((data: Lesson) => {
-          this.lesson = data;
-          this.completed = this.isLessonCompleted(data)
-          this.lessonVideo$ = this.vimeoService.getOneVideo(data?.video);
+        tap((lesson: Lesson) => {
+          this.lesson = lesson;
+          this.completed = this.isLessonCompleted(lesson)
+          this.lessonVideo$ = this.vimeoService.getOneVideo(lesson?.video);
           this.loading = false;
         })
       )

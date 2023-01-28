@@ -25,6 +25,7 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() activeLessonID: number;
   @Input() chapters!: Chapter[];
   @Input() canAccessCourse!: boolean;
+  @Input() loading!: boolean;
 
   currentRoute: string;
 

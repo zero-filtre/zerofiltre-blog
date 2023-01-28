@@ -1,12 +1,14 @@
-<div class="hidden lg:flex flex-col">
-    <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art order-2 hidden lg:block lg:order-none">
-        <app-curriculum-sidebar [canEdit]="canEditCourse" [course]="course" [lessons]="lessons$ | async"
-            [chapters]="chapters$ | async" [activeLessonID]="lessonID" [canAccessCourse]="canAccessCourse">
-        </app-curriculum-sidebar>
+<div class="hidden lg:flex site-container pt-2">
+    <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art hidden lg:block">
+        <div class="sticky top-20">
+            <app-curriculum-sidebar [canEdit]="canEditCourse" [course]="course" [lessons]="lessons$ | async"
+                [chapters]="chapters$ | async" [activeLessonID]="lessonID" [canAccessCourse]="canAccessCourse" [loading]="loading">
+            </app-curriculum-sidebar>
+        </div>
     </aside>
 
-    <main class="py-5 text-skin-art">
-        <div class="lesson_content site-container min-h-screen">
+    <main class="text-skin-art w-full lg:pl-5">
+        <div class="lesson_content min-h-screen">
             <div *ngIf="isSubscriber" class="progress_bar mb-5 mx-auto">
                 <progress *ngIf="completedLessonsIds$|async" id="bluebar" class="progress w-full h-10"
                     [value]="completeProgressVal" max="100"></progress>
