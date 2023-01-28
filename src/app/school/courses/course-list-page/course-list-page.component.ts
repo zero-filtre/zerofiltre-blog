@@ -138,7 +138,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   fetchCourseByTag(tagName: string): void {
     this.loading = true;
     this.courses$ = this.courseService
-      .findAllArticlesByTag(this.pageNumber, this.pageItemsLimit, tagName)
+      .findAllCoursesByTag(this.pageNumber, this.pageItemsLimit, tagName)
       .subscribe(this.handleFetchedCourses)
   }
 
@@ -172,7 +172,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
 
     if (queryParamTwo) {
       return this.courseService
-        .findAllArticlesByTag(
+        .findAllCoursesByTag(
           this.scrollyPageNumber,
           this.pageItemsLimit,
           queryParamTwo

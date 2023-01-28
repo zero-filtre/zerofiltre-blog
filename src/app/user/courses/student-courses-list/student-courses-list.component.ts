@@ -78,44 +78,40 @@ export class StudentCoursesListComponent implements OnInit {
   loadInProgressCourses() {
     this.loading = true;
 
-    setTimeout(() => {
-      this.courseService.getAllSubscribedCourseInProgressIds(this.authService.currentUsr.id)
-        .pipe(
-          switchMap(ids => {
-            const data = ids.map(id => this.courseService.findCourseById(id))
-            this.loading = false;
-            return forkJoin(data).pipe(
-              tap(d => {
-                this.loading = false;
-                this.courses = d;
-              }),
-              map(values => values)
-            )
-          })
-        ).subscribe()
-    }, 1000);
+    // this.courseService.findMyInCompletedCourses(this.authService.currentUsr.id)
+    //   .pipe(
+    //     switchMap(ids => {
+    //       const data = ids.map(id => this.courseService.findCourseById(id))
+    //       this.loading = false;
+    //       return forkJoin(data).pipe(
+    //         tap(d => {
+    //           this.loading = false;
+    //           this.courses = d;
+    //         }),
+    //         map(values => values)
+    //       )
+    //     })
+    //   ).subscribe()
 
   }
 
   loadCompletedCourses() {
     this.loading = true;
 
-    setTimeout(() => {
-      this.courseService.getAllSubscribedCourseCompletedIds(this.authService.currentUsr.id)
-        .pipe(
-          switchMap(ids => {
-            const data = ids.map(id => this.courseService.findCourseById(id))
-            this.loading = false;
-            return forkJoin(data).pipe(
-              tap(d => {
-                this.loading = false;
-                this.courses = d;
-              }),
-              map(values => values)
-            )
-          })
-        ).subscribe()
-    }, 1000);
+    // this.courseService.findMyCompletedCourses(this.authService.currentUsr.id)
+    //   .pipe(
+    //     switchMap(ids => {
+    //       const data = ids.map(id => this.courseService.findCourseById(id))
+    //       this.loading = false;
+    //       return forkJoin(data).pipe(
+    //         tap(d => {
+    //           this.loading = false;
+    //           this.courses = d;
+    //         }),
+    //         map(values => values)
+    //       )
+    //     })
+    //   ).subscribe()
 
   }
 

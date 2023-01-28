@@ -11,6 +11,7 @@ import { Lesson } from '../../lessons/lesson';
 import { Chapter } from '../../chapters/chapter';
 import { ChapterUpdatePopupComponent } from '../../chapters/chapter-update-popup/chapter-update-popup.component';
 import { capitalizeString } from 'src/app/services/utilities.service';
+import { CourseService } from '../../courses/course.service';
 
 @Component({
   selector: 'app-curriculum-sidebar',
@@ -26,11 +27,13 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() chapters!: Chapter[];
   @Input() canAccessCourse!: boolean;
   @Input() loading!: boolean;
+  @Input() completedLessonsIds!: number[];
 
   currentRoute: string;
 
   constructor(
     public authService: AuthService,
+    private courseService: CourseService,
     public dialogNewChapterRef: MatDialog,
     private dialogDeleteChapterRef: MatDialog,
     private dialogUpdateChapterRef: MatDialog,
@@ -102,6 +105,15 @@ export class CurriculumSidebarComponent implements OnInit {
 
   public capitalize(str: string): string {
     return capitalizeString(str);
+  }
+
+  publishCourse(course: Course) {
+    this.courseService.publishCourse(course)
+      .subscribe()
+  }
+
+  isLessonCompleted(lesson: Lesson): boolean {
+    return this.completedLessonsIds?.includes(lesson?.id);
   }
 
   ngOnInit(): void {

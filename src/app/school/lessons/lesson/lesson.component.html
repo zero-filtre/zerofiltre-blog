@@ -2,14 +2,15 @@
     <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art hidden lg:block">
         <div class="sticky top-20">
             <app-curriculum-sidebar [canEdit]="canEditCourse" [course]="course" [lessons]="lessons$ | async"
-                [chapters]="chapters$ | async" [activeLessonID]="lessonID" [canAccessCourse]="canAccessCourse" [loading]="loading">
+                [chapters]="chapters$ | async" [activeLessonID]="lessonID" [canAccessCourse]="canAccessCourse" [loading]="loadingCourse"
+                [completedLessonsIds]="completedLessonsIds">
             </app-curriculum-sidebar>
         </div>
     </aside>
 
     <main class="text-skin-art w-full lg:pl-5">
         <div class="lesson_content min-h-screen">
-            <div *ngIf="isSubscriber" class="progress_bar mb-5 mx-auto">
+            <div *ngIf="isSubscriber" class="progress_bar mb-2 mx-auto">
                 <progress *ngIf="completedLessonsIds$|async" id="bluebar" class="progress w-full h-10"
                     [value]="completeProgressVal" max="100"></progress>
                 <progress *ngIf="!(completedLessonsIds$|async)" id="bluebar" class="progress w-full h-10" [value]="0"
@@ -64,10 +65,10 @@
                 </div>
             </div>
 
-            <div class="lesson_content_wrapper p-5">
-                <div *ngIf="lesson$|async as lesson" class="markdown-content mt-2 lg:mt-8">
+            <div class="lesson_content_wrapper p-5 pt-0">
+                <div *ngIf="lesson$|async as lesson" class="markdown-content mt-2 lg:mt-5">
                     <div
-                        class="lesson_name mb-6 lg:mb-10 text-3xl w-full font-black text-primary-500 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
+                        class="lesson_name mb-6 lg:mb-8 text-3xl w-full font-black text-primary-500 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
                         <h1>{{capitalize(lesson?.title)}}</h1>
                     </div>
                     <markdown
@@ -153,11 +154,11 @@
                         <span *ngIf="+lesson.id == 1" class="w-full text-center">{{course?.title}}</span>
                     </a>
 
-                    <a routerLink="{{'/cours/'+ course?.id + '/' + (+lesson?.id < lessonsTotal ? (+lesson?.id + 1) : +lesson?.id)}}"
+                    <a routerLink="{{'/cours/'+ course?.id + '/' + (+lesson?.id < lessonsCount ? (+lesson?.id + 1) : +lesson?.id)}}"
                         class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
-                        <span *ngIf="+lesson?.id < lessonsTotal"
+                        <span *ngIf="+lesson?.id < lessonsCount"
                             class="w-full text-center">{{nextLesson$|async}}</span>
-                        <span *ngIf="+lesson?.id == lessonsTotal" class="w-full text-center">{{lesson?.title}}</span>
+                        <span *ngIf="+lesson?.id == lessonsCount" class="w-full text-center">{{lesson?.title}}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                             stroke="currentColor" class="w-5 h-5 mt-0.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
