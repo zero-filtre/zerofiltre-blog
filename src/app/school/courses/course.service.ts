@@ -43,7 +43,7 @@ export class CourseService {
     return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) 
   }
 
-  // STUDENT SUBSCIPTIONS START
+  // STUDENT SUBSCRIPTIONS START
 
   isSubscriber(user: User, course: Course) {
     if (!user) return false;
@@ -60,7 +60,8 @@ export class CourseService {
       .pipe(shareReplay());
   }
 
-  findSubscribedByCourseId(courseId: number, userId: any): Observable<any> {
+  findSubscribedByCourseId(data: any): Observable<any> {
+    const { courseId, userId } = data
     return this.http.get<any>(`${this.apiServerUrl}/subscription?courseId=${courseId}&userId=${userId}`, httpOptions)
       .pipe(
         map(data => data[0]),
@@ -68,7 +69,8 @@ export class CourseService {
       );
   }
 
-  findAllSubscribedCourses(userId: number): Observable<any> {
+  findAllSubscribedCourses(data: any): Observable<any> {
+    const { userId, courseId, pageNumber, pageSize, completed } = data
     return this.http.get<any>(`${this.apiServerUrl}/subscription?userId=${userId}`, httpOptions)
       .pipe(shareReplay());
   }
@@ -81,7 +83,7 @@ export class CourseService {
 
   markLessonAsInComplete(data: any): Observable<any> {
     const { courseId, lessonId } = data
-    return this.http.post<any>(`${this.apiServerUrl}/subscription/incomplete?lessonId=${lessonId}&courseId=${courseId}`, httpOptions)
+    return this.http.patch<any>(`${this.apiServerUrl}/subscription/incomplete?lessonId=${lessonId}&courseId=${courseId}`, httpOptions)
       .pipe(shareReplay());
   }
 

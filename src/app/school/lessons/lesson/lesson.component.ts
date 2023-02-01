@@ -120,8 +120,9 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   loadCourseCompletedLessonsIds(): Observable<any> {
-    const userId = (this.authService?.currentUsr as User)?.id
-    return this.courseService.findSubscribedByCourseId(this.courseID, +userId)
+    const userId = +(this.authService?.currentUsr as User)?.id
+    const payload = { courseId: this.courseID, userId }
+    return this.courseService.findSubscribedByCourseId(payload)
       .pipe(
         map((data: CourseSubscription) => {
           this.courseSubscriptionID = data.id;

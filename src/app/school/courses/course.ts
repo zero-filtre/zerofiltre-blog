@@ -38,10 +38,5 @@ export interface Reaction {
     action: string
 }
 
-export enum STATUS {
-    'DRAFT',
-    'PUBLISHED',
-    'IN_REVIEW',
-    'COMPLETED',
-    'IN_PROGRESS'
-}
+const CourseStatuses = ['PUBLISHED','DRAFT','IN_REVIEW','COMPLETED','IN_PROGRESS'] as const;
+export type CourseStatus = typeof CourseStatuses[number];
