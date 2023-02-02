@@ -85,7 +85,7 @@ export class CourseDetailPageComponent implements OnInit {
     this.courseService.subscribeCourse(this.course.id)
       .subscribe(_data => {
         this.notify.openSnackBarSuccess('Vous avez souscrit à ce cours avec succes !', '');
-        this.router.navigateByUrl('/cours/')
+        this.router.navigateByUrl(`/cours/${this.courseID}/?`)
       })
 
   }

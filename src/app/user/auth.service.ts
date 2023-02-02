@@ -87,12 +87,6 @@ export class AuthService {
           this.setUserData(usr);
           this.refreshData = false;
           httpOptions.headers = httpOptions.headers.delete('x-refresh');
-
-          // this.courseService.findAllSubscribedCourses(usr.id)
-          //   .pipe(tap(data => {
-          //     console.log('All SUB: ', data);
-          //     this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
-          //   })).subscribe()
         }),
         shareReplay()
       )
@@ -304,11 +298,6 @@ export class AuthService {
           } else {
             this.router.navigateByUrl('/articles');
           }
-
-          // this.courseService.findAllSubscribedCourses(usr.id)
-          //   .pipe(tap(data => {
-          //     console.log('All SUB: ', data);
-          //   })).subscribe()
         },
         error: (_err: HttpErrorResponse) => {
           this.messageService.loadUserFailed();

@@ -12,7 +12,7 @@ export interface Course {
     reactions: Reaction[];
     enrolledCount: number;
     chapterCount: number;
-    lessonCount: number;
+    lessonsCount: number;
     author: User;
     duration: string;
     editorIds: any[];

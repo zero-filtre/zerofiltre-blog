@@ -11,9 +11,9 @@
     <main class="text-skin-art w-full lg:pl-5">
         <div class="lesson_content min-h-screen">
             <div *ngIf="isSubscriber" class="progress_bar mb-2 mx-auto">
-                <progress *ngIf="completedLessonsIds$|async" id="bluebar" class="progress w-full h-10"
+                <progress *ngIf="courseSubscription$|async" id="bluebar" class="progress w-full h-10"
                     [value]="completeProgressVal" max="100"></progress>
-                <progress *ngIf="!(completedLessonsIds$|async)" id="bluebar" class="progress w-full h-10" [value]="0"
+                <progress *ngIf="!(courseSubscription$|async)" id="bluebar" class="progress w-full h-10" [value]="0"
                     max="100"></progress>
             </div>
 

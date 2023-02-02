@@ -63,15 +63,12 @@ export class CourseService {
   findSubscribedByCourseId(data: any): Observable<any> {
     const { courseId, userId } = data
     return this.http.get<any>(`${this.apiServerUrl}/subscription?courseId=${courseId}&userId=${userId}`, httpOptions)
-      .pipe(
-        map(data => data[0]),
-        shareReplay()
-      );
+      .pipe(shareReplay());
   }
 
   findAllSubscribedCourses(data: any): Observable<any> {
-    const { userId, courseId, pageNumber, pageSize, completed } = data
-    return this.http.get<any>(`${this.apiServerUrl}/subscription?userId=${userId}`, httpOptions)
+    const { pageNumber, pageSize, completed } = data
+    return this.http.get<any>(`${this.apiServerUrl}/subscription/user?pageNumber=${pageNumber}&pageSize=${pageSize}&completed=${completed}`, httpOptions)
       .pipe(shareReplay());
   }
 
@@ -83,7 +80,7 @@ export class CourseService {
 
   markLessonAsInComplete(data: any): Observable<any> {
     const { courseId, lessonId } = data
-    return this.http.patch<any>(`${this.apiServerUrl}/subscription/incomplete?lessonId=${lessonId}&courseId=${courseId}`, httpOptions)
+    return this.http.patch<any>(`${this.apiServerUrl}/subscription/uncomplete?lessonId=${lessonId}&courseId=${courseId}`, httpOptions)
       .pipe(shareReplay());
   }
 

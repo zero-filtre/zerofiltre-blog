@@ -1,6 +1,6 @@
 .scrollbar::-webkit-scrollbar {
-  height: 0.375rem;
-  width: 0.375rem;
+  height: 0.175rem;
+  width: 0.175rem;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {

@@ -31,7 +31,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   lesson!: Lesson;
   loading: boolean;
   loadingCourse: boolean;
-  completedLessonsIds = <any>[];
+  completedLessonsIds: number[] = [];
+  completedLessons: Lesson[] = [];
   lessonsCount: number;
   completeProgressVal: number;
 
@@ -45,7 +46,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
-  completedLessonsIds$: Observable<any>;
+  courseSubscription$: Observable<CourseSubscription>;
   prevLesson$: Observable<any>;
   nextLesson$: Observable<any>;
 
@@ -96,7 +97,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           this.completed = true;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
-          this.router.navigateByUrl(`/cours/${this.courseID}/${+this.lessonID < this.lessonsCount ? +this.lessonID + 1 : this.lessonID}`)
+          // this.router.navigateByUrl(`/cours/${this.courseID}/${+this.lessonID < this.lessonsCount ? +this.lessonID + 1 : this.lessonID}`)
         })
     } else {
       this.courseService.markLessonAsInComplete(data)
@@ -110,26 +111,28 @@ export class LessonComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadCompleteProgressBar(data: []) {
-    const completed = data?.length;
-    this.completeProgressVal = Math.round(100 * (completed / this.lessonsCount)) || 0
+  loadCompleteProgressBar(lessonsIds: number[]) {
+    const completedLessonCount = lessonsIds?.length;
+    this.completeProgressVal = Math.round(100 * (completedLessonCount / this.lessonsCount)) || 0
   }
 
   isLessonCompleted(lesson: Lesson): boolean {
     return this.completedLessonsIds.includes(lesson?.id);
   }
 
-  loadCourseCompletedLessonsIds(): Observable<any> {
+  loadCourseSubscription() {
     const userId = +(this.authService?.currentUsr as User)?.id
     const payload = { courseId: this.courseID, userId }
-    return this.courseService.findSubscribedByCourseId(payload)
+
+    this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
       .pipe(
-        map((data: CourseSubscription) => {
+        tap((data: CourseSubscription) => {
           this.courseSubscriptionID = data.id;
-          this.completedLessonsIds = [...new Set(data.completedLessons)];
+          this.completedLessons = data.completedLessons;
+          this.completedLessonsIds = [...new Set(data.completedLessons.map(l => l.id))];
           this.loadCompleteProgressBar(this.completedLessonsIds);
-          return data;
         }),
+        shareReplay()
       )
   }
 
@@ -142,7 +145,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         catchError(err => {
         this.loading = false;
         return throwError(() => err?.message)
-      }),
+        }),
         tap((lesson: Lesson) => {
           this.lesson = lesson;
           this.completed = this.isLessonCompleted(lesson)
@@ -165,6 +168,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.loadingCourse = false;
         this.course = data;
         this.lessonsCount = data.lessonsCount;
+        this.loadCourseSubscription();
       })
   }
 
@@ -224,7 +228,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.lessonID = params.get('lesson_id')!;
         this.courseID = params.get('course_id')!;
         this.loadLessonData(this.lessonID);
-        // this.completedLessonsIds$ = this.loadCourseCompletedLessonsIds();
+        this.loadCourseSubscription();
       }
     );
   }
