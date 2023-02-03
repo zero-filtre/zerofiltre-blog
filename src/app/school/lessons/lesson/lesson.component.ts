@@ -143,8 +143,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.lesson$ = this.lessonService.findLessonById(lessonId)
       .pipe(
         catchError(err => {
-        this.loading = false;
-        return throwError(() => err?.message)
+          this.loading = false;
+          return throwError(() => err?.message)
         }),
         tap((lesson: Lesson) => {
           this.lesson = lesson;
@@ -172,7 +172,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       })
   }
 
-  loadAllChapters(courseId: any) {
+  loadAllChapters(courseId: any, lessonId: any) {
     this.loading = true;
     this.chapters$ = this.chapterService.fetchAllChapters(courseId)
     .pipe(
@@ -182,9 +182,12 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.allChapters = data;
           this.currentChapter = data[0];
 
-          // this.lesson = data[0].lessons[0]
-          // this.lesson$ = of(this.lesson);
-          // this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
+          if (lessonId === '?') {
+            this.lesson = data[0].lessons[0]
+            this.lessonID = this.lesson.id;
+            this.lesson$ = of(this.lesson);
+            this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
+          }
       }),
       shareReplay()
     )
@@ -219,14 +222,14 @@ export class LessonComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.seo.unmountFooter();
     this.courseID = this.route.snapshot.paramMap.get('course_id');
+    this.lessonID = this.route.snapshot.paramMap.get('lesson_id');
 
     this.loadCourseData(this.courseID);
-    this.loadAllChapters(this.courseID);
+    this.loadAllChapters(this.courseID, this.lessonID);
 
     this.route.paramMap.subscribe(
       params => {
         this.lessonID = params.get('lesson_id')!;
-        this.courseID = params.get('course_id')!;
         this.loadLessonData(this.lessonID);
         this.loadCourseSubscription();
       }
