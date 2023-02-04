@@ -25,8 +25,8 @@ export class StudentCoursesListComponent extends BaseCourseListComponent impleme
   courses: any = [];
   pageSize: number = 5;
 
-  IN_PROGRESS = 'false';
-  COMPLETED = 'true';
+  IN_PROGRESS = 'in_progress';
+  COMPLETED = 'completed';
 
   noCoursesAvailable: boolean = false;
   loadingMore: boolean = false;
@@ -79,12 +79,12 @@ e
 
     if (tab === this.IN_PROGRESS) {
       this.activePage = this.IN_PROGRESS;
-      this.router.navigateByUrl('/user/dashboard/courses?completed=false');
+      this.router.navigateByUrl('/user/dashboard/courses');
     }
 
     if (tab === this.COMPLETED) {
       this.activePage = this.COMPLETED;
-      this.router.navigateByUrl('/user/dashboard/courses?completed=true');
+      this.router.navigateByUrl('/user/dashboard/courses?filter=completed');
     }
 
     this.scrollyPageNumber = 0;
@@ -117,12 +117,11 @@ e
       .subscribe((response: any) => this.handleFetchNewCourses(response));
   }
 
-
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.route.queryParamMap.subscribe(
         query => {
-          this.status = query.get('completed')!;
+          this.status = query.get('filter')!;
           if (!this.status) {
             this.activePage = this.IN_PROGRESS;
             return this.fetchAllCoursesByStatus(this.IN_PROGRESS);

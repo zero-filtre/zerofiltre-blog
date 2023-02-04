@@ -68,7 +68,7 @@ export class CourseService {
 
   findAllSubscribedCourses(data: any): Observable<any> {
     const { pageNumber, pageSize, completed } = data
-    return this.http.get<any>(`${this.apiServerUrl}/subscription/user?pageNumber=${pageNumber}&pageSize=${pageSize}&completed=${completed}`, httpOptions)
+    return this.http.get<any>(`${this.apiServerUrl}/subscription/user?pageNumber=${pageNumber}&pageSize=${pageSize}` + (completed == 'completed' ? '&filter=completed' : ''), httpOptions)
       .pipe(shareReplay());
   }
 
