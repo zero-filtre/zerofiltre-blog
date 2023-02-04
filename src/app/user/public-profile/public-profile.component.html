@@ -36,6 +36,18 @@
                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.myArticles' | translate}}</span>
                 </a>
+                <a aria-labelledby="Link to my student courses dashboard" routerLink="/user/dashboard/courses"
+                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    <span class="truncate">{{'sidebar.myCourses' | translate}}</span>
+                </a>
+                <a aria-labelledby="Link to my teacher courses dashboard" routerLink="/user/dashboard/teacher/courses"
+                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    <span class="truncate">{{'sidebar.myTrainings' | translate}}</span>
+                </a>
+                <a aria-labelledby="Link to all courses dashboard" *ngIf="authService?.isAdmin" routerLink="/user/dashboard/courses/all"
+                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    <span class="truncate">{{'sidebar.allTrainings' | translate}}</span>
+                </a>
                 <a aria-labelledby="Link to about page" *ngIf="authService?.isAdmin" routerLink="/user/dashboard/admin"
                     class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.allAdminArticles' | translate}}</span>
