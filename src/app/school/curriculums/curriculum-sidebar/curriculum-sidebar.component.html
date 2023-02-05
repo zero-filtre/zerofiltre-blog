@@ -186,9 +186,9 @@
                                             </ng-container>
 
                                             <span
-                                                [ngClass]="{'!text-white !bg-skin-base !opacity-50': lesson?.free && !canAccessCourse}"
+                                                [ngClass]="{'!text-white !bg-skin-base !opacity-50': !lesson?.free && !canAccessCourse}"
                                                 class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-normale">
-                                                {{lesson.duration}}
+                                                {{videoDuration}}
                                             </span>
                                         </div>
                                     </div>

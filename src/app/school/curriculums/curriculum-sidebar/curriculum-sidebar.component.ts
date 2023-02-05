@@ -28,6 +28,7 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() canAccessCourse!: boolean;
   @Input() loading!: boolean;
   @Input() completedLessonsIds!: number[];
+  @Input() videoDuration!: number;
 
   currentRoute: string;
 

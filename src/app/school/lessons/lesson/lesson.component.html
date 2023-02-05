@@ -1,17 +1,17 @@
 <div class="hidden lg:flex site-container pt-2">
     <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art hidden lg:block">
         <div class="sticky top-20">
-            <app-curriculum-sidebar [canEdit]="canEditCourse" [course]="course" [lessons]="lessons$ | async"
+            <app-curriculum-sidebar [canEdit]="canEditCourse" [course]="course$|async" [lessons]="lessons$ | async"
                 [chapters]="chapters$ | async" [activeLessonID]="lessonID" [canAccessCourse]="canAccessCourse" [loading]="loadingCourse"
-                [completedLessonsIds]="completedLessonsIds">
+                [completedLessonsIds]="completedLessonsIds" [videoDuration]="videoDuration">
             </app-curriculum-sidebar>
         </div>
     </aside>
 
     <main class="text-skin-art w-full lg:pl-5">
         <div class="lesson_content min-h-screen">
-            <div *ngIf="isSubscriber" class="progress_bar mb-2 mx-auto">
-                <progress *ngIf="courseSubscription$|async" id="bluebar" class="progress w-full h-10"
+            <div *ngIf="courseSubscription$|async" class="progress_bar mb-2 mx-auto">
+                <progress *ngIf="isSubscriber" id="bluebar" class="progress w-full h-10"
                     [value]="completeProgressVal" max="100"></progress>
                 <progress *ngIf="!(courseSubscription$|async)" id="bluebar" class="progress w-full h-10" [value]="0"
                     max="100"></progress>
@@ -21,7 +21,7 @@
                 <div class="vid_wrapper w-full h-full bg-gray-900">
                     <ng-container *ngIf="lesson$|async as lesson">
                         <ng-container *ngIf="lesson.video">
-                            <iframe *ngIf="canAccessCourse || lesson.free" [src]="lessonVideo$ | async | vimeoUrl"
+                            <iframe *ngIf="canAccessCourse || lesson.free" #player [src]="lessonVideo$ | async | vimeoUrl"
                                 class="" webkitallowfullscreen mozallowfullscreen allowfullscreen width="100%"
                                 height="100%" title="Lesson video">
                             </iframe>
@@ -144,21 +144,18 @@
 
             <div class="lesson_pagination my-10">
                 <div *ngIf="lesson$|async as lesson" class="flex gap-10 font-semibold">
-                    <a routerLink="{{'/cours/'+ course?.id + '/' + (+lesson?.id > 1 ? (+lesson?.id - 1) : '')}}"
+                    <a *ngIf="prevLesson$|async as prev" routerLink="{{'/cours/'+ course?.id + '/' + prev.id}}"
                         class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                             stroke="currentColor" class="w-5 h-5 mt-0.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                         </svg>
-                        <span *ngIf="+lesson.id > 1" class="w-full text-center">{{prevLesson$|async}}</span>
-                        <span *ngIf="+lesson.id == 1" class="w-full text-center">{{course?.title}}</span>
+                        <span class="w-full text-center">{{prev.title}}</span>
                     </a>
 
-                    <a routerLink="{{'/cours/'+ course?.id + '/' + (+lesson?.id < lessonsCount ? (+lesson?.id + 1) : +lesson?.id)}}"
+                    <a *ngIf="nextLesson$|async as next" routerLink="{{'/cours/'+ course?.id + '/' + next.id}}"
                         class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
-                        <span *ngIf="+lesson?.id < lessonsCount"
-                            class="w-full text-center">{{nextLesson$|async}}</span>
-                        <span *ngIf="+lesson?.id == lessonsCount" class="w-full text-center">{{lesson?.title}}</span>
+                        <span class="w-full text-center">{{next.title}}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                             stroke="currentColor" class="w-5 h-5 mt-0.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
