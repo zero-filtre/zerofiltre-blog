@@ -9,10 +9,10 @@ import { NavigationService } from '../../../services/navigation.service';
 import { Lesson } from '../../lessons/lesson';
 import { Chapter } from '../../chapters/chapter';
 import { ChapterService } from '../../chapters/chapter.service';
-import { LessonService } from '../../lessons/lesson.service';
 import { AuthService } from '../../../user/auth.service';
 import { User } from '../../../user/user.model';
 import { environment } from 'src/environments/environment';
+import { CourseSubscription } from '../../studentCourse';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -83,9 +83,9 @@ export class CourseDetailPageComponent implements OnInit {
     }
 
     this.courseService.subscribeCourse(this.course.id)
-      .subscribe(_data => {
+      .subscribe((data:CourseSubscription) => {
         this.notify.openSnackBarSuccess('Vous avez souscrit à ce cours avec succes !', '');
-        this.router.navigateByUrl(`/cours/${this.courseID}/?`)
+        this.router.navigateByUrl(`/cours/${this.courseID}/?`);
       })
 
   }

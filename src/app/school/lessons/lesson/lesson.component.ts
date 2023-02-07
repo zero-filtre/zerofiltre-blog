@@ -137,7 +137,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
           this.completedLessons = data.completedLessons;
           this.completedLessonsIds = [...new Set(data.completedLessons.map(l => l.id))];
           this.completed = this.isLessonCompleted(this.lesson);
-          // this.lessonsCount = data.course.lessonsCount;
+          this.lessonsCount = data.course.lessonsCount;
           this.loadCompleteProgressBar(this.completedLessonsIds);
         }),
         shareReplay()
@@ -160,8 +160,15 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
           this.lessonVideo$ = this.vimeoService.getOneVideo(lesson?.video);
           this.loading = false;
 
-          this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
-          this.loadPrevNext(this.currentChapter)
+          if (!this.allChapters.length) {
+            setTimeout(() => {
+              this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
+              this.loadPrevNext(this.currentChapter)
+            }, 0);
+          }else{
+            this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
+            this.loadPrevNext(this.currentChapter)
+          }
         }),
         shareReplay()
       )
@@ -179,7 +186,6 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
         tap(data => {
           this.loadingCourse = false;
           this.course = data;
-          this.lessonsCount = data.lessonsCount;
         })
       )
   }
@@ -206,37 +212,34 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     )
   }
 
-  loadPrevNext(chapter: Chapter){
-    let lessonList: Lesson[] = chapter?.lessons;
-    const currLessonId = +this.lessonID
+  loadPrevNext(currentChapter: Chapter){
+    let currentChapterLessonList: Lesson[] = currentChapter?.lessons;
+    const currentLessonId = this.lessonID
 
-    console.log('CHAPTER: ', chapter);
+    if (!currentLessonId) return
+    if (!currentChapter) return
 
-    if (!currLessonId) return
-    if (!chapter) return
+    const currentChapterIndex = this.allChapters.findIndex(chap => chap.id == currentChapter.id);
+    const currentLessonIndex = currentChapterLessonList?.findIndex(lesson => lesson.id == currentLessonId);
 
-    const currentChapterIndex = this.allChapters.findIndex(chap => chap.id === chapter.id);
-    const currLessonIndex = lessonList?.findIndex(lesson => lesson.id == currLessonId);
-
-    
     let prev = null, next = null;
-    const prevLastLessonIndex = this.allChapters[currentChapterIndex - 1]?.lessons.length - 1;
-    const currentLastLessonIndex = chapter?.lessons.length - 1;
-    const nextFirstLessonIndex = 0;
+    const prevChapterLastLessonIndex = this.allChapters[currentChapterIndex - 1]?.lessons.length - 1;
+    const currentChapterLastLessonIndex = currentChapter?.lessons.length - 1;
+    const nextChapterFirstLessonIndex = 0;
     const lastChapterIndex = this.allChapters?.length - 1
 
-    if (currLessonIndex == 0 && currentChapterIndex > 0) {
-      const prevLastLesson = this.allChapters[currentChapterIndex - 1].lessons[prevLastLessonIndex]
-      prev = prevLastLesson;
+    if (currentLessonIndex == 0 && currentChapterIndex > 0) {
+      const prevChapterLastLesson = this.allChapters[currentChapterIndex - 1].lessons[prevChapterLastLessonIndex]
+      prev = prevChapterLastLesson;
     }else {
-      prev = lessonList[currLessonIndex - 1]
+      prev = currentChapterLessonList[currentLessonIndex - 1]
     }
 
-    if (currLessonIndex == currentLastLessonIndex && currentChapterIndex < lastChapterIndex){
-      const nextFirstLesson = this.allChapters[currentChapterIndex + 1].lessons[nextFirstLessonIndex];
-      next = nextFirstLesson;
+    if (currentLessonIndex == currentChapterLastLessonIndex && currentChapterIndex < lastChapterIndex){
+      const nextChapterFirstLesson = this.allChapters[currentChapterIndex + 1].lessons[nextChapterFirstLessonIndex];
+      next = nextChapterFirstLesson;
     }else {
-      next = lessonList[currLessonIndex + 1]
+      next = currentChapterLessonList[currentLessonIndex + 1]
     }
 
 
