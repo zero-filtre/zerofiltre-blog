@@ -163,11 +163,11 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
           if (!this.allChapters.length) {
             setTimeout(() => {
               this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
-              this.loadPrevNext(this.currentChapter)
-            }, 0);
+              this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
+            }, 100);
           }else{
             this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
-            this.loadPrevNext(this.currentChapter)
+            this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
           }
         }),
         shareReplay()
@@ -205,49 +205,54 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
             this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
 
             this.currentChapter = data[0];
-            this.loadPrevNext(this.currentChapter)
+            this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
           }
       }),
       shareReplay()
     )
   }
 
-  loadPrevNext(currentChapter: Chapter){
-    let currentChapterLessonList: Lesson[] = currentChapter?.lessons;
-    const currentLessonId = this.lessonID
+  loadPrevNext(currentChapter: Chapter, allChapters: Chapter[], currentLessonId: any){
 
-    if (!currentLessonId) return
-    if (!currentChapter) return
-
-    const currentChapterIndex = this.allChapters.findIndex(chap => chap.id == currentChapter.id);
-    const currentLessonIndex = currentChapterLessonList?.findIndex(lesson => lesson.id == currentLessonId);
-
-    let prev = null, next = null;
-    const prevChapterLastLessonIndex = this.allChapters[currentChapterIndex - 1]?.lessons.length - 1;
-    const currentChapterLastLessonIndex = currentChapter?.lessons.length - 1;
-    const nextChapterFirstLessonIndex = 0;
-    const lastChapterIndex = this.allChapters?.length - 1
-
-    if (currentLessonIndex == 0 && currentChapterIndex > 0) {
-      const prevChapterLastLesson = this.allChapters[currentChapterIndex - 1].lessons[prevChapterLastLessonIndex]
-      prev = prevChapterLastLesson;
-    }else {
-      prev = currentChapterLessonList[currentLessonIndex - 1]
-    }
-
-    if (currentLessonIndex == currentChapterLastLessonIndex && currentChapterIndex < lastChapterIndex){
-      const nextChapterFirstLesson = this.allChapters[currentChapterIndex + 1].lessons[nextChapterFirstLessonIndex];
-      next = nextChapterFirstLesson;
-    }else {
-      next = currentChapterLessonList[currentLessonIndex + 1]
-    }
-
+    const { prev, next } = this.loadPrevNextHelper(currentChapter, allChapters, currentLessonId) || {};
 
     this.prevLesson$ = of(prev)
       .pipe(map((data: Lesson) => data))
     this.nextLesson$ = of(next)
       .pipe(map((data: Lesson) => data))
 
+  }
+
+  loadPrevNextHelper(currentChapter: Chapter, allChapters: Chapter[], currentLessonId: any){
+    if (!currentLessonId) return null;
+    if (!currentChapter) return null;
+
+    let currentChapterLessonList: Lesson[] = currentChapter?.lessons;
+
+    const currentChapterIndex = allChapters.findIndex(chap => chap.id == currentChapter.id);
+    const currentLessonIndex = currentChapterLessonList?.findIndex(lesson => lesson.id == currentLessonId);
+
+    let prev = null, next = null;
+    const prevChapterLastLessonIndex = allChapters[currentChapterIndex - 1]?.lessons.length - 1;
+    const currentChapterLastLessonIndex = currentChapter?.lessons.length - 1;
+    const nextChapterFirstLessonIndex = 0;
+    const lastChapterIndex = allChapters?.length - 1
+
+    if (currentLessonIndex == 0 && currentChapterIndex > 0) {
+      const prevChapterLastLesson = allChapters[currentChapterIndex - 1].lessons[prevChapterLastLessonIndex]
+      prev = prevChapterLastLesson;
+    } else {
+      prev = currentChapterLessonList[currentLessonIndex - 1]
+    }
+
+    if (currentLessonIndex == currentChapterLastLessonIndex && currentChapterIndex < lastChapterIndex) {
+      const nextChapterFirstLesson = allChapters[currentChapterIndex + 1].lessons[nextChapterFirstLessonIndex];
+      next = nextChapterFirstLesson;
+    } else {
+      next = currentChapterLessonList[currentLessonIndex + 1]
+    }
+
+    return { prev, next };
   }
   
   capitalize(str: string): string {
