@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
@@ -16,6 +16,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { CourseSubscription } from '../../studentCourse';
 import { capitalizeString } from 'src/app/services/utilities.service';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 
 @Component({
@@ -24,6 +25,8 @@ import { capitalizeString } from 'src/app/services/utilities.service';
   styleUrls: ['./lesson.component.css']
 })
 export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
+  mobileQuery: MediaQueryList;
+
   form!: FormGroup;
   color: ThemePalette = 'accent';
 
@@ -59,8 +62,9 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isSubscriber:boolean;
 
-  @ViewChild('player', {static: false}) video: ElementRef;
-  videoDuration: number = 130
+  @ViewChild("player") playerRef: ElementRef;
+  videoDuration: number;
+  player: any;
 
   constructor(
     private fb: FormBuilder,
@@ -72,10 +76,18 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     private courseService: CourseService,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+    changeDetectorRef: ChangeDetectorRef, 
+    media: MediaMatcher
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 1024px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
   CompletedText$ = new Subject<boolean>();
+
+  private _mobileQueryListener: () => void;
 
   get canAccessCourse() {
     const user = this.authService?.currentUsr as User
@@ -164,7 +176,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
             setTimeout(() => {
               this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
               this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
-            }, 100);
+            }, 1000);
           }else{
             this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
             this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
@@ -259,6 +271,18 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     return capitalizeString(str);
   }
 
+  loadlessonDuration() {
+    window.onload = () => {
+      if (this.playerRef?.nativeElement) {
+        this.player = new window["Vimeo"].Player(this.playerRef.nativeElement);
+        this.player.getDuration().then(duration => {
+          this.videoDuration = duration;
+          console.log('DURATION: ', duration);
+        });
+      }
+    }
+  }
+
   ngOnInit(): void {
     this.seo.unmountFooter();
     this.courseID = this.route.snapshot.paramMap.get('course_id');
@@ -272,21 +296,17 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
         this.lessonID = params.get('lesson_id')!;
         this.loadLessonData(this.lessonID);
         this.loadCourseSubscription();
+        this.loadlessonDuration();      
       }
     );
   }
 
   ngOnDestroy(): void {
     this.seo.mountFooter();
+    this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
   ngAfterViewInit() {
-    const video = this.video?.nativeElement;
-
-    // video.addEventListener('loadedmetadata', () => {
-    //   this.videoDuration = video.duration;
-    //   console.log('DURATION: ', this.videoDuration);
-    // });
   }
 
 }

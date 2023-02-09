@@ -23,7 +23,12 @@ iframe {
   border: none;
 }
 
-.example-container {
-  width: 100%;
-  height: 100vh;
+.drawer-container {
+  @apply w-full h-screen;
 }
+
+mat-sidenav {
+  @apply lg:bg-transparent border-none;
+}
+
+
