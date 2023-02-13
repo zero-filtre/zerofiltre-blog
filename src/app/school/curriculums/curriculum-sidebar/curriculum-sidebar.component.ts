@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../user/auth.service';
@@ -12,6 +12,7 @@ import { Chapter } from '../../chapters/chapter';
 import { ChapterUpdatePopupComponent } from '../../chapters/chapter-update-popup/chapter-update-popup.component';
 import { capitalizeString } from 'src/app/services/utilities.service';
 import { CourseService } from '../../courses/course.service';
+
 
 @Component({
   selector: 'app-curriculum-sidebar',
@@ -28,7 +29,7 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() canAccessCourse!: boolean;
   @Input() loading!: boolean;
   @Input() completedLessonsIds!: number[];
-  @Input() videoDuration!: number;
+  @Input() durations!: any[];
 
   currentRoute: string;
 
@@ -40,7 +41,7 @@ export class CurriculumSidebarComponent implements OnInit {
     private dialogUpdateChapterRef: MatDialog,
     private dialogNewLessonRef: MatDialog,
     private dialogDeleteLessonRef: MatDialog,
-    private router: Router
+    private router: Router,
   ) { }
 
   isActiveLesson(lessonID: number) {
@@ -104,7 +105,7 @@ export class CurriculumSidebarComponent implements OnInit {
     });
   }
 
-  public capitalize(str: string): string {
+  capitalize(str: string): string {
     return capitalizeString(str);
   }
 
@@ -120,5 +121,4 @@ export class CurriculumSidebarComponent implements OnInit {
   ngOnInit(): void {
     this.currentRoute = this.router.url;
   }
-
 }

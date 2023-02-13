@@ -305,10 +305,8 @@ export class LessonEditPageComponent implements OnInit {
     this.lessonService.updateLesson({ ...this.form.value, free: !this.free.value })
       .subscribe({
         next: (_res: Lesson) => {
-          setTimeout(() => {
-            this.isSaving = false;
-            this.messageService.openSnackBarSuccess('Publication de la leçon réussie !', '');
-          }, 1000);
+          this.isSaving = false;
+          this.messageService.openSnackBarSuccess('Publication de la leçon réussie !', '');
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;

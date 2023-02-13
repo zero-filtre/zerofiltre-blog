@@ -39,7 +39,7 @@
             </ng-container>
 
             <div class="curriculum_chapters_wrapper">
-                <div *ngFor="let chapter of chapters" class="curriculum_chapter mb-1">
+                <div *ngFor="let chapter of chapters ; let i = index" class="curriculum_chapter mb-1">
                     <div
                         class="curriculum_chapter_title uppercase opacity-90 shadow-md rounded-sm group flex items-center justify-between bg-primary-100 text-secondary p-3 font-semibold">
                         <span>{{chapter?.title}}</span>
@@ -92,7 +92,7 @@
                     </div>
 
                     <ul class="curriculum_chapter_lessons mt-1 space-y-0.5">
-                        <ng-container *ngFor="let lesson of chapter.lessons">
+                        <ng-container *ngFor="let lesson of chapter.lessons ; let j = index">
                             <li *ngIf="lesson?.chapterId === chapter?.id"
                                 [ngClass]="{'!bg-skin-link': isActiveLesson(lesson.id), '!text-skin-base opacity-80': !lesson?.free && !canAccessCourse}"
                                 class="curriculum_chapter_lesson_elt text-primary-500 hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
@@ -186,10 +186,10 @@
                                                 </mat-menu>
                                             </ng-container>
 
-                                            <span
+                                            <span *ngIf="durations.length"
                                                 [ngClass]="{'!text-white !bg-skin-base !opacity-50': !lesson?.free && !canAccessCourse}"
                                                 class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-normale">
-                                                {{videoDuration}}
+                                                <!-- {{durations[i][j]}} -->
                                             </span>
                                         </div>
                                     </div>

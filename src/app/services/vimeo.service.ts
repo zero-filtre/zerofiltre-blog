@@ -93,4 +93,17 @@ export class VimeoService {
       .pipe(shareReplay())
   }
 
+  getDuration(videoUrl: string): Promise<number> {
+    return new Promise((resolve, reject) => {
+      // window.onload = () => {
+        const player = new window["Vimeo"].Player(videoUrl);
+        player.getDuration().then(duration => {
+          resolve(duration);
+        }).catch(error => {
+          reject(error);
+        });
+      // }
+    });
+  }
+
 }

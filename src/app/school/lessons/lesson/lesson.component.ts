@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
@@ -7,12 +7,12 @@ import { AuthService } from '../../../user/auth.service';
 import { User } from '../../../user/user.model';
 import { LessonService } from '../lesson.service';
 import { MessageService } from '../../../services/message.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
 import { Lesson } from '../lesson';
 import { ChapterService } from '../../chapters/chapter.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { CourseSubscription } from '../../studentCourse';
 import { capitalizeString } from 'src/app/services/utilities.service';
@@ -62,12 +62,9 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isSubscriber:boolean;
 
-  @ViewChild("player") playerRef: ElementRef;
-  videoDuration: number;
-  player: any;
+  durations = [];
 
   constructor(
-    private fb: FormBuilder,
     private seo: SeoService,
     private vimeoService: VimeoService,
     public authService: AuthService,
@@ -76,7 +73,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     private courseService: CourseService,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private router: Router,
+    private vimeo: VimeoService,
     changeDetectorRef: ChangeDetectorRef, 
     media: MediaMatcher
   ) {
@@ -209,6 +206,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
         tap(data => {
           this.loading = false;
           this.allChapters = data;
+          // this.getEachLessonDuration(data);
 
           if (lessonId === '?') {
             this.lesson = data[0].lessons[0]
@@ -271,16 +269,39 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     return capitalizeString(str);
   }
 
-  loadlessonDuration() {
-    window.onload = () => {
-      if (this.playerRef?.nativeElement) {
-        this.player = new window["Vimeo"].Player(this.playerRef.nativeElement);
-        this.player.getDuration().then(duration => {
-          this.videoDuration = duration;
-          console.log('DURATION: ', duration);
-        });
-      }
-    }
+  getEachLessonDuration(chapters: Chapter[]) {
+
+    chapters.forEach((chap: Chapter) => {
+      const chapterLessonsDurations = []
+      const chapterLastLessonIndex = chap.lessons.length - 1;
+
+      chap.lessons.forEach((lesson: Lesson, i) => {
+
+        const videoId = lesson.video?.split('.com/')[1] || ''
+        if (!videoId) {
+          
+        }
+
+        this.vimeo.getVideo(videoId)
+          .pipe(catchError(err => {
+            chapterLessonsDurations.push('');
+            if (i == chapterLastLessonIndex) {
+              this.durations.push(chapterLessonsDurations)
+              console.log('DURATIONS: ', this.durations);
+            }
+            return throwError(() => err?.message);
+          }))
+          .subscribe(({ duration }) => {
+            chapterLessonsDurations.push(duration)
+            if (i == chapterLastLessonIndex) {
+              this.durations.push(chapterLessonsDurations)
+              console.log('DURATIONS VALID: ', this.durations);
+            }
+          })
+
+      });
+    })
+
   }
 
   ngOnInit(): void {
@@ -296,7 +317,6 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
         this.lessonID = params.get('lesson_id')!;
         this.loadLessonData(this.lessonID);
         this.loadCourseSubscription();
-        this.loadlessonDuration();      
       }
     );
   }
