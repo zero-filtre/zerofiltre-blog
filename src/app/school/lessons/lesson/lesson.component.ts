@@ -189,7 +189,6 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(
         catchError(err => {
           this.loadingCourse = false;
-          this.messageService.openSnackBarError(err?.statusText, '');
           return throwError(() => err?.message)
         }),
         tap(data => {

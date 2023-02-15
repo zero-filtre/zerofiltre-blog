@@ -93,7 +93,6 @@ export class CourseSectionEditComponent implements OnInit {
   addSection(section: Section) {
     this.sectionService.AddSection(section)
       .pipe(catchError(err => {
-        this.messageService.openSnackBarError('Echec ajout de la section', 'OK')
         return throwError(() => err.message);
       }))
       .subscribe(data => {
@@ -106,7 +105,6 @@ export class CourseSectionEditComponent implements OnInit {
   updateSection(section: Section) {
     this.sectionService.updateSection(section)
       .pipe(catchError(err => {
-        this.messageService.openSnackBarError('Echec mise à jour de la section', 'OK')
         return throwError(() => err.message);
       }))
       .subscribe(data => {

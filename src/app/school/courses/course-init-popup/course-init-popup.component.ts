@@ -18,9 +18,8 @@ export class CourseInitPopupComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CourseInitPopupComponent>,
     private router: Router,
-    private messageService: MessageService,
+    private courseService: CourseService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private courseService: CourseService
   ) { }
 
   onNoClick(): void {

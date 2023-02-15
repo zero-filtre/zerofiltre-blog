@@ -310,7 +310,6 @@ export class LessonEditPageComponent implements OnInit {
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
-          this.messageService.openSnackBarError('Une erreur est survenue lors de la publication de la leçon', 'OK')
         }
       })
   }

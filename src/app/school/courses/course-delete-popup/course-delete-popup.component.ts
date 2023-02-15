@@ -33,7 +33,6 @@ export class CourseDeletePopupComponent implements OnInit {
       .pipe(
         catchError(err => {
           this.loading = false;
-          this.messageService.openSnackBarError("Une erreur s'est produite !", '');
           return throwError(() => err?.message)
         })
       )

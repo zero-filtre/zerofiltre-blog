@@ -42,7 +42,6 @@ export class LessonInitPopupComponent implements OnInit {
         catchError(err => {
           this.loading = false;
           this.dialogRef.close();
-          this.messageService.openSnackBarError("Une erreur s'est produite !", '');
           return throwError(() => err?.message)
         })
       )

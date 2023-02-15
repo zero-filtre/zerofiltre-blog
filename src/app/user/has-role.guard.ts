@@ -26,12 +26,19 @@ export class HasRoleGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (isPlatformBrowser(this.platformId)) {
-      const isAuthorised = this.authService?.currentUsr?.roles?.includes(route.data?.role)!;
+      const user = this.authService?.currentUsr;
+      
+      if (!user) return false;
+      
+      const isAuthorised = user?.roles?.includes(route.data?.role);
+
       if (!isAuthorised) {
-        this.messageService.openSnackBarError("Desolé vous n'etes pas " + route.data?.role + ' !', 'Ok');
+        this.messageService.openSnackBarError("Desolé vous n'etes pas autorisé à acceder à ce contenu.", 'Ok');
       }
+
       return isAuthorised;
     }
+    
     return true
   }
 
