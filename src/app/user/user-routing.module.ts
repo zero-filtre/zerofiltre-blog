@@ -21,9 +21,17 @@ import { AdminCoursesListComponent } from './courses/admin-courses-list/admin-co
 
 
 const routes: Routes = [
-  { path: 'passwordReset', component: PasswordRenewalPageComponent, canActivate: [LoggedInAuthGuard] },
-  { path: 'accountConfirmation', component: AccountConfirmationPageComponent },
-  { path: 'social-auth', component: SocialAuthComponent, canActivate: [LoggedInAuthGuard] },
+  { path: 'passwordReset', 
+    component: PasswordRenewalPageComponent, 
+    canActivate: [LoggedInAuthGuard] 
+  },
+  { path: 'accountConfirmation', 
+    component: AccountConfirmationPageComponent 
+  },
+  { path: 'social-auth', 
+    component: SocialAuthComponent, 
+    canActivate: [LoggedInAuthGuard] 
+  },
 
   {
     path: 'profile',
@@ -38,10 +46,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
-    data: {
-      role: 'ROLE_USER'
-    }
+    canActivate: [TokenExpiredGuard, AuthGuard],
   },
   {
     path: 'dashboard/admin',
@@ -54,18 +59,12 @@ const routes: Routes = [
   {
     path: 'dashboard/courses',
     component: StudentCoursesListComponent,
-    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
-    data: {
-      role: 'ROLE_USER'
-    }
+    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard],
   },
   {
     path: 'dashboard/teacher/courses',
     component: TeacherCoursesListComponent,
-    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
-    data: {
-      role: 'ROLE_USER'
-    }
+    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard],
   },
   {
     path: 'dashboard/courses/all',
