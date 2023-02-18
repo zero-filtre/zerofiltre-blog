@@ -3,6 +3,8 @@
     <!-- [ngClass]="{'site-container' : !mobileQuery.matches}" -->
     
     <!-- [opened]="!mobileQuery.matches" -->
+    <!-- lg:max-w-5xl -->
+    
 <mat-sidenav-container [class.site-container]="!mobileQuery.matches" class="drawer-container">
     <mat-sidenav #drawer [mode]="mobileQuery.matches ? 'over' : 'side'" role="region" class="no-scrollbar w-full md:w-auto">
         <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art lg:mr-5">
@@ -13,7 +15,7 @@
         </aside>
     </mat-sidenav>
 
-    <mat-sidenav-content [class.site-container]="mobileQuery.matches" class="lg:max-w-5xl mx-auto no-scrollbar" role="main">
+    <mat-sidenav-content [class.site-container]="mobileQuery.matches" class="mx-auto no-scrollbar" role="main">
         <button mat-raised-button class="toogle-curriculum flex items-center gap-3 my-2" (click)="drawer?.toggle()">
             <div class="shadow-md h-8 w-8 grid place-items-center rounded-full bg-primary-500 text-white">
                 <svg [ngClass]="drawer.opened ? 'rotate-90' : '-rotate-90'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"

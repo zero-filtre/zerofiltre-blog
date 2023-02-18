@@ -134,6 +134,8 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     const userId = +(this.authService?.currentUsr as User)?.id
     const payload = { courseId: this.courseID, userId }
 
+    if (!userId) return;
+    
     this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
       .pipe(
         catchError(err => {
