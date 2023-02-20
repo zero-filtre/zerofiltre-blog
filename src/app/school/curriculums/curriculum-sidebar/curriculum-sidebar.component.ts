@@ -30,6 +30,7 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() loading!: boolean;
   @Input() completedLessonsIds!: number[];
   @Input() durations!: any[];
+  @Input() mobileQuery: MediaQueryList;
 
   currentRoute: string;
 
