@@ -34,6 +34,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   lesson!: Lesson;
   loading: boolean;
   loadingCourse: boolean;
+  loadingChapters: boolean;
   completedLessonsIds: number[] = [];
   completedLessons: Lesson[] = [];
   lessonsCount: number;
@@ -201,23 +202,28 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   loadAllChapters(courseId: any, lessonId: any) {
-    this.loading = true;
+    this.loadingChapters = true;
     this.chapters$ = this.chapterService.fetchAllChapters(courseId)
     .pipe(
-        tap(data => {
-          this.loading = false;
-          this.allChapters = data;
-          // this.getEachLessonDuration(data);
+      catchError(err => {
+        this.loadingChapters = false;
+        return throwError(() => err?.message)
+      }),
+      tap(data => {
+        this.allChapters = data;
+        this.loadingChapters = false;
 
-          if (lessonId === '?') {
-            this.lesson = data[0].lessons[0]
-            this.lessonID = this.lesson.id;
-            this.lesson$ = of(this.lesson);
-            this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
+        // this.getEachLessonDuration(data);
 
-            this.currentChapter = data[0];
-            this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
-          }
+        if (lessonId === '?') {
+          this.lesson = data[0].lessons[0]
+          this.lessonID = this.lesson?.id;
+          this.lesson$ = of(this.lesson);
+          this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
+
+          this.currentChapter = data[0];
+          this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
+        }
       }),
       shareReplay()
     )

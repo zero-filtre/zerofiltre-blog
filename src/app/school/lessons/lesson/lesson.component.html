@@ -9,7 +9,7 @@
     <mat-sidenav #drawer [mode]="mobileQuery.matches ? 'over' : 'side'" role="region" class="no-scrollbar w-full md:w-auto">
         <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art lg:mr-5">
             <app-curriculum-sidebar [drawer]="drawer" [canEdit]="canEditCourse" [course]="course$|async" [lessons]="lessons$ | async"
-                [chapters]="chapters$ | async" [activeLessonID]="lessonID" [canAccessCourse]="canAccessCourse" [loading]="loadingCourse"
+                [chapters]="chapters$ | async" [activeLessonID]="lessonID" [canAccessCourse]="canAccessCourse" [loading]="loadingChapters"
                 [completedLessonsIds]="completedLessonsIds" [durations]="durations">
             </app-curriculum-sidebar>
         </aside>
