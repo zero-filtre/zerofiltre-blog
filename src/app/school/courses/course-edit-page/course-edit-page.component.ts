@@ -294,6 +294,7 @@ export class CourseEditPageComponent implements OnInit {
       .pipe(
         switchMap(params => {
           this.courseID = params.get('course_id');
+          this.fetchListOfTags();
           return this.getCourse();;
         })
       );
