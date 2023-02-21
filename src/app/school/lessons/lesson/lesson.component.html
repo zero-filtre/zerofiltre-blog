@@ -4,9 +4,10 @@
     
     <!-- [opened]="!mobileQuery.matches" -->
     <!-- lg:max-w-5xl -->
+    <!-- [class.site-container]="mobileQuery.matches" -->
     
-<mat-sidenav-container [class.site-container]="!mobileQuery.matches" class="drawer-container">
-    <mat-sidenav #drawer [mode]="mobileQuery.matches ? 'over' : 'side'" role="region" class="no-scrollbar w-full md:w-auto">
+<mat-sidenav-container class="drawer-container" [hasBackdrop]="false">
+    <mat-sidenav #drawer [mode]="mobileQuery.matches ? 'over' : 'side'" class="bg-blue-500"> 
         <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art lg:mr-5">
             <app-curriculum-sidebar [drawer]="drawer" [canEdit]="canEditCourse" [course]="course$|async" [lessons]="lessons$ | async"
                 [chapters]="chapters$ | async" [activeLessonID]="lessonID" [canAccessCourse]="canAccessCourse" [loading]="loadingChapters"
@@ -15,7 +16,8 @@
         </aside>
     </mat-sidenav>
 
-    <mat-sidenav-content [class.site-container]="mobileQuery.matches" class="mx-auto no-scrollbar" role="main">
+    
+    <mat-sidenav-content class="site-container bg-red-500">
         <button mat-raised-button class="toogle-curriculum flex items-center gap-3 my-2" (click)="drawer?.toggle()">
             <div class="shadow-md h-8 w-8 grid place-items-center rounded-full bg-primary-500 text-white">
                 <svg [ngClass]="drawer.opened ? 'rotate-90' : '-rotate-90'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -29,7 +31,7 @@
         </button>
 
         <main class="text-skin-art">
-            <div class="lesson_content min-h-screen">
+            <div class="lesson_content_wrapper min-h-screen">
                 <div class="lesson_progressBar_wrapper mb-2">
                     <div *ngIf="courseSubscription$|async" class="progress_bar mx-auto">
                         <progress *ngIf="isSubscriber" id="bluebar" class="progress w-full h-10"
@@ -37,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="vimeo_video shadow-lg rounded-sm overflow-hidden mx-auto">
+                <div class="shadow-lg rounded-sm overflow-hidden mx-auto" id="lesson_video_player">
                     <div class="vid_wrapper w-full h-full bg-gray-900">
                         <ng-container *ngIf="lesson$|async as lesson">
                             <ng-container *ngIf="lesson.video">
@@ -85,7 +87,7 @@
                     </div>
                 </div>
 
-                <div class="lesson_content_wrapper">
+                <div class="lesson_content">
                     <div *ngIf="lesson$|async as lesson" class="markdown-content mt-2 lg:mt-5">
                         <div
                             class="lesson_name mb-6 lg:mb-8 text-3xl w-full font-black text-primary-500 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
@@ -107,14 +109,14 @@
                     </ng-container>
                 </div>
 
-                <div class="course_ressources_wrapper mb-5">
-                    <label for="course_ressourses"
+                <div class="lesson_ressources_wrapper mb-5">
+                    <label for="lesson_ressourses"
                         class="block text-base font-semibold leading-5 text-skin-base mt-14 ml-3">
                         Ressources
                     </label>
 
                     <div *ngIf="lesson$|async as lesson"
-                        class="course_ressources w-full border-2 border-dashed rounded p-5 flex  justify-center lg:justify-start  flex-wrap mt-[-10px]">
+                        class="lesson_ressourses w-full border-2 border-dashed rounded p-5 flex  justify-center lg:justify-start  flex-wrap mt-[-10px]">
                         <ng-container *ngFor="let res of lesson?.ressources; let i = index">
                             <div *ngIf="imageTypes.includes(res.type)"
                                 class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded">

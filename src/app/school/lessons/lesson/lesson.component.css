@@ -13,7 +13,7 @@ progress::-webkit-progress-value {
   @apply bg-primary-500;
 }
 
-.vimeo_video {
+#lesson_video_player {
   position: relative;
   aspect-ratio: 16 / 9;
   width: 100%;
