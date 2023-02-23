@@ -1,26 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { CourseDeletePopupComponent } from '../../../school/courses/course-delete-popup/course-delete-popup.component';
 import { CourseService } from 'src/app/school/courses/course.service';
-import { forkJoin, map, Observable, switchMap, tap } from 'rxjs';
+import { catchError, forkJoin, map, Observable, Subscription, switchMap, tap, throwError } from 'rxjs';
 import { Course } from 'src/app/school/courses/course';
 import { User } from '../../user.model';
+import { BaseCourseListComponent } from 'src/app/shared/base-course-list/base-course-list.component';
+import { isPlatformBrowser } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { SeoService } from 'src/app/services/seo.service';
+import { LoadEnvService } from 'src/app/services/load-env.service';
 
 @Component({
   selector: 'app-student-courses-list',
   templateUrl: './student-courses-list.component.html',
   styleUrls: ['./student-courses-list.component.css']
 })
-export class StudentCoursesListComponent implements OnInit {
-  courses$: Observable<Course[]>;
+export class StudentCoursesListComponent extends BaseCourseListComponent implements OnInit, OnDestroy {
+  courses$: Subscription;
+  // courses$: Observable<Course[]>;
 
   courses: any = [];
   pageSize: number = 5;
 
-  IN_PROGRESS = 'en cours';
-  COMPLETED = 'achevés';
+  IN_PROGRESS = 'in_progress';
+  COMPLETED = 'completed';
 
   noCoursesAvailable: boolean = false;
   loadingMore: boolean = false;
@@ -32,15 +38,22 @@ export class StudentCoursesListComponent implements OnInit {
 
 
   constructor(
+    public loadEnvService: LoadEnvService,
+    public seo: SeoService,
+    public router: Router,
+    public route: ActivatedRoute,
+    public courseService: CourseService,
     public authService: AuthService,
-    private dialogDeleteRef: MatDialog,
+    public translate: TranslateService,
     public dialogEntryRef: MatDialog,
-    private router: Router,
-    private courseService: CourseService
-  ) { }
+    public dialogDeleteRef: MatDialog,
+    @Inject(PLATFORM_ID) public platformId: any
+  ) {
+    super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
+  }
 
   onScroll() { }
-
+e
   openCourseDeleteDialog(courseId: any): void {
     this.dialogDeleteRef.open(CourseDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
@@ -66,61 +79,72 @@ export class StudentCoursesListComponent implements OnInit {
 
     if (tab === this.IN_PROGRESS) {
       this.activePage = this.IN_PROGRESS;
-      this.loadInProgressCourses();
+      this.router.navigateByUrl('/user/dashboard/courses');
     }
 
     if (tab === this.COMPLETED) {
       this.activePage = this.COMPLETED;
-      this.loadCompletedCourses();
+      this.router.navigateByUrl('/user/dashboard/courses?filter=completed');
     }
+
+    this.scrollyPageNumber = 0;
+    this.notEmptyCourses = true;
   }
 
-  loadInProgressCourses() {
+  fetchAllCoursesByStatus(status: string) {
     this.loading = true;
+    const payload = { pageSize: this.pageItemsLimit, pageNumber: this.pageNumber, completed: status }
 
-    setTimeout(() => {
-      this.courseService.getAllSubscribedCourseInProgressIds(this.authService.currentUsr.id)
-        .pipe(
-          switchMap(ids => {
-            const data = ids.map(id => this.courseService.findCourseById(id))
-            this.loading = false;
-            return forkJoin(data).pipe(
-              tap(d => {
-                this.loading = false;
-                this.courses = d;
-              }),
-              map(values => values)
-            )
-          })
-        ).subscribe()
-    }, 1000);
-
+    this.subscription$ = this.courseService
+      .findAllSubscribedCourses(payload)
+      .subscribe(this.handleFetchedCourses);
   }
 
-  loadCompletedCourses() {
-    this.loading = true;
+  fetchMoreCourses(): any {
+    this.scrollyPageNumber += 1;
 
-    setTimeout(() => {
-      this.courseService.getAllSubscribedCourseCompletedIds(this.authService.currentUsr.id)
-        .pipe(
-          switchMap(ids => {
-            const data = ids.map(id => this.courseService.findCourseById(id))
-            this.loading = false;
-            return forkJoin(data).pipe(
-              tap(d => {
-                this.loading = false;
-                this.courses = d;
-              }),
-              map(values => values)
-            )
-          })
-        ).subscribe()
-    }, 1000);
+    const queryParam = this.route.snapshot.queryParamMap.get('completed')!;
+    const payload = { pageSize: this.pageItemsLimit, pageNumber: this.scrollyPageNumber, completed: this.COMPLETED }
 
+    if (queryParam === this.IN_PROGRESS) {
+      return this.courseService
+        .findAllSubscribedCourses({ ...payload, completed: this.IN_PROGRESS })
+        .subscribe((response: any) => this.handleFetchNewCourses(response));
+    }
+
+    this.courseService
+      .findAllSubscribedCourses(payload)
+      .subscribe((response: any) => this.handleFetchNewCourses(response));
   }
 
   ngOnInit(): void {
-    this.loadInProgressCourses();
+    if (isPlatformBrowser(this.platformId)) {
+      this.route.queryParamMap.subscribe(
+        query => {
+          this.status = query.get('filter')!;
+          if (!this.status) {
+            this.activePage = this.IN_PROGRESS;
+            return this.fetchAllCoursesByStatus(this.IN_PROGRESS);
+          }
+
+          this.activePage = this.status;
+          this.fetchAllCoursesByStatus(this.status);
+        }
+      );
+    }
+
+    this.seo.generateTags({
+      title: this.translate.instant('meta.articlesTitle'),
+      description: this.translate.instant('meta.articlesDescription'),
+      author: 'Zerofiltre.tech',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.subscription$.unsubscribe();
+    }
   }
 
 }

@@ -24,80 +24,63 @@ export class CourseService {
   ) { }
 
 
-  canCreateCourse(user: User): boolean {
+  isAdminUser(user: User){
     if (!user) return false;
     return user.roles.includes("ROLE_ADMIN");
   }
 
-  canAccessCourse(user: User, courseId: any): boolean {
+  canCreateCourse(user: User): boolean {
+    return this.isAdminUser(user) || true;
+  }
+
+  canAccessCourse(user: User, course: Course): boolean {
     if (!user) return false;
-    return user?.courseIds?.includes(courseId) || this.canCreateCourse(user)
+    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) 
   }
 
   canEditCourse(user: User, course: Course): boolean {
     if (!user) return false;
-    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.canCreateCourse(user);
+    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) 
   }
 
-  // STUDENT START
+  // STUDENT SUBSCRIPTIONS START
 
   isSubscriber(user: User, course: Course) {
     if (!user) return false;
-    return user?.courseIds?.includes(course?.id);
+    return true;
   }
 
-  subscribeCourse(data: any): Observable<any> {
-    return this.http.post<any>(`${this.schoolApi}/CourseSubscriptions`, data, httpOptions)
+  subscribeCourse(courseId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/subscription?courseId=${courseId}`, httpOptions)
       .pipe(shareReplay());
   }
 
-  deleteSubscriptionCourse(courseId: any, userId: any): Observable<any> {
-    return this.http.delete<any>(`${this.schoolApi}/CourseSubscriptions/course/${courseId}/user/${userId}`, httpOptions)
+  deleteSubscriptionCourse(courseId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/subscription?course=${courseId}`, httpOptions)
       .pipe(shareReplay());
   }
 
-  findSubscribedByCourseId(courseId: any, userId: any): Observable<any> {
-    return this.http.get<any>(`${this.schoolApi}/CourseSubscriptions?courseId=${courseId}&userId=${userId}`, httpOptions)
-      .pipe(
-        map(data => data[0]),
-        shareReplay()
-      );
+  findSubscribedByCourseId(data: any): Observable<any> {
+    const { courseId, userId } = data
+    return this.http.get<any>(`${this.apiServerUrl}/subscription?courseId=${courseId}&userId=${userId}`, httpOptions)
+      .pipe(shareReplay());
   }
 
-  getAllSubscribedCourse(userId: any): Observable<any> {
-    return this.http.get<any>(`${this.schoolApi}/CourseSubscriptions?userId=${userId}`, httpOptions)
-      .pipe(
-        shareReplay()
-      );
+  findAllSubscribedCourses(data: any): Observable<any> {
+    const { pageNumber, pageSize, completed } = data
+    return this.http.get<any>(`${this.apiServerUrl}/subscription/user?pageNumber=${pageNumber}&pageSize=${pageSize}` + (completed == 'completed' ? '&filter=completed' : ''), httpOptions)
+      .pipe(shareReplay());
   }
 
-  getAllSubscribedCourseIds(userId: any): Observable<any> {
-    return this.http.get<any>(`${this.schoolApi}/CourseSubscriptions?userId=${userId}`, httpOptions)
-      .pipe(
-        map((data: CourseSubscription[]) => data.map(d => d.courseId)),
-        shareReplay()
-      );
+  markLessonAsComplete(data: any): Observable<any> {
+    const { courseId, lessonId } = data
+    return this.http.patch<any>(`${this.apiServerUrl}/subscription/complete?lessonId=${lessonId}&courseId=${courseId}`, httpOptions)
+      .pipe(shareReplay());
   }
 
-  getAllSubscribedCourseCompletedIds(userId: any): Observable<any> {
-    return this.http.get<any>(`${this.schoolApi}/CourseSubscriptions?userId=${userId}`, httpOptions)
-      .pipe(
-        map((data: CourseSubscription[]) => data.filter(d => d.completed).map(d => d.courseId)),
-        shareReplay()
-      );
-  }
-
-  getAllSubscribedCourseInProgressIds(userId: any): Observable<any> {
-    return this.http.get<any>(`${this.schoolApi}/CourseSubscriptions?userId=${userId}`, httpOptions)
-      .pipe(
-        map((data: CourseSubscription[]) => data.filter(d => !d.completed).map(d => d.courseId)),
-        shareReplay()
-      );
-  }
-
-  toggleCourseLessonProgressComplete(data: any): Observable<any> {
-    const { subscriptionId, payload } = data
-    return this.http.patch<any>(`${this.schoolApi}/courseSubscriptions/${subscriptionId}`, payload, httpOptions)
+  markLessonAsInComplete(data: any): Observable<any> {
+    const { courseId, lessonId } = data
+    return this.http.patch<any>(`${this.apiServerUrl}/subscription/uncomplete?lessonId=${lessonId}&courseId=${courseId}`, httpOptions)
       .pipe(shareReplay());
   }
 
@@ -126,7 +109,7 @@ export class CourseService {
       .pipe(shareReplay());
   }
 
-  findAllArticlesByTag(page: number, limit: number, tagName: string): Observable<Course[]> {
+  findAllCoursesByTag(page: number, limit: number, tagName: string): Observable<Course[]> {
     return this.http.get<any>(`${this.apiServerUrl}/course?pageNumber=${page}&pageSize=${limit}&status=published&tag=${tagName}`, httpOptions)
       .pipe(shareReplay());
   }
@@ -141,7 +124,7 @@ export class CourseService {
       .pipe(shareReplay());
   }
 
-  updateCourse(course: any): Observable<any> {
+  updateCourse(course: Course): Observable<any> {
     return this.http.patch<any>(`${this.apiServerUrl}/course`, course, httpOptions)
       .pipe(shareReplay());
   }
@@ -156,6 +139,11 @@ export class CourseService {
 
   addReactionToCourse(courseId: string, action: string): Observable<any> {
     return this.http.post<string>(`${this.apiServerUrl}/reaction?articleId=0&courseId=${courseId}&action=${action}`, {})
+      .pipe(shareReplay());
+  }
+
+  publishCourse(course: Course){
+    return this.http.patch<any>(`${this.apiServerUrl}/course/publish`, course, httpOptions)
       .pipe(shareReplay());
   }
 }

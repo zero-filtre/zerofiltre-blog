@@ -2,7 +2,7 @@ import { Tag } from "../../articles/article.model";
 import { User } from "../../user/user.model";
 
 export interface Course {
-    id: string;
+    id: number;
     title: string;
     subTitle: string;
     summary: string;
@@ -12,11 +12,11 @@ export interface Course {
     reactions: Reaction[];
     enrolledCount: number;
     chapterCount: number;
-    lessonCount: number;
+    lessonsCount: number;
     author: User;
     duration: string;
     editorIds: any[];
-    price: string;
+    price: number;
     status: string;
     video: string;
     sections: Section[];
@@ -24,7 +24,7 @@ export interface Course {
 }
 
 export interface Section {
-    id: string;
+    id: number;
     position: number;
     title: string;
     content: string;
@@ -38,10 +38,5 @@ export interface Reaction {
     action: string
 }
 
-export enum STATUS {
-    'DRAFT',
-    'PUBLISHED',
-    'IN_REVIEW',
-    'COMPLETED',
-    'IN_PROGRESS'
-}
+const CourseStatuses = ['PUBLISHED','DRAFT','IN_REVIEW','COMPLETED','IN_PROGRESS'] as const;
+export type CourseStatus = typeof CourseStatuses[number];

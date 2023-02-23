@@ -55,7 +55,7 @@ export class LessonEditPageComponent implements OnInit {
   private ThumbnailText$ = new Subject<string>();
   private VideoText$ = new Subject<string>();
   public EditorText$ = new Subject<string>();
-  public PrivacyText$ = new Subject<boolean>();
+  public FreeText$ = new Subject<boolean>();
   private RessourcesText$ = new Subject<string>();
 
   constructor(
@@ -71,7 +71,7 @@ export class LessonEditPageComponent implements OnInit {
   ) { }
 
   initForm(lesson: Lesson) {
-    const summaryTemplate = 'Un petit resume de la lesson ici';
+    const summaryTemplate = 'des petites bonnes actions.';
     const contentTemplate = `
       ## Introduction
       Ici vous dites ce que vous allez faire de façon objective.
@@ -103,8 +103,10 @@ export class LessonEditPageComponent implements OnInit {
       summary: [lessonSummary, [Validators.required]],
       thumbnail: [lesson.thumbnail],
       video: [lesson.video],
-      private: [lesson.private],
+      free: [lesson.free],
+      type: [lesson.type],
       content: [lessonContent],
+      chapterId: [lesson.chapterId],
       ressources: this.fb.array(this.loadFormRessources(lesson))
     })
   }
@@ -129,7 +131,8 @@ export class LessonEditPageComponent implements OnInit {
   get summary() { return this.form.get('summary'); }
   get thumbnail() { return this.form.get('thumbnail'); }
   get video() { return this.form.get('video'); }
-  get private() { return this.form.get('private'); }
+  get free() { return this.form.get('free'); }
+  get type() { return this.form.get('type'); }
   get ressources() { return this.form.get('ressources') as FormArray; }
 
   getValue(event: Event): string {
@@ -146,7 +149,8 @@ export class LessonEditPageComponent implements OnInit {
     this.ThumbnailText$.next(content);
   }
   typeInPrivacy(event: MatSlideToggleChange) {
-    this.PrivacyText$.next(event.checked);
+    const val = event.checked
+    this.FreeText$.next(!val);
   }
   typeInVideo(content: string) {
     this.VideoText$.next(content);
@@ -160,6 +164,7 @@ export class LessonEditPageComponent implements OnInit {
 
   addRessource(res: Ressource) {
     const resItem = this.fb.group({
+      id: res.id,
       url: res.url,
       type: res.type,
       name: res.name
@@ -217,7 +222,7 @@ export class LessonEditPageComponent implements OnInit {
       .subscribe((event: any) => {
         if (typeof (event) === 'object') {
           this.resUploading = false;
-          const res = { url: event.url, type: this.fileType, name: this.fileName };
+          const res = { id: 1, url: event.url, type: this.fileType, name: this.fileName };
           this.addRessource(res);
         }
       })
@@ -260,7 +265,7 @@ export class LessonEditPageComponent implements OnInit {
   }
 
   getLesson(): Observable<any> {
-    return this.lessonService.findLessonById(this.lessonID, this.courseID)
+    return this.lessonService.findLessonById(this.lessonID)
       .pipe(
         catchError(err => {
           if (err.status === 404) {
@@ -279,14 +284,12 @@ export class LessonEditPageComponent implements OnInit {
   updateLesson() {
     this.isSaving = true;
 
-    this.lessonService.updateLesson(this.form.value)
+    this.lessonService.updateLesson({ ...this.form.value, free: !this.free.value })
       .subscribe({
         next: (_res: Lesson) => {
-          setTimeout(() => {
-            this.isSaving = false;
-            this.isSaved = true;
-            this.saveFailed = false;
-          }, 1000);
+          this.isSaving = false;
+          this.isSaved = true;
+          this.saveFailed = false;
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
@@ -298,17 +301,15 @@ export class LessonEditPageComponent implements OnInit {
 
   publishLesson() {
     this.isSaving = true;
-    this.lessonService.updateLesson(this.form.value)
+
+    this.lessonService.updateLesson({ ...this.form.value, free: !this.free.value })
       .subscribe({
         next: (_res: Lesson) => {
-          setTimeout(() => {
-            this.isSaving = false;
-            this.messageService.openSnackBarSuccess('Publication de la leçon réussie !', '');
-          }, 1000);
+          this.isSaving = false;
+          this.messageService.openSnackBarSuccess('Publication de la leçon réussie !', '');
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
-          this.messageService.openSnackBarError('Une erreur est survenue lors de la publication de la leçon', 'OK')
         }
       })
   }
@@ -341,6 +342,11 @@ export class LessonEditPageComponent implements OnInit {
 
   deleteVideo(lesson: Lesson) {
     const videoID = lesson.video.split('/')[3];
+    if (!videoID){
+      this.video.setValue('');
+      this.typeInVideo('');
+      return
+    }
 
     this.vimeo.deleteVideoFile(videoID)
       .pipe(catchError(err => {
@@ -400,7 +406,7 @@ export class LessonEditPageComponent implements OnInit {
       this.SummaryText$,
       this.ThumbnailText$,
       this.VideoText$,
-      this.PrivacyText$
+      this.FreeText$
     ]
 
     fields.forEach((el: Observable<any>) => {

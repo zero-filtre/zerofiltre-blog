@@ -76,7 +76,7 @@
 
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
                             <a aria-labelledby="Link to course detail page"
-                                routerLink="{{canAccessCourse(course?.id) ? course.id + '/' + (course.firstLessonId || 1) : course.id}}"
+                                routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -144,7 +144,7 @@
 
                                 <div class="mt-2">
                                     <a aria-labelledby="Link to course detail page"
-                                        routerLink="{{canAccessCourse(course?.id) ? course.id + '/' + (course.firstLessonId || 1) : course.id}}"
+                                        routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
                                         class="article-title">
                                         <h4
                                             class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">

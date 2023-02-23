@@ -57,7 +57,7 @@
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
 
                             <a aria-labelledby="Link to course detail page"
-                                routerLink="{{'/cours/' + course.id + '/' + course.firstLessonId}}"
+                                routerLink="{{'/cours/' + course.id + '/' + '?'}}"
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -118,7 +118,7 @@
                                 <div class="mt-2">
 
                                     <a aria-labelledby="Link to about page"
-                                        routerLink="{{'/cours/' + course.id + '/' + course.firstLessonId}}"
+                                        routerLink="{{'/cours/' + course.id + '/' + '?'}}"
                                         class="article-title">
                                         <h4
                                             class="text-lg inline-block leading-6 font-semibold text-skin-inverted hover:text-primary-500 transition-all duration-200">
@@ -171,7 +171,7 @@
                                                         d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
                                                     <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
                                                 </svg>
-                                                <span>140</span>
+                                                <span>{{course.enrolledCount}}</span>
 
                                                 <span class="enrol-tooltip">
                                                     suivent ce cours

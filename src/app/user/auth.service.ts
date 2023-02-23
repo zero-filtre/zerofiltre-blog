@@ -15,7 +15,6 @@ const httpOptions = {
   })
 };
 
-const fakeCourseIds = [];
 
 @Injectable({
   providedIn: 'root'
@@ -88,12 +87,6 @@ export class AuthService {
           this.setUserData(usr);
           this.refreshData = false;
           httpOptions.headers = httpOptions.headers.delete('x-refresh');
-
-          this.courseService.getAllSubscribedCourseIds(usr.id)
-            .pipe(tap(data => {
-              this.setUserData({ ...usr, courseIds: [...new Set(data)] })
-              this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
-            })).subscribe()
         }),
         shareReplay()
       )
@@ -305,11 +298,6 @@ export class AuthService {
           } else {
             this.router.navigateByUrl('/articles');
           }
-
-          this.courseService.getAllSubscribedCourseIds(usr.id)
-            .pipe(tap(data => {
-              this.setUserData({ ...usr, courseIds: [...new Set(data)] })
-            })).subscribe()
         },
         error: (_err: HttpErrorResponse) => {
           this.messageService.loadUserFailed();

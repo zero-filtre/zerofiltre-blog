@@ -100,7 +100,6 @@ export class CourseEditPageComponent implements OnInit {
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
-          this.messageService.openSnackBarError('Une erreur est survenue lors de la sauvegarde', 'OK')
         }
       })
   }
@@ -113,7 +112,6 @@ export class CourseEditPageComponent implements OnInit {
           this.messageService.openSnackBarSuccess('Succes !', '');
         },
         error: (_error: HttpErrorResponse) => {
-          this.messageService.openSnackBarError("Une erreur est survenue lors de la mise à jour de l'image", 'OK')
         }
       })
   }
@@ -296,6 +294,7 @@ export class CourseEditPageComponent implements OnInit {
       .pipe(
         switchMap(params => {
           this.courseID = params.get('course_id');
+          this.fetchListOfTags();
           return this.getCourse();;
         })
       );

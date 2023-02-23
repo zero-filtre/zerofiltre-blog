@@ -9,8 +9,8 @@ import { ChapterService } from '../chapter.service';
   styleUrls: ['./chapter-update-popup.component.css']
 })
 export class ChapterUpdatePopupComponent implements OnInit {
-  public title: string = '';
-  public loading: boolean = false;
+  title: string = '';
+  loading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ChapterUpdatePopupComponent>,
@@ -28,7 +28,7 @@ export class ChapterUpdatePopupComponent implements OnInit {
     this.loading = true;
 
     const payload = {
-      ...this.data.chapterId,
+      ...this.data.chapter,
       title: this.title,
     }
 
@@ -43,7 +43,7 @@ export class ChapterUpdatePopupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title = this.data.chapterTitle;
+    this.title = this.data.chapter.title;
   }
 
 }

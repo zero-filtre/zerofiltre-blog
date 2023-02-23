@@ -66,13 +66,13 @@
             </div>
 
             <button *ngIf="fullscreenBtn" aria-label="click here to enter full screen" (click)="toggleFullScreen()"
-                class="toggle_fullScreen_btn inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
                 <mat-icon *ngIf="!fullScreenOn" class="">fullscreen</mat-icon>
                 <mat-icon *ngIf="fullScreenOn" class="">fullscreen_exit</mat-icon>
             </button>
 
             <div *ngIf="imageBtn"
-                class="add_image_btn relative cursor-pointer inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+                class="add_image_btn relative cursor-pointer inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
                 <input class="sr-only" (change)="onFileSelected($event)" type="file" id="editorFileUpload"
                     name="editorFileUpload" #editorFileUpload accept="image/*">
                 <svg (click)="editorFileUpload.click()" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -86,7 +86,7 @@
 
         <ng-template #exitFullScreenBtn>
             <button *ngIf="fullscreenBtn" aria-label="click here to enter full screen" (click)="toggleFullScreen()"
-                class="toggle_fullScreen_btn inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
                 <mat-icon *ngIf="!fullScreenOn" class="">fullscreen</mat-icon>
                 <mat-icon *ngIf="fullScreenOn" class="">fullscreen_exit</mat-icon>
             </button>
@@ -110,7 +110,7 @@
         <div *ngIf="activeTab === 'preview'"
             class="markdown-preview-container markdown-content h-full overflow-y-scroll bg-skin-bg w-full p-4 pb-24">
             <markdown [data]="content?.value"
-                class="prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-ul:list-disc prose-ol:list-disc">
+                class="prose prose-img:rounded-xl prose-img:border-4 lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-ul:list-disc prose-ol:list-disc">
             </markdown>
         </div>
 

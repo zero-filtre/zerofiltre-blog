@@ -18,9 +18,8 @@ export class CourseInitPopupComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CourseInitPopupComponent>,
     private router: Router,
-    private messageService: MessageService,
+    private courseService: CourseService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private courseService: CourseService
   ) { }
 
   onNoClick(): void {
@@ -37,10 +36,10 @@ export class CourseInitPopupComponent implements OnInit {
         this.loading = false
         return throwError(() => err)
       }))
-      .subscribe(_data => {
+      .subscribe(course => {
         this.dialogRef.close();
         this.loading = false;
-        location.reload();
+        this.router.navigateByUrl(`/cours/${course.id}/edit`)
       });
 
   }

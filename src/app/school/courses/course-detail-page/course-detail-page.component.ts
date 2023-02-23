@@ -9,10 +9,10 @@ import { NavigationService } from '../../../services/navigation.service';
 import { Lesson } from '../../lessons/lesson';
 import { Chapter } from '../../chapters/chapter';
 import { ChapterService } from '../../chapters/chapter.service';
-import { LessonService } from '../../lessons/lesson.service';
 import { AuthService } from '../../../user/auth.service';
 import { User } from '../../../user/user.model';
 import { environment } from 'src/environments/environment';
+import { CourseSubscription } from '../../studentCourse';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -58,17 +58,14 @@ export class CourseDetailPageComponent implements OnInit {
     private router: Router,
     private courseService: CourseService,
     private chapterService: ChapterService,
-    private lessonService: LessonService,
     private notify: MessageService,
     private navigate: NavigationService,
     private authService: AuthService
   ) { }
 
   get canAccessCourse() {
-    const userId = (this.authService?.currentUsr as User)?.id
-    if (!userId) return false;
-
-    return this.course?.author?.id === userId || this.course?.editorIds?.includes(userId) || this.authService.isAdmin || this.authService?.currentUsr?.courseIds?.includes(this.course.id);
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canAccessCourse(user, this.course);
   }
 
   subscribeToCourse() {
@@ -85,11 +82,10 @@ export class CourseDetailPageComponent implements OnInit {
         });
     }
 
-    const newIds = currUser.courseIds ? [...currUser?.courseIds, this.course.id] : [this.course.id]
-
-    this.courseService.subscribeCourse({ courseId: this.course.id, userId: currUser.id, completedLessons: [] })
-      .subscribe(_data => {
-        this.authService.setUserData({ ...currUser, courseIds: newIds })
+    this.courseService.subscribeCourse(this.course.id)
+      .subscribe((data:CourseSubscription) => {
+        this.notify.openSnackBarSuccess('Vous avez souscrit à ce cours avec succes !', '');
+        this.router.navigateByUrl(`/cours/${this.courseID}/?`);
       })
 
   }
@@ -190,10 +186,7 @@ export class CourseDetailPageComponent implements OnInit {
           this.courseID = params.get('course_id');
 
           this.chapters$ = this.chapterService
-            .fetchAllChapters(this.courseID)
-
-          this.lessons$ = this.chapterService.fetchChapterById(this.courseID)
-            .pipe(map(data => data.lessons))
+            .fetchAllChapters(this.courseID);
 
           return this.getCourse();
         })
