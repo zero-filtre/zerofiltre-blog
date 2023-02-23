@@ -1,18 +1,5 @@
-<section class="sidebar_curriculum py-2 lg:pt-2 scrollbar overflow-auto lg:h-screen lg:max-w-[350px]">
-    <div *ngIf="!loading" class="px-1.5">
-        <div class="lg:hidden site-container flex flex-col">
-            <button mat-raised-button class="toogle-curriculum flex items-center gap-3 mb-5 mt-2 -mr-1 self-end"
-                (click)="drawer?.toggle()">
-                <span class="text-primary-400 text-sm mt-0.5">Retourner à la leçon</span>
-                <div class="shadow-md h-8 w-8 grid place-items-center rounded-full bg-primary-500 text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-4 h-4 mr-0.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                    </svg>
-                </div>
-            </button>
-        </div>
-
+<div class="sidebar_curriculum lg:max-w-[350px]">
+    <div *ngIf="!loading" class="px-1.5 lg:pr-4 lg:pl-0">
         <div class="curriculum_wrapper max-w-3xl m-auto">
             <h2 class="pb-4 pt-5 lg:pb-6 lg:pl-2 font-black text-xl lg:text-2xl text-primary-500">
                 <a routerLink="{{'/cours/'+course?.id}}">{{course?.title}}</a>
@@ -209,4 +196,4 @@
                                                             }">
         </ngx-skeleton-loader>
     </ng-container>
-</section>
+</div>

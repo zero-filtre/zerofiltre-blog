@@ -204,29 +204,29 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   loadAllChapters(courseId: any, lessonId: any) {
     this.loadingChapters = true;
     this.chapters$ = this.chapterService.fetchAllChapters(courseId)
-    .pipe(
-      catchError(err => {
-        this.loadingChapters = false;
-        return throwError(() => err?.message)
-      }),
-      tap(data => {
-        this.allChapters = data;
-        this.loadingChapters = false;
+      .pipe(
+        catchError(err => {
+          this.loadingChapters = false;
+          return throwError(() => err?.message)
+        }),
+        tap(data => {
+          this.allChapters = data;
+          this.loadingChapters = false;
 
-        // this.getEachLessonDuration(data);
+          // this.getEachLessonDuration(data);
 
-        if (lessonId === '?') {
-          this.lesson = data[0].lessons[0]
-          this.lessonID = this.lesson?.id;
-          this.lesson$ = of(this.lesson);
-          this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
+          if (lessonId === '?') {
+            this.lesson = data[0].lessons[0]
+            this.lessonID = this.lesson?.id;
+            this.lesson$ = of(this.lesson);
+            this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
 
-          this.currentChapter = data[0];
-          this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
-        }
-      }),
-      shareReplay()
-    )
+            this.currentChapter = data[0];
+            this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
+          }
+        }),
+        shareReplay()
+      )
   }
 
   loadPrevNext(currentChapter: Chapter, allChapters: Chapter[], currentLessonId: any){
