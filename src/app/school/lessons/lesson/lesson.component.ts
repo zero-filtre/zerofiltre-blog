@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, HostListener, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
@@ -17,6 +17,7 @@ import { ThemePalette } from '@angular/material/core';
 import { CourseSubscription } from '../../studentCourse';
 import { capitalizeString } from 'src/app/services/utilities.service';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material/sidenav';
 
 
 @Component({
@@ -26,6 +27,9 @@ import { MediaMatcher } from '@angular/cdk/layout';
 })
 export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   mobileQuery: MediaQueryList;
+  isSidenavOpen = false;
+  @ViewChild('sidenavContainer') sidenavContainer: ElementRef;
+  @ViewChild('snav') sidenav: MatSidenav;
 
   form!: FormGroup;
   color: ThemePalette = 'accent';
@@ -53,6 +57,8 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   courseSubscription$: Observable<CourseSubscription>;
   prevLesson$: Observable<any>;
   nextLesson$: Observable<any>;
+
+  CompletedText$ = new Subject<boolean>();
 
   imageTypes = ['png', 'jpeg', 'jpg', 'svg'];
 
@@ -83,8 +89,6 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  CompletedText$ = new Subject<boolean>();
-
   private _mobileQueryListener: () => void;
 
   get canAccessCourse() {
@@ -94,6 +98,16 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   get canEditCourse() {
     const user = this.authService?.currentUsr as User
     return this.courseService.canEditCourse(user, this.course);
+  }
+
+  @HostListener('document:keydown.control.b', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    this.toggleSidenav();
+  }
+
+  toggleSidenav(): void {
+    this.isSidenavOpen = !this.isSidenavOpen;
+    this.sidenav.toggle();
   }
 
   toggleCompleted() {
