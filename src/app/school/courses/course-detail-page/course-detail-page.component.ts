@@ -28,6 +28,8 @@ export class CourseDetailPageComponent implements OnInit {
   lessons$: Observable<Lesson[]>;
   course: Course;
 
+  currentVideoId: string;
+
   paymentHandler: any = null;
 
   public loading!: boolean;
@@ -90,7 +92,7 @@ export class CourseDetailPageComponent implements OnInit {
 
   }
 
-  getCourse(): Observable<any> {
+  getCourse(): Observable<Course> {
     return this.courseService.findCourseById(this.courseID)
       .pipe(
         catchError(err => {
@@ -100,9 +102,11 @@ export class CourseDetailPageComponent implements OnInit {
           }
           return throwError(() => err?.message)
         }),
-        tap(data => {
+        tap((data: Course) => {
           this.course = data;
+          this.extractVideoId(data.video)
           this.setEachReactionTotal(data?.reactions);
+
           if (data.status === 'PUBLISHED') {
             this.isPublished.next(true);
           } else {
@@ -175,6 +179,11 @@ export class CourseDetailPageComponent implements OnInit {
       };
       window.document.body.appendChild(script);
     }
+  }
+
+  extractVideoId(videoLink: any) {
+    const params = new URL(videoLink).searchParams;
+    this.currentVideoId = params.get('v');
   }
 
   ngOnInit(): void {

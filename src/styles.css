@@ -31,6 +31,10 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
+iframe {
+  max-width: 100%;
+}
+
 /* Extends forms plugin styles with our custom styles in one place */
 @layer base {
   [type="text"],
