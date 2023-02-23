@@ -21,6 +21,7 @@ import { MatListModule } from '@angular/material/list';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MarkdownModule } from 'ngx-markdown';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './lang-switcher/translate-universal-loader';
@@ -36,6 +37,7 @@ import { AutoSaveButtonComponent } from './ui/buttons/auto-save-button/auto-save
 import { UploadFormComponent } from './upload-form/upload-form.component';
 import { UrlPipe } from './pipes/url.pipe';
 import { BaseCourseListComponent } from './base-course-list/base-course-list.component';
+import { YoutubeVideoPlayerComponent } from './youtube-video-player/youtube-video-player.component';
 
 const components = [
   AppShellRenderDirective,
@@ -49,7 +51,9 @@ const components = [
   NotFoundPageComponent,
   VimeoUrlPipe,
   UrlPipe,
-  UploadFormComponent
+  UploadFormComponent,
+  YoutubeVideoPlayerComponent,
+  BaseCourseListComponent
 ];
 
 const modules = [
@@ -70,11 +74,12 @@ const modules = [
   MatProgressBarModule,
   MatSelectModule,
   MatSlideToggleModule,
-  MatListModule
+  MatListModule,
+  YouTubePlayerModule
 ];
 
 @NgModule({
-  declarations: [...components, BaseCourseListComponent],
+  declarations: [...components],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
