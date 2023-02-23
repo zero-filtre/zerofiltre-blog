@@ -65,10 +65,10 @@ export class CourseEditPageComponent implements OnInit {
     private courseService: CourseService,
     private sectionService: SectionService,
     private messageService: MessageService,
-    private navigate: NavigationService,
+    public navigate: NavigationService,
     private fileService: FileUploadService,
     private dialogSectionRef: MatDialog,
-    private tagService: TagService
+    private tagService: TagService,
   ) { }
 
   getCourse(): Observable<any> {
