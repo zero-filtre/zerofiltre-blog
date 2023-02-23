@@ -109,9 +109,7 @@
 
         <div *ngIf="activeTab === 'preview'"
             class="markdown-preview-container markdown-content h-full overflow-y-scroll bg-skin-bg w-full p-4 pb-24">
-            <markdown [data]="content?.value"
-                class="prose prose-img:rounded-xl prose-img:border-4 lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-ul:list-disc prose-ol:list-disc">
-            </markdown>
+            <app-markdown-preview [data]="content?.value"></app-markdown-preview>
         </div>
 
         <div *ngIf="activeTab === 'help'"

@@ -81,10 +81,7 @@
                                 class="lesson_name mb-6 lg:mb-8 text-3xl w-full font-black text-primary-500 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
                                 <h1>{{capitalize(lesson?.title)}}</h1>
                             </div>
-                            <markdown
-                                class="prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-ul:list-disc prose-ol:list-disc"
-                                [data]="lesson?.content">
-                            </markdown>
+                            <app-markdown-preview [data]="lesson?.content"></app-markdown-preview>
                         </div>
             
                         <ng-container *ngIf="loading" class="articleContentSkeletonLoader">

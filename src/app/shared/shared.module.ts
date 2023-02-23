@@ -38,6 +38,7 @@ import { UploadFormComponent } from './upload-form/upload-form.component';
 import { UrlPipe } from './pipes/url.pipe';
 import { BaseCourseListComponent } from './base-course-list/base-course-list.component';
 import { YoutubeVideoPlayerComponent } from './youtube-video-player/youtube-video-player.component';
+import { MarkdownPreviewComponent } from './markdown-preview/markdown-preview.component';
 
 const components = [
   AppShellRenderDirective,
@@ -53,7 +54,8 @@ const components = [
   UrlPipe,
   UploadFormComponent,
   YoutubeVideoPlayerComponent,
-  BaseCourseListComponent
+  BaseCourseListComponent,
+  MarkdownPreviewComponent
 ];
 
 const modules = [
