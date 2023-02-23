@@ -6,14 +6,14 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
         </button>
-        <!-- *ngIf="courseSubscription$|async" -->
-        <!-- *ngIf="isSubscriber" -->
-        <progress  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="completeProgressVal" max="100"></progress>
+        
+        <progress *ngIf="courseSubscription$|async"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="completeProgressVal" max="100"></progress>
+        <progress *ngIf="!isSubscriber"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="20" max="100"></progress>
     </div>
 </div>
 
 <div class="example-container" [class.site-container]="!mobileQuery.matches" [class.example-is-mobile]="mobileQuery.matches">
-    <mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav-container class="example-sidenav-container" tabIndex="-1" #sidenavContainer>
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="true"
             fixedTopGap="0" [opened]="!mobileQuery.matches" class="pt-36 border-none lg:bg-transparent lg:min-w-[350px] !shadow-none">
             <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art">
