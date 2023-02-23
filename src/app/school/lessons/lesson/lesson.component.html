@@ -1,11 +1,15 @@
-<div class="example-toolbar sticky top-[72px] lg:top-20 z-20 site-container bg-primary-100 flex items-center justify-between gap-4 lg:gap-5 h-16">
-    <button mat-icon-button (click)="snav.toggle()" class="flex items-center justify-center">
-        <mat-icon>menu</mat-icon>
-    </button>
-    <!-- *ngIf="courseSubscription$|async" -->
-    <!-- *ngIf="isSubscriber" -->
-    <!-- [ngClass]="{'sidebar-closed':!snav.opened}" -->
-    <progress  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="completeProgressVal" max="100"></progress>
+<div class="example-toolbar sticky top-[72px] lg:top-20 z-20 bg-primary-100">
+    <div class="site-container flex items-center justify-between gap-4 lg:gap-5 h-16">
+        <button mat-icon-button (click)="snav.toggle()" class="flex items-center justify-center bg-primary-50 text-white h-full w-16">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+        <!-- *ngIf="courseSubscription$|async" -->
+        <!-- *ngIf="isSubscriber" -->
+        <progress  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="completeProgressVal" max="100"></progress>
+    </div>
 </div>
 
 <div class="example-container" [class.site-container]="!mobileQuery.matches" [class.example-is-mobile]="mobileQuery.matches">
