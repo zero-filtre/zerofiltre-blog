@@ -21,6 +21,7 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   @Input() saveFailed!: boolean;
   @Input() imageBtn: boolean = true;
   @Input() fullscreenBtn: boolean = true;
+  @Input() showFullscreenPublishBtn: boolean = false;
   @Input() height: number = 100;
 
   @Output() publishEvent = new EventEmitter<string>();

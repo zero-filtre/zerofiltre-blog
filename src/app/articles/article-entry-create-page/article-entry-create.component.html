@@ -96,7 +96,7 @@
                     <div class="editor_wrapper !shadow-md">
                         <app-text-editor [form]="form" [content]="content" [isLoading]="loading"
                             [isPublishing]="isPublishing" [isPublished]="isPublished" [isSaving]="isSaving"
-                            [isSaved]="isSaved" [saveFailed]="saveFailed" [editorSub$]="EditorText$"
+                            [isSaved]="isSaved" [saveFailed]="saveFailed" [editorSub$]="EditorText$" [showFullscreenPublishBtn]="true"
                             (onFileSelectedEvent)="onFileSelected($event, 'editorImage')"
                             (publishEvent)="publishArticle()">
                         </app-text-editor>
