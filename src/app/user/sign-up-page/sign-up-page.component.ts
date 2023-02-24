@@ -22,6 +22,8 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
   public readonly stackOverflowRedirectURL = environment.stackOverflowRedirectURL;
   public path: string = '/';
 
+  public passwordVisible = false;
+
   constructor(
     private loadEnvService: LoadEnvService,
     private formuilder: FormBuilder,
@@ -47,6 +49,10 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
 
   get passwordDoesMatch() {
     return this.password?.value === this.matchingPassword?.value;
+  }
+
+  public togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 
   public signup(): void {
