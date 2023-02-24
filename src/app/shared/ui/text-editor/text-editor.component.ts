@@ -88,10 +88,11 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   }
 
   toggleFullScreen() {
-    this.elem = (document as any).querySelector('.editor_sticky_wrapper');
+    this.elem = (document as any).querySelector('.editor_wrapper');
     const textarea = (document as any).querySelector('#content');
     const editotheader = (document as any).querySelector('.editor-header');
 
+    if (!this.elem) return;
     this.elem.addEventListener('fullscreenchange', this.fullscreenchanged);
 
     if (!this.document.fullscreenElement) {
