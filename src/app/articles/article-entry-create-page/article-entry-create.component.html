@@ -1,4 +1,4 @@
-<main class="site-container relative py-10 lg:py-14 min-h-screen">
+<main class="site-container relative py-10 pt-5 lg:py-14 min-h-screen">
     <form *ngIf="form" [formGroup]="form">
         <div class="article-data-container flex flex-col lg:grid grid-cols-7 gap-10 lg:gap-14 items-stretch">
             <main class="col-span-5 order-2 lg:order-none">
@@ -128,10 +128,12 @@
                         </h2>
                     </nav>
 
-                    <app-auto-save-button [form]="form" [loading]="loading" [isPublishing]="isPublishing"
-                        [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
-                        (publishEvent)="publishArticle()">
-                    </app-auto-save-button>
+                    <div class="mt-5">
+                        <app-auto-save-button [form]="form" [loading]="loading" [isPublishing]="isPublishing"
+                            [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
+                            (publishEvent)="publishArticle()">
+                        </app-auto-save-button>
+                    </div>
 
                     <div class="article-summary">
                         <label for="summary" class="block text-base font-semibold leading-5 text-skin-base">
