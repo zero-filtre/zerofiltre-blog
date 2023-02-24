@@ -19,7 +19,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   public readonly STACK_OVERFLOW_CLIENT_ID = environment.STACK_OVERFLOW_CLIENT_ID;
   public readonly gitHubRedirectURL = environment.gitHubRedirectURL;
   public readonly stackOverflowRedirectURL = environment.stackOverflowRedirectURL;
-  redirectURL: any;
+  public redirectURL: any;
+
+  public passwordVisible = false;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -40,6 +42,11 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   get username() { return this.form.get('username'); }
   get password() { return this.form.get('password'); }
+
+
+  public togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
 
   public login(): void {
     this.loading = true;

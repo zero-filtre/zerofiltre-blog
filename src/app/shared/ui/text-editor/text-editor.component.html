@@ -61,7 +61,7 @@
             <div *ngIf="fullScreenOn">
                 <app-auto-save-button [form]="form" [loading]="isLoading" [isPublishing]="isPublishing"
                     [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
-                    (publishEvent)="initPublish()">
+                    (publishEvent)="initPublish()" [showBtn]="showFullscreenPublishBtn">
                 </app-auto-save-button>
             </div>
 
