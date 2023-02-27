@@ -30,6 +30,7 @@ export class CourseService {
   }
 
   canCreateCourse(user: User): boolean {
+    if (!user) return false;
     return this.isAdminUser(user) || true;
   }
 
