@@ -101,7 +101,9 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   @HostListener('document:keydown.control.b', ['$event'])
+  @HostListener('document:keydown.meta.b', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
+    event.preventDefault();
     this.toggleSidenav();
   }
 
@@ -171,8 +173,11 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   loadLessonData(lessonId: any) {
-    if (lessonId == '?') return;
     this.loading = true;
+    if (lessonId == '?') {
+      this.loading = false;
+      return;
+    }
 
     this.lesson$ = this.lessonService.findLessonById(lessonId)
       .pipe(
@@ -257,9 +262,9 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   loadPrevNextHelper(currentChapter: Chapter, allChapters: Chapter[], currentLessonId: any){
     if (!currentLessonId) return null;
     if (!currentChapter) return null;
-
+    
     let currentChapterLessonList: Lesson[] = currentChapter?.lessons;
-
+    
     const currentChapterIndex = allChapters.findIndex(chap => chap.id == currentChapter.id);
     const currentLessonIndex = currentChapterLessonList?.findIndex(lesson => lesson.id == currentLessonId);
 
@@ -269,14 +274,18 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     const nextChapterFirstLessonIndex = 0;
     const lastChapterIndex = allChapters?.length - 1
 
-    if (currentLessonIndex == 0 && currentChapterIndex > 0) {
+    if (currentLessonIndex < 0) {
+      prev = null;
+    } else if (currentLessonIndex == 0 && currentChapterIndex > 0) {
       const prevChapterLastLesson = allChapters[currentChapterIndex - 1].lessons[prevChapterLastLessonIndex]
       prev = prevChapterLastLesson;
     } else {
       prev = currentChapterLessonList[currentLessonIndex - 1]
     }
 
-    if (currentLessonIndex == currentChapterLastLessonIndex && currentChapterIndex < lastChapterIndex) {
+    if (currentLessonIndex < 0) {
+      next = currentChapterLessonList[1];
+    } else if (currentLessonIndex == currentChapterLastLessonIndex && currentChapterIndex < lastChapterIndex) {
       const nextChapterFirstLesson = allChapters[currentChapterIndex + 1].lessons[nextChapterFirstLessonIndex];
       next = nextChapterFirstLesson;
     } else {
