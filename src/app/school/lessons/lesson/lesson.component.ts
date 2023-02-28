@@ -101,7 +101,9 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   @HostListener('document:keydown.control.b', ['$event'])
+  @HostListener('document:keydown.meta.b', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
+    event.preventDefault();
     this.toggleSidenav();
   }
 
