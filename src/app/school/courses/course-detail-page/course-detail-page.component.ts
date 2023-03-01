@@ -99,6 +99,7 @@ export class CourseDetailPageComponent implements OnInit {
 
   getCourse(): Observable<Course> {
     this.isLoading = true;
+
     return this.courseService.findCourseById(this.courseID)
       .pipe(
         catchError(err => {
@@ -192,6 +193,7 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   extractVideoId(videoLink: any) {
+    if (!videoLink) return;
     const params = new URL(videoLink).searchParams;
     this.currentVideoId = params.get('v');
   }
@@ -205,6 +207,7 @@ export class CourseDetailPageComponent implements OnInit {
     this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
       .pipe(
         catchError(err => {
+          this.isSubscriber = false;
           this.notify.cancel();
           return throwError(() => err?.message)
         }),
@@ -226,7 +229,7 @@ export class CourseDetailPageComponent implements OnInit {
 
           this.chapters$ = this.chapterService
             .fetchAllChapters(this.courseID);
-
+          
           return this.getCourse();
         })
       );
