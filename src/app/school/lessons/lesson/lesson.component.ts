@@ -7,7 +7,7 @@ import { AuthService } from '../../../user/auth.service';
 import { User } from '../../../user/user.model';
 import { LessonService } from '../lesson.service';
 import { MessageService } from '../../../services/message.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
 import { Lesson } from '../lesson';
@@ -57,6 +57,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   courseSubscription$: Observable<CourseSubscription>;
   prevLesson$: Observable<any>;
   nextLesson$: Observable<any>;
+  nextLesson: Lesson;
 
   CompletedText$ = new Subject<boolean>();
 
@@ -80,6 +81,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     private courseService: CourseService,
     private messageService: MessageService,
     private route: ActivatedRoute,
+    private router: Router,
     private vimeo: VimeoService,
     changeDetectorRef: ChangeDetectorRef, 
     media: MediaMatcher
@@ -124,7 +126,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(data => {
           this.completed = true;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
-          // this.router.navigateByUrl(`/cours/${this.courseID}/${+this.lessonID < this.lessonsCount ? +this.lessonID + 1 : this.lessonID}`)
+          if (this.nextLesson) this.router.navigateByUrl(`cours/${this.courseID}/${this.nextLesson.id}`);
         })
     } else {
       this.courseService.markLessonAsInComplete(data)
@@ -255,7 +257,10 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     this.prevLesson$ = of(prev)
       .pipe(map((data: Lesson) => data))
     this.nextLesson$ = of(next)
-      .pipe(map((data: Lesson) => data))
+      .pipe(map((data: Lesson) => {
+        this.nextLesson = data;
+        return data;
+      }))
 
   }
 

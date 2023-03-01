@@ -8,7 +8,7 @@
         </button>
         
         <progress *ngIf="courseSubscription$|async"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="completeProgressVal" max="100"></progress>
-        <progress *ngIf="!isSubscriber"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="20" max="100"></progress>
+        <progress *ngIf="!isSubscriber"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="0" max="100"></progress>
     </div>
 </div>
 
