@@ -30,6 +30,7 @@ export class CourseDetailPageComponent implements OnInit {
 
   courseSubscription$: Observable<CourseSubscription>;
   isSubscriber: boolean;
+  isLoading: boolean;
 
 
   currentVideoId: string;
@@ -91,15 +92,18 @@ export class CourseDetailPageComponent implements OnInit {
     this.courseService.subscribeCourse(this.course.id)
       .subscribe((_data:CourseSubscription) => {
         this.notify.openSnackBarSuccess('Vous avez souscrit à ce cours avec succes !', '');
-        this.router.navigateByUrl(this.router.url + '/' + '?');
+        this.router.navigateByUrl(`cours/${this.courseID}` + '/' + '?');
       })
 
   }
 
   getCourse(): Observable<Course> {
+    this.isLoading = true;
     return this.courseService.findCourseById(this.courseID)
       .pipe(
         catchError(err => {
+          this.isLoading = false;
+
           if (err.status === 404) {
             this.notify.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
             this.navigate.back();
@@ -107,6 +111,8 @@ export class CourseDetailPageComponent implements OnInit {
           return throwError(() => err?.message)
         }),
         tap((data: Course) => {
+          this.isLoading = false;
+
           this.course = data;
           this.extractVideoId(data.video)
           this.setEachReactionTotal(data?.reactions);

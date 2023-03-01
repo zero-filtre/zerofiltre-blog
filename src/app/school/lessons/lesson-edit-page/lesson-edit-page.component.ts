@@ -265,9 +265,12 @@ export class LessonEditPageComponent implements OnInit {
   }
 
   getLesson(): Observable<any> {
+    this.isLoading = true;
     return this.lessonService.findLessonById(this.lessonID)
       .pipe(
         catchError(err => {
+          this.isLoading = false;
+
           if (err.status === 404) {
             this.messageService.openSnackBarError("Oops cette lesson est n'existe pas 😣!", '');
             this.navigate.back();
@@ -275,6 +278,8 @@ export class LessonEditPageComponent implements OnInit {
           return throwError(() => err?.message)
         }),
         tap((data: Lesson) => {
+          this.isLoading = false;
+
           this.initForm(data)
           this.lessonVideo$ = this.vimeo.getOneVideo(data?.video);
         })
