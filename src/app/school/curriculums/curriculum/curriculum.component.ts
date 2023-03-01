@@ -15,6 +15,7 @@ export class CurriculumComponent implements OnInit {
   @Input() lessons!: Lesson[];
   @Input() chapters!: Chapter[];
   @Input() canAccessCourse!: boolean;
+  @Input() isSubscriber!: boolean;
 
   currentRoute: string
 

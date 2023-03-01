@@ -88,10 +88,10 @@
         
         <section class="section curriculum py-6 lg:py-12">
             <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
-                [canAccessCourse]="canAccessCourse"></app-curriculum>
+                [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber"></app-curriculum>
         </section>
 
-        <button (click)="subscribeToCourse()"
+        <button *ngIf="!(courseSubscription$|async)" (click)="subscribeToCourse()"
             class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
             <span class="text-center">Acheter ce cours</span>
 

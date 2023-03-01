@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
-import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map } from 'rxjs';
+import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay } from 'rxjs';
 import { Course, Reaction } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
@@ -27,6 +27,10 @@ export class CourseDetailPageComponent implements OnInit {
   chapters$: Observable<Chapter[]>
   lessons$: Observable<Lesson[]>;
   course: Course;
+
+  courseSubscription$: Observable<CourseSubscription>;
+  isSubscriber: boolean;
+
 
   currentVideoId: string;
 
@@ -62,7 +66,7 @@ export class CourseDetailPageComponent implements OnInit {
     private chapterService: ChapterService,
     private notify: MessageService,
     private navigate: NavigationService,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
 
   get canAccessCourse() {
@@ -85,9 +89,9 @@ export class CourseDetailPageComponent implements OnInit {
     }
 
     this.courseService.subscribeCourse(this.course.id)
-      .subscribe((data:CourseSubscription) => {
+      .subscribe((_data:CourseSubscription) => {
         this.notify.openSnackBarSuccess('Vous avez souscrit à ce cours avec succes !', '');
-        this.router.navigateByUrl(`/cours/${this.courseID}/?`);
+        this.router.navigateByUrl(this.router.url + '/' + '?');
       })
 
   }
@@ -186,6 +190,25 @@ export class CourseDetailPageComponent implements OnInit {
     this.currentVideoId = params.get('v');
   }
 
+  loadCourseSubscription() {
+    const userId = +(this.authService?.currentUsr as User)?.id
+    const payload = { courseId: this.courseID, userId }
+
+    if (!userId) return;
+
+    this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
+      .pipe(
+        catchError(err => {
+          this.notify.cancel();
+          return throwError(() => err?.message)
+        }),
+        tap((_data: CourseSubscription) => {
+          this.isSubscriber = true;
+        }),
+        shareReplay()
+      )
+  }
+
   ngOnInit(): void {
     this.invokeStripe();
 
@@ -193,6 +216,7 @@ export class CourseDetailPageComponent implements OnInit {
       .pipe(
         switchMap(params => {
           this.courseID = params.get('course_id');
+          this.loadCourseSubscription();
 
           this.chapters$ = this.chapterService
             .fetchAllChapters(this.courseID);

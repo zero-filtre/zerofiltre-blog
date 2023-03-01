@@ -349,9 +349,6 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loadCourseSubscription();
       }
     );
-
-    const key = document.getElementById('viewBookmarksSidebarKb');
-    if (key) key.remove();
   }
 
   ngOnDestroy(): void {
