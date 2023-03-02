@@ -17,33 +17,33 @@
         </div>
 
         <ng-container *ngFor="let section of course?.sections; let i = index">
-            <section class="section py-6 lg:py-12 site-container flex flex-col lg:flex-row justify-between">
-                <div
-                    class="why-text order-2 lg:basis-1/2 xl:basis-2/3 text-center lg:text-left flex flex-col lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:px-2">
-                    <h3>{{section.title}}</h3>
+            <section class="regular-section">
+                <div class="site-container grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="text lg:col-span-8">
+                        <h3>{{section.title}}</h3>
+                        <app-markdown-preview [data]="section?.content"></app-markdown-preview>
+                    </div>
 
-                    <app-markdown-preview [data]="section?.content"></app-markdown-preview>
-                </div>
-
-                <div class="why-image m-auto order-1 lg:basis-1/2 xl:basis-1/3">
-                    <app-image [classes]="'m-auto object-contain w-auto sm:max-w-[50%] lg:max-w-full'"
-                        [sourceUrl]="section?.image" [alt]="section?.title">
-                    </app-image>
+                    <div class="image lg:col-span-4 self-center">
+                        <app-image [classes]="'w-full h-full object-contain'"
+                            [sourceUrl]="section?.image" [alt]="section?.title">
+                        </app-image>
+                    </div>
                 </div>
             </section>
         </ng-container>
 
-        <div class="reactions py-10 border bg-secondary grid place-items-center border-skin-border">
+        <section class="reactions !py-6 border bg-secondary grid place-items-center border-skin-border">
             <!-- *ngIf="!loading && (isPublished$ | async)" -->
-            <div class="reactions-container mt-5 flex flex-wrap justify-center lg:justify-start gap-10">
+            <div class="site-container pt-5 flex flex-wrap justify-center lg:justify-start">
                 <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
-                    class="group flex items-center justify-center transition-all duration-300"
+                    class="group px-4 flex items-center justify-center transition-all duration-300"
                     attr.aria-label="{{reaction.action}} button">
 
                     <div
-                        class="reaction-wrapper flex flex-col gap-5 group-hover:-translate-y-2 transition-all ease-in duration-200">
+                        class="reaction-wrapper flex flex-col gap-3 lg:gap-4 group-hover:-translate-y-2 transition-all ease-in duration-200">
                         <ng-container *ngIf="reaction.action === 'clap'">
-                            <div class="group-hover:scale-[4] scale-[3.5] transition-all ease-in duration-200">
+                            <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
                                 {{reaction.emoji}}
                             </div>
                             <div class="text-lg font-semibold text-skin-link">
@@ -51,7 +51,7 @@
                             </div>
                         </ng-container>
                         <ng-container *ngIf="reaction.action === 'fire'">
-                            <div class="group-hover:scale-[4] scale-[3.5] transition-all ease-in duration-200">
+                            <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
                                 {{reaction.emoji}}
                             </div>
                             <div class="text-lg font-semibold text-skin-link">
@@ -59,7 +59,7 @@
                             </div>
                         </ng-container>
                         <ng-container *ngIf="reaction.action === 'love'">
-                            <div class="group-hover:scale-[4] scale-[3.5] transition-all ease-in duration-200">
+                            <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
                                 {{reaction.emoji}}
                             </div>
                             <div class="text-lg font-semibold text-skin-link">
@@ -67,7 +67,7 @@
                             </div>
                         </ng-container>
                         <ng-container *ngIf="reaction.action === 'like'">
-                            <div class="group-hover:scale-[4] scale-[3.5] transition-all ease-in duration-200">
+                            <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
                                 {{reaction.emoji}}
                             </div>
                             <div class="text-lg font-semibold text-skin-link">
@@ -87,16 +87,15 @@
                         }">
                 </ngx-skeleton-loader>
             </ng-container>
-        </div>
-        
+        </section> 
 
-        <section class="practical-video-section site-container section py-6 lg:py-12">
+        <section *ngIf="currentVideoId" class="presentation-video site-container">
 
             <app-youtube-video-player [videoId]="currentVideoId" [width]="800" [height]="450"></app-youtube-video-player>
 
         </section>
         
-        <section class="section curriculum py-6 lg:py-12">
+        <section class="curriculum">
             <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
                 [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber"></app-curriculum>
         </section>
