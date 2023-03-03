@@ -8,7 +8,7 @@ import { PasswordUpdatePopupComponent } from '../password-update-popup/password-
 import { ProfileImagePopupComponent } from '../profile-image-popup/profile-image-popup.component';
 import { User } from '../user.model';
 import { SeoService } from 'src/app/services/seo.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, shareReplay } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadEnvService } from 'src/app/services/load-env.service';
@@ -19,11 +19,12 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  public userID!: string;
-  public loading!: boolean;
+  userID!: string;
+  loading!: boolean;
+  loadingUser!: boolean;
 
-  public loggedUser$!: Observable<User>;
-  public user$!: Observable<User>;
+  loggedUser$!: Observable<User>;
+  user$!: Observable<User>;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -34,25 +35,25 @@ export class ProfileComponent implements OnInit {
     private translate: TranslateService,
   ) { }
 
-  public openPasswordEntryDialog(): void {
+  openPasswordEntryDialog(): void {
     this.dialogRef.open(PasswordUpdatePopupComponent, {
       panelClass: 'password-popup-panel',
     });
   }
 
-  public openAccountDeleteDialog(): void {
+  openAccountDeleteDialog(): void {
     this.dialogRef.open(DeleteAccountPopupComponent, {
       panelClass: 'delete-account-popup-panel',
     });
   }
 
-  public openProfileImageDeleteDialog(): void {
+  openProfileImageDeleteDialog(): void {
     this.dialogRef.open(ProfileImagePopupComponent, {
       panelClass: 'profile-image-popup-panel',
     });
   }
 
-  public resendConfirmationMail(email: string) {
+  resendConfirmationMail(email: string) {
     this.loading = true;
     this.authService.resendUserConfirm(email).subscribe({
       next: (_response: any) => {
@@ -65,14 +66,21 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  loadUser() {
+    this.loadingUser = true;
+    this.loggedUser$ = this.authService.refreshUser()
+      .pipe(
+        map(user => {
+          this.loadingUser = false;
+          return user;
+        }),
+        shareReplay()
+      )
+  }
+
 
   ngOnInit(): void {
-    this.loggedUser$ = this.authService.user$
-      .pipe(
-        map(user => user)
-      )
-
-    this.authService.refreshUser().subscribe();
+    this.loadUser();
 
     this.seo.generateTags({
       title: this.translate.instant('meta.profileTitle'),
