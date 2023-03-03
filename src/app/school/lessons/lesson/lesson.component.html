@@ -13,7 +13,7 @@
 </div>
 
 <div class="example-container" [class.site-container]="!mobileQuery.matches" [class.example-is-mobile]="mobileQuery.matches">
-    <mat-sidenav-container class="example-sidenav-container" tabIndex="-1" #sidenavContainer>
+    <mat-sidenav-container class="example-sidenav-container" tabIndex="-1">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="true"
             fixedTopGap="0" [opened]="!mobileQuery.matches" class="pt-36 border-none lg:bg-transparent lg:min-w-[350px] !shadow-none">
             <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art">

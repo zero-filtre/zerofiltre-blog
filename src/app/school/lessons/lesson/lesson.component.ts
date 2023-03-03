@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, HostListener, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, HostListener, OnInit, ViewChild } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
@@ -25,10 +25,9 @@ import { MatSidenav } from '@angular/material/sidenav';
   templateUrl: './lesson.component.html',
   styleUrls: ['./lesson.component.css']
 })
-export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
+export class LessonComponent implements OnInit, OnDestroy {
   mobileQuery: MediaQueryList;
   isSidenavOpen = false;
-  @ViewChild('sidenavContainer') sidenavContainer: ElementRef;
   @ViewChild('snav') sidenav: MatSidenav;
 
   form!: FormGroup;
@@ -116,7 +115,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
 
   toggleCompleted() {
     const data = { lessonId: this.lessonID, courseId: this.courseID };
-    const isCourseFullyCompleted = this.completeProgressVal == Math.round(100 * ((this.lessonsCount - 1) / this.lessonsCount)) ? true : false
+    // const isCourseFullyCompleted = this.completeProgressVal == Math.round(100 * ((this.lessonsCount - 1) / this.lessonsCount)) ? true : false
 
     if (!this.completed) {
       this.courseService.markLessonAsComplete(data)
@@ -359,9 +358,6 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this.seo.mountFooter();
     this.mobileQuery.removeListener(this._mobileQueryListener);
-  }
-
-  ngAfterViewInit() {
   }
 
 }
