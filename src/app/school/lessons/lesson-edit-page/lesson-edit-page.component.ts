@@ -150,7 +150,7 @@ export class LessonEditPageComponent implements OnInit {
   }
   typeInPrivacy(event: MatSlideToggleChange) {
     const val = event.checked
-    this.FreeText$.next(!val);
+    this.FreeText$.next(val);
   }
   typeInVideo(content: string) {
     this.VideoText$.next(content);
@@ -289,7 +289,7 @@ export class LessonEditPageComponent implements OnInit {
   updateLesson() {
     this.isSaving = true;
 
-    this.lessonService.updateLesson({ ...this.form.value, free: !this.free.value })
+    this.lessonService.updateLesson({ ...this.form.value, free: this.free.value })
       .subscribe({
         next: (_res: Lesson) => {
           this.isSaving = false;
