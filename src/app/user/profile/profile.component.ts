@@ -10,8 +10,8 @@ import { User } from '../user.model';
 import { SeoService } from 'src/app/services/seo.service';
 import { map, Observable, shareReplay } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute } from '@angular/router';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +19,8 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  readonly activeCourseModule = environment.courseRoutesActive === 'true';
+
   userID!: string;
   loading!: boolean;
   loadingUser!: boolean;

@@ -205,8 +205,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       });
 
     if (isPlatformBrowser(this.platformId)) {
-      console.log('APP MOUNTED!');
-
       this.loadCopyToClipboardSvg();
       (window as any).onload = AddTargetToExternalLinks();
     }

@@ -94,7 +94,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   get canAccessCourse() {
     const user = this.authService?.currentUsr as User
-    return this.courseService.canAccessCourse(user, this.course)
+    return this.courseService.canAccessCourse(user, this.course) || this.isSubscriber
   }
   get canEditCourse() {
     const user = this.authService?.currentUsr as User

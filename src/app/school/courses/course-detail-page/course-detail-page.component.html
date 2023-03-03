@@ -89,10 +89,10 @@
             </ng-container>
         </section> 
 
-        <section *ngIf="currentVideoId" class="presentation-video site-container">
-
-            <app-youtube-video-player [videoId]="currentVideoId" [width]="800" [height]="450"></app-youtube-video-player>
-
+        <section *ngIf="currentVideoId" class="presentation-video">
+            <div class="site-container">
+                <app-youtube-video-player [videoId]="currentVideoId" [width]="800" [height]="450"></app-youtube-video-player>
+            </div>
         </section>
         
         <section class="curriculum">

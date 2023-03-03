@@ -33,6 +33,7 @@ body {
 
 iframe {
   max-width: 100%;
+  margin: auto;
 }
 
 /* Extends forms plugin styles with our custom styles in one place */

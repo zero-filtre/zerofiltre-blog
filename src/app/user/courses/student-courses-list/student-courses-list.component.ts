@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { CourseDeletePopupComponent } from '../../../school/courses/course-delete-popup/course-delete-popup.component';
 import { CourseService } from 'src/app/school/courses/course.service';
-import { catchError, forkJoin, map, Observable, Subscription, switchMap, tap, throwError } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Course } from 'src/app/school/courses/course';
 import { User } from '../../user.model';
 import { BaseCourseListComponent } from 'src/app/shared/base-course-list/base-course-list.component';
@@ -12,6 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-student-courses-list',
@@ -47,7 +48,8 @@ export class StudentCoursesListComponent extends BaseCourseListComponent impleme
     public translate: TranslateService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
-    @Inject(PLATFORM_ID) public platformId: any
+    @Inject(PLATFORM_ID) public platformId: any,
+    public navigate: NavigationService,
   ) {
     super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
   }
