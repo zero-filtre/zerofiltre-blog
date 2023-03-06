@@ -15,6 +15,7 @@ const apiBase = 'https://api.vimeo.com';
   providedIn: 'root'
 })
 export class VimeoService {
+  readonly apiServerUrl = environment.apiBaseUrl;
   readonly accessToken = environment.vimeoToken;
   readonly clientID = environment.vimeoClientID;
   readonly clientSecret = environment.vimeoClientSecret;
@@ -54,21 +55,10 @@ export class VimeoService {
       )
   }
 
-  postVideo(file: File): Observable<any> {
+  initVideoUpload(file: File): Observable<any> {
     const fileSize = file.size;
-
-    httpOptions.headers = httpOptions.headers
-      .set('Authorization', `bearer ${this.accessToken}`)
-      .set('Accept', 'application/vnd.vimeo.*+json;version=3.4')
-
-    const body = {
-      "upload": {
-        "approach": "tus",
-        "size": fileSize,
-      }
-    }
-
-    return this.http.post<any>(`${apiBase}/me/videos`, body, httpOptions)
+    return this.http.post<any>(`${this.apiServerUrl}/vimeo/init?size=${fileSize}`, httpOptions)
+      .pipe(shareReplay())
   }
 
   uploadVideoFileTus(url: string, fileData: any, offset: number): Observable<any> {

@@ -323,7 +323,7 @@ export class LessonEditPageComponent implements OnInit {
     this.onFileSelected($event);
 
     this.uploading = true;
-    this.vimeo.postVideo(this.file.data)
+    this.vimeo.initVideoUpload(this.file.data)
       .pipe(catchError(err => {
         this.uploading = false;
         this.messageService.openSnackBarError('Un probleme est survenu lors du chargement!', 'OK')
