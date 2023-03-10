@@ -150,7 +150,7 @@ export class LessonEditPageComponent implements OnInit {
   }
   typeInPrivacy(event: MatSlideToggleChange) {
     const val = event.checked
-    this.FreeText$.next(!val);
+    this.FreeText$.next(val);
   }
   typeInVideo(content: string) {
     this.VideoText$.next(content);
@@ -265,9 +265,12 @@ export class LessonEditPageComponent implements OnInit {
   }
 
   getLesson(): Observable<any> {
+    this.isLoading = true;
     return this.lessonService.findLessonById(this.lessonID)
       .pipe(
         catchError(err => {
+          this.isLoading = false;
+
           if (err.status === 404) {
             this.messageService.openSnackBarError("Oops cette lesson est n'existe pas 😣!", '');
             this.navigate.back();
@@ -275,6 +278,8 @@ export class LessonEditPageComponent implements OnInit {
           return throwError(() => err?.message)
         }),
         tap((data: Lesson) => {
+          this.isLoading = false;
+
           this.initForm(data)
           this.lessonVideo$ = this.vimeo.getOneVideo(data?.video);
         })
@@ -284,7 +289,7 @@ export class LessonEditPageComponent implements OnInit {
   updateLesson() {
     this.isSaving = true;
 
-    this.lessonService.updateLesson({ ...this.form.value, free: !this.free.value })
+    this.lessonService.updateLesson({ ...this.form.value, free: this.free.value })
       .subscribe({
         next: (_res: Lesson) => {
           this.isSaving = false;
@@ -318,7 +323,7 @@ export class LessonEditPageComponent implements OnInit {
     this.onFileSelected($event);
 
     this.uploading = true;
-    this.vimeo.postVideo(this.file.data)
+    this.vimeo.initVideoUpload(this.file.data)
       .pipe(catchError(err => {
         this.uploading = false;
         this.messageService.openSnackBarError('Un probleme est survenu lors du chargement!', 'OK')

@@ -46,6 +46,8 @@ export class MessageService {
 
   // For expired session
   sessionExpired(state: any) {
+    this.openSnackBarError('Votre session est expirée ! Veuillez vous reconnecter.', 'OK');
+
     this.router.navigate(
       ['/login'],
       {

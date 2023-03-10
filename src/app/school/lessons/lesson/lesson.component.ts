@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, HostListener, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, HostListener, OnInit, ViewChild } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
@@ -7,7 +7,7 @@ import { AuthService } from '../../../user/auth.service';
 import { User } from '../../../user/user.model';
 import { LessonService } from '../lesson.service';
 import { MessageService } from '../../../services/message.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
 import { Lesson } from '../lesson';
@@ -25,10 +25,9 @@ import { MatSidenav } from '@angular/material/sidenav';
   templateUrl: './lesson.component.html',
   styleUrls: ['./lesson.component.css']
 })
-export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
+export class LessonComponent implements OnInit, OnDestroy {
   mobileQuery: MediaQueryList;
   isSidenavOpen = false;
-  @ViewChild('sidenavContainer') sidenavContainer: ElementRef;
   @ViewChild('snav') sidenav: MatSidenav;
 
   form!: FormGroup;
@@ -57,6 +56,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
   courseSubscription$: Observable<CourseSubscription>;
   prevLesson$: Observable<any>;
   nextLesson$: Observable<any>;
+  nextLesson: Lesson;
 
   CompletedText$ = new Subject<boolean>();
 
@@ -80,6 +80,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     private courseService: CourseService,
     private messageService: MessageService,
     private route: ActivatedRoute,
+    private router: Router,
     private vimeo: VimeoService,
     changeDetectorRef: ChangeDetectorRef, 
     media: MediaMatcher
@@ -93,7 +94,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get canAccessCourse() {
     const user = this.authService?.currentUsr as User
-    return this.courseService.canAccessCourse(user, this.course)
+    return this.courseService.canAccessCourse(user, this.course) || this.isSubscriber
   }
   get canEditCourse() {
     const user = this.authService?.currentUsr as User
@@ -114,7 +115,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
 
   toggleCompleted() {
     const data = { lessonId: this.lessonID, courseId: this.courseID };
-    const isCourseFullyCompleted = this.completeProgressVal == Math.round(100 * ((this.lessonsCount - 1) / this.lessonsCount)) ? true : false
+    // const isCourseFullyCompleted = this.completeProgressVal == Math.round(100 * ((this.lessonsCount - 1) / this.lessonsCount)) ? true : false
 
     if (!this.completed) {
       this.courseService.markLessonAsComplete(data)
@@ -124,7 +125,7 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(data => {
           this.completed = true;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
-          // this.router.navigateByUrl(`/cours/${this.courseID}/${+this.lessonID < this.lessonsCount ? +this.lessonID + 1 : this.lessonID}`)
+          if (this.nextLesson) this.router.navigateByUrl(`cours/${this.courseID}/${this.nextLesson.id}`);
         })
     } else {
       this.courseService.markLessonAsInComplete(data)
@@ -255,7 +256,10 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
     this.prevLesson$ = of(prev)
       .pipe(map((data: Lesson) => data))
     this.nextLesson$ = of(next)
-      .pipe(map((data: Lesson) => data))
+      .pipe(map((data: Lesson) => {
+        this.nextLesson = data;
+        return data;
+      }))
 
   }
 
@@ -349,17 +353,11 @@ export class LessonComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loadCourseSubscription();
       }
     );
-
-    const key = document.getElementById('viewBookmarksSidebarKb');
-    if (key) key.remove();
   }
 
   ngOnDestroy(): void {
     this.seo.mountFooter();
     this.mobileQuery.removeListener(this._mobileQueryListener);
-  }
-
-  ngAfterViewInit() {
   }
 
 }

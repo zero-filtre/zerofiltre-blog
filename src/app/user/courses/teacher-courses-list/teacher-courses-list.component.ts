@@ -12,6 +12,7 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-teacher-courses-list',
@@ -48,7 +49,8 @@ export class TeacherCoursesListComponent extends BaseCourseListComponent impleme
     public translate: TranslateService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
-    @Inject(PLATFORM_ID) public platformId: any
+    @Inject(PLATFORM_ID) public platformId: any,
+    public navigate: NavigationService,
   ) {
     super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
   }

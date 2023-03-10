@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
-import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map } from 'rxjs';
+import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay } from 'rxjs';
 import { Course, Reaction } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
@@ -27,6 +27,11 @@ export class CourseDetailPageComponent implements OnInit {
   chapters$: Observable<Chapter[]>
   lessons$: Observable<Lesson[]>;
   course: Course;
+
+  courseSubscription$: Observable<CourseSubscription>;
+  isSubscriber: boolean;
+  isLoading: boolean;
+
 
   currentVideoId: string;
 
@@ -62,7 +67,7 @@ export class CourseDetailPageComponent implements OnInit {
     private chapterService: ChapterService,
     private notify: MessageService,
     private navigate: NavigationService,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
 
   get canAccessCourse() {
@@ -85,17 +90,21 @@ export class CourseDetailPageComponent implements OnInit {
     }
 
     this.courseService.subscribeCourse(this.course.id)
-      .subscribe((data:CourseSubscription) => {
+      .subscribe((_data:CourseSubscription) => {
         this.notify.openSnackBarSuccess('Vous avez souscrit à ce cours avec succes !', '');
-        this.router.navigateByUrl(`/cours/${this.courseID}/?`);
+        this.router.navigateByUrl(`cours/${this.courseID}` + '/' + '?');
       })
 
   }
 
   getCourse(): Observable<Course> {
+    this.isLoading = true;
+
     return this.courseService.findCourseById(this.courseID)
       .pipe(
         catchError(err => {
+          this.isLoading = false;
+
           if (err.status === 404) {
             this.notify.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
             this.navigate.back();
@@ -103,6 +112,8 @@ export class CourseDetailPageComponent implements OnInit {
           return throwError(() => err?.message)
         }),
         tap((data: Course) => {
+          this.isLoading = false;
+
           this.course = data;
           this.extractVideoId(data.video)
           this.setEachReactionTotal(data?.reactions);
@@ -182,8 +193,29 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   extractVideoId(videoLink: any) {
+    if (!videoLink) return;
     const params = new URL(videoLink).searchParams;
     this.currentVideoId = params.get('v');
+  }
+
+  loadCourseSubscription() {
+    const userId = +(this.authService?.currentUsr as User)?.id
+    const payload = { courseId: this.courseID, userId }
+
+    if (!userId) return;
+
+    this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
+      .pipe(
+        catchError(err => {
+          this.isSubscriber = false;
+          this.notify.cancel();
+          return throwError(() => err?.message)
+        }),
+        tap((_data: CourseSubscription) => {
+          this.isSubscriber = true;
+        }),
+        shareReplay()
+      )
   }
 
   ngOnInit(): void {
@@ -193,10 +225,11 @@ export class CourseDetailPageComponent implements OnInit {
       .pipe(
         switchMap(params => {
           this.courseID = params.get('course_id');
+          this.loadCourseSubscription();
 
           this.chapters$ = this.chapterService
             .fetchAllChapters(this.courseID);
-
+          
           return this.getCourse();
         })
       );

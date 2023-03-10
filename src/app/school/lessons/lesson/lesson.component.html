@@ -8,14 +8,14 @@
         </button>
         
         <progress *ngIf="courseSubscription$|async"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="completeProgressVal" max="100"></progress>
-        <progress *ngIf="!isSubscriber"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="20" max="100"></progress>
+        <progress *ngIf="!isSubscriber"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="0" max="100"></progress>
     </div>
 </div>
 
 <div class="example-container" [class.site-container]="!mobileQuery.matches" [class.example-is-mobile]="mobileQuery.matches">
-    <mat-sidenav-container class="example-sidenav-container" tabIndex="-1" #sidenavContainer>
+    <mat-sidenav-container class="example-sidenav-container" tabIndex="-1">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="true"
-            fixedTopGap="0" [opened]="!mobileQuery.matches" class="pt-36 border-none lg:bg-transparent lg:min-w-[350px] !shadow-none">
+            fixedTopGap="0" [opened]="!mobileQuery.matches" class="pt-36 border-none lg:bg-transparent lg:min-w-[370px] !shadow-none">
             <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art">
                 <app-curriculum-sidebar [drawer]="snav" [canEdit]="canEditCourse" [course]="course$|async"
                     [lessons]="lessons$ | async" [chapters]="chapters$ | async" [activeLessonID]="lessonID"
@@ -41,19 +41,21 @@
                                         <div class="upgrade-required text-center text-skin-base">
                                             <h5 class="text-base mb-7 font-semibold text-error">Permission refusée</h5>
                                             <div class="buy-box p-6 border border-primary-500 rounded-lg">
-                                                <span class="text-xl text-primary-500 uppercase font-semibold mr-2">
-                                                    <a href="#">Achetez ce cours</a>
-                                                </span>
-                                                <span class="text-xl font-medium">pour {{course?.price}} €</span>
-                                                <p class="text-sm">Accès à vie pour un prix incroyablement bas</p>
+                                                <a routerLink=".">
+                                                    <span class="text-xl text-primary-500 uppercase font-semibold mr-2">
+                                                        Achetez ce cours
+                                                    </span>
+                                                    <span class="text-xl font-medium">pour {{(course?.price/100)|currency:'EUR'}}</span>
+                                                    <p class="text-sm">Accès à vie pour un prix incroyablement bas</p>
+                                                </a>
                                             </div>
                                             <h3 class="my-5 font-bold text-2xl">OU</h3>
                                             <div class="buy-box p-6 border border-accent-400 rounded-lg">
-                                                <p><a href="#" class="text-xl text-accent-400 uppercase font-semibold">Passer à
-                                                        Pro</a>
-                                                </p>
-                                                <p class="text-sm">Débloquez tout le contenu Zerofiltre &amp;&amp; avantages
-                                                    bonus</p>
+                                                <a routerLink=".">
+                                                    <p class="text-xl text-accent-400 uppercase font-semibold">Passer à Pro</p>
+                                                    <p class="text-sm">Débloquez tout le contenu Zerofiltre &amp;&amp; avantages
+                                                        bonus</p>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

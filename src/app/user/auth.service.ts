@@ -177,6 +177,8 @@ export class AuthService {
   }
 
   logout() {
+    // if (confirm("Voulez-vous vraiment vous deconnecter ?")) {
+    // }
     this.subject.next(null!);
     this.clearLSwithoutExcludedKey()
     this.isAdmin = false;
