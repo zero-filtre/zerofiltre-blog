@@ -198,8 +198,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.completed = this.isLessonCompleted(lesson)
           this.lessonVideo$ = this.vimeoService.getOneVideo(lesson?.video);
           this.loading = false;
-          this.videoID = lesson?.video.split('com/')[1]
-          console.log('ID: ', this.videoID);
+          this.videoID = lesson?.video?.split('com/')[1]
 
           // const options = {
           //   id: '804933075',
