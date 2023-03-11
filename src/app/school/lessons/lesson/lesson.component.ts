@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
@@ -18,6 +18,9 @@ import { CourseSubscription } from '../../studentCourse';
 import { capitalizeString } from 'src/app/services/utilities.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
+import { environment } from 'src/environments/environment';
+
+// import Player from '@vimeo/player';
 
 
 @Component({
@@ -26,9 +29,13 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./lesson.component.css']
 })
 export class LessonComponent implements OnInit, OnDestroy {
+  readonly accessToken = environment.vimeoToken;
+  videoID: string;
+
   mobileQuery: MediaQueryList;
   isSidenavOpen = false;
   @ViewChild('snav') sidenav: MatSidenav;
+  @ViewChild('playerContainer') playerContainer: ElementRef<HTMLDivElement>;
 
   form!: FormGroup;
   color: ThemePalette = 'accent';
@@ -191,6 +198,42 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.completed = this.isLessonCompleted(lesson)
           this.lessonVideo$ = this.vimeoService.getOneVideo(lesson?.video);
           this.loading = false;
+          this.videoID = lesson?.video.split('com/')[1]
+          console.log('ID: ', this.videoID);
+
+          // const options = {
+          //   id: '804933075',
+          //   // url: videoUrl,
+          //   loop: false,
+          //   autoplay: true,
+          //   controls: true,
+          //   muted: false,
+          //   byline: false,
+          //   portrait: false,
+          //   title: false,
+          //   responsive: true,
+          //   playsinline: true,
+          //   access_token: 'token'
+          // };
+
+          // setTimeout(() => {
+          //   let player;
+
+          //   try {
+          //     if (this.playerContainer?.nativeElement) {
+          //       player = new Player(this.playerContainer.nativeElement, options);
+          //     }
+          //   } catch (error) {
+          //     console.error('Error creating Vimeo player:', error);
+          //   }
+
+          //   if (this.playerContainer?.nativeElement) {
+          //     player.on('error', (error) => {
+          //       console.error('Vimeo player error:', error);
+          //     });
+          //   }
+
+          // }, 500);
 
           if (!this.allChapters.length) {
             setTimeout(() => {
