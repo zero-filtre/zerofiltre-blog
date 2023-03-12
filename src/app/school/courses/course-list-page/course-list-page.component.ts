@@ -13,6 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { sortByNameAsc } from 'src/app/services/utilities.service';
 import { TagService } from 'src/app/services/tag.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Course } from '../course';
 
 @Component({
   selector: 'app-course-list-page',
@@ -42,6 +43,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   status: string;
   tag: string;
 
+
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,
@@ -57,7 +59,6 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   ) {
     super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
   }
-
 
   fetchListOfTags(): void {
     this.loading = true;

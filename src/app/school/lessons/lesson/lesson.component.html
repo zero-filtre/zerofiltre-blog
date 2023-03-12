@@ -32,10 +32,27 @@
                         <div class="vid_wrapper w-full h-full bg-gray-900">
                             <ng-container *ngIf="lesson$|async as lesson">
                                 <ng-container *ngIf="lesson.video">
-                                    <iframe *ngIf="canAccessCourse || lesson.free" #player [src]="lessonVideo$ | async | vimeoUrl"
-                                        class="" webkitallowfullscreen mozallowfullscreen allowfullscreen width="100%" height="100%"
-                                        title="Lesson video">
+                                    <iframe *ngIf="canAccessCourse || lesson.free" [src]="lesson.video | vimeoUrl" webkitallowfullscreen mozallowfullscreen 
+                                        allowfullscreen width="100%" height="100%" allow="autoplay; fullscreen; picture-in-picture" title="Lesson video">
                                     </iframe>
+
+                                    <!-- <iframe *ngIf="canAccessCourse || lesson.free" #player [src]="lessonVideo$ | async | vimeoUrl" class=""
+                                        webkitallowfullscreen mozallowfullscreen allowfullscreen width="100%" height="100%" title="Lesson video">
+                                    </iframe> -->
+
+                                    <!-- <div *ngIf="canAccessCourse || lesson.free" #playerContainer></div> -->
+
+                                    <!-- <iframe src="https://player.vimeo.com/video/{video_id}?access_token={your_access_token}&autoplay=1" width="640"
+                                        height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe> -->
+
+                                    <!-- <iframe [src]="'https://player.vimeo.com/video/{{videoID}}?access_token={{accessToken}}&autoplay=1' | vimeoUrl"
+                                        allow="autoplay; fullscreen; picture-in-picture" webkitallowfullscreen mozallowfullscreen allowfullscreen
+                                        width="100%" height="100%"></iframe> -->
+
+                                    <!-- <iframe src="https://player.vimeo.com/video/804933075?access_token=b1a29e516fcad64d02675b2720de399b&autoplay=1"
+                                        allow="autoplay; fullscreen; picture-in-picture"  webkitallowfullscreen mozallowfullscreen allowfullscreen 
+                                        width="100%" height="100%"></iframe> -->
+
             
                                     <div *ngIf="!lesson?.free && !canAccessCourse" class="h-full flex items-center justify-center">
                                         <div class="upgrade-required text-center text-skin-base">

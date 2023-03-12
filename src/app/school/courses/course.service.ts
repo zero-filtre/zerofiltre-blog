@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, shareReplay, map } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Course } from './course';
 import { CourseSubscription } from '../studentCourse';
@@ -36,7 +36,7 @@ export class CourseService {
 
   canAccessCourse(user: User, course: Course): boolean {
     if (!user) return false;
-    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) 
+    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) || this.isSubscriber(course?.id);
   }
 
   canEditCourse(user: User, course: Course): boolean {
@@ -46,14 +46,20 @@ export class CourseService {
 
   // STUDENT SUBSCRIPTIONS START
 
-  isSubscriber(user: User, course: Course) {
-    if (!user) return false;
-    return true;
+  isSubscriber(courseId: any) {
+    const subIds = JSON.parse(localStorage?.getItem('_subs'));
+    return subIds?.includes(courseId);
   }
 
   subscribeCourse(courseId: number): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/subscription?courseId=${courseId}`, httpOptions)
-      .pipe(shareReplay());
+      .pipe(
+        tap((data: CourseSubscription) => {
+          const subIds = JSON.parse(localStorage?.getItem('_subs'));
+          localStorage?.setItem('_subs', JSON.stringify([...subIds, data.id]));
+        }),
+        shareReplay()
+      );
   }
 
   deleteSubscriptionCourse(courseId: number): Observable<any> {

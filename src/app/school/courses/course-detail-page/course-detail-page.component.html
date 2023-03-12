@@ -1,5 +1,5 @@
 <main class="text-skin-art min-h-screen">
-    <div *ngIf="isLoading" class="flex items-center justify-center h-[88vh]">
+    <!-- <div *ngIf="isLoading" class="flex items-center justify-center h-[88vh]">
         <svg class="w-40 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
             preserveAspectRatio="xMidYMid">
@@ -7,7 +7,7 @@
                 stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
                 style="animation-play-state:paused"></circle>
         </svg>
-    </div>
+    </div> -->
 
     <div *ngIf="course$|async as course" class="content flex flex-col">
 
@@ -100,7 +100,7 @@
                 [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber"></app-curriculum>
         </section>
 
-        <button *ngIf="!(courseSubscription$|async) && isPublished$|async" (click)="subscribeToCourse()"
+        <button *ngIf="!isSubscriber && isPublished$|async" (click)="subscribeToCourse()"
             class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
             <span class="text-center">Acheter ce cours</span>
 
