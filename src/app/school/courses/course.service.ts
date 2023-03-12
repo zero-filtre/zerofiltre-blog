@@ -36,7 +36,7 @@ export class CourseService {
 
   canAccessCourse(user: User, course: Course): boolean {
     if (!user) return false;
-    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) 
+    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) || this.isSubscriber(user, course);
   }
 
   canEditCourse(user: User, course: Course): boolean {
@@ -48,7 +48,9 @@ export class CourseService {
 
   isSubscriber(user: User, course: Course) {
     if (!user) return false;
-    return true;
+
+    const subIds = JSON.parse(localStorage?.getItem('_subs'));
+    return subIds?.includes(course.id);
   }
 
   subscribeCourse(courseId: number): Observable<any> {
