@@ -29,7 +29,7 @@
 </div>
 
 <main class="site-container min-h-screen py-8">
-    <div *ngIf="isLoading" class="flex items-center justify-center h-[68vh]">
+    <!-- <div *ngIf="isLoading" class="flex items-center justify-center h-[68vh]">
         <svg class="w-40 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
             preserveAspectRatio="xMidYMid">
@@ -37,7 +37,7 @@
                 stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
                 style="animation-play-state:paused"></circle>
         </svg>
-    </div>
+    </div> -->
     
     <form *ngIf="lesson$ |async as lesson" [formGroup]="form" class="">
         <div class="article-data-container lg:max-w-4xl mx-auto">

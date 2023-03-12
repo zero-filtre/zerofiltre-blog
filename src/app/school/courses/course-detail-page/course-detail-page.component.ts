@@ -113,6 +113,7 @@ export class CourseDetailPageComponent implements OnInit {
         }),
         tap((data: Course) => {
           this.isLoading = false;
+          this.isSubscriber = this.courseService.isSubscriber(data.id);
 
           this.course = data;
           this.extractVideoId(data.video)
@@ -123,7 +124,8 @@ export class CourseDetailPageComponent implements OnInit {
           } else {
             this.isPublished.next(false);
           }
-        })
+        }),
+        shareReplay()
       )
   }
 
@@ -225,7 +227,7 @@ export class CourseDetailPageComponent implements OnInit {
       .pipe(
         switchMap(params => {
           this.courseID = params.get('course_id');
-          this.loadCourseSubscription();
+          // this.loadCourseSubscription();
 
           this.chapters$ = this.chapterService
             .fetchAllChapters(this.courseID);

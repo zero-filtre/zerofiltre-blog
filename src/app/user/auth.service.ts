@@ -292,7 +292,7 @@ export class AuthService {
       .pipe(
         tap(({ content }) => {
           this.userSubscriptionsSubject.next(content)
-          localStorage.setItem('_subs', JSON.stringify(content.map((d: CourseSubscription) => d.id)));
+          localStorage?.setItem('_subs', JSON.stringify(content.map((d: CourseSubscription) => d.id)));
         })
       ).subscribe()
   }

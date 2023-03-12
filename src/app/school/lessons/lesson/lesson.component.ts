@@ -20,8 +20,6 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
 
-// import Player from '@vimeo/player';
-
 
 @Component({
   selector: 'app-course-content',
@@ -158,8 +156,10 @@ export class LessonComponent implements OnInit, OnDestroy {
   loadCourseSubscription() {
     const userId = +(this.authService?.currentUsr as User)?.id
     const payload = { courseId: this.courseID, userId }
+    this.isSubscriber = this.courseService.isSubscriber(+this.courseID);
 
     if (!userId) return;
+    if (!this.isSubscriber) return;
     
     this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
       .pipe(
