@@ -1,0 +1,19 @@
+<main class="h-[90vh] bg-white">
+    <div class="site-container h-full grid grid-cols-12 items-center">
+
+        <div class="col-span-6">
+            <h1 class="text-5xl font-light text-error mb-16">Paiement echoué !</h1>
+            <div>
+                <p class="flex flex-col gap-4 text-skin-base">
+                    <span>Désolé, nous avons eu un problème pour confirmer votre paiement.</span>
+                    <span>Veuillez réessayer.</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="col-span-6 shadow-md">
+            <app-image [classes]="'object-contain'" [sourceUrl]="'https://ik.imagekit.io/lfegvix1p/payement_processing20200812-12951-1ffansx_EVy21dmof.png?updatedAt=1678649224813'"></app-image>
+        </div>
+
+    </div>
+</main>

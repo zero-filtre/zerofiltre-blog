@@ -39,6 +39,8 @@ import { UrlPipe } from './pipes/url.pipe';
 import { BaseCourseListComponent } from './base-course-list/base-course-list.component';
 import { YoutubeVideoPlayerComponent } from './youtube-video-player/youtube-video-player.component';
 import { MarkdownPreviewComponent } from './markdown-preview/markdown-preview.component';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
+import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
 
 const components = [
   AppShellRenderDirective,
@@ -55,7 +57,9 @@ const components = [
   UploadFormComponent,
   YoutubeVideoPlayerComponent,
   BaseCourseListComponent,
-  MarkdownPreviewComponent
+  MarkdownPreviewComponent,
+  PaymentSuccessComponent,
+  PaymentFailedComponent
 ];
 
 const modules = [
