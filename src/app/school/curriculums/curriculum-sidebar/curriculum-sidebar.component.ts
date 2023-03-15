@@ -12,6 +12,7 @@ import { Chapter } from '../../chapters/chapter';
 import { ChapterUpdatePopupComponent } from '../../chapters/chapter-update-popup/chapter-update-popup.component';
 import { capitalizeString } from 'src/app/services/utilities.service';
 import { CourseService } from '../../courses/course.service';
+import { Observable, of } from 'rxjs';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() completedLessonsIds!: number[];
   @Input() durations!: any[];
   @Input() mobileQuery: MediaQueryList;
+
 
   currentRoute: string;
 
@@ -115,8 +117,9 @@ export class CurriculumSidebarComponent implements OnInit {
       .subscribe()
   }
 
-  isLessonCompleted(lesson: Lesson): boolean {
-    return this.completedLessonsIds?.includes(lesson?.id);
+  isLessonCompleted(lesson: Lesson): Observable<boolean> {
+    const res = this.completedLessonsIds?.includes(lesson?.id)
+    return of(res);
   }
 
   ngOnInit(): void {
