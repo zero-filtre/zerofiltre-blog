@@ -1,0 +1,3 @@
+main {
+    @apply lg:h-[calc(100vh-85px)] lg:max-h-[800px]
+}
