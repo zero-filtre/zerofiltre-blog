@@ -25,12 +25,12 @@ const routes: Routes = [
   }
   ,
   {
-    path: 'payment-success',
+    path: 'payment/success',
     component: PaymentSuccessComponent,
     canActivate: [TokenExpiredGuard]
   },
   {
-    path: 'payment-failed',
+    path: 'payment/failure',
     component: PaymentFailedComponent,
     canActivate: [TokenExpiredGuard]
   },
