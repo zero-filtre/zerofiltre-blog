@@ -4,6 +4,8 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { RouteGuard } from './shared/guard/route.guard';
 import { TokenExpiredGuard } from './shared/guard/token-expired.guard';
 import { NotFoundPageComponent } from './shared/not-found-page/not-found-page.component';
+import { PaymentFailedComponent } from './shared/payment-failed/payment-failed.component';
+import { PaymentSuccessComponent } from './shared/payment-success/payment-success.component';
 import { LoggedInAuthGuard } from './user/logged-in-auth.guard';
 import { LoginPageComponent } from './user/login-page/login-page.component';
 import { PasswordResetPageComponent } from './user/password-reset-page/password-reset-page.component';
@@ -20,6 +22,17 @@ const routes: Routes = [
     path: 'register',
     component: SignUpPageComponent,
     canActivate: [LoggedInAuthGuard],
+  }
+  ,
+  {
+    path: 'payment/success',
+    component: PaymentSuccessComponent,
+    canActivate: [TokenExpiredGuard]
+  },
+  {
+    path: 'payment/failure',
+    component: PaymentFailedComponent,
+    canActivate: [TokenExpiredGuard]
   },
   {
     path: 'resetPassword',

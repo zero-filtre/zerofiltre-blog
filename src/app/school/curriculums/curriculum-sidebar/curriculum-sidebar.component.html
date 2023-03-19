@@ -90,7 +90,7 @@
                                                 class="w-full flex items-center p-3 gap-2" (click)="mobileQuery.matches ? drawer?.toggle() : null">
 
                                                 <span class="lesson_small_icon">
-                                                    <ng-container *ngIf="!isLessonCompleted(lesson)">
+                                                    <ng-container *ngIf="!(isLessonCompleted(lesson) | async)">
                                                         <svg *ngIf="lesson?.type === 'video' && (lesson?.free || canAccessCourse)"
                                                             xmlns="http://www.w3.org/2000/svg" fill="none"
                                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -108,7 +108,7 @@
                                                         </svg>
                                                     </ng-container>
 
-                                                    <svg *ngIf="isLessonCompleted(lesson) && canAccessCourse"
+                                                    <svg *ngIf="(isLessonCompleted(lesson) | async) && canAccessCourse"
                                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                         stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5 text-primary-600">
