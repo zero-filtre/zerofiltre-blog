@@ -101,7 +101,7 @@ export class CourseDetailPageComponent implements OnInit {
     }
 
     const payload = { productId: +this.courseID, productType: 'COURSE' }
-    const type = 'product'
+    const type = 'basic'
 
     this.paymentService.openPaymentDialog(payload, type);
 

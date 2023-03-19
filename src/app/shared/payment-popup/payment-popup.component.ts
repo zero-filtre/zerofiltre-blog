@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/services/payment.service';
 import { DOCUMENT } from '@angular/common';
 
@@ -15,7 +14,6 @@ export class PaymentPopupComponent implements OnInit {
 
   constructor(
     private payment: PaymentService,
-    private router: Router,
     public dialogRef: MatDialogRef<PaymentPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     @Inject(DOCUMENT) private document: Document

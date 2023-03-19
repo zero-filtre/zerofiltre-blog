@@ -19,6 +19,7 @@ import { capitalizeString } from 'src/app/services/utilities.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
+import { PaymentService } from 'src/app/services/payment.service';
 
 
 @Component({
@@ -88,7 +89,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     private router: Router,
     private vimeo: VimeoService,
     changeDetectorRef: ChangeDetectorRef, 
-    media: MediaMatcher
+    media: MediaMatcher,
+    private paymentService: PaymentService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -377,6 +379,59 @@ export class LessonComponent implements OnInit, OnDestroy {
 
       });
     })
+
+  }
+
+
+  subscribeToCourse() {
+
+    const currUser = this.authService.currentUsr as User;
+    const loggedIn = !!currUser;
+
+    if (!loggedIn) {
+      this.router.navigate(
+        ['/login'],
+        {
+          relativeTo: this.route,
+          queryParams: { redirectURL: this.router.url },
+          queryParamsHandling: 'merge',
+        });
+
+      this.messageService.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
+
+      return;
+    }
+
+    const payload = { productId: +this.courseID, productType: 'COURSE' }
+    const type = 'product'
+
+    this.paymentService.openPaymentDialog(payload, type);
+
+  }
+
+  subscribeToPro() {
+
+    const currUser = this.authService.currentUsr as User;
+    const loggedIn = !!currUser;
+
+    if (!loggedIn) {
+      this.router.navigate(
+        ['/login'],
+        {
+          relativeTo: this.route,
+          queryParams: { redirectURL: this.router.url },
+          queryParamsHandling: 'merge',
+        });
+
+      this.messageService.openSnackBarInfo('Veuillez vous connecter pour prendre votre abonnement PRO 🤗', 'OK');
+
+      return;
+    }
+
+    const payload = { productId: +this.courseID, productType: 'COURSE' }
+    const type = 'pro'
+
+    this.paymentService.openPaymentDialog(payload, type);
 
   }
 
