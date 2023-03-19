@@ -14,6 +14,8 @@ import { User } from '../../../user/user.model';
 import { environment } from 'src/environments/environment';
 import { CourseSubscription } from '../../studentCourse';
 import { PaymentService } from 'src/app/services/payment.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PaymentPopupComponent } from 'src/app/shared/payment-popup/payment-popup.component';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -69,7 +71,8 @@ export class CourseDetailPageComponent implements OnInit {
     private notify: MessageService,
     private navigate: NavigationService,
     private authService: AuthService,
-    private payment: PaymentService
+    private paymentService: PaymentService,
+    public dialogPaymentRef: MatDialog,
   ) { }
 
   get canAccessCourse() {
@@ -77,7 +80,9 @@ export class CourseDetailPageComponent implements OnInit {
     return this.courseService.canAccessCourse(user, this.course);
   }
 
+
   subscribeToCourse() {
+
     const currUser = this.authService.currentUsr as User;
     const loggedIn = !!currUser;
 
@@ -95,15 +100,13 @@ export class CourseDetailPageComponent implements OnInit {
       return;
     }
 
+    const payload = { productId: +this.courseID, productType: 'COURSE' }
+    const type = 'product'
 
-    const payload = { productId: +this.courseID, productType: 'COURSE', mode: 'payment' }
-
-    this.payment.checkoutBasicOneTime(payload)
-      .subscribe(data => {
-        this.router.navigateByUrl(data)
-      })
+    this.paymentService.openPaymentDialog(payload, type);
 
   }
+
 
   getCourse(): Observable<Course> {
     this.isLoading = true;
