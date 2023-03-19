@@ -13,3 +13,9 @@ export interface CourseSubscription {
     lastModifiedAt: string;
     active: boolean;
 }
+
+const ProductTypes = ['COURSE', 'BOOTCAMP'] as const;
+export type ProductType = typeof ProductTypes[number];
+
+const ModeTypes = ['subscription', 'payment'] as const;
+export type ModeType = typeof ModeTypes[number];

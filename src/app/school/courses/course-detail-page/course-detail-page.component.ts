@@ -13,6 +13,7 @@ import { AuthService } from '../../../user/auth.service';
 import { User } from '../../../user/user.model';
 import { environment } from 'src/environments/environment';
 import { CourseSubscription } from '../../studentCourse';
+import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -68,6 +69,7 @@ export class CourseDetailPageComponent implements OnInit {
     private notify: MessageService,
     private navigate: NavigationService,
     private authService: AuthService,
+    private payment: PaymentService
   ) { }
 
   get canAccessCourse() {
@@ -87,12 +89,18 @@ export class CourseDetailPageComponent implements OnInit {
           queryParams: { redirectURL: this.router.url },
           queryParamsHandling: 'merge',
         });
+      
+      this.notify.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
+
+      return;
     }
 
-    this.courseService.subscribeCourse(this.course.id)
-      .subscribe((_data:CourseSubscription) => {
-        this.notify.openSnackBarSuccess('Vous avez souscrit à ce cours avec succes !', '');
-        // this.router.navigateByUrl(`cours/${this.courseID}` + '/' + '?');
+
+    const payload = { productId: +this.courseID, productType: 'COURSE', mode: 'payment' }
+
+    this.payment.checkoutBasicOneTime(payload)
+      .subscribe(data => {
+        this.router.navigateByUrl(data)
       })
 
   }
