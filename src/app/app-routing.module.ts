@@ -30,7 +30,7 @@ const routes: Routes = [
     canActivate: [TokenExpiredGuard]
   },
   {
-    path: 'payment/failure',
+    path: 'payment/cancel',
     component: PaymentFailedComponent,
     canActivate: [TokenExpiredGuard]
   },
