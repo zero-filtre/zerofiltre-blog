@@ -46,18 +46,18 @@ export class PaymentPopupComponent implements OnInit {
       })
   }
 
-  payProOneTime() {
-    this.payload = { ...this.payload, mode: 'subscription', proPlan: true }
-    this.payment.checkoutProPlan(this.payload)
+  payProMonthly() {
+    this.payload = { ...this.payload, mode: 'subscription', proPlan: true, recurringInterval: 'month' }
+    this.payment.checkoutProPlanMonthly(this.payload)
       .subscribe(data => {
         this.goToUrl(data);
         this.dialogRef.close();
       })
   }
 
-  payProThreeTimes() {
-    this.payload = { ...this.payload, mode: 'subscription', proPlan: true }
-    this.payment.checkoutProPlan(this.payload)
+  payProYearly() {
+    this.payload = { ...this.payload, mode: 'subscription', proPlan: true, recurringInterval: 'year' }
+    this.payment.checkoutProPlanYearly(this.payload)
       .subscribe(data => {
         this.goToUrl(data);
         this.dialogRef.close();
