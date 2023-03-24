@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { CourseService } from '../school/courses/course.service';
 import { CourseSubscription } from '../school/studentCourse';
 import { MessageService } from '../services/message.service';
-import { User } from './user.model';
+import { PLANS, User } from './user.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -54,7 +54,7 @@ export class AuthService {
 
     this.redirectURL = '';
     this.isAdmin = this.currentUsr ? this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN') : false;
-    this.isPro = this.currentUsr ? this.currentUsr.plan === 'PRO' : false;
+    this.isPro = this.currentUsr ? this.currentUsr.plan === PLANS.PRO : false;
 
     this.loadCurrentUser();
   }
@@ -311,7 +311,7 @@ export class AuthService {
 
           this.setUserData(usr)
           this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
-          this.isPro = this.currentUsr.plan === 'PRO'
+          this.isPro = this.currentUsr.plan === PLANS.PRO
 
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)

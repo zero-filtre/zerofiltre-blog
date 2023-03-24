@@ -14,4 +14,8 @@ export interface User {
     loginFrom?: string;
     expired?: boolean;
     language?: string;
+    plan?: PlanType;
 }
+
+export const PLANS = { PRO: 'PRO', BASIC: 'BASIC' } as const;
+export type PlanType = typeof PLANS
