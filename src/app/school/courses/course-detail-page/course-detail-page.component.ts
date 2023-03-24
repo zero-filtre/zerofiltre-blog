@@ -223,8 +223,13 @@ export class CourseDetailPageComponent implements OnInit {
         catchError(err => {
           this.isSubscriber = false;
           this.notify.cancel();
+
+          const subIds = JSON.parse(localStorage?.getItem('_subs'));
+          localStorage?.setItem('_subs', JSON.stringify(subIds.filter(id => id != this.courseID)));
+
           if (!this.authService.isPro) return EMPTY;
           return this.courseService.subscribeToCourse(+this.courseID)
+            .pipe(tap(data => this.isSubscriber = true))
         }),
         tap((_data: CourseSubscription) => {
           this.isSubscriber = true;
@@ -235,7 +240,6 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.invokeStripe();
 
     // this.courseSubscription$ = this.route.data
     //   .pipe(
