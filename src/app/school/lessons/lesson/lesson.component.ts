@@ -383,7 +383,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
 
-  subscribeToCourse() {
+  buyCourse() {
 
     const currUser = this.authService.currentUsr as User;
     const loggedIn = !!currUser;

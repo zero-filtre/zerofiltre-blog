@@ -38,6 +38,7 @@ export class AuthService {
   private redirectURL: string;
 
   public isAdmin: boolean;
+  public isPro: boolean;
 
   private refreshData!: boolean
 
@@ -53,6 +54,7 @@ export class AuthService {
 
     this.redirectURL = '';
     this.isAdmin = this.currentUsr ? this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN') : false;
+    this.isPro = this.currentUsr ? this.currentUsr.plan === 'PRO' : false;
 
     this.loadCurrentUser();
   }
@@ -186,6 +188,7 @@ export class AuthService {
     this.subject.next(null!);
     this.clearLSwithoutExcludedKey()
     this.isAdmin = false;
+    this.isPro = false;
   }
 
   requestPasswordReset(email: string): Observable<any> {
@@ -308,6 +311,7 @@ export class AuthService {
 
           this.setUserData(usr)
           this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
+          this.isPro = this.currentUsr.plan === 'PRO'
 
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)

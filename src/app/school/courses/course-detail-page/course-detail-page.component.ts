@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
-import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay } from 'rxjs';
+import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay, EMPTY } from 'rxjs';
 import { Course, Reaction } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
@@ -81,7 +81,7 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
 
-  subscribeToCourse() {
+  buyCourse() {
 
     const currUser = this.authService.currentUsr as User;
     const loggedIn = !!currUser;
@@ -212,33 +212,44 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   loadCourseSubscription() {
-    const userId = +(this.authService?.currentUsr as User)?.id
-    const payload = { courseId: this.courseID, userId }
+    
+    const user = this.authService.currentUsr as User
+    const data = { courseId: this.courseID, userId: +user.id }
 
-    if (!userId) return;
+    if (!user) return;
 
-    this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
+    this.courseSubscription$ = this.courseService.findSubscribedByCourseId(data)
       .pipe(
         catchError(err => {
           this.isSubscriber = false;
           this.notify.cancel();
-          return throwError(() => err?.message)
+          if (!this.authService.isPro) return EMPTY;
+          return this.courseService.subscribeToCourse(+this.courseID)
         }),
         tap((_data: CourseSubscription) => {
           this.isSubscriber = true;
         }),
         shareReplay()
       )
+
   }
 
   ngOnInit(): void {
-    this.invokeStripe();
+    // this.invokeStripe();
+
+    // this.courseSubscription$ = this.route.data
+    //   .pipe(
+    //     map(data => {
+    //       this.isSubscriber = !!data.sub;
+    //       return data.sub
+    //     })
+    //   )
 
     this.course$ = this.route.paramMap
       .pipe(
         switchMap(params => {
           this.courseID = params.get('course_id');
-          // this.loadCourseSubscription();
+          this.loadCourseSubscription();
 
           this.chapters$ = this.chapterService
             .fetchAllChapters(this.courseID);
