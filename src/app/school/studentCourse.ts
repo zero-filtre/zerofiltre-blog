@@ -14,46 +14,46 @@ export interface CourseSubscription {
     active: boolean;
 }
 
-// const ProductTypes = ['COURSE', 'BOOTCAMP'] as const;
-// export type ProductType = typeof ProductTypes[number];
+// ENUMS: A structure that has a set of valid values
 
-// const ModeTypes = ['subscription', 'payment'] as const;
-// export type ModeType = typeof ModeTypes[number];
+// enum UserRoles {
+//     User,
+//     Admin = 'Admin',
+//     Staff = 'Staff'
+// }
 
-// const IntervalTypes = ['month', 'year'] as const;
-// export type IntervalType = typeof IntervalTypes[number];
+// if (UserRoles.User) {
+//     console.log('This code will never get hit because UserRoles.User = 0 and it is falsy');
+// }
 
-export const ProductTypes = ['COURSE', 'BOOTCAMP'];
+// type USER_ROLES = 'User' | 'Admin' | 'Staff';
 
-export const ModeTypes = ['subscription', 'payment'];
+// export const USER_ROLES = ['User', 'Admin', 'Staff'] as const;
+// export type UserRole = typeof USER_ROLES[number]
 
-export const IntervalTypes = ['month', 'year'];
+// type User = {
+//     role: UserRole;
+// }
 
-export interface PaymentProMonth {
+// function test(mess: string, role: UserRole) {}
+
+// test('hey', USER_ROLES[1])
+
+
+export const PRODUCTS = ['COURSE', 'BOOTCAMP'] as const;
+export type ProductType = typeof PRODUCTS[number]
+
+export const MODES = ['subscription', 'payment'] as const;
+export type ModeType = typeof MODES[number]
+
+export const INTERVALS = ['month', 'year'] as const;
+export type IntervalType = typeof INTERVALS[number]
+
+
+export interface PaymentConfig {
     productId: number,
-    productType: string,
-    mode: string,
-    proPlan: boolean,
-    recurringInterval: string
-}
-
-export interface PaymentProYear {
-    productId: number,
-    productType: string,
-    mode: string,
-    proPlan: boolean,
-    recurringInterval: string
-}
-
-export interface PaymentBasicOne {
-    productId: number,
-    productType: string,
-    mode: string
-}
-
-export interface PaymentBasicThree {
-    productId: number,
-    productType: string,
-    mode: string,
-    proPlan?: boolean
+    productType: ProductType,
+    mode: ModeType,
+    proPlan?: boolean,
+    recurringInterval?: IntervalType
 }

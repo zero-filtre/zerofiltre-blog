@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PaymentService } from 'src/app/services/payment.service';
 import { DOCUMENT } from '@angular/common';
+import { PaymentConfig } from 'src/app/school/studentCourse';
 
 @Component({
   selector: 'app-payment-popup',
@@ -9,7 +10,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./payment-popup.component.css']
 })
 export class PaymentPopupComponent implements OnInit {
-  payload: any;
+  payload: PaymentConfig;
   type: string;
 
   constructor(

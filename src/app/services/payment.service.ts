@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, shareReplay } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { PaymentProMonth, PaymentProYear, PaymentBasicOne, PaymentBasicThree } from '../school/studentCourse';
+import { PaymentConfig } from '../school/studentCourse';
 import { PaymentPopupComponent } from '../shared/payment-popup/payment-popup.component';
 
 
@@ -36,7 +36,7 @@ export class PaymentService {
     });
   }
 
-  checkoutProPlanMonthly(data: PaymentProMonth): Observable<any> {
+  checkoutProPlanMonthly(data: PaymentConfig): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/payment/checkout`, data, {
       ...httpOptions,
       responseType: 'text' as 'json'
@@ -44,7 +44,7 @@ export class PaymentService {
       .pipe(shareReplay())
   }
 
-  checkoutProPlanYearly(data: PaymentProYear): Observable<any> {
+  checkoutProPlanYearly(data: PaymentConfig): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/payment/checkout`, data, {
       ...httpOptions,
       responseType: 'text' as 'json'
@@ -52,7 +52,7 @@ export class PaymentService {
       .pipe(shareReplay())
   }
 
-  checkoutBasicOneTime(data: PaymentBasicOne): Observable<any> {
+  checkoutBasicOneTime(data: PaymentConfig): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/payment/checkout`, data, {
       ...httpOptions,
       responseType: 'text' as 'json'
@@ -60,7 +60,7 @@ export class PaymentService {
       .pipe(shareReplay())
   }
 
-  checkoutBasicThreeTimes(data: PaymentBasicThree): Observable<any> {
+  checkoutBasicThreeTimes(data: PaymentConfig): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/payment/checkout`, data, {
       ...httpOptions,
       responseType: 'text' as 'json'
