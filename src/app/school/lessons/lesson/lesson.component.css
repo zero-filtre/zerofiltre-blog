@@ -1,5 +1,5 @@
 progress {
-  @apply border border-primary-500 bg-primary-50 rounded-sm overflow-hidden shadow-md w-full lg:w-[calc(100%-370px)];
+  @apply border border-primary-500 bg-primary-50 bg-opacity-40 rounded-sm overflow-hidden shadow-md w-full lg:w-[calc(100%-370px)];
   border: none;
   -webkit-appearance: none;
 }
