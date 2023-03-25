@@ -229,6 +229,8 @@ export class CourseDetailPageComponent implements OnInit {
     this.courseSubscription$ = this.route.data
       .pipe(
         map(({ sub }) => {
+          if (sub === true) return;
+          
           this.isSubscriber = !!sub;
           return sub
         })

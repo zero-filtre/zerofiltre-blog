@@ -426,7 +426,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.courseSubscription$ = this.route.data
       .pipe(
         map(({ sub }) => {
-        
+          if (sub === true) return;
+
           this.isSubscriber = !!sub;
           this.courseSubscriptionID = sub.id
           this.completedLessons = sub.completedLessons;
