@@ -44,9 +44,12 @@ export class CourseSubscriptionResolver implements Resolve<boolean> {
           if (!this.authService.isPro) return of(true);
 
           return this.courseService.subscribeToCourse(+courseID)
-            .pipe(tap(data => {
-              if (!lessonID) this.router.navigateByUrl(`/cours/${courseID}${"/%3F"}`)
-            }))
+            .pipe(
+              catchError(_ => of(true)),
+              tap(data => {
+                if (!lessonID) this.router.navigateByUrl(`/cours/${courseID}${"/%3F"}`)
+              })
+            )
 
         })
       )
