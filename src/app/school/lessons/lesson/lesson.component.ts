@@ -156,17 +156,22 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   loadCourseSubscription() {
-    const userId = +(this.authService?.currentUsr as User)?.id
-    const payload = { courseId: this.courseID, userId }
-    this.isSubscriber = this.courseService.isSubscriber(+this.courseID);
+    const user = this.authService?.currentUsr as User
+    const payload = { courseId: this.courseID, userId: +user.id }
+    // this.isSubscriber = this.courseService.isSubscriber(+this.courseID);
 
-    if (!userId) return;
-    if (!this.isSubscriber) return;
+    if (!user) return;
+    // if (!this.isSubscriber) return;
     
     this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
       .pipe(
         catchError(err => {
           this.messageService.cancel();
+          this.isSubscriber = false;
+
+          const subIds = JSON.parse(localStorage?.getItem('_subs'));
+          localStorage?.setItem('_subs', JSON.stringify(subIds.filter(id => id != this.courseID)));
+
           return throwError(() => err?.message)
         }),
         tap((data: CourseSubscription) => {
