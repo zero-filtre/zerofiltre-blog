@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { CourseService } from '../school/courses/course.service';
 import { CourseSubscription } from '../school/studentCourse';
 import { MessageService } from '../services/message.service';
-import { PLANS, User } from './user.model';
+import { PLANS, ROLES, User } from './user.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -53,7 +53,7 @@ export class AuthService {
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.redirectURL = '';
-    this.isAdmin = this.currentUsr ? this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN') : false;
+    this.isAdmin = this.currentUsr ? this.checkRole(this.currentUsr?.roles, ROLES.ADMIN) : false;
     this.isPro = this.currentUsr ? this.currentUsr.plan === PLANS.PRO : false;
 
     this.loadCurrentUser();
@@ -310,7 +310,7 @@ export class AuthService {
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
 
           this.setUserData(usr)
-          this.isAdmin = this.checkRole(usr.roles, 'ROLE_ADMIN');
+          this.isAdmin = this.checkRole(usr.roles, ROLES.ADMIN);
           this.isPro = this.currentUsr.plan === PLANS.PRO
 
           if (this.redirectURL) {

@@ -13,9 +13,9 @@ const routes: Routes = [
   {
     path: ':course_id',
     component: CourseDetailPageComponent,
-    // resolve: {
-    //   sub: CourseSubscriptionResolver
-    // },
+    resolve: {
+      sub: CourseSubscriptionResolver
+    },
   },
   {
     path: ':course_id/edit',

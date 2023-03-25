@@ -211,49 +211,13 @@ export class CourseDetailPageComponent implements OnInit {
     this.currentVideoId = params.get('v');
   }
 
-  loadCourseSubscription() {
-    
-    const user = this.authService?.currentUsr as User
-    const data = { courseId: this.courseID, userId: +user?.id }
-
-    if (!user) return;
-
-    this.courseSubscription$ = this.courseService.findSubscribedByCourseId(data)
-      .pipe(
-        catchError(err => {
-          this.isSubscriber = false;
-          this.notify.cancel();
-
-          const subIds = JSON.parse(localStorage?.getItem('_subs'));
-          localStorage?.setItem('_subs', JSON.stringify(subIds.filter(id => id != this.courseID)));
-
-          if (!this.authService.isPro) return EMPTY;
-          return this.courseService.subscribeToCourse(+this.courseID)
-            .pipe(tap(data => this.isSubscriber = true))
-        }),
-        tap((_data: CourseSubscription) => {
-          this.isSubscriber = true;
-        }),
-        shareReplay()
-      )
-
-  }
 
   ngOnInit(): void {
-
-    // this.courseSubscription$ = this.route.data
-    //   .pipe(
-    //     map(data => {
-    //       this.isSubscriber = !!data.sub;
-    //       return data.sub
-    //     })
-    //   )
 
     this.course$ = this.route.paramMap
       .pipe(
         switchMap(params => {
           this.courseID = params.get('course_id');
-          this.loadCourseSubscription();
 
           this.chapters$ = this.chapterService
             .fetchAllChapters(this.courseID);
@@ -261,6 +225,14 @@ export class CourseDetailPageComponent implements OnInit {
           return this.getCourse();
         })
       );
+
+    this.courseSubscription$ = this.route.data
+      .pipe(
+        map(({ sub }) => {
+          this.isSubscriber = !!sub;
+          return sub
+        })
+      )
 
   }
 }

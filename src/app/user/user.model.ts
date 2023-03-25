@@ -10,7 +10,7 @@ export interface User {
     socialLinks?: any;
     website?: string;
     active?: boolean;
-    roles?: string[];
+    roles?: RoleType[];
     loginFrom?: string;
     expired?: boolean;
     language?: string;
@@ -18,4 +18,9 @@ export interface User {
 }
 
 export const PLANS = { PRO: 'PRO', BASIC: 'BASIC' } as const;
-export type PlanType = typeof PLANS
+export type PlanType = 'PRO' | 'BASIC'
+
+export const ROLES = { ADMIN: 'ROLE_ADMIN', USER: 'ROLE_USER' } as const;
+export type RoleType = 'ROLE_ADMIN' | 'ROLE_USER'
+
+// export type RoleType = keyof typeof ROLES;

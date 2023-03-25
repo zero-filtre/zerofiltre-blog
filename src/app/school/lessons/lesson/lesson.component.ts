@@ -47,7 +47,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   completedLessonsIds: number[] = [];
   completedLessons: Lesson[] = [];
   lessonsCount: number;
-  completeProgressVal: number;
+  completeProgressVal: number = 0;
 
   lessonID!: any;
   courseID!: any;
@@ -153,38 +153,6 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   isLessonCompleted(lesson: Lesson): boolean {
     return this.completedLessonsIds.includes(lesson?.id);
-  }
-
-  loadCourseSubscription() {
-    const user = this.authService?.currentUsr as User
-    const payload = { courseId: this.courseID, userId: +user.id }
-    // this.isSubscriber = this.courseService.isSubscriber(+this.courseID);
-
-    if (!user) return;
-    // if (!this.isSubscriber) return;
-    
-    this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
-      .pipe(
-        catchError(err => {
-          this.messageService.cancel();
-          this.isSubscriber = false;
-
-          const subIds = JSON.parse(localStorage?.getItem('_subs'));
-          localStorage?.setItem('_subs', JSON.stringify(subIds.filter(id => id != this.courseID)));
-
-          return throwError(() => err?.message)
-        }),
-        tap((data: CourseSubscription) => {
-          this.isSubscriber = true;
-          this.courseSubscriptionID = data.id;
-          this.completedLessons = data.completedLessons;
-          this.completedLessonsIds = [...new Set(data.completedLessons.map(l => l.id))];
-          this.completed = this.isLessonCompleted(this.lesson);
-          this.lessonsCount = data.course.lessonsCount;
-          this.loadCompleteProgressBar(this.completedLessonsIds);
-        }),
-        shareReplay()
-      )
   }
 
   loadLessonData(lessonId: any) {
@@ -452,9 +420,24 @@ export class LessonComponent implements OnInit, OnDestroy {
       params => {
         this.lessonID = params.get('lesson_id')!;
         this.loadLessonData(this.lessonID);
-        this.loadCourseSubscription();
       }
     );
+
+    this.courseSubscription$ = this.route.data
+      .pipe(
+        map(({ sub }) => {
+        
+          this.isSubscriber = !!sub;
+          this.courseSubscriptionID = sub.id
+          this.completedLessons = sub.completedLessons;
+          this.completedLessonsIds = [...new Set(sub.completedLessons.map((l:Lesson) => l.id))] as number[];
+          this.completed = this.isLessonCompleted(this.lesson);
+          this.lessonsCount = sub.course.lessonsCount;
+          this.loadCompleteProgressBar(this.completedLessonsIds);
+
+          return sub
+        })
+      )
   }
 
   ngOnDestroy(): void {
