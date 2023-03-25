@@ -213,8 +213,8 @@ export class CourseDetailPageComponent implements OnInit {
 
   loadCourseSubscription() {
     
-    const user = this.authService.currentUsr as User
-    const data = { courseId: this.courseID, userId: +user.id }
+    const user = this.authService?.currentUsr as User
+    const data = { courseId: this.courseID, userId: +user?.id }
 
     if (!user) return;
 
