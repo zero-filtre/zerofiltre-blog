@@ -14,6 +14,10 @@ export class PaymentPopupComponent implements OnInit {
   payload: PaymentConfig;
   type: string;
   course: Course;
+  loadingOne: boolean
+  loadingThree: boolean
+  loadingMonth: boolean
+  loadingYear: boolean
 
   constructor(
     private payment: PaymentService,
@@ -32,36 +36,44 @@ export class PaymentPopupComponent implements OnInit {
   }
 
   payOneTime() {
+    this.loadingOne = true
     this.payload = { ...this.payload, mode: 'payment' }
     this.payment.checkoutBasicOneTime(this.payload)
       .subscribe(data => {
+        this.loadingOne = false;
         this.goToUrl(data);
         this.dialogRef.close();
       })
   }
 
   payThreeTimes() {
+    this.loadingThree = true;
     this.payload = { ...this.payload, mode: 'subscription', proPlan: false }
     this.payment.checkoutBasicThreeTimes(this.payload)
       .subscribe(data => {
+        this.loadingThree = false;
         this.goToUrl(data);
         this.dialogRef.close();
       })
   }
 
   payProMonthly() {
+    this.loadingMonth = true;
     this.payload = { ...this.payload, mode: 'subscription', proPlan: true, recurringInterval: 'month' }
     this.payment.checkoutProPlanMonthly(this.payload)
       .subscribe(data => {
+        this.loadingMonth = false;
         this.goToUrl(data);
         this.dialogRef.close();
       })
   }
 
   payProYearly() {
+    this.loadingYear = true;
     this.payload = { ...this.payload, mode: 'subscription', proPlan: true, recurringInterval: 'year' }
     this.payment.checkoutProPlanYearly(this.payload)
       .subscribe(data => {
+        this.loadingYear = false;
         this.goToUrl(data);
         this.dialogRef.close();
       })
