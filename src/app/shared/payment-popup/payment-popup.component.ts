@@ -36,6 +36,7 @@ export class PaymentPopupComponent implements OnInit {
   }
 
   payOneTime() {
+    console.log('CLIKED!!!!!!!!');
     this.loadingOne = true
     this.payload = { ...this.payload, mode: 'payment' }
     this.payment.checkoutBasicOneTime(this.payload)
