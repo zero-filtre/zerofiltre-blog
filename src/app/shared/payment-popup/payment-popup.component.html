@@ -1,14 +1,43 @@
 <div class="p-5">
-    <h1 *ngIf="type !== 'pro'">Vous pouvez payer en 3 reprises</h1>
-    <h1 *ngIf="type === 'pro'">Economisez en prenant un abonnement annuel</h1>
-    <div class="flex flex-col justify-center lg:flex-row gap-3 lg:gap-5 mt-10">
-        <ng-container *ngIf="type === 'pro'">
-            <button (click)="payProMonthly()" class="px-4 py-3 rounded-md text-white bg-primary-500 shadow-lg hover:bg-primary-600 transition-all duration-200">Mois</button>
-            <button (click)="payProYearly()" class="px-4 py-3 rounded-md text-white bg-primary-500 shadow-lg hover:bg-primary-600 transition-all duration-200">Année</button>
-        </ng-container>
-        <ng-container *ngIf="type !== 'pro'">
-            <button (click)="payOneTime()" class="px-4 py-3 rounded-md text-white bg-primary-500 shadow-lg hover:bg-primary-600 transition-all duration-200">Une fois</button>
-            <button (click)="payThreeTimes()" class="px-4 py-3 rounded-md text-white bg-primary-500 shadow-lg hover:bg-primary-600 transition-all duration-200">Trois fois</button>
-        </ng-container>
-    </div>
+    <ng-container  *ngIf="type !== 'pro'">
+        <div class="text-center text-skin-base">
+            <small class="font-bold text-sm text-primary-500">{{course.title}}</small>
+            <h1 class="mt-3">Vous pouvez payer en 3 reprises</h1>
+            <div class="flex gap-10 justify-center mt-8 text-lg">
+                <button (click)="payOneTime()" class="">
+                    <div class="flex flex-col gap-2 font-bold text-secondary">
+                        <span>icon</span>
+                        <span class="flex gap-2 items-center">1 <span class="text-skin-base text-base">x</span> <span>{{(course?.price/100)|currency:'EUR'}}</span></span>
+                    </div>
+                </button>
+                <button (click)="payThreeTimes()" class="">
+                    <div class="flex flex-col gap-2 font-bold text-secondary">
+                        <span>icon</span>
+                        <span class="flex gap-2 items-center">3 <span class="text-skin-base text-base">x</span> <span>{{((course?.price/100)/3+1)|currency:'EUR'}}</span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </ng-container>
+    
+    <ng-container *ngIf="type === 'pro'">
+        <div class="text-center text-skin-base">
+            <small class="font-bold text-sm text-primary-500">Abonement PRO</small>
+            <h1 class="mt-3">Economisez en prenant un abonnement annuel</h1>
+            <div class="flex gap-10 justify-center mt-8 text-lg">
+                <button (click)="payProMonthly()" class="">
+                    <div class="flex flex-col gap-2 font-bold text-secondary">
+                        <span>icon</span>
+                        <span>{{(999/100)|currency:'EUR'}}</span>
+                    </div>
+                </button>
+                <button (click)="payProYearly()" class="">
+                    <div class="flex flex-col gap-2 font-bold text-secondary">
+                        <span>icon</span>
+                        <span>{{(10989/100)|currency:'EUR'}}</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </ng-container>
 </div>

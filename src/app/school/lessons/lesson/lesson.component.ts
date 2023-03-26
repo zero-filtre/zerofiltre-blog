@@ -378,7 +378,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     const payload = { productId: +this.courseID, productType: 'COURSE' }
     const type = 'product'
 
-    this.paymentService.openPaymentDialog(payload, type);
+    this.paymentService.openPaymentDialog(payload, type, this.course);
 
   }
 
@@ -404,7 +404,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     const payload = { productId: +this.courseID, productType: 'COURSE' }
     const type = 'pro'
 
-    this.paymentService.openPaymentDialog(payload, type);
+    this.paymentService.openPaymentDialog(payload, type, this.course);
 
   }
 

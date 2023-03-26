@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, shareReplay } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Course } from '../school/courses/course';
 import { PaymentConfig } from '../school/studentCourse';
 import { PaymentPopupComponent } from '../shared/payment-popup/payment-popup.component';
 
@@ -24,14 +25,13 @@ export class PaymentService {
     public dialogPaymentRef: MatDialog,
     ) { }
 
-  openPaymentDialog(payload: any, type: string): void {
+  openPaymentDialog(payload: any, type: string, course: Course): void {
     this.dialogPaymentRef.open(PaymentPopupComponent, {
-      width: '850px',
-      height: '350px',
-      panelClass: 'article-popup-panel',
+      panelClass: 'payment-popup',
       data: {
         payload,
-        type
+        type,
+        course
       }
     });
   }

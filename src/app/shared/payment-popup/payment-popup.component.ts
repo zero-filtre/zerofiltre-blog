@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PaymentService } from 'src/app/services/payment.service';
 import { DOCUMENT } from '@angular/common';
 import { PaymentConfig } from 'src/app/school/studentCourse';
+import { Course } from 'src/app/school/courses/course';
 
 @Component({
   selector: 'app-payment-popup',
@@ -12,6 +13,7 @@ import { PaymentConfig } from 'src/app/school/studentCourse';
 export class PaymentPopupComponent implements OnInit {
   payload: PaymentConfig;
   type: string;
+  course: Course;
 
   constructor(
     private payment: PaymentService,
@@ -68,6 +70,7 @@ export class PaymentPopupComponent implements OnInit {
   ngOnInit(): void {
     this.payload = this.data.payload;
     this.type = this.data.type;
+    this.course = this.data.course;
   }
 
 }
