@@ -8,7 +8,7 @@
         </button>
         
         <progress *ngIf="courseSubscription$|async"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="completeProgressVal" max="100"></progress>
-        <progress *ngIf="!isSubscriber"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="0" max="100"></progress>
+        <progress *ngIf="!isSubscriber"  id="bluebar" class="progress_bar h-10 opacity-0" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="0" max="100"></progress>
     </div>
 </div>
 
@@ -31,57 +31,43 @@
                     <div class="shadow-lg rounded-sm overflow-hidden mx-auto" id="lesson_video_player">
                         <div class="vid_wrapper w-full h-full bg-gray-900">
                             <ng-container *ngIf="lesson$|async as lesson">
-                                <ng-container *ngIf="lesson.video">
-                                    <iframe *ngIf="canAccessCourse || lesson.free" [src]="lesson.video | vimeoUrl" webkitallowfullscreen mozallowfullscreen 
+                                <!-- <ng-container *ngIf="lesson.video"> -->
+                                <ng-container>
+                                    <!-- <iframe *ngIf="canAccessCourse || lesson.free" [src]="lesson.video | vimeoUrl" webkitallowfullscreen mozallowfullscreen 
                                         allowfullscreen width="100%" height="100%" allow="autoplay; fullscreen; picture-in-picture" title="Lesson video">
-                                    </iframe>
-
-                                    <!-- <iframe *ngIf="canAccessCourse || lesson.free" #player [src]="lessonVideo$ | async | vimeoUrl" class=""
-                                        webkitallowfullscreen mozallowfullscreen allowfullscreen width="100%" height="100%" title="Lesson video">
                                     </iframe> -->
 
-                                    <!-- <div *ngIf="canAccessCourse || lesson.free" #playerContainer></div> -->
-
-                                    <!-- <iframe src="https://player.vimeo.com/video/{video_id}?access_token={your_access_token}&autoplay=1" width="640"
-                                        height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe> -->
-
-                                    <!-- <iframe [src]="'https://player.vimeo.com/video/{{videoID}}?access_token={{accessToken}}&autoplay=1' | vimeoUrl"
-                                        allow="autoplay; fullscreen; picture-in-picture" webkitallowfullscreen mozallowfullscreen allowfullscreen
-                                        width="100%" height="100%"></iframe> -->
-
-                                    <!-- <iframe src="https://player.vimeo.com/video/804933075?access_token=b1a29e516fcad64d02675b2720de399b&autoplay=1"
-                                        allow="autoplay; fullscreen; picture-in-picture"  webkitallowfullscreen mozallowfullscreen allowfullscreen 
-                                        width="100%" height="100%"></iframe> -->
-
-            
-                                    <div *ngIf="!lesson?.free && !canAccessCourse" class="h-full flex items-center justify-center">
+                                    <div *ngIf="(!lesson?.free && !canAccessCourse) || !lesson?.video" class="h-full flex items-center justify-center">
                                         <div class="upgrade-required text-center text-skin-base">
                                             <h5 class="text-base mb-7 font-semibold text-error">Permission refusée</h5>
                                             <div class="buy-box p-6 border border-primary-500 rounded-lg">
-                                                <a routerLink=".">
+                                                <button (click)="buyCourse()">
                                                     <span class="text-xl text-primary-500 uppercase font-semibold mr-2">
                                                         Achetez ce cours
                                                     </span>
                                                     <span class="text-xl font-medium">pour {{(course?.price/100)|currency:'EUR'}}</span>
                                                     <p class="text-sm">Accès à vie pour un prix incroyablement bas</p>
-                                                </a>
+                                                </button>
                                             </div>
+
                                             <h3 class="my-5 font-bold text-2xl">OU</h3>
+                                            
                                             <div class="buy-box p-6 border border-accent-400 rounded-lg">
-                                                <a routerLink=".">
+                                                <button (click)="subscribeToPro()">
                                                     <p class="text-xl text-accent-400 uppercase font-semibold">Passer à Pro</p>
                                                     <p class="text-sm">Débloquez tout le contenu Zerofiltre &amp;&amp; avantages
                                                         bonus</p>
-                                                </a>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="!lesson?.video">
+
+                                <!-- <ng-container *ngIf="!lesson?.video">
                                     <div class="text-lg lg:text-2xl text-skin-base h-full flex items-center justify-center">
                                         Aucun contenu video
                                     </div>
-                                </ng-container>
+                                </ng-container> -->
                             </ng-container>
             
                             <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">

@@ -41,6 +41,7 @@ import { YoutubeVideoPlayerComponent } from './youtube-video-player/youtube-vide
 import { MarkdownPreviewComponent } from './markdown-preview/markdown-preview.component';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
+import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 
 const components = [
   AppShellRenderDirective,
@@ -85,7 +86,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, PaymentPopupComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),

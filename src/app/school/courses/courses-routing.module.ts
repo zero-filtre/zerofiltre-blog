@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CourseSubscriptionResolver } from '../course-subscription.resolver';
 import { CourseDetailPageComponent } from './course-detail-page/course-detail-page.component';
 import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
 import { CourseListPageComponent } from './course-list-page/course-list-page.component';
@@ -12,6 +13,9 @@ const routes: Routes = [
   {
     path: ':course_id',
     component: CourseDetailPageComponent,
+    resolve: {
+      sub: CourseSubscriptionResolver
+    },
   },
   {
     path: ':course_id/edit',

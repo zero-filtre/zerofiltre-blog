@@ -51,7 +51,7 @@ export class CourseService {
     return subIds?.includes(courseId);
   }
 
-  subscribeCourse(courseId: number): Observable<any> {
+  subscribeToCourse(courseId: number): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/subscription?courseId=${courseId}`, httpOptions)
       .pipe(
         tap((data: CourseSubscription) => {

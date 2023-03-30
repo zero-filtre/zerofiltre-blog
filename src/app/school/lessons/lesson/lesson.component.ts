@@ -19,6 +19,7 @@ import { capitalizeString } from 'src/app/services/utilities.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
+import { PaymentService } from 'src/app/services/payment.service';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   completedLessonsIds: number[] = [];
   completedLessons: Lesson[] = [];
   lessonsCount: number;
-  completeProgressVal: number;
+  completeProgressVal: number = 0;
 
   lessonID!: any;
   courseID!: any;
@@ -88,7 +89,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     private router: Router,
     private vimeo: VimeoService,
     changeDetectorRef: ChangeDetectorRef, 
-    media: MediaMatcher
+    media: MediaMatcher,
+    private paymentService: PaymentService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -151,33 +153,6 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   isLessonCompleted(lesson: Lesson): boolean {
     return this.completedLessonsIds.includes(lesson?.id);
-  }
-
-  loadCourseSubscription() {
-    const userId = +(this.authService?.currentUsr as User)?.id
-    const payload = { courseId: this.courseID, userId }
-    this.isSubscriber = this.courseService.isSubscriber(+this.courseID);
-
-    if (!userId) return;
-    if (!this.isSubscriber) return;
-    
-    this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
-      .pipe(
-        catchError(err => {
-          this.messageService.cancel();
-          return throwError(() => err?.message)
-        }),
-        tap((data: CourseSubscription) => {
-          this.isSubscriber = true;
-          this.courseSubscriptionID = data.id;
-          this.completedLessons = data.completedLessons;
-          this.completedLessonsIds = [...new Set(data.completedLessons.map(l => l.id))];
-          this.completed = this.isLessonCompleted(this.lesson);
-          this.lessonsCount = data.course.lessonsCount;
-          this.loadCompleteProgressBar(this.completedLessonsIds);
-        }),
-        shareReplay()
-      )
   }
 
   loadLessonData(lessonId: any) {
@@ -380,6 +355,59 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   }
 
+
+  buyCourse() {
+
+    const currUser = this.authService.currentUsr as User;
+    const loggedIn = !!currUser;
+
+    if (!loggedIn) {
+      this.router.navigate(
+        ['/login'],
+        {
+          relativeTo: this.route,
+          queryParams: { redirectURL: this.router.url },
+          queryParamsHandling: 'merge',
+        });
+
+      this.messageService.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
+
+      return;
+    }
+
+    const payload = { productId: +this.courseID, productType: 'COURSE' }
+    const type = 'product'
+
+    this.paymentService.openPaymentDialog(payload, type, this.course);
+
+  }
+
+  subscribeToPro() {
+
+    const currUser = this.authService.currentUsr as User;
+    const loggedIn = !!currUser;
+
+    if (!loggedIn) {
+      this.router.navigate(
+        ['/login'],
+        {
+          relativeTo: this.route,
+          queryParams: { redirectURL: this.router.url },
+          queryParamsHandling: 'merge',
+        });
+
+      this.messageService.openSnackBarInfo('Veuillez vous connecter pour prendre votre abonnement PRO 🤗', 'OK');
+
+      return;
+    }
+
+    const payload = { productId: +this.courseID, productType: 'COURSE' }
+    const type = 'pro'
+
+    this.paymentService.openPaymentDialog(payload, type, this.course);
+
+  }
+
   ngOnInit(): void {
     this.seo.unmountFooter();
     this.courseID = this.route.snapshot.paramMap.get('course_id');
@@ -392,9 +420,25 @@ export class LessonComponent implements OnInit, OnDestroy {
       params => {
         this.lessonID = params.get('lesson_id')!;
         this.loadLessonData(this.lessonID);
-        this.loadCourseSubscription();
       }
     );
+
+    this.courseSubscription$ = this.route.data
+      .pipe(
+        map(({ sub }) => {
+          if (sub === true) return;
+
+          this.isSubscriber = !!sub;
+          this.courseSubscriptionID = sub.id
+          this.completedLessons = sub.completedLessons;
+          this.completedLessonsIds = [...new Set(sub.completedLessons.map((l:Lesson) => l.id))] as number[];
+          this.completed = this.isLessonCompleted(this.lesson);
+          this.lessonsCount = sub.course.lessonsCount;
+          this.loadCompleteProgressBar(this.completedLessonsIds);
+
+          return sub
+        })
+      )
   }
 
   ngOnDestroy(): void {

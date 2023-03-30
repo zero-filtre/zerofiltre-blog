@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
-import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay } from 'rxjs';
+import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay, EMPTY } from 'rxjs';
 import { Course, Reaction } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
@@ -13,6 +13,9 @@ import { AuthService } from '../../../user/auth.service';
 import { User } from '../../../user/user.model';
 import { environment } from 'src/environments/environment';
 import { CourseSubscription } from '../../studentCourse';
+import { PaymentService } from 'src/app/services/payment.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PaymentPopupComponent } from 'src/app/shared/payment-popup/payment-popup.component';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -68,6 +71,8 @@ export class CourseDetailPageComponent implements OnInit {
     private notify: MessageService,
     private navigate: NavigationService,
     private authService: AuthService,
+    private paymentService: PaymentService,
+    public dialogPaymentRef: MatDialog,
   ) { }
 
   get canAccessCourse() {
@@ -75,7 +80,9 @@ export class CourseDetailPageComponent implements OnInit {
     return this.courseService.canAccessCourse(user, this.course);
   }
 
-  subscribeToCourse() {
+
+  buyCourse() {
+
     const currUser = this.authService.currentUsr as User;
     const loggedIn = !!currUser;
 
@@ -87,15 +94,19 @@ export class CourseDetailPageComponent implements OnInit {
           queryParams: { redirectURL: this.router.url },
           queryParamsHandling: 'merge',
         });
+      
+      this.notify.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
+
+      return;
     }
 
-    this.courseService.subscribeCourse(this.course.id)
-      .subscribe((_data:CourseSubscription) => {
-        this.notify.openSnackBarSuccess('Vous avez souscrit à ce cours avec succes !', '');
-        // this.router.navigateByUrl(`cours/${this.courseID}` + '/' + '?');
-      })
+    const payload = { productId: +this.courseID, productType: 'COURSE' }
+    const type = 'basic'
+
+    this.paymentService.openPaymentDialog(payload, type, this.course);
 
   }
+
 
   getCourse(): Observable<Course> {
     this.isLoading = true;
@@ -200,34 +211,13 @@ export class CourseDetailPageComponent implements OnInit {
     this.currentVideoId = params.get('v');
   }
 
-  loadCourseSubscription() {
-    const userId = +(this.authService?.currentUsr as User)?.id
-    const payload = { courseId: this.courseID, userId }
-
-    if (!userId) return;
-
-    this.courseSubscription$ = this.courseService.findSubscribedByCourseId(payload)
-      .pipe(
-        catchError(err => {
-          this.isSubscriber = false;
-          this.notify.cancel();
-          return throwError(() => err?.message)
-        }),
-        tap((_data: CourseSubscription) => {
-          this.isSubscriber = true;
-        }),
-        shareReplay()
-      )
-  }
 
   ngOnInit(): void {
-    this.invokeStripe();
 
     this.course$ = this.route.paramMap
       .pipe(
         switchMap(params => {
           this.courseID = params.get('course_id');
-          // this.loadCourseSubscription();
 
           this.chapters$ = this.chapterService
             .fetchAllChapters(this.courseID);
@@ -235,6 +225,16 @@ export class CourseDetailPageComponent implements OnInit {
           return this.getCourse();
         })
       );
+
+    this.courseSubscription$ = this.route.data
+      .pipe(
+        map(({ sub }) => {
+          if (sub === true) return;
+          
+          this.isSubscriber = !!sub;
+          return sub
+        })
+      )
 
   }
 }

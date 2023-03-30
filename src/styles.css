@@ -63,6 +63,9 @@ img {
   max-width: 95rem;
   @apply mx-auto px-4 xl:px-[5%];
 }
+.payment-popup .mat-dialog-container {
+   @apply bg-white rounded-2xl;
+}
 
 .edit-section-popup-panel {
   @apply !overflow-y-scroll;
