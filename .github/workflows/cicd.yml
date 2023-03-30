@@ -1,0 +1,134 @@
+
+
+name: Angular CI/CD Pipeline with k8s
+
+on:
+  push:
+    branches: 
+      - '*'
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      KUBE_CONFIG : ${{ secrets.KUBE_CONFIG }}
+      env_name: ${{startsWith(github.ref, 'refs/heads/main') && 'prod' || 'dev'}}
+      api_host : ${{startsWith(github.ref, 'refs/heads/main') && 'blog-api.zerofiltre.tech' || 'blog-api-dev.zerofiltre.tech'}}
+      DOCKER_TAG_SUFFIX: ${{startsWith(github.ref, 'refs/heads/main') && 'stable' || 'unstable'}}
+      replicas : ${{startsWith(github.ref, 'refs/heads/main') && 1 || 1 }}
+      requests_cpu : ${{startsWith(github.ref, 'refs/heads/main') && 0.1 || 0.1 }}
+      requests_memory : ${{startsWith(github.ref, 'refs/heads/main') && '0.5Gi' || '0.5Gi' }}
+      limits_cpu : ${{startsWith(github.ref, 'refs/heads/main') && 0.5 || 0.5 }}
+      limits_memory : ${{startsWith(github.ref, 'refs/heads/main') && '1.5Gi' || '1Gi' }}
+      
+
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+
+    - name: Install dependencies
+      run: npm install -f
+
+    - name: Build Angular app with SSR
+      run: ng build && ng run zerofiltre-blog:server
+    
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        projectBaseDir: ./src/app
+        organization: zero-filtre
+        projectKey: zero-filtre_zerofiltre-blog
+        projectName: zerofiltre-blog
+        sources: ./src
+        tests: ./src
+        exclusions: '**/node_modules/**,**/*.spec.ts'
+        coverageReportPaths: coverage/lcov.info
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Cache Docker layers
+      uses: actions/cache@v2
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+
+    - name: Docker Login
+      uses: docker/login-action@v2.1.0
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: imzerofiltre/zerofiltretech-blog:${{ github.run_number }}_${{ env.DOCKER_TAG_SUFFIX }}
+        cache-from: type=local,src=/tmp/.buildx-cache
+        cache-to: type=local,dest=/tmp/.buildx-cache-new
+
+    - name: Set up kubectl
+      uses: tale/kubectl-action@v1
+      with:
+        base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+        
+    - name: Set up k8s manifest
+      run: |
+        envsubst < k8s/microservices.yml > k8s.yml
+        cat k8s.yml
+        
+    - name: Deploy to k8s
+      run: |
+        kubectl apply -f k8s.yml
+        kubectl set image deployment/zerofiltretech-blog-${{ env.env_name }} zerofiltretech-blog-${{ env.env_name }}=imzerofiltre/zerofiltretech-blog:${{ github.run_number }}_${{ env.DOCKER_TAG_SUFFIX }} -n zerofiltretech-${{ env.env_name }}
+        kubectl annotate deployment zerofiltretech-blog-${{ env.env_name }} kubernetes.io/change-cause="version change to: ${{ github.run_number }}_${{ env.DOCKER_TAG_SUFFIX }} " -n zerofiltretech-${{ env.env_name }} --overwrite=true
+        if ! kubectl rollout status -w deployment/zerofiltretech-blog-${{ env.env_name }} -n zerofiltretech-${{ env.env_name }}; then
+              kubectl rollout undo deployment.v1.apps/zerofiltretech-blog-${{ env.env_name }} -n zerofiltretech-${{ env.env_name }}
+              kubectl rollout status deployment/zerofiltretech-blog-${{ env.env_name }} -n zerofiltretech-${{ env.env_name }}
+              exit 1
+        fi
+        
+    - name: Get commit author email
+      if: ${{ failure() }}
+      run: |
+        COMMIT_AUTHOR_EMAIL=$(git log -1 --pretty=format:'%ae')
+        echo "COMMIT_AUTHOR_EMAIL=$COMMIT_AUTHOR_EMAIL" >> $GITHUB_ENV
+      
+    - name: Send email on failure
+      uses: dawidd6/action-send-mail@v2.5.0
+      with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Workflow failed on ${{ github.repository }}/${{ github.head_ref }} (commit ${{ github.sha }})"
+          body: |
+            Workflow failed on ${{ github.repository }}/${{ github.head_ref }} (commit ${{ github.sha }}). \nSee the workflow run log for more details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          from: "GitHub Actions <${{ vars.EMAIL_FROM }}>"
+          to: ${{ env.COMMIT_AUTHOR_EMAIL }}
+      if: ${{ failure() }}
+ 
+    - name: Move cache
+      run: |
+        rm -rf /tmp/.buildx-cache
+        mv /tmp/.buildx-cache-new /tmp/.buildx-cache
