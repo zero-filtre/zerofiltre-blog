@@ -11,6 +11,7 @@ import { LoginPageComponent } from './user/login-page/login-page.component';
 import { PasswordResetPageComponent } from './user/password-reset-page/password-reset-page.component';
 import { ResendConfirmationPageComponent } from './user/resend-confirmation-page/resend-confirmation-page.component';
 import { SignUpPageComponent } from './user/sign-up-page/sign-up-page.component';
+import { WachatgptHomePageComponent } from './wachatgpt-home-page/wachatgpt-home-page.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,10 @@ const routes: Routes = [
     path: 'cours',
     loadChildren: () => import('./school/school.module').then((m) => m.SchoolModule),
     canLoad: [RouteGuard]
+  },
+  {
+    path: 'wachatgpt',
+    component: WachatgptHomePageComponent
   },
   {
     path: '**',
