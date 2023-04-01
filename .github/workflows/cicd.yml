@@ -25,6 +25,7 @@ jobs:
       requests_memory : ${{startsWith(github.ref, 'refs/heads/main') && '0.5Gi' || '0.5Gi' }}
       limits_cpu : ${{startsWith(github.ref, 'refs/heads/main') && 0.5 || 0.5 }}
       limits_memory : ${{startsWith(github.ref, 'refs/heads/main') && '1.5Gi' || '1Gi' }}
+      domain_name : ${{startsWith(github.ref, 'refs/heads/main') && 'zerofiltre.tech' || 'dev.zerofiltre.tech' }}
       
 
 
@@ -112,6 +113,16 @@ jobs:
         tags: imzerofiltre/zerofiltretech-blog-front:${{ github.run_number }}_${{ env.DOCKER_TAG_SUFFIX }}
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache-new
+    
+    - name: Set up kubectl
+      uses: tale/kubectl-action@v1
+      with:
+        base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+
+    - name: Set up k8s manifest
+      run: |
+        envsubst < k8s/microservices.yaml > k8s.yml
+        cat k8s.yml
         
     - name: Deploy to k8s
       run: |
