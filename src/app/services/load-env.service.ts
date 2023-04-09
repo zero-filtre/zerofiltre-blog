@@ -2,8 +2,8 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import envTemplate from 'src/environments/environment.template';
 import { environment } from 'src/environments/environment';
-import { environment as localEnv } from 'src/environments/environment.locals';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+// import { environment as localEnv } from 'src/environments/environment.locals';
+import { isPlatformServer } from '@angular/common';
 
 
 const STATE_ENV_OBJECT = makeStateKey('env-value');
@@ -40,8 +40,8 @@ export class LoadEnvService {
             environment[key] = true;
           } else {
             envObj[key] = process.env[(<any>envTemplate)[key]] || ''
-            // environment[key] = process.env[(<any>envTemplate)[key]] || '';
-            environment[key] = localEnv[key]  // Just for local developments
+            environment[key] = process.env[(<any>envTemplate)[key]] || '';
+            // environment[key] = localEnv[key]  // Just for local developments
           }
         }
 
@@ -57,8 +57,8 @@ export class LoadEnvService {
         if (key == 'production') {
           environment[key] = true;
         } else {
-          // environment[key] = this.envObject[key];
-          environment[key] = localEnv[key]  // Just for local developments
+          environment[key] = this.envObject[key];
+          // environment[key] = localEnv[key]  // Just for local developments
         }
       }
 

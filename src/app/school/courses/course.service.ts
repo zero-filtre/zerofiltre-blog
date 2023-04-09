@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Course } from './course';
-import { CourseSubscription } from '../studentCourse';
+import { CourseEnrollment } from '../studentCourse';
 import { User } from 'src/app/user/user.model';
 
 const httpOptions = {
@@ -44,7 +44,7 @@ export class CourseService {
     return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) 
   }
 
-  // STUDENT SUBSCRIPTIONS START
+  // STUDENT EnrollmentS START
 
   isSubscriber(courseId: any) {
     const subIds = JSON.parse(localStorage?.getItem('_subs'));
@@ -54,7 +54,7 @@ export class CourseService {
   subscribeToCourse(courseId: number): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/enrollment?courseId=${courseId}`, httpOptions)
       .pipe(
-        tap((data: CourseSubscription) => {
+        tap((data: CourseEnrollment) => {
           const subIds = JSON.parse(localStorage?.getItem('_subs'));
           localStorage?.setItem('_subs', JSON.stringify([...subIds, data.id]));
         }),
@@ -62,7 +62,7 @@ export class CourseService {
       );
   }
 
-  deleteSubscriptionCourse(courseId: number): Observable<any> {
+  deleteEnrollmentCourse(courseId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiServerUrl}/enrollment?course=${courseId}`, httpOptions)
       .pipe(shareReplay());
   }

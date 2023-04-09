@@ -2,7 +2,7 @@ import { User } from "../user/user.model";
 import { Course } from "./courses/course";
 import { Lesson } from "./lessons/lesson";
 
-export interface CourseSubscription {
+export interface CourseEnrollment {
     id?: number;
     completedLessons: Lesson[]
     completed: boolean;
@@ -43,7 +43,7 @@ export interface CourseSubscription {
 export const PRODUCTS = ['COURSE', 'BOOTCAMP'] as const;
 export type ProductType = typeof PRODUCTS[number]
 
-export const MODES = ['subscription', 'payment'] as const;
+export const MODES = ['enrollment', 'payment'] as const;
 export type ModeType = typeof MODES[number]
 
 export const INTERVALS = ['month', 'year'] as const;

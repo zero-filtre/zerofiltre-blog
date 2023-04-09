@@ -15,7 +15,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
-export class CourseSubscriptionResolver implements Resolve<boolean> {
+export class CourseEnrollmentResolver implements Resolve<boolean> {
   constructor(
     private loadEnvService: LoadEnvService,
     private messageService: MessageService,

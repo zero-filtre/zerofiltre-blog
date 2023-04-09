@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CourseService } from '../school/courses/course.service';
-import { CourseSubscription } from '../school/studentCourse';
+import { CourseEnrollment } from '../school/studentCourse';
 import { MessageService } from '../services/message.service';
 import { PLANS, ROLES, User } from './user.model';
 
@@ -26,8 +26,8 @@ export class AuthService {
   private subject = new BehaviorSubject<User>(null!);
   public user$ = this.subject.asObservable();
 
-  private userSubscriptionsSubject = new BehaviorSubject<CourseSubscription[]>([]);
-  public userSubscriptions$ = this.userSubscriptionsSubject.asObservable();
+  private userEnrollmentsSubject = new BehaviorSubject<CourseEnrollment[]>([]);
+  public userEnrollments$ = this.userEnrollmentsSubject.asObservable();
 
   public isLoggedIn$!: Observable<boolean>;
   public isLoggedOut$!: Observable<boolean>;
@@ -294,8 +294,8 @@ export class AuthService {
     return this.courseService.findAllSubscribedCourses({pageNumber: 0, pageSize: 1000})
       .pipe(
         tap(({ content }) => {
-          this.userSubscriptionsSubject.next(content)
-          localStorage?.setItem('_subs', JSON.stringify(content.map((d: CourseSubscription) => d.id)));
+          this.userEnrollmentsSubject.next(content)
+          localStorage?.setItem('_subs', JSON.stringify(content.map((d: CourseEnrollment) => d.id)));
         })
       ).subscribe()
   }
