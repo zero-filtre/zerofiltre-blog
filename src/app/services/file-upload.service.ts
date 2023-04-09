@@ -39,12 +39,12 @@ export class FileUploadService {
     private http: HttpClient,
     private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: any
-  ) {
-    this.loadxToken();
+  ) { 
+    // this.loadxToken() 
   }
 
 
-  private loadxToken() {
+  loadxToken() {
 
     this.xTokenServerValue = this.state.get(STATE_KEY_X_TOKEN, <any>null);
 
@@ -61,9 +61,12 @@ export class FileUploadService {
 
     if (isPlatformServer(this.platformId)) {
       ovhPass = process.env.OVH_AUTH_PASSWORD || '';
+      // ovhPass = environment.ovhAuthPassword; // Just for local developments
     }
 
     if (!this.xTokenServerValue) {
+      // console.log('OVH NAME: ', environment.ovhAuthName,);
+      // console.log('OVH PASS: ', ovhPass);
 
       const body = {
         "auth": {

@@ -72,7 +72,7 @@ export const genericRetryPolicy =
           // retry after 1s, 2s, 3s
           return timer(retryAttempt * scalingDuration);
         }),
-        finalize(() => console.log('Retry end, We are done!'))
+        finalize(() => console.log('Fin de rejeu, Requete echouée !'))
       );
     };
 

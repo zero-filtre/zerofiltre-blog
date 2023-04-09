@@ -31,11 +31,10 @@
                     <div class="shadow-lg rounded-sm overflow-hidden mx-auto" id="lesson_video_player">
                         <div class="vid_wrapper w-full h-full bg-gray-900">
                             <ng-container *ngIf="lesson$|async as lesson">
-                                <!-- <ng-container *ngIf="lesson.video"> -->
-                                <ng-container>
-                                    <!-- <iframe *ngIf="canAccessCourse || lesson.free" [src]="lesson.video | vimeoUrl" webkitallowfullscreen mozallowfullscreen 
+                                <ng-container *ngIf="lesson.video">
+                                    <iframe *ngIf="canAccessCourse || lesson.free" [src]="lesson.video | vimeoUrl" webkitallowfullscreen mozallowfullscreen 
                                         allowfullscreen width="100%" height="100%" allow="autoplay; fullscreen; picture-in-picture" title="Lesson video">
-                                    </iframe> -->
+                                    </iframe>
 
                                     <div *ngIf="(!lesson?.free && !canAccessCourse) || !lesson?.video" class="h-full flex items-center justify-center">
                                         <div class="upgrade-required text-center text-skin-base">
@@ -63,11 +62,11 @@
                                     </div>
                                 </ng-container>
 
-                                <!-- <ng-container *ngIf="!lesson?.video">
+                                <ng-container *ngIf="!lesson?.video">
                                     <div class="text-lg lg:text-2xl text-skin-base h-full flex items-center justify-center">
                                         Aucun contenu video
                                     </div>
-                                </ng-container> -->
+                                </ng-container>
                             </ng-container>
             
                             <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
