@@ -40,7 +40,7 @@ export class FileUploadService {
     private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: any
   ) { 
-    // this.loadxToken() 
+    // this.loadxToken()
   }
 
 

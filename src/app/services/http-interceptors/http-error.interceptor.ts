@@ -38,7 +38,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     const userOrigin = this.authService?.currentUsr?.loginFrom;
 
 
-    if (request.url.startsWith(this.apiServerUrl)) {
+    // if (request.url.startsWith(this.apiServerUrl)) {
       return next.handle(request)
         .pipe(
           retryWhen(genericRetryPolicy({
@@ -64,12 +64,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               return throwError(() => 'Connexion internet perdue!');
             }
 
-            const errorMessage = this.setError(error);
+            const errorMessage = this.setError(error, request);
             this.messageService.openSnackBarError(errorMessage, 'OK');
             return throwError(() => errorMessage);
           })
         );
-    }
+    // }
 
     return next.handle(request);
   }
@@ -96,8 +96,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    * When No response from the server and database is down => statusCode == 500 && statusText == 'Internal Server Error' 
    * Ex: CORS block, Internet Failed
    */
-  setError(error: HttpErrorResponse): string {
+  setError(error: HttpErrorResponse, req: any): string {
     let errorMessage = "Oopss... Un problème est survenu !";
+    console.log('REQUEST: ', req.url);
 
     if (error.status === 0) {
       // Client side Error
