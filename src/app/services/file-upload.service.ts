@@ -65,8 +65,6 @@ export class FileUploadService {
     }
 
     if (!this.xTokenServerValue) {
-      // console.log('OVH NAME: ', environment.ovhAuthName,);
-      // console.log('OVH PASS: ', ovhPass);
 
       const body = {
         "auth": {
@@ -88,7 +86,7 @@ export class FileUploadService {
       }
 
 
-
+      // ovh/ovh/auth
       this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
         ...httpOptions,
         observe: 'response'

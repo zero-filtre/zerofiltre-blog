@@ -2,7 +2,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import envTemplate from 'src/environments/environment.template';
 import { environment } from 'src/environments/environment';
-import { environment as localEnv } from 'src/environments/environment.locals';
+// import { environment as localEnv } from 'src/environments/environment.locals'; // Just for local developments
 import { isPlatformServer } from '@angular/common';
 
 
