@@ -312,7 +312,8 @@ export class AuthService {
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
 
           this.setUserData(usr)
-          // this.fileUploadService.xToken$.subscribe();
+          this.fileUploadService.getOvhToken();
+          this.fileUploadService.xToken$.subscribe();
           this.isAdmin = this.checkRole(usr.roles, ROLES.ADMIN);
           this.isPro = this.currentUsr.plan === PLANS.PRO
 
