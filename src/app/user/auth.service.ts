@@ -8,6 +8,7 @@ import { CourseService } from '../school/courses/course.service';
 import { CourseEnrollment } from '../school/studentCourse';
 import { MessageService } from '../services/message.service';
 import { PLANS, ROLES, User } from './user.model';
+import { FileUploadService } from '../services/file-upload.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -47,6 +48,7 @@ export class AuthService {
     private router: Router,
     private messageService: MessageService,
     private courseService: CourseService,
+    private fileUploadService: FileUploadService,
     @Inject(PLATFORM_ID) private platformId: any,
   ) {
     this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
@@ -310,6 +312,7 @@ export class AuthService {
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
 
           this.setUserData(usr)
+          // this.fileUploadService.xToken$.subscribe();
           this.isAdmin = this.checkRole(usr.roles, ROLES.ADMIN);
           this.isPro = this.currentUsr.plan === PLANS.PRO
 
@@ -329,7 +332,7 @@ export class AuthService {
   }
 
   private clearLSwithoutExcludedKey() {
-    const excludedKey = 'x_token'
+    const excludedKey = '';
     const keys = []
     if (isPlatformBrowser(this.platformId)) {
       for (let i = 0; i < localStorage.length; i++) {

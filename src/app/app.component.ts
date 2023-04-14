@@ -209,7 +209,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       (window as any).onload = AddTargetToExternalLinks();
     }
 
-    if (isPlatformServer(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && this.authService.currentUsr) {
       this.fileUploadService.xToken$.subscribe();
     }
   }
