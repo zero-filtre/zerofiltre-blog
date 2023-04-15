@@ -15,7 +15,7 @@ const httpOptions = {
   }),
 };
 
-const STATE_KEY_X_TOKEN = makeStateKey('x-token-value');
+// const STATE_KEY_X_TOKEN = makeStateKey('x-token-value');
 
 
 @Injectable({
@@ -24,91 +24,116 @@ const STATE_KEY_X_TOKEN = makeStateKey('x-token-value');
 export class FileUploadService {
   readonly apiServerUrl = environment.apiBaseUrl;
   readonly ovhServerUrl = environment.ovhServerUrl;
-  readonly ovhTokenUrl = environment.ovhTokenUrl;
-  readonly ovhToken = environment.ovhToken;
+
+  // readonly ovhTokenUrl = environment.ovhTokenUrl;
+  // readonly ovhToken = environment.ovhToken;
+  // readonly ovhAuthUrl = environment.ovhAuthUrl;
 
   private XTOKEN_NAME = 'x_token';
 
   private subject = new BehaviorSubject<any>(null!);
   public xToken$ = this.subject.asObservable();
 
-  public xTokenServerValue!: any;
+  // public xTokenServerValue!: any;
 
   constructor(
-    private state: TransferState,
+    // private state: TransferState,
     private http: HttpClient,
     private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: any
-  ) {
-    this.loadxToken();
+  ) { 
+    this.getOvhToken();
   }
 
+  getOvhToken() {
+    this.xToken$ = this.http.get<any>(`${this.apiServerUrl}/ovh/token`)
+      .pipe(
+        catchError(error => {
+          return throwError(() => error);
+        }),
+        tap(({ accessToken, expiresAt }: any) => {
 
-  private loadxToken() {
-
-    this.xTokenServerValue = this.state.get(STATE_KEY_X_TOKEN, <any>null);
-
-    if (this.xTokenServerValue && isPlatformBrowser(this.platformId)) {
-      this.subject.next(this.xTokenServerValue);
-      localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(this.xTokenServerValue));
-    }
-
-    let ovhPass = ''
-
-    if (isDevMode()) {
-      ovhPass = environment.ovhAuthPassword;
-    }
-
-    if (isPlatformServer(this.platformId)) {
-      ovhPass = process.env.OVH_AUTH_PASSWORD || '';
-    }
-
-    if (!this.xTokenServerValue) {
-
-      const body = {
-        "auth": {
-          "identity": {
-            "methods": [
-              "password"
-            ],
-            "password": {
-              "user": {
-                "name": environment.ovhAuthName,
-                "domain": {
-                  "id": "default"
-                },
-                "password": ovhPass
-              }
-            }
+          const xToken = accessToken;
+          const expireAt = expiresAt;
+          const tokenObj = {
+            xToken,
+            expireAt
           }
-        }
-      }
-
-
-
-      this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
-        ...httpOptions,
-        observe: 'response'
-      })
-        .pipe(
-          catchError(error => {
-            return throwError(() => error);
-          }),
-          tap(response => {
-
-            const xToken = this.extractTokenFromHeaders(response);
-            const expireAt = response.body.token.expires_at;
-            const tokenObj = {
-              xToken,
-              expireAt
-            }
-            this.state.set(STATE_KEY_X_TOKEN, <any>tokenObj);
-            this.subject.next(tokenObj);
-          }),
-          shareReplay()
-        )
-    }
+          
+          this.subject.next(tokenObj);
+          localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(tokenObj));
+        }),
+        shareReplay()
+      )
   }
+
+
+  // loadxToken() {
+
+  //   this.xTokenServerValue = this.state.get(STATE_KEY_X_TOKEN, <any>null);
+
+  //   if (this.xTokenServerValue && isPlatformBrowser(this.platformId)) {
+  //     this.subject.next(this.xTokenServerValue);
+  //     localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(this.xTokenServerValue));
+  //   }
+
+  //   let ovhPass = ''
+
+  //   if (isDevMode()) {
+  //     ovhPass = environment.ovhAuthPassword;
+  //   }
+
+  //   if (isPlatformServer(this.platformId)) {
+  //     ovhPass = process.env.OVH_AUTH_PASSWORD || '';
+  //     // ovhPass = environment.ovhAuthPassword; // Just for local developments
+  //   }
+
+  //   if (!this.xTokenServerValue) {
+
+  //     const body = {
+  //       "auth": {
+  //         "identity": {
+  //           "methods": [
+  //             "password"
+  //           ],
+  //           "password": {
+  //             "user": {
+  //               "name": environment.ovhAuthName,
+  //               "domain": {
+  //                 "id": "default"
+  //               },
+  //               "password": ovhPass
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+
+
+  //     // ovh/ovh/auth
+  //     this.xToken$ = this.http.post<any>(`${this.ovhTokenUrl}`, body, {
+  //       ...httpOptions,
+  //       observe: 'response'
+  //     })
+  //       .pipe(
+  //         catchError(error => {
+  //           return throwError(() => error);
+  //         }),
+  //         tap(response => {
+
+  //           const xToken = this.extractTokenFromHeaders(response);
+  //           const expireAt = response.body.token.expires_at;
+  //           const tokenObj = {
+  //             xToken,
+  //             expireAt
+  //           }
+  //           this.state.set(STATE_KEY_X_TOKEN, <any>tokenObj);
+  //           this.subject.next(tokenObj);
+  //         }),
+  //         shareReplay()
+  //       )
+  //   }
+  // }
 
   private extractTokenFromHeaders(response: any) {
     return response.headers.get('X-Subject-Token');
@@ -155,7 +180,7 @@ export class FileUploadService {
   private uploadImage(fileName: string, file: File): Observable<any> {
     if (!this.validateImage(file)) return throwError(() => new Error('Invalid file'))
 
-    const xToken = this.xTokenObj?.xToken || this.ovhToken;
+    const xToken = this.xTokenObj?.xToken;
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
@@ -175,7 +200,7 @@ export class FileUploadService {
   }
 
   public removeImage(fileName: string): Observable<any> {
-    const xToken = this.xTokenObj?.xToken || this.ovhToken;
+    const xToken = this.xTokenObj?.xToken;
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')

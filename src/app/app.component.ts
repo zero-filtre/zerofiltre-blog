@@ -45,7 +45,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   readonly coursesUrl = environment.coursesUrl
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
-  appLogoUrl = 'assets/logoblue.svg';
+  appLogoUrl = 'https://ik.imagekit.io/lfegvix1p/logoblue_XmLzzzq19.svg?updatedAt=1681556349203';
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])
@@ -209,7 +209,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       (window as any).onload = AddTargetToExternalLinks();
     }
 
-    if (isPlatformServer(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && this.authService.currentUsr) {
       this.fileUploadService.xToken$.subscribe();
     }
   }

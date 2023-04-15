@@ -25,271 +25,272 @@
     </nav>
 </div>
 
-<main class="site-container relative py-10 lg:py-14 min-h-screen">
-    <!-- <div *ngIf="isLoading" class="flex items-center justify-center h-[68vh]">
-        <svg class="w-40 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
-            preserveAspectRatio="xMidYMid">
-            <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="4" r="35"
+<main class="site-container relative">
+    <div class="flex justify-center items-center h-[88vh]" *appShellRender>
+        <svg class="w-40 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="2" r="35"
                 stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
                 style="animation-play-state:paused"></circle>
         </svg>
-    </div> -->
+    </div>
     
-    <form *ngIf="course$ |async " [formGroup]="form" class="lg:max-w-4xl mx-auto">
+    <div class="min-h-screen py-10 lg:py-14" *appShellNoRender>
+        <form *ngIf="course$ |async " [formGroup]="form" class="lg:max-w-4xl mx-auto">
 
-        <div class="mb-10">
-            <label for="title" class="block text-base font-medium leading-5 text-skin-base mb-5">
-                Titre:
-            </label>
-
-            <input (keyup)="typeInTitle(getValue($event))" id="title" required minlength="4" formControlName="title"
-                class="w-full bg-transparent font-medium border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
-                placeholder="Entrez le titre de votre cours..." autocomplete="off" />
-
-            <div *ngIf="title?.invalid && title?.dirty" class="">
-                <div *ngIf="title?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
-                    {{ 'articleEntryEdit.missingTitle' | translate }}
-                </div>
-                <div *ngIf="title?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
-                    {{ 'articleEntryEdit.invalidTitleLenght' | translate }}
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-10">
-            <label for="sub_title" class="block text-base leading-5 font-medium text-skin-base mb-5">
-                Sous-titre:
-            </label>
-
-            <input (keyup)="typeInSubTitle(getValue($event))" id="sub_title" minlength="4" formControlName="subTitle"
-                class="w-full bg-transparent font-medium border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
-                placeholder="Entrez le sous titre de votre cours..." autocomplete="off" />
-
-            <div *ngIf="subTitle?.invalid && subTitle?.dirty" class="">
-                <div *ngIf="subTitle?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
-                    {{ 'articleEntryEdit.invalidTitleLenght' | translate }}
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-10">
-            <label for="summary" class="block text-base font-medium leading-5 text-skin-base mb-5">
-                Resumé:
-            </label>
-
-            <textarea (keyup)="typeInSummary(getValue($event))"
-                class="editor-textarea font-normal rounded-xl shadow-md text-skin-base text-xl sm:text-2xl lg:text-5xl w-full placeholder:text-skin-muted placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl no-scrollbar"
-                rows="5" cols="33" placeholder="Decrivez votre cours en quelques mots... (Entre 20 et 250 caractères)"
-                id="summary" formControlName="summary" required minlength="20" maxlength="250">
-            </textarea>
-            <div *ngIf="summary?.invalid && summary?.dirty" class="">
-                <div *ngIf="summary?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
-                    {{ 'articleEntryEdit.missingSummary' | translate }}
-                </div>
-                <div *ngIf="summary?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
-                    {{ 'articleEntryEdit.invalidSummaryLenght' | translate }}
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-10">
-            <label for="video" class="block text-base font-medium leading-5 text-skin-base mb-5">
-                Video:
-            </label>
-
-            <input (keyup)="typeInVideo(getValue($event))" id="video" required minlength="4" formControlName="video"
-                class="w-full bg-transparent border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
-                placeholder="Entrez le lien youtube de la video..." autocomplete="off" />
-
-            <div *ngIf="video?.invalid && video?.dirty" class="">
-                <div *ngIf="video?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
-                    Veuillez ajouter un lien vers la video
-                </div>
-                <div *ngIf="video?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
-                    Le lien est incorrect
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-10">
-            <div class="course-thumbnail-preview-wrapper">
-                <label for="fileUpload" class="block text-base font-medium leading-5 text-skin-base mb-5">
-                    Thumbnail:
+            <div class="mb-10">
+                <label for="title" class="block text-base font-medium leading-5 text-skin-base mb-5">
+                    Titre:
                 </label>
 
-                <div *ngIf="!thumbnail?.value" class="label-image-preview relative aspect-w-4 aspect-h-2">
-                    <label *ngIf="!uploading" for="file" (click)="fileUpload.click()"
-                        class="preview-label group flex items-center justify-center rounded-md cursor-pointer">
+                <input (keyup)="typeInTitle(getValue($event))" id="title" required minlength="4" formControlName="title"
+                    class="w-full bg-transparent font-medium border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
+                    placeholder="Entrez le titre de votre cours..." autocomplete="off" />
 
-                        <div class="text-center">
-                            <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
-                                viewBox="0 0 48 48">
-                                <path
-                                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                            <p class="mt-1 text-xs text-skin-base leading-6">
-                                <span
-                                    class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                    Upload a file
-                                </span>
-                            </p>
-                            <p class="mt-1 text-xs text-skin-muted">
-                                PNG, JPG, GIF up to 5MB
-                            </p>
+                <div *ngIf="title?.invalid && title?.dirty" class="">
+                    <div *ngIf="title?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
+                        {{ 'articleEntryEdit.missingTitle' | translate }}
+                    </div>
+                    <div *ngIf="title?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
+                        {{ 'articleEntryEdit.invalidTitleLenght' | translate }}
+                    </div>
+                </div>
+            </div>
 
-                            <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
-                                (change)="uploadImage($event, thumbnail)" accept="image/*">
-                        </div>
+            <div class="mb-10">
+                <label for="sub_title" class="block text-base leading-5 font-medium text-skin-base mb-5">
+                    Sous-titre:
+                </label>
+
+                <input (keyup)="typeInSubTitle(getValue($event))" id="sub_title" minlength="4" formControlName="subTitle"
+                    class="w-full bg-transparent font-medium border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
+                    placeholder="Entrez le sous titre de votre cours..." autocomplete="off" />
+
+                <div *ngIf="subTitle?.invalid && subTitle?.dirty" class="">
+                    <div *ngIf="subTitle?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
+                        {{ 'articleEntryEdit.invalidTitleLenght' | translate }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <label for="summary" class="block text-base font-medium leading-5 text-skin-base mb-5">
+                    Resumé:
+                </label>
+
+                <textarea (keyup)="typeInSummary(getValue($event))"
+                    class="editor-textarea font-normal rounded-xl shadow-md text-skin-base text-xl sm:text-2xl lg:text-5xl w-full placeholder:text-skin-muted placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl no-scrollbar"
+                    rows="5" cols="33" placeholder="Decrivez votre cours en quelques mots... (Entre 20 et 250 caractères)"
+                    id="summary" formControlName="summary" required minlength="20" maxlength="250">
+                </textarea>
+                <div *ngIf="summary?.invalid && summary?.dirty" class="">
+                    <div *ngIf="summary?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
+                        {{ 'articleEntryEdit.missingSummary' | translate }}
+                    </div>
+                    <div *ngIf="summary?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
+                        {{ 'articleEntryEdit.invalidSummaryLenght' | translate }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <label for="video" class="block text-base font-medium leading-5 text-skin-base mb-5">
+                    Video:
+                </label>
+
+                <input (keyup)="typeInVideo(getValue($event))" id="video" required minlength="4" formControlName="video"
+                    class="w-full bg-transparent border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
+                    placeholder="Entrez le lien youtube de la video..." autocomplete="off" />
+
+                <div *ngIf="video?.invalid && video?.dirty" class="">
+                    <div *ngIf="video?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
+                        Veuillez ajouter un lien vers la video
+                    </div>
+                    <div *ngIf="video?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
+                        Le lien est incorrect
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <div class="course-thumbnail-preview-wrapper">
+                    <label for="fileUpload" class="block text-base font-medium leading-5 text-skin-base mb-5">
+                        Thumbnail:
                     </label>
 
-                    <div *ngIf="uploading" class="flex items-center justify-center shadow-lg rounded-lg border">
-                        <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
-                            viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                            <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                    <div *ngIf="!thumbnail?.value" class="label-image-preview relative aspect-w-4 aspect-h-2">
+                        <label *ngIf="!uploading" for="file" (click)="fileUpload.click()"
+                            class="preview-label group flex items-center justify-center rounded-md cursor-pointer">
+
+                            <div class="text-center">
+                                <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
+                                    viewBox="0 0 48 48">
+                                    <path
+                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                                <p class="mt-1 text-xs text-skin-base leading-6">
+                                    <span
+                                        class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                                        Upload a file
+                                    </span>
+                                </p>
+                                <p class="mt-1 text-xs text-skin-muted">
+                                    PNG, JPG, GIF up to 5MB
+                                </p>
+
+                                <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
+                                    (change)="uploadImage($event, thumbnail)" accept="image/*">
+                            </div>
+                        </label>
+
+                        <div *ngIf="uploading" class="flex items-center justify-center shadow-lg rounded-lg border">
+                            <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
+                                viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                                    stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                                    style="animation-play-state:paused"></circle>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div *ngIf="thumbnail?.value"
+                        class="image-wrapper relative shadow-lg overflow-hidden rounded-lg aspect-w-4 aspect-h-2">
+                        <app-image [classes]="'object-cover'" [sourceUrl]="thumbnail?.value!" [alt]="title.value">
+                        </app-image>
+
+                        <div class="cover-close-btn absolute top-2 left-[92%] lg:left-[97%] z-10 flex justify-center w-5 h-5 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
+                            (click)="removeImage(thumbnail)">x
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <label for="fileUpload" class="block text-base font-medium leading-5 text-skin-base mb-5">
+                    Sections: <br><br>
+                    <span class="font-normal">Ajouter au moins 4 sections. Un exemple est fourni <span><a
+                                class="text-primary-500 underline" routerLink="/cours/1">ici</a></span></span>
+                </label>
+
+
+                <div formArrayName="sections" class="sections mb-5 space-y-2">
+                    <ng-container *ngFor="let section of sections?.value; let i = index">
+                        <div
+                            class="border rounded-lg p-2 lg:p-5 text-secondary text-sm lg:text-base flex justify-between items-center">
+                            <div class="flex gap-2">
+                                <span>{{section.position}}</span>
+                                <span>-</span>
+                                <span>{{section.title}}</span>
+                            </div>
+
+                            <div class="actions flex items-center lg:gap-2 text-secondary">
+                                <button (click)="openSectionEditDialog(section)"
+                                    aria-labelledby="Button of section edit page" routerLink="/cours/{{course.id}}/edit/"
+                                    class="flex items-end p-2 lg:px-4 lg:py-2 rounded-lg hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-4 lg:w-6 lg:h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                    </svg>
+                                </button>
+                                <button (click)="removeSection(section?.id, i)" aria-labelledby="Delete article button"
+                                    class="flex items-end w-full text-left p-2 lg:px-4 py-2 rounded-lg hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-4 lg:w-6 lg:h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <button (click)="openSectionEditDialog()" aria-labelledby="Add a new section button"
+                    [disabled]="sections?.value.length > 3" [ngClass]="{'opacity-30': sections?.value.length > 3}"
+                    class="flex border w-fit items-center gap-3 rounded-md text-left text-white bg-primary-500 px-4 py-2 hover:bg-primary-600 text-sm lg:text-base transition-all duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Ajouter une section</span>
+                </button>
+            </div>
+
+            <div class="tag-list" formArrayName="tags">
+                <label for="tags" class="block text-base font-medium leading-5 text-skin-base mb-5">
+                    Tags:
+                </label>
+            
+                <div class="mt-5">
+                    <div (click)="openTagsDropdown()"
+                        class="selected-tags-container bg-skin-cardMuted cursor-pointer relative flex flex-wrap p-2 min-h-[50px] gap-1 rounded-xl shadow-md">
+                        <ng-container *ngFor="let tag of tags.controls; let i = index">
+                            <span [formGroupName]="i"
+                                class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border">
+                                <svg [ngStyle]="{'color': tag.value.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span>{{tag.value.name}}</span>
+                                <button aria-label="remove the tag" (click)="removeTag(i)"
+                                    class="remove-tag-btn cursor-pointer text-skin-muted flex items-center justify-center ml-2 border rounded-full h-4 w-4 justify-self-end">
+                                    <span class="remove-tag-btn text-xs">x</span>
+                                </button>
+                            </span>
+                        </ng-container>
+            
+                        <ng-container *ngIf="!tags.length">
+                            <p class="selected-tags-container text-skin-muted leading-9">Cliquez ici
+                                pour ajouter des tags
+                            </p>
+                        </ng-container>
+                    </div>
+            
+                    <ul *ngIf="tagsDropdownOpened"
+                        class="multiselect-tags-dropdown mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
+                        <ng-container *ngFor="let tag of tagList; let i = index">
+                            <li class="tagItem flex items-center gap-2 text-skin-base hover:bg-slate-100 px-4 py-2 cursor-pointer"
+                                (click)="addtag(tag)">
+                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
+                                    viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                {{tag?.name}}
+                            </li>
+                        </ng-container>
+                    </ul>
+            
+                </div>
+            </div>
+            
+            <div class="save-course flex justify-end my-20">
+                <ng-container *ngIf="form.invalid; else validBtn">
+                    <button [disabled]="form.invalid || isLoading" aria-labelledby="button to update or submit a course"
+                        class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
+                        <span>Enregistrer</span>
+                    </button>
+                </ng-container>
+
+                <ng-template #validBtn>
+                    <button type="submit" aria-labelledby="button to publish or submit an article" (click)="updateCourse()"
+                        [disabled]="isSaving || isLoading" [ngClass]="{'opacity-50': isSaving || isLoading }"
+                        class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
+                        <span *ngIf="!isSaving">Enregistrer</span>
+                        <svg *ngIf="isSaving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                            preserveAspectRatio="xMidYMid">
+                            <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10" r="35"
                                 stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
                                 style="animation-play-state:paused"></circle>
                         </svg>
-                    </div>
-                </div>
-
-                <div *ngIf="thumbnail?.value"
-                    class="image-wrapper relative shadow-lg overflow-hidden rounded-lg aspect-w-4 aspect-h-2">
-                    <app-image [classes]="'object-cover'" [sourceUrl]="thumbnail?.value!" [alt]="title.value">
-                    </app-image>
-
-                    <div class="cover-close-btn absolute top-2 left-[92%] lg:left-[97%] z-10 flex justify-center w-5 h-5 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100"
-                        (click)="removeImage(thumbnail)">x
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-10">
-            <label for="fileUpload" class="block text-base font-medium leading-5 text-skin-base mb-5">
-                Sections: <br><br>
-                <span class="font-normal">Ajouter au moins 4 sections. Un exemple est fourni <span><a
-                            class="text-primary-500 underline" routerLink="/cours/1">ici</a></span></span>
-            </label>
-
-
-            <div formArrayName="sections" class="sections mb-5 space-y-2">
-                <ng-container *ngFor="let section of sections?.value; let i = index">
-                    <div
-                        class="border rounded-lg p-2 lg:p-5 text-secondary text-sm lg:text-base flex justify-between items-center">
-                        <div class="flex gap-2">
-                            <span>{{section.position}}</span>
-                            <span>-</span>
-                            <span>{{section.title}}</span>
-                        </div>
-
-                        <div class="actions flex items-center lg:gap-2 text-secondary">
-                            <button (click)="openSectionEditDialog(section)"
-                                aria-labelledby="Button of section edit page" routerLink="/cours/{{course.id}}/edit/"
-                                class="flex items-end p-2 lg:px-4 lg:py-2 rounded-lg hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-4 lg:w-6 lg:h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                                </svg>
-                            </button>
-                            <button (click)="removeSection(section?.id, i)" aria-labelledby="Delete article button"
-                                class="flex items-end w-full text-left p-2 lg:px-4 py-2 rounded-lg hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-4 lg:w-6 lg:h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </ng-container>
+                    </button>
+                </ng-template>
             </div>
 
-            <button (click)="openSectionEditDialog()" aria-labelledby="Add a new section button"
-                [disabled]="sections?.value.length > 3" [ngClass]="{'opacity-30': sections?.value.length > 3}"
-                class="flex border w-fit items-center gap-3 rounded-md text-left text-white bg-primary-500 px-4 py-2 hover:bg-primary-600 text-sm lg:text-base transition-all duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>Ajouter une section</span>
-            </button>
-        </div>
-
-        <div class="tag-list" formArrayName="tags">
-            <label for="tags" class="block text-base font-medium leading-5 text-skin-base mb-5">
-                Tags:
-            </label>
-        
-            <div class="mt-5">
-                <div (click)="openTagsDropdown()"
-                    class="selected-tags-container bg-skin-cardMuted cursor-pointer relative flex flex-wrap p-2 min-h-[50px] gap-1 rounded-xl shadow-md">
-                    <ng-container *ngFor="let tag of tags.controls; let i = index">
-                        <span [formGroupName]="i"
-                            class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border">
-                            <svg [ngStyle]="{'color': tag.value.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
-                                viewBox="0 0 8 8">
-                                <circle cx="4" cy="4" r="3"></circle>
-                            </svg>
-                            <span>{{tag.value.name}}</span>
-                            <button aria-label="remove the tag" (click)="removeTag(i)"
-                                class="remove-tag-btn cursor-pointer text-skin-muted flex items-center justify-center ml-2 border rounded-full h-4 w-4 justify-self-end">
-                                <span class="remove-tag-btn text-xs">x</span>
-                            </button>
-                        </span>
-                    </ng-container>
-        
-                    <ng-container *ngIf="!tags.length">
-                        <p class="selected-tags-container text-skin-muted leading-9">Cliquez ici
-                            pour ajouter des tags
-                        </p>
-                    </ng-container>
-                </div>
-        
-                <ul *ngIf="tagsDropdownOpened"
-                    class="multiselect-tags-dropdown mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
-                    <ng-container *ngFor="let tag of tagList; let i = index">
-                        <li class="tagItem flex items-center gap-2 text-skin-base hover:bg-slate-100 px-4 py-2 cursor-pointer"
-                            (click)="addtag(tag)">
-                            <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
-                                viewBox="0 0 8 8">
-                                <circle cx="4" cy="4" r="3"></circle>
-                            </svg>
-                            {{tag?.name}}
-                        </li>
-                    </ng-container>
-                </ul>
-        
-            </div>
-        </div>
-        
-        <div class="save-course flex justify-end my-20">
-            <ng-container *ngIf="form.invalid; else validBtn">
-                <button [disabled]="form.invalid || isLoading" aria-labelledby="button to update or submit a course"
-                    class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
-                    <span>Enregistrer</span>
-                </button>
-            </ng-container>
-
-            <ng-template #validBtn>
-                <button type="submit" aria-labelledby="button to publish or submit an article" (click)="updateCourse()"
-                    [disabled]="isSaving || isLoading" [ngClass]="{'opacity-50': isSaving || isLoading }"
-                    class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
-                    <span *ngIf="!isSaving">Enregistrer</span>
-                    <svg *ngIf="isSaving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
-                        preserveAspectRatio="xMidYMid">
-                        <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10" r="35"
-                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                            style="animation-play-state:paused"></circle>
-                    </svg>
-                </button>
-            </ng-template>
-        </div>
-
-    </form>
+        </form>
+    </div>
 </main>

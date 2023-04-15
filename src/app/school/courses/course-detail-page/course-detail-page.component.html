@@ -1,116 +1,117 @@
 <main class="text-skin-art min-h-screen">
-    <!-- <div *ngIf="isLoading" class="flex items-center justify-center h-[88vh]">
-        <svg class="w-40 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
-            preserveAspectRatio="xMidYMid">
-            <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="4" r="35"
+    <div class="flex justify-center items-center h-[88vh]" *appShellRender>
+        <svg class="w-40 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="2" r="35"
                 stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
                 style="animation-play-state:paused"></circle>
         </svg>
-    </div> -->
+    </div>
 
-    <div *ngIf="course$|async as course" class="content flex flex-col">
+    <div *appShellNoRender>
+        <div *ngIf="course$|async as course" class="content flex flex-col">
 
-        <div class="page-title site-container py-8 lg:pt-14 text-center space-y-5 lg:max-w-7xl mx-auto">
-            <h1>{{course?.title}}</h1>
-            <h2>{{course?.subTitle}}</h2>
-        </div>
+            <div class="page-title site-container py-8 lg:pt-14 text-center space-y-5 lg:max-w-7xl mx-auto">
+                <h1>{{course?.title}}</h1>
+                <h2>{{course?.subTitle}}</h2>
+            </div>
 
-        <ng-container *ngFor="let section of course?.sections; let i = index">
-            <section class="regular-section">
-                <div class="site-container grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <div class="text lg:col-span-8">
-                        <h3>{{section.title}}</h3>
-                        <app-markdown-preview [data]="section?.content"></app-markdown-preview>
+            <ng-container *ngFor="let section of course?.sections; let i = index">
+                <section class="regular-section">
+                    <div class="site-container grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <div class="text lg:col-span-8">
+                            <h3>{{section.title}}</h3>
+                            <app-markdown-preview [data]="section?.content"></app-markdown-preview>
+                        </div>
+
+                        <div class="image lg:col-span-4 self-center">
+                            <app-image [classes]="'w-full h-full max-w-[300px] lg:max-w-[350px] mx-auto object-contain'"
+                                [sourceUrl]="section?.image" [alt]="section?.title">
+                            </app-image>
+                        </div>
                     </div>
+                </section>
+            </ng-container>
 
-                    <div class="image lg:col-span-4 self-center">
-                        <app-image [classes]="'w-full h-full max-w-[300px] lg:max-w-[350px] mx-auto object-contain'"
-                            [sourceUrl]="section?.image" [alt]="section?.title">
-                        </app-image>
-                    </div>
+            <section class="reactions !py-6 border bg-secondary grid place-items-center border-skin-border">
+                <!-- *ngIf="!loading && (isPublished$ | async)" -->
+                <div class="site-container pt-5 flex flex-wrap justify-center lg:justify-start">
+                    <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
+                        class="group px-4 flex items-center justify-center transition-all duration-300"
+                        attr.aria-label="{{reaction.action}} button">
+
+                        <div
+                            class="reaction-wrapper flex flex-col gap-3 lg:gap-4 group-hover:-translate-y-2 transition-all ease-in duration-200">
+                            <ng-container *ngIf="reaction.action === 'clap'">
+                                <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
+                                    {{reaction.emoji}}
+                                </div>
+                                <div class="text-lg font-semibold text-skin-link">
+                                    {{clapReactions$ | async}}
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="reaction.action === 'fire'">
+                                <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
+                                    {{reaction.emoji}}
+                                </div>
+                                <div class="text-lg font-semibold text-skin-link">
+                                    {{fireReactions$ | async}}
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="reaction.action === 'love'">
+                                <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
+                                    {{reaction.emoji}}
+                                </div>
+                                <div class="text-lg font-semibold text-skin-link">
+                                    {{loveReactions$ | async}}
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="reaction.action === 'like'">
+                                <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
+                                    {{reaction.emoji}}
+                                </div>
+                                <div class="text-lg font-semibold text-skin-link">
+                                    {{likeReactions$ | async}}
+                                </div>
+                            </ng-container>
+                        </div>
+                    </button>
+                </div>
+
+                <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
+                    <ngx-skeleton-loader class="space-x-2" count="4" appearance="line"
+                        [theme]="{ 
+                            'border-radius': '5px',
+                                height: '20px',
+                                width: '20px'
+                            }">
+                    </ngx-skeleton-loader>
+                </ng-container>
+            </section> 
+
+            <section *ngIf="currentVideoId" class="presentation-video">
+                <div class="site-container">
+                    <app-youtube-video-player [videoId]="currentVideoId" [width]="800" [height]="450"></app-youtube-video-player>
                 </div>
             </section>
-        </ng-container>
+            
+            <section class="curriculum">
+                <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
+                    [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber"></app-curriculum>
+            </section>
 
-        <section class="reactions !py-6 border bg-secondary grid place-items-center border-skin-border">
-            <!-- *ngIf="!loading && (isPublished$ | async)" -->
-            <div class="site-container pt-5 flex flex-wrap justify-center lg:justify-start">
-                <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
-                    class="group px-4 flex items-center justify-center transition-all duration-300"
-                    attr.aria-label="{{reaction.action}} button">
+            <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
+                class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
+                <span class="text-center">Acheter ce cours</span>
 
-                    <div
-                        class="reaction-wrapper flex flex-col gap-3 lg:gap-4 group-hover:-translate-y-2 transition-all ease-in duration-200">
-                        <ng-container *ngIf="reaction.action === 'clap'">
-                            <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
-                                {{reaction.emoji}}
-                            </div>
-                            <div class="text-lg font-semibold text-skin-link">
-                                {{clapReactions$ | async}}
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="reaction.action === 'fire'">
-                            <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
-                                {{reaction.emoji}}
-                            </div>
-                            <div class="text-lg font-semibold text-skin-link">
-                                {{fireReactions$ | async}}
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="reaction.action === 'love'">
-                            <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
-                                {{reaction.emoji}}
-                            </div>
-                            <div class="text-lg font-semibold text-skin-link">
-                                {{loveReactions$ | async}}
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="reaction.action === 'like'">
-                            <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
-                                {{reaction.emoji}}
-                            </div>
-                            <div class="text-lg font-semibold text-skin-link">
-                                {{likeReactions$ | async}}
-                            </div>
-                        </ng-container>
-                    </div>
-                </button>
-            </div>
+                <span class="mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </span>
+            </button>
 
-            <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
-                <ngx-skeleton-loader class="space-x-2" count="4" appearance="line"
-                    [theme]="{ 
-                        'border-radius': '5px',
-                            height: '20px',
-                            width: '20px'
-                        }">
-                </ngx-skeleton-loader>
-            </ng-container>
-        </section> 
-
-        <section *ngIf="currentVideoId" class="presentation-video">
-            <div class="site-container">
-                <app-youtube-video-player [videoId]="currentVideoId" [width]="800" [height]="450"></app-youtube-video-player>
-            </div>
-        </section>
-        
-        <section class="curriculum">
-            <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
-                [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber"></app-curriculum>
-        </section>
-
-        <button *ngIf="!(courseSubscription$|async) && isPublished$|async" (click)="buyCourse()"
-            class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
-            <span class="text-center">Acheter ce cours</span>
-
-            <span class="mt-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-            </span>
-        </button>
-
+        </div>
     </div>
 </main>

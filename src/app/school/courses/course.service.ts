@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Course } from './course';
-import { CourseSubscription } from '../studentCourse';
+import { CourseEnrollment } from '../studentCourse';
 import { User } from 'src/app/user/user.model';
 
 const httpOptions = {
@@ -44,7 +44,7 @@ export class CourseService {
     return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) 
   }
 
-  // STUDENT SUBSCRIPTIONS START
+  // STUDENT EnrollmentS START
 
   isSubscriber(courseId: any) {
     const subIds = JSON.parse(localStorage?.getItem('_subs'));
@@ -52,9 +52,9 @@ export class CourseService {
   }
 
   subscribeToCourse(courseId: number): Observable<any> {
-    return this.http.post<any>(`${this.apiServerUrl}/subscription?courseId=${courseId}`, httpOptions)
+    return this.http.post<any>(`${this.apiServerUrl}/enrollment?courseId=${courseId}`, httpOptions)
       .pipe(
-        tap((data: CourseSubscription) => {
+        tap((data: CourseEnrollment) => {
           const subIds = JSON.parse(localStorage?.getItem('_subs'));
           localStorage?.setItem('_subs', JSON.stringify([...subIds, data.id]));
         }),
@@ -62,32 +62,32 @@ export class CourseService {
       );
   }
 
-  deleteSubscriptionCourse(courseId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiServerUrl}/subscription?course=${courseId}`, httpOptions)
+  deleteEnrollmentCourse(courseId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/enrollment?course=${courseId}`, httpOptions)
       .pipe(shareReplay());
   }
 
   findSubscribedByCourseId(data: any): Observable<any> {
     const { courseId, userId } = data
-    return this.http.get<any>(`${this.apiServerUrl}/subscription?courseId=${courseId}&userId=${userId}`, httpOptions)
+    return this.http.get<any>(`${this.apiServerUrl}/enrollment?courseId=${courseId}&userId=${userId}`, httpOptions)
       .pipe(shareReplay());
   }
 
   findAllSubscribedCourses(data: any): Observable<any> {
     const { pageNumber, pageSize, completed } = data
-    return this.http.get<any>(`${this.apiServerUrl}/subscription/user?pageNumber=${pageNumber}&pageSize=${pageSize}` + (completed == 'completed' ? '&filter=completed' : ''), httpOptions)
+    return this.http.get<any>(`${this.apiServerUrl}/enrollment/user?pageNumber=${pageNumber}&pageSize=${pageSize}` + (completed == 'completed' ? '&filter=completed' : ''), httpOptions)
       .pipe(shareReplay());
   }
 
   markLessonAsComplete(data: any): Observable<any> {
     const { courseId, lessonId } = data
-    return this.http.patch<any>(`${this.apiServerUrl}/subscription/complete?lessonId=${lessonId}&courseId=${courseId}`, httpOptions)
+    return this.http.patch<any>(`${this.apiServerUrl}/enrollment/complete?lessonId=${lessonId}&courseId=${courseId}`, httpOptions)
       .pipe(shareReplay());
   }
 
   markLessonAsInComplete(data: any): Observable<any> {
     const { courseId, lessonId } = data
-    return this.http.patch<any>(`${this.apiServerUrl}/subscription/uncomplete?lessonId=${lessonId}&courseId=${courseId}`, httpOptions)
+    return this.http.patch<any>(`${this.apiServerUrl}/enrollment/uncomplete?lessonId=${lessonId}&courseId=${courseId}`, httpOptions)
       .pipe(shareReplay());
   }
 

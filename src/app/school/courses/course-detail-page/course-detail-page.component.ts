@@ -12,7 +12,7 @@ import { ChapterService } from '../../chapters/chapter.service';
 import { AuthService } from '../../../user/auth.service';
 import { User } from '../../../user/user.model';
 import { environment } from 'src/environments/environment';
-import { CourseSubscription } from '../../studentCourse';
+import { CourseEnrollment } from '../../studentCourse';
 import { PaymentService } from 'src/app/services/payment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PaymentPopupComponent } from 'src/app/shared/payment-popup/payment-popup.component';
@@ -31,7 +31,7 @@ export class CourseDetailPageComponent implements OnInit {
   lessons$: Observable<Lesson[]>;
   course: Course;
 
-  courseSubscription$: Observable<CourseSubscription>;
+  courseEnrollment$: Observable<CourseEnrollment>;
   isSubscriber: boolean;
   isLoading: boolean;
 
@@ -226,7 +226,7 @@ export class CourseDetailPageComponent implements OnInit {
         })
       );
 
-    this.courseSubscription$ = this.route.data
+    this.courseEnrollment$ = this.route.data
       .pipe(
         map(({ sub }) => {
           if (sub === true) return;

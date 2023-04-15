@@ -14,7 +14,7 @@ import { Lesson } from '../lesson';
 import { ChapterService } from '../../chapters/chapter.service';
 import { FormGroup } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { CourseSubscription } from '../../studentCourse';
+import { CourseEnrollment } from '../../studentCourse';
 import { capitalizeString } from 'src/app/services/utilities.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -51,7 +51,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   lessonID!: any;
   courseID!: any;
-  courseSubscriptionID: any;
+  courseEnrollmentID: any;
 
   course$: Observable<Course>;
   lessonVideo$: Observable<any>;
@@ -59,7 +59,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
-  courseSubscription$: Observable<CourseSubscription>;
+  courseEnrollment$: Observable<CourseEnrollment>;
   prevLesson$: Observable<any>;
   nextLesson$: Observable<any>;
   nextLesson: Lesson;
@@ -423,13 +423,13 @@ export class LessonComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.courseSubscription$ = this.route.data
+    this.courseEnrollment$ = this.route.data
       .pipe(
         map(({ sub }) => {
           if (sub === true) return;
 
           this.isSubscriber = !!sub;
-          this.courseSubscriptionID = sub.id
+          this.courseEnrollmentID = sub.id
           this.completedLessons = sub.completedLessons;
           this.completedLessonsIds = [...new Set(sub.completedLessons.map((l:Lesson) => l.id))] as number[];
           this.completed = this.isLessonCompleted(this.lesson);

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CourseSubscriptionResolver } from './course-subscription.resolver';
+import { CourseEnrollmentResolver } from './course-enrollment.resolver';
 
 const routes: Routes = [
   {
