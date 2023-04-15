@@ -4,8 +4,11 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CourseService } from '../school/courses/course.service';
+import { CourseEnrollment } from '../school/studentCourse';
 import { MessageService } from '../services/message.service';
-import { User } from './user.model';
+import { PLANS, ROLES, User } from './user.model';
+import { FileUploadService } from '../services/file-upload.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,6 +28,9 @@ export class AuthService {
   private subject = new BehaviorSubject<User>(null!);
   public user$ = this.subject.asObservable();
 
+  private userEnrollmentsSubject = new BehaviorSubject<CourseEnrollment[]>([]);
+  public userEnrollments$ = this.userEnrollmentsSubject.asObservable();
+
   public isLoggedIn$!: Observable<boolean>;
   public isLoggedOut$!: Observable<boolean>;
 
@@ -41,7 +47,10 @@ export class AuthService {
     @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private courseService: CourseService,
+    private fileUploadService: FileUploadService,
+    @Inject(PLATFORM_ID) private platformId: any,
   ) {
     // this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
     this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
@@ -282,6 +291,16 @@ export class AuthService {
     )
   }
 
+  private loadUserAllSubs() {
+    return this.courseService.findAllSubscribedCourses({pageNumber: 0, pageSize: 1000})
+      .pipe(
+        tap(({ content }) => {
+          this.userEnrollmentsSubject.next(content)
+          localStorage?.setItem('_subs', JSON.stringify(content.map((d: CourseEnrollment) => d.id)));
+        })
+      ).subscribe()
+  }
+
   private loadLoggedInUser(accessToken: string, tokenType: string, refreshToken = '') {
     this.getUser(accessToken, tokenType)
       .subscribe({
@@ -289,8 +308,12 @@ export class AuthService {
           this.subject.next(usr);
           localStorage.setItem(this.TOKEN_NAME, accessToken);
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
-          this.setUserData(usr);
-          this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
+
+          this.setUserData(usr)
+          this.fileUploadService.getOvhToken();
+          this.fileUploadService.xToken$.subscribe();
+          this.isAdmin = this.checkRole(usr.roles, ROLES.ADMIN);
+          this.isPro = this.currentUsr.plan === PLANS.PRO
 
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)
@@ -306,7 +329,7 @@ export class AuthService {
   }
 
   private clearLSwithoutExcludedKey() {
-    const excludedKey = 'x_token'
+    const excludedKey = '';
     const keys = []
     if (isPlatformBrowser(this.platformId)) {
       for (let i = 0; i < localStorage.length; i++) {

@@ -1,5 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
+import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay, EMPTY } from 'rxjs';
+import { Course, Reaction } from '../course';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CourseService } from '../course.service';
+import { MessageService } from '../../../services/message.service';
+import { NavigationService } from '../../../services/navigation.service';
+import { Lesson } from '../../lessons/lesson';
+import { Chapter } from '../../chapters/chapter';
+import { ChapterService } from '../../chapters/chapter.service';
+import { AuthService } from '../../../user/auth.service';
+import { User } from '../../../user/user.model';
+import { environment } from 'src/environments/environment';
+import { CourseEnrollment } from '../../studentCourse';
+import { PaymentService } from 'src/app/services/payment.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PaymentPopupComponent } from 'src/app/shared/payment-popup/payment-popup.component';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -14,9 +30,9 @@ export class CourseDetailPageComponent implements OnInit {
   public practiceSectionImage = 'https://ik.imagekit.io/lfegvix1p/Mesa-1_rxodYJjzE.svg';
   public masterSectionImage = 'https://ik.imagekit.io/lfegvix1p/inspiration_EkvzNOIP2U.svg';
 
-  public lessonGroupImage1 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
-  public lessonGroupImage2 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
-  public lessonGroupImage3 = 'https://ik.imagekit.io/lfegvix1p/presentation_1_-REzJE-9c.svg';
+  courseEnrollment$: Observable<CourseEnrollment>;
+  isSubscriber: boolean;
+  isLoading: boolean;
 
 
   course: any = {
@@ -76,7 +92,29 @@ export class CourseDetailPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // do nothing.
+
+    this.course$ = this.route.paramMap
+      .pipe(
+        switchMap(params => {
+          this.courseID = params.get('course_id');
+
+          this.chapters$ = this.chapterService
+            .fetchAllChapters(this.courseID);
+          
+          return this.getCourse();
+        })
+      );
+
+    this.courseEnrollment$ = this.route.data
+      .pipe(
+        map(({ sub }) => {
+          if (sub === true) return;
+          
+          this.isSubscriber = !!sub;
+          return sub
+        })
+      )
+
   }
 
 }

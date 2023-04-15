@@ -12,6 +12,14 @@ import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
 import { Lesson } from '../lesson';
 import { ChapterService } from '../../chapters/chapter.service';
+import { FormGroup } from '@angular/forms';
+import { ThemePalette } from '@angular/material/core';
+import { CourseEnrollment } from '../../studentCourse';
+import { capitalizeString } from 'src/app/services/utilities.service';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material/sidenav';
+import { environment } from 'src/environments/environment';
+import { PaymentService } from 'src/app/services/payment.service';
 
 
 @Component({
@@ -26,14 +34,19 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   lessonID!: any;
   courseID!: any;
-
-  canEdit: boolean = false;
+  courseEnrollmentID: any;
 
   courseVideos$: Observable<any[]>;
   lessonVideo$: Observable<any>;
 
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
+  courseEnrollment$: Observable<CourseEnrollment>;
+  prevLesson$: Observable<any>;
+  nextLesson$: Observable<any>;
+  nextLesson: Lesson;
+
+  CompletedText$ = new Subject<boolean>();
 
   imageTypes = ['png', 'jpeg', 'jpg', 'svg'];
 
@@ -109,6 +122,22 @@ export class LessonComponent implements OnInit, OnDestroy {
       }
     );
 
+    this.courseEnrollment$ = this.route.data
+      .pipe(
+        map(({ sub }) => {
+          if (sub === true) return;
+
+          this.isSubscriber = !!sub;
+          this.courseEnrollmentID = sub.id
+          this.completedLessons = sub.completedLessons;
+          this.completedLessonsIds = [...new Set(sub.completedLessons.map((l:Lesson) => l.id))] as number[];
+          this.completed = this.isLessonCompleted(this.lesson);
+          this.lessonsCount = sub.course.lessonsCount;
+          this.loadCompleteProgressBar(this.completedLessonsIds);
+
+          return sub
+        })
+      )
   }
 
   ngOnDestroy(): void {

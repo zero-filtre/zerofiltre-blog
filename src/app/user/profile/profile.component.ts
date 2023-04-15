@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../auth.service';
@@ -12,6 +12,8 @@ import { map, Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { environment } from 'src/environments/environment';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -32,6 +34,7 @@ export class ProfileComponent implements OnInit {
     public authService: AuthService,
     private messageService: MessageService,
     private translate: TranslateService,
+    @Inject(PLATFORM_ID) private platformID: any
   ) { }
 
   public openPasswordEntryDialog(): void {
@@ -72,7 +75,11 @@ export class ProfileComponent implements OnInit {
         map(user => user)
       )
 
-    this.authService.refreshUser().subscribe();
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformID)) {
+      this.loadUser();
+    }
 
     this.seo.generateTags({
       title: this.translate.instant('meta.profileTitle'),

@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
@@ -23,7 +23,8 @@ export class FooterComponent implements OnInit {
   constructor(
     private loadEnvService: LoadEnvService,
     private articleService: ArticleService,
-    private seo: SeoService
+    private seo: SeoService,
+    @Inject(PLATFORM_ID) private platformID: any
   ) { }
 
   loadCurrentYear() {
@@ -38,10 +39,7 @@ export class FooterComponent implements OnInit {
     return this.seo.isFooterMounted
   }
 
-  ngOnInit(): void {
-    this.isMounted();
-    this.loadCurrentYear();
-
+  fetchRecentArticles() {
     this.recentArticles$ = this.articleService
       .findAllArticleByFilter(0, 5, this.PUBLISHED)
       .pipe(
@@ -50,6 +48,16 @@ export class FooterComponent implements OnInit {
         }),
         // tap(console.log)
       )
+  }
+
+  ngOnInit(): void {
+    this.isMounted();
+    this.loadCurrentYear();
+
+    if (isPlatformBrowser(this.platformID)) {
+      this.fetchRecentArticles();
+    }
+    
   }
 
 }

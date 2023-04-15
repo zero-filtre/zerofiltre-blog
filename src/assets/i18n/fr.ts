@@ -50,7 +50,7 @@ export const fr = {
         myProfile: 'Mon profil',
         logout: 'Se déconnecter',
         courses: 'Cours',
-        blog: 'Blog',
+        blog: 'Articles',
         services: 'Services',
         portfolio: 'Services',
         contact: 'Contact',
