@@ -1,5 +1,14 @@
 <main class="bg-white pb-5">
-    <div class="site-container lg:h-full grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-0 items-center">
+    <div class="flex justify-center items-center h-[88vh]" *appShellRender>
+        <svg class="w-40 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="2" r="35"
+                stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                style="animation-play-state:paused"></circle>
+        </svg>
+    </div>
+
+    <div class="site-container lg:h-full grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-0 items-center" *appShellRender>
 
         <div class="col-span-6 lg:order-2">
             <app-image [classes]="'object-contain max-w-[300px] lg:max-w-full m-auto'"
