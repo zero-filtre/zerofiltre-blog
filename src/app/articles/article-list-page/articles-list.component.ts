@@ -28,7 +28,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
   TRENDING = 'most_viewed';
   TAGS = 'tags';
 
-  dddSponsorContentSourceUrl = 'https://ik.imagekit.io/lfegvix1p/Frame_DDD_mxMc3-SbQ.svg?updatedAt=1655189575556'
+  dddSponsorContentSourceUrl = 'https://ik.imagekit.io/lfegvix1p/ddd-imagee_7A342RNOT.svg?updatedAt=1681558221642'
 
   noArticlesAvailable!: boolean;
   loadArticlesErrorMessage!: boolean;
