@@ -30,7 +30,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   TRENDING = 'most_viewed';
   TAGS = 'tags';
 
-  dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg';
+  dddSponsorContentSourceUrl = 'https://ik.imagekit.io/lfegvix1p/Frame_DDD_mxMc3-SbQ.svg?updatedAt=1655189575556';
 
   activePage: string = this.RECENT;
   mainPage = true;
