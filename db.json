@@ -1,0 +1,227 @@
+{
+  "courses": [
+    {
+      "title": "Ce cours",
+      "summary": "La description du cours a ete modifié...",
+      "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/rouge.jpeg",
+      "firstLessonId": 1,
+      "tags": [
+        {
+          "name": "tag 1"
+        },
+        {
+          "name": "tag 2"
+        }
+      ],
+      "enrolledCount": 0,
+      "duration": 0,
+      "chapterCount": 0,
+      "lessonCount": 0,
+      "editorIds": [],
+      "id": 1
+    },
+    {
+      "title": "Autre cours",
+      "summary": "La description de ce cours est claire",
+      "thumbnail": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_vert.jpeg",
+      "firstLessonId": 1,
+      "tags": [
+        {
+          "name": "tag 1"
+        },
+        {
+          "name": "tag 2"
+        }
+      ],
+      "enrolledCount": 0,
+      "duration": 0,
+      "chapterCount": 0,
+      "lessonCount": 0,
+      "editorIds": [],
+      "id": 2
+    },
+    {
+      "title": "router",
+      "summary": "La description du cours...",
+      "thumbnail": "",
+      "firstLessonId": 1,
+      "tags": [
+        {
+          "name": "tag 1"
+        },
+        {
+          "name": "tag 2"
+        }
+      ],
+      "enrolledCount": 0,
+      "duration": 0,
+      "chapterCount": 0,
+      "lessonCount": 0,
+      "editorIds": [],
+      "id": 3
+    }
+  ],
+  "lessons": [
+    {
+      "title": "lesson 1 modifiée leçon",
+      "content": "Let's do it well!\n\n![alt](https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/Screen%20Shot%202022-11-02%20at%205.01.28%20PM.png)\n",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 1,
+      "courseId": 1,
+      "id": 1,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "ressources": [
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/vert.jpeg",
+          "type": "jpeg",
+          "name": "vert.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/p_blanc.jpeg",
+          "type": "jpeg",
+          "name": "p_blanc.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/DV-2024-Instructions.pdf",
+          "type": "pdf",
+          "name": "DV-2024-Instructions.pdf"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/rouge.jpeg",
+          "type": "jpeg",
+          "name": "rouge.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/vert.jpeg",
+          "type": "jpeg",
+          "name": "vert.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/blanc.jpeg",
+          "type": "jpeg",
+          "name": "blanc.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/blanc.jpeg",
+          "type": "jpeg",
+          "name": "blanc.jpeg"
+        },
+        {
+          "url": "https://storage.gra.cloud.ovh.net/v1/AUTH_5159edadfde2413fb43128c1fef06fbf/zerofiltre-object-container/DV-2024-Instructions.pdf",
+          "type": "pdf",
+          "name": "DV-2024-Instructions.pdf"
+        }
+      ],
+      "video": "https://vimeo.com/778254627"
+    },
+    {
+      "title": "lesson 2",
+      "content": "Un petit contenu de la lecon",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 1,
+      "courseId": 1,
+      "id": 2,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": "https://vimeo.com/778448877",
+      "ressources": []
+    },
+    {
+      "title": "lesson 3",
+      "content": "Un petit contenu de la lecon",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 1,
+      "courseId": 1,
+      "id": 3,
+      "summary": "Un petit resume de la lesson ici",
+      "thumbnail": null,
+      "video": "",
+      "ressources": []
+    },
+    {
+      "title": "lesson 3",
+      "content": "Un petit contenu de la lecon",
+      "free": true,
+      "type": "video",
+      "duration": "9:20",
+      "chapterId": 16,
+      "courseId": 1,
+      "id": 4
+    }
+  ],
+  "chapters": [
+    {
+      "title": "update du chap suivant",
+      "courseId": 1,
+      "id": 1
+    },
+    {
+      "title": "update chapitre",
+      "id": 2
+    },
+    {
+      "title": "hello",
+      "id": 3
+    },
+    {
+      "title": "cccd",
+      "id": 4
+    },
+    {
+      "title": "dscdfd",
+      "id": 5
+    },
+    {
+      "title": "sdsdds",
+      "id": 6
+    },
+    {
+      "title": "sdsdsdsd",
+      "id": 7
+    },
+    {
+      "title": "dsdsds",
+      "id": 8
+    },
+    {
+      "title": "dsdsds",
+      "id": 9
+    },
+    {
+      "title": "dsdfdsd",
+      "id": 10
+    },
+    {
+      "title": "sdsdsds",
+      "id": 11
+    },
+    {
+      "title": "sdsdsds",
+      "id": 12
+    },
+    {
+      "title": "ssxqsx",
+      "id": 13
+    },
+    {
+      "title": "dcscsdc",
+      "id": 14
+    },
+    {
+      "title": "csqdsqd",
+      "id": 15
+    },
+    {
+      "title": "chap 2",
+      "courseId": 1,
+      "id": 16
+    }
+  ]
+}
