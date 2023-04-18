@@ -61,18 +61,18 @@
             <div *ngIf="fullScreenOn">
                 <app-auto-save-button [form]="form" [loading]="isLoading" [isPublishing]="isPublishing"
                     [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
-                    (publishEvent)="initPublish()">
+                    (publishEvent)="initPublish()" [showBtn]="showFullscreenPublishBtn">
                 </app-auto-save-button>
             </div>
 
-            <button aria-label="click here to enter full screen" (click)="toggleFullScreen()"
-                class="toggle_fullScreen_btn inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+            <button *ngIf="fullscreenBtn" aria-label="click here to enter full screen" (click)="toggleFullScreen()"
+                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
                 <mat-icon *ngIf="!fullScreenOn" class="">fullscreen</mat-icon>
                 <mat-icon *ngIf="fullScreenOn" class="">fullscreen_exit</mat-icon>
             </button>
 
-            <div
-                class="add_image_btn relative cursor-pointer inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+            <div *ngIf="imageBtn"
+                class="add_image_btn relative cursor-pointer inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
                 <input class="sr-only" (change)="onFileSelected($event)" type="file" id="editorFileUpload"
                     name="editorFileUpload" #editorFileUpload accept="image/*">
                 <svg (click)="editorFileUpload.click()" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -85,15 +85,15 @@
         </div>
 
         <ng-template #exitFullScreenBtn>
-            <button aria-label="click here to enter full screen" (click)="toggleFullScreen()"
-                class="toggle_fullScreen_btn inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+            <button *ngIf="fullscreenBtn" aria-label="click here to enter full screen" (click)="toggleFullScreen()"
+                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
                 <mat-icon *ngIf="!fullScreenOn" class="">fullscreen</mat-icon>
                 <mat-icon *ngIf="fullScreenOn" class="">fullscreen_exit</mat-icon>
             </button>
         </ng-template>
     </div>
 
-    <div class="tabs-content-wrapper" [formGroup]="form">
+    <div class="tabs-content-wrapper" [formGroup]="form" [ngStyle]="{'height': height+'vh'}">
         <ng-container *ngIf="content?.invalid && content?.dirty" class="">
             <div *ngIf="content?.errors?.['required']" class="p-4 bg-white text-xs sm:text-sm text-error italic">
                 {{ 'articleEntryEdit.missingArticleContent' | translate }}
@@ -102,20 +102,18 @@
 
         <ng-container *ngIf="activeTab === 'editor'">
             <textarea #editor (keydown)="handleTab($event, false);" formControlName="content" id="content" required
-                class="editor-textarea bg-white text-lg text-[#111] p-4 pb-24 w-full h-[100vh]"
+                class="editor-textarea bg-white text-lg text-[#111] p-4 pb-24 w-full h-full"
                 placeholder="{{ 'articleEntryEdit.articleContentPlaceholder' | translate }}">
             </textarea>
         </ng-container>
 
         <div *ngIf="activeTab === 'preview'"
-            class="markdown-preview-container markdown-content h-screen overflow-y-scroll bg-skin-bg w-full p-4 pb-24">
-            <markdown [data]="content?.value"
-                class="prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-ul:list-disc prose-ol:list-disc">
-            </markdown>
+            class="markdown-preview-container markdown-content h-full overflow-y-scroll bg-skin-bg w-full p-4 pb-24">
+            <app-markdown-preview [data]="content?.value"></app-markdown-preview>
         </div>
 
         <div *ngIf="activeTab === 'help'"
-            class="help-container h-screen overflow-y-scroll bg-skin-card p-4 pb-24 prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:p-1 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-code:mx-1 prose-ul:list-disc prose-ol:list-disc">
+            class="help-container h-full overflow-y-scroll bg-skin-card p-4 pb-24 prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:p-1 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-code:mx-1 prose-ul:list-disc prose-ol:list-disc">
             <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
             <p>
                 {{'articleEntryEdit.helpSubTitle' | translate}}

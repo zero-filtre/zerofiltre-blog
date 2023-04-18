@@ -1,5 +1,5 @@
 export interface Lesson {
-    id: string;
+    id: number;
     title: string;
     content: string;
     summary: string;
@@ -8,12 +8,13 @@ export interface Lesson {
     free: boolean;
     type: any;
     duration: string;
-    chapterId: string;
-    courseId: string;
+    chapterId: number;
     ressources: Ressource[];
+    number: number;
 }
 
 export interface Ressource {
+    id: number;
     type: string;
     url: string;
     name: string;

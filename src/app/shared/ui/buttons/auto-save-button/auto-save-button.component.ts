@@ -15,6 +15,7 @@ export class AutoSaveButtonComponent implements OnInit {
   @Input() isSaving!: boolean;
   @Input() isSaved!: boolean;
   @Input() saveFailed!: boolean;
+  @Input() showBtn: boolean = true;
 
   @Output() publishEvent = new EventEmitter<string>();
 

@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HomePageComponent } from './home-page/home-page.component';
+import { WachatgptHomePageComponent } from './wachatgpt-home-page/wachatgpt-home-page.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -20,6 +21,7 @@ registerLocaleData(localeFr, 'fr');
   declarations: [
     AppComponent,
     HomePageComponent,
+    WachatgptHomePageComponent
   ],
   imports: [
     BrowserModule,

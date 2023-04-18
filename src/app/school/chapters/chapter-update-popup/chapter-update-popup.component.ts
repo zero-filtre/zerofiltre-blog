@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { MessageService } from '../../../services/message.service';
 import { ChapterService } from '../chapter.service';
 
 @Component({
@@ -10,13 +9,12 @@ import { ChapterService } from '../chapter.service';
   styleUrls: ['./chapter-update-popup.component.css']
 })
 export class ChapterUpdatePopupComponent implements OnInit {
-  public title: string = '';
-  public loading: boolean = false;
+  title: string = '';
+  loading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ChapterUpdatePopupComponent>,
     private router: Router,
-    private messageService: MessageService,
     private chapterService: ChapterService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
@@ -30,8 +28,8 @@ export class ChapterUpdatePopupComponent implements OnInit {
     this.loading = true;
 
     const payload = {
-      "id": this.data.chapterId,
-      "title": this.title,
+      ...this.data.chapter,
+      title: this.title,
     }
 
     this.chapterService.updateChapter(payload)
@@ -45,7 +43,7 @@ export class ChapterUpdatePopupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title = this.data.chapterTitle;
+    this.title = this.data.chapter.title;
   }
 
 }

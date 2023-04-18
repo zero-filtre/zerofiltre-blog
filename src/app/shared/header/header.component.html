@@ -42,36 +42,112 @@
                     <div>{{'navbar.register' | translate}}</div>
                 </a>
 
-                <button *ngIf="authService.currentUsr as currentUsr" [matMenuTriggerFor]="menu" class="ml-4"
-                    aria-label="Example icon-button with a menu">
+                <button *ngIf="authService.currentUsr as currentUsr" [matMenuTriggerFor]="menu"  #t="matMenuTrigger" class="user-profile-icon flex gap-2.5 items-center justify-center ml-4 border border-skin-borderBold p-1.5 rounded-full shadow-inner hover:bg-primary-50 hover:bg-opacity-10 transition-all duration-300"
+                    aria-label="User profile icon with a menu">
 
-                    <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
-                        <app-image [classes]="'h-10 w-10 rounded-full'" [sourceUrl]="currentUsr?.profilePicture!"
-                            [alt]="currentUsr?.fullName">
-                        </app-image>
+                    <div class="profile-image">
+                        <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
+                            <app-image [classes]="'h-10 w-10 rounded-full'" [sourceUrl]="currentUsr?.profilePicture!"
+                                [alt]="currentUsr?.fullName">
+                            </app-image>
+                        </div>
+
+                        <div *ngIf="!currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-10 w-10 p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white rounded-full"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
                     </div>
 
-                    <div *ngIf="!currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="h-10 w-10 p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white rounded-full"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    <div class="profile-arrow-down mr-2 relative top-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                            class="w-5 h-5 text-skin-muted transition-all duration-200" [ngClass]="{'!rotate-90': t.menuOpen}">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </div>
+
+                    <mat-menu #menu="matMenu" class="mt-2 text-skin-base w-64">
+                        <a aria-labelledby="Link to user profile page" routerLink="/user/profile"
+                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span>{{'navbar.myProfile' | translate}}</span>
+                        </a>
+
+                        <a aria-labelledby="Link to user articles page" routerLink="/user/dashboard"
+                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            <span>{{'sidebar.myArticles' | translate}}</span>
+                        </a>
+
+                        <a *ngIf="activeCourseModule" aria-labelledby="Link to user student courses page" routerLink="/user/dashboard/courses"
+                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            <span>{{'sidebar.myCourses' | translate}}</span>
+                        </a>
+
+                        <a *ngIf="activeCourseModule" aria-labelledby="Link to user teacher courses page" routerLink="/user/dashboard/teacher/courses"
+                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            <span>{{'sidebar.myTrainings' | translate}}</span>
+                        </a>
+
+                        <a *ngIf="activeCourseModule && authService?.isAdmin" aria-labelledby="Link to about page" routerLink="/user/dashboard/courses/all"
+                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            <span>{{'sidebar.allTrainings' | translate}}</span>
+                        </a>
+
+                        <a *ngIf="authService?.isAdmin" aria-labelledby="Link to about page" routerLink="/user/dashboard/admin"
+                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            <span>{{'profile.allAdminArticles' | translate}}</span>
+                        </a>
+
+                        <button (click)="logout()" aria-labelledby="logout button"
+                            class="flex items-center gap-3 px-4 py-3 hover:bg-skin-link hover:text-error text-sm w-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                            </svg>
+                            <span>{{'navbar.logout' | translate}}</span>
+                        </button>
+                    </mat-menu>
                 </button>
 
-                <mat-menu #menu="matMenu" class="mt-2 font-semibold text-skin-base">
-                    <a aria-labelledby="Link to about page" routerLink="/user/profile"
-                        class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                        <span>{{'navbar.myProfile' | translate}}</span>
-                    </a>
-
-                    <button (click)="logout()" aria-labelledby="logout button"
-                        class="inline-block w-full px-4 py-2 font-semibold hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-                        <span>{{'navbar.logout' | translate}}</span>
-                    </button>
-                </mat-menu>
             </ng-container>
 
         </div>

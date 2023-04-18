@@ -35,13 +35,13 @@ export class TokenExpiredGuard implements CanActivate {
     const authToken = this.authService.token;
     const userOrigin = this.authService?.currentUsr?.loginFrom;
 
-    const refreshExpiryAt = +this.authService.refreshTokenExpiryDate;
+    const refreshTokenExpiresIn = +this.authService.refreshTokenExpiryDate;
     const todayTime = Math.floor(new Date().getTime() / 1000.0);
 
     if (authToken && userOrigin === null) {
-      if (todayTime > refreshExpiryAt) {
+      if (todayTime > refreshTokenExpiresIn) {
         this.authService.logout();
-        this.messageService.openSnackBarError('Votre session est expirée ! Veuillez vous reconnecter.', '');
+        this.messageService.openSnackBarError('Votre session est expirée ! Veuillez vous reconnecter.', 'OK');
       }
     }
   }

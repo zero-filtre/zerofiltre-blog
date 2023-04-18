@@ -15,9 +15,13 @@ import { AppShellRenderDirective } from '../directives/app-shell-render.directiv
 import { AppShellNoRenderDirective } from '../directives/app-shell-no-render.directive';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ImagekitioAngularModule } from 'imagekitio-angular';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatListModule } from '@angular/material/list';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MarkdownModule } from 'ngx-markdown';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './lang-switcher/translate-universal-loader';
@@ -31,6 +35,13 @@ import { VimeoUrlPipe } from './pipes/vimeo-url.pipe';
 import { TextEditorComponent } from './ui/text-editor/text-editor.component';
 import { AutoSaveButtonComponent } from './ui/buttons/auto-save-button/auto-save-button.component';
 import { UploadFormComponent } from './upload-form/upload-form.component';
+import { UrlPipe } from './pipes/url.pipe';
+import { BaseCourseListComponent } from './base-course-list/base-course-list.component';
+import { YoutubeVideoPlayerComponent } from './youtube-video-player/youtube-video-player.component';
+import { MarkdownPreviewComponent } from './markdown-preview/markdown-preview.component';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
+import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
+import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 
 const components = [
   AppShellRenderDirective,
@@ -43,7 +54,13 @@ const components = [
   AutoSaveButtonComponent,
   NotFoundPageComponent,
   VimeoUrlPipe,
-  UploadFormComponent
+  UrlPipe,
+  UploadFormComponent,
+  YoutubeVideoPlayerComponent,
+  BaseCourseListComponent,
+  MarkdownPreviewComponent,
+  PaymentSuccessComponent,
+  PaymentFailedComponent
 ];
 
 const modules = [
@@ -61,11 +78,15 @@ const modules = [
   ReactiveFormsModule,
   InfiniteScrollModule,
   TranslateModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatSelectModule,
+  MatSlideToggleModule,
+  MatListModule,
+  YouTubePlayerModule
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, PaymentPopupComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),

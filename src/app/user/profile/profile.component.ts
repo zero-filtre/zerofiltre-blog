@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../auth.service';
@@ -8,10 +8,11 @@ import { PasswordUpdatePopupComponent } from '../password-update-popup/password-
 import { ProfileImagePopupComponent } from '../profile-image-popup/profile-image-popup.component';
 import { User } from '../user.model';
 import { SeoService } from 'src/app/services/seo.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, shareReplay } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute } from '@angular/router';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { environment } from 'src/environments/environment';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -19,11 +20,14 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  public userID!: string;
-  public loading!: boolean;
+  readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
-  public loggedUser$!: Observable<User>;
-  public user$!: Observable<User>;
+  userID!: string;
+  loading!: boolean;
+  loadingUser!: boolean;
+
+  loggedUser$!: Observable<User>;
+  user$!: Observable<User>;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -32,27 +36,28 @@ export class ProfileComponent implements OnInit {
     public authService: AuthService,
     private messageService: MessageService,
     private translate: TranslateService,
+    @Inject(PLATFORM_ID) private platformID: any
   ) { }
 
-  public openPasswordEntryDialog(): void {
+  openPasswordEntryDialog(): void {
     this.dialogRef.open(PasswordUpdatePopupComponent, {
       panelClass: 'password-popup-panel',
     });
   }
 
-  public openAccountDeleteDialog(): void {
+  openAccountDeleteDialog(): void {
     this.dialogRef.open(DeleteAccountPopupComponent, {
       panelClass: 'delete-account-popup-panel',
     });
   }
 
-  public openProfileImageDeleteDialog(): void {
+  openProfileImageDeleteDialog(): void {
     this.dialogRef.open(ProfileImagePopupComponent, {
       panelClass: 'profile-image-popup-panel',
     });
   }
 
-  public resendConfirmationMail(email: string) {
+  resendConfirmationMail(email: string) {
     this.loading = true;
     this.authService.resendUserConfirm(email).subscribe({
       next: (_response: any) => {
@@ -65,14 +70,23 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  loadUser() {
+    this.loadingUser = true;
+    this.loggedUser$ = this.authService.refreshUser()
+      .pipe(
+        map(user => {
+          this.loadingUser = false;
+          return user;
+        }),
+        shareReplay()
+      )
+  }
+
 
   ngOnInit(): void {
-    this.loggedUser$ = this.authService.user$
-      .pipe(
-        map(user => user)
-      )
-
-    this.authService.refreshUser().subscribe();
+    if (isPlatformBrowser(this.platformID)) {
+      this.loadUser();
+    }
 
     this.seo.generateTags({
       title: this.translate.instant('meta.profileTitle'),

@@ -31,6 +31,11 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
+iframe {
+  max-width: 100%;
+  margin: auto;
+}
+
 /* Extends forms plugin styles with our custom styles in one place */
 @layer base {
   [type="text"],
@@ -57,6 +62,13 @@ img {
 .site-container {
   max-width: 95rem;
   @apply mx-auto px-4 xl:px-[5%];
+}
+.payment-popup .mat-dialog-container {
+   @apply bg-white rounded-2xl;
+}
+
+.edit-section-popup-panel {
+  @apply !overflow-y-scroll;
 }
 
 .article-popup-panel {

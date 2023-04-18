@@ -31,8 +31,8 @@ export class ChapterInitPopupComponent implements OnInit {
 
     const payload =
     {
-      "title": this.title,
-      "courseId": this.data.courseId
+      title: this.title,
+      courseId: this.data.courseId
     }
 
     this.loading = true;
@@ -42,7 +42,6 @@ export class ChapterInitPopupComponent implements OnInit {
         catchError(err => {
           this.loading = false;
           this.dialogRef.close();
-          this.messageService.openSnackBarError("Une erreur s'est produite !", '');
           return throwError(() => err?.message)
         })
       )

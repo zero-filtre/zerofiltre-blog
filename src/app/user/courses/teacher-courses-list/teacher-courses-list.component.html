@@ -1,21 +1,41 @@
 <main class="articles-list-container site-container py-5">
     <div class="max-w-2xl mx-auto">
         <div class="main-side-container">
-            <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
+            <div class="dashboard-navigation-btns flex lg:hidden mt-2 sm:mt-8">
+                <button aria-label="Navigate back button" (click)="navigate.back()" class="flex items-center gap-1 font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="text-primary-500" data-supported-dps="24x24"
+                        fill="currentColor" width="24" height="24" focusable="false">
+                        <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
+                    </svg>
+                    <span class="text-primary-500 hidden text-base">
+                        {{'dashboard.backToProfileText' | translate}}
+                    </span>
+                </button>
+            
+                <div class="flex-1">
+                    <h1 class="text-primary-500 font-semibold text-xl sm:text-2xl text-center">
+                        Mes formations
+                    </h1>
+                </div>
+            </div>
+
+            <div class="tabs-wrapper relative flex items-center justify-between mt-8 border-b border-skin-border">
                 <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
-                    <button type="button" aria-current="page" aria-labelledby="Toggle to published articles tab"
+                    <button type="button" (click)="sortByTab(PUBLISHED)" aria-current="page"
+                        aria-labelledby="Toggle to published articles tab"
                         [ngClass]="activePage === PUBLISHED ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'dashboard.published' | translate}}</span>
                     </button>
 
-                    <button type=" button" aria-current="false" aria-labelledby="Toggle to draft articles tab"
+                    <button type=" button" (click)="sortByTab(DRAFT)" aria-current="false" aria-labelledby="Toggle to draft articles tab"
                         [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'dashboard.draft' | translate}}</span>
                     </button>
 
-                    <button type="button" aria-current="false" aria-labelledby="Toggle to in-review articles tab"
+                    <button type="button" (click)="sortByTab(IN_REVIEW)" aria-current="false"
+                        aria-labelledby="Toggle to in-review articles tab"
                         [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'dashboard.inReview' | translate}}</span>
@@ -23,7 +43,7 @@
                 </nav>
 
                 <div *ngIf="authService.currentUsr">
-                    <button aria-label="Button to create a new article" (click)="openCourseEntryDialog()" type="button"
+                    <button aria-label="Button to create a new course" (click)="openCourseEntryDialog()" type="button"
                         class="">
                         <span class="sr-only">Nouveau cours</span>
                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +74,7 @@
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
 
                             <a aria-labelledby="Link to course detail page"
-                                routerLink="{{canAccess ? '/cours/' + course.id + '/' + course.firstLessonId : course.id}}"
+                                routerLink="{{'/cours/' + course.id + '/' + '?'}}"
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -68,24 +88,24 @@
                                 <div class="flex justify-between items-start">
                                     <!-- Liste des tags du cours -->
                                     <div class="article-tags-container flex flex-wrap items-center gap-1">
-                                        <a class="tag-item flex items-center space-x-2 group">
+                                        <a *ngFor="let tag of course?.tags" routerLink='/cours' [queryParams]="{tag:tag.name}"
+                                            class="tag-item flex items-center space-x-2 group">
                                             <span
                                                 class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
-                                                <svg [ngStyle]="{'color': ''}" class="mr-1 h-2 w-2" fill="currentColor"
-                                                    viewBox="0 0 8 8">
+                                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
                                                     <circle cx="4" cy="4" r="3"></circle>
                                                 </svg>
                                                 <span class="hover:text-primary-500">
-                                                    tag du cours
+                                                    {{tag.name}}
                                                 </span>
-
+                                        
                                             </span>
                                         </a>
 
                                     </div>
 
                                     <!-- Contextuel menu for editing -->
-                                    <div *ngIf="canAccess">
+                                    <div *ngIf="canEditCourse(course)">
                                         <button [matMenuTriggerFor]="menu"
                                             class="rounded-full p-2 opacity-0 group-hover:opacity-100 hover:bg-skin-link transition-all duration-500"
                                             aria-label="icon-button with a menu">
@@ -114,11 +134,11 @@
                                 <div class="mt-2">
 
                                     <a aria-labelledby="Link to about page"
-                                        routerLink="{{canAccess ? '/cours/' +course.id + '/' + course.firstLessonId : course.id}}"
+                                        routerLink="{{'/cours/' + course.id + '/' + '?'}}"
                                         class="article-title">
                                         <h4
                                             class="text-lg inline-block leading-6 font-semibold text-skin-inverted hover:text-primary-500 transition-all duration-200">
-                                            Titre de mon premier cours en tant que prof
+                                            {{course?.title}}
                                         </h4>
                                     </a>
 
@@ -167,10 +187,22 @@
                                                         d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
                                                     <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
                                                 </svg>
-                                                <span>140</span>
+                                                <span>{{course.enrolledCount}}</span>
 
                                                 <span class="enrol-tooltip">
                                                     suivent ce cours
+                                                </span>
+                                            </span>
+
+                                            <span class="inline-flex enrol-total relative items-center gap-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-4 text-accent-300" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                                <span>{{course?.reactions?.length}}</span>
+                                                <span class="enrol-tooltip">
+                                                    aiment ce cours
                                                 </span>
                                             </span>
                                         </div>
@@ -186,7 +218,7 @@
                                 <a routerLink="/courses/learn-ddd" class="flex flex-col lg:flex-row items-center">
                                     <div class="card-image flex-1 p-4">
                                         <app-image [classes]="'object-cover w-[250px] lg:w-[52%] m-auto'"
-                                            [alt]="'apprener le DDD'" [sourceUrl]="dddSponsorContentSourceUrl">
+                                            [alt]="'apprener le DDD'" [sourceUrl]="''">
                                         </app-image>
                                     </div>
                                     <div class="card-body flex-1 p-4 flex flex-col gap-4">
@@ -289,7 +321,7 @@
                 </ng-template>
 
                 <!-- No Content Found Message -->
-                <ng-template [ngIf]="noArticlesAvailable">
+                <ng-template [ngIf]="noCourseAvailable">
                     <div class="flex flex-col justify-center items-center h-96 space-y-5">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-primary-500" fill="currentColor"
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -314,7 +346,7 @@
                 </div>
 
                 <!-- Alert no more Courses -->
-                <div *ngIf="notEmptyArticles" class="py-5">
+                <div *ngIf="notEmptyCourses" class="py-5">
                     <div class="flex justify-center">
                         <div class="text-skin-base text-sm font-bold">{{ 'articles.noMoreArticles' | translate }}</div>
                     </div>

@@ -4,8 +4,11 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CourseService } from '../school/courses/course.service';
+import { CourseEnrollment } from '../school/studentCourse';
 import { MessageService } from '../services/message.service';
-import { User } from './user.model';
+import { PLANS, ROLES, User } from './user.model';
+import { FileUploadService } from '../services/file-upload.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,7 +17,6 @@ const httpOptions = {
   })
 };
 
-const fakeCourseIds = [1, 2, 3];
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +27,9 @@ export class AuthService {
   private subject = new BehaviorSubject<User>(null!);
   public user$ = this.subject.asObservable();
 
+  private userEnrollmentsSubject = new BehaviorSubject<CourseEnrollment[]>([]);
+  public userEnrollments$ = this.userEnrollmentsSubject.asObservable();
+
   public isLoggedIn$!: Observable<boolean>;
   public isLoggedOut$!: Observable<boolean>;
 
@@ -33,28 +38,29 @@ export class AuthService {
 
   private redirectURL: string;
 
-  public isAdmin!: boolean;
+  public isAdmin: boolean;
+  public isPro: boolean;
 
   private refreshData!: boolean
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: any,
     private http: HttpClient,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private courseService: CourseService,
+    private fileUploadService: FileUploadService,
+    @Inject(PLATFORM_ID) private platformId: any,
   ) {
-    // this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
     this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.redirectURL = '';
-    this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
+    this.isAdmin = this.currentUsr ? this.checkRole(this.currentUsr?.roles, ROLES.ADMIN) : false;
+    this.isPro = this.currentUsr ? this.currentUsr.plan === PLANS.PRO : false;
 
     this.loadCurrentUser();
   }
 
-
-  // AUTH SERVICES
 
   private loadCurrentUser() {
     if (isPlatformBrowser(this.platformId)) {
@@ -87,7 +93,7 @@ export class AuthService {
         tap(usr => {
           this.subject.next(usr);
           this.setUserData(usr);
-          this.refreshData = false
+          this.refreshData = false;
           httpOptions.headers = httpOptions.headers.delete('x-refresh');
         }),
         shareReplay()
@@ -136,17 +142,17 @@ export class AuthService {
     }
   }
 
-  public setUserData(user: User) {
+  setUserData(user: User) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('user_data', JSON.stringify({ ...user, courseIds: fakeCourseIds }));
+      localStorage.setItem('user_data', JSON.stringify(user));
     }
   }
 
-  public setRedirectUrlValue(redirectURL: string) {
+  setRedirectUrlValue(redirectURL: string) {
     this.redirectURL = redirectURL;
   }
 
-  public sendRefreshToken(): Observable<any> {
+  sendRefreshToken(): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/jwt/refreshToken?refreshToken=${this.refreshToken}`)
       .pipe(
         tap(({ accessToken, refreshToken }) => {
@@ -156,7 +162,7 @@ export class AuthService {
       )
   }
 
-  public login(credentials: FormData, redirectURL: any): Observable<any> {
+  login(credentials: FormData, redirectURL: any): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
       observe: 'response'
     }).pipe(
@@ -167,7 +173,7 @@ export class AuthService {
     );
   }
 
-  public signup(credentials: FormData): Observable<User> {
+  signup(credentials: FormData): Observable<User> {
     return this.http.post<User>(`${this.apiServerUrl}/user`, credentials, {
       observe: 'response'
     }).pipe(
@@ -178,29 +184,33 @@ export class AuthService {
     )
   }
 
-  public logout() {
+  logout() {
+    // if (confirm("Voulez-vous vraiment vous deconnecter ?")) {
+    // }
     this.subject.next(null!);
     this.clearLSwithoutExcludedKey()
+    this.isAdmin = false;
+    this.isPro = false;
   }
 
-  public requestPasswordReset(email: string): Observable<any> {
+  requestPasswordReset(email: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/initPasswordReset?email=${email}`, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
-  public verifyTokenForPasswordReset(token: string): Observable<any> {
+  verifyTokenForPasswordReset(token: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/verifyTokenForPasswordReset?token=${token}`)
       .pipe(shareReplay())
   }
 
-  public savePasswordReset(values: FormData): Observable<any> {
+  savePasswordReset(values: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/user/savePasswordReset`, values, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
-  public registrationConfirm(token: string): Observable<any> {
+  registrationConfirm(token: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/registrationConfirm?token=${token}`, {
       responseType: 'text' as 'json'
     }).pipe(
@@ -209,13 +219,13 @@ export class AuthService {
     );
   }
 
-  public resendUserConfirm(email: string): Observable<any> {
+  resendUserConfirm(email: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/user/resendRegistrationConfirm?email=${email}`, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
-  public getGithubAccessTokenFromCode(code: string): Observable<any> {
+  getGithubAccessTokenFromCode(code: string): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/user/github/accessToken?code=${code}`, {}, {
       observe: 'response'
     }).pipe(
@@ -226,20 +236,20 @@ export class AuthService {
     )
   }
 
-  public InitSOLoginWithAccessToken(accessToken: string) {
+  InitSOLoginWithAccessToken(accessToken: string) {
     this.loadLoggedInUser(accessToken, 'stack');
   }
 
 
   // USER PROFILE SERVICES
 
-  public updateUserPassword(passwords: FormData): Observable<any> {
+  updateUserPassword(passwords: FormData): Observable<any> {
     return this.http.post<string>(`${this.apiServerUrl}/user/updatePassword`, passwords, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
   }
 
-  public updateUserProfile(profile: any): Observable<User> {
+  updateUserProfile(profile: any): Observable<User> {
     return this.http.patch<User>(`${this.apiServerUrl}/user`, profile)
       .pipe(
         tap(_ => this.refreshData = true),
@@ -247,14 +257,14 @@ export class AuthService {
       );
   }
 
-  public findUserProfile(userId: string): Observable<User> {
+  findUserProfile(userId: string): Observable<User> {
     return this.http.get<User>(`${this.apiServerUrl}/user/profile/${userId}`)
       .pipe(
         shareReplay()
       )
   }
 
-  public deleteUserAccount(userId: string): Observable<any> {
+  deleteUserAccount(userId: string): Observable<any> {
     return this.http.delete<any>(`${this.apiServerUrl}/user/${userId}`, {
       responseType: 'text' as 'json'
     }).pipe(shareReplay())
@@ -282,21 +292,38 @@ export class AuthService {
     )
   }
 
+  private loadUserAllSubs() {
+    return this.courseService.findAllSubscribedCourses({pageNumber: 0, pageSize: 1000})
+      .pipe(
+        tap(({ content }) => {
+          this.userEnrollmentsSubject.next(content)
+          localStorage?.setItem('_subs', JSON.stringify(content.map((d: CourseEnrollment) => d.id)));
+        })
+      ).subscribe()
+  }
+
   private loadLoggedInUser(accessToken: string, tokenType: string, refreshToken = '') {
     this.getUser(accessToken, tokenType)
       .subscribe({
         next: usr => {
           this.subject.next(usr);
           localStorage.setItem(this.TOKEN_NAME, accessToken);
+
           if (refreshToken) localStorage.setItem(this.REFRESH_TOKEN_NAME, refreshToken);
-          this.setUserData(usr);
-          this.isAdmin = this.checkRole(this.currentUsr?.roles, 'ROLE_ADMIN');
+
+          this.setUserData(usr)
+          this.fileUploadService.getOvhToken();
+          this.fileUploadService.xToken$.subscribe();
+          this.isAdmin = this.checkRole(usr.roles, ROLES.ADMIN);
+          this.isPro = this.currentUsr.plan === PLANS.PRO
 
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)
           } else {
             this.router.navigateByUrl('/articles');
           }
+
+          this.loadUserAllSubs();
         },
         error: (_err: HttpErrorResponse) => {
           this.messageService.loadUserFailed();
@@ -306,7 +333,7 @@ export class AuthService {
   }
 
   private clearLSwithoutExcludedKey() {
-    const excludedKey = 'x_token'
+    const excludedKey = '';
     const keys = []
     if (isPlatformBrowser(this.platformId)) {
       for (let i = 0; i < localStorage.length; i++) {
@@ -319,7 +346,6 @@ export class AuthService {
   }
 
   private checkRole(roles: string[], role: string): boolean {
-    // return roles?.some((role: string) => role === role);
     return roles?.includes(role);
   }
 

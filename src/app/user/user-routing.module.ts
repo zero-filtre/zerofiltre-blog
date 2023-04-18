@@ -16,13 +16,22 @@ import { PublicProfileComponent } from './public-profile/public-profile.componen
 import { SocialAuthComponent } from './social-auth/social-auth.component';
 import { UserResolver } from './user.resolver';
 import { SingleRouteGuard } from '../shared/guard/single-route.guard';
+import { AdminCoursesListComponent } from './courses/admin-courses-list/admin-courses-list.component';
 
 
 
 const routes: Routes = [
-  { path: 'passwordReset', component: PasswordRenewalPageComponent, canActivate: [LoggedInAuthGuard] },
-  { path: 'accountConfirmation', component: AccountConfirmationPageComponent },
-  { path: 'social-auth', component: SocialAuthComponent, canActivate: [LoggedInAuthGuard] },
+  { path: 'passwordReset', 
+    component: PasswordRenewalPageComponent, 
+    canActivate: [LoggedInAuthGuard] 
+  },
+  { path: 'accountConfirmation', 
+    component: AccountConfirmationPageComponent 
+  },
+  { path: 'social-auth', 
+    component: SocialAuthComponent, 
+    canActivate: [LoggedInAuthGuard] 
+  },
 
   {
     path: 'profile',
@@ -37,10 +46,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [TokenExpiredGuard, AuthGuard, HasRoleGuard],
-    data: {
-      role: 'ROLE_USER'
-    }
+    canActivate: [TokenExpiredGuard, AuthGuard],
   },
   {
     path: 'dashboard/admin',
@@ -53,22 +59,16 @@ const routes: Routes = [
   {
     path: 'dashboard/courses',
     component: StudentCoursesListComponent,
-    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
-    data: {
-      role: 'ROLE_USER'
-    }
+    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard],
   },
   {
-    path: 'dashboard/courses/teacher',
+    path: 'dashboard/teacher/courses',
     component: TeacherCoursesListComponent,
-    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
-    data: {
-      role: 'ROLE_USER'
-    }
+    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard],
   },
   {
-    path: 'dashboard/courses/teacher/all',
-    component: TeacherCoursesListComponent,
+    path: 'dashboard/courses/all',
+    component: AdminCoursesListComponent,
     canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
     data: {
       role: 'ROLE_ADMIN'

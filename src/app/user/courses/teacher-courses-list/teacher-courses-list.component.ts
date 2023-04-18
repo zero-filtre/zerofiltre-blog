@@ -1,56 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Tag } from 'src/app/articles/article.model';
 import { AuthService } from '../../auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseInitPopupComponent } from 'src/app/school/courses/course-init-popup/course-init-popup.component';
 import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
+import { Course } from 'src/app/school/courses/course';
+import { CourseService } from 'src/app/school/courses/course.service';
+import { Subscription } from 'rxjs';
+import { BaseCourseListComponent } from 'src/app/shared/base-course-list/base-course-list.component';
+import { LoadEnvService } from 'src/app/services/load-env.service';
+import { SeoService } from 'src/app/services/seo.service';
+import { TranslateService } from '@ngx-translate/core';
+import { isPlatformBrowser } from '@angular/common';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-teacher-courses-list',
   templateUrl: './teacher-courses-list.component.html',
   styleUrls: ['./teacher-courses-list.component.css']
 })
-export class TeacherCoursesListComponent implements OnInit {
-  tagList: Tag[] = [];
-  courses: any[] = [];
+export class TeacherCoursesListComponent extends BaseCourseListComponent implements OnInit, OnDestroy {
+  courses$: Subscription;
+
+  courses: Course[] = [];
   pageSize: number = 5;
 
   PUBLISHED = 'published';
   DRAFT = 'draft';
   IN_REVIEW = 'in_review';
-  TAGS = 'tags';
 
-  dddSponsorContentSourceUrl = 'assets/images/ddd-imagee.svg'
-  noArticlesAvailable: boolean = false;
+
+  noCourseAvailable: boolean = false;
   loadingMore: boolean = false;
-  notEmptyArticles: boolean = false;
+  notEmptyCourses: boolean = false;
   loading: boolean = false;
 
   activePage: string = this.PUBLISHED;
   mainPage = true;
 
-  openedTagsDropdown = false;
-  activeTag!: string;
-
-  canAccess: boolean = false;
-
 
   constructor(
+    public loadEnvService: LoadEnvService,
+    public seo: SeoService,
+    public router: Router,
+    public route: ActivatedRoute,
+    public courseService: CourseService,
     public authService: AuthService,
-    private dialogDeleteRef: MatDialog,
+    public translate: TranslateService,
     public dialogEntryRef: MatDialog,
-    private router: Router
-  ) { }
-
-  onScroll() { }
-
-  isAuthor(user: any, cours: any): boolean {
-    return user?.id === cours?.author?.id
+    public dialogDeleteRef: MatDialog,
+    @Inject(PLATFORM_ID) public platformId: any,
+    public navigate: NavigationService,
+  ) {
+    super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
   }
 
-  canAccessCourse() {
-    this.canAccess = this.authService.isAdmin
+  isAuthor(course: Course): boolean {
+    return this.courseService.isAuthor(this.authService.currentUsr, course);
   }
 
   openCourseEntryDialog(): void {
@@ -61,7 +67,7 @@ export class TeacherCoursesListComponent implements OnInit {
     });
   }
 
-  openCourseDeleteDialog(courseId: number | undefined): void {
+  openCourseDeleteDialog(courseId: any): void {
     this.dialogDeleteRef.open(CourseDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
@@ -71,29 +77,99 @@ export class TeacherCoursesListComponent implements OnInit {
     });
   }
 
-  loadData() {
+
+  sortByTab(tab: string): void {
+    this.courses = [];
+
+    if (tab === this.PUBLISHED) {
+      this.activePage = this.PUBLISHED;
+      this.router.navigateByUrl('/user/dashboard/teacher/courses');
+    }
+
+    if (tab === this.DRAFT) {
+      this.activePage = this.DRAFT;
+      this.router.navigateByUrl(`/user/dashboard/teacher/courses?filter=${tab}`);
+    }
+
+    if (tab === this.IN_REVIEW) {
+      this.activePage = this.IN_REVIEW;
+      this.router.navigateByUrl(`/user/dashboard/teacher/courses?filter=${tab}`);
+    }
+
+    this.scrollyPageNumber = 0;
+    this.notEmptyCourses = true;
+  }
+
+  fetchMyCoursesByStatus(status: string) {
     this.loading = true;
-    this.activePage = this.PUBLISHED
+    this.subscription$ = this.courseService
+      .getAllMyCreatedCoursesByStatus(this.pageNumber, this.pageItemsLimit, status)
+      .subscribe(this.handleFetchedCourses);
+  }
 
-    const courses$ = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const data = [
-          ...this.courses,
-          { id: 1, title: 'mon premier cours', summary: 'un magnifique cours', firstLessonId: 1 },
-        ]
-        resolve(data);
-      }, 1000);
-    });
+  fetchMoreCourses(): any {
+    this.scrollyPageNumber += 1;
 
-    courses$.then((data: any[]) => {
-      this.loading = false;
-      this.courses = data;
-    })
+    const queryParam = this.route.snapshot.queryParamMap.get('filter')!;
+
+    if (queryParam === this.DRAFT) {
+      return this.courseService
+        .getAllMyCreatedCoursesByStatus(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          this.DRAFT
+        )
+        .subscribe((response: any) => this.handleFetchNewCourses(response));
+    }
+
+    if (queryParam === 'in-review') {
+      return this.courseService
+        .getAllMyCreatedCoursesByStatus(
+          this.scrollyPageNumber,
+          this.pageItemsLimit,
+          this.IN_REVIEW
+        )
+        .subscribe((response: any) => this.handleFetchNewCourses(response));
+    }
+
+    this.courseService
+      .getAllMyCreatedCoursesByStatus(
+        this.scrollyPageNumber,
+        this.pageItemsLimit,
+        this.PUBLISHED
+      )
+      .subscribe((response: any) => this.handleFetchNewCourses(response));
   }
 
   ngOnInit(): void {
-    this.loadData();
-    this.canAccessCourse()
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.route.queryParamMap.subscribe(
+        query => {
+          this.status = query.get('filter')!;
+          if (!this.status) {
+            this.activePage = this.PUBLISHED;
+            return this.fetchMyCoursesByStatus(this.PUBLISHED);
+          }
+
+          this.activePage = this.status;
+          this.fetchMyCoursesByStatus(this.status);
+        }
+      );
+    }
+
+    this.seo.generateTags({
+      title: this.translate.instant('meta.articlesTitle'),
+      description: this.translate.instant('meta.articlesDescription'),
+      author: 'Zerofiltre.tech',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.subscription$.unsubscribe();
+    }
   }
 
 }

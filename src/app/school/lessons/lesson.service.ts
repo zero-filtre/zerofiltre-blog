@@ -15,36 +15,43 @@ const httpOptions = {
 })
 export class LessonService {
   readonly schoolApi = environment.schoolApi;
+  readonly apiServerUrl = environment.apiBaseUrl;
 
   constructor(
     private http: HttpClient,
   ) { }
 
   fetchAllLessons(courseId: any): Observable<Lesson[]> {
-    return this.http.get<Lesson[]>(`${this.schoolApi}/lessons?courseId=${courseId}`)
+    return this.http.get<Lesson[]>(`${this.apiServerUrl}/lesson?courseId=${courseId}`)
       .pipe(shareReplay());
   }
 
-  findLessonById(lessonId: any, courseId: any): Observable<any> {
-    return this.http.get<any>(`${this.schoolApi}/lessons?id=${lessonId}&courseId=${courseId}`)
+  findLessonById(lessonId: any): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/lesson/${lessonId}`)
+      .pipe(shareReplay());
+  }
+
+  findLessonByPosition(posId: any, courseId: any): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/lesson?position=${posId}&courseId=${courseId}`)
       .pipe(
         map(data => data[0]),
         shareReplay()
       );
   }
 
-  AddLesson(lesson: any): Observable<any> {
-    return this.http.post<any>(`${this.schoolApi}/lessons`, lesson, httpOptions)
+  initLesson(data: any): Observable<any> {
+    const { title, chapterId } = data
+    return this.http.post<any>(`${this.apiServerUrl}/lesson?title=${title}&chapterId=${chapterId}`, httpOptions)
       .pipe(shareReplay());
   }
 
   updateLesson(lesson: any): Observable<any> {
-    return this.http.patch<any>(`${this.schoolApi}/lessons/${lesson.id}`, lesson, httpOptions)
+    return this.http.patch<any>(`${this.apiServerUrl}/lesson`, lesson, httpOptions)
       .pipe(shareReplay());
   }
 
   deleteLesson(lessonId: any): Observable<any> {
-    return this.http.delete<any>(`${this.schoolApi}/lessons/${lessonId}`, httpOptions)
+    return this.http.delete<any>(`${this.apiServerUrl}/lesson/${lessonId}`, httpOptions)
       .pipe(shareReplay());
   }
 

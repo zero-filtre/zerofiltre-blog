@@ -3,25 +3,25 @@
         <div class="main-side-container max-w-xl mx-auto lg:max-w-none">
             <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
                 <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
-                    <button type="button" aria-current="page" aria-labelledby="Toggle to recent articles tab"
+                    <button type="button" (click)="sortBy(RECENT)" aria-current="page" aria-labelledby="Toggle to recent articles tab"
                         [ngClass]="activePage === RECENT ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'articles.new' | translate}}</span>
                     </button>
 
-                    <button type=" button" aria-current="false" aria-labelledby="Toggle to pupular articles tab"
+                    <button type=" button" (click)="sortBy(POPULAR)" aria-current="false" aria-labelledby="Toggle to pupular articles tab"
                         [ngClass]="activePage === POPULAR ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'articles.famous' | translate}}</span>
                     </button>
 
-                    <button type="button" aria-current="false" aria-labelledby="Toggle to trending articles tab"
+                    <button type="button" (click)="sortBy(TRENDING)" aria-current="false" aria-labelledby="Toggle to trending articles tab"
                         [ngClass]="activePage === TRENDING ? 'active-tab' : ''"
                         class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm lg:text-base font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'articles.modish' | translate}}</span>
                     </button>
 
-                    <button type="button" aria-current="false" aria-labelledby="Toggle to the tag articles tab"
+                    <button type="button" (click)="sortBy(TAGS)" aria-current="false" aria-labelledby="Toggle to the tag articles tab"
                         [ngClass]="activePage === TAGS ? 'active-tab' : ''"
                         class="lg:hidden relative text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'app.tags' | translate}}</span>
@@ -31,10 +31,10 @@
                 <div *ngIf="openedTagsDropdown"
                     class="tagList-container lg:hidden flex flex-wrap justify-center absolute z-30 top-full gap-1.5 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%] bg-skin-bgMuted border shadow-2xl rounded-2xl overflow-y-scroll no-scrollbar">
                     <ng-container *ngFor="let tag of tagList">
-                        <button type="button" aria-current="false" aria-labelledby="a tag"
-                            [ngClass]="{'active-tag': activeTag == tag.name}"
+                        <button type="button" (click)="sortByTag(tag?.name)" aria-current="false" aria-labelledby="a tag"
+                            [ngClass]="{'active-tag': activeTag == tag?.name}"
                             class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                            <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
+                            <svg [ngStyle]="{'color': tag?.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
                                 viewBox="0 0 8 8">
                                 <circle cx="4" cy="4" r="3"></circle>
                             </svg>
@@ -44,7 +44,7 @@
                     </ng-container>
                 </div>
 
-                <div *ngIf="authService.isAdmin">
+                <div *ngIf="canCreateCourse">
                     <button aria-label="Button to create a new article" (click)="openCourseEntryDialog()" type="button"
                         class="">
                         <span class="sr-only">Nouveau cours</span>
@@ -73,10 +73,10 @@
 
                 <ng-template [ngIf]="courses" *appShellNoRender>
                     <div *ngFor="let course of courses; let i=index" class="space-y-11">
-                        <div class="article-card lg:grid grid-cols-3 gap-6 group">
 
+                        <div class="article-card lg:grid grid-cols-3 gap-6 group">
                             <a aria-labelledby="Link to course detail page"
-                                routerLink="{{canAccessCourse(course?.id) ? course.id + '/' + course.firstLessonId : course.id}}"
+                                routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -86,10 +86,9 @@
                             </a>
 
                             <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
-
                                 <div class="flex justify-between items-start">
                                     <div class="article-tags-container flex flex-wrap items-center gap-1">
-                                        <a *ngFor="let tag of course?.tags" routerLink='/articles'
+                                        <a *ngFor="let tag of course?.tags" routerLink='/cours'
                                             [queryParams]="{tag:tag.name}"
                                             class="tag-item flex items-center space-x-2 group">
                                             <span
@@ -101,10 +100,8 @@
                                                 <span class="hover:text-primary-500">
                                                     {{tag.name}}
                                                 </span>
-
                                             </span>
                                         </a>
-
                                     </div>
 
                                     <!-- Contextuel menu for editing -->
@@ -146,9 +143,8 @@
                                 </div>
 
                                 <div class="mt-2">
-
-                                    <a aria-labelledby="Link to about page"
-                                        routerLink="{{canAccessCourse(course?.id) ? course.id + '/' + course.firstLessonId : course.id}}"
+                                    <a aria-labelledby="Link to course detail page"
+                                        routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
                                         class="article-title">
                                         <h4
                                             class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
@@ -208,11 +204,22 @@
                                                     suivent ce cours
                                                 </span>
                                             </span>
+
+                                            <span class="inline-flex enrol-total relative items-center gap-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-4 text-accent-300" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                                <span>{{course?.reactions?.length}}</span>
+                                                <span class="enrol-tooltip">
+                                                    aiment ce cours
+                                                </span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <!-- Sponsor Content -->
@@ -324,7 +331,7 @@
                 </ng-template>
 
                 <!-- No Content Found Message -->
-                <ng-template [ngIf]="noArticlesAvailable">
+                <ng-template [ngIf]="noCourseAvailable">
                     <div class="flex flex-col justify-center items-center h-96 space-y-5">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-primary-500" fill="currentColor"
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -349,7 +356,7 @@
                 </div>
 
                 <!-- Alert no more Courses -->
-                <div *ngIf="notEmptyArticles" class="py-5">
+                <div *ngIf="notEmptyCourses" class="py-5">
                     <div class="flex justify-center">
                         <div class="text-skin-base text-sm font-bold">{{ 'articles.noMoreArticles' | translate }}</div>
                     </div>
@@ -372,7 +379,7 @@
                 <ng-template [ngIf]="tagList?.length">
                     <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
                         <ng-container *ngFor="let tag of tagList">
-                            <button type="button" aria-labelledby="A tag"
+                            <button (click)="sortByTag(tag?.name)" type="button" aria-labelledby="A tag"
                                 class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
                                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
                                     viewBox="0 0 8 8">

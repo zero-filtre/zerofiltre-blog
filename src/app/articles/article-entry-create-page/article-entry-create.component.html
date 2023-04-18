@@ -1,4 +1,4 @@
-<main class="site-container relative py-10 lg:py-14 min-h-screen">
+<main class="site-container relative py-10 pt-5 lg:py-14 min-h-screen">
     <form *ngIf="form" [formGroup]="form">
         <div class="article-data-container flex flex-col lg:grid grid-cols-7 gap-10 lg:gap-14 items-stretch">
             <main class="col-span-5 order-2 lg:order-none">
@@ -92,11 +92,11 @@
                     </div>
                 </div>
 
-                <div class="article-content min-h-[3000px] mt-4 sm:mt-2">
-                    <div class="editor_sticky_wrapper !shadow-md sticky top-20">
+                <div class="article-content mt-4 sm:mt-2">
+                    <div class="editor_wrapper !shadow-md">
                         <app-text-editor [form]="form" [content]="content" [isLoading]="loading"
                             [isPublishing]="isPublishing" [isPublished]="isPublished" [isSaving]="isSaving"
-                            [isSaved]="isSaved" [saveFailed]="saveFailed" [editorSub$]="EditorText$"
+                            [isSaved]="isSaved" [saveFailed]="saveFailed" [editorSub$]="EditorText$" [showFullscreenPublishBtn]="true"
                             (onFileSelectedEvent)="onFileSelected($event, 'editorImage')"
                             (publishEvent)="publishArticle()">
                         </app-text-editor>
@@ -128,10 +128,12 @@
                         </h2>
                     </nav>
 
-                    <app-auto-save-button [form]="form" [loading]="loading" [isPublishing]="isPublishing"
-                        [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
-                        (publishEvent)="publishArticle()">
-                    </app-auto-save-button>
+                    <div class="mt-5">
+                        <app-auto-save-button [form]="form" [loading]="loading" [isPublishing]="isPublishing"
+                            [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
+                            (publishEvent)="publishArticle()">
+                        </app-auto-save-button>
+                    </div>
 
                     <div class="article-summary">
                         <label for="summary" class="block text-base font-semibold leading-5 text-skin-base">
@@ -142,7 +144,7 @@
                                 class="editor-textarea rounded-xl shadow-md text-skin-base w-full placeholder:text-sm no-scrollbar"
                                 rows="5" cols="33" placeholder="{{ 'articleEntryEdit.summaryPlaceholder' | translate }}"
                                 id="summary" formControlName="summary" required minlength="20" maxlength="250">
-                                </textarea>
+                            </textarea>
                             <div *ngIf="summary?.invalid && summary?.dirty" class="">
                                 <div *ngIf="summary?.errors?.['required']"
                                     class="mt-2 text-xs sm:text-sm text-error italic">
@@ -184,8 +186,6 @@
                                         pour ajouter des tags
                                     </p>
                                 </ng-container>
-
-                                <!-- absolute top-full inset-x-0 -->
                             </div>
 
                             <ul *ngIf="tagsDropdownOpened"

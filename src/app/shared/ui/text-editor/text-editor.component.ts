@@ -19,6 +19,10 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   @Input() isSaving!: boolean;
   @Input() isSaved!: boolean;
   @Input() saveFailed!: boolean;
+  @Input() imageBtn: boolean = true;
+  @Input() fullscreenBtn: boolean = true;
+  @Input() showFullscreenPublishBtn: boolean = false;
+  @Input() height: number = 100;
 
   @Output() publishEvent = new EventEmitter<string>();
   @Output() onFileSelectedEvent = new EventEmitter<string>();
@@ -85,10 +89,11 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   }
 
   toggleFullScreen() {
-    this.elem = (document as any).querySelector('.editor_sticky_wrapper');
+    this.elem = (document as any).querySelector('.editor_wrapper');
     const textarea = (document as any).querySelector('#content');
     const editotheader = (document as any).querySelector('.editor-header');
 
+    if (!this.elem) return;
     this.elem.addEventListener('fullscreenchange', this.fullscreenchanged);
 
     if (!this.document.fullscreenElement) {
@@ -141,13 +146,13 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.seo.unmountFooter()
+    if (this.fullscreenBtn) this.seo.unmountFooter()
     this.checkScreenMode();
     this.elem = document.documentElement;
   }
 
   ngOnDestroy(): void {
-    this.seo.mountFooter();
+    if (this.fullscreenBtn) this.seo.mountFooter();
   }
 
 }

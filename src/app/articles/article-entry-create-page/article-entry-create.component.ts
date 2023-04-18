@@ -17,6 +17,7 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
 import { sortByNameAsc } from 'src/app/services/utilities.service';
 import { BaseComponent } from 'src/app/Base.component';
 import { DOCUMENT } from '@angular/common';
+import { TagService } from 'src/app/services/tag.service';
 
 @Component({
   selector: 'app-article-entry-create',
@@ -79,6 +80,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
     public authService: AuthService,
     private translate: TranslateService,
     public navigate: NavigationService,
+    private tagService: TagService,
     @Inject(DOCUMENT) private document: any
   ) { }
 
@@ -87,7 +89,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   }
 
   fetchListOfTags(): void {
-    this.articleService.getListOfTags().subscribe(
+    this.tagService.getListOfTags().subscribe(
       (response: Tag[]) => {
         const sortedList = sortByNameAsc(response);
         this.tagList = sortedList;

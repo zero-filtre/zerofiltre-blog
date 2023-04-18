@@ -27,6 +27,7 @@ import {
 
 import { LoadEnvService } from './services/load-env.service';
 import { environment } from 'src/environments/environment';
+import { CourseService } from './school/courses/course.service';
 
 declare var Prism: any;
 
@@ -44,7 +45,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   readonly coursesUrl = environment.coursesUrl
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
-  appLogoUrl = 'assets/logoblue.svg';
+  appLogoUrl = 'https://ik.imagekit.io/lfegvix1p/logoblue_XmLzzzq19.svg?updatedAt=1681556349203';
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])
@@ -78,6 +79,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private router: Router,
     public authService: AuthService,
     private fileUploadService: FileUploadService,
+    private courseService: CourseService
   ) {
     this.setBrowserTranslationConfigs();
   }
@@ -131,27 +133,22 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   fetchAllArticlesAsAdmin() {
     this.activePage = this.ALL_ARTICLES;
-    this.router.navigateByUrl('/user/dashboard/admin');
   }
 
   fetchAllArticlesAsUser() {
     this.activePage = this.MY_ARTICLES;
-    this.router.navigateByUrl('/user/dashboard');
   }
 
   fetchAllCoursesAsUser() {
     this.activePage = this.MY_COURSES;
-    this.router.navigateByUrl('/user/dashboard/courses');
   }
 
   fetchAllCoursesAsTeacher() {
     this.activePage = this.MY_TRAININGS;
-    this.router.navigateByUrl('/user/dashboard/courses/teacher');
   }
 
   fetchAllCoursesAsAdmin() {
     this.activePage = this.ALL_TRAININGS;
-    this.router.navigateByUrl('/user/dashboard/courses/teacher/all');
   }
 
   logCopySuccessMessage(event: any) {
@@ -185,8 +182,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (url?.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
     if (url?.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
     if (url?.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
-    if (url?.startsWith('/user/dashboard/courses/teacher')) this.activePage = this.MY_TRAININGS;
-    if (url?.startsWith('/user/dashboard/courses/teacher/all')) this.activePage = this.ALL_TRAININGS;
+    if (url?.startsWith('/user/dashboard/teacher/courses')) this.activePage = this.MY_TRAININGS;
+    if (url?.startsWith('/user/dashboard/courses/all')) this.activePage = this.ALL_TRAININGS;
   }
 
   ngAfterViewInit(): void {
@@ -199,6 +196,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       })
   }
 
+  subscribedCourses$: Observable<any[]>;
+
   ngOnInit(): void {
     this.router.events
       .subscribe(({ url }: any) => {
@@ -210,7 +209,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       (window as any).onload = AddTargetToExternalLinks();
     }
 
-    if (isPlatformServer(this.platformId)) {
+    if (isPlatformBrowser(this.platformId) && this.authService.currentUsr) {
       this.fileUploadService.xToken$.subscribe();
     }
   }

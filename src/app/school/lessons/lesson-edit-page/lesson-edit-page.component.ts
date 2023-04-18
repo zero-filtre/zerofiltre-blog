@@ -12,6 +12,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { VimeoService } from '../../../services/vimeo.service';
 import { UploadFormComponent } from '../../../shared/upload-form/upload-form.component';
+import { ThemePalette } from '@angular/material/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-lesson-edit-page',
@@ -20,6 +22,7 @@ import { UploadFormComponent } from '../../../shared/upload-form/upload-form.com
 })
 export class LessonEditPageComponent implements OnInit {
   form!: FormGroup;
+  color: ThemePalette = 'accent';
 
   file: File = {
     data: null,
@@ -52,6 +55,7 @@ export class LessonEditPageComponent implements OnInit {
   private ThumbnailText$ = new Subject<string>();
   private VideoText$ = new Subject<string>();
   public EditorText$ = new Subject<string>();
+  public FreeText$ = new Subject<boolean>();
   private RessourcesText$ = new Subject<string>();
 
   constructor(
@@ -67,7 +71,7 @@ export class LessonEditPageComponent implements OnInit {
   ) { }
 
   initForm(lesson: Lesson) {
-    const summaryTemplate = 'Un petit resume de la lesson ici';
+    const summaryTemplate = 'des petites bonnes actions.';
     const contentTemplate = `
       ## Introduction
       Ici vous dites ce que vous allez faire de façon objective.
@@ -99,7 +103,10 @@ export class LessonEditPageComponent implements OnInit {
       summary: [lessonSummary, [Validators.required]],
       thumbnail: [lesson.thumbnail],
       video: [lesson.video],
+      free: [lesson.free],
+      type: [lesson.type],
       content: [lessonContent],
+      chapterId: [lesson.chapterId],
       ressources: this.fb.array(this.loadFormRessources(lesson))
     })
   }
@@ -124,6 +131,8 @@ export class LessonEditPageComponent implements OnInit {
   get summary() { return this.form.get('summary'); }
   get thumbnail() { return this.form.get('thumbnail'); }
   get video() { return this.form.get('video'); }
+  get free() { return this.form.get('free'); }
+  get type() { return this.form.get('type'); }
   get ressources() { return this.form.get('ressources') as FormArray; }
 
   getValue(event: Event): string {
@@ -139,6 +148,10 @@ export class LessonEditPageComponent implements OnInit {
   typeInThumbnail(content: string) {
     this.ThumbnailText$.next(content);
   }
+  typeInPrivacy(event: MatSlideToggleChange) {
+    const val = event.checked
+    this.FreeText$.next(val);
+  }
   typeInVideo(content: string) {
     this.VideoText$.next(content);
   }
@@ -151,6 +164,7 @@ export class LessonEditPageComponent implements OnInit {
 
   addRessource(res: Ressource) {
     const resItem = this.fb.group({
+      id: res.id,
       url: res.url,
       type: res.type,
       name: res.name
@@ -208,7 +222,7 @@ export class LessonEditPageComponent implements OnInit {
       .subscribe((event: any) => {
         if (typeof (event) === 'object') {
           this.resUploading = false;
-          const res = { url: event.url, type: this.fileType, name: this.fileName };
+          const res = { id: 1, url: event.url, type: this.fileType, name: this.fileName };
           this.addRessource(res);
         }
       })
@@ -251,9 +265,12 @@ export class LessonEditPageComponent implements OnInit {
   }
 
   getLesson(): Observable<any> {
-    return this.lessonService.findLessonById(this.lessonID, this.courseID)
+    this.isLoading = true;
+    return this.lessonService.findLessonById(this.lessonID)
       .pipe(
         catchError(err => {
+          this.isLoading = false;
+
           if (err.status === 404) {
             this.messageService.openSnackBarError("Oops cette lesson est n'existe pas 😣!", '');
             this.navigate.back();
@@ -261,6 +278,8 @@ export class LessonEditPageComponent implements OnInit {
           return throwError(() => err?.message)
         }),
         tap((data: Lesson) => {
+          this.isLoading = false;
+
           this.initForm(data)
           this.lessonVideo$ = this.vimeo.getOneVideo(data?.video);
         })
@@ -270,14 +289,12 @@ export class LessonEditPageComponent implements OnInit {
   updateLesson() {
     this.isSaving = true;
 
-    this.lessonService.updateLesson(this.form.value)
+    this.lessonService.updateLesson({ ...this.form.value, free: this.free.value })
       .subscribe({
         next: (_res: Lesson) => {
-          setTimeout(() => {
-            this.isSaving = false;
-            this.isSaved = true;
-            this.saveFailed = false;
-          }, 1000);
+          this.isSaving = false;
+          this.isSaved = true;
+          this.saveFailed = false;
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
@@ -289,17 +306,15 @@ export class LessonEditPageComponent implements OnInit {
 
   publishLesson() {
     this.isSaving = true;
-    this.lessonService.updateLesson(this.form.value)
+
+    this.lessonService.updateLesson({ ...this.form.value, free: !this.free.value })
       .subscribe({
         next: (_res: Lesson) => {
-          setTimeout(() => {
-            this.isSaving = false;
-            this.messageService.openSnackBarSuccess('Publication de la leçon réussie !', '');
-          }, 1000);
+          this.isSaving = false;
+          this.messageService.openSnackBarSuccess('Publication de la leçon réussie !', '');
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
-          this.messageService.openSnackBarError('Une erreur est survenue lors de la publication de la leçon', 'OK')
         }
       })
   }
@@ -308,7 +323,7 @@ export class LessonEditPageComponent implements OnInit {
     this.onFileSelected($event);
 
     this.uploading = true;
-    this.vimeo.postVideo(this.file.data)
+    this.vimeo.initVideoUpload(this.file.data)
       .pipe(catchError(err => {
         this.uploading = false;
         this.messageService.openSnackBarError('Un probleme est survenu lors du chargement!', 'OK')
@@ -332,6 +347,11 @@ export class LessonEditPageComponent implements OnInit {
 
   deleteVideo(lesson: Lesson) {
     const videoID = lesson.video.split('/')[3];
+    if (!videoID){
+      this.video.setValue('');
+      this.typeInVideo('');
+      return
+    }
 
     this.vimeo.deleteVideoFile(videoID)
       .pipe(catchError(err => {
@@ -390,7 +410,8 @@ export class LessonEditPageComponent implements OnInit {
       this.EditorText$,
       this.SummaryText$,
       this.ThumbnailText$,
-      this.VideoText$
+      this.VideoText$,
+      this.FreeText$
     ]
 
     fields.forEach((el: Observable<any>) => {

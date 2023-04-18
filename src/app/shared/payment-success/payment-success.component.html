@@ -1,0 +1,34 @@
+<div class="flex justify-center items-center h-[88vh]" *appShellRender>
+    <svg class="w-40 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="2" r="35"
+            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+            style="animation-play-state:paused"></circle>
+    </svg>
+</div>
+
+<main class="bg-white pb-5" *appShellNoRender>
+    <div *ngIf="user$|async" class="site-container lg:h-full grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-0 items-center">
+
+        <div class="col-span-6 lg:order-2">
+            <app-image [classes]="'object-contain max-w-[300px] lg:max-w-full m-auto'"
+                [sourceUrl]="'https://ik.imagekit.io/lfegvix1p/paiement-success_4_jni6Ki5TS.svg?updatedAt=1679091108952'"></app-image>
+        </div>
+
+        <div class="col-span-6 w-full text-center lg:text-left lg:max-w-xl lg:ml-auto pt-5">
+            <h1 class="text-4xl lg:text-5xl font-light text-primary-500 mb-6 lg:mb-16">Merci pour votre achat!</h1>
+            <div>
+                <p class="flex flex-col gap-4 text-skin-base">
+                    <span>Vous pouvez débuter votre apprentissage.</span>
+                    <span>En cas de problème, contactez-nous ici.</span>
+                </p>
+
+                <div class="flex flex-col lg:flex-row gap-3 lg:gap-5 mt-10">
+                    <a href="mailto:info@zerofiltre.tech" class="px-4 py-3 rounded-md font-light text-white bg-primary-500 hover:bg-primary-600 transition-all duration-200">Nous contacter</a>
+                    <a routerLink="/cours" class="px-4 py-3 rounded-md font-light text-white bg-primary-500 hover:bg-primary-600 transition-all duration-200">Liste de dcours</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
