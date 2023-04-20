@@ -30,9 +30,9 @@
 }
 
 ::ng-deep .mat-progress-bar-fill::after {
-  @apply bg-primary-500;
+  @apply !bg-primary-500;
 }
 
 ::ng-deep .mat-progress-bar-buffer {
-  background: #e4e8eb;
+  @apply !bg-[#e4e8eb];
 }
