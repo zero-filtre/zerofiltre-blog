@@ -12,6 +12,7 @@ import { PasswordResetPageComponent } from './user/password-reset-page/password-
 import { ResendConfirmationPageComponent } from './user/resend-confirmation-page/resend-confirmation-page.component';
 import { SignUpPageComponent } from './user/sign-up-page/sign-up-page.component';
 import { WachatgptHomePageComponent } from './wachatgpt-home-page/wachatgpt-home-page.component';
+import { PaymentCanceledComponent } from './shared/payment-canceled/payment-canceled.component';
 
 const routes: Routes = [
   {
@@ -31,9 +32,14 @@ const routes: Routes = [
     canActivate: [TokenExpiredGuard]
   },
   {
-    path: 'payment/cancel',
+    path: 'payment/failed',
     component: PaymentFailedComponent,
-    canActivate: [TokenExpiredGuard]
+    // canActivate: [TokenExpiredGuard]
+  },
+  {
+    path: 'payment/cancel',
+    component: PaymentCanceledComponent,
+    // canActivate: [TokenExpiredGuard]
   },
   {
     path: 'resetPassword',
