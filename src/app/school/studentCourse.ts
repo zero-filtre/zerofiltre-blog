@@ -43,7 +43,7 @@ export interface CourseEnrollment {
 export const PRODUCTS = ['COURSE', 'BOOTCAMP'] as const;
 export type ProductType = typeof PRODUCTS[number]
 
-export const MODES = ['enrollment', 'payment'] as const;
+export const MODES = ['subscription', 'payment'] as const;
 export type ModeType = typeof MODES[number]
 
 export const INTERVALS = ['month', 'year'] as const;
