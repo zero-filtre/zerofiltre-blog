@@ -66,7 +66,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   CompletedText$ = new Subject<boolean>();
 
-  imageTypes = ['png', 'jpeg', 'jpg', 'svg'];
+  docTypes = ['txt', 'doc', 'pdf'];
 
   completed: boolean;
 
@@ -174,40 +174,6 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.lessonVideo$ = this.vimeoService.getOneVideo(lesson?.video);
           this.loading = false;
           this.videoID = lesson?.video?.split('com/')[1]
-
-          // const options = {
-          //   id: '804933075',
-          //   // url: videoUrl,
-          //   loop: false,
-          //   autoplay: true,
-          //   controls: true,
-          //   muted: false,
-          //   byline: false,
-          //   portrait: false,
-          //   title: false,
-          //   responsive: true,
-          //   playsinline: true,
-          //   access_token: 'token'
-          // };
-
-          // setTimeout(() => {
-          //   let player;
-
-          //   try {
-          //     if (this.playerContainer?.nativeElement) {
-          //       player = new Player(this.playerContainer.nativeElement, options);
-          //     }
-          //   } catch (error) {
-          //     console.error('Error creating Vimeo player:', error);
-          //   }
-
-          //   if (this.playerContainer?.nativeElement) {
-          //     player.on('error', (error) => {
-          //       console.error('Vimeo player error:', error);
-          //     });
-          //   }
-
-          // }, 500);
 
           if (!this.allChapters.length) {
             setTimeout(() => {

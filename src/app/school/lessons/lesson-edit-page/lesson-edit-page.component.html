@@ -142,15 +142,15 @@
                 </div>
 
                 <div class="mb-5">
-                    <label for="ressources"
+                    <label for="resources"
                         class="block text-base font-semibold leading-5 text-skin-base lg:mt-14 ml-3">
                         Ressources
                     </label>
 
-                    <div formArrayName="ressources"
-                        class="w-full border-2 border-dashed rounded p-5 flex justify-center lg:justify-start flex-wrap mt-[-10px]">
-                        <ng-container *ngFor="let res of ressources?.value; let i = index">
-                            <div *ngIf="imageTypes.includes(res.type)"
+                    <div formArrayName="resources"
+                        class="w-full text-secondary border-2 border-dashed rounded p-5 flex justify-center lg:justify-start flex-wrap mt-[-10px]">
+                        <ng-container *ngFor="let res of resources?.value; let i = index">
+                            <div *ngIf="res.type == 'img'"
                                 class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded">
                                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="1" viewBox="0 0 24 24"
@@ -160,15 +160,15 @@
                                     </path>
                                 </svg>
                                 <span class="group-hover:text-primary-500">{{res.name}}</span>
-                                <div class="ressource-remove-btn flex justify-center items-center w-5 h-5 mt-4 text-sm text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
+                                <div class="ressource-remove-btn flex justify-center items-center w-5 h-5 mt-4 text-sm text-white bg-secondary rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
                                     (click)="deleteRessource(res, i)">
                                     <span class="-mt-0.5">x</span>
                                 </div>
                             </div>
 
-                            <div *ngIf="res.type == 'pdf'"
+                            <div *ngIf="docTypes.includes(res.type)"
                                 class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded">
-                                <svg class="mx-auto h-8 w-8 group-hover:text-primary-500"
+                                <svg class="mx-auto h-7 w-7 group-hover:text-primary-500"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <path
                                         d="M416 221.25V416a48 48 0 01-48 48H144a48 48 0 01-48-48V96a48 48 0 0148-48h98.75a32 32 0 0122.62 9.37l141.26 141.26a32 32 0 019.37 22.62z"
@@ -178,7 +178,7 @@
                                 </svg>
 
                                 <span class="group-hover:text-primary-500">{{res.name}}</span>
-                                <div class="ressource-remove-btn flex justify-center items-center w-5 h-5 mt-4 text-sm text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
+                                <div class="ressource-remove-btn flex justify-center items-center w-5 h-5 mt-4 text-sm text-white bg-secondary rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
                                     (click)="deleteRessource(res, i)">
                                     <span class="-mt-0.5">x</span>
                                 </div>
@@ -186,28 +186,28 @@
                         </ng-container>
 
                         <label *ngIf="!resUploading" for="file" (click)="fileUpload.click()"
-                            class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-8 w-8 group-hover:text-primary-500"
+                            class="group text-skin-base flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-8 w-8 group-hover:text-primary-500 shadow-sm"
                                 viewBox="0 0 512 512">
                                 <path
                                     d="M320 367.79h76c55 0 100-29.21 100-83.6s-53-81.47-96-83.6c-8.89-85.06-71-136.8-144-136.8-69 0-113.44 45.79-128 91.2-60 5.7-112 43.88-112 106.4s54 106.4 120 106.4h56"
                                     fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="20" />
+                                    stroke-width="15" />
                                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="20" d="M320 255.79l-64-64-64 64M256 448.21V207.79" />
+                                    stroke-width="15" d="M320 255.79l-64-64-64 64M256 448.21V207.79" />
                             </svg>
 
                             <span class="group-hover:text-primary-500">Ajouter un fichier</span>
 
                             <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
-                                (change)="uploadRessource($event)" accept="image/*,.pdf" />
+                                (change)="uploadRessource($event)" accept="image/*,.pdf,.docx,.txt" />
                         </label>
 
                         <div *ngIf="resUploading" class="flex items-center justify-center">
                             <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
                                 viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                                <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+                                <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
                                     stroke-dasharray="164.93361431346415 56.97787143782138"
                                     transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused"></circle>
                             </svg>

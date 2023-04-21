@@ -7,10 +7,18 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root'
 })
 export class MessageService {
-  private durationLimit = 5;
   private defaultHorizontalPosition = 'right'
   private defaultVerticalPosition = 'top'
   private OK = 'OK';
+  
+  DURATION_DEFAULT = 5;
+
+  DURATION_SUCCESS = this.DURATION_DEFAULT;
+  DURATION_WARNING = 10;
+  DURATION_INFO = this.DURATION_DEFAULT;
+  DURATION_ERROR = this.DURATION_DEFAULT;
+
+
 
   constructor(
     private snackBar: MatSnackBar,
@@ -27,16 +35,16 @@ export class MessageService {
     });
   }
 
-  public openSnackBarSuccess(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
+  public openSnackBarSuccess(message: string, action: string, duration = this.DURATION_SUCCESS, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'success-snackbar', 'success', duration, hoPosition)
   }
-  public openSnackBarError(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
+  public openSnackBarError(message: string, action: string, duration = this.DURATION_ERROR, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'error-snackbar', 'error', duration, hoPosition)
   }
-  public openSnackBarWarning(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
+  public openSnackBarWarning(message: string, action: string, duration = this.DURATION_WARNING, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'warning-snackbar', 'error', duration, hoPosition)
   }
-  public openSnackBarInfo(message: string, action: string, duration = this.durationLimit, hoPosition = this.defaultHorizontalPosition) {
+  public openSnackBarInfo(message: string, action: string, duration = this.DURATION_INFO, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'info-snackbar', 'info', duration, hoPosition)
   }
 

@@ -9,12 +9,13 @@ export interface Lesson {
     type: any;
     duration: string;
     chapterId: number;
-    ressources: Ressource[];
+    resources: Resource[];
     number: number;
 }
 
-export interface Ressource {
-    id: number;
+export interface Resource {
+    id?: number,
+    lessonId: string;
     type: string;
     url: string;
     name: string;
