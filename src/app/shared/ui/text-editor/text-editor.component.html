@@ -59,10 +59,12 @@
 
         <div *ngIf="activeTab === 'editor'; else exitFullScreenBtn" class="flex lg:gap-2 lg:mr-1 items-center">
             <div *ngIf="fullScreenOn">
-                <app-auto-save-button [form]="form" [loading]="isLoading" [isPublishing]="isPublishing"
-                    [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
-                    (publishEvent)="initPublish()" [showBtn]="showFullscreenPublishBtn">
-                </app-auto-save-button>
+                <ng-container *ngIf="form">
+                    <app-auto-save-button [form]="form" [loading]="isLoading" [isPublishing]="isPublishing"
+                        [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
+                        (publishEvent)="initPublish()" [showBtn]="showFullscreenPublishBtn">
+                    </app-auto-save-button>
+                </ng-container>
             </div>
 
             <button *ngIf="fullscreenBtn" aria-label="click here to enter full screen" (click)="toggleFullScreen()"

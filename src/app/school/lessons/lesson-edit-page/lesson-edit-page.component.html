@@ -9,10 +9,12 @@
                 </svg>
             </button>
 
-            <app-auto-save-button [form]="form" [loading]="isLoading" [isPublishing]="isPublishing" [isPublished]="isPublished"
-                [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed" (publishEvent)="publishLesson()"
-                [showBtn]="false">
-            </app-auto-save-button>
+            <ng-container *ngIf="form">
+                <app-auto-save-button [form]="form" [loading]="isLoading" [isPublishing]="isPublishing" [isPublished]="isPublished"
+                    [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed" (publishEvent)="publishLesson()"
+                    [showBtn]="false">
+                </app-auto-save-button>
+            </ng-container>
 
             <h2 class="bg-primary-50 h-full grid place-items-center font-normal">
                 <a aria-labelledby="Link to about page" routerLink="/user/dashboard/teacher/courses"
