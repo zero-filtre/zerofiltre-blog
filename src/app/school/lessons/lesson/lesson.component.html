@@ -108,7 +108,7 @@
                         <div
                             class="lesson_ressourses w-full border-2 border-dashed rounded p-5 flex justify-center lg:justify-start lg:items-center flex-wrap mt-[-10px]">
                             <ng-container *ngFor="let res of lesson?.resources; let i = index">
-                                <a href="{{res.url}}" target="_blank">
+                                <a href="{{res.url}}" target="_blank" rel="noopener">
                                     <div *ngIf="res.type == 'img'"
                                         class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
                                         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"

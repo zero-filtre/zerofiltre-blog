@@ -154,7 +154,7 @@
                         <ng-container *ngFor="let res of resources?.value; let i = index">
                             <div *ngIf="res.type == 'img'"
                                 class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded">
-                                <a href="{{res.url}}" target="_blank">
+                                <a href="{{res.url}}" target="_blank" rel="noopener">
                                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="1" viewBox="0 0 24 24"
                                         class="mx-auto h-8 w-8 group-hover:text-primary-500">
@@ -173,7 +173,7 @@
 
                             <div *ngIf="docTypes.includes(res.type)"
                                 class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded">
-                                <a href="{{res.url}}" target="_blank">
+                                <a href="{{res.url}}" target="_blank" rel="noopener">
                                     <svg class="mx-auto h-7 w-7 group-hover:text-primary-500"
                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                         <path

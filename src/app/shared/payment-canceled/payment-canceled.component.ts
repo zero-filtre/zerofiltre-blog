@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentCanceledComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    // Do nothing.
+  }
 
   ngOnInit(): void {
+    // Do nothing.
   }
 
 }

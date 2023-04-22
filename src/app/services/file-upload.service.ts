@@ -116,10 +116,8 @@ export class FileUploadService {
     }
 
     if (!acceptedTypes.includes(fileType)) {
-      isValid = false
       this.messageService.openSnackBarWarning("Le document n'est pas au format autorisé ('.txt', '.doc', '.pdf', 'image*')", 'OK')
     } else if (fileSize > maxSize) {
-      isValid = false
       this.messageService.fileSizeWarning(maxSize);
     } else {
       isValid = true;
