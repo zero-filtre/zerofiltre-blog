@@ -25,7 +25,8 @@ export const fr = {
         authorRouteError: 'Vous ne pouvez pas acceder à cette page !',
         codeCopied: 'copié dans le Presse-papier',
         deleteArticlePopupBtn: 'Supprimer',
-        deleteArticleCautionText: 'Voulez-vous vraiment supprimer cet article ?'
+        deleteArticleCautionText: 'Voulez-vous vraiment supprimer cet article ?',
+        deleteCourseCautionText: 'Voulez-vous vraiment supprimer ce cours ?'
     },
     home: {
         exploreServices: 'Découvrez nos services',

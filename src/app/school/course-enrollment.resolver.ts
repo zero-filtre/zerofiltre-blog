@@ -35,6 +35,8 @@ export class CourseEnrollmentResolver implements Resolve<boolean> {
 
     const data = { courseId: courseID , userId: user.id }
     if (isPlatformBrowser(this.platformID)){
+      this.messageService.cancel();
+      
       return this.courseService.findSubscribedByCourseId(data)
         .pipe(
           catchError(_ => {

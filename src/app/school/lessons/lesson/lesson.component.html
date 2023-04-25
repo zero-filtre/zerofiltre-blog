@@ -27,7 +27,7 @@
 
         <mat-sidenav-content>
             <main class="text-skin-art min-h-screen">
-                <div class="lesson_content_wrapper p-4 lg:p-0 lg:pt-4" *appShellNoRender>
+                <div class="lesson_content_wrapper p-4 lg:p-0 lg:pt-4 lg:pl-6" [ngClass]="{'lg:!pl-0':!snav.opened}" *appShellNoRender>
                     <div class="shadow-lg rounded-sm overflow-hidden mx-auto" id="lesson_video_player">
                         <div class="vid_wrapper w-full h-full bg-gray-900">
                             <ng-container *ngIf="lesson$|async as lesson">

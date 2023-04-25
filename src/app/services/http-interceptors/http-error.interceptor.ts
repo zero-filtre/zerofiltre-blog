@@ -98,7 +98,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    */
   setError(error: HttpErrorResponse, req: any): string {
     let errorMessage = "Oopss... Un problème est survenu !";
-    console.log('REQUEST: ', req.url);
+    // console.log('REQUEST: ', req.url);
 
     if (error.status === 0) {
       // Client side Error
