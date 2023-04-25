@@ -17,15 +17,15 @@ jobs:
 
     env:
       KUBE_CONFIG : ${{ secrets.KUBE_CONFIG }}
-      env_name: ${{startsWith(github.ref, 'refs/heads/main') && 'prod' || 'dev'}}
-      api_host : ${{startsWith(github.ref, 'refs/heads/main') && 'blog-api.zerofiltre.tech' || 'blog-api-dev.zerofiltre.tech'}}
-      DOCKER_TAG_SUFFIX: ${{startsWith(github.ref, 'refs/heads/main') && 'stable' || 'unstable'}}
-      replicas : ${{startsWith(github.ref, 'refs/heads/main') && 1 || 1 }}
-      requests_cpu : ${{startsWith(github.ref, 'refs/heads/main') && 0.1 || 0.1 }}
-      requests_memory : ${{startsWith(github.ref, 'refs/heads/main') && '0.5Gi' || '0.5Gi' }}
-      limits_cpu : ${{startsWith(github.ref, 'refs/heads/main') && 0.5 || 0.5 }}
-      limits_memory : ${{startsWith(github.ref, 'refs/heads/main') && '1.5Gi' || '1Gi' }}
-      domain_name : ${{startsWith(github.ref, 'refs/heads/main') && 'zerofiltre.tech' || 'dev.zerofiltre.tech' }}
+      env_name: ${{startsWith(github.ref, 'refs/heads/release-') && 'prod' || 'dev'}}
+      api_host : ${{startsWith(github.ref, 'refs/heads/release-') && 'blog-api.zerofiltre.tech' || 'blog-api-dev.zerofiltre.tech'}}
+      DOCKER_TAG_SUFFIX: ${{startsWith(github.ref, 'refs/heads/release-') && 'stable' || 'unstable'}}
+      replicas : ${{startsWith(github.ref, 'refs/heads/release-') && 1 || 1 }}
+      requests_cpu : ${{startsWith(github.ref, 'refs/heads/release-') && 0.1 || 0.1 }}
+      requests_memory : ${{startsWith(github.ref, 'refs/heads/release-') && '0.5Gi' || '0.5Gi' }}
+      limits_cpu : ${{startsWith(github.ref, 'refs/heads/release-') && 0.5 || 0.5 }}
+      limits_memory : ${{startsWith(github.ref, 'refs/heads/release-') && '1.5Gi' || '1Gi' }}
+      domain_name : ${{startsWith(github.ref, 'refs/heads/release-') && 'zerofiltre.tech' || 'dev.zerofiltre.tech' }}
       
 
 

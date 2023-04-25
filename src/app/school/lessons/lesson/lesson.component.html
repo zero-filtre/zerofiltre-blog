@@ -27,7 +27,7 @@
 
         <mat-sidenav-content>
             <main class="text-skin-art min-h-screen">
-                <div class="lesson_content_wrapper p-4 lg:p-0 lg:pt-4" *appShellNoRender>
+                <div class="lesson_content_wrapper p-4 lg:p-0 lg:pt-4 lg:pl-6" [ngClass]="{'lg:!pl-0':!snav.opened}" *appShellNoRender>
                     <div class="shadow-lg rounded-sm overflow-hidden mx-auto" id="lesson_video_player">
                         <div class="vid_wrapper w-full h-full bg-gray-900">
                             <ng-container *ngIf="lesson$|async as lesson">
@@ -79,7 +79,7 @@
                         </div>
                     </div>
             
-                    <div class="lesson_content">
+                    <div class="lesson_content mb-14">
                         <div *ngIf="lesson$|async as lesson" class="markdown-content mt-3 lg:mt-5">
                             <div
                                 class="lesson_name mb-6 lg:mb-8 text-3xl w-full font-black text-primary-500 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
@@ -98,38 +98,42 @@
                         </ng-container>
                     </div>
             
-                    <div class="lesson_ressources_wrapper mb-5">
-                        <label for="lesson_ressourses" class="block text-base font-semibold leading-5 text-skin-base mt-14 ml-3">
+                    <div *ngIf="lesson$|async as lesson" [ngClass]="{'hidden':!lesson.resources?.length}"
+                        class="lesson_ressources_wrapper mb-5">
+
+                        <label for="lesson_ressourses" class="block text-base font-semibold leading-5 text-skin-base ml-3">
                             Ressources
                         </label>
-            
-                        <div *ngIf="lesson$|async as lesson"
-                            class="lesson_ressourses w-full border-2 border-dashed rounded p-5 flex  justify-center lg:justify-start  flex-wrap mt-[-10px]">
-                            <ng-container *ngFor="let res of lesson?.ressources; let i = index">
-                                <div *ngIf="imageTypes.includes(res.type)"
-                                    class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded">
-                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="1" viewBox="0 0 24 24" class="mx-auto h-8 w-8 group-hover:text-primary-500">
-                                        <path
-                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                        </path>
-                                    </svg>
-                                    <span class="group-hover:text-primary-500">{{res.name}}</span>
-                                </div>
-            
-                                <div *ngIf="res.type == 'pdf'"
-                                    class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded">
-                                    <svg class="mx-auto h-8 w-8 group-hover:text-primary-500" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 512 512">
-                                        <path
-                                            d="M416 221.25V416a48 48 0 01-48 48H144a48 48 0 01-48-48V96a48 48 0 0148-48h98.75a32 32 0 0122.62 9.37l141.26 141.26a32 32 0 019.37 22.62z"
-                                            fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="20" />
-                                        <path d="M256 56v120a32 32 0 0032 32h120" fill="none" stroke="currentColor"
-                                            stroke-linecap="round" stroke-linejoin="round" stroke-width="20" />
-                                    </svg>
-            
-                                    <span class="group-hover:text-primary-500">{{res.name}}</span>
-                                </div>
+
+                        <div
+                            class="lesson_ressourses w-full border-2 border-dashed rounded p-5 flex justify-center lg:justify-start lg:items-center flex-wrap mt-[-10px]">
+                            <ng-container *ngFor="let res of lesson?.resources; let i = index">
+                                <a href="{{res.url}}" target="_blank" rel="noopener">
+                                    <div *ngIf="res.type == 'img'"
+                                        class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
+                                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="1" viewBox="0 0 24 24" class="mx-auto h-8 w-8 group-hover:text-primary-500">
+                                            <path
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
+                                        <span class="group-hover:text-primary-500">{{res.name}}</span>
+                                    </div>
+                
+                                    <div *ngIf="docTypes.includes(res.type)"
+                                        class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
+                                        <svg class="mx-auto h-7 w-7 group-hover:text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 512 512">
+                                            <path
+                                                d="M416 221.25V416a48 48 0 01-48 48H144a48 48 0 01-48-48V96a48 48 0 0148-48h98.75a32 32 0 0122.62 9.37l141.26 141.26a32 32 0 019.37 22.62z"
+                                                fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="25" />
+                                            <path d="M256 56v120a32 32 0 0032 32h120" fill="none" stroke="currentColor"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="25" />
+                                        </svg>
+                
+                                        <span class="group-hover:text-primary-500">{{res.name}}</span>
+                                    </div>
+                                </a>
                             </ng-container>
                         </div>
                     </div>

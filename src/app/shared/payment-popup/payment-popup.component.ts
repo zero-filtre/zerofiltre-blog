@@ -49,7 +49,7 @@ export class PaymentPopupComponent implements OnInit {
 
   payThreeTimes() {
     this.loadingThree = true;
-    this.payload = { ...this.payload, mode: 'enrollment', proPlan: false }
+    this.payload = { ...this.payload, mode: 'subscription', proPlan: false }
     this.payment.checkoutBasicThreeTimes(this.payload)
       .subscribe(data => {
         this.loadingThree = false;
@@ -60,7 +60,7 @@ export class PaymentPopupComponent implements OnInit {
 
   payProMonthly() {
     this.loadingMonth = true;
-    this.payload = { ...this.payload, mode: 'enrollment', proPlan: true, recurringInterval: 'month' }
+    this.payload = { ...this.payload, mode: 'subscription', proPlan: true, recurringInterval: 'month' }
     this.payment.checkoutProPlanMonthly(this.payload)
       .subscribe(data => {
         this.loadingMonth = false;
@@ -71,7 +71,7 @@ export class PaymentPopupComponent implements OnInit {
 
   payProYearly() {
     this.loadingYear = true;
-    this.payload = { ...this.payload, mode: 'enrollment', proPlan: true, recurringInterval: 'year' }
+    this.payload = { ...this.payload, mode: 'subscription', proPlan: true, recurringInterval: 'year' }
     this.payment.checkoutProPlanYearly(this.payload)
       .subscribe(data => {
         this.loadingYear = false;

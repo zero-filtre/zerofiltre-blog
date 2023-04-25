@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Lesson } from './lesson';
+import { Lesson, Resource } from './lesson';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -52,6 +52,16 @@ export class LessonService {
 
   deleteLesson(lessonId: any): Observable<any> {
     return this.http.delete<any>(`${this.apiServerUrl}/lesson/${lessonId}`, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  addResourse(resource: Resource): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/resources`, resource, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  deleteResource(resourceId: any): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/resources/${resourceId}`, httpOptions)
       .pipe(shareReplay());
   }
 

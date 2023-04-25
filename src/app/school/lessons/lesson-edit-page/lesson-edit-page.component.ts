@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, Subject, switchMap, throwError, tap, debounceTime, distinctUntilChanged } from 'rxjs';
 import { File } from 'src/app/articles/article.model';
-import { Lesson, Ressource } from '../lesson';
+import { Lesson, Resource } from '../lesson';
 import { LessonService } from '../lesson.service';
 import { MessageService } from '../../../services/message.service';
 import { NavigationService } from '../../../services/navigation.service';
@@ -48,7 +48,7 @@ export class LessonEditPageComponent implements OnInit {
   uploading: boolean;
   resUploading: boolean;
 
-  imageTypes = ['png', 'jpeg', 'jpg', 'svg'];
+  docTypes = ['txt', 'doc', 'pdf'];
 
   private TitleText$ = new Subject<string>();
   private SummaryText$ = new Subject<string>();
@@ -107,7 +107,7 @@ export class LessonEditPageComponent implements OnInit {
       type: [lesson.type],
       content: [lessonContent],
       chapterId: [lesson.chapterId],
-      ressources: this.fb.array(this.loadFormRessources(lesson))
+      resources: this.fb.array(this.loadFormRessources(lesson))
     })
   }
 
@@ -115,11 +115,13 @@ export class LessonEditPageComponent implements OnInit {
     return obj?.hasOwnProperty('length');
   }
   loadFormRessources(lesson: Lesson) {
-    if (!this.isArray(lesson.ressources)) return [];
-    return lesson.ressources.map(res => this.buildRessourceItem(res));
+    if (!this.isArray(lesson.resources)) return [];
+    return lesson.resources.map((res: Resource) => this.buildRessourceItem(res));
   }
-  buildRessourceItem(res: Ressource): FormGroup {
+  buildRessourceItem(res: Resource): FormGroup {
     return new FormGroup({
+      id: new FormControl(res.id),
+      lessonId: new FormControl(res.lessonId),
       url: new FormControl(res.url),
       type: new FormControl(res.type),
       name: new FormControl(res.name),
@@ -133,7 +135,7 @@ export class LessonEditPageComponent implements OnInit {
   get video() { return this.form.get('video'); }
   get free() { return this.form.get('free'); }
   get type() { return this.form.get('type'); }
-  get ressources() { return this.form.get('ressources') as FormArray; }
+  get resources() { return this.form.get('resources') as FormArray; }
 
   getValue(event: Event): string {
     event.preventDefault();
@@ -159,24 +161,41 @@ export class LessonEditPageComponent implements OnInit {
     this.EditorText$.next(content);
   }
   typeInRessourse() {
-    this.RessourcesText$.next(this.ressources.value);
+    this.RessourcesText$.next(this.resources.value);
   }
 
-  addRessource(res: Ressource) {
-    const resItem = this.fb.group({
-      id: res.id,
-      url: res.url,
-      type: res.type,
-      name: res.name
-    })
+  addRessource(res: Resource) {
+    this.lessonService.addResourse(res)
+      .pipe(catchError(err => {
+        this.resUploading = false;
+        return throwError(() => err.message);
+      }))
+      .subscribe((data: Resource) => {
+        const resItem = this.fb.group({
+          id: data.id,
+          lessonId: data.lessonId,
+          url: data.url,
+          type: data.type,
+          name: data.name
+        })
 
-    this.ressources.push(resItem)
-    this.typeInRessourse();
+        this.resUploading = false;
+        this.resources.push(resItem)
+        this.messageService.openSnackBarSuccess('Votre document a bien été ajouté', 'OK')
+      })
   }
 
-  removeRessource(resIndex: number) {
-    this.ressources.removeAt(resIndex);
-    this.typeInRessourse();
+  removeRessource(res: Resource, resIndex: number) {
+    this.lessonService.deleteResource(res.id)
+      .pipe(catchError(err => {
+        this.resUploading = false;
+        return throwError(() => err.message);
+      }))
+      .subscribe(_data => {
+        this.resUploading = false;
+        this.resources.removeAt(resIndex);
+        this.messageService.openSnackBarSuccess('Le document a bien été suprimé', 'OK')
+      })
   }
 
   onFileSelected(event: any) {
@@ -186,7 +205,14 @@ export class LessonEditPageComponent implements OnInit {
       progress: 0
     };
 
-    this.fileType = this.file.data.type.split('/')[1];
+    const fType = this.file.data.type
+
+    if (fType.startsWith('image')) {
+      this.fileType = 'img'
+    }else {
+      this.fileType = fType.split('/')[1];
+    }
+
     this.fileName = this.file.data.name;
     this.fileSize = this.file.data.size;
   }
@@ -212,6 +238,9 @@ export class LessonEditPageComponent implements OnInit {
 
   uploadRessource(event: any) {
     this.onFileSelected(event);
+
+    if (!this.fileService.validateResource(this.file.data)) return;
+
     this.resUploading = true;
 
     this.fileService.uploadFile(this.file)
@@ -221,24 +250,22 @@ export class LessonEditPageComponent implements OnInit {
       }))
       .subscribe((event: any) => {
         if (typeof (event) === 'object') {
-          this.resUploading = false;
-          const res = { id: 1, url: event.url, type: this.fileType, name: this.fileName };
+          const res = { lessonId: this.lessonID, url: event.url, type: this.fileType, name: this.fileName };
           this.addRessource(res);
         }
       })
   }
 
-  deleteRessource(res: Ressource, id: any) {
+  deleteRessource(res: Resource, index: any) {
     this.resUploading = true;
 
     this.fileService.removeImage(res.name)
       .pipe(catchError(err => {
-        this.resUploading = false;
+        if (err.status == 404) this.removeRessource(res, index)
         return throwError(() => err.message);
       }))
       .subscribe(() => {
-        this.resUploading = false;
-        this.removeRessource(id)
+        this.removeRessource(res, index)
       })
   }
 
@@ -405,7 +432,7 @@ export class LessonEditPageComponent implements OnInit {
 
   triggerAutoSave() {
     const fields = [
-      this.RessourcesText$,
+      // this.RessourcesText$,
       this.TitleText$,
       this.EditorText$,
       this.SummaryText$,

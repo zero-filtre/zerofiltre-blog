@@ -42,6 +42,7 @@ import { MarkdownPreviewComponent } from './markdown-preview/markdown-preview.co
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
 import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
+import { PaymentCanceledComponent } from './payment-canceled/payment-canceled.component';
 
 const components = [
   AppShellRenderDirective,
@@ -60,7 +61,9 @@ const components = [
   BaseCourseListComponent,
   MarkdownPreviewComponent,
   PaymentSuccessComponent,
-  PaymentFailedComponent
+  PaymentFailedComponent,
+  PaymentCanceledComponent,
+  PaymentPopupComponent
 ];
 
 const modules = [
@@ -86,7 +89,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, PaymentPopupComponent],
+  declarations: [...components],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),

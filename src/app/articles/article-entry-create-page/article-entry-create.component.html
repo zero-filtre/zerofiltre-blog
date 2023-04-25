@@ -129,10 +129,12 @@
                     </nav>
 
                     <div class="mt-5">
-                        <app-auto-save-button [form]="form" [loading]="loading" [isPublishing]="isPublishing"
-                            [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
-                            (publishEvent)="publishArticle()">
-                        </app-auto-save-button>
+                        <ng-container *ngIf="form">
+                            <app-auto-save-button [form]="form" [loading]="loading" [isPublishing]="isPublishing"
+                                [isPublished]="isPublished" [isSaving]="isSaving" [isSaved]="isSaved" [saveFailed]="saveFailed"
+                                (publishEvent)="publishArticle()">
+                            </app-auto-save-button>
+                        </ng-container>
                     </div>
 
                     <div class="article-summary">

@@ -98,7 +98,7 @@ img {
 
 /* Message Notification styles */
 .success-snackbar {
-  @apply bg-primary-500;
+  @apply bg-primary-600;
 }
 
 .error-snackbar {
@@ -106,7 +106,7 @@ img {
 }
 
 .warning-snackbar {
-  @apply bg-accent-400;
+  @apply bg-accent-600;
 }
 
 .info-snackbar {
@@ -117,14 +117,14 @@ img {
 .error-snackbar,
 .warning-snackbar,
 .info-snackbar {
-  @apply text-skin-link;
+  @apply text-white;
 }
 
 .success-snackbar button,
 .error-snackbar button,
 .warning-snackbar button,
 .info-snackbar button {
-  @apply text-skin-link;
+  @apply text-white;
 }
 
 /* Block code styles */

@@ -25,7 +25,8 @@ export const fr = {
         authorRouteError: 'Vous ne pouvez pas acceder à cette page !',
         codeCopied: 'copié dans le Presse-papier',
         deleteArticlePopupBtn: 'Supprimer',
-        deleteArticleCautionText: 'Voulez-vous vraiment supprimer cet article ?'
+        deleteArticleCautionText: 'Voulez-vous vraiment supprimer cet article ?',
+        deleteCourseCautionText: 'Voulez-vous vraiment supprimer ce cours ?'
     },
     home: {
         exploreServices: 'Découvrez nos services',
@@ -128,8 +129,8 @@ export const fr = {
         ofReadTime: 'min(s) de lecture',
         AllArticles: 'Tous les articles',
         similarArticles: 'Articles similaires',
-        edit: "Éditer l'article",
-        delete: 'Supprimer',
+        edit: "Modifier l'article",
+        delete: 'Supprimer cet article',
         callToShareText: 'Vous avez aimé, alors partagez !',
         maxNberReactionText: '🚨 Nombre max de reactions sur cet article atteint !',
         loginToReactText: '🚨 Vous devez vous connecter pour réagir sur cet article',
