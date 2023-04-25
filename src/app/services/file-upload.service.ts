@@ -103,7 +103,7 @@ export class FileUploadService {
   validateResource(file: File): boolean {
     let isValid = false;
     const maxSize = 5;
-    const acceptedTypes = ['txt', 'doc', 'pdf', 'img'];
+    const acceptedTypes = ['txt', 'pdf', 'img'];
 
     const sizeUnit = 1024 * 1024;
     const fileSize = Math.round(file.size / sizeUnit);
@@ -111,12 +111,14 @@ export class FileUploadService {
 
     if (fileType.startsWith('image')) {
       fileType = 'img'
+    } else if (fileType.startsWith('text')) {
+      fileType = 'txt'
     } else {
       fileType = fileType.split('/')[1];
     }
 
     if (!acceptedTypes.includes(fileType)) {
-      this.messageService.openSnackBarWarning("Le document n'est pas au format autorisé ('.txt', '.doc', '.pdf', 'image*')", 'OK')
+      this.messageService.openSnackBarWarning("Le document n'est pas au format autorisé ('.txt', '.pdf', 'image*')", 'OK')
     } else if (fileSize > maxSize) {
       this.messageService.fileSizeWarning(maxSize);
     } else {

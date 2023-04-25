@@ -13,7 +13,8 @@ export class VimeoUrlPipe implements PipeTransform {
   ) { }
 
   transform(value: string, ...args: any[]): any {
-    const prev = `${'https://vimeo.com/697276485'}?access_token=${this.accessToken}&autoplay=0&title=false&muted=true&color=15B2BC&byline=false`
+    // 'https://vimeo.com/697276485'
+    const prev = `${value}?access_token=${this.accessToken}&autoplay=0&title=false&muted=true&color=15B2BC&byline=false`
     const url = prev?.replace("vimeo.com/", "player.vimeo.com/video/")
 
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
