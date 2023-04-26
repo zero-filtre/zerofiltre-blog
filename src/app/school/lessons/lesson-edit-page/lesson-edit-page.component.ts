@@ -417,6 +417,32 @@ export class LessonEditPageComponent implements OnInit {
     });
   }
 
+  openPdfFile(url: string){
+    const ext = url.split(/[#?]/)[0].split('.').pop().trim();
+
+    // return;
+    // const params = new URL(url).searchParams;
+    // const p = params.get('v');
+
+    var xhr = new XMLHttpRequest();
+    // load `document` from `cache`
+    xhr.open("GET", url, true);
+    xhr.responseType = "blob";
+    xhr.onload = function (e) {
+      if (this.status === 200) {
+        // `blob` response
+        console.log(this.response);
+        var file = window.URL.createObjectURL(this.response);
+        document.querySelector("iframe").src = file;
+
+        // var blobURL = URL.createObjectURL(blob);
+        // window.open(file);
+
+      }
+    };
+    xhr.send();
+  }
+
   onChanges(element: Observable<any>): void {
     element.pipe(
       debounceTime(2000),
