@@ -100,6 +100,7 @@ export class FileUploadService {
     return isValid;
   }
   
+  // TODO: merge validateResource and validateImage methods into one inside uploadImage function.
   validateResource(file: File): boolean {
     let isValid = false;
     const maxSize = 5;
