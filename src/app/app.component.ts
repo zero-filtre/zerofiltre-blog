@@ -43,9 +43,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   readonly servicesUrl = environment.servicesUrl
   readonly coursesUrl = environment.coursesUrl
+  readonly blogUrl = environment.blogUrl;
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
   appLogoUrl = 'https://ik.imagekit.io/lfegvix1p/logoblue_XmLzzzq19.svg?updatedAt=1681556349203';
+
+  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])

@@ -13,9 +13,12 @@ import { environment } from 'src/environments/environment';
 export class HeaderComponent implements OnInit {
   readonly servicesUrl = environment.servicesUrl;
   readonly coursesUrl = environment.coursesUrl;
+  readonly blogUrl = environment.blogUrl;
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
-  public appLogoUrl = 'https://ik.imagekit.io/lfegvix1p/logoblue_6whym-RBD.svg'
+  appLogoUrl = 'https://ik.imagekit.io/lfegvix1p/logoblue_6whym-RBD.svg'
+
+  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
 
   @Input() changingRoute!: boolean;
   @Input() drawer!: any;
