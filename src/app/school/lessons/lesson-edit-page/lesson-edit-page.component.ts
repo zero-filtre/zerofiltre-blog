@@ -359,15 +359,17 @@ export class LessonEditPageComponent implements OnInit {
       .subscribe(
         data => {
           this.uploading = false;
-          this.openUploadFormDialog(
-            data.upload.upload_link,
-            this.file.data,
-            this.fileName,
-            data.link,
-            this.fileSize,
-            this.video,
-            this.VideoText$
-          );
+          if (data) {
+            this.openUploadFormDialog(
+              data.upload.upload_link,
+              this.file.data,
+              this.fileName,
+              data.link,
+              this.fileSize,
+              this.video,
+              this.VideoText$
+            );
+          }
         }
       )
   }
