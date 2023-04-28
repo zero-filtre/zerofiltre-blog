@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, Subject, switchMap, throwError, tap, debounceTime, distinctUntilChanged } from 'rxjs';
+import { catchError, Observable, Subject, switchMap, throwError, tap, debounceTime, distinctUntilChanged, EMPTY } from 'rxjs';
 import { File } from 'src/app/articles/article.model';
 import { Lesson, Resource } from '../lesson';
 import { LessonService } from '../lesson.service';
@@ -374,6 +374,12 @@ export class LessonEditPageComponent implements OnInit {
       )
   }
 
+  notifySucessOnVideoFileDelete() {
+    this.video.setValue('');
+    this.typeInVideo('');
+    this.messageService.openSnackBarSuccess('La vidéo a bien été supprimée!', 'OK')
+  }
+
   deleteVideo(lesson: Lesson) {
     const videoID = lesson.video.split('/')[3];
     if (!videoID){
@@ -385,13 +391,15 @@ export class LessonEditPageComponent implements OnInit {
     this.vimeo.deleteVideoFile(videoID)
       .pipe(catchError(err => {
         this.uploading = false;
+        if (err.status == 404){
+          this.notifySucessOnVideoFileDelete();
+          return EMPTY;
+        }
         this.messageService.openSnackBarError('Un problème est survenu lors de la suppression!', 'OK')
         return throwError(() => err.message)
       }))
       .subscribe(_data => {
-        this.video.setValue('');
-        this.typeInVideo('');
-        this.messageService.openSnackBarSuccess('La vidéo a bien été supprimée!', 'OK')
+        this.notifySucessOnVideoFileDelete();
       });
   }
 
@@ -420,29 +428,7 @@ export class LessonEditPageComponent implements OnInit {
   }
 
   openPdfFile(url: string){
-    const ext = url.split(/[#?]/)[0].split('.').pop().trim();
-
-    // return;
-    // const params = new URL(url).searchParams;
-    // const p = params.get('v');
-
-    var xhr = new XMLHttpRequest();
-    // load `document` from `cache`
-    xhr.open("GET", url, true);
-    xhr.responseType = "blob";
-    xhr.onload = function (e) {
-      if (this.status === 200) {
-        // `blob` response
-        console.log(this.response);
-        var file = window.URL.createObjectURL(this.response);
-        document.querySelector("iframe").src = file;
-
-        // var blobURL = URL.createObjectURL(blob);
-        // window.open(file);
-
-      }
-    };
-    xhr.send();
+    // IMPlement the pdf viewer
   }
 
   onChanges(element: Observable<any>): void {
@@ -460,7 +446,6 @@ export class LessonEditPageComponent implements OnInit {
 
   triggerAutoSave() {
     const fields = [
-      // this.RessourcesText$,
       this.TitleText$,
       this.EditorText$,
       this.SummaryText$,
