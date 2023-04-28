@@ -447,7 +447,7 @@ export class LessonEditPageComponent implements OnInit {
 
   onChanges(element: Observable<any>): void {
     element.pipe(
-      debounceTime(2000),
+      debounceTime(800),
       distinctUntilChanged(),
       tap(() => {
         if (this.form.valid) {
