@@ -18,7 +18,6 @@ import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatListModule } from '@angular/material/list';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MarkdownModule } from 'ngx-markdown';
@@ -88,7 +87,6 @@ const modules = [
   MatSlideToggleModule,
   MatListModule,
   YouTubePlayerModule,
-  PdfViewerModule
 ];
 
 @NgModule({

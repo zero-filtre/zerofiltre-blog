@@ -38,7 +38,6 @@
     "express": "^4.15.2",
     "express-rate-limit": "^6.5.1",
     "imagekitio-angular": "^1.0.2",
-    "ng2-pdf-viewer": "^9.1.5",
     "ngx-markdown": "^13.0.0",
     "ngx-skeleton-loader": "^4.0.0",
     "prismjs": "^1.27.0",
