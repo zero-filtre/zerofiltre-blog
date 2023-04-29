@@ -56,15 +56,15 @@ export class StudentCoursesListComponent extends BaseCourseListComponent impleme
 
   onScroll() { }
 e
-  openCourseDeleteDialog(courseId: any): void {
-    this.dialogDeleteRef.open(CourseDeletePopupComponent, {
-      panelClass: 'delete-article-popup-panel',
-      data: {
-        id: courseId,
-        history: this.router.url
-      }
-    });
-  }
+  // openCourseDeleteDialog(courseId: any): void {
+  //   this.dialogDeleteRef.open(CourseDeletePopupComponent, {
+  //     panelClass: 'delete-article-popup-panel',
+  //     data: {
+  //       courseId,
+  //       history: this.router.url
+  //     }
+  //   });
+  // }
 
   canAccessCourse(courseId: any) {
     const user = this.authService?.currentUsr as User

@@ -65,15 +65,15 @@ export class AdminCoursesListComponent extends BaseCourseListComponent implement
     });
   }
 
-  openCourseDeleteDialog(courseId: any): void {
-    this.dialogDeleteRef.open(CourseDeletePopupComponent, {
-      panelClass: 'delete-article-popup-panel',
-      data: {
-        id: courseId,
-        history: this.router.url
-      }
-    });
-  }
+  // openCourseDeleteDialog(courseId: any): void {
+  //   this.dialogDeleteRef.open(CourseDeletePopupComponent, {
+  //     panelClass: 'delete-article-popup-panel',
+  //     data: {
+  //       courseId,
+  //       history: this.router.url
+  //     }
+  //   });
+  // }
 
   sortByTab(tab: string): void {
     this.courses = [];
