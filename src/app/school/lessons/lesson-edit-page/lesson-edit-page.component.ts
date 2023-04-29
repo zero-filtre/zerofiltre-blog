@@ -427,10 +427,6 @@ export class LessonEditPageComponent implements OnInit {
     });
   }
 
-  openPdfFile(url: string){
-    // IMPlement the pdf viewer
-  }
-
   onChanges(element: Observable<any>): void {
     element.pipe(
       debounceTime(800),

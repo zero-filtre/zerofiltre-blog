@@ -18,6 +18,7 @@ import { ImagekitioAngularModule } from 'imagekitio-angular';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatListModule } from '@angular/material/list';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MarkdownModule } from 'ngx-markdown';
@@ -43,6 +44,7 @@ import { PaymentSuccessComponent } from './payment-success/payment-success.compo
 import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
 import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 import { PaymentCanceledComponent } from './payment-canceled/payment-canceled.component';
+import { PdfPreviewComponent } from './ui/pdf-preview/pdf-preview.component';
 
 const components = [
   AppShellRenderDirective,
@@ -85,11 +87,12 @@ const modules = [
   MatSelectModule,
   MatSlideToggleModule,
   MatListModule,
-  YouTubePlayerModule
+  YouTubePlayerModule,
+  PdfViewerModule
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, PdfPreviewComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
