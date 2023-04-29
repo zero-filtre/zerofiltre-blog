@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, Subject, switchMap, throwError, tap, debounceTime, distinctUntilChanged } from 'rxjs';
+import { catchError, Observable, Subject, switchMap, throwError, tap, debounceTime, distinctUntilChanged, EMPTY } from 'rxjs';
 import { File } from 'src/app/articles/article.model';
 import { Lesson, Resource } from '../lesson';
 import { LessonService } from '../lesson.service';
@@ -359,17 +359,25 @@ export class LessonEditPageComponent implements OnInit {
       .subscribe(
         data => {
           this.uploading = false;
-          this.openUploadFormDialog(
-            data.upload.upload_link,
-            this.file.data,
-            this.fileName,
-            data.link,
-            this.fileSize,
-            this.video,
-            this.VideoText$
-          );
+          if (data) {
+            this.openUploadFormDialog(
+              data.upload.upload_link,
+              this.file.data,
+              this.fileName,
+              data.link,
+              this.fileSize,
+              this.video,
+              this.VideoText$
+            );
+          }
         }
       )
+  }
+
+  notifySucessOnVideoFileDelete() {
+    this.video.setValue('');
+    this.typeInVideo('');
+    this.messageService.openSnackBarSuccess('La vidéo a bien été supprimée!', 'OK')
   }
 
   deleteVideo(lesson: Lesson) {
@@ -383,13 +391,15 @@ export class LessonEditPageComponent implements OnInit {
     this.vimeo.deleteVideoFile(videoID)
       .pipe(catchError(err => {
         this.uploading = false;
+        if (err.status == 404){
+          this.notifySucessOnVideoFileDelete();
+          return EMPTY;
+        }
         this.messageService.openSnackBarError('Un problème est survenu lors de la suppression!', 'OK')
         return throwError(() => err.message)
       }))
       .subscribe(_data => {
-        this.video.setValue('');
-        this.typeInVideo('');
-        this.messageService.openSnackBarSuccess('La vidéo a bien été supprimée!', 'OK')
+        this.notifySucessOnVideoFileDelete();
       });
   }
 
@@ -419,7 +429,7 @@ export class LessonEditPageComponent implements OnInit {
 
   onChanges(element: Observable<any>): void {
     element.pipe(
-      debounceTime(2000),
+      debounceTime(800),
       distinctUntilChanged(),
       tap(() => {
         if (this.form.valid) {
@@ -432,7 +442,6 @@ export class LessonEditPageComponent implements OnInit {
 
   triggerAutoSave() {
     const fields = [
-      // this.RessourcesText$,
       this.TitleText$,
       this.EditorText$,
       this.SummaryText$,

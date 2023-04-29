@@ -106,34 +106,25 @@
                         </label>
 
                         <div
-                            class="lesson_ressourses w-full border-2 border-dashed rounded p-5 flex justify-center lg:justify-start lg:items-center flex-wrap mt-[-10px]">
+                            class="lesson_ressourses w-full border-2 border-dashed rounded p-5 grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:justify-start flex-wrap mt-[-10px]">
                             <ng-container *ngFor="let res of lesson?.resources; let i = index">
-                                <a href="{{res.url}}" target="_blank" rel="noopener">
-                                    <div *ngIf="res.type == 'img'"
-                                        class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
-                                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="1" viewBox="0 0 24 24" class="mx-auto h-8 w-8 group-hover:text-primary-500">
-                                            <path
-                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                            </path>
-                                        </svg>
-                                        <span class="group-hover:text-primary-500">{{res.name}}</span>
-                                    </div>
+                                <div *ngIf="res.type == 'img'"
+                                    class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
+                                    <a href="{{res.url}}" target="_blank" rel="noopener" class="self-center">
+                                        <app-image [sourceUrl]="res.url" [classes]="'w-[200px]'"></app-image>
+                                        <span class="group-hover:text-primary-500 break-words mt-2 inline-block">{{res.name}}</span>
+                                    </a>
+                                </div>
                 
-                                    <div *ngIf="docTypes.includes(res.type)"
-                                        class="group flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
-                                        <svg class="mx-auto h-7 w-7 group-hover:text-primary-500" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 512 512">
-                                            <path
-                                                d="M416 221.25V416a48 48 0 01-48 48H144a48 48 0 01-48-48V96a48 48 0 0148-48h98.75a32 32 0 0122.62 9.37l141.26 141.26a32 32 0 019.37 22.62z"
-                                                fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="25" />
-                                            <path d="M256 56v120a32 32 0 0032 32h120" fill="none" stroke="currentColor"
-                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="25" />
-                                        </svg>
-                
-                                        <span class="group-hover:text-primary-500">{{res.name}}</span>
-                                    </div>
-                                </a>
+                                <div *ngIf="docTypes.includes(res.type)"
+                                    class="group flex flex-col items-center justify-center self-start hover:bg-base-100 p-5 rounded cursor-pointer">
+                                   <a [routerLink]="['/pdf']" [queryParams]="{ url: res.url}" target="_blank"> 
+                                        <div class="w-[200px] flex flex-col">
+                                            <ngx-doc-viewer class="border border-primary-600" [url]="res.url" viewer="google" style="width:100%;height:50vh;"></ngx-doc-viewer>
+                                            <span class="group-hover:text-primary-500 break-words">{{res.name}}</span>
+                                        </div>
+                                    </a>
+                                </div>
                             </ng-container>
                         </div>
                     </div>

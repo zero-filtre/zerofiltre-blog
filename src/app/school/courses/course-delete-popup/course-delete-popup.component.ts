@@ -26,7 +26,7 @@ export class CourseDeletePopupComponent implements OnInit {
   }
 
 
-  handleDeleteArticle(): void {
+  handleDeleteCourse(): void {
     this.loading = true;
 
     this.courseService.deleteCourse(this.data.courseId)
@@ -40,6 +40,7 @@ export class CourseDeletePopupComponent implements OnInit {
         location.reload();
         this.loading = false;
         this.dialogRef.close();
+        this.messageService.openSnackBarSuccess("Le cours a bien été supprimé", 'OK');
       })
   }
 

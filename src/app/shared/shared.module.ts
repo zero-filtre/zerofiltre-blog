@@ -22,6 +22,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MarkdownModule } from 'ngx-markdown';
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import { NgxDocViewerModule } from'ngx-doc-viewer'
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './lang-switcher/translate-universal-loader';
@@ -43,6 +44,7 @@ import { PaymentSuccessComponent } from './payment-success/payment-success.compo
 import { PaymentFailedComponent } from './payment-failed/payment-failed.component';
 import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 import { PaymentCanceledComponent } from './payment-canceled/payment-canceled.component';
+import { PdfPreviewComponent } from './ui/pdf-preview/pdf-preview.component';
 
 const components = [
   AppShellRenderDirective,
@@ -63,7 +65,8 @@ const components = [
   PaymentSuccessComponent,
   PaymentFailedComponent,
   PaymentCanceledComponent,
-  PaymentPopupComponent
+  PaymentPopupComponent,
+  PdfPreviewComponent
 ];
 
 const modules = [
@@ -85,7 +88,8 @@ const modules = [
   MatSelectModule,
   MatSlideToggleModule,
   MatListModule,
-  YouTubePlayerModule
+  YouTubePlayerModule,
+  NgxDocViewerModule
 ];
 
 @NgModule({
