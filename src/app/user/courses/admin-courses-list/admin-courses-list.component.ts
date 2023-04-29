@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Course } from 'src/app/school/courses/course';
-import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
 import { CourseInitPopupComponent } from 'src/app/school/courses/course-init-popup/course-init-popup.component';
 import { CourseService } from 'src/app/school/courses/course.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
@@ -64,16 +63,6 @@ export class AdminCoursesListComponent extends BaseCourseListComponent implement
       panelClass: 'article-popup-panel',
     });
   }
-
-  // openCourseDeleteDialog(courseId: any): void {
-  //   this.dialogDeleteRef.open(CourseDeletePopupComponent, {
-  //     panelClass: 'delete-article-popup-panel',
-  //     data: {
-  //       courseId,
-  //       history: this.router.url
-  //     }
-  //   });
-  // }
 
   sortByTab(tab: string): void {
     this.courses = [];

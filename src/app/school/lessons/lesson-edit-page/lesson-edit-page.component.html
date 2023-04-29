@@ -1,13 +1,13 @@
 <div class="edit-toolbar sticky top-[72px] lg:top-20 z-20 bg-primary-100">
     <nav class="top-nav font-semibold">
         <div class="site-container flex items-center justify-between gap-4 lg:gap-5 h-16">
-            <!-- <a routerLink="/cours/{{courseID}}/{{lessonID}}" class="flex items-center justify-center bg-primary-50 text-white h-full w-16"
+            <a routerLink="/cours/{{courseID}}/{{lessonID}}" class="flex items-center justify-center bg-primary-50 text-white h-full w-16"
                 aria-label="navigate back button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="group-hover:text-primary-300"
                     data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
                     <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
                 </svg>
-            </a> -->
+            </a>
 
             <ng-container *ngIf="form">
                 <app-auto-save-button [form]="form" [loading]="isLoading" [isPublishing]="isPublishing" [isPublished]="isPublished"
@@ -236,8 +236,3 @@
         </div>
     </form>
 </main>
-
-<div id="my-container" class="ng-scope pdfobject-container">
-    <iframe src="" type="application/pdf" width="100%" height="100%" style="overflow: auto;">
-    </iframe>
-</div>

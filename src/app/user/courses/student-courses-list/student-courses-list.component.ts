@@ -2,7 +2,6 @@ import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
-import { CourseDeletePopupComponent } from '../../../school/courses/course-delete-popup/course-delete-popup.component';
 import { CourseService } from 'src/app/school/courses/course.service';
 import { Subscription } from 'rxjs';
 import { Course } from 'src/app/school/courses/course';
@@ -55,16 +54,6 @@ export class StudentCoursesListComponent extends BaseCourseListComponent impleme
   }
 
   onScroll() { }
-e
-  // openCourseDeleteDialog(courseId: any): void {
-  //   this.dialogDeleteRef.open(CourseDeletePopupComponent, {
-  //     panelClass: 'delete-article-popup-panel',
-  //     data: {
-  //       courseId,
-  //       history: this.router.url
-  //     }
-  //   });
-  // }
 
   canAccessCourse(courseId: any) {
     const user = this.authService?.currentUsr as User

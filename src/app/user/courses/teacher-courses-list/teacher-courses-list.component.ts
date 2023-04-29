@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseInitPopupComponent } from 'src/app/school/courses/course-init-popup/course-init-popup.component';
-import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
 import { Course } from 'src/app/school/courses/course';
 import { CourseService } from 'src/app/school/courses/course.service';
 import { Subscription } from 'rxjs';
@@ -66,17 +65,6 @@ export class TeacherCoursesListComponent extends BaseCourseListComponent impleme
       panelClass: 'article-popup-panel',
     });
   }
-
-  // openCourseDeleteDialog(courseId: any): void {
-  //   this.dialogDeleteRef.open(CourseDeletePopupComponent, {
-  //     panelClass: 'delete-article-popup-panel',
-  //     data: {
-  //       courseId,
-  //       history: this.router.url
-  //     }
-  //   });
-  // }
-
 
   sortByTab(tab: string): void {
     this.courses = [];
