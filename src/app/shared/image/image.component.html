@@ -4,4 +4,4 @@
 
 <!-- *ngIf="serverRunning" -->
 
-<img width="1200" height="1200" [src]="imageKitSource()" class="{{classes}}" [alt]="alt" [srcset]="srcsetValue" />
+<img width="1200" height="1200" [src]="imageKitSource()" class="{{classes}}" [alt]="alt" [srcset]="srcsetValue ? srcsetValue : ''" />
