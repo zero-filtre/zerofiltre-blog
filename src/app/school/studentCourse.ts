@@ -49,6 +49,10 @@ export type ModeType = typeof MODES[number]
 export const INTERVALS = ['month', 'year'] as const;
 export type IntervalType = typeof INTERVALS[number]
 
+export const STATUS = ['PUBLISHED', 'DRAFT', 'IN_REVIEW'] as const;
+export type StatusType = typeof STATUS[number]
+
+
 
 export interface PaymentConfig {
     productId: number,

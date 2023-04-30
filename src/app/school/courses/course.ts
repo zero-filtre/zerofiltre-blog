@@ -1,5 +1,6 @@
 import { Tag } from "../../articles/article.model";
 import { User } from "../../user/user.model";
+import { StatusType } from "../studentCourse";
 
 export interface Course {
     id: number;
@@ -17,7 +18,7 @@ export interface Course {
     duration: string;
     editorIds: any[];
     price: number;
-    status: string;
+    status: StatusType;
     video: string;
     sections: Section[];
     publishedAt: string;
