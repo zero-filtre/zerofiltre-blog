@@ -4,6 +4,8 @@ import { CourseEnrollmentResolver } from '../course-enrollment.resolver';
 import { LessonAccessGuard } from './lesson-access.guard';
 import { LessonEditPageComponent } from './lesson-edit-page/lesson-edit-page.component';
 import { LessonComponent } from './lesson/lesson.component';
+import { TokenExpiredGuard } from 'src/app/shared/guard/token-expired.guard';
+import { AuthGuard } from 'src/app/user/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: ':lesson_id/edit',
-    component: LessonEditPageComponent
+    component: LessonEditPageComponent,
+    canActivate: [TokenExpiredGuard, AuthGuard, LessonAccessGuard],
   }
 ];
 

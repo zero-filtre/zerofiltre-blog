@@ -32,17 +32,19 @@ export class PaymentPopupComponent implements OnInit {
 
   goToUrl(url: string): void {
     // this.document.location.href = url;
-    (window as any).open(url, "_blank");
+    // const popup = (window as any).open(url, "_blank");
   }
 
   payOneTime() {
-    console.log('CLIKED!!!!!!!!');
     this.loadingOne = true
     this.payload = { ...this.payload, mode: 'payment' }
+
+    let popupWin = (window as any).open('about:blank', "_blank");
+
     this.payment.checkoutBasicOneTime(this.payload)
       .subscribe(data => {
         this.loadingOne = false;
-        this.goToUrl(data);
+        popupWin.location.href = data;
         this.dialogRef.close();
       })
   }
@@ -50,10 +52,13 @@ export class PaymentPopupComponent implements OnInit {
   payThreeTimes() {
     this.loadingThree = true;
     this.payload = { ...this.payload, mode: 'subscription', proPlan: false }
+
+    let popupWin = (window as any).open('about:blank', "_blank");
+
     this.payment.checkoutBasicThreeTimes(this.payload)
       .subscribe(data => {
         this.loadingThree = false;
-        this.goToUrl(data);
+        popupWin.location.href = data;
         this.dialogRef.close();
       })
   }
@@ -61,10 +66,13 @@ export class PaymentPopupComponent implements OnInit {
   payProMonthly() {
     this.loadingMonth = true;
     this.payload = { ...this.payload, mode: 'subscription', proPlan: true, recurringInterval: 'month' }
+
+    let popupWin = (window as any).open('about:blank', "_blank");
+
     this.payment.checkoutProPlanMonthly(this.payload)
       .subscribe(data => {
         this.loadingMonth = false;
-        this.goToUrl(data);
+        popupWin.location.href = data;
         this.dialogRef.close();
       })
   }
@@ -72,10 +80,13 @@ export class PaymentPopupComponent implements OnInit {
   payProYearly() {
     this.loadingYear = true;
     this.payload = { ...this.payload, mode: 'subscription', proPlan: true, recurringInterval: 'year' }
+
+    let popupWin = (window as any).open('about:blank', "_blank");
+    
     this.payment.checkoutProPlanYearly(this.payload)
       .subscribe(data => {
         this.loadingYear = false;
-        this.goToUrl(data);
+        popupWin.location.href = data;
         this.dialogRef.close();
       })
   }
