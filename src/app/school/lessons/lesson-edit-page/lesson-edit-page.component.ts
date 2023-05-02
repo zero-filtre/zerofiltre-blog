@@ -208,9 +208,12 @@ export class LessonEditPageComponent implements OnInit {
     const fType = this.file.data.type
 
     if (fType.startsWith('image')) {
-      this.fileType = 'img'
-    }else {
-      this.fileType = fType.split('/')[1];
+      this.fileType = 'img';
+    } else {
+      const nameParts = this.file.data.name.split('.');
+      this.fileType = nameParts[nameParts.length - 1];
+
+      if (this.fileType === 'zip') this.fileType = 'doc';
     }
 
     this.fileName = this.file.data.name;
@@ -239,11 +242,9 @@ export class LessonEditPageComponent implements OnInit {
   uploadRessource(event: any) {
     this.onFileSelected(event);
 
-    if (!this.fileService.validateResource(this.file.data)) return;
-
     this.resUploading = true;
 
-    this.fileService.uploadFile(this.file)
+    this.fileService.uploadResourceFile(this.file)
       .pipe(catchError(err => {
         this.resUploading = false;
         return throwError(() => err.message);
