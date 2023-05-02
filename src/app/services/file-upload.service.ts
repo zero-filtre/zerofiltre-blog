@@ -103,8 +103,8 @@ export class FileUploadService {
   // TODO: merge validateResource and validateImage methods into one inside uploadImage function.
   validateResource(file: File): boolean {
     let isValid = false;
-    const maxSize = 5;
-    const acceptedTypes = ['txt', 'pdf', 'img'];
+    const maxSize = 200;
+    const acceptedTypes = ['txt', 'pdf', 'img', 'zip', 'doc', 'docx'];
 
     const sizeUnit = 1024 * 1024;
     const fileSize = Math.round(file.size / sizeUnit);

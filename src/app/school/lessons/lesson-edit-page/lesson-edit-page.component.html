@@ -85,11 +85,11 @@
                                     <p class="mt-1 text-xs text-skin-base leading-6">
                                         <span
                                             class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                            Upload a file
+                                            Telecharger un fichier
                                         </span>
                                     </p>
                                     <p class="mt-1 text-xs text-skin-muted">
-                                        MP4, Webm up to MB
+                                        MP4, Webm jusqu'à 500 MB
                                     </p>
 
                                     <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
@@ -205,7 +205,7 @@
                             <span class="group-hover:text-primary-500">Ajouter un fichier</span>
 
                             <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
-                                (change)="uploadRessource($event)" accept="image/*,.pdf,.txt" />
+                                (change)="uploadRessource($event)" accept="image/*,.pdf,.txt,.doc,.docx,.zip" />
                         </label>
 
                         <div *ngIf="resUploading" class="flex items-center justify-center">
