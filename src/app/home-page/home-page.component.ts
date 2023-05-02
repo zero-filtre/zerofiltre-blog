@@ -18,6 +18,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   readonly servicesUrl = environment.servicesUrl
   readonly coursesUrl = environment.coursesUrl
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
+  readonly blogUrl = environment.blogUrl;
+
+  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
 
   public blogHeroImage = 'https://ik.imagekit.io/lfegvix1p/community1__PF0EdVIS.svg'
   public coursesHeroImage = 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg'
