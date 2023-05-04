@@ -29,7 +29,7 @@
               "src/assets",
               "src/assets/favicon/favicon.ico", 
               "src/assets/sitemap.xml",
-              "src/robots.txt"
+              "src/assets/robots.txt"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
