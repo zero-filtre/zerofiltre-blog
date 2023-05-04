@@ -170,6 +170,13 @@ export class LessonComponent implements OnInit, OnDestroy {
         }),
         tap((lesson: Lesson) => {
           this.lesson = lesson;
+
+          this.seo.generateTags({
+            title: lesson.title,
+            description: lesson.summary,
+            image: lesson.thumbnail,
+          })
+
           this.completed = this.isLessonCompleted(lesson)
           this.lessonVideo$ = this.vimeoService.getOneVideo(lesson?.video);
           this.loading = false;

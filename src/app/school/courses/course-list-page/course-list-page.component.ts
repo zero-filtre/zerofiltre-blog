@@ -226,8 +226,8 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
     }
 
     this.seo.generateTags({
-      title: this.translate.instant('meta.articlesTitle'),
-      description: this.translate.instant('meta.articlesDescription'),
+      title: this.translate.instant('meta.coursesTitle'),
+      description: this.translate.instant('meta.coursesDescription'),
       author: 'Zerofiltre.tech',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });

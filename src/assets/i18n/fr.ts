@@ -258,7 +258,9 @@ export const fr = {
         homeDescription: "La communauté d'experts de l'IT  qui changent des vies et des carrières grâce à la tech, tout ceci sans discrimination et sans filtres",
 
         articlesTitle: 'Tous les articles | Zerofiltre.tech',
-        articlesDescription: "Développez des Applications à haute valeur ajoutée pour votre business et pas que pour l'IT. Profitez d'offres taillées pour chaque entreprise. Industrialisation, Maintenance, extension, monitoring et supervision.",
+        coursesTitle: 'Toutes nos formations | Zerofiltre.tech',
+        articlesDescription: "Dopez vos compétences sur des sujets techniques afin de devenir un profil désiré par des entreprises !",
+        coursesDescription: "Dopez vos compétences sur des sujets techniques afin de devenir un profil désiré par des entreprises !",
 
         articleEntryEditTitle: "Editer l'article | Zerofiltre.tech",
         articleEntryEditDescription: 'Editer votre article dejà publié ou non avec une sauvegarde automatique assurée !',
