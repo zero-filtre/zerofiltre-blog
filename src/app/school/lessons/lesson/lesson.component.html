@@ -117,13 +117,13 @@
                                 </div>
                 
                                 <div *ngIf="docTypes.includes(res.type)"
-                                    class="group flex flex-col items-center justify-center self-start hover:bg-base-100 p-5 rounded cursor-pointer">
-                                   <a [routerLink]="['/pdf']" [queryParams]="{ url: res.url}" target="_blank"> 
+                                    class="group flex flex-col items-center justify-center self-start hover:bg-base-100 p-5 rounded">
+                                   <!-- <a [routerLink]="['/pdf']" [queryParams]="{ url: res.url}" target="_blank">  -->
                                         <div class="w-[200px] flex flex-col">
-                                            <ngx-doc-viewer class="border border-primary-600" [url]="res.url" viewer="google" style="width:100%;height:50vh;"></ngx-doc-viewer>
+                                            <ngx-doc-viewer class="border border-primary-600 rounded-sm" [url]="res.url" viewer="google" style="width:100%;height:50vh;"></ngx-doc-viewer>
                                             <span class="group-hover:text-primary-500 break-words">{{res.name}}</span>
                                         </div>
-                                    </a>
+                                    <!-- </a> -->
                                 </div>
                             </ng-container>
                         </div>

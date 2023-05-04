@@ -123,6 +123,13 @@ export class CourseDetailPageComponent implements OnInit {
           return throwError(() => err?.message)
         }),
         tap((data: Course) => {
+          this.seo.generateTags({
+            title: data.title,
+            description: data.summary,
+            image: data.thumbnail,
+            author: data.author?.fullName,
+          })
+
           this.isLoading = false;
           this.isSubscriber = this.courseService.isSubscriber(data.id);
 
@@ -235,6 +242,5 @@ export class CourseDetailPageComponent implements OnInit {
           return sub
         })
       )
-
   }
 }

@@ -100,26 +100,25 @@ export class FileUploadService {
     return isValid;
   }
   
-  // TODO: merge validateResource and validateImage methods into one inside uploadImage function.
-  validateResource(file: File): boolean {
+  private validateResource(file: File): boolean {
     let isValid = false;
-    const maxSize = 5;
-    const acceptedTypes = ['txt', 'pdf', 'img'];
+    const maxSize = 200;
+    const acceptedTypes = ['txt', 'pdf', 'img', 'zip', 'doc', 'docx'];
 
     const sizeUnit = 1024 * 1024;
     const fileSize = Math.round(file.size / sizeUnit);
     let fileType = file.type
 
+
     if (fileType.startsWith('image')) {
       fileType = 'img'
-    } else if (fileType.startsWith('text')) {
-      fileType = 'txt'
     } else {
-      fileType = fileType.split('/')[1];
+      const nameParts = file.name.split('.')
+      fileType = nameParts[nameParts.length - 1];
     }
 
     if (!acceptedTypes.includes(fileType)) {
-      this.messageService.openSnackBarWarning("Le document n'est pas au format autorisé ('.txt', '.pdf', 'image*')", 'OK')
+      this.messageService.openSnackBarWarning("Le document n'est pas au format autorisé ('.txt', '.pdf', '.zip', '.doc', 'image*')", 'OK')
     } else if (fileSize > maxSize) {
       this.messageService.fileSizeWarning(maxSize);
     } else {
@@ -131,6 +130,28 @@ export class FileUploadService {
 
   private uploadImage(fileName: string, file: File): Observable<any> {
     if (!this.validateImage(file)) return throwError(() => new Error('Invalid file'))
+
+    const xToken = this.xTokenObj?.xToken;
+
+    httpOptions.headers = httpOptions.headers
+      .set('Content-Type', 'image/png')
+      .set('X-Auth-Token', xToken)
+
+    return this.http.put<string>(`${this.ovhServerUrl}/${fileName}`, file, {
+      ...httpOptions,
+      reportProgress: true,
+      observe: 'events'
+    })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.handleError(error);
+          return throwError(() => error)
+        })
+      )
+  }
+
+  private uploadDoc(fileName: string, file: File): Observable<any> {
+    if (!this.validateResource(file)) return throwError(() => new Error('Invalid document'))
 
     const xToken = this.xTokenObj?.xToken;
 
@@ -234,6 +255,26 @@ export class FileUploadService {
     file.inProgress = true;
 
     return this.uploadImage(fileName, file.data).pipe(
+      map((event) => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            file.progress = Math.round(event.loaded * 100 / event.total);
+            break;
+          case HttpEventType.Response:
+            return event;
+        }
+      }),
+      catchError((_error: HttpErrorResponse) => {
+        file.inProgress = false;
+        return throwError(() => 'Upload failed');
+      }))
+  }
+
+  public uploadResourceFile(file: any): Observable<any> {
+    const fileName = file.data.name
+    file.inProgress = true;
+
+    return this.uploadDoc(fileName, file.data).pipe(
       map((event) => {
         switch (event.type) {
           case HttpEventType.UploadProgress:

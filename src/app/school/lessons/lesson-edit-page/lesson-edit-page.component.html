@@ -85,11 +85,11 @@
                                     <p class="mt-1 text-xs text-skin-base leading-6">
                                         <span
                                             class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                            Upload a file
+                                            Telecharger un fichier
                                         </span>
                                     </p>
                                     <p class="mt-1 text-xs text-skin-muted">
-                                        MP4, Webm up to MB
+                                        MP4, Webm jusqu'à 500 MB
                                     </p>
 
                                     <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
@@ -170,12 +170,12 @@
                             <div *ngIf="docTypes.includes(res.type)"
                                 class="group flex flex-col items-center justify-center self-start hover:bg-base-100 p-5 rounded">
 
-                                <a [routerLink]="['/pdf']" [queryParams]="{url: res.url}" target="_blank">
+                                <!-- <a [routerLink]="['/pdf']" [queryParams]="{url: res.url}" target="_blank"> -->
                                     <div class="w-[200px] flex flex-col">
-                                        <ngx-doc-viewer class="border border-primary-600" [url]="res.url" viewer="google" style="width:100%;height:50vh;"></ngx-doc-viewer>
+                                        <ngx-doc-viewer class="border border-primary-600 rounded-sm" [url]="res.url" viewer="google" style="width:100%;height:50vh;"></ngx-doc-viewer>
                                         <span class="group-hover:text-primary-500 break-words">{{res.name}}</span>
                                     </div>
-                                </a>
+                                <!-- </a> -->
 
                                 <div class="ressource-remove-btn flex justify-center items-center w-8 h-8 mt-4 text-sm text-white bg-secondary rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
                                     (click)="deleteRessource(res, i)">
@@ -192,20 +192,20 @@
 
                         <label *ngIf="!resUploading" for="file" (click)="fileUpload.click()"
                             class="group text-skin-base flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-8 w-8 group-hover:text-primary-500 shadow-sm"
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-10 w-10 group-hover:text-primary-500"
                                 viewBox="0 0 512 512">
                                 <path
                                     d="M320 367.79h76c55 0 100-29.21 100-83.6s-53-81.47-96-83.6c-8.89-85.06-71-136.8-144-136.8-69 0-113.44 45.79-128 91.2-60 5.7-112 43.88-112 106.4s54 106.4 120 106.4h56"
                                     fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="15" />
+                                    stroke-width="22" />
                                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="15" d="M320 255.79l-64-64-64 64M256 448.21V207.79" />
+                                    stroke-width="22" d="M320 255.79l-64-64-64 64M256 448.21V207.79" />
                             </svg>
 
-                            <span class="group-hover:text-primary-500">Ajouter un fichier</span>
+                            <span class="group-hover:text-primary-500 text-center">Ajouter un fichier <br> (jusqu'à 200 MB)</span>
 
                             <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
-                                (change)="uploadRessource($event)" accept="image/*,.pdf,.txt" />
+                                (change)="uploadRessource($event)" accept="image/*,.pdf,.txt,.doc,.docx,.zip" />
                         </label>
 
                         <div *ngIf="resUploading" class="flex items-center justify-center">
