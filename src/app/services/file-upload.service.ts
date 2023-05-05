@@ -155,8 +155,31 @@ export class FileUploadService {
 
     const xToken = this.xTokenObj?.xToken;
 
+    let fileType = file.type
+    let contentType = '';
+
+    if (fileType.startsWith('image')) {
+      fileType = 'img'
+      contentType = 'image/*'
+    } else {
+      const nameParts = file.name.split('.')
+      fileType = nameParts[nameParts.length - 1];
+
+      if (fileType === 'pdf'){
+        contentType = 'application/pdf';
+      } else if (fileType === 'zip') {
+        contentType = 'application/zip';
+      } else if (fileType === 'txt') {
+        contentType = 'text/plain';
+      } else if (fileType === 'doc') {
+        contentType = 'application/msword';
+      } else if (fileType === 'docx') {
+        contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      }
+    }
+
     httpOptions.headers = httpOptions.headers
-      .set('Content-Type', 'image/png')
+      .set('Content-Type', contentType)
       .set('X-Auth-Token', xToken)
 
     return this.http.put<string>(`${this.ovhServerUrl}/${fileName}`, file, {

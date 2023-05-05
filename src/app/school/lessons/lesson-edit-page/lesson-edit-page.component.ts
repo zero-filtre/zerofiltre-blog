@@ -70,6 +70,13 @@ export class LessonEditPageComponent implements OnInit {
     private dialogUploadRef: MatDialog
   ) { }
 
+  isZIP(res: Resource): boolean {
+    const parts = res.url.split('.')
+    const ext = parts[parts.length - 1]
+
+    return ext === "zip";
+  }
+
   initForm(lesson: Lesson) {
     const summaryTemplate = 'des petites bonnes actions.';
     const contentTemplate = `
@@ -213,7 +220,9 @@ export class LessonEditPageComponent implements OnInit {
       const nameParts = this.file.data.name.split('.');
       this.fileType = nameParts[nameParts.length - 1];
 
+      // Laisser passer ces types au niveau de l'api
       if (this.fileType === 'zip') this.fileType = 'doc';
+      if (this.fileType === 'docx') this.fileType = 'doc';
     }
 
     this.fileName = this.file.data.name;
@@ -454,6 +463,15 @@ export class LessonEditPageComponent implements OnInit {
     fields.forEach((el: Observable<any>) => {
       this.onChanges(el);
     })
+  }
+
+  async openTxtContent(url: string) {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const _url = window.URL.createObjectURL(blob);
+
+    console.log('RESULT: ', blob);
+    window.open(_url, '_blank');
   }
 
   ngOnInit(): void {
