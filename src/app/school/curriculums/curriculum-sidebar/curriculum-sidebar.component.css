@@ -14,3 +14,39 @@
 .sidebar_curriculum {
   scroll-behavior: smooth;
 }
+
+
+.curriculum_chapter {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.curriculum_chapter_lessons {
+  min-height: 30px;
+  overflow: hidden;
+  display: block;
+}
+
+.curriculum_chapter_lesson_elt {
+  display: flex;
+  box-sizing: border-box;
+  cursor: move;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  @apply shadow-md;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.curriculum_chapter_lessons.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

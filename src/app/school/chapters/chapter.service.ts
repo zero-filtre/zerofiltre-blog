@@ -47,4 +47,9 @@ export class ChapterService {
       .pipe(shareReplay());
   }
 
+  moveChapter(chapterId: any, position: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiServerUrl}/chapter/${chapterId}?toNumber=${position}`, {}, httpOptions)
+      .pipe(shareReplay());
+  }
+
 }

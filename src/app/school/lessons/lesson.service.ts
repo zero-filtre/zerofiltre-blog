@@ -65,4 +65,9 @@ export class LessonService {
       .pipe(shareReplay());
   }
 
+  moveLesson(chapterId: any, lessonId: any, position: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiServerUrl}/chapter/${chapterId}/lesson/${lessonId}?toNumber=${position}`, {}, httpOptions)
+      .pipe(shareReplay());
+  }
+
 }
