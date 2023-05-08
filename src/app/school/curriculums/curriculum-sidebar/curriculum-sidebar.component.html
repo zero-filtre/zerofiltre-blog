@@ -36,7 +36,7 @@
                     >
 
                         <ng-container *ngFor="let chapter of chapters ; let i = index">
-                            <li cdkDrag [cdkDragDisabled]="!canEdit">
+                            <li cdkDrag [cdkDragDisabled]="!canEdit" [ngClass]="{'cursor-grab' : canEdit}">
                                 <div
                                     class="curriculum_chapter_title uppercase opacity-90 shadow-md rounded-sm group flex items-center justify-between bg-primary-100 text-secondary p-3 font-semibold mb-1">
                                     <span>{{chapter?.title}}</span>
@@ -96,7 +96,7 @@
                                 >
                                     <ng-container *ngFor="let lesson of chapter.lessons ; let j = index">
                                         <li cdkDrag [cdkDragDisabled]="!canEdit" *ngIf="lesson?.chapterId === chapter?.id"
-                                            [ngClass]="{'!bg-skin-link': isActiveLesson(lesson.id), '!text-skin-base opacity-80': !lesson?.free && !canAccessCourse}"
+                                            [ngClass]="{'!bg-skin-link': isActiveLesson(lesson.id), '!text-skin-base opacity-80': !lesson?.free && !canAccessCourse, 'cursor-grab' : canEdit}"
                                             class="curriculum_chapter_lesson_elt text-primary-500 hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
                                             <div class="lesson_link w-full group flex justify-between items-center gap-2">
                                                 <div class="w-full flex items-center gap-2 pr-3">
