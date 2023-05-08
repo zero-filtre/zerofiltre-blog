@@ -55,9 +55,10 @@ export class VimeoService {
       )
   }
 
-  initVideoUpload(file: File): Observable<any> {
+  initVideoUpload(file: File, name=null): Observable<any> {
     const fileSize = file.size;
-    return this.http.post<any>(`${this.apiServerUrl}/vimeo/init?size=${fileSize}`, httpOptions)
+    const fileName = name ? name : file.name;
+    return this.http.post<any>(`${this.apiServerUrl}/vimeo/init?size=${fileSize}&name=${fileName}`, httpOptions)
       .pipe(shareReplay())
   }
 
