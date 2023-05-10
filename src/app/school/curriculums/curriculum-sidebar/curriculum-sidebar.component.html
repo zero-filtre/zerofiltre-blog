@@ -95,7 +95,7 @@
                                     class="curriculum_chapter_lessons mt-1 space-y-0.5"
                                 >
                                     <ng-container *ngFor="let lesson of chapter.lessons ; let j = index">
-                                        <li cdkDrag [cdkDragDisabled]="!canEdit" *ngIf="lesson?.chapterId === chapter?.id"
+                                        <li cdkDrag [cdkDragDisabled]="!canEdit" id="{{lesson.id}}" *ngIf="lesson?.chapterId === chapter?.id"
                                             [ngClass]="{'!bg-skin-link': isActiveLesson(lesson.id), '!text-skin-base opacity-80': !lesson?.free && !canAccessCourse, 'cursor-grab' : canEdit}"
                                             class="curriculum_chapter_lesson_elt text-primary-500 hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
                                             <div class="lesson_link w-full group flex justify-between items-center gap-2">

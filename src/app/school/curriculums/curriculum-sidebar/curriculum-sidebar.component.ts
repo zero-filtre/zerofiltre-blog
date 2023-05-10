@@ -52,6 +52,14 @@ export class CurriculumSidebarComponent implements OnInit {
   dropLessons(event: CdkDragDrop<Lesson[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      // const elementId = +event.item.element.nativeElement.id
+
+      const currPosition = event.currentIndex
+      const draggedElement = event.item.dropContainer.data[event.currentIndex] as Lesson
+
+      this.courseService.moveLesson(draggedElement.chapterId, draggedElement.id, currPosition)
+        .subscribe(data => console.log('DRAGGED RESPONSE LESSON: ', data))
+
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -65,6 +73,13 @@ export class CurriculumSidebarComponent implements OnInit {
   dropChapters(event: CdkDragDrop<Chapter[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+
+      const currPosition = event.currentIndex
+      const draggedElement = event.item.dropContainer.data[event.currentIndex] as Chapter
+
+      this.courseService.moveChapter(draggedElement.id, currPosition)
+        .subscribe(data => console.log('DRAGGED RESPONSE CHAPTER: ', data))
+
     } else {
       transferArrayItem(
         event.previousContainer.data,

@@ -64,10 +64,4 @@ export class LessonService {
     return this.http.delete<any>(`${this.apiServerUrl}/resources/${resourceId}`, httpOptions)
       .pipe(shareReplay());
   }
-
-  moveLesson(chapterId: any, lessonId: any, position: any): Observable<any> {
-    return this.http.patch<any>(`${this.apiServerUrl}/chapter/${chapterId}/lesson/${lessonId}?toNumber=${position}`, {}, httpOptions)
-      .pipe(shareReplay());
-  }
-
 }
