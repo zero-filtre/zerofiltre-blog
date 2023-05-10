@@ -71,6 +71,10 @@ img {
   @apply !overflow-y-scroll;
 }
 
+.edit-section-popup-panel .mat-dialog-container{
+  @apply rounded-none;
+}
+
 .article-popup-panel {
   max-width: 90vw !important;
   @apply !h-[300px] sm:!h-[350px];
