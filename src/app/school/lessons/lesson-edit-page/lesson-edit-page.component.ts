@@ -70,11 +70,18 @@ export class LessonEditPageComponent implements OnInit {
     private dialogUploadRef: MatDialog
   ) { }
 
-  isZIP(res: Resource): boolean {
+  isZIPFile(res: Resource): boolean {
     const parts = res.url.split('.')
     const ext = parts[parts.length - 1]
 
     return ext === "zip";
+  }
+
+  isTXTFile(res: Resource): boolean {
+    const parts = res.url.split('.')
+    const ext = parts[parts.length - 1]
+
+    return ext === "txt";
   }
 
   initForm(lesson: Lesson) {
@@ -465,13 +472,15 @@ export class LessonEditPageComponent implements OnInit {
     })
   }
 
-  async openTxtContent(url: string) {
-    const response = await fetch(url);
+  async downloadFileContent(res: Resource) {
+    const response = await fetch(res.url);
     const blob = await response.blob();
     const _url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a')
 
-    console.log('RESULT: ', blob);
-    window.open(_url, '_blank');
+    a.setAttribute('href', _url)
+    a.setAttribute('download', res.name)
+    a.click()
   }
 
   ngOnInit(): void {

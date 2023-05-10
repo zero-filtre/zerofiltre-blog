@@ -10,7 +10,7 @@ import { MessageService } from '../../../services/message.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
-import { Lesson } from '../lesson';
+import { Lesson, Resource } from '../lesson';
 import { ChapterService } from '../../chapters/chapter.service';
 import { FormGroup } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
@@ -379,6 +379,31 @@ export class LessonComponent implements OnInit, OnDestroy {
 
     this.paymentService.openPaymentDialog(payload, type, this.course);
 
+  }
+
+  async downloadFileContent(res: Resource) {
+    const response = await fetch(res.url);
+    const blob = await response.blob();
+    const _url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a')
+
+    a.setAttribute('href', _url)
+    a.setAttribute('download', res.name)
+    a.click()
+  }
+
+  isZIPFile(res: Resource): boolean {
+    const parts = res.url.split('.')
+    const ext = parts[parts.length - 1]
+
+    return ext === "zip";
+  }
+
+  isTXTFile(res: Resource): boolean {
+    const parts = res.url.split('.')
+    const ext = parts[parts.length - 1]
+
+    return ext === "txt";
   }
 
   ngOnInit(): void {
