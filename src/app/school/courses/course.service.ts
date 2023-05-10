@@ -153,4 +153,14 @@ export class CourseService {
     return this.http.patch<any>(`${this.apiServerUrl}/course/publish`, course, httpOptions)
       .pipe(shareReplay());
   }
+
+  moveLesson(chapterId: any, lessonId: any, position: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiServerUrl}/chapter/${chapterId}/lesson/${lessonId}?toNumber=${position}`, null, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  moveChapter(chapterId: any, position: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiServerUrl}/chapter/${chapterId}?toNumber=${position}`, null, httpOptions)
+      .pipe(shareReplay());
+  }
 }

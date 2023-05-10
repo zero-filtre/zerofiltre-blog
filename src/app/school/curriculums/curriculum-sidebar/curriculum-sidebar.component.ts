@@ -14,6 +14,8 @@ import { capitalizeString } from 'src/app/services/utilities.service';
 import { CourseService } from '../../courses/course.service';
 import { Observable, of } from 'rxjs';
 
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'app-curriculum-sidebar',
@@ -46,6 +48,47 @@ export class CurriculumSidebarComponent implements OnInit {
     private dialogDeleteLessonRef: MatDialog,
     private router: Router,
   ) { }
+
+  dropLessons(event: CdkDragDrop<Lesson[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      // const elementId = +event.item.element.nativeElement.id
+
+      const currPosition = event.currentIndex
+      const draggedElement = event.item.dropContainer.data[event.currentIndex] as Lesson
+
+      this.courseService.moveLesson(draggedElement.chapterId, draggedElement.id, currPosition)
+        .subscribe(data => console.log('DRAGGED RESPONSE LESSON: ', data))
+
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+  }
+
+  dropChapters(event: CdkDragDrop<Chapter[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+
+      const currPosition = event.currentIndex
+      const draggedElement = event.item.dropContainer.data[event.currentIndex] as Chapter
+
+      this.courseService.moveChapter(draggedElement.id, currPosition)
+        .subscribe(data => console.log('DRAGGED RESPONSE CHAPTER: ', data))
+
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+  }
 
   isActiveLesson(lessonID: number) {
     return lessonID == this.activeLessonID

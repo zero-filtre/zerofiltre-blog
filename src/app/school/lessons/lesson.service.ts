@@ -64,5 +64,4 @@ export class LessonService {
     return this.http.delete<any>(`${this.apiServerUrl}/resources/${resourceId}`, httpOptions)
       .pipe(shareReplay());
   }
-
 }
