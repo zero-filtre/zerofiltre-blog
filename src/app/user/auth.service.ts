@@ -320,7 +320,7 @@ export class AuthService {
           if (this.redirectURL) {
             this.router.navigateByUrl(this.redirectURL)
           } else {
-            this.router.navigateByUrl('/articles');
+            this.router.navigateByUrl('/cours');
           }
 
           this.loadUserAllSubs();

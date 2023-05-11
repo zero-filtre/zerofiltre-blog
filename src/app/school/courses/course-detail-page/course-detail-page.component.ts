@@ -39,6 +39,7 @@ export class CourseDetailPageComponent implements OnInit {
   currentVideoId: string;
 
   paymentHandler: any = null;
+  
 
   public loading!: boolean;
   private isPublished = new BehaviorSubject<any>(null);

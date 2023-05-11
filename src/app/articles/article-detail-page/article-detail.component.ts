@@ -54,7 +54,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public maxNberOfReaction!: boolean;
   public hasHistory: boolean;
 
-  dddSponsorContentSourceUrl = 'https://ik.imagekit.io/lfegvix1p/ddd-imagee_7A342RNOT.svg?updatedAt=1681558221642';
+  sponsorContentUrl = '/cours/1';
+  sponsorContentImageUrl = 'https://ik.imagekit.io/lfegvix1p/ddd-imagee_7A342RNOT.svg?updatedAt=1681558221642';
 
   constructor(
     private loadEnvService: LoadEnvService,

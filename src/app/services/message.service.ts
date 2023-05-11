@@ -86,7 +86,7 @@ export class MessageService {
 
   // When user is already logged In
   loggedInAuthError() {
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/cours');
   }
 
   // When logging In
@@ -104,7 +104,7 @@ export class MessageService {
   authorRouteError() {
     const msg = this.translate.instant('app.authorRouteError');
     this.openSnackBarError(msg, this.OK);
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/cours');
   }
 
   // Email notification on signup success

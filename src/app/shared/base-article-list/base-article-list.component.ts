@@ -45,6 +45,9 @@ export class BaseArticleListComponent implements OnInit {
   subscription$!: Subscription;
   status!: string;
 
+  sponsorContentUrl = '/cours/1';
+  sponsorContentImageUrl = 'https://ik.imagekit.io/lfegvix1p/ddd-imagee_7A342RNOT.svg?updatedAt=1681558221642';
+
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,

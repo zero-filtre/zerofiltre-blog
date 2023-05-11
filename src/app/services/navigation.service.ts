@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 })
 export class NavigationService {
   private hasHistory!: boolean
-  private homeUrl = '/articles'
+  private homeUrl = '/cours'
 
   constructor(
     private location: Location,
