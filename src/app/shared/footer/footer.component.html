@@ -4,13 +4,8 @@
             <div class="services order-1">
                 <p class="yellow-text title">NOS COURS</p>
                 <ul>
-                    <li *ngIf="activeCourseModule && prod"><a aria-labelledby="Mettez (enfin) en place le DDD"
-                            href="https://cours.zerofiltre.tech/p/mettez-enfin-en-place-le-ddd">
-                            Mettez (enfin) en place le DDD
-                        </a>
-                    </li>
                     <ng-container *ngFor="let course of recentCourses$ | async">
-                        <li *ngIf="activeCourseModule && !prod"><a aria-labelledby="Link to about page"
+                        <li *ngIf="activeCourseModule"><a aria-labelledby="Link to about page"
                                 routerLink="cours/{{course?.id}}">{{capitalize(course?.title!)}}</a></li>
                     </ng-container>
                 </ul>

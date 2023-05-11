@@ -220,10 +220,10 @@
                         <!-- Sponsor Content -->
                         <ng-container *ngIf="(i+1)%3 === 0">
                             <div class="sponsor-content overflow-hidden shadow-lg rounded-lg bg-skin-card group">
-                                <a href="https://cours.zerofiltre.tech/p/mettez-enfin-en-place-le-ddd" class="flex flex-col lg:flex-row items-center">
+                                <a [routerLink]="sponsorContentUrl" class="flex flex-col lg:flex-row items-center">
                                     <div class="card-image flex-1 p-4">
                                         <app-image [classes]="'object-cover w-[250px] lg:w-[52%] m-auto'"
-                                            [alt]="'apprener le DDD'" [sourceUrl]="dddSponsorContentSourceUrl">
+                                            [alt]="'apprener le DDD'" [sourceUrl]="sponsorContentImageUrl">
                                         </app-image>
                                     </div>
                                     <div class="card-body flex-1 p-4 flex flex-col gap-4">
@@ -410,10 +410,10 @@
 
         <div
             class="sponsor-content overflow-hidden max-w-md mx-auto sticky top-28 shadow-lg rounded-lg bg-skin-card group">
-            <a href="https://cours.zerofiltre.tech/p/mettez-enfin-en-place-le-ddd" class="">
+            <a [routerLink]="sponsorContentUrl" class="">
                 <div class="card-image p-4">
                     <app-image [classes]="'object-cover m-auto w-[250px]'" [alt]="'apprener le DDD'"
-                        [sourceUrl]="dddSponsorContentSourceUrl">
+                        [sourceUrl]="sponsorContentImageUrl">
                     </app-image>
                 </div>
                 <div class="card-body p-4 flex flex-col gap-4">
