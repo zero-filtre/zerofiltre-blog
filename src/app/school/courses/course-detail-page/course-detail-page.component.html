@@ -16,7 +16,7 @@
                 <h2>{{course?.subTitle}}</h2>
             </div>
 
-            <ng-container *ngFor="let section of course?.sections; let i = index">
+            <ng-container *ngFor="let section of orderedSections; let i = index">
                 <section class="regular-section">
                     <div class="site-container grid grid-cols-1 lg:grid-cols-12 gap-8">
                         <div class="text lg:col-span-8">

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
-import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay, EMPTY } from 'rxjs';
-import { Course, Reaction } from '../course';
+import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay } from 'rxjs';
+import { Course, Reaction, Section } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
 import { MessageService } from '../../../services/message.service';
@@ -15,7 +15,6 @@ import { environment } from 'src/environments/environment';
 import { CourseEnrollment } from '../../studentCourse';
 import { PaymentService } from 'src/app/services/payment.service';
 import { MatDialog } from '@angular/material/dialog';
-import { PaymentPopupComponent } from 'src/app/shared/payment-popup/payment-popup.component';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -37,8 +36,9 @@ export class CourseDetailPageComponent implements OnInit {
 
 
   currentVideoId: string;
+  orderedSections: Section[];
+  // paymentHandler: any = null;
 
-  paymentHandler: any = null;
   
 
   public loading!: boolean;
@@ -108,7 +108,6 @@ export class CourseDetailPageComponent implements OnInit {
 
   }
 
-
   getCourse(): Observable<Course> {
     this.isLoading = true;
 
@@ -135,6 +134,7 @@ export class CourseDetailPageComponent implements OnInit {
           this.isSubscriber = this.courseService.isSubscriber(data.id);
 
           this.course = data;
+          this.orderSections(data);
           this.extractVideoId(data.video)
           this.setEachReactionTotal(data?.reactions);
 
@@ -146,6 +146,11 @@ export class CourseDetailPageComponent implements OnInit {
         }),
         shareReplay()
       )
+  }
+
+  orderSections(course: Course) {
+    const list = course.sections
+    this.orderedSections = list.sort((a:Section, b: Section) => a.position - b.position)
   }
 
   setEachReactionTotal(reactions: Reaction[]) {
@@ -177,48 +182,47 @@ export class CourseDetailPageComponent implements OnInit {
       });
   }
 
-  makePayment(amount: any) {
-    const paymentHandler = (<any>window).StripeCheckout.configure({
-      key: this.STRIPE_PUBLIC_KEY,
-      locale: 'auto',
-      token: function (stripeToken: any) {
-        console.log('TOKEN: ', stripeToken);
-        alert('Stripe token generated!');
-      },
-    });
-    paymentHandler.open({
-      name: 'ZEROFILTRE',
-      description: 'Changez vos finances grace au code',
-      amount: amount * 100,
-    });
-  }
+  // makePayment(amount: any) {
+  //   const paymentHandler = (<any>window).StripeCheckout.configure({
+  //     key: this.STRIPE_PUBLIC_KEY,
+  //     locale: 'auto',
+  //     token: function (stripeToken: any) {
+  //       console.log('TOKEN: ', stripeToken);
+  //       alert('Stripe token generated!');
+  //     },
+  //   });
+  //   paymentHandler.open({
+  //     name: 'ZEROFILTRE',
+  //     description: 'Changez vos finances grace au code',
+  //     amount: amount * 100,
+  //   });
+  // }
 
-  invokeStripe() {
-    if (!window.document.getElementById('stripe-script')) {
-      const script = window.document.createElement('script');
-      script.id = 'stripe-script';
-      script.type = 'text/javascript';
-      script.src = 'https://checkout.stripe.com/checkout.js';
-      script.onload = () => {
-        this.paymentHandler = (<any>window).StripeCheckout.configure({
-          key: this.STRIPE_PUBLIC_KEY,
-          locale: 'auto',
-          token: function (stripeToken: any) {
-            console.log(stripeToken);
-            alert('Payment connection has been successfull!');
-          },
-        });
-      };
-      window.document.body.appendChild(script);
-    }
-  }
+  // invokeStripe() {
+  //   if (!window.document.getElementById('stripe-script')) {
+  //     const script = window.document.createElement('script');
+  //     script.id = 'stripe-script';
+  //     script.type = 'text/javascript';
+  //     script.src = 'https://checkout.stripe.com/checkout.js';
+  //     script.onload = () => {
+  //       this.paymentHandler = (<any>window).StripeCheckout.configure({
+  //         key: this.STRIPE_PUBLIC_KEY,
+  //         locale: 'auto',
+  //         token: function (stripeToken: any) {
+  //           console.log(stripeToken);
+  //           alert('Payment connection has been successfull!');
+  //         },
+  //       });
+  //     };
+  //     window.document.body.appendChild(script);
+  //   }
+  // }
 
   extractVideoId(videoLink: any) {
     if (!videoLink) return;
     const params = new URL(videoLink).searchParams;
     this.currentVideoId = params.get('v');
   }
-
 
   ngOnInit(): void {
 
