@@ -1,6 +1,6 @@
 export const fr = {
     app: {
-        home: 'Acceuil',
+        home: 'Accueil',
         password: 'Mot de passe',
         missingPassword: 'Le mot de passe est obligatoire',
         invalidPassword: `Le mot de passe doit contenir au moins:
@@ -110,7 +110,7 @@ export const fr = {
         resendConfirmationSuccessMesssage: "Un email avec un lien de confirmation de compte a été envoyé à l'adresse mail saisie"
     },
     accountConfirmation: {
-        accountVeriedText: "Félicitations, votre compte a été confirmé ! Cliquez sur le lien ci-dessous pour vous rendre à la page d'acceuil."
+        accountVeriedText: "Félicitations, votre compte a été confirmé ! Cliquez sur le lien ci-dessous pour vous rendre à la page d'accueil."
     },
     articles: {
         new: 'Neufs',
@@ -184,8 +184,8 @@ export const fr = {
         myArticles: 'Mes articles',
         allAdminArticles: "Tous nos articles",
         editMyInfos: 'Éditer mes infos',
-        verifiedBadgeText: 'Email verifié !',
-        notVerifiedBadgeText: 'Email non verifié !',
+        verifiedBadgeText: 'Email vérifié !',
+        notVerifiedBadgeText: 'Email non vérifié !',
         resendConfirmationText: 'Renvoyer le lien de confirmation',
         deleteMyAccount: 'Supprimer mon compte',
         updateSuccessMessage: 'Enregistrement reussi !',

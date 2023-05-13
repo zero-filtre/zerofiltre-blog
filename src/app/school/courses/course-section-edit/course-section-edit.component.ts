@@ -63,7 +63,8 @@ export class CourseSectionEditComponent implements OnInit {
   }
 
   isUnavailable(id: number): boolean {
-    return this.SelectedPositions.includes(id);
+    // return this.SelectedPositions.includes(id);
+    return false;
   }
 
   onNoClick(): void {
