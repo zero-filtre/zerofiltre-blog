@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SectionService } from '../../sections/section.service';
 import { TagService } from 'src/app/services/tag.service';
 import { sortByNameAsc } from 'src/app/services/utilities.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-course-edit-page',
@@ -51,6 +52,7 @@ export class CourseEditPageComponent implements OnInit {
   uploading: boolean;
 
   tagsDropdownOpened!: boolean;
+  orderedSections: Section[];
 
   private TitleText$ = new Subject<string>();
   private SubTitleText$ = new Subject<string>();
@@ -82,10 +84,11 @@ export class CourseEditPageComponent implements OnInit {
           }
           return throwError(() => err?.message)
         }),
-        tap(data => {
+        tap((data: Course) => {
           this.isLoading = false;
           this.initForm(data);
           this.course = data;
+          this.orderSections(data.sections);
         })
       )
   }
@@ -286,6 +289,28 @@ export class CourseEditPageComponent implements OnInit {
         this.tagList = sortedList;
       }
     )
+  }
+
+  dropSection(event: CdkDragDrop<Section[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+
+      const currPosition = event.currentIndex + 1;
+      const draggedElement = event.item.dropContainer.data[event.currentIndex] as Section
+
+      this.sectionService.updateSection({...draggedElement, position: currPosition})
+        .pipe(catchError(err => {
+          return throwError(() => err.message);
+        }))
+        .subscribe(_data => {
+          console.log('DRAGGED RESPONSE SECTION');
+          // this.orderSections(this.course.sections);
+        })
+    }
+  }
+
+  orderSections(list: Section[]) {
+    this.orderedSections = list.sort((a: Section, b: Section) => a.position - b.position)
   }
 
   ngOnInit(): void {
