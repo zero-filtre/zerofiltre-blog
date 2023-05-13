@@ -6,3 +6,35 @@
   outline-color: transparent;
   @apply focus:ring-1 ring-primary-500;
 }
+
+.drag_elts_parent {
+  min-height: 30px;
+  overflow: hidden;
+}
+
+.drag_elt {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  @apply shadow-md;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drag_elts_parent.cdk-drop-list-dragging .drag_elt-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging {
+  @apply cursor-grabbing;
+}

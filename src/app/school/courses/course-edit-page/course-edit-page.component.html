@@ -132,7 +132,7 @@
                                 <p class="mt-1 text-xs text-skin-base leading-6">
                                     <span
                                         class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                        Upload a file
+                                        Télécharger un fichier
                                     </span>
                                 </p>
                                 <p class="mt-1 text-xs text-skin-muted">
@@ -160,7 +160,7 @@
                         <app-image [classes]="'object-cover'" [sourceUrl]="thumbnail?.value!" [alt]="title.value">
                         </app-image>
 
-                        <div class="cover-close-btn absolute top-2 left-[92%] lg:left-[97%] z-10 flex justify-center items-center w-12 h-12 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error"
+                        <div class="cover-close-btn absolute left-auto top-1 right-1 z-10 flex justify-center items-center w-12 h-12 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error"
                             (click)="removeImage(thumbnail)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                 class="w-6 h-6">
@@ -180,37 +180,45 @@
                 </label>
 
 
-                <div formArrayName="sections" class="sections mb-5 space-y-2">
-                    <ng-container *ngFor="let section of sections?.value; let i = index">
-                        <div
-                            class="border rounded-lg p-2 lg:p-5 text-secondary text-sm lg:text-base flex justify-between items-center">
-                            <div class="flex gap-2">
-                                <span>{{section.position}}</span>
-                                <span>-</span>
-                                <span>{{section.title}}</span>
-                            </div>
+                <div cdkDropListGroup formArrayName="sections" class="sections mb-5 space-y-2">
+                    <ul *ngIf="orderedSections.length" 
+                        cdkDropList 
+                        [cdkDropListData]="orderedSections" 
+                        (cdkDropListDropped)="dropSection($event)"
+                        class="drag_elts_parent flex flex-col gap-3">
 
-                            <div class="actions flex items-center lg:gap-2 text-secondary">
-                                <button (click)="openSectionEditDialog(section)"
-                                    aria-labelledby="Button of section edit page" routerLink="/cours/{{course.id}}/edit/"
-                                    class="flex items-end p-2 lg:px-4 lg:py-2 rounded-lg hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="w-4 lg:w-6 lg:h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                                    </svg>
-                                </button>
-                                <button (click)="removeSection(section?.id, i)" aria-labelledby="Delete article button"
-                                    class="flex items-end w-full text-left p-2 lg:px-4 py-2 rounded-lg hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="w-4 lg:w-6 lg:h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </ng-container>
+                        <ng-container *ngFor="let section of orderedSections; let i = index">
+                            <li cdkDrag
+                                class="drag_elt border rounded-lg p-2 lg:p-5 text-secondary text-sm lg:text-base flex justify-between items-center cursor-grab">
+                                <div class="flex gap-2">
+                                    <!-- <span>{{section.position}}</span>
+                                    <span>-</span> -->
+                                    <span>{{section.title}}</span>
+                                </div>
+
+                                <div class="actions flex items-center lg:gap-2 text-secondary">
+                                    <button (click)="openSectionEditDialog(section)"
+                                        aria-labelledby="Button of section edit page" routerLink="/cours/{{course.id}}/edit/"
+                                        class="flex items-end p-2 lg:px-4 lg:py-2 rounded-lg hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-4 lg:w-6 lg:h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                        </svg>
+                                    </button>
+                                    <button (click)="removeSection(section?.id, i)" aria-labelledby="Delete article button"
+                                        class="flex items-end w-full text-left p-2 lg:px-4 py-2 rounded-lg hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-4 lg:w-6 lg:h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </li>
+                        </ng-container>
+
+                    </ul>
                 </div>
 
                 <button (click)="openSectionEditDialog()" aria-labelledby="Add a new section button"

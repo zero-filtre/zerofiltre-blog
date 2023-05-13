@@ -58,7 +58,7 @@ export class CurriculumSidebarComponent implements OnInit {
       const draggedElement = event.item.dropContainer.data[event.currentIndex] as Lesson
 
       this.courseService.moveLesson(draggedElement.chapterId, draggedElement.id, currPosition)
-        .subscribe(data => console.log('DRAGGED RESPONSE LESSON: ', data))
+        .subscribe(_data => console.log('DRAGGED RESPONSE LESSON'))
 
     } else {
       transferArrayItem(
@@ -78,7 +78,7 @@ export class CurriculumSidebarComponent implements OnInit {
       const draggedElement = event.item.dropContainer.data[event.currentIndex] as Chapter
 
       this.courseService.moveChapter(draggedElement.id, currPosition)
-        .subscribe(data => console.log('DRAGGED RESPONSE CHAPTER: ', data))
+        .subscribe(_data => console.log('DRAGGED RESPONSE CHAPTER'))
 
     } else {
       transferArrayItem(
