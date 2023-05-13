@@ -12,9 +12,10 @@ import { Chapter } from '../../chapters/chapter';
 import { ChapterUpdatePopupComponent } from '../../chapters/chapter-update-popup/chapter-update-popup.component';
 import { capitalizeString } from 'src/app/services/utilities.service';
 import { CourseService } from '../../courses/course.service';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError, of, tap, throwError } from 'rxjs';
 
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MessageService } from 'src/app/services/message.service';
 
 
 @Component({
@@ -37,6 +38,9 @@ export class CurriculumSidebarComponent implements OnInit {
 
 
   currentRoute: string;
+  isPublishing: boolean;
+  publishBtnText: string;
+  
 
   constructor(
     public authService: AuthService,
@@ -47,6 +51,7 @@ export class CurriculumSidebarComponent implements OnInit {
     private dialogNewLessonRef: MatDialog,
     private dialogDeleteLessonRef: MatDialog,
     private router: Router,
+    private messageService: MessageService
   ) { }
 
   dropLessons(event: CdkDragDrop<Lesson[]>) {
@@ -156,8 +161,23 @@ export class CurriculumSidebarComponent implements OnInit {
   }
 
   publishCourse(course: Course) {
+    this.isPublishing = true;
+    this.publishBtnText = this.authService.isAdmin ? 'Publication' : 'Soumission';
+
     this.courseService.publishCourse(course)
-      .subscribe()
+      .pipe(
+        catchError(err => {
+        this.isPublishing = false;
+        this.publishBtnText = this.authService.isAdmin ? 'Publier' : 'Soumettre'
+        return throwError(() => err)
+        }),
+        tap(_data => {
+          const msg = this.authService.isAdmin ? 'Publication reussie !' : 'Soumission reussie !'
+          this.isPublishing = false;
+          this.publishBtnText = this.authService.isAdmin ? 'Publier' : 'Soumettre'
+          this.messageService.openSnackBarSuccess(msg, 'OK')
+        })
+      ).subscribe()
   }
 
   isLessonCompleted(lesson: Lesson): Observable<boolean> {
@@ -167,5 +187,6 @@ export class CurriculumSidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentRoute = this.router.url;
+    this.publishBtnText = this.authService.isAdmin ? 'Publier' : 'Soumettre'
   }
 }

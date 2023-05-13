@@ -204,17 +204,29 @@
             
                     <div *ngIf="isSubscriber" class="lesson_complete_btn my-10">
                         <div *ngIf="lesson$|async as lesson" class="flex justify-center font-semibold">
-                            <button *ngIf="!completed" (click)="toggleCompleted()"
+                            <button *ngIf="!completed" (click)="toggleCompleted()" [disabled]="isCompleting" [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
                                 class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">
                                 <span>Marquer cette leçon terminée</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
+                                <svg *ngIf="!isCompleting" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                                     stroke="currentColor" class="w-5 h-5 mt-0.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                 </svg>
+                                <svg *ngIf="isCompleting" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                    <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
+                                        stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                                        style="animation-play-state:paused"></circle>
+                                </svg>
                             </button>
-                            <button *ngIf="completed" (click)="toggleCompleted()"
-                                class="shadow-xl rounded-md p-4 py-3 text-white  bg-error hover:bg-red-500 transition-all duration-300">
+                            <button *ngIf="completed" (click)="toggleCompleted()" [disabled]="isCompleting" [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
+                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-white  bg-error hover:bg-red-500 transition-all duration-300">
                                 Marquer cette leçon non terminée
+                                <svg *ngIf="isCompleting" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                    <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
+                                        stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                                        style="animation-play-state:paused"></circle>
+                                </svg>
                             </button>
                         </div>
                     </div>
