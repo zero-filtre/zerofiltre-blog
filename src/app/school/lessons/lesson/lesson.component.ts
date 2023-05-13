@@ -74,6 +74,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   currentChapter: Chapter;
 
   isSubscriber:boolean;
+  isCompleting:boolean;
 
   durations = [];
 
@@ -122,14 +123,17 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   toggleCompleted() {
     const data = { lessonId: this.lessonID, courseId: this.courseID };
+    this.isCompleting = true;
     // const isCourseFullyCompleted = this.completeProgressVal == Math.round(100 * ((this.lessonsCount - 1) / this.lessonsCount)) ? true : false
 
     if (!this.completed) {
       this.courseService.markLessonAsComplete(data)
         .pipe(catchError(err => {
+          this.isCompleting = false;
           return throwError(() => err)
         }))
         .subscribe(data => {
+          this.isCompleting = false;
           this.completed = true;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
           if (this.nextLesson) this.router.navigateByUrl(`cours/${this.courseID}/${this.nextLesson.id}`);
@@ -137,9 +141,11 @@ export class LessonComponent implements OnInit, OnDestroy {
     } else {
       this.courseService.markLessonAsInComplete(data)
         .pipe(catchError(err => {
+          this.isCompleting = false;
           return throwError(() => err)
         }))
         .subscribe(data => {
+          this.isCompleting = false;
           this.completed = false;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
         })
