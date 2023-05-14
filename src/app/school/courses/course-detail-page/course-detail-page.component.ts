@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
 import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay } from 'rxjs';
 import { Course, Reaction, Section } from '../course';
@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { CourseEnrollment } from '../../studentCourse';
 import { PaymentService } from 'src/app/services/payment.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -37,6 +38,7 @@ export class CourseDetailPageComponent implements OnInit {
 
   currentVideoId: string;
   orderedSections: Section[];
+  mobileQuery: MediaQueryList;
   // paymentHandler: any = null;
 
   
@@ -74,7 +76,15 @@ export class CourseDetailPageComponent implements OnInit {
     private authService: AuthService,
     private paymentService: PaymentService,
     public dialogPaymentRef: MatDialog,
-  ) { }
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 1024px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  private _mobileQueryListener: () => void;
 
   get canAccessCourse() {
     const user = this.authService?.currentUsr as User
@@ -251,5 +261,9 @@ export class CourseDetailPageComponent implements OnInit {
           return sub
         })
       )
+  }
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 }
