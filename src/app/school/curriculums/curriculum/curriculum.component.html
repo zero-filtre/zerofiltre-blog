@@ -26,7 +26,8 @@
                                 <div (click)="chapter.lessons?.length && accordionItem.toggle()"
                                     class="curriculum_chapter_title flex items-center justify-between uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold">
                                     {{chapter.title}}
-                                    <div *ngIf="chapter.lessons?.length" class="text-sm capitalize font-normal hover:!cursor-pointer">
+
+                                    <div *ngIf="chapter.lessons?.length" class="text-sm capitalize font-normal hover:cursor-pointer">
                                         <div *ngIf="accordionItem.expanded" class="flex items-center gap-1">
                                             <span class="hidden lg:inline-flex">fermer</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
