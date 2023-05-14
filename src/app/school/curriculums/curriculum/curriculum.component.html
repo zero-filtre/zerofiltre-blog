@@ -31,7 +31,7 @@
                             <li cdkDrag [cdkDragDisabled]="!canEdit" class="mt-0.5" [ngClass]="{'cursor-grab' : canEdit}">
 
                                 <div (click)="chapter.lessons?.length && accordionItem.toggle()"
-                                    class="curriculum_chapter_title flex items-center justify-between uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold">
+                                    class="curriculum_chapter_title flex items-center justify-between gap-4 uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold">
                                     {{chapter.title}}
 
                                     <div *ngIf="chapter.lessons?.length" class="text-sm capitalize font-normal hover:cursor-pointer">
