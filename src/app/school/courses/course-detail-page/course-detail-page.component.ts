@@ -81,6 +81,10 @@ export class CourseDetailPageComponent implements OnInit {
     return this.courseService.canAccessCourse(user, this.course);
   }
 
+  get canEditCourse() {
+    const user = this.authService?.currentUsr as User
+    return this.courseService.canEditCourse(user, this.course);
+  }
 
   buyCourse() {
 

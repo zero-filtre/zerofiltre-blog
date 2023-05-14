@@ -29,6 +29,10 @@
                 <div>{{'navbar.portfolio' | translate}}</div>
             </a>
 
+            <a aria-labelledby="Link to contact page" class="navLink" href="https://services.zerofiltre.tech/contact.html">
+                <div>Contact</div>
+            </a>
+
             <ng-container class="navbar-links-hidden-on-server-rendering" *appShellNoRender>
                 <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" class="navLink"
                     routerLink="/login">

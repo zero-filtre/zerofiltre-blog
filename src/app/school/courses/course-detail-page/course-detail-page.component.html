@@ -97,7 +97,7 @@
             
             <section class="curriculum">
                 <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
-                    [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber"></app-curriculum>
+                    [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber" [canEdit]="canEditCourse"></app-curriculum>
             </section>
 
             <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
