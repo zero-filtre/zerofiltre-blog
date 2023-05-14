@@ -10,6 +10,13 @@
                         cdkDropList [cdkDropListData]="chapters" 
                         (cdkDropListDropped)="dropChapters($event)"
                         class="curriculum_chapter mb-1">
+            <cdk-accordion [multi]="true">
+
+                <div cdkDropListGroup class="curriculum_chapters_wrapper">
+                    <ul *ngIf="chapters?.length" 
+                        cdkDropList [cdkDropListData]="chapters" 
+                        (cdkDropListDropped)="dropChapters($event)"
+                        class="curriculum_chapter mb-1">
 
                         <cdk-accordion-item *ngFor="let chapter of chapters; let index = index; first as isFirst"
                             #accordionItem="cdkAccordionItem"
