@@ -19,6 +19,7 @@ export class CurriculumComponent implements OnInit {
   @Input() canAccessCourse!: boolean;
   @Input() isSubscriber!: boolean;
   @Input() canEdit: boolean = true;
+  @Input() mobileQuery: MediaQueryList;
 
   currentRoute: string
   expandedIndex = 0;
