@@ -21,6 +21,7 @@ export class CurriculumComponent implements OnInit {
   @Input() canEdit: boolean = true;
 
   currentRoute: string
+  expandedIndex = 0;
 
   constructor(
     private router: Router,
