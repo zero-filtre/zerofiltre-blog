@@ -15,11 +15,6 @@
     </div>
 
     <div>
-      <a aria-labelledby="Link to about page" (click)="drawer.close()" class="sidenavLink"
-        href="{{servicesUrl}}/#about">
-        <div>{{'navbar.about' | translate}}</div>
-      </a>
-
       <a *ngIf="activeCourseModule" aria-labelledby="Link to courses list page" (click)="drawer.close()" class="sidenavLink"
         routerLink="cours">
         <div>{{'navbar.courses' | translate}}</div>

@@ -13,10 +13,7 @@
         </a>
 
         <div class="navbar-links hidden lg:flex items-center text-secondary">
-            <a aria-labelledby="Link to about page" class="navLink" href="{{servicesUrl}}/#about">
-                <div>{{'navbar.about' | translate}}</div>
-            </a>
-
+            
             <a *ngIf="activeCourseModule" aria-labelledby="Link to courses list page" class="navLink" routerLink="cours">
                 <div>{{'navbar.courses' | translate}}</div>
             </a>
