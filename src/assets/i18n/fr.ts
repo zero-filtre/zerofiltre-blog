@@ -10,6 +10,7 @@ export const fr = {
         matchingPassword: 'Confirmation mot de passe',
         passwordDoesNotMatch: 'Les mots de passe ne correspondent pas',
         invalidPasswordLenght: 'Le mot de passe doit comporter au moins 6 caractères.',
+        invalidPasswordMaxLenght: 'Le mot de passe est trop long (maximum 15 caractères).',
         save: 'Enregistrer',
         cancel: 'Annuler',
         forgotPassword: 'Mot de passe oublié',
@@ -89,6 +90,7 @@ export const fr = {
         invalidEmail: 'Vous devez entrer une adresse email valide',
         missingPassword: ' Le mot de passe est obligatoire.',
         invalidPasswordLenght: 'Le mot de passe doit comporter au moins 6 caractères.',
+        invalidPasswordMaxLenght: 'Le mot de passe est trop long (maximum 15 caractères).',
         invalidPassword: `Le mot de passe doit contenir au moins:
         - une majuscule
         - un caractère spécial 
