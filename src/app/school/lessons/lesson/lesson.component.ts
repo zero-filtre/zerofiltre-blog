@@ -188,7 +188,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.loading = false;
           this.videoID = lesson?.video?.split('com/')[1]
 
-          if (!this.allChapters.length) {
+          if (!this.allChapters?.length) {
             setTimeout(() => {
               this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
               this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
@@ -232,7 +232,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           // this.getEachLessonDuration(data);
 
           if (lessonId === '?') {
-            this.lesson = data[0].lessons[0]
+            this.lesson = data[0]?.lessons[0]
             this.lessonID = this.lesson?.id;
             this.lesson$ = of(this.lesson);
             this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
@@ -269,15 +269,15 @@ export class LessonComponent implements OnInit, OnDestroy {
     const currentLessonIndex = currentChapterLessonList?.findIndex(lesson => lesson.id == currentLessonId);
 
     let prev = null, next = null;
-    const prevChapterLastLessonIndex = allChapters[currentChapterIndex - 1]?.lessons.length - 1;
-    const currentChapterLastLessonIndex = currentChapter?.lessons.length - 1;
+    const prevChapterLastLessonIndex = allChapters[currentChapterIndex - 1]?.lessons?.length - 1;
+    const currentChapterLastLessonIndex = currentChapter?.lessons?.length - 1;
     const nextChapterFirstLessonIndex = 0;
     const lastChapterIndex = allChapters?.length - 1
 
     if (currentLessonIndex < 0) {
       prev = null;
     } else if (currentLessonIndex == 0 && currentChapterIndex > 0) {
-      const prevChapterLastLesson = allChapters[currentChapterIndex - 1].lessons[prevChapterLastLessonIndex]
+      const prevChapterLastLesson = allChapters[currentChapterIndex - 1]?.lessons[prevChapterLastLessonIndex]
       prev = prevChapterLastLesson;
     } else {
       prev = currentChapterLessonList[currentLessonIndex - 1]
@@ -286,7 +286,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     if (currentLessonIndex < 0) {
       next = currentChapterLessonList[1];
     } else if (currentLessonIndex == currentChapterLastLessonIndex && currentChapterIndex < lastChapterIndex) {
-      const nextChapterFirstLesson = allChapters[currentChapterIndex + 1].lessons[nextChapterFirstLessonIndex];
+      const nextChapterFirstLesson = allChapters[currentChapterIndex + 1]?.lessons[nextChapterFirstLessonIndex];
       next = nextChapterFirstLesson;
     } else {
       next = currentChapterLessonList[currentLessonIndex + 1]
@@ -303,9 +303,9 @@ export class LessonComponent implements OnInit, OnDestroy {
 
     chapters.forEach((chap: Chapter) => {
       const chapterLessonsDurations = []
-      const chapterLastLessonIndex = chap.lessons.length - 1;
+      const chapterLastLessonIndex = chap.lessons?.length - 1;
 
-      chap.lessons.forEach((lesson: Lesson, i) => {
+      chap?.lessons.forEach((lesson: Lesson, i) => {
 
         const videoId = lesson.video?.split('.com/')[1] || ''
         if (!videoId) {

@@ -36,7 +36,7 @@
 
                     <div cdkDropListGroup class="curriculum_chapters_wrapper">
 
-                        <ul *ngIf="chapters.length"
+                        <ul *ngIf="chapters?.length"
                             cdkDropList
                             [cdkDropListData]="chapters"
                             (cdkDropListDropped)="dropChapters($event)"
@@ -54,7 +54,7 @@
 
                                 <li cdkDrag [cdkDragDisabled]="!canEdit || mobileQuery.matches" [ngClass]="{'cursor-grab' : canEdit}">
 
-                                    <div (click)="chapter.lessons?.length && accordionItem.toggle()"
+                                    <div (click)="chapter?.lessons?.length && accordionItem.toggle()"
                                         class="curriculum_chapter_title uppercase opacity-90 shadow-md rounded-sm group flex items-center justify-between bg-primary-100 text-secondary p-3 font-semibold mb-1">
                                         <span>{{chapter?.title}}</span>
 
@@ -110,13 +110,13 @@
                                         [attr.id]="'accordion-body-' + index"
                                         [attr.aria-labelledby]="'accordion-header-' + index">
 
-                                        <ul *ngIf="chapter.lessons.length"
+                                        <ul *ngIf="chapter?.lessons?.length"
                                             cdkDropList
-                                            [cdkDropListData]="chapter.lessons"
+                                            [cdkDropListData]="chapter?.lessons"
                                             (cdkDropListDropped)="dropLessons($event)"
                                             class="curriculum_chapter_lessons mt-1 space-y-0.5">
 
-                                            <ng-container *ngFor="let lesson of chapter.lessons ; let j = index">
+                                            <ng-container *ngFor="let lesson of chapter?.lessons ; let j = index">
 
                                                 <li cdkDrag [cdkDragDisabled]="!canEdit || mobileQuery.matches" id="{{lesson.id}}" *ngIf="lesson?.chapterId === chapter?.id"
                                                     [ngClass]="{'!bg-skin-link': isActiveLesson(lesson.id), '!text-skin-base opacity-80': !lesson?.free && !canAccessCourse, 'cursor-grab' : canEdit}"

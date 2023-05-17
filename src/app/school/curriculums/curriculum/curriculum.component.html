@@ -23,11 +23,11 @@
                             <li cdkDrag [cdkDragDisabled]="!canEdit || mobileQuery.matches" class="mt-0.5"
                                 [ngClass]="{'cursor-grab' : canEdit}">
 
-                                <div (click)="chapter.lessons?.length && accordionItem.toggle()"
+                                <div (click)="chapter?.lessons?.length && accordionItem.toggle()"
                                     class="curriculum_chapter_title flex items-center justify-between gap-4 uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold">
-                                    {{chapter.title}}
+                                    {{chapter?.title}}
 
-                                    <div *ngIf="chapter.lessons?.length"
+                                    <div *ngIf="chapter?.lessons?.length"
                                         class="text-xs capitalize font-normal hover:cursor-pointer">
                                         <div *ngIf="accordionItem.expanded" class="flex items-center gap-1">
                                             <span class="hidden lg:inline-flex">fermer</span>
@@ -55,12 +55,12 @@
                                     [attr.id]="'accordion-body-' + index"
                                     [attr.aria-labelledby]="'accordion-header-' + index">
 
-                                    <ul *ngIf="chapter.lessons?.length" cdkDropList
-                                        [cdkDropListData]="chapter.lessons"
+                                    <ul *ngIf="chapter?.lessons?.length" cdkDropList
+                                        [cdkDropListData]="chapter?.lessons"
                                         (cdkDropListDropped)="dropLessons($event)"
                                         class="curriculum_chapter_lessons space-y-0.5">
 
-                                        <ng-container *ngFor="let lesson of chapter.lessons">
+                                        <ng-container *ngFor="let lesson of chapter?.lessons">
 
                                             <li cdkDrag [cdkDragDisabled]="!canEdit || mobileQuery.matches"
                                                 id="{{lesson.id}}" *ngIf="lesson?.chapterId === chapter?.id"
