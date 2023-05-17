@@ -164,6 +164,14 @@ export class CurriculumSidebarComponent implements OnInit {
     this.isPublishing = true;
     this.publishBtnText = this.authService.isAdmin ? 'Publication' : 'Soumission';
 
+    const { subTitle, summary } = course
+    if (subTitle == null) {
+      course = {...course, subTitle: 'Ce sous titre est à titre indicatif, vous devrez le changer!'};
+    }
+    if (summary == null) {
+      course = { ...course, summary: 'Ce sommaire est à titre indicatif, vous devrez le changer!' };
+    }
+
     this.courseService.publishCourse(course)
       .pipe(
         catchError(err => {

@@ -38,11 +38,9 @@ export class LessonDeletePopupComponent implements OnInit {
         })
       )
       .subscribe(_data => {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigateByUrl(`${this.data.history}`);
-          this.loading = false;
-          this.dialogRef.close();
-        })
+        location.reload();
+        // this.loading = false;
+        // this.dialogRef.close();
       })
   }
 
