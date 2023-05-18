@@ -6,7 +6,7 @@ import { CourseEditPageComponent } from './course-edit-page/course-edit-page.com
 import { CourseListPageComponent } from './course-list-page/course-list-page.component';
 import { TokenExpiredGuard } from 'src/app/shared/guard/token-expired.guard';
 import { AuthGuard } from 'src/app/user/auth.guard';
-import { LessonAccessGuard } from '../lessons/lesson-access.guard';
+import { CourseAccessGuardGuard } from './course-access-guard.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
   {
     path: ':course_id',
     component: CourseDetailPageComponent,
-    canActivate: [LessonAccessGuard],
+    canActivate: [CourseAccessGuardGuard],
     resolve: {
       sub: CourseEnrollmentResolver
     },
@@ -24,7 +24,7 @@ const routes: Routes = [
   {
     path: ':course_id/edit',
     component: CourseEditPageComponent,
-    canActivate: [TokenExpiredGuard, AuthGuard],
+    canActivate: [TokenExpiredGuard, AuthGuard, CourseAccessGuardGuard],
   },
 ];
 

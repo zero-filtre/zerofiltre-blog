@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: ':lesson_id/edit',
     component: LessonEditPageComponent,
-    canActivate: [TokenExpiredGuard, AuthGuard],
+    canActivate: [TokenExpiredGuard, AuthGuard, LessonAccessGuard],
   }
 ];
 

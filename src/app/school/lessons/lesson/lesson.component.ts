@@ -433,11 +433,11 @@ export class LessonComponent implements OnInit, OnDestroy {
           if (sub === true) return;
 
           this.isSubscriber = !!sub;
-          this.courseEnrollmentID = sub.id
-          this.completedLessons = sub.completedLessons;
-          this.completedLessonsIds = [...new Set(sub.completedLessons.map((l:Lesson) => l.id))] as number[];
+          this.courseEnrollmentID = sub?.id
+          this.completedLessons = sub?.completedLessons;
+          this.completedLessonsIds = [...new Set(sub?.completedLessons?.map((l:Lesson) => l.id))] as number[];
           this.completed = this.isLessonCompleted(this.lesson);
-          this.lessonsCount = sub.course.lessonsCount;
+          this.lessonsCount = sub?.course?.lessonsCount;
           this.loadCompleteProgressBar(this.completedLessonsIds);
 
           return sub
