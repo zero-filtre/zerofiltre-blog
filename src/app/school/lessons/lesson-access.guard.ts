@@ -38,12 +38,7 @@ export class LessonAccessGuard implements CanActivate {
           return of(false);
         }),
         map((data: Course) => {
-          if (data?.status !== 'PUBLISHED' && !user) {
-            this.router.navigateByUrl('**')
-            return false;
-          } else {
-            return true
-          }
+          return true;
         })
       )
   }
