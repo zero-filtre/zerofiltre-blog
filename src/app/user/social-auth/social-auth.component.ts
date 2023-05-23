@@ -33,7 +33,6 @@ export class SocialAuthComponent implements OnInit {
   }
 
   loginWithStackOverflow(): void {
-    console.log('TOKEN : ', this.accessToken);
     if (this.accessToken) {
       this.authService.InitSOLoginWithAccessToken(this.accessToken);
     }
