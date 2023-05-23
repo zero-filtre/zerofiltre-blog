@@ -12,7 +12,7 @@ import { AuthService } from '../auth.service';
 })
 export class SocialAuthComponent implements OnInit {
   private code!: string;
-  private accessToken!: string;
+  private accessToken!: any;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -33,6 +33,7 @@ export class SocialAuthComponent implements OnInit {
   }
 
   loginWithStackOverflow(): void {
+    console.log('TOKEN : ', this.accessToken);
     if (this.accessToken) {
       this.authService.InitSOLoginWithAccessToken(this.accessToken);
     }
@@ -40,7 +41,7 @@ export class SocialAuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.code = this.route.snapshot.queryParamMap.get('code')!;
-    this.accessToken = this.route.snapshot.fragment?.split('=')[1]!;
+    this.accessToken = this.route.snapshot.fragment.split('=')[1].split('&')[0];
 
     if (isPlatformBrowser(this.platformId)) {
       if (this.code) {
