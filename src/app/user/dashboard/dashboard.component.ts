@@ -9,6 +9,7 @@ import { NavigationService } from 'src/app/services/navigation.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
 import { BaseArticleListComponent } from '../../shared/base-article-list/base-article-list.component';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,9 +29,10 @@ export class DashboardComponent extends BaseArticleListComponent implements OnIn
     public navigate: NavigationService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
+    public messageService: MessageService,
     @Inject(PLATFORM_ID) public platformId: any
   ) {
-    super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, platformId)
+    super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, messageService, platformId)
   }
 
   fetchMyArticlesByStatus(status: string) {

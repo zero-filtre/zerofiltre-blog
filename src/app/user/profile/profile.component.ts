@@ -21,6 +21,9 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class ProfileComponent implements OnInit {
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
+  readonly blogUrl = environment.blogUrl;
+
+  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
 
   userID!: string;
   loading!: boolean;
@@ -28,6 +31,7 @@ export class ProfileComponent implements OnInit {
 
   loggedUser$!: Observable<User>;
   user$!: Observable<User>;
+  stripeRoute = this.prod ? ' https://billing.stripe.com/p/login/eVa02LasC8V116EbII' : 'https://billing.stripe.com/p/login/test_28odSt4jj89l8kE6oo';
 
   constructor(
     private loadEnvService: LoadEnvService,

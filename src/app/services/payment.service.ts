@@ -25,7 +25,7 @@ export class PaymentService {
     public dialogPaymentRef: MatDialog,
     ) { }
 
-  openPaymentDialog(payload: any, type: string, course: Course): void {
+  openPaymentDialog(payload: any, type: string, course: Course = null): void {
     this.dialogPaymentRef.open(PaymentPopupComponent, {
       panelClass: 'payment-popup',
       data: {

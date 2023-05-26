@@ -13,7 +13,10 @@
         </a>
 
         <div class="navbar-links hidden lg:flex items-center text-secondary">
-            
+            <button (click)="subscribeToPro()" class="mr-1 border border-primary-500 rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
+                <p class="text-sm sm:text-lg text-primary-500 uppercase font-extrabold px-1.5">Pro</p>
+            </button>
+
             <a *ngIf="activeCourseModule" aria-labelledby="Link to courses list page" class="navLink" routerLink="cours">
                 <div>{{'navbar.courses' | translate}}</div>
             </a>

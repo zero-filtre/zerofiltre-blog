@@ -14,6 +14,7 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
 import { BaseArticleListComponent } from '../../shared/base-article-list/base-article-list.component';
 import { NavigationService } from '../../services/navigation.service';
 import { TagService } from 'src/app/services/tag.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-articles-list',
@@ -60,9 +61,10 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
     public translate: TranslateService,
     public navigate: NavigationService,
     private tagService: TagService,
+    public messageService: MessageService,
     @Inject(PLATFORM_ID) public platformId: any
   ) {
-    super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, platformId)
+    super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, messageService, platformId)
   }
 
   fetchListOfTags(): void {
@@ -205,6 +207,11 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
         query => {
           this.status = query.get('filter')!;
           this.tag = query.get('tag')!;
+
+          // const shouldOpenArticleDialog = query.get('articleDialog');
+          // if (shouldOpenArticleDialog) {
+          //   this.openArticleEntryDialog();
+          // }
 
           if (this.tag) {
             return this.fetchArticlesByTag(this.tag);

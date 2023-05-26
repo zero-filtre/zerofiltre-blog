@@ -292,7 +292,7 @@ export class AuthService {
     )
   }
 
-  private loadUserAllSubs() {
+  loadUserAllSubs() {
     return this.courseService.findAllSubscribedCourses({pageNumber: 0, pageSize: 1000})
       .pipe(
         tap(({ content }) => {

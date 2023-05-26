@@ -241,7 +241,11 @@
                         </button>
                     </div>
     
-                    <div class="action-btns flex justify-end  mt-12">
+                    <div class="action-btns flex gap-3 flex-col lg:flex-row justify-between mt-12">
+                        <a href="{{stripeRoute}}" target="_blank"
+                            class="px-4 py-2 text-center shadow-lg text-skin-base font-semibold text-xs sm:text-sm rounded-full bg-skin-card hover:bg-skin-bgMuted transition-all duration-200">
+                            Gérer ma facturation
+                        </a>
                         <button (click)="openAccountDeleteDialog()" aria-labelledby="Delete account button"
                             class="px-4 py-2 shadow-lg text-white font-semibold text-xs sm:text-sm rounded-full bg-error hover:bg-red-500 transition-all duration-200">
                             {{'profile.deleteMyAccount' | translate}}

@@ -1,12 +1,15 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
+import { User } from '../user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ArticleEntryPopupComponent } from 'src/app/articles/article-entry-popup/article-entry-popup.component';
 
 @Component({
   selector: 'app-account-confirmation-page',
@@ -26,6 +29,8 @@ export class AccountConfirmationPageComponent implements OnInit {
     private messageService: MessageService,
     private seo: SeoService,
     private translate: TranslateService,
+    public router: Router,
+    public dialogEntryRef: MatDialog,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -42,6 +47,34 @@ export class AccountConfirmationPageComponent implements OnInit {
         if (!this.token) this.messageService.cancel();
         this.loading = false;
         this.isTokenValid = false;
+      }
+    });
+  }
+
+  openArticleEntryDialog(): void {
+    const currUser = this.authService.currentUsr as User;
+    const loggedIn = !!currUser;
+
+    if (!loggedIn) {
+      this.router.navigate(
+        ['/login'],
+        {
+          relativeTo: this.route,
+          queryParams: { redirectURL: this.router.url, articleDialog: true },
+          queryParamsHandling: 'merge',
+        });
+
+      this.messageService.openSnackBarInfo('Veuillez vous connecter pour rédiger un article 🙂', 'OK');
+
+      return;
+    }
+
+    this.dialogEntryRef.open(ArticleEntryPopupComponent, {
+      width: '850px',
+      height: '350px',
+      panelClass: 'article-popup-panel',
+      data: {
+        router: this.router
       }
     });
   }

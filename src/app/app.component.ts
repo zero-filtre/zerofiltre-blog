@@ -28,6 +28,8 @@ import {
 import { LoadEnvService } from './services/load-env.service';
 import { environment } from 'src/environments/environment';
 import { CourseService } from './school/courses/course.service';
+import { User } from './user/user.model';
+import { PaymentService } from './services/payment.service';
 
 declare var Prism: any;
 
@@ -82,7 +84,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private router: Router,
     public authService: AuthService,
     private fileUploadService: FileUploadService,
-    private courseService: CourseService
+    private paymentService: PaymentService
   ) {
     this.setBrowserTranslationConfigs();
   }
@@ -200,6 +202,32 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   subscribedCourses$: Observable<any[]>;
+
+
+  subscribeToPro() {
+
+    const currUser = this.authService.currentUsr as User;
+    const loggedIn = !!currUser;
+
+    if (!loggedIn) {
+      this.router.navigate(
+        ['/login'],
+        {
+          queryParams: { redirectURL: this.router.url },
+          queryParamsHandling: 'merge',
+        });
+
+      this.messageService.openSnackBarInfo('Veuillez vous connecter pour prendre votre abonnement PRO 🤗', 'OK');
+
+      return;
+    }
+
+    const payload = { productId: 1, productType: 'COURSE' }
+    const type = 'pro'
+
+    this.paymentService.openPaymentDialog(payload, type);
+
+  }
 
   ngOnInit(): void {
     this.router.events

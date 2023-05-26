@@ -19,7 +19,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   public readonly STACK_OVERFLOW_CLIENT_ID = environment.STACK_OVERFLOW_CLIENT_ID;
   public readonly gitHubRedirectURL = environment.gitHubRedirectURL;
   public readonly stackOverflowRedirectURL = environment.stackOverflowRedirectURL;
-  public redirectURL: any;
+  public redirectURL: string;
+  public articleDialog: string;
 
   public passwordVisible = false;
 
@@ -74,6 +75,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.InitForm();
 
     this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
+    this.articleDialog = this.route.snapshot.queryParamMap.get('articleDialog')!;
 
     this.seo.generateTags({
       title: this.translate.instant('meta.loginTitle'),
