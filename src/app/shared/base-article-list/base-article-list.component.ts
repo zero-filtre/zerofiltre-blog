@@ -13,6 +13,8 @@ import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { calcReadingTime, capitalizeString, nFormatter } from '../../services/utilities.service';
 import { ArticleEntryPopupComponent } from '../../articles/article-entry-popup/article-entry-popup.component';
+import { MessageService } from 'src/app/services/message.service';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-base-article-list',
@@ -59,6 +61,7 @@ export class BaseArticleListComponent implements OnInit {
     public navigate: NavigationService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
+    public messageService: MessageService,
     @Inject(PLATFORM_ID) public platformId: any
   ) { }
 
@@ -73,6 +76,23 @@ export class BaseArticleListComponent implements OnInit {
   }
 
   openArticleEntryDialog(): void {
+    const currUser = this.authService.currentUsr as User;
+    const loggedIn = !!currUser;
+
+    if (!loggedIn) {
+      this.router.navigate(
+        ['/login'],
+        {
+          relativeTo: this.route,
+          queryParams: { redirectURL: this.router.url, articleDialog: true },
+          queryParamsHandling: 'merge',
+        });
+
+      this.messageService.openSnackBarInfo('Veuillez vous connecter pour rédiger un article 🙂', 'OK');
+
+      return;
+    }
+
     this.dialogEntryRef.open(ArticleEntryPopupComponent, {
       width: '850px',
       height: '350px',

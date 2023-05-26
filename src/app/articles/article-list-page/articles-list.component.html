@@ -48,16 +48,16 @@
                     </ng-container>
                 </div>
 
-                <div *ngIf="authService.currentUsr">
+                <div>
                     <button aria-label="Button to create a new article" (click)="openArticleEntryDialog()" type="button"
-                        class="">
-                        <span class="sr-only">Nouvel article</span>
+                        class="rounded-lg lg:border lg:border-primary-500 pl-2 pr-5 flex gap-1 items-center hover:shadow-md transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-30">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="h-10 w-10 text-white fill-primary-500 border-primary-500" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"
-                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
+                        <span class="hidden lg:inline text-primary-500">Rédiger</span>
                     </button>
                 </div>
             </div>
