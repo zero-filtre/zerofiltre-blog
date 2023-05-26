@@ -26,6 +26,8 @@ export class PaymentSuccessComponent implements OnInit {
         }),
         tap(_data => this.loading = false)
       )
+
+    this.authService.loadUserAllSubs();
   }
 
 }
