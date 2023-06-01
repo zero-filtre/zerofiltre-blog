@@ -20,6 +20,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "imagekitio-angular"
+            ],
             "outputPath": "dist/zerofiltre-blog/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -52,30 +55,12 @@
           },
           "configurations": {
             "prod": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            },
-            "uat": {
               "optimization": {
                 "scripts": true,
-                "styles": { "minify": true, "inlineCritical": false },
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
                 "fonts": true
               },
               "outputHashing": "all",
@@ -97,9 +82,37 @@
                 }
               ]
             },
-            "dev": {
+            "uat": {
               "optimization": false,
-              "sourceMap": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "dev": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": true
+                },
+                "fonts": true
+              },
+              "sourceMap": false,
               "namedChunks": true,
               "extractLicenses": false,
               "vendorChunk": true,
@@ -177,7 +190,7 @@
             },
             "uat": {
               "outputHashing": "media",
-              "optimization": true,
+              "optimization": false,
               "sourceMap": false,
               "extractLicenses": true
             },
