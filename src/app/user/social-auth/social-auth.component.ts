@@ -39,13 +39,13 @@ export class SocialAuthComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.code = this.route.snapshot.queryParamMap.get('code')!;
-    this.accessToken = this.route.snapshot.fragment.split('=')[1].split('&')[0];
-
+    this.code = this.route.snapshot?.queryParamMap.get('code')!;
+    
     if (isPlatformBrowser(this.platformId)) {
       if (this.code) {
         this.loginWithGithub();
       } else {
+        this.accessToken = this.route.snapshot?.fragment?.split('=')[1]?.split('&')[0];
         this.loginWithStackOverflow();
       }
     }
