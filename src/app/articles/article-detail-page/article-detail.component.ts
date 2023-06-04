@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-article-popup.component';
 import { MessageService } from 'src/app/services/message.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-article-detail',
@@ -57,6 +58,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   sponsorContentUrl = '/cours/1';
   sponsorContentImageUrl = 'https://ik.imagekit.io/lfegvix1p/ddd-imagee_7A342RNOT.svg?updatedAt=1681558221642';
 
+  giscusScriptTag: HTMLScriptElement;
+
   constructor(
     private loadEnvService: LoadEnvService,
     private dialogRef: MatDialog,
@@ -68,6 +71,29 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     public messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.giscusScriptTag = document.createElement("script");
+
+      this.giscusScriptTag.src = "https://giscus.app/client.js";
+      this.giscusScriptTag.async = true;
+      this.giscusScriptTag.type = 'text/javascript';
+
+      this.giscusScriptTag.setAttribute('data-repo', 'zero-filtre/zerofiltre-blog');
+      this.giscusScriptTag.setAttribute('data-repo-id', 'R_kgDOGhkG4Q');
+      this.giscusScriptTag.setAttribute('data-category', 'Announcements');
+      this.giscusScriptTag.setAttribute('data-category-id', 'DIC_kwDOGhkG4c4CW2nQ');
+      this.giscusScriptTag.setAttribute('data-mapping', 'title');
+      this.giscusScriptTag.setAttribute('data-strict', '0');
+      this.giscusScriptTag.setAttribute('data-reactions-enabled', '1');
+      this.giscusScriptTag.setAttribute('data-emit-metadata', '0');
+      this.giscusScriptTag.setAttribute('data-input-position', 'top');
+      this.giscusScriptTag.setAttribute('data-theme', 'dark');
+      this.giscusScriptTag.setAttribute('data-lang', 'fr');
+      this.giscusScriptTag.setAttribute('data-loading', 'lazy');
+      this.giscusScriptTag.setAttribute('crossorigin', 'anonymous');
+
+      document.body.appendChild(this.giscusScriptTag);
+    }
     this.hasHistory = this.router.navigated;
   }
 
