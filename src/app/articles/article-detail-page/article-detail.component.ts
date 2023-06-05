@@ -61,8 +61,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   sponsorContentUrl = '/cours/1';
   sponsorContentImageUrl = 'https://ik.imagekit.io/lfegvix1p/ddd-imagee_7A342RNOT.svg?updatedAt=1681558221642';
 
-  giscusScriptTag: HTMLScriptElement;
-
   giscusConfig = {
     'data-repo': 'zero-filtre/zerofiltre-blog',
     'data-repo-id': 'R_kgDOGhkG4Q',
@@ -101,8 +99,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   private _mobileQueryListener: () => void;
 
-  injectGiscus(scriptElement: HTMLScriptElement, data: any) {
-    scriptElement = document.createElement("script");
+  injectGiscus(data: any) {
+    const scriptElement: HTMLScriptElement = document.createElement("script");
 
     scriptElement.src = "https://giscus.app/client.js";
     scriptElement.async = true;
@@ -139,7 +137,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         next: (response: Article) => {
           this.article = response
           if (isPlatformBrowser(this.platformId)) {
-            this.injectGiscus(this.giscusScriptTag, this.giscusConfig);
+            this.injectGiscus(this.giscusConfig);
           }
 
           this.seo.generateTags({
