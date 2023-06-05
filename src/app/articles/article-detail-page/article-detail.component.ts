@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
@@ -14,6 +14,7 @@ import { DeleteArticlePopupComponent } from '../delete-article-popup/delete-arti
 import { MessageService } from 'src/app/services/message.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { isPlatformBrowser } from '@angular/common';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-article-detail',
@@ -55,10 +56,28 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public maxNberOfReaction!: boolean;
   public hasHistory: boolean;
 
+  mobileQuery: MediaQueryList;
+
   sponsorContentUrl = '/cours/1';
   sponsorContentImageUrl = 'https://ik.imagekit.io/lfegvix1p/ddd-imagee_7A342RNOT.svg?updatedAt=1681558221642';
 
   giscusScriptTag: HTMLScriptElement;
+
+  giscusConfig = {
+    'data-repo': 'zero-filtre/zerofiltre-blog',
+    'data-repo-id': 'R_kgDOGhkG4Q',
+    'data-category': 'Announcements',
+    'data-category-id': 'DIC_kwDOGhkG4c4CW2nQ',
+    'data-mapping': 'title',
+    'data-strict': '0',
+    'data-reactions-enabled': '1',
+    'data-emit-metadata': '0',
+    'data-input-position': 'top',
+    'data-theme': 'light',
+    'data-lang': 'fr',
+    'data-loading': 'lazy',
+    'crossorigin': 'anonymous',
+  }
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -69,32 +88,30 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     public authService: AuthService,
     public messageService: MessageService,
+    media: MediaMatcher,
+    changeDetectorRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
-    if (isPlatformBrowser(this.platformId)) {
-      this.giscusScriptTag = document.createElement("script");
-
-      this.giscusScriptTag.src = "https://giscus.app/client.js";
-      this.giscusScriptTag.async = true;
-      this.giscusScriptTag.type = 'text/javascript';
-
-      this.giscusScriptTag.setAttribute('data-repo', 'zero-filtre/zerofiltre-blog');
-      this.giscusScriptTag.setAttribute('data-repo-id', 'R_kgDOGhkG4Q');
-      this.giscusScriptTag.setAttribute('data-category', 'Announcements');
-      this.giscusScriptTag.setAttribute('data-category-id', 'DIC_kwDOGhkG4c4CW2nQ');
-      this.giscusScriptTag.setAttribute('data-mapping', 'title');
-      this.giscusScriptTag.setAttribute('data-strict', '0');
-      this.giscusScriptTag.setAttribute('data-reactions-enabled', '1');
-      this.giscusScriptTag.setAttribute('data-emit-metadata', '0');
-      this.giscusScriptTag.setAttribute('data-input-position', 'top');
-      this.giscusScriptTag.setAttribute('data-theme', 'dark');
-      this.giscusScriptTag.setAttribute('data-lang', 'fr');
-      this.giscusScriptTag.setAttribute('data-loading', 'lazy');
-      this.giscusScriptTag.setAttribute('crossorigin', 'anonymous');
-
-      document.body.appendChild(this.giscusScriptTag);
-    }
     this.hasHistory = this.router.navigated;
+
+    this.mobileQuery = media.matchMedia('(max-width: 1024px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  private _mobileQueryListener: () => void;
+
+  injectGiscus(scriptElement: HTMLScriptElement, data: any) {
+    scriptElement = document.createElement("script");
+
+    scriptElement.src = "https://giscus.app/client.js";
+    scriptElement.async = true;
+
+    for (let key in data) {
+      scriptElement.setAttribute(key, data[key]);
+    }
+
+    document.body.appendChild(scriptElement);
   }
 
   public setDateFormat(date: any) {
@@ -121,6 +138,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: Article) => {
           this.article = response
+          if (isPlatformBrowser(this.platformId)) {
+            this.injectGiscus(this.giscusScriptTag, this.giscusConfig);
+          }
 
           this.seo.generateTags({
             title: response.title,

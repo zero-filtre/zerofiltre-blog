@@ -276,7 +276,7 @@
                     </div>
                 </div>
 
-                <div class="giscus mt-20"></div>
+                <div *ngIf="!mobileQuery.matches" class="giscus mt-20"></div>
             </div>
         </main>
 
@@ -638,6 +638,8 @@
                     </a>
                 </div>
             </div>
+
+            <div *ngIf="mobileQuery.matches" class="giscus order-5"></div>
         </aside>
     </article>
 
