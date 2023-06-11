@@ -57,42 +57,35 @@ export class CurriculumSidebarComponent implements OnInit {
   dropLessons(event: CdkDragDrop<Lesson[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      // const elementId = +event.item.element.nativeElement.id
 
-      const currPosition = event.currentIndex
+      const currPosition = event.currentIndex;
+      const prevPosition = event.previousIndex;
       const draggedElement = event.item.dropContainer.data[event.currentIndex] as Lesson
 
-      this.courseService.moveLesson(draggedElement.chapterId, draggedElement.id, currPosition)
-        .subscribe(_data => console.log('DRAGGED RESPONSE LESSON'))
-
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
+      if (currPosition != prevPosition) {
+        this.courseService.moveLesson(draggedElement.chapterId, draggedElement.id, currPosition)
+          .subscribe(_data => console.log('DRAGGED LESSON'));
+      }
+    } 
   }
 
   dropChapters(event: CdkDragDrop<Chapter[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
-      const currPosition = event.currentIndex
+      const currPosition = event.currentIndex + 1;
+      const prevPosition = event.previousIndex + 1;
       const draggedElement = event.item.dropContainer.data[event.currentIndex] as Chapter
 
-      this.courseService.moveChapter(draggedElement.id, currPosition)
-        .subscribe(_data => console.log('DRAGGED RESPONSE CHAPTER'))
-
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
+      if (currPosition != prevPosition) {
+        this.courseService.moveChapter(draggedElement.id, currPosition)
+          .subscribe(_data => console.log('DRAGGED CHAPTER'))
+      }
     }
+  }
+
+  sortByNumber(list: any[]) {
+    return list.sort((a,b) => a.number - b.number);
   }
 
   isActiveLesson(lessonID: number) {
@@ -195,6 +188,6 @@ export class CurriculumSidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentRoute = this.router.url;
-    this.publishBtnText = this.authService.isAdmin ? 'Publier' : 'Soumettre'
+    this.publishBtnText = this.authService.isAdmin ? 'Publier' : 'Soumettre';
   }
 }
