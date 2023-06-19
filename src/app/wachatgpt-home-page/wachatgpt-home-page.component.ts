@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SeoService } from '../services/seo.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-wachatgpt-home-page',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WachatgptHomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private seo: SeoService,
+    public translate: TranslateService
+  ) { }
 
   ngOnInit(): void {
+    this.seo.generateTags({
+      title: this.translate.instant('wachatgpt.title'),
+      description: this.translate.instant('wachatgpt.description'),
+      author: 'Zerofiltre.tech',
+      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+    });
   }
 
 }

@@ -299,5 +299,9 @@ export const fr = {
     },
     ddd: {
         buyButtonText: 'Achetez ce cours complet pour seulement 150 €'
+    },
+    wachatgpt: {
+        title: 'Wachatgpt - ChatGPT sur Whatsapp !',
+        description: 'Cessez de dépenser des fortunes pour accéder à la connaissance. Accédez gratuitement à la connaissance 24h / 24, 7J / 7 sur WhatsApp !'
     }
 }

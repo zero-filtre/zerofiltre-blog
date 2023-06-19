@@ -47,6 +47,7 @@ import { PaymentFailedComponent } from './payment-failed/payment-failed.componen
 import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 import { PaymentCanceledComponent } from './payment-canceled/payment-canceled.component';
 import { PdfPreviewComponent } from './ui/pdf-preview/pdf-preview.component';
+import { PricingComponent } from './pricing/pricing.component';
 
 const components = [
   AppShellRenderDirective,
@@ -68,7 +69,8 @@ const components = [
   PaymentFailedComponent,
   PaymentCanceledComponent,
   PaymentPopupComponent,
-  PdfPreviewComponent
+  PdfPreviewComponent,
+  PricingComponent
 ];
 
 const modules = [
