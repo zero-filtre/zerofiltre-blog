@@ -78,7 +78,7 @@ export class PricingComponent {
           new: '4€'
         }
       },
-      time: '/an',
+      time: '/mois',
       pros: [
         'Questions illimitées',
         'Questions vocales',
