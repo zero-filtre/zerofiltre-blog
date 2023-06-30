@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from '../services/seo.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
+import { BotUserPopupComponent } from '../shared/bot-user-popup/bot-user-popup.component';
 
 @Component({
   selector: 'app-wachatgpt-home-page',
@@ -11,8 +13,20 @@ export class WachatgptHomePageComponent implements OnInit {
 
   constructor(
     private seo: SeoService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public dialogEntryRef: MatDialog,
   ) { }
+
+  openAccountDialog() {
+    this.dialogEntryRef.open(BotUserPopupComponent, {
+      // width: '850px',
+      // height: '350px',
+      panelClass: '',
+      data: {
+        // router: this.router
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.seo.generateTags({

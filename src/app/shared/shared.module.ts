@@ -49,6 +49,7 @@ import { PaymentCanceledComponent } from './payment-canceled/payment-canceled.co
 import { PdfPreviewComponent } from './ui/pdf-preview/pdf-preview.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { BotUserProfileComponent } from './bot-user-profile/bot-user-profile.component';
+import { BotUserPopupComponent } from './bot-user-popup/bot-user-popup.component';
 
 const components = [
   AppShellRenderDirective,
@@ -100,7 +101,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, BotUserProfileComponent],
+  declarations: [...components, BotUserProfileComponent, BotUserPopupComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
