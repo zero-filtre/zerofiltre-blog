@@ -14,6 +14,7 @@ import { SignUpPageComponent } from './user/sign-up-page/sign-up-page.component'
 import { WachatgptHomePageComponent } from './wachatgpt-home-page/wachatgpt-home-page.component';
 import { PaymentCanceledComponent } from './shared/payment-canceled/payment-canceled.component';
 import { PdfPreviewComponent } from './shared/ui/pdf-preview/pdf-preview.component';
+import { BotUserProfileComponent } from './shared/bot-user-profile/bot-user-profile.component';
 
 const routes: Routes = [
   {
@@ -79,6 +80,10 @@ const routes: Routes = [
   {
     path: 'wachatgpt',
     component: WachatgptHomePageComponent
+  },
+  {
+    path: 'wachatgpt/user',
+    component: BotUserProfileComponent
   },
   {
     path: '**',
