@@ -23,16 +23,57 @@ export class BotService {
   ) { }
 
   isSignup(phone: string): Observable<any> {
-    return this.http.get<any>(`${this.apiServerUrl}/users/signup/check/${phone}`)
+    const token = 'x+\Ljn)63+CFJ]rM!:PtP7>,2fc^5E'; // Where does this token comes from? is it a static one ?
+
+    httpOptions.headers = httpOptions.headers
+      .set('Authorization', `Bearer ${token}`)
+
+    return this.http.get<any>(`${this.apiServerUrl}/users/signup/check/${phone}`, httpOptions)
       .pipe(shareReplay());
   }
 
-  // checkoutProPlanMonthly(data: any): Observable<any> {
-  //   return this.http.post<any>(`${this.apiServerUrl}/payment/checkout`, data, {
-  //     ...httpOptions,
-  //     responseType: 'text' as 'json'
-  //   })
-  //     .pipe(shareReplay())
-  // }
+  signup(data: any): Observable<any> {
+    const token = 'x+\Ljn)63+CFJ]rM!:PtP7>,2fc^5E'; // Where does this token comes from? is it a static one ?
+
+    httpOptions.headers = httpOptions.headers
+      .set('Authorization', `Bearer ${token}`)
+
+    return this.http.post<any>(`${this.apiServerUrl}/users/signup`, data, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  signin(data: any): Observable<any> {
+    const token = 'x+\Ljn)63+CFJ]rM!:PtP7>,2fc^5E'; // Where does this token comes from? is it a static one ?
+
+    httpOptions.headers = httpOptions.headers
+      .set('Authorization', `Bearer ${token}`)
+
+    return this.http.post<any>(`${this.apiServerUrl}/users/signin`, data, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  getUser(token: string): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
+    httpOptions.headers = httpOptions.headers
+      .set('Authorization', `Bearer ${token}`)
+
+    return this.http.get<any>(`${this.apiServerUrl}/users`, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  updateUser(data: any, token: string): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
+    httpOptions.headers = httpOptions.headers
+      .set('Authorization', `Bearer ${token}`)
+
+    return this.http.put<any>(`${this.apiServerUrl}/users`, data, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  getUserStats(token: string): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
+    httpOptions.headers = httpOptions.headers
+      .set('Authorization', `Bearer ${token}`)
+
+    return this.http.get<any>(`${this.apiServerUrl}/users/stats`, httpOptions)
+      .pipe(shareReplay());
+  }
 
 }
