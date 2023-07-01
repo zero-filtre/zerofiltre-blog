@@ -78,10 +78,12 @@ export class BotUserPopupComponent {
         this.dialogRef.close();
 
         if (is_signup) {
-          //TODO: Implement the sign in component -> signin the user with the provided pwd
+          //TODO: Implement the signin popup component -> signin the user with the provided pwd
+          //TODO: Implement the stats component -> fetch and display the user's stats
+          //TODO: Implement the userInfos component -> fetch and display the user's infos / allow single inputs update (updateUser)
           this.openSignInDialog();
         } else {
-          //TODO: Implement the signup multi steps component -> signup the user
+          //TODO: Implement the signup multi steps popup component -> signup the user
           this.openSignUpDialog();
         }
       })

@@ -1,9 +1,9 @@
 <div class="site-container">
-    <main class="py-10">
-        <h1 class="text-4xl">Mes Informations</h1>
+    <main class="py-10 text-gray-500">
+        <h1 class="text-4xl font-extrabold text-gray-700">Mes Informations</h1>
 
         <section class="py-6 h-72">
-            <h2 class="text-3xl">Statistiques d’utilisation:</h2>
+            <h2 class="text-xl sm:text-3xl text-skin-base font-bold">Statistiques d’utilisation:</h2>
             <p class="pt-3">Vous avez envoyé 'N' messages de plus/de moins que la semaine dernière.</p>
 
             <div class="pt-4">
@@ -16,7 +16,31 @@
         </section>
 
         <section class="py-6 h-72">
-            <h2 class="text-3xl">Profil:</h2>
+            <nav class="user-credentials-nav flex gap-2 items-center">
+                <h2 class="text-xl sm:text-3xl text-skin-base font-bold">Profil:</h2>
+                <div class="edit-action-btn">
+                    <a aria-labelledby="Link to about page" routerLink="."
+                        class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-border transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
+                            class="" width="24" height="24" focusable="false">
+                            <path
+                                d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+            </nav>
+
+            <div>
+                "phone": "31099307310",
+                "password": "p@$$w0rd",
+                "name": "nom",
+                "prename": "Prenom",
+                "gender": "m",
+                "city": "Ville",
+                "statut": "Poste",
+                "domain": "Technology"
+            </div>
         </section>
 
         <hr>
