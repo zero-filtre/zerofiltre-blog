@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
@@ -23,11 +23,14 @@ export class BotUserPopupComponent {
     private fb: FormBuilder,
     private router: Router,
     private bot: BotService,
-    private notify: MessageService
+    private notify: MessageService,
+    private signInDialogRef: MatDialog,
+    private signUpDialogRef: MatDialog,
   ) {}
 
   initForm(): void {
     this.form = this.fb.group({
+      //TODO: Add a validation display in the template 
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{6,20}$/)]],
     })
   }
@@ -37,6 +40,25 @@ export class BotUserPopupComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  openSignInDialog() {
+    this.signInDialogRef.open(BotUserPopupComponent, {
+      panelClass: 'popup-panel',
+      data: {
+        // router: this.router
+      }
+    });
+  }
+
+  openSignUpDialog() {
+    this.signUpDialogRef.open(BotUserPopupComponent, {
+      panelClass: 'popup-panel',
+      data: {
+        // router: this.router
+      }
+    });
+  }
+
 
   handleLogin(): void {
 
@@ -49,21 +71,24 @@ export class BotUserPopupComponent {
         catchError(err => {
           this.loading = false;
           this.notify.openSnackBarError(err.message, '');
-          // this.dialogRef.close();
           return throwError(() => err?.message)
         }),)
       .subscribe(({ is_user, is_signup }) => {
         this.loading = false;
         this.dialogRef.close();
 
-        if (is_user) {
-          this.router.navigateByUrl('wachatgpt/user');
+        if (is_signup) {
+          //TODO: Implement the sign in component -> signin the user with the provided pwd
+          this.openSignInDialog();
         } else {
-          // Open the signup multi steps component -> signup the user
+          //TODO: Implement the signup multi steps component -> signup the user
+          this.openSignUpDialog();
         }
       })
-
-    // this.router.navigateByUrl('wachatgpt/user');
+    
+    // Only for demo purposes
+    this.router.navigateByUrl('wachatgpt/user');
+    this.dialogRef.close();
 
   }
 

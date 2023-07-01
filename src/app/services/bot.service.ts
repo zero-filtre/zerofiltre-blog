@@ -16,6 +16,7 @@ const httpOptions = {
 export class BotService {
   // readonly apiServerUrl = environment.apiBaseUrl;
   readonly apiServerUrl = 'https://wachatgptpremium.zerofiltre.tech/app';
+  readonly token = 'x+\Ljn)63+CFJ]rM!:PtP7>,2fc^5E'; // Where does this token comes from? is it a static one ?
 
   constructor(
     private http: HttpClient,
@@ -23,30 +24,24 @@ export class BotService {
   ) { }
 
   isSignup(phone: string): Observable<any> {
-    const token = 'x+\Ljn)63+CFJ]rM!:PtP7>,2fc^5E'; // Where does this token comes from? is it a static one ?
-
     httpOptions.headers = httpOptions.headers
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${this.token}`)
 
     return this.http.get<any>(`${this.apiServerUrl}/users/signup/check/${phone}`, httpOptions)
       .pipe(shareReplay());
   }
 
   signup(data: any): Observable<any> {
-    const token = 'x+\Ljn)63+CFJ]rM!:PtP7>,2fc^5E'; // Where does this token comes from? is it a static one ?
-
     httpOptions.headers = httpOptions.headers
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${this.token}`)
 
     return this.http.post<any>(`${this.apiServerUrl}/users/signup`, data, httpOptions)
       .pipe(shareReplay());
   }
 
   signin(data: any): Observable<any> {
-    const token = 'x+\Ljn)63+CFJ]rM!:PtP7>,2fc^5E'; // Where does this token comes from? is it a static one ?
-
     httpOptions.headers = httpOptions.headers
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${this.token}`)
 
     return this.http.post<any>(`${this.apiServerUrl}/users/signin`, data, httpOptions)
       .pipe(shareReplay());
