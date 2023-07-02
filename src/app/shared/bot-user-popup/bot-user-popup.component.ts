@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { SearchCountryField, CountryISO } from 'ngx-intl-tel-input';
 import { catchError, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
@@ -28,10 +29,21 @@ export class BotUserPopupComponent {
     private signUpDialogRef: MatDialog,
   ) {}
 
+  separateDialCode = false;
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
+  preferredCountries: CountryISO[] = [
+    CountryISO.Cameroon,
+    CountryISO.UnitedStates,
+    CountryISO.UnitedKingdom
+  ];
+  // TooltipLabel = TooltipLabel;
+
   initForm(): void {
     this.form = this.fb.group({
       //TODO: Add a validation display in the template + country id 
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{6,20}$/)]],
+      // phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{6,20}$/)]],
+      phoneNumber: [''],
     })
   }
 
@@ -62,7 +74,10 @@ export class BotUserPopupComponent {
 
   handleLogin(): void {
 
+    console.log('PHONE: ', this.phoneNumber.value.e164Number);
+    
     if (!this.phoneNumber.valid) return;
+    return 
 
     this.loading = true;
 

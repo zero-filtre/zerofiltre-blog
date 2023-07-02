@@ -13,9 +13,22 @@
     <!-- <form *ngIf="form" [formGroup]="form" (ngSubmit)="handleLogin()" class="space-y-6"> -->
     <div *ngIf="form" [formGroup]="form" class="space-y-6">
         <div class="content">
-            <input name="phoneNumber" id="phoneNumber" required formControlName="phoneNumber" autocomplete="off"
+            <!-- <input name="phoneNumber" id="phoneNumber" required formControlName="phoneNumber" autocomplete="off"
                 class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium focus:border-b-skin-borderBold"
-                required placeholder="Entrez votre numéro">
+                required placeholder="Entrez votre numéro"> -->
+            
+            <ngx-intl-tel-input 
+                [cssClass]="'w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-lg sm:text-xl lg:text-5xl font-medium placeholder:font-medium focus:border-b-skin-borderBold'" 
+                [preferredCountries]="[CountryISO.Cameroon, CountryISO.France]"
+                [enableAutoCountrySelect]="true" 
+                [enablePlaceholder]="true" 
+                [customPlaceholder]="'Entrez votre numéro'"
+                [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                [selectedCountryISO]="CountryISO.Cameroon" 
+                [phoneValidation]="true" 
+                name="phoneNumber" formControlName="phoneNumber">
+            </ngx-intl-tel-input>
 
             <div class="action-buttons flex gap-4 mt-6">
                 <button aria-labelledby="cancel"

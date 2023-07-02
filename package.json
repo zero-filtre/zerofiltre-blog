@@ -39,6 +39,7 @@
     "express-rate-limit": "^6.5.1",
     "imagekitio-angular": "^1.0.2",
     "ngx-doc-viewer": "^15.0.1",
+    "ngx-intl-tel-input": "^3.2.0",
     "ngx-markdown": "^13.0.0",
     "ngx-skeleton-loader": "^4.0.0",
     "prismjs": "^1.27.0",

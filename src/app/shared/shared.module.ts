@@ -20,6 +20,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
+
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MarkdownModule } from 'ngx-markdown';
@@ -97,7 +99,8 @@ const modules = [
   YouTubePlayerModule,
   NgxDocViewerModule,
   DragDropModule,
-  CdkAccordionModule
+  CdkAccordionModule,
+  NgxIntlTelInputModule
 ];
 
 @NgModule({
