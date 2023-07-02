@@ -30,7 +30,7 @@ export class BotUserPopupComponent {
 
   initForm(): void {
     this.form = this.fb.group({
-      //TODO: Add a validation display in the template 
+      //TODO: Add a validation display in the template + country id 
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{6,20}$/)]],
     })
   }
@@ -77,21 +77,30 @@ export class BotUserPopupComponent {
         this.loading = false;
         this.dialogRef.close();
 
+        //TODO: if is_user == false -> renvoyer vers le bot (click sur decouvrir sur whatsapp)
+        if (!is_user) {
+          window.location.href = 'https://wa.me/237620158556?text=Hello';
+          this.dialogRef.close();
+          return
+        }
+
         if (is_signup) {
           //TODO: Implement the signin popup component -> signin the user with the provided pwd
           //TODO: Implement the stats component -> fetch and display the user's stats
           //TODO: Implement the userInfos component -> fetch and display the user's infos / allow single inputs update (updateUser)
+          this.router.navigateByUrl('wachatgpt/user');
           this.openSignInDialog();
+          this.dialogRef.close();
         } else {
+          // TODO: Call confirmPhone api -> open confirmPhone popup component, start a count down (show link resend code) of 30s 
+          // if clicked? count down (show link resend code) of 30 mins
+          // Call checkConfirm api after user enters code and click on send button.
           //TODO: Implement the signup multi steps popup component -> signup the user
           this.openSignUpDialog();
+          this.dialogRef.close();
         }
       })
     
-    // Only for demo purposes
-    this.router.navigateByUrl('wachatgpt/user');
-    this.dialogRef.close();
-
   }
 
   ngOnInit(): void {

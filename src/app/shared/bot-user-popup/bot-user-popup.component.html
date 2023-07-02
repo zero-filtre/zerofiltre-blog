@@ -10,7 +10,8 @@
 </div>
 
 <ng-template #popupContent>
-    <form *ngIf="form" [formGroup]="form" (ngSubmit)="handleLogin()" class="space-y-6">
+    <!-- <form *ngIf="form" [formGroup]="form" (ngSubmit)="handleLogin()" class="space-y-6"> -->
+    <div *ngIf="form" [formGroup]="form" class="space-y-6">
         <div class="content">
             <input name="phoneNumber" id="phoneNumber" required formControlName="phoneNumber" autocomplete="off"
                 class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium focus:border-b-skin-borderBold"
@@ -23,11 +24,11 @@
                     {{'app.cancel' | translate}}
                 </button>
 
-                <button type="submit" aria-labelledby="create an article"
+                <button type="submit" aria-labelledby="login whachatgpt" (click)="handleLogin()"
                     class="px-4 py-2 rounded-full shadow-sm bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 text-sm lg:text-lg leading-5 text-white focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
                     Se connecter
                 </button>
             </div>
         </div>
-    </form>
+    </div>
 </ng-template>
