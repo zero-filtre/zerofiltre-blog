@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SearchCountryField, CountryISO } from 'ngx-intl-tel-input';
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 import { catchError, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
@@ -37,7 +37,7 @@ export class BotUserPopupComponent {
     CountryISO.UnitedStates,
     CountryISO.UnitedKingdom
   ];
-  // TooltipLabel = TooltipLabel;
+  placeholderNumberFormat: PhoneNumberFormat = PhoneNumberFormat.National
 
   initForm(): void {
     this.form = this.fb.group({
@@ -73,15 +73,16 @@ export class BotUserPopupComponent {
 
 
   handleLogin(): void {
-
-    console.log('PHONE: ', this.phoneNumber.value.e164Number);
     
     if (!this.phoneNumber.valid) return;
-    return 
+
+    console.log('PHONE: ', this.phoneNumber.value.e164Number.substring(1));
 
     this.loading = true;
+    const phoneValue = this.phoneNumber.value.e164Number.substring(1);
+    return
 
-    this.bot.isSignup(this.phoneNumber.value)
+    this.bot.isSignup(phoneValue)
       .pipe(
         catchError(err => {
           this.loading = false;
