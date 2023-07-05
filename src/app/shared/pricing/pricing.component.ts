@@ -32,8 +32,8 @@ export class PricingComponent {
         'Réduction'
       ],
       checkout: {
-        cfa: 'https://wa.me/237620158556?text=Hello',
-        eur: 'https://wa.me/237620158556?text=Hello'
+        cfa: 'https://wa.me/237693176973?text=Hello',
+        eur: 'https://wa.me/237693176973?text=Hello'
       },
       order: 1
     },
