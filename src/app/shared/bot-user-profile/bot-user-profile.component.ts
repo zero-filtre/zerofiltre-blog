@@ -49,8 +49,28 @@ export class BotUserProfileComponent {
       )
   }
 
+  fetchUserInfos(): void {
+    this.loadingInfos = true;
+
+    this.stats$ = this.bot.getUserStats()
+      .pipe(
+        catchError(err => {
+          this.loadingInfos = false;
+          this.notify.openSnackBarError(err.message, '');
+          return throwError(() => err?.message)
+        }),
+        map(data => {
+
+          this.loadingInfos = false;
+
+          return data;
+        })
+      )
+  }
+
 
   ngOnInit(): void {
     this.fetchUserStats();
+    this.fetchUserInfos();
   }
 }

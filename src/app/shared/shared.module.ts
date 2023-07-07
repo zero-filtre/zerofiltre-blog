@@ -54,6 +54,7 @@ import { PricingComponent } from './pricing/pricing.component';
 import { BotUserProfileComponent } from './bot-user-profile/bot-user-profile.component';
 import { BotUserPopupComponent } from './bot-user-popup/bot-user-popup.component';
 import { StatChartComponent } from './stat-chart/stat-chart.component';
+import { BotSignupFormComponent } from './bot-signup-form/bot-signup-form.component';
 
 const components = [
   AppShellRenderDirective,
@@ -78,7 +79,9 @@ const components = [
   PdfPreviewComponent,
   PricingComponent,
   BotUserProfileComponent, 
-  BotUserPopupComponent
+  BotUserPopupComponent,
+  StatChartComponent, 
+  BotSignupFormComponent
 ];
 
 const modules = [
@@ -109,7 +112,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, StatChartComponent],
+  declarations: [...components],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
