@@ -53,6 +53,7 @@ import { PdfPreviewComponent } from './ui/pdf-preview/pdf-preview.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { BotUserProfileComponent } from './bot-user-profile/bot-user-profile.component';
 import { BotUserPopupComponent } from './bot-user-popup/bot-user-popup.component';
+import { StatChartComponent } from './stat-chart/stat-chart.component';
 
 const components = [
   AppShellRenderDirective,
@@ -108,7 +109,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, StatChartComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
