@@ -139,6 +139,7 @@ export class BotUserPopupComponent {
         this.bot.saveTokenToLS(token, expireAt);
         this.loading = false;
         this.dialogRef.close();
+        this.router.navigateByUrl('wachatgpt/user');
       })
 
   }
