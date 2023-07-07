@@ -55,6 +55,7 @@ import { BotUserProfileComponent } from './bot-user-profile/bot-user-profile.com
 import { BotUserPopupComponent } from './bot-user-popup/bot-user-popup.component';
 import { StatChartComponent } from './stat-chart/stat-chart.component';
 import { BotSignupFormComponent } from './bot-signup-form/bot-signup-form.component';
+import { BotUserInfosComponent } from './bot-user-infos/bot-user-infos.component';
 
 const components = [
   AppShellRenderDirective,
@@ -81,7 +82,8 @@ const components = [
   BotUserProfileComponent, 
   BotUserPopupComponent,
   StatChartComponent, 
-  BotSignupFormComponent
+  BotSignupFormComponent,
+  BotUserInfosComponent
 ];
 
 const modules = [
