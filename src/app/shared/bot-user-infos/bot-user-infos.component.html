@@ -1,1 +1,52 @@
-<p>bot-user-infos works!</p>
+<div class="">
+    <div *ngIf="!editMode" class="profile-content">
+        <div class="user-credentials flex flex-col space-y-4 px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md">
+            <nav class="user-credentials-nav flex gap-2 items-center">
+                <h2 class="text-xl sm:text-3xl text-skin-base font-bold">Profil:</h2>
+                <div class="edit-action-btn">
+                    <button aria-labelledby="Link to about page" (click)="edit()"
+                        class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full text-skin-base hover:bg-skin-border transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
+                            class="" width="24" height="24" focusable="false">
+                            <path
+                                d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+    
+            <div class="full-name text-base">
+                <label class="text-skin-muted">Nom</label>
+                <div class="text-skin-base">{{data.name}}</div>
+            </div>
+    
+            
+        </div>
+    </div>
+
+
+    <div *ngIf="editMode">
+        <form [formGroup]="userInfoForm" (ngSubmit)="save()" class="space-y-4">
+            <div>
+                <label class="block font-bold">Name</label>
+                <input type="text" formControlName="name" class="block w-full border border-gray-300 rounded-md p-2">
+            </div>
+            <div>
+                <label class="block font-bold">Email</label>
+                <input type="email" formControlName="email" class="block w-full border border-gray-300 rounded-md p-2">
+            </div>
+            <div>
+                <label class="block font-bold">Phone</label>
+                <input type="text" formControlName="phone" class="block w-full border border-gray-300 rounded-md p-2">
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">Save</button>
+                <button type="button" class="bg-gray-300 text-gray-800 py-2 px-4 rounded-md ml-2"
+                    (click)="cancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+

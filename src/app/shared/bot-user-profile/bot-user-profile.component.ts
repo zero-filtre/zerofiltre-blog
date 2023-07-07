@@ -14,6 +14,7 @@ export class BotUserProfileComponent {
   loadingStats: boolean;
   loadingInfos: boolean;
   stats$: Observable<any[]>;
+  infos$: Observable<any[]>;
   nberOfMessages: number;
 
   constructor(
@@ -52,7 +53,7 @@ export class BotUserProfileComponent {
   fetchUserInfos(): void {
     this.loadingInfos = true;
 
-    this.stats$ = this.bot.getUserStats()
+    this.infos$ = this.bot.getUser()
       .pipe(
         catchError(err => {
           this.loadingInfos = false;
@@ -60,9 +61,7 @@ export class BotUserProfileComponent {
           return throwError(() => err?.message)
         }),
         map(data => {
-
           this.loadingInfos = false;
-
           return data;
         })
       )
