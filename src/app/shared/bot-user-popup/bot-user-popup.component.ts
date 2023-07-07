@@ -7,7 +7,6 @@ import { catchError, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
-import { BotLoginPopupComponent } from '../bot-login-popup/bot-login-popup.component';
 
 @Component({
   selector: 'app-bot-user-popup',
@@ -57,14 +56,6 @@ export class BotUserPopupComponent {
     this.dialogRef.close();
   }
 
-  openSignInDialog() {
-    this.signInDialogRef.open(BotLoginPopupComponent, {
-      panelClass: 'popup-panel',
-      data: {
-        phone: this.phoneNumber
-      }
-    });
-  }
 
   openSignUpDialog() {
     this.signUpDialogRef.open(BotUserPopupComponent, {
