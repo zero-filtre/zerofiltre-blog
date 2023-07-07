@@ -27,6 +27,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MarkdownModule } from 'ngx-markdown';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { NgxDocViewerModule } from'ngx-doc-viewer'
+import { NgChartsModule } from 'ng2-charts';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './lang-switcher/translate-universal-loader';
@@ -102,7 +103,8 @@ const modules = [
   NgxDocViewerModule,
   DragDropModule,
   CdkAccordionModule,
-  NgxIntlTelInputModule
+  NgxIntlTelInputModule,
+  NgChartsModule
 ];
 
 @NgModule({
