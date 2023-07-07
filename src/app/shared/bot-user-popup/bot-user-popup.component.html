@@ -10,8 +10,7 @@
 </div>
 
 <ng-template #popupContent>
-    <!-- <form *ngIf="form" [formGroup]="form" (ngSubmit)="handleLogin()" class="space-y-6"> -->
-    <div *ngIf="form" [formGroup]="form" class="space-y-6">
+    <div *ngIf="form && !authMode" [formGroup]="form" class="space-y-6">
         <div class="content">
             <ngx-intl-tel-input 
                 [cssClass]="'w-full bg-transparent border-0 border-b border-skin-border !pb-2 focus:outline-none focus:ring-0 focus:border-b-primary-500 placeholder:text-skin-muted text-secondary text-lg sm:text-xl lg:text-5xl font-medium placeholder:font-medium'" 
@@ -37,9 +36,30 @@
                     {{'app.cancel' | translate}}
                 </button>
 
-                <button type="submit" aria-labelledby="login whachatgpt" (click)="handleLogin()"
+                <button type="submit" aria-labelledby="login whachatgpt" (click)="checkisSignup()"
                     class="px-4 py-2 rounded-full shadow-sm bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 text-sm lg:text-lg leading-5 text-white focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
                     Se connecter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="form && authMode" [formGroup]="form" class="space-y-6">
+        <div class="content">
+            <input name="password" id="password" required formControlName="password" autocomplete="off"
+                class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium focus:border-b-skin-borderBold"
+                required placeholder="Entrez votre mot de passe">
+        
+            <div class="action-buttons flex gap-4 mt-6">
+                <button aria-labelledby="cancel"
+                    class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm lg:text-lg leading-5 text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-200"
+                    (click)="onNoClick()">
+                    {{'app.cancel' | translate}}
+                </button>
+        
+                <button type="submit" aria-labelledby="login whachatgpt" (click)="login()"
+                    class="px-4 py-2 rounded-full shadow-sm bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 text-sm lg:text-lg leading-5 text-white focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
+                    J'y vais
                 </button>
             </div>
         </div>

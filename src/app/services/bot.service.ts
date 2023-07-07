@@ -15,12 +15,34 @@ const httpOptions = {
 })
 export class BotService {
   // readonly apiServerUrl = environment.apiBaseUrl;
-  readonly apiServerUrl = 'https://wachatgptpremium.zerofiltre.tech/app';
+  readonly apiServerUrl = 'https://wachatgpt.zerofiltre.tech/app';
 
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
   ) { }
+
+  saveTokenToLS(token: string, expiryDate: string) {
+    localStorage.setItem('_bot_token', token);
+    localStorage.setItem('_bot_token_expiry', expiryDate);
+  }
+
+  getToken() {
+    return localStorage.getItem('_bot_token');
+  }
+
+  validToken() {
+    const tokenExpiresIn = +localStorage.getItem('_bot_token_expiry');
+    const todayTime = Math.floor(new Date().getTime() / 1000.0);
+
+    if (todayTime > tokenExpiresIn) return false;
+    return true;
+  }
+
+  logout() {
+    localStorage.removeItem('_bot_token');
+    localStorage.removeItem('_bot_token_expiry');
+  }
 
   isSignup(phone: string): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/users/signup/check/${phone}`, httpOptions)
@@ -37,25 +59,25 @@ export class BotService {
       .pipe(shareReplay());
   }
 
-  getUser(token: string): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
-    httpOptions.headers = httpOptions.headers
-      .set('Authorization', `Bearer ${token}`)
+  getUser(): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
+    // httpOptions.headers = httpOptions.headers
+    //   .set('Authorization', `Bearer ${token}`)
 
     return this.http.get<any>(`${this.apiServerUrl}/users`, httpOptions)
       .pipe(shareReplay());
   }
 
-  updateUser(data: any, token: string): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
-    httpOptions.headers = httpOptions.headers
-      .set('Authorization', `Bearer ${token}`)
+  updateUser(data: any): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
+    // httpOptions.headers = httpOptions.headers
+    //   .set('Authorization', `Bearer ${token}`)
 
     return this.http.put<any>(`${this.apiServerUrl}/users`, data, httpOptions)
       .pipe(shareReplay());
   }
 
-  getUserStats(token: string): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
-    httpOptions.headers = httpOptions.headers
-      .set('Authorization', `Bearer ${token}`)
+  getUserStats(): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
+    // httpOptions.headers = httpOptions.headers
+    //   .set('Authorization', `Bearer ${token}`)
 
     return this.http.get<any>(`${this.apiServerUrl}/users/stats`, httpOptions)
       .pipe(shareReplay());

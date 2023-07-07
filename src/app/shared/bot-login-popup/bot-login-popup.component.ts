@@ -16,6 +16,7 @@ export class BotLoginPopupComponent {
 
   loading: boolean = false;
   form!: FormGroup;
+  phone: string;
 
 
   constructor(
@@ -43,15 +44,20 @@ export class BotLoginPopupComponent {
 
 
   login(): void {
+    const payload = {
+      phone: this.phone,
+      password: this.password
+    }
 
-    this.bot.signin(this.password)
+    this.bot.signin(payload)
       .pipe(
         catchError(err => {
           this.loading = false;
           this.notify.openSnackBarError(err.message, '');
           return throwError(() => err?.message)
         }),)
-      .subscribe(({ is_user, is_signup }) => {
+      .subscribe(data => {
+        console.log('DATA: data');
         this.loading = false;
         this.dialogRef.close();
       })
@@ -61,6 +67,7 @@ export class BotLoginPopupComponent {
 
   ngOnInit(): void {
     this.initForm();
+    this.phone = this.data.phone
   }
 
   ngOnDestroy(): void {

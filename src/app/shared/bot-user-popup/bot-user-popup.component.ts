@@ -7,6 +7,7 @@ import { catchError, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
+import { BotLoginPopupComponent } from '../bot-login-popup/bot-login-popup.component';
 
 @Component({
   selector: 'app-bot-user-popup',
@@ -16,8 +17,9 @@ import { MessageService } from 'src/app/services/message.service';
 export class BotUserPopupComponent {
   loading: boolean = false;
   form!: FormGroup;
+  authForm!: FormGroup;
   phoneNotValid: boolean;
-
+  authMode:boolean;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -43,11 +45,12 @@ export class BotUserPopupComponent {
 
   initForm(): void {
     this.form = this.fb.group({
-      // phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{6,20}$/)]],
       phoneNumber: [''],
+      password: ['', [Validators.required]]
     })
   }
 
+  get password() { return this.form.get('password'); }
   get phoneNumber() { return this.form.get('phoneNumber'); }
 
   onNoClick(): void {
@@ -55,10 +58,10 @@ export class BotUserPopupComponent {
   }
 
   openSignInDialog() {
-    this.signInDialogRef.open(BotUserPopupComponent, {
+    this.signInDialogRef.open(BotLoginPopupComponent, {
       panelClass: 'popup-panel',
       data: {
-        // router: this.router
+        phone: this.phoneNumber
       }
     });
   }
@@ -73,7 +76,7 @@ export class BotUserPopupComponent {
   }
 
 
-  handleLogin(): void {
+  checkisSignup(): void {
     
     if (!this.phoneNumber.valid) {
       this.phoneNotValid = true;
@@ -83,7 +86,6 @@ export class BotUserPopupComponent {
     this.phoneNotValid = false;
     this.loading = true;
     const phoneValue = this.phoneNumber.value.e164Number.substring(1);
-    // return
 
     this.bot.isSignup(phoneValue)
       .pipe(
@@ -94,9 +96,7 @@ export class BotUserPopupComponent {
         }),)
       .subscribe(({ is_user, is_signup }) => {
         this.loading = false;
-        this.dialogRef.close();
 
-        //TODO: if is_user == false -> renvoyer vers le bot (click sur decouvrir sur whatsapp)
         if (!is_user) {
           window.location.href = 'https://wa.me/237693176973?text=Hello';
           this.dialogRef.close();
@@ -104,26 +104,51 @@ export class BotUserPopupComponent {
         }
 
         if (is_signup) {
-          //TODO: Implement the signin popup component -> signin the user with the provided pwd
           //TODO: Implement the stats component -> fetch and display the user's stats
           //TODO: Implement the userInfos component -> fetch and display the user's infos / allow single inputs update (updateUser)
-          this.dialogRef.close();
-          this.openSignInDialog();
-          // this.router.navigateByUrl('wachatgpt/user');
+
+          this.authMode = true;
         } else {
           // TODO: Call confirmPhone api -> open confirmPhone popup component, start a count down (show link resend code) of 30s 
           // if clicked? count down (show link resend code) of 30 mins
           // Call checkConfirm api after user enters code and click on send button.
           //TODO: Implement the signup multi steps popup component -> signup the user
-          this.dialogRef.close();
-          this.openSignInDialog();
           // this.openSignUpDialog();
         }
       })
     
   }
 
+  login(): void {
+    this.loading = true;
+
+    const phoneValue = this.phoneNumber.value.e164Number.substring(1);
+    const payload = {
+      "phone": phoneValue,
+      "password": this.password.value
+    }
+
+    this.bot.signin(payload)
+      .pipe(
+        catchError(err => {
+          this.loading = false;
+          this.notify.openSnackBarError(err.message, '');
+          return throwError(() => err?.message)
+        }),)
+      .subscribe(({ expireAt, token, user}) => {
+        this.bot.saveTokenToLS(token, expireAt);
+        this.loading = false;
+        this.dialogRef.close();
+      })
+
+  }
+
   ngOnInit(): void {
     this.initForm();
+  }
+
+  ngOnDestroy(): void {
+    this.form.reset();
+    this.loading = false;
   }
 }
