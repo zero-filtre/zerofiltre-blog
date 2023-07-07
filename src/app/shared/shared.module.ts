@@ -52,6 +52,7 @@ import { PdfPreviewComponent } from './ui/pdf-preview/pdf-preview.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { BotUserProfileComponent } from './bot-user-profile/bot-user-profile.component';
 import { BotUserPopupComponent } from './bot-user-popup/bot-user-popup.component';
+import { BotLoginPopupComponent } from './bot-login-popup/bot-login-popup.component';
 
 const components = [
   AppShellRenderDirective,
@@ -104,7 +105,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, BotUserProfileComponent, BotUserPopupComponent],
+  declarations: [...components, BotUserProfileComponent, BotUserPopupComponent, BotLoginPopupComponent],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),

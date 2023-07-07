@@ -43,7 +43,6 @@ export class BotUserPopupComponent {
 
   initForm(): void {
     this.form = this.fb.group({
-      //TODO: Add a validation display in the template + country id 
       // phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{6,20}$/)]],
       phoneNumber: [''],
     })
@@ -84,7 +83,7 @@ export class BotUserPopupComponent {
     this.phoneNotValid = false;
     this.loading = true;
     const phoneValue = this.phoneNumber.value.e164Number.substring(1);
-    return
+    // return
 
     this.bot.isSignup(phoneValue)
       .pipe(
@@ -108,16 +107,17 @@ export class BotUserPopupComponent {
           //TODO: Implement the signin popup component -> signin the user with the provided pwd
           //TODO: Implement the stats component -> fetch and display the user's stats
           //TODO: Implement the userInfos component -> fetch and display the user's infos / allow single inputs update (updateUser)
-          this.router.navigateByUrl('wachatgpt/user');
-          this.openSignInDialog();
           this.dialogRef.close();
+          this.openSignInDialog();
+          // this.router.navigateByUrl('wachatgpt/user');
         } else {
           // TODO: Call confirmPhone api -> open confirmPhone popup component, start a count down (show link resend code) of 30s 
           // if clicked? count down (show link resend code) of 30 mins
           // Call checkConfirm api after user enters code and click on send button.
           //TODO: Implement the signup multi steps popup component -> signup the user
-          this.openSignUpDialog();
           this.dialogRef.close();
+          this.openSignInDialog();
+          // this.openSignUpDialog();
         }
       })
     
