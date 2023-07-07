@@ -14,8 +14,10 @@ import { MessageService } from 'src/app/services/message.service';
   styleUrls: ['./bot-user-popup.component.css']
 })
 export class BotUserPopupComponent {
-  public loading: boolean = false;
-  public form!: FormGroup;
+  loading: boolean = false;
+  form!: FormGroup;
+  phoneNotValid: boolean;
+
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -74,10 +76,12 @@ export class BotUserPopupComponent {
 
   handleLogin(): void {
     
-    if (!this.phoneNumber.valid) return;
+    if (!this.phoneNumber.valid) {
+      this.phoneNotValid = true;
+      return;
+    }
 
-    console.log('PHONE: ', this.phoneNumber.value.e164Number.substring(1));
-
+    this.phoneNotValid = false;
     this.loading = true;
     const phoneValue = this.phoneNumber.value.e164Number.substring(1);
     return
@@ -95,7 +99,7 @@ export class BotUserPopupComponent {
 
         //TODO: if is_user == false -> renvoyer vers le bot (click sur decouvrir sur whatsapp)
         if (!is_user) {
-          window.location.href = 'https://wa.me/237620158556?text=Hello';
+          window.location.href = 'https://wa.me/237693176973?text=Hello';
           this.dialogRef.close();
           return
         }

@@ -25,6 +25,10 @@
                 [phoneValidation]="true" 
                 name="phoneNumber" formControlName="phoneNumber">
             </ngx-intl-tel-input>
+            <!-- <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="text-red-400"> -->
+            <div *ngIf="phoneNotValid && phoneNumber.invalid" class="text-red-400">
+                Veuillez fournir un numéro de téléphone valide.
+            </div>
 
             <div class="action-buttons flex gap-4 mt-6">
                 <button aria-labelledby="cancel"
