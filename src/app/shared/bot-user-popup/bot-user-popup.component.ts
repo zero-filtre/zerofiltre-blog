@@ -29,7 +29,6 @@ export class BotUserPopupComponent {
     private router: Router,
     private bot: BotService,
     private notify: MessageService,
-    private signInDialogRef: MatDialog,
     private signUpDialogRef: MatDialog,
   ) {}
 
@@ -62,7 +61,7 @@ export class BotUserPopupComponent {
     this.signUpDialogRef.open(BotSignupFormComponent, {
       panelClass: 'popup-panel',
       data: {
-        // router: this.router
+        phone: this.phoneNumber.value.e164Number.substring(1)
       }
     });
   }
@@ -101,7 +100,7 @@ export class BotUserPopupComponent {
           // TODO: Call confirmPhone api -> open confirmPhone popup component, start a count down (show link resend code) of 30s 
           // if clicked? count down (show link resend code) of 30 mins
           // Call checkConfirm api after user enters code and click on send button.
-
+          this.dialogRef.close();
           this.openSignUpDialog();
         }
       })

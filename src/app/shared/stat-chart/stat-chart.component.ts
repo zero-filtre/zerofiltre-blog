@@ -18,13 +18,13 @@ export class StatChartComponent {
 
   initData() {
     let dailyReports = [
-      { day: 'Lundi', quantity: 50 },
-      { day: 'Mardi', quantity: 60 },
-      { day: 'Mercredi', quantity: 45 },
-      { day: 'Jeudi', quantity: 55 },
-      { day: 'Vendredi', quantity: 75 },
-      { day: 'Samedi', quantity: 80 },
-      { day: 'Dimanche', quantity: 90 },
+      { day: 'Lundi', quantity: 0 },
+      { day: 'Mardi', quantity: 0 },
+      { day: 'Mercredi', quantity: 0 },
+      { day: 'Jeudi', quantity: 0 },
+      { day: 'Vendredi', quantity: 0 },
+      { day: 'Samedi', quantity: 0 },
+      { day: 'Dimanche', quantity: 0 },
     ];
 
     this.dataset.forEach((data, i) => {

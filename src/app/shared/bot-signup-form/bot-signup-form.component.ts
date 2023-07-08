@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
@@ -20,7 +21,9 @@ export class BotSignupFormComponent {
     private fb: FormBuilder,
     private bot: BotService,
     private notify: MessageService,
-    private router: Router
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<BotSignupFormComponent>,
     ) {}
 
   initForm() {
@@ -48,7 +51,9 @@ export class BotSignupFormComponent {
     this.step = 2;
   }
 
-  cancel() { }
+  cancel() {
+    this.dialogRef.close();
+  }
 
   back() {
     this.step = 1;;
@@ -58,10 +63,9 @@ export class BotSignupFormComponent {
   signup(): void {
     this.saving = true;
 
-    // const phoneValue = this.phone.value.e164Number.substring(1);
     const payload = {
       ...this.form.value,
-      phone: '237696278898',
+      phone: this.data.phone,
     }
 
     this.bot.signup(payload)
@@ -72,11 +76,12 @@ export class BotSignupFormComponent {
           return throwError(() => err?.message)
         }),)
       // .subscribe(({ expireAt, token, user }) => {
-      .subscribe(data => {
+      .subscribe(_data => {
         // this.bot.saveTokenToLS(token, expireAt);
         this.saving = false;
-        // this.dialogRef.close();
-        this.router.navigateByUrl('wachatgpt/user');
+        this.dialogRef.close();
+        this.notify.openSnackBarSuccess('Félicitations, votre compte a bien été crée!', 'OK');
+        // this.router.navigateByUrl('wachatgpt/user');
       })
 
   }
