@@ -79,34 +79,34 @@ export class BotUserPopupComponent {
     this.loading = true;
     const phoneValue = this.phoneNumber.value.e164Number.substring(1);
 
-    // this.bot.isSignup(phoneValue)
-    //   .pipe(
-    //     catchError(err => {
-    //       this.loading = false;
-    //       this.notify.openSnackBarError(err.message, '');
-    //       return throwError(() => err?.message)
-    //     }),)
-    //   .subscribe(({ is_user, is_signup }) => {
-    //     this.loading = false;
+    this.bot.isSignup(phoneValue)
+      .pipe(
+        catchError(err => {
+          this.loading = false;
+          this.notify.openSnackBarError(err.message, '');
+          return throwError(() => err?.message)
+        }),)
+      .subscribe(({ is_user, is_signup }) => {
+        this.loading = false;
 
-    //     if (!is_user) {
-    //       window.location.href = 'https://wa.me/237693176973?text=Hello';
-    //       this.dialogRef.close();
-    //       return
-    //     }
+        if (!is_user) {
+          window.location.href = 'https://wa.me/237693176973?text=Hello';
+          this.dialogRef.close();
+          return
+        }
 
-    //     if (is_signup) {
-    //       this.authMode = true;
-    //     } else {
-    //       // TODO: Call confirmPhone api -> open confirmPhone popup component, start a count down (show link resend code) of 30s 
-    //       // if clicked? count down (show link resend code) of 30 mins
-    //       // Call checkConfirm api after user enters code and click on send button.
-    //       //TODO: Implement the signup multi steps popup component -> signup the user
-    //       this.openSignUpDialog();
-    //     }
-    //   })
+        if (is_signup) {
+          this.authMode = true;
+        } else {
+          // TODO: Call confirmPhone api -> open confirmPhone popup component, start a count down (show link resend code) of 30s 
+          // if clicked? count down (show link resend code) of 30 mins
+          // Call checkConfirm api after user enters code and click on send button.
+          //TODO: Implement the signup multi steps popup component -> signup the user
+          this.openSignUpDialog();
+        }
+      })
     
-    this.openSignUpDialog();
+    // this.openSignUpDialog();
   }
 
   login(): void {

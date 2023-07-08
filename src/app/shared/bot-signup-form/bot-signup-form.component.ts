@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
+import { BotService } from 'src/app/services/bot.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-bot-signup-form',
@@ -7,15 +11,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./bot-signup-form.component.css']
 })
 export class BotSignupFormComponent {
-  // personalInfoForm: FormGroup;
-  // accountInfoForm: FormGroup;
 
   form: FormGroup;
   step = 1;
   saving: boolean;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private bot: BotService,
+    private notify: MessageService,
+    private router: Router
     ) {}
 
   initForm() {
@@ -49,9 +54,31 @@ export class BotSignupFormComponent {
     this.step = 1;;
   }
 
-  signup() {
-    // Handle form submission
-    // ...
+
+  signup(): void {
+    this.saving = true;
+
+    // const phoneValue = this.phone.value.e164Number.substring(1);
+    const payload = {
+      ...this.form.value,
+      phone: '237696278898',
+    }
+
+    this.bot.signup(payload)
+      .pipe(
+        catchError(err => {
+          this.saving = false;
+          this.notify.openSnackBarError(err.message, '');
+          return throwError(() => err?.message)
+        }),)
+      // .subscribe(({ expireAt, token, user }) => {
+      .subscribe(data => {
+        // this.bot.saveTokenToLS(token, expireAt);
+        this.saving = false;
+        // this.dialogRef.close();
+        this.router.navigateByUrl('wachatgpt/user');
+      })
+
   }
 
   ngOnInit(): void {
