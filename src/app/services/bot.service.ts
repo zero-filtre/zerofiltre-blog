@@ -19,7 +19,6 @@ export class BotService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService,
   ) { }
 
   saveTokenToLS(token: string, expiryDate: string) {
@@ -59,26 +58,17 @@ export class BotService {
       .pipe(shareReplay());
   }
 
-  getUser(): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
-    // httpOptions.headers = httpOptions.headers
-    //   .set('Authorization', `Bearer ${token}`)
-
+  getUser(): Observable<any> { 
     return this.http.get<any>(`${this.apiServerUrl}/users`, httpOptions)
       .pipe(shareReplay());
   }
 
-  updateUser(data: any): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
-    // httpOptions.headers = httpOptions.headers
-    //   .set('Authorization', `Bearer ${token}`)
-
+  updateUser(data: any): Observable<any> {
     return this.http.put<any>(`${this.apiServerUrl}/users`, data, httpOptions)
       .pipe(shareReplay());
   }
 
-  getUserStats(): Observable<any> { // Need a token to retrieve the user, the token comes from the signin
-    // httpOptions.headers = httpOptions.headers
-    //   .set('Authorization', `Bearer ${token}`)
-
+  getUserStats(): Observable<any> { 
     return this.http.get<any>(`${this.apiServerUrl}/users/stats`, httpOptions)
       .pipe(shareReplay());
   }

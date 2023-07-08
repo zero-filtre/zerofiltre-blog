@@ -101,12 +101,10 @@ export class BotUserPopupComponent {
           // TODO: Call confirmPhone api -> open confirmPhone popup component, start a count down (show link resend code) of 30s 
           // if clicked? count down (show link resend code) of 30 mins
           // Call checkConfirm api after user enters code and click on send button.
-          //TODO: Implement the signup multi steps popup component -> signup the user
+
           this.openSignUpDialog();
         }
       })
-    
-    // this.openSignUpDialog();
   }
 
   login(): void {
