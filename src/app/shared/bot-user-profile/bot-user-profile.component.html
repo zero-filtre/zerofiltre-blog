@@ -1,7 +1,5 @@
 <div class="site-container">
     <main class="py-5 text-gray-500">
-        <!-- <h1 class="text-4xl font-extrabold text-gray-700">Mes Informations</h1> -->
-
         <section class="py-6">
             <h2 class="text-xl sm:text-3xl text-skin-base font-bold">Statistiques d’utilisation:</h2>
             <!-- <p class="pt-3">Vous avez envoyé {{nberOfMessages}} messages de plus/de moins que la semaine dernière.</p> -->
@@ -13,8 +11,7 @@
 
         </section>
 
-        <section class="py-6">
-            
+        <section class="py-6">           
             <div class="max-w-3xl pt-6">
                 <app-bot-user-infos *ngIf="infos$ | async as infos" [data]="infos"></app-bot-user-infos>
             </div>
