@@ -97,9 +97,6 @@ export class BotUserPopupComponent {
         if (is_signup) {
           this.authMode = true;
         } else {
-          // TODO: Call confirmPhone api -> open confirmPhone popup component, start a count down (show link resend code) of 30s 
-          // if clicked? count down (show link resend code) of 30 mins
-          // Call checkConfirm api after user enters code and click on send button.
           this.dialogRef.close();
           this.openSignUpDialog();
         }

@@ -59,6 +59,13 @@ export class BotSignupFormComponent {
     this.step = 1;;
   }
 
+  // TODO: Call confirmPhone api -> open confirmPhone popup component, start a count down (show link resend code) of 30s 
+  // if clicked? count down (show link resend code) of 30 mins
+  // Call checkConfirm api after user enters code and click on send button.
+  // Show id number by user ip adress country
+
+  confirmPhone() {}
+  checkConfirm() {}
 
   signup(): void {
     this.saving = true;

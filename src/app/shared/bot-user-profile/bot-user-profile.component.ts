@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
@@ -19,7 +18,6 @@ export class BotUserProfileComponent {
 
   constructor(
     private loadEnvService: LoadEnvService,
-    private router: Router,
     private bot: BotService,
     private notify: MessageService,
   ) { }
@@ -41,12 +39,14 @@ export class BotUserProfileComponent {
           for (let key in messageCountByDay) {
             arr = arr.concat(messageCountByDay[key])
           }
-  
+          
+          arr = arr.slice(arr.length - 7);
           this.loadingStats = false;
-          this.nberOfMessages = arr.length;
+          this.nberOfMessages = arr.reduce((curr, sum) => sum + curr, 0)
 
           return arr;
-        })
+        }),
+        shareReplay()
       )
   }
 
