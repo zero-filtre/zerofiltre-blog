@@ -7,6 +7,15 @@
 
             <div class="max-w-3xl pt-6">
                 <app-stat-chart *ngIf="stats$ | async as stats" [dataset]="stats"></app-stat-chart>
+                <div *ngIf="loadingStats" class="h-52 flex items-center justify-center">
+                    <svg class="w-20 h-20 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                </div>
             </div>
 
         </section>
@@ -14,6 +23,15 @@
         <section class="py-6">           
             <div class="max-w-3xl pt-6">
                 <app-bot-user-infos *ngIf="infos$ | async as infos" [data]="infos"></app-bot-user-infos>
+                <div *ngIf="loadingInfos" class="h-52 flex items-center justify-center">
+                    <svg class="w-20 h-20 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                </div>
             </div>
         </section>
 
