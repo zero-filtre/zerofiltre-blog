@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BotService } from 'src/app/services/bot.service';
 
@@ -13,6 +13,7 @@ export class BotPhoneVerificationComponent {
   showResend: boolean;
   countdown: number;
   loading:boolean;
+  @Input() phone: string;
 
   constructor(
     private fb: FormBuilder,

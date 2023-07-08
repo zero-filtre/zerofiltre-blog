@@ -16,6 +16,7 @@ export class BotSignupFormComponent {
   form: FormGroup;
   step = 1;
   saving: boolean;
+  userNumber: string;
 
   constructor(
     private fb: FormBuilder,
@@ -72,7 +73,7 @@ export class BotSignupFormComponent {
 
     const payload = {
       ...this.form.value,
-      phone: this.data.phone,
+      phone: this.data.phone.e164Number.substring(1),
     }
 
     this.bot.signup(payload)
@@ -94,6 +95,7 @@ export class BotSignupFormComponent {
   }
 
   ngOnInit(): void {
+    this.userNumber = this.data.phone.internationalNumber;
     this.initForm();
   }
 }

@@ -61,7 +61,7 @@ export class BotUserPopupComponent {
     this.signUpDialogRef.open(BotSignupFormComponent, {
       panelClass: 'popup-panel',
       data: {
-        phone: this.phoneNumber.value.e164Number.substring(1)
+        phone: this.phoneNumber.value
       }
     });
   }
