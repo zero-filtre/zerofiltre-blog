@@ -1,0 +1,183 @@
+<main class="max-w-xl mx-auto">
+    <div *ngIf="sendingCode" class="flex gap-2 items-center text-skin-base">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-6 h-6 text-primary-500 animate-spin">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+        </svg>
+        <h2 class="block">Demande d'un SMS en cours...</h2>
+    </div>
+
+    <div *ngIf="(verificationId$ | async) && confirmMode" class="phoneConfirm">
+        <app-bot-phone-verification 
+            [phone]="userNumber" 
+            (confirmMode)="updateConfirmModeValue($event)"
+            (signupMode)="updateSignupModeValue($event)">
+        </app-bot-phone-verification>
+    </div>
+
+    <div *ngIf="signupMode" class="signup">
+
+        <h2 class="text-2xl text-primary-500 font-medium mb-4 text-center">Remplissez vos informations manquantes en 3 minutes</h2>
+
+        <div *ngIf="step === 1">
+            <form [formGroup]="form" (ngSubmit)="nextStep()" class="space-y-4">
+                <div class="profile-edit-content flex flex-col space-y-4 px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md">
+                    <div>
+                        <label for="name" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Nom
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="name" type="text" id="name" formControlName="name" class="" required placeholder="">
+                            </div>
+                            <div *ngIf="name?.invalid && name?.dirty" class="">
+                                <div *ngIf="name?.errors?.['required']" class="mt-1 text-xs sm:text-sm text-error italic">
+                                    {{'profileEdit.missingfullName' | translate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div>
+                        <label for="prename" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Prénom
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="prename" type="text" id="prename" formControlName="prename" class=""
+                                    placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="gender" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Genre
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="gender" type="text" id="gender" formControlName="gender" class="" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="city" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Ville
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="city" type="text" id="city" formControlName="city" class="" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-5 mt-10">
+                    <button type="button"
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-base bg-skin-card hover:bg-skin-cardMuted transition-all duration-200"
+                        (click)="cancel()">Annuler</button>
+
+                    <button *ngIf="name.valid" type="submit" [disabled]="saving" [ngClass]="{'opacity-50': saving}"
+                        aria-labelledby="Update profile button"
+                        class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
+                        <svg *ngIf="saving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                            preserveAspectRatio="xMidYMid">
+                            <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10" r="35"
+                                stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                                style="animation-play-state:paused"></circle>
+                        </svg>
+                        <span>Suivant</span>
+                    </button>
+                
+                    <button *ngIf="name.invalid" [disabled]="name.invalid || saving" aria-labelledby="Update profile button"
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
+                        Suivant
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div *ngIf="step === 2">
+            <form [formGroup]="form" (ngSubmit)="signup()" class="space-y-4">
+                <div class="profile-edit-content flex flex-col space-y-4 px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md">
+                    <div>
+                        <label for="statut" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Activité proféssionnelle
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="statut" type="text" id="statut" formControlName="statut" class="" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="domain" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Domaine
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="domain" type="text" id="domain" formControlName="domain" class="" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-semibold leading-5 text-skin-muted">
+                            Mot de passe
+                        </label>
+                        <div class="mt-2">
+                            <div class="relative ">
+                                <input name="password" type="text" id="password" formControlName="password" class="" placeholder="">
+                            </div>
+                        </div>
+                        <div *ngIf="password?.invalid && password?.dirty" class="">
+                            <div *ngIf="password?.errors?.['required']" class="mt-1 text-xs sm:text-sm text-error italic">
+                                {{'signup.missingPassword' | translate}}
+                            </div>
+                            <div *ngIf="password?.errors?.['minlength']" class="mt-1 text-xs sm:text-sm text-error italic">
+                                {{'signup.invalidPasswordLenght' | translate}}
+                            </div>
+                            <div *ngIf="password?.errors?.['pattern']['actualValue'].length > 15"
+                                class="mt-1 text-xs sm:text-sm text-error italic">
+                                {{'signup.invalidPasswordMaxLenght' | translate}}
+                            </div>
+                            <div *ngIf="password?.invalid && password.value.length <= 15" class="mt-1 text-xs sm:text-sm text-error italic">
+                                {{'signup.invalidPassword' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-5 mt-10">
+                    <button type="button"
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-base bg-skin-card hover:bg-skin-cardMuted transition-all duration-200"
+                        (click)="back()">Retour</button>
+
+                    <button *ngIf="form.valid" type="submit" [disabled]="saving" [ngClass]="{'opacity-50': saving}"
+                        aria-labelledby="Update profile button"
+                        class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
+                        <svg *ngIf="saving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                            preserveAspectRatio="xMidYMid">
+                            <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10" r="35"
+                                stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                                style="animation-play-state:paused"></circle>
+                        </svg>
+                        <span>{{'profileEdit.updateBtn' | translate}}</span>
+                    </button>
+                
+                    <button *ngIf="form.invalid" [disabled]="form.invalid || saving" aria-labelledby="Update profile button"
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
+                        <span>{{'profileEdit.updateBtn' | translate}}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</main>
+

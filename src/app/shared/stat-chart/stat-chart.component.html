@@ -1,0 +1,12 @@
+<div>
+    <canvas 
+        baseChart 
+        [datasets]="[
+            { data: chartDataPrevWeek, label: 'La semaine précedente' },
+            { data: chartDataCurrWeek, label: 'Cette semaine' },
+        ]" 
+        [labels]="chartLabels"
+        [options]="chartOptions" 
+        [type]="'bar'">
+    </canvas>
+</div>

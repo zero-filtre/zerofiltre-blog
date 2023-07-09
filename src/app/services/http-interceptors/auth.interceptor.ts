@@ -8,14 +8,17 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { environment } from 'src/environments/environment';
+import { BotService } from '../bot.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   readonly apiServerUrl = environment.apiBaseUrl;
+  readonly botServerUrl = 'https://wachatgpt.zerofiltre.tech/app';
 
   constructor(
     private authService: AuthService,
+    private bot: BotService
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -41,6 +44,14 @@ export class AuthInterceptor implements HttpInterceptor {
           return next.handle(request);
       }
     }
+
+
+    const botAuthToken = this.bot.getToken();
+
+    if (request.url.indexOf(this.botServerUrl) === 0) {
+      request = request.clone({ setHeaders: { Authorization: `Bearer ${botAuthToken}` } });
+    }
+
 
     return next.handle(request);
   }

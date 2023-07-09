@@ -20,11 +20,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
+
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MarkdownModule } from 'ngx-markdown';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { NgxDocViewerModule } from'ngx-doc-viewer'
+import { NgChartsModule } from 'ng2-charts';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateUniversalLoader } from './lang-switcher/translate-universal-loader';
@@ -48,6 +51,12 @@ import { PaymentPopupComponent } from './payment-popup/payment-popup.component';
 import { PaymentCanceledComponent } from './payment-canceled/payment-canceled.component';
 import { PdfPreviewComponent } from './ui/pdf-preview/pdf-preview.component';
 import { PricingComponent } from './pricing/pricing.component';
+import { BotUserProfileComponent } from './bot-user-profile/bot-user-profile.component';
+import { BotUserPopupComponent } from './bot-user-popup/bot-user-popup.component';
+import { StatChartComponent } from './stat-chart/stat-chart.component';
+import { BotSignupFormComponent } from './bot-signup-form/bot-signup-form.component';
+import { BotUserInfosComponent } from './bot-user-infos/bot-user-infos.component';
+import { BotPhoneVerificationComponent } from './bot-phone-verification/bot-phone-verification.component';
 
 const components = [
   AppShellRenderDirective,
@@ -70,7 +79,13 @@ const components = [
   PaymentCanceledComponent,
   PaymentPopupComponent,
   PdfPreviewComponent,
-  PricingComponent
+  PricingComponent,
+  BotUserProfileComponent, 
+  BotUserPopupComponent,
+  StatChartComponent, 
+  BotSignupFormComponent,
+  BotUserInfosComponent,
+  BotPhoneVerificationComponent
 ];
 
 const modules = [
@@ -95,7 +110,9 @@ const modules = [
   YouTubePlayerModule,
   NgxDocViewerModule,
   DragDropModule,
-  CdkAccordionModule
+  CdkAccordionModule,
+  NgxIntlTelInputModule,
+  NgChartsModule
 ];
 
 @NgModule({

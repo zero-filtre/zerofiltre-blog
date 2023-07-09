@@ -1,0 +1,65 @@
+<div *ngIf="loading; else popupContent" class="flex gap-2 items-center text-skin-base">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        class="w-6 h-6 text-primary-500 animate-spin">
+        <path stroke-linecap="round" stroke-linejoin="round"
+            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+    </svg>
+    <h2 class="block">Verification du numéro...</h2>
+</div>
+
+<ng-template #popupContent>
+    <div *ngIf="form && !authMode" [formGroup]="form" class="space-y-6">
+        <div class="content">
+            <ngx-intl-tel-input 
+                [cssClass]="'w-full bg-transparent border-0 border-b border-skin-border !pb-2 focus:outline-none focus:ring-0 focus:border-b-primary-500 placeholder:text-skin-muted text-secondary text-lg sm:text-xl lg:text-5xl font-medium placeholder:font-medium'" 
+                [preferredCountries]="[CountryISO.Cameroon, CountryISO.France]"
+                [enableAutoCountrySelect]="true" 
+                [enablePlaceholder]="true" 
+                [numberFormat]="placeholderNumberFormat"
+                [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                [selectedCountryISO]="currentCountry" 
+                [phoneValidation]="true" 
+                name="phoneNumber" formControlName="phoneNumber">
+            </ngx-intl-tel-input>
+            <!-- <div *ngIf="phoneNotValid && phoneNumber.invalid && phoneNumber.touched" class="text-red-400"> -->
+            <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="text-red-400">
+                Veuillez fournir un numéro de téléphone valide.
+            </div>
+
+            <div class="action-buttons flex gap-4 mt-6">
+                <button aria-labelledby="cancel"
+                    class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm lg:text-lg leading-5 text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-200"
+                    (click)="onNoClick()">
+                    {{'app.cancel' | translate}}
+                </button>
+
+                <button type="submit" aria-labelledby="login whachatgpt" (click)="checkisSignup()"
+                    class="px-4 py-2 rounded-full shadow-sm bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 text-sm lg:text-lg leading-5 text-white focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
+                    Se connecter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="form && authMode" [formGroup]="form" class="space-y-6">
+        <div class="content">
+            <input name="password" id="password" required formControlName="password" autocomplete="off"
+                class="w-full bg-transparent border-b border-skin-border !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium focus:border-b-skin-borderBold"
+                required placeholder="Entrez votre mot de passe">
+        
+            <div class="action-buttons flex gap-4 mt-6">
+                <button aria-labelledby="cancel"
+                    class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm lg:text-lg leading-5 text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-200"
+                    (click)="onNoClick()">
+                    {{'app.cancel' | translate}}
+                </button>
+        
+                <button type="submit" aria-labelledby="login whachatgpt" (click)="login()"
+                    class="px-4 py-2 rounded-full shadow-sm bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 text-sm lg:text-lg leading-5 text-white focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
+                    J'y vais
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>

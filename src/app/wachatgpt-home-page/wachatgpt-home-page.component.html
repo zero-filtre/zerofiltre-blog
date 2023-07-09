@@ -35,18 +35,28 @@
                         Posez N’IMPORTE quelle question à tout moment et obtenez une réponse instantanée ! 🎯 <br><br>
                         Obtenez chaque jour, vos cinq premiers messages gratuitement.
                     </p>
-                    <div class="mt-14 lg:w-1/2 mx-auto">
+                    <div class="flex flex-col lg:flex-row gap-3 lg:gap-5 mt-14">
                         <a href="https://wa.me/237693176973?text=Salut"
-                            class="flex items-center justify-center bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 shadow-md transition-all duration-300 text-white font-bold py-4 px-8 rounded-full">
+                            class="flex lg:w-1/2 items-center justify-center bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 shadow-md transition-all duration-300 text-white font-bold py-4 px-8 rounded-full">
                             <app-image [classes]="'w-8 mr-2'" [sourceUrl]="'https://ik.imagekit.io/lfegvix1p/WhatsApp_icon_D5-ZAmWuV.svg?updatedAt=1680203681973'"></app-image>
                             DÉCOUVRIR sur Whatsapp
                         </a>
+
+                        <button (click)="openAccountDialog()"
+                            class="flex items-center justify-center bg-secondary bg-opacity-95 hover:bg-opacity-100 shadow-md transition-all duration-300 text-white font-bold py-4 px-8 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-8 h-8 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            Mon compte
+                        </button>
                     </div>
                 </div>
             </div>
 
             <div class="lg:flex-shrink-0 lg:flex-grow">
-                <svg viewBox="0 0 366 729" role="img" class="mx-auto w-[22.875rem] -mt-20 max-w-full drop-shadow-xl">
+                <svg viewBox="0 0 366 729" role="img" class="mx-auto w-[22.875rem] relative -z-10 -mt-20 max-w-full drop-shadow-xl">
                     <title>Wachatgpt</title>
                     <defs>
                         <clipPath id="2ade4387-9c63-4fc4-b754-10e687a0d332">
@@ -62,11 +72,11 @@
                         <path fill="#343E4E"
                             d="M16 59c0-23.748 19.252-43 43-43h246c23.748 0 43 19.252 43 43v615c0 23.196-18.804 42-42 42H58c-23.196 0-42-18.804-42-42V59Z" />
                     </svg>
-                    <foreignObject width="316" height="1600" transform="translate(24 190)"
-                        clip-path="url(#2ade4387-9c63-4fc4-b754-10e687a0d332)">
-                        <video class="-mt-4" autoplay loop muted playsinline
-                            src="https://ik.imagekit.io/lfegvix1p/demo_RRfSNu9FS.mp4?updatedAt=1687375756829"></video>
-                    </foreignObject>
+                <foreignObject _ngcontent-serverApp-c16="" width="316" height="1600" transform="translate(24 190)"
+                    clip-path="url(#2ade4387-9c63-4fc4-b754-10e687a0d332)"><video _ngcontent-serverapp-c16="" autoplay="" loop=""
+                        muted="" playsinline="" src="https://ik.imagekit.io/lfegvix1p/demo_RRfSNu9FS.mp4?updatedAt=1687375756829"
+                        class="-mt-4"></video>
+                </foreignObject>
                 </svg>
             </div>
 
