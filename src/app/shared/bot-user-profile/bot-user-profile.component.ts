@@ -13,7 +13,7 @@ import { MessageService } from 'src/app/services/message.service';
 export class BotUserProfileComponent {
   loadingStats: boolean;
   loadingInfos: boolean;
-  stats$: Observable<any[]>;
+  stats$: Observable<any>;
   infos$: Observable<any[]>;
   nberOfMessages: number;
 
@@ -40,12 +40,12 @@ export class BotUserProfileComponent {
           let prevData = [];
           let currData = [];
   
+          this.loadingStats = false;
+
           for (let key in messageCountByDay) {
             data = [...data, { [key]: messageCountByDay[key] }]
           }
           
-          this.loadingStats = false;
-
           data.sort((a, b) => {
             const keyA = Object.keys(a)[0];
             const keyB = Object.keys(b)[0];
@@ -55,25 +55,25 @@ export class BotUserProfileComponent {
           currData = data.slice(data.length - 7);
           prevData = data.slice(0, 7);
 
-          const prevQty = prevData.reduce((acc, obj) => {
-            const value = Object.values(obj)[0];
-            return acc + value;
-          }, 0);
-
-          const currQty = currData.reduce((acc, obj) => {
-            const value = Object.values(obj)[0];
-            return acc + value;
-          }, 0);
+          const prevQty = this.sumValues(prevData);
+          const currQty = this.sumValues(currData);
 
           this.nberOfMessages = Math.abs(currQty - prevQty);
 
-          console.log('CURR : ', currData);
-          console.log('PREV : ', prevData);
-
-          return currData;
+          return { 
+            prevWeek: prevData,
+            currWeek: currData
+          };
         }),
         shareReplay()
       )
+  }
+
+  sumValues(data: any) {
+    return data.reduce((acc, obj) => {
+      const value = Object.values(obj)[0];
+      return acc + value;
+    }, 0);
   }
 
   fetchUserInfos(): void {
@@ -97,7 +97,6 @@ export class BotUserProfileComponent {
     this.bot.logout();
     this.router.navigateByUrl('wachatgpt');
   }
-
 
   ngOnInit(): void {
     this.fetchUserStats();

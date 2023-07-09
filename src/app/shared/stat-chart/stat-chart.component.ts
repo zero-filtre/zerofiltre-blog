@@ -12,27 +12,34 @@ export class StatChartComponent {
   chartLabels: string[] = [];
   chartData: number[] = [];
 
-  @Input() dataset!: any[];
+  @Input() dataset!: any;
 
   constructor() { }
 
   initData() {
-    let dailyReports = [
-      { day: 'Lundi', quantity: 0 },
-      { day: 'Mardi', quantity: 0 },
-      { day: 'Mercredi', quantity: 0 },
-      { day: 'Jeudi', quantity: 0 },
-      { day: 'Vendredi', quantity: 0 },
-      { day: 'Samedi', quantity: 0 },
-      { day: 'Dimanche', quantity: 0 },
-    ];
+    let dailyReports = [];
+    const { prevWeek, currWeek } = this.dataset;
 
-    this.dataset.forEach((data, i) => {
-      dailyReports[i] = { ...dailyReports[i], quantity: data }
+    const pureData1 = this.parseData(currWeek)
+    const pureData2 = this.parseData(prevWeek)
+
+    pureData1.forEach((data: any) => {
+      dailyReports = [...dailyReports, { day: Object.keys(data)[0], quantity: Object.values(data)[0]}] 
     })
 
     this.chartLabels = dailyReports.map(report => report.day);
     this.chartData = dailyReports.map(report => report.quantity);
+  }
+
+  parseData(data: any) {
+    return data.map(data => {
+      const dateStr = Object.keys(data)[0];
+      const date = new Date(dateStr);
+      const options: Intl.DateTimeFormatOptions = { weekday: 'long' };
+      const weekday = date.toLocaleDateString('fr-FR', options);
+      const newData = { [weekday[0].toUpperCase() + weekday.slice(1)]: Object.values(data)[0] }
+      return newData
+    })
   }
 
   ngOnInit() {
