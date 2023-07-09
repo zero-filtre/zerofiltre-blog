@@ -104,6 +104,7 @@ export class PricingComponent {
           this.locale = 'fr';
           this.isFR = true;
         }
+        // Should run only in browser mode
         localStorage.setItem('_location', data.country_name)
       })
   }

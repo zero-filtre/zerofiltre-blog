@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from './message.service';
-import { Observable, shareReplay } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 const httpOptions = {
@@ -70,6 +70,19 @@ export class BotService {
 
   getUserStats(): Observable<any> { 
     return this.http.get<any>(`${this.apiServerUrl}/users/stats`, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  sendCode(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/users/send_code`, data, httpOptions)
+      .pipe(
+        tap(({ verification_id }) => localStorage.setItem('_verification_id', verification_id)),
+        shareReplay()
+      );
+  }
+
+  verifyCode(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/users/verify_code`, data, httpOptions)
       .pipe(shareReplay());
   }
 

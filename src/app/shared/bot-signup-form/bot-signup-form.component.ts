@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
 import { MessageService } from 'src/app/services/message.service';
 
@@ -17,11 +17,13 @@ export class BotSignupFormComponent {
   step = 1;
   saving: boolean;
   userNumber: string;
-  
+
   verifying: boolean;
-  resending: boolean;
+  sendingCode: boolean;
   signupMode: boolean;
   confirmMode: boolean;
+
+  verificationId$: Observable<any>;
 
 
   constructor(
@@ -31,7 +33,7 @@ export class BotSignupFormComponent {
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<BotSignupFormComponent>,
-    ) {}
+  ) { }
 
   initForm() {
     this.form = this.fb.group({
@@ -66,8 +68,29 @@ export class BotSignupFormComponent {
     this.step = 1;;
   }
 
-  confirmPhone() {
-    // auto send the code to the user phone -> return the verification_id
+  sendConfirmationCode() {
+
+    this.sendingCode = true;
+
+    const phoneValue = this.data.phone.e164Number.substring(1);
+    const payload = {
+      "phone": phoneValue,
+    }
+
+    this.verificationId$ = this.bot.sendCode(payload)
+      .pipe(
+        catchError(err => {
+          this.sendingCode = false;
+          this.notify.openSnackBarError(err.message, '');
+          return throwError(() => err?.message)
+        }),
+        map(({ message, verification_id }) => {
+          // localStorage.setItem('_verification_id', verification_id)
+          this.sendingCode = false;
+          this.confirmMode = true;
+          return verification_id;
+        })
+      )
   }
 
   checkConfirm() {
@@ -104,7 +127,7 @@ export class BotSignupFormComponent {
 
   ngOnInit(): void {
     this.userNumber = this.data.phone.internationalNumber;
-    this.confirmMode = true;
     this.initForm();
+    this.sendConfirmationCode();
   }
 }
