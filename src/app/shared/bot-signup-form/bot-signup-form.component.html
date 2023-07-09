@@ -1,9 +1,9 @@
 <main>
-    <div class="phoneConfirm">
+    <div *ngIf="confirmMode" class="phoneConfirm">
         <app-bot-phone-verification [phone]="userNumber"></app-bot-phone-verification>
     </div>
 
-    <div class="signup hidden">
+    <div *ngIf="signupMode" class="signup hidden">
 
         <h2 class="text-2xl text-primary-500 font-medium mb-4">Remplissez vos informations manquantes en 3 minutes</h2>
 

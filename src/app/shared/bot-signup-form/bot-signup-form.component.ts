@@ -16,7 +16,12 @@ export class BotSignupFormComponent {
   form: FormGroup;
   step = 1;
   saving: boolean;
+  verifying: boolean;
+  resending: boolean;
   userNumber: string;
+  signupMode: boolean;
+  confirmMode: boolean;
+
 
   constructor(
     private fb: FormBuilder,
@@ -65,8 +70,15 @@ export class BotSignupFormComponent {
   // Call checkConfirm api after user enters code and click on send button.
   // Show id number by user ip adress country
 
-  confirmPhone() {}
-  checkConfirm() {}
+  confirmPhone() {
+    // auto send the code to the user phone -> return the verification_id
+  }
+
+  checkConfirm() {
+    // will use the verification_id and the entered code to check if valid
+    this.confirmMode = false;
+    this.signupMode = true;
+  }
 
   signup(): void {
     this.saving = true;
@@ -96,6 +108,7 @@ export class BotSignupFormComponent {
 
   ngOnInit(): void {
     this.userNumber = this.data.phone.internationalNumber;
+    this.confirmMode = true;
     this.initForm();
   }
 }
