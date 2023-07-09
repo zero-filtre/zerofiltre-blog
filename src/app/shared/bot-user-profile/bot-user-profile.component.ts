@@ -15,7 +15,8 @@ export class BotUserProfileComponent {
   loadingInfos: boolean;
   stats$: Observable<any>;
   infos$: Observable<any[]>;
-  nberOfMessages: number;
+  weekDiffQty: number;
+  weekDiffQtyAbs: number;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -58,7 +59,8 @@ export class BotUserProfileComponent {
           const prevQty = this.sumValues(prevData);
           const currQty = this.sumValues(currData);
 
-          this.nberOfMessages = Math.abs(currQty - prevQty);
+          this.weekDiffQty = currQty - prevQty;
+          this.weekDiffQtyAbs = Math.abs(currQty - prevQty);
 
           return { 
             prevWeek: prevData,

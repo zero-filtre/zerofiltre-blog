@@ -1,7 +1,10 @@
 <div>
     <canvas 
         baseChart 
-        [datasets]="[{ data: chartData, label: 'Nombre de messages envoyés' }]" 
+        [datasets]="[
+            { data: chartData, label: 'La semaine précedente' },
+            { data: chartData, label: 'Cette semaine' },
+        ]" 
         [labels]="chartLabels"
         [options]="chartOptions" 
         [type]="'bar'">

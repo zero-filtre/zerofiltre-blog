@@ -7,8 +7,9 @@ import { Component, Input } from '@angular/core';
 })
 export class StatChartComponent {
   chartOptions = {
-    responsive: true
+    responsive: true,
   };
+
   chartLabels: string[] = [];
   chartData: number[] = [];
 
