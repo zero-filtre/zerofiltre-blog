@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
@@ -20,6 +21,7 @@ export class BotUserProfileComponent {
     private loadEnvService: LoadEnvService,
     private bot: BotService,
     private notify: MessageService,
+    private router: Router,
   ) { }
 
 
@@ -65,6 +67,11 @@ export class BotUserProfileComponent {
           return data;
         })
       )
+  }
+
+  logout() {
+    this.bot.logout();
+    this.router.navigateByUrl('wachatgpt');
   }
 
 

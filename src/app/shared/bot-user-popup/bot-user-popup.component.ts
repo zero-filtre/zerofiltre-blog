@@ -45,7 +45,7 @@ export class BotUserPopupComponent {
 
   get currentCountryName() {
     let name = localStorage.getItem('_location');
-    name = name.split(' ').map(e => e.charAt(0).toUpperCase() + e.slice(1)).join('')
+    name = name?.split(' ').map(e => e.charAt(0).toUpperCase() + e.slice(1)).join('')
     return name
   }
 
