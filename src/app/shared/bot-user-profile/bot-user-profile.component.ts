@@ -36,17 +36,41 @@ export class BotUserProfileComponent {
           return throwError(() => err?.message)
         }),
         map(({ messageCountByDay }) => {
-          let arr = [];
+          let data = [];
+          let prevData = [];
+          let currData = [];
   
           for (let key in messageCountByDay) {
-            arr = arr.concat(messageCountByDay[key])
+            data = [...data, { [key]: messageCountByDay[key] }]
           }
           
-          arr = arr.slice(arr.length - 7);
           this.loadingStats = false;
-          this.nberOfMessages = arr.reduce((curr, sum) => sum + curr, 0)
 
-          return arr;
+          data.sort((a, b) => {
+            const keyA = Object.keys(a)[0];
+            const keyB = Object.keys(b)[0];
+            return new Date(keyA).getTime() - new Date(keyB).getTime();
+          });
+
+          currData = data.slice(data.length - 7);
+          prevData = data.slice(0, 7);
+
+          const prevQty = prevData.reduce((acc, obj) => {
+            const value = Object.values(obj)[0];
+            return acc + value;
+          }, 0);
+
+          const currQty = currData.reduce((acc, obj) => {
+            const value = Object.values(obj)[0];
+            return acc + value;
+          }, 0);
+
+          this.nberOfMessages = Math.abs(currQty - prevQty);
+
+          console.log('CURR : ', currData);
+          console.log('PREV : ', prevData);
+
+          return currData;
         }),
         shareReplay()
       )

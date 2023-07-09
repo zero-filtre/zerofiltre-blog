@@ -2,8 +2,7 @@
     <main class="py-5 text-gray-500">
         <section class="py-6">
             <h2 class="text-xl sm:text-3xl text-skin-base font-bold">Statistiques d’utilisation:</h2>
-            <!-- <p class="pt-3">Vous avez envoyé {{nberOfMessages}} messages de plus/de moins que la semaine dernière.</p> -->
-            <p class="pt-3">Vous avez envoyé {{nberOfMessages}} messages cette semaine.</p>
+            <p class="pt-3">Vous avez envoyé <span class="font-medium text-primary-500">{{nberOfMessages}} messages</span> de <span>{{nberOfMessages > 0 ? 'plus':'moins'}}</span> que la semaine dernière.</p>
 
             <div class="max-w-3xl pt-6">
                 <app-stat-chart *ngIf="stats$ | async as stats" [dataset]="stats"></app-stat-chart>
