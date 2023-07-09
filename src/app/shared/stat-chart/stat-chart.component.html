@@ -2,8 +2,8 @@
     <canvas 
         baseChart 
         [datasets]="[
-            { data: chartData, label: 'La semaine précedente' },
-            { data: chartData, label: 'Cette semaine' },
+            { data: chartDataPrevWeek, label: 'La semaine précedente' },
+            { data: chartDataCurrWeek, label: 'Cette semaine' },
         ]" 
         [labels]="chartLabels"
         [options]="chartOptions" 
