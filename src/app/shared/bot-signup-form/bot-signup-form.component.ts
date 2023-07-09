@@ -54,6 +54,13 @@ export class BotSignupFormComponent {
   get statut() { return this.form.get('statut'); }
   get domain() { return this.form.get('domain'); }
 
+  updateSignupModeValue(newValue: boolean) {
+    this.signupMode = newValue;
+  }
+  updateConfirmModeValue(newValue: boolean) {
+    this.confirmMode = newValue;
+  }
+
   nextStep() {
     this.step = 2;
   }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
@@ -19,8 +19,8 @@ export class BotPhoneVerificationComponent {
   userNumber:string;
 
   @Input() phone: any;
-  @Input() confirmMode: any;
-  @Input() signupMode: any;
+  @Output() confirmMode = new EventEmitter<any>();
+  @Output() signupMode = new EventEmitter<any>();
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +36,11 @@ export class BotPhoneVerificationComponent {
   }
 
   get code() { return this.verificationForm.get('code'); }
+
+  showSignupForm() {
+    this.confirmMode.emit(false);
+    this.signupMode.emit(true);
+  }
 
   verify() {
 
@@ -55,8 +60,7 @@ export class BotPhoneVerificationComponent {
         }))
       .subscribe(({ _message }) => {
         this.verifying = false;
-        this.confirmMode = false;
-        this.signupMode = true;
+        this.showSignupForm();
       })
   }
 
@@ -107,7 +111,7 @@ export class BotPhoneVerificationComponent {
     this.initForm();
 
     this.showResend = true;
-    this.countdown = 20;
+    this.countdown = 30;
     this.userNumber = this.phone.internationalNumber;
     this.startCountdown();
   }

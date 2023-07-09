@@ -6,12 +6,13 @@
             <input id="verificationCode" type="text" formControlName="code"
                 class="block w-full border border-gray-300 rounded-md p-2">
         </div>
+        
         <div class="flex flex-col justify-between mt-4">
             <div *ngIf="showResend" class="text-gray-600 font-light text-sm">
                 Vous pourrez demander un nouveau code dans <span class="font-bold ml-1">{{ minutes }} : {{ seconds | number: '2.0' }}</span>
             </div>
 
-            <button *ngIf="countdown <= 0" (click)="resendCode()" class="flex gap-2 text-gray-600 font-light text-sm underline">
+            <button *ngIf="countdown <= 0" type="button" (click)="resendCode()" class="flex gap-2 text-gray-600 font-light text-sm underline">
                 Renvoyer le code
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                     class="w-6 h-6 text-primary-500 {{sendingCode && 'animate-spin'}}">
