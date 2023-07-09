@@ -1,5 +1,5 @@
-<main>
-    <div *ngIf="sendingCode" class="flex gap-3 items-center">
+<main class="max-w-xl mx-auto">
+    <div *ngIf="sendingCode" class="flex gap-2 items-center text-skin-base">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-6 h-6 text-primary-500 animate-spin">
             <path stroke-linecap="round" stroke-linejoin="round"
@@ -18,7 +18,7 @@
 
     <div *ngIf="signupMode" class="signup">
 
-        <h2 class="text-2xl text-primary-500 font-medium mb-4">Remplissez vos informations manquantes en 3 minutes</h2>
+        <h2 class="text-2xl text-primary-500 font-medium mb-4 text-center">Remplissez vos informations manquantes en 3 minutes</h2>
 
         <div *ngIf="step === 1">
             <form [formGroup]="form" (ngSubmit)="nextStep()" class="space-y-4">
@@ -79,7 +79,7 @@
                         class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-base bg-skin-card hover:bg-skin-cardMuted transition-all duration-200"
                         (click)="cancel()">Annuler</button>
 
-                    <button *ngIf="form.valid" type="submit" [disabled]="saving" [ngClass]="{'opacity-50': saving}"
+                    <button *ngIf="name.valid" type="submit" [disabled]="saving" [ngClass]="{'opacity-50': saving}"
                         aria-labelledby="Update profile button"
                         class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
                         <svg *ngIf="saving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +92,7 @@
                         <span>Suivant</span>
                     </button>
                 
-                    <button *ngIf="form.invalid" [disabled]="form.invalid || saving" aria-labelledby="Update profile button"
+                    <button *ngIf="name.invalid" [disabled]="name.invalid || saving" aria-labelledby="Update profile button"
                         class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
                         Suivant
                     </button>
@@ -132,6 +132,21 @@
                         <div class="mt-2">
                             <div class="relative ">
                                 <input name="password" type="text" id="password" formControlName="password" class="" placeholder="">
+                            </div>
+                        </div>
+                        <div *ngIf="password?.invalid && password?.dirty" class="">
+                            <div *ngIf="password?.errors?.['required']" class="mt-1 text-xs sm:text-sm text-error italic">
+                                {{'signup.missingPassword' | translate}}
+                            </div>
+                            <div *ngIf="password?.errors?.['minlength']" class="mt-1 text-xs sm:text-sm text-error italic">
+                                {{'signup.invalidPasswordLenght' | translate}}
+                            </div>
+                            <div *ngIf="password?.errors?.['pattern']['actualValue'].length > 15"
+                                class="mt-1 text-xs sm:text-sm text-error italic">
+                                {{'signup.invalidPasswordMaxLenght' | translate}}
+                            </div>
+                            <div *ngIf="password?.invalid && password.value.length <= 15" class="mt-1 text-xs sm:text-sm text-error italic">
+                                {{'signup.invalidPassword' | translate}}
                             </div>
                         </div>
                     </div>

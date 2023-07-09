@@ -38,7 +38,7 @@ export class BotSignupFormComponent {
       name: ['', Validators.required],
       prename: [''],
       phone: [''],
-      password: [''],
+      password: ['', [Validators.required, Validators.pattern(/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,15})$/)]],
       gender: [''],
       city: [''],
       statut: [''],
@@ -53,6 +53,7 @@ export class BotSignupFormComponent {
   get city() { return this.form.get('city'); }
   get statut() { return this.form.get('statut'); }
   get domain() { return this.form.get('domain'); }
+  get password() { return this.form.get('password'); }
 
   updateSignupModeValue(newValue: boolean) {
     this.signupMode = newValue;

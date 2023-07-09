@@ -60,6 +60,7 @@ export class BotPhoneVerificationComponent {
         }))
       .subscribe(({ _message }) => {
         this.verifying = false;
+        localStorage.removeItem('_verification_id');
         this.showSignupForm();
       })
   }

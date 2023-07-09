@@ -81,9 +81,6 @@ export class BotUserPopupComponent {
       return;
     }
 
-    this.openSignUpDialog();
-    return
-
     this.phoneNotValid = false;
     this.loading = true;
     const phoneValue = this.phoneNumber.value.e164Number.substring(1);
