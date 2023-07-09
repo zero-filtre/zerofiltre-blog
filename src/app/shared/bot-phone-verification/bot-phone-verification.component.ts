@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError, throwError } from 'rxjs';
 import { BotService } from 'src/app/services/bot.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-bot-phone-verification',
@@ -12,29 +14,76 @@ export class BotPhoneVerificationComponent {
   verificationForm: FormGroup;
   showResend: boolean;
   countdown: number;
-  loading:boolean;
-  @Input() phone: string;
+  verifying:boolean;
+  sendingCode: boolean;
+  userNumber:string;
+
+  @Input() phone: any;
+  @Input() confirmMode: any;
+  @Input() signupMode: any;
 
   constructor(
     private fb: FormBuilder,
-    private bot: BotService
+    private bot: BotService,
+    private notify: MessageService
   ) { }
 
   initForm() {
     this.verificationForm = this.fb.group({
+      // code: ['', Validators.required, Validators.pattern(/^\d{6}$/)]
       code: ['', Validators.required]
     });
   }
 
-  verify() {
-    // Handle verification logic
-    // ...
+  get code() { return this.verificationForm.get('code'); }
 
-    // Reset the form
-    this.verificationForm.reset();
+  verify() {
+
+    this.verifying = true;
+
+    const payload = {
+      "code": this.code.value,
+      "verification_id": localStorage.getItem('_verification_id'),
+    }
+
+    this.bot.verifyCode(payload)
+      .pipe(
+        catchError(err => {
+          this.verifying = false;
+          this.notify.openSnackBarError(err.message, '');
+          return throwError(() => err?.message)
+        }))
+      .subscribe(({ _message }) => {
+        this.verifying = false;
+        this.confirmMode = false;
+        this.signupMode = true;
+      })
   }
 
-  resend() { }
+  resendCode() {
+
+    this.sendingCode = true;
+
+    const phoneValue = this.phone.e164Number.substring(1);
+    const payload = {
+      "phone": phoneValue,
+    }
+
+    this.bot.sendCode(payload)
+      .pipe(
+        catchError(err => {
+          this.sendingCode = false;
+          this.notify.openSnackBarError(err.message, '');
+          return throwError(() => err?.message)
+        }))
+        .subscribe(({ _message, _verification_id }) => {
+          this.sendingCode = false;
+          this.countdown = 150;
+          this.showResend = true;
+          this.startCountdown();
+          this.notify.openSnackBarWarning('Un SMS avec le code vous a été envoyé!', 'OK');
+        })
+  }
 
   startCountdown() {
     const timer = setInterval(() => {
@@ -58,7 +107,8 @@ export class BotPhoneVerificationComponent {
     this.initForm();
 
     this.showResend = true;
-    this.countdown = 30;
+    this.countdown = 20;
+    this.userNumber = this.phone.internationalNumber;
     this.startCountdown();
   }
 

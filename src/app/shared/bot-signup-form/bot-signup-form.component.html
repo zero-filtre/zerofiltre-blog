@@ -1,5 +1,5 @@
 <main>
-    <div *ngIf="!confirmMode" class="flex gap-3 items-center">
+    <div *ngIf="!confirmMode && !signupMode" class="flex gap-3 items-center">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-6 h-6 text-primary-500 animate-spin">
             <path stroke-linecap="round" stroke-linejoin="round"
@@ -7,8 +7,13 @@
         </svg>
         <h2 class="block">Demande d'un SMS en cours...</h2>
     </div>
-    <div *ngIf="verificationId$ | async" class="phoneConfirm">
-        <app-bot-phone-verification [phone]="userNumber"></app-bot-phone-verification>
+
+    <div *ngIf="(verificationId$ | async) && confirmMode" class="phoneConfirm">
+        <app-bot-phone-verification 
+            [phone]="userNumber" 
+            [signupMode]="signupMode"
+            [confirmMode]="confirmMode">
+        </app-bot-phone-verification>
     </div>
 
     <div *ngIf="signupMode" class="signup hidden">

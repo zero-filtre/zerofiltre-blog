@@ -18,13 +18,11 @@ export class BotSignupFormComponent {
   saving: boolean;
   userNumber: string;
 
-  verifying: boolean;
   sendingCode: boolean;
   signupMode: boolean;
   confirmMode: boolean;
 
   verificationId$: Observable<any>;
-
 
   constructor(
     private fb: FormBuilder,
@@ -84,19 +82,12 @@ export class BotSignupFormComponent {
           this.notify.openSnackBarError(err.message, '');
           return throwError(() => err?.message)
         }),
-        map(({ message, verification_id }) => {
-          // localStorage.setItem('_verification_id', verification_id)
+        map(({ _message, verification_id }) => {
           this.sendingCode = false;
           this.confirmMode = true;
           return verification_id;
         })
       )
-  }
-
-  checkConfirm() {
-    // will use the verification_id and the entered code to check if valid
-    this.confirmMode = false;
-    this.signupMode = true;
   }
 
   signup(): void {
@@ -126,7 +117,7 @@ export class BotSignupFormComponent {
   }
 
   ngOnInit(): void {
-    this.userNumber = this.data.phone.internationalNumber;
+    this.userNumber = this.data.phone;
     this.initForm();
     this.sendConfirmationCode();
   }
