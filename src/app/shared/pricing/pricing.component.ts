@@ -104,6 +104,7 @@ export class PricingComponent {
           this.locale = 'fr';
           this.isFR = true;
         }
+        localStorage.setItem('_location', data.country_name)
       })
   }
 

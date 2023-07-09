@@ -36,11 +36,18 @@ export class BotUserPopupComponent {
   SearchCountryField = SearchCountryField;
   CountryISO = CountryISO;
   preferredCountries: CountryISO[] = [
-    CountryISO.Cameroon,
+    CountryISO.France,
     CountryISO.UnitedStates,
     CountryISO.UnitedKingdom
   ];
   placeholderNumberFormat: PhoneNumberFormat = PhoneNumberFormat.National
+  currentCountry: CountryISO = CountryISO[this.currentCountryName];
+
+  get currentCountryName() {
+    let name = localStorage.getItem('_location');
+    name = name.split(' ').map(e => e.charAt(0).toUpperCase() + e.slice(1)).join('')
+    return name
+  }
 
   initForm(): void {
     this.form = this.fb.group({
