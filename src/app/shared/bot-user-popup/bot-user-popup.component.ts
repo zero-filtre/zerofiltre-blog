@@ -72,6 +72,7 @@ export class BotUserPopupComponent {
   openSignUpDialog() {
     this.signUpDialogRef.open(BotSignupFormComponent, {
       panelClass: 'popup-panel',
+      disableClose: true,
       data: {
         phone: this.phoneNumber.value
       }

@@ -8,7 +8,7 @@
 </div>
 
 <ng-template #popupContent>
-    <div *ngIf="form && !authMode" [formGroup]="form" class="space-y-6">
+    <form *ngIf="form && !authMode" [formGroup]="form" (ngSubmit)="checkisSignup()" class="space-y-6">
         <div class="content">
             <ngx-intl-tel-input 
                 [cssClass]="'w-full bg-transparent border-0 border-b border-skin-border !pb-2 focus:outline-none focus:ring-0 focus:border-b-primary-500 placeholder:text-skin-muted text-secondary text-lg sm:text-xl lg:text-5xl font-medium placeholder:font-medium'" 
@@ -22,8 +22,7 @@
                 [phoneValidation]="true" 
                 name="phoneNumber" formControlName="phoneNumber">
             </ngx-intl-tel-input>
-            <!-- <div *ngIf="phoneNotValid && phoneNumber.invalid && phoneNumber.touched" class="text-red-400"> -->
-            <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="text-red-400">
+            <div *ngIf="phoneNotValid && phoneNumber.invalid && phoneNumber.touched" class="text-red-400 mt-1">
                 Veuillez fournir un numéro de téléphone valide.
             </div>
 
@@ -34,15 +33,15 @@
                     {{'app.cancel' | translate}}
                 </button>
 
-                <button [disabled]="phoneNumber.invalid || loading" type="submit" [ngClass]="{'opacity-30': phoneNumber.invalid}" aria-labelledby="login whachatgpt" (click)="checkisSignup()"
+                <button type="submit" [disabled]="phoneNumber.invalid || loading" [ngClass]="{'opacity-30': phoneNumber.invalid}" aria-labelledby="login whachatgpt"
                     class="px-4 py-2 rounded-full shadow-sm bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 text-sm lg:text-lg leading-5 text-white focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
                     Se connecter
                 </button>
             </div>
         </div>
-    </div>
+    </form>
 
-    <div *ngIf="form && authMode" [formGroup]="form" class="space-y-6">
+    <form *ngIf="form && authMode" [formGroup]="form" (ngSubmit)="login()" class="space-y-6">
         <div class="content">
             <div class="relative">
                 <input name="password" type="{{ passwordVisible ? 'text' : 'password' }}" id="password" required minlength="6" formControlName="password" autocomplete="off"
@@ -78,11 +77,11 @@
                     {{'app.cancel' | translate}}
                 </button>
         
-                <button [disabled]="password.invalid || loading" type="submit" [ngClass]="{'opacity-30': password.invalid}" aria-labelledby="login whachatgpt" (click)="login()"
+                <button type="submit" [disabled]="password.invalid || loading" [ngClass]="{'opacity-30': password.invalid}" aria-labelledby="login whachatgpt"
                     class="px-4 py-2 rounded-full shadow-sm bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 text-sm lg:text-lg leading-5 text-white focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
                     J'y vais
                 </button>
             </div>
         </div>
-    </div>
+    </form>
 </ng-template>
