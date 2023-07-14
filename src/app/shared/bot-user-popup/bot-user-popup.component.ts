@@ -52,7 +52,7 @@ export class BotUserPopupComponent {
 
   initForm(): void {
     this.form = this.fb.group({
-      phoneNumber: [''],
+      phoneNumber: ['', [Validators.required]],
       password: ['', [Validators.required]]
     })
   }
