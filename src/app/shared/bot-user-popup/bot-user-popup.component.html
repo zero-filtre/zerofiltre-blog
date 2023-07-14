@@ -8,40 +8,33 @@
 </div>
 
 <ng-template #popupContent>
-    <form *ngIf="form && !authMode" [formGroup]="form" (ngSubmit)="checkisSignup()" class="space-y-6">
+    <form *ngIf="nberForm && !authMode" [formGroup]="nberForm" (ngSubmit)="checkisSignup()" class="space-y-6">
         <div class="content">
-            <ngx-intl-tel-input 
-                [cssClass]="'w-full bg-transparent border-0 border-b border-skin-border !pb-2 focus:outline-none focus:ring-0 focus:border-b-primary-500 placeholder:text-skin-muted text-secondary text-lg sm:text-xl lg:text-5xl font-medium placeholder:font-medium'" 
-                [preferredCountries]="[CountryISO.Cameroon, CountryISO.France]"
-                [enableAutoCountrySelect]="true" 
-                [enablePlaceholder]="true" 
-                [numberFormat]="placeholderNumberFormat"
-                [searchCountryFlag]="true"
-                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-                [selectedCountryISO]="currentCountry" 
-                [phoneValidation]="true" 
-                name="phoneNumber" formControlName="phoneNumber">
+            <ngx-intl-tel-input
+                [cssClass]="'w-full bg-transparent border-0 border-b border-skin-border !pb-2 focus:outline-none focus:ring-0 focus:border-b-primary-500 placeholder:text-skin-muted text-secondary text-lg sm:text-xl lg:text-5xl font-medium placeholder:font-medium'"
+                [preferredCountries]="[CountryISO.Cameroon, CountryISO.France]" [enableAutoCountrySelect]="true"
+                [enablePlaceholder]="true" [numberFormat]="placeholderNumberFormat" [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectedCountryISO]="currentCountry"
+                [phoneValidation]="true" name="phoneNumber" formControlName="phoneNumber" (keydown.enter)="onEnterKeyPress()">
             </ngx-intl-tel-input>
-            <div *ngIf="phoneNotValid && phoneNumber.invalid && phoneNumber.touched" class="text-red-400 mt-1">
-                Veuillez fournir un numéro de téléphone valide.
-            </div>
-
+    
             <div class="action-buttons flex gap-4 mt-6">
-                <button aria-labelledby="cancel"
+                <button aria-labelledby="cancel" type="button"
                     class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm lg:text-lg leading-5 text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-200"
                     (click)="onNoClick()">
                     {{'app.cancel' | translate}}
                 </button>
-
-                <button type="submit" [disabled]="phoneNumber.invalid || loading" [ngClass]="{'opacity-30': phoneNumber.invalid}" aria-labelledby="login whachatgpt"
+    
+                <button type="submit" [disabled]="nberForm.invalid || loading" [ngClass]="{'opacity-30': nberForm.invalid}"
+                    aria-labelledby="login whachatgpt"
                     class="px-4 py-2 rounded-full shadow-sm bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 text-sm lg:text-lg leading-5 text-white focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
-                    Se connecter
+                    J'y vais
                 </button>
             </div>
         </div>
     </form>
 
-    <form *ngIf="form && authMode" [formGroup]="form" (ngSubmit)="login()" class="space-y-6">
+    <form *ngIf="pwdForm && authMode" [formGroup]="pwdForm" (ngSubmit)="login()" class="space-y-6">
         <div class="content">
             <div class="relative">
                 <input name="password" type="{{ passwordVisible ? 'text' : 'password' }}" id="password" required minlength="6" formControlName="password" autocomplete="off"
@@ -71,13 +64,13 @@
 
         
             <div class="action-buttons flex gap-4 mt-6">
-                <button aria-labelledby="cancel"
+                <button aria-labelledby="cancel" type="button"
                     class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm lg:text-lg leading-5 text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-200"
                     (click)="onNoClick()">
                     {{'app.cancel' | translate}}
                 </button>
         
-                <button type="submit" [disabled]="password.invalid || loading" [ngClass]="{'opacity-30': password.invalid}" aria-labelledby="login whachatgpt"
+                <button type="submit" [disabled]="pwdForm.invalid || loading" [ngClass]="{'opacity-30': pwdForm.invalid}" aria-labelledby="login whachatgpt"
                     class="px-4 py-2 rounded-full shadow-sm bg-green-600 hover:bg-gradient-to-r from-green-600 to-green-700 text-sm lg:text-lg leading-5 text-white focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
                     J'y vais
                 </button>

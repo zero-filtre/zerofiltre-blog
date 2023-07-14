@@ -17,7 +17,8 @@ import { BotSignupFormComponent } from '../bot-signup-form/bot-signup-form.compo
 export class BotUserPopupComponent {
   loading: boolean = false;
   form!: FormGroup;
-  authForm!: FormGroup;
+  pwdForm!: FormGroup;
+  nberForm!: FormGroup;
   phoneNotValid: boolean;
   authMode:boolean;
   passwordVisible = false;
@@ -51,14 +52,17 @@ export class BotUserPopupComponent {
   }
 
   initForm(): void {
-    this.form = this.fb.group({
+    this.nberForm = this.fb.group({
       phoneNumber: ['', [Validators.required]],
+    })
+
+    this.pwdForm = this.fb.group({
       password: ['', [Validators.required]]
     })
   }
 
-  get password() { return this.form.get('password'); }
-  get phoneNumber() { return this.form.get('phoneNumber'); }
+  get password() { return this.pwdForm.get('password'); }
+  get phoneNumber() { return this.nberForm.get('phoneNumber'); }
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
@@ -67,7 +71,6 @@ export class BotUserPopupComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 
   openSignUpDialog() {
     this.signUpDialogRef.open(BotSignupFormComponent, {
@@ -79,8 +82,11 @@ export class BotUserPopupComponent {
     });
   }
 
+  onEnterKeyPress() {
+    this.checkisSignup();
+  }
+
   checkisSignup(): void {
-    
     if (!this.phoneNumber.valid) {
       this.phoneNotValid = true;
       return;
@@ -137,7 +143,6 @@ export class BotUserPopupComponent {
         this.dialogRef.close();
         this.router.navigateByUrl('wachatgpt/user');
       })
-
   }
 
   ngOnInit(): void {
@@ -145,7 +150,8 @@ export class BotUserPopupComponent {
   }
 
   ngOnDestroy(): void {
-    this.form.reset();
+    this.pwdForm.reset();
+    this.nberForm.reset();
     this.loading = false;
   }
 }
