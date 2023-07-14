@@ -30,9 +30,10 @@ export class BotUserProfileComponent {
 
   fetchUserStats(): void {
     this.loadingStats = true;
-    
+
     const currentDayPos = new Date().getDay();
-    let nberOfdays = currentDayPos + 6;
+    let nberOfdays = currentDayPos + 6; // The nber of completed days of the current week + the nber of days of the previous week minus 1 (Api spec)
+    if (currentDayPos == 0) nberOfdays = 7 + 6; // The sunday position is O, so we explicitely define its value to 7
 
     this.stats$ = this.bot.getUserStats(nberOfdays)
       .pipe(

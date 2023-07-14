@@ -10,9 +10,11 @@ export class StatChartComponent {
     responsive: true,
   };
 
-  chartLabels: string[] = [];
   chartDataPrevWeek: number[] = [];
   chartDataCurrWeek: number[] = [];
+  
+  chartLabels: string[] = [];
+  chartDataArray: any[] = [];
 
   @Input() dataset!: any;
 
@@ -24,6 +26,20 @@ export class StatChartComponent {
     this.chartLabels = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
     this.chartDataPrevWeek = prevWeek.map(obj => Object.values(obj)[0]);
     this.chartDataCurrWeek = currWeek.map(obj => Object.values(obj)[0]);
+
+    if (prevWeek.length) {
+      this.chartDataArray = [
+        ...this.chartDataArray,
+        { data: this.chartDataPrevWeek, label: 'La semaine précedente' },
+        { data: this.chartDataCurrWeek, label: 'Cette semaine' },
+      ]
+    } else {
+      this.chartDataArray = [
+        ...this.chartDataArray,
+        { data: this.chartDataCurrWeek, label: 'Cette semaine' },
+      ]
+    }
+
   }
 
   parseData(data: any) {
