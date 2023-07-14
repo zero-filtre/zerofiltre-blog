@@ -16,6 +16,7 @@ export class BotUserInfosComponent {
   form: FormGroup;
   editMode = false;
   saving: boolean;
+  passwordVisible = false;
 
   constructor(
     private fb: FormBuilder,
@@ -41,6 +42,10 @@ export class BotUserInfosComponent {
   get city() { return this.form.get('city'); }
   get statut() { return this.form.get('statut'); }
   get domain() { return this.form.get('domain'); }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
 
   edit() {
     this.editMode = true;
