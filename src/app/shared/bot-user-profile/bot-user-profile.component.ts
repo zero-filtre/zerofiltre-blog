@@ -15,8 +15,10 @@ export class BotUserProfileComponent {
   loadingInfos: boolean;
   stats$: Observable<any>;
   infos$: Observable<any[]>;
+  nberOfMessages: number;
   weekDiffQty: number;
   weekDiffQtyAbs: number;
+  isFirstWeek:boolean;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -28,8 +30,11 @@ export class BotUserProfileComponent {
 
   fetchUserStats(): void {
     this.loadingStats = true;
+    
+    const currentDayPos = new Date().getDay();
+    let nberOfdays = currentDayPos + 6;
 
-    this.stats$ = this.bot.getUserStats()
+    this.stats$ = this.bot.getUserStats(nberOfdays)
       .pipe(
         catchError(err => {
           this.loadingStats = false;
@@ -53,11 +58,21 @@ export class BotUserProfileComponent {
             return new Date(keyA).getTime() - new Date(keyB).getTime();
           });
 
-          currData = data.slice(data.length - 7);
-          prevData = data.slice(0, 7);
-
-          const prevQty = this.sumValues(prevData);
+          currData = data.slice(data.length - currentDayPos);
           const currQty = this.sumValues(currData);
+
+          if (data.length < 8) {
+            this.isFirstWeek = true;
+            this.nberOfMessages = currQty;
+
+            return {
+              prevWeek: [],
+              currWeek: currData
+            };
+          }
+
+          prevData = data.slice(0, 7);
+          const prevQty = this.sumValues(prevData);
 
           this.weekDiffQty = currQty - prevQty;
           this.weekDiffQtyAbs = Math.abs(currQty - prevQty);

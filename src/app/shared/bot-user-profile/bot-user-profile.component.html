@@ -2,9 +2,12 @@
     <main class="py-5 text-gray-500">
         <section class="py-6">
             <h2 class="text-xl sm:text-3xl text-skin-base font-bold">Statistiques d’utilisation:</h2>
-            <ng-container *ngIf="!loadingStats">
+            <ng-container *ngIf="!loadingStats && !isFirstWeek">
                 <p *ngIf="weekDiffQty != 0" class="pt-3">Vous avez envoyé <span class="font-medium {{weekDiffQty > 0 ? 'text-sky-400':'text-[#FF8FA4]'}}">{{weekDiffQtyAbs}} messages</span> de <span>{{weekDiffQty > 0 ? 'plus':'moins'}}</span> que la semaine dernière.</p>
                 <p *ngIf="weekDiffQty == 0" class="pt-3">Vous avez envoyé autant de messages que la semaine dernière.</p>
+            </ng-container>
+            <ng-container *ngIf="!loadingStats && isFirstWeek">
+                <p class="pt-3">Vous avezenvoyé <b>{{nberOfMessages}} messages</b> cette semaine.</p>
             </ng-container>
 
             <div class="max-w-3xl pt-6">
@@ -48,7 +51,7 @@
             </a>
 
             <button class="flex gap-1 hover:underline text-error" (click)="logout()">
-                Deconnexion
+                Déconnexion
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                     class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"

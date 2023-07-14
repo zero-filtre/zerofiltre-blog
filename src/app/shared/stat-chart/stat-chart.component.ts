@@ -19,24 +19,11 @@ export class StatChartComponent {
   constructor() { }
 
   initData() {
-    let dailyReportPrevWeek = [];
-    let dailyReportCurrWeek = [];
     const { prevWeek, currWeek } = this.dataset;
 
-    const pureData1 = this.parseData(prevWeek)
-    const pureData2 = this.parseData(currWeek)
-
-    pureData1.forEach((data: any) => {
-      dailyReportPrevWeek = [...dailyReportPrevWeek, { day: Object.keys(data)[0], quantity: Object.values(data)[0]}] 
-    })
-
-    pureData2.forEach((data: any) => {
-      dailyReportCurrWeek = [...dailyReportCurrWeek, { day: Object.keys(data)[0], quantity: Object.values(data)[0] }]
-    })
-
-    this.chartLabels = dailyReportCurrWeek.map(report => report.day);
-    this.chartDataPrevWeek = dailyReportPrevWeek.map(report => report.quantity);
-    this.chartDataCurrWeek = dailyReportCurrWeek.map(report => report.quantity);
+    this.chartLabels = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+    this.chartDataPrevWeek = prevWeek.map(obj => Object.values(obj)[0]);
+    this.chartDataCurrWeek = currWeek.map(obj => Object.values(obj)[0]);
   }
 
   parseData(data: any) {
