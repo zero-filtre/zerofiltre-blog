@@ -31,9 +31,8 @@ export class WachatgptHomePageComponent implements OnInit {
 
     this.dialogEntryRef.open(BotUserPopupComponent, {
       panelClass: 'popup-panel',
-      data: {
-        // router: this.router
-      }
+      disableClose: true,
+      data: {}
     });
   }
 

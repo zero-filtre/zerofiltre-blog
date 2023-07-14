@@ -87,7 +87,7 @@ export class BotSignupFormComponent {
       .pipe(
         catchError(err => {
           this.sendingCode = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError("Une erreur est survenue lors de l'envoi du code", 'OK');
           return throwError(() => err?.message)
         }),
         map(({ _message, verification_id }) => {
@@ -110,16 +110,13 @@ export class BotSignupFormComponent {
       .pipe(
         catchError(err => {
           this.saving = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue.', 'OK');
           return throwError(() => err?.message)
         }),)
-      // .subscribe(({ expireAt, token, user }) => {
       .subscribe(_data => {
-        // this.bot.saveTokenToLS(token, expireAt);
         this.saving = false;
         this.dialogRef.close();
         this.notify.openSnackBarSuccess('Félicitations, votre compte a bien été crée!', 'OK');
-        // this.router.navigateByUrl('wachatgpt/user');
       })
 
   }

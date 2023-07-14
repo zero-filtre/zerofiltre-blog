@@ -15,8 +15,10 @@ export class BotUserProfileComponent {
   loadingInfos: boolean;
   stats$: Observable<any>;
   infos$: Observable<any[]>;
+  nberOfMessages: number;
   weekDiffQty: number;
   weekDiffQtyAbs: number;
+  isFirstWeek:boolean;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -29,11 +31,15 @@ export class BotUserProfileComponent {
   fetchUserStats(): void {
     this.loadingStats = true;
 
-    this.stats$ = this.bot.getUserStats()
+    const currentDayPos = new Date().getDay();
+    let nberOfdays = currentDayPos + 6; // The nber of completed days of the current week + the nber of days of the previous week minus 1 (Api spec)
+    if (currentDayPos == 0) nberOfdays = 7 + 6; // The sunday position is O, so we explicitely define its value to 7
+
+    this.stats$ = this.bot.getUserStats(nberOfdays)
       .pipe(
         catchError(err => {
           this.loadingStats = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue lors de la récupération de vos statistiques', 'OK');
           return throwError(() => err?.message)
         }),
         map(({ messageCountByDay }) => {
@@ -53,11 +59,21 @@ export class BotUserProfileComponent {
             return new Date(keyA).getTime() - new Date(keyB).getTime();
           });
 
-          currData = data.slice(data.length - 7);
-          prevData = data.slice(0, 7);
-
-          const prevQty = this.sumValues(prevData);
+          currData = data.slice(data.length - currentDayPos);
           const currQty = this.sumValues(currData);
+
+          if (data.length < 8) {
+            this.isFirstWeek = true;
+            this.nberOfMessages = currQty;
+
+            return {
+              prevWeek: [],
+              currWeek: currData
+            };
+          }
+
+          prevData = data.slice(0, 7);
+          const prevQty = this.sumValues(prevData);
 
           this.weekDiffQty = currQty - prevQty;
           this.weekDiffQtyAbs = Math.abs(currQty - prevQty);
@@ -85,7 +101,7 @@ export class BotUserProfileComponent {
       .pipe(
         catchError(err => {
           this.loadingInfos = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue lors de la récupération de vos informations', 'OK');
           return throwError(() => err?.message)
         }),
         map(data => {

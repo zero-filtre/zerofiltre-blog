@@ -55,7 +55,7 @@ export class BotPhoneVerificationComponent {
       .pipe(
         catchError(err => {
           this.verifying = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue.', 'OK');
           return throwError(() => err?.message)
         }))
       .subscribe(({ _message }) => {
@@ -78,7 +78,7 @@ export class BotPhoneVerificationComponent {
       .pipe(
         catchError(err => {
           this.sendingCode = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue.', 'OK');
           return throwError(() => err?.message)
         }))
         .subscribe(({ _message, _verification_id }) => {
@@ -86,7 +86,7 @@ export class BotPhoneVerificationComponent {
           this.countdown = 150;
           this.showResend = true;
           this.startCountdown();
-          this.notify.openSnackBarWarning('Un SMS avec le code vous a été envoyé!', 'OK');
+          this.notify.openSnackBarWarning('Un message whatsapp avec le code vous a été envoyé!', 'OK');
         })
   }
 

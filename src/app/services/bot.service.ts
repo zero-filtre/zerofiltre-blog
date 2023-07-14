@@ -68,8 +68,8 @@ export class BotService {
       .pipe(shareReplay());
   }
 
-  getUserStats(): Observable<any> { 
-    return this.http.get<any>(`${this.apiServerUrl}/users/stats?days=14`, httpOptions)
+  getUserStats(days: number): Observable<any> { 
+    return this.http.get<any>(`${this.apiServerUrl}/users/stats?days=${days}`, httpOptions)
       .pipe(shareReplay());
   }
 

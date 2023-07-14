@@ -16,6 +16,7 @@ export class BotUserInfosComponent {
   form: FormGroup;
   editMode = false;
   saving: boolean;
+  passwordVisible = false;
 
   constructor(
     private fb: FormBuilder,
@@ -42,6 +43,10 @@ export class BotUserInfosComponent {
   get statut() { return this.form.get('statut'); }
   get domain() { return this.form.get('domain'); }
 
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
   edit() {
     this.editMode = true;
 
@@ -62,7 +67,7 @@ export class BotUserInfosComponent {
       .pipe(
         catchError(err => {
           this.saving = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue.', 'OK');
           return throwError(() => err?.message)
         })
       )
