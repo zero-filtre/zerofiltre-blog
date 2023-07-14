@@ -55,7 +55,7 @@ export class BotPhoneVerificationComponent {
       .pipe(
         catchError(err => {
           this.verifying = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue.', 'OK');
           return throwError(() => err?.message)
         }))
       .subscribe(({ _message }) => {
@@ -78,7 +78,7 @@ export class BotPhoneVerificationComponent {
       .pipe(
         catchError(err => {
           this.sendingCode = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue.', 'OK');
           return throwError(() => err?.message)
         }))
         .subscribe(({ _message, _verification_id }) => {

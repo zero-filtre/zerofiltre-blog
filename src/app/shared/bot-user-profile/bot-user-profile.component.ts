@@ -39,7 +39,7 @@ export class BotUserProfileComponent {
       .pipe(
         catchError(err => {
           this.loadingStats = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue lors de la récupération de vos statistiques', 'OK');
           return throwError(() => err?.message)
         }),
         map(({ messageCountByDay }) => {
@@ -101,7 +101,7 @@ export class BotUserProfileComponent {
       .pipe(
         catchError(err => {
           this.loadingInfos = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue lors de la récupération de vos informations', 'OK');
           return throwError(() => err?.message)
         }),
         map(data => {

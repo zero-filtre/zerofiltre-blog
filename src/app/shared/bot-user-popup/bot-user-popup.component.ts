@@ -100,7 +100,7 @@ export class BotUserPopupComponent {
       .pipe(
         catchError(err => {
           this.loading = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue.', 'OK');
           return throwError(() => err?.message)
         }),)
       .subscribe(({ is_user, is_signup }) => {
@@ -134,7 +134,7 @@ export class BotUserPopupComponent {
       .pipe(
         catchError(err => {
           this.loading = false;
-          this.notify.openSnackBarError(err.message, '');
+          this.notify.openSnackBarError('Une erreur est survenue.', 'OK');
           return throwError(() => err?.message)
         }),)
       .subscribe(({ expireAt, token, user}) => {
