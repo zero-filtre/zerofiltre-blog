@@ -86,7 +86,7 @@ export class BotPhoneVerificationComponent {
           this.countdown = 150;
           this.showResend = true;
           this.startCountdown();
-          this.notify.openSnackBarWarning('Un SMS avec le code vous a été envoyé!', 'OK');
+          this.notify.openSnackBarWarning('Un message whatsapp avec le code vous a été envoyé!', 'OK');
         })
   }
 

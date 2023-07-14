@@ -20,6 +20,7 @@ export class BotUserPopupComponent {
   authForm!: FormGroup;
   phoneNotValid: boolean;
   authMode:boolean;
+  passwordVisible = false;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -59,6 +60,10 @@ export class BotUserPopupComponent {
   get password() { return this.form.get('password'); }
   get phoneNumber() { return this.form.get('phoneNumber'); }
 
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -72,7 +77,6 @@ export class BotUserPopupComponent {
       }
     });
   }
-
 
   checkisSignup(): void {
     
