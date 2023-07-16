@@ -31,9 +31,9 @@ export class BotUserProfileComponent {
   fetchUserStats(): void {
     this.loadingStats = true;
 
-    const currentDayPos = new Date().getDay();
+    let currentDayPos = new Date().getDay();
+    if (currentDayPos == 0) currentDayPos = 7; // The sunday position is O, so we explicitely define its value to 7
     let nberOfdays = currentDayPos + 6; // The nber of completed days of the current week + the nber of days of the previous week minus 1 (Api spec)
-    if (currentDayPos == 0) nberOfdays = 7 + 6; // The sunday position is O, so we explicitely define its value to 7
 
     this.stats$ = this.bot.getUserStats(nberOfdays)
       .pipe(
@@ -62,19 +62,19 @@ export class BotUserProfileComponent {
           currData = data.slice(data.length - currentDayPos);
           const currQty = this.sumValues(currData);
 
-          if (data.length < 8) {
+          prevData = data.slice(0, 7);
+          const prevQty = this.sumValues(prevData);
+          
+          if (prevQty === 0) {
             this.isFirstWeek = true;
             this.nberOfMessages = currQty;
-
+            
             return {
               prevWeek: [],
               currWeek: currData
             };
           }
-
-          prevData = data.slice(0, 7);
-          const prevQty = this.sumValues(prevData);
-
+          
           this.weekDiffQty = currQty - prevQty;
           this.weekDiffQtyAbs = Math.abs(currQty - prevQty);
 

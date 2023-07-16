@@ -3,11 +3,11 @@
         <section class="py-6">
             <h2 class="text-xl sm:text-3xl text-skin-base font-bold">Statistiques d’utilisation:</h2>
             <ng-container *ngIf="!loadingStats && !isFirstWeek">
-                <p *ngIf="weekDiffQty != 0" class="pt-3">Vous avez envoyé <span class="font-medium {{weekDiffQty > 0 ? 'text-sky-400':'text-[#FF8FA4]'}}">{{weekDiffQtyAbs}} messages</span> de <span>{{weekDiffQty > 0 ? 'plus':'moins'}}</span> que la semaine dernière.</p>
+                <p *ngIf="weekDiffQty != 0" class="pt-3">Vous avez envoyé <span class="font-medium {{weekDiffQty > 0 ? 'text-sky-400':'text-[#FF8FA4]'}}">{{weekDiffQtyAbs}} {{weekDiffQtyAbs > 1 ? 'messages' : 'message'}}</span> de <span>{{weekDiffQty > 0 ? 'plus':'moins'}}</span> que la semaine dernière.</p>
                 <p *ngIf="weekDiffQty == 0" class="pt-3">Vous avez envoyé autant de messages que la semaine dernière.</p>
             </ng-container>
             <ng-container *ngIf="!loadingStats && isFirstWeek">
-                <p class="pt-3">Vous avez envoyé <b>{{nberOfMessages}} messages</b> cette semaine.</p>
+                <p class="pt-3">Vous avez envoyé <span class="font-medium text-sky-400">{{nberOfMessages}} {{nberOfMessages > 1 ? 'messages' : 'message'}}</span> cette semaine.</p>
             </ng-container>
 
             <div class="max-w-3xl pt-6">
@@ -42,7 +42,7 @@
 
         <hr>
         <div class="pt-3 flex justify-between">
-            <a [routerLink]="'.'" class="flex gap-2 hover:underline">Gérer ma facturation
+            <a href="https://billing.stripe.com/p/login/eVa02LasC8V116EbII" class="flex gap-2 hover:underline">Gérer ma facturation
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                     class="w-6 h-6 text-primary-500">
                     <path stroke-linecap="round" stroke-linejoin="round"

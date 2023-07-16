@@ -22,6 +22,8 @@ export class BotSignupFormComponent {
   signupMode: boolean;
   confirmMode: boolean;
 
+  passwordVisible = false;
+
   verificationId$: Observable<any>;
 
   constructor(
@@ -38,7 +40,7 @@ export class BotSignupFormComponent {
       name: ['', Validators.required],
       prename: [''],
       phone: [''],
-      password: ['', [Validators.required, Validators.pattern(/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,15})$/)]],
+      password: ['', [Validators.required, Validators.pattern(/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,55})$/)]],
       gender: [''],
       city: [''],
       statut: [''],
@@ -72,6 +74,10 @@ export class BotSignupFormComponent {
 
   back() {
     this.step = 1;;
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 
   sendConfirmationCode() {
