@@ -30,13 +30,13 @@ export class StatChartComponent {
     if (prevWeek.length) {
       this.chartDataArray = [
         ...this.chartDataArray,
-        { data: this.chartDataPrevWeek, label: 'La semaine précedente' },
-        { data: this.chartDataCurrWeek, label: 'Cette semaine' },
+        { data: this.chartDataPrevWeek, label: 'La semaine précedente', backgroundColor: '#FFB1C1', },
+        { data: this.chartDataCurrWeek, label: 'Cette semaine', backgroundColor: '#9BD0F5', },
       ]
     } else {
       this.chartDataArray = [
         ...this.chartDataArray,
-        { data: this.chartDataCurrWeek, label: 'Cette semaine' },
+        { data: this.chartDataCurrWeek, label: 'Cette semaine', backgroundColor: '#9BD0F5', },
       ]
     }
 
