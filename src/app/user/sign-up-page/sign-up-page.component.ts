@@ -37,7 +37,7 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
     this.form = this.formuilder.group({
       fullName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern('[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)@[A-Za-z0-9-]+(\.[A-Za-z0-9]+).[A-Za-z]{2,}')]],
-      password: ['', [Validators.required, Validators.pattern(/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,15})$/)]],
+      password: ['', [Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}/)]],
       matchingPassword: ['', [Validators.required]],
     })
   }
