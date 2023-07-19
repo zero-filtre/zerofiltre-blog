@@ -81,11 +81,7 @@
                                     class="mt-1 text-xs sm:text-sm text-error italic">
                                     {{'signup.invalidPasswordLenght' | translate}}
                                 </div>
-                                <div *ngIf="password?.errors?.['pattern']['actualValue'].length > 15"
-                                    class="mt-1 text-xs sm:text-sm text-error italic">
-                                    {{'signup.invalidPasswordMaxLenght' | translate}}
-                                </div>
-                                <div *ngIf="password?.invalid && password.value.length <= 15" class="mt-1 text-xs sm:text-sm text-error italic">
+                                <div *ngIf="password?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
                                     {{'signup.invalidPassword' | translate}}
                                 </div>
                             </div>

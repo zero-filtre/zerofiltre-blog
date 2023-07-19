@@ -40,7 +40,7 @@ export class BotSignupFormComponent {
       name: ['', Validators.required],
       prename: [''],
       phone: [''],
-      password: ['', [Validators.required, Validators.pattern(/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,55})$/)]],
+      password: ['', [Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}/)]],
       gender: [''],
       city: [''],
       statut: [''],
