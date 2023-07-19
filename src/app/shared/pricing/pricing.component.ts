@@ -43,7 +43,7 @@ export class PricingComponent {
       price: {
         cfa: {
           old: null,
-          new: '2000 FCFA'
+          new: '2500 FCFA'
         },
         eur: {
           old: null,
@@ -60,8 +60,8 @@ export class PricingComponent {
       cons: ['Réduction'],
       subs: 'Sans engagement: Annulez à tout moment',
       checkout: {
-        cfa: 'https://buy.stripe.com/dR6cMVgzG6ubfbGeUY',
-        eur: 'https://buy.stripe.com/cN28wFdnug4L1kQ28d'
+        cfa: 'https://buy.stripe.com/4gwaGefQEbQQ4ucaEH',
+        eur: 'https://buy.stripe.com/28o15E0VK9II0dW4gh'
       },
       order: 2
     },
@@ -70,8 +70,8 @@ export class PricingComponent {
       desc: 'Idéal pour les utilisations à grande échelle',
       price: {
         cfa: {
-          old: '2000 FCFA',
-          new: '1600 FCFA'
+          old: '2500 FCFA',
+          new: '2000 FCFA'
         },
         eur: {
           old: '5€',
@@ -89,8 +89,8 @@ export class PricingComponent {
       cons: [],
       subs: 'Sans engagement: Annulez à tout moment',
       checkout: {
-        cfa: 'https://buy.stripe.com/eVa6oxgzG7yfe7C9AH',
-        eur: 'https://buy.stripe.com/eVa14ddnu8Cj6Fa8wC'
+        cfa: 'https://buy.stripe.com/dR64hQ1ZO1ccgcU3ce',
+        eur: 'https://buy.stripe.com/5kAeWu5c01ccbWE7ss'
       },
       order: 3
     }
