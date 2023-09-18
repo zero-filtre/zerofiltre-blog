@@ -67,7 +67,7 @@ export class DashboardComponent extends BaseArticleListComponent implements OnIn
   fetchMoreArticles(): any {
     this.scrollyPageNumber += 1;
 
-    const queryParam = this.route.snapshot.queryParamMap.get('filter')!;
+    const queryParam = this.route.snapshot.queryParamMap.get('filter');
 
     if (queryParam === this.DRAFT) {
       return this.articleService
@@ -79,7 +79,7 @@ export class DashboardComponent extends BaseArticleListComponent implements OnIn
         .subscribe((response: any) => this.handleFetchNewArticles(response));
     }
 
-    if (queryParam === 'in-review') {
+    if (queryParam === this.IN_REVIEW) {
       return this.articleService
         .findAllMyArticles(
           this.scrollyPageNumber,
