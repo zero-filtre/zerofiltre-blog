@@ -34,7 +34,7 @@
                                     </a>
                                 </div>
 
-                                <div *ngIf="articleHasTags" class="flex items-center gap-2 flex-wrap">
+                                <div *ngIf="articleHasTags" class="flex items-center gap-1 lg:gap-2 flex-wrap">
                                     <a *ngFor="let tag of article?.tags" routerLink='/articles'
                                         [queryParams]="{tag:tag.name}"
                                         class="tag-item flex items-center space-x-2 group">
