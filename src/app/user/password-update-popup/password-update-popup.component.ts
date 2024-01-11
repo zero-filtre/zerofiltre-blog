@@ -18,6 +18,9 @@ export class PasswordUpdatePopupComponent implements OnInit {
   public loading: boolean = false;
 
   public form!: FormGroup;
+  public passwordVisible = false;
+  public oldPasswordVisible = false;
+  public matchingPasswordVisible = false;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -34,7 +37,7 @@ export class PasswordUpdatePopupComponent implements OnInit {
   public InitForm(): void {
     this.form = this.formbuilder.group({
       oldPassword: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.pattern(/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})$/)]],
+      password: ['', [Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}/)]],
       matchingPassword: ['', [Validators.required]],
     })
   }
@@ -49,6 +52,12 @@ export class PasswordUpdatePopupComponent implements OnInit {
 
   passwordDoesMatch(): boolean {
     return this.password?.value == this.matchingPassword?.value
+  }
+
+  public togglePasswordVisibility(el: string) {
+    if (el==='pwd') this.passwordVisible = !this.passwordVisible;
+    if (el==='oldPwd') this.oldPasswordVisible = !this.oldPasswordVisible;
+    if (el==='matchPwd') this.matchingPasswordVisible = !this.matchingPasswordVisible;
   }
 
   handlePasswordUpdate(): void {
