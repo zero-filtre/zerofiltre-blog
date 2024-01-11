@@ -1,0 +1,54 @@
+<div class="max-w-md w-full">
+
+    <div>
+        <h2 class="text-center text-3xl font-bold text-skin-inverted">
+            <!-- {{'resendConfirmation.title' | translate}} -->
+            Veuillez saisir votre adresse email
+        </h2>
+        <div class="mt-4 text-sm text-skin-base font-normal">
+            <!-- {{'resendConfirmation.message' | translate}} -->
+            Nous n’avons pas pu récupérer votre @‌email. Nous en avons besoin pour vous notifier de la validation de vos articles/cours et par conséquent du versement de vos revenus.
+        </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="saveEmail()" class="space-y-4 mt-5">
+        <div class="block">
+            <label for="email" class="block text-sm font-semibold leading-5 text-skin-base">
+                {{'resendConfirmation.email' | translate}}
+            </label>
+            <div class="mt-1">
+                <div class="relative">
+                    <input name="email" type="email" id="email" class="" required="required" formControlName="email"
+                        autofocus="autofocus">
+                </div>
+                <div *ngIf="email?.invalid && email?.dirty" class="">
+                    <div *ngIf="email?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
+                        {{'resendConfirmation.invaldEmail' | translate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-5 mt-10">
+            <button *ngIf="form.valid" type="submit" [disabled]="saving" [ngClass]="{'opacity-50': saving}"
+                aria-labelledby="Update profile button"
+                class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
+                <svg *ngIf="saving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                    preserveAspectRatio="xMidYMid">
+                    <circle cx="50" cy="50" fill="none" stroke="#fff" stroke-width="10" r="35"
+                        stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                        style="animation-play-state:paused"></circle>
+                </svg>
+                <span>{{'profileEdit.updateBtn' | translate}}</span>
+            </button>
+
+            <button *ngIf="form.invalid" [disabled]="form.invalid || saving" aria-labelledby="Update profile button"
+                class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-white bg-primary-300 bg-opacity-20">
+                <span>{{'profileEdit.updateBtn' | translate}}</span>
+            </button>
+        </div>
+    </form>
+
+</div>
+

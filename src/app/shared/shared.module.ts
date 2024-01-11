@@ -57,6 +57,7 @@ import { StatChartComponent } from './stat-chart/stat-chart.component';
 import { BotSignupFormComponent } from './bot-signup-form/bot-signup-form.component';
 import { BotUserInfosComponent } from './bot-user-infos/bot-user-infos.component';
 import { BotPhoneVerificationComponent } from './bot-phone-verification/bot-phone-verification.component';
+import { AddEmailPopupComponent } from './add-email-popup/add-email-popup.component';
 
 const components = [
   AppShellRenderDirective,
@@ -85,7 +86,8 @@ const components = [
   StatChartComponent, 
   BotSignupFormComponent,
   BotUserInfosComponent,
-  BotPhoneVerificationComponent
+  BotPhoneVerificationComponent,
+  AddEmailPopupComponent
 ];
 
 const modules = [

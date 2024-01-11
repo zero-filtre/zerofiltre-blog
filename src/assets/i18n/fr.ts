@@ -108,7 +108,8 @@ export const fr = {
         email: 'Email',
         invaldEmail: 'Vous devez entrer une adresse email valide',
         sendLink: '(R)envoyer le lien de confirmation',
-        resendConfirmationSuccessMesssage: "Un email avec un lien de confirmation de compte a été envoyé à l'adresse mail saisie"
+        // resendConfirmationSuccessMesssage: "Un email avec un lien de confirmation de compte a été envoyé à l'adresse mail saisie"
+        resendConfirmationSuccessMesssage: "Un email de confirmation vous sera envoyé, cliquez sur le lien afin de valider votre adresse e-mail"
     },
     accountConfirmation: {
         accountVeriedText: "Félicitations, votre compte a été confirmé ! Cliquez sur le lien ci-dessous pour vous rendre à la page d'accueil."

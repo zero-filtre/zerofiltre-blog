@@ -146,7 +146,7 @@ export class MessageService {
 
   resendConfirmationSuccess() {
     const msg = this.translate.instant('resendConfirmation.resendConfirmationSuccessMesssage');
-    this.openSnackBarSuccess(msg, this.OK);
+    this.openSnackBarSuccess(msg, this.OK, 10);
   }
 
   updateProfileSuccess() {
