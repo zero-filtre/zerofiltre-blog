@@ -8,7 +8,9 @@ export const fr = {
         - un caractère spécial 
         - un chiffre compris entre 0 et 9`,
         matchingPassword: 'Confirmation mot de passe',
+        matchingEmail: "Confirmation de l'email",
         passwordDoesNotMatch: 'Les mots de passe ne correspondent pas',
+        emailDoesNotMatch: 'Les emails ne correspondent pas',
         invalidPasswordLenght: 'Le mot de passe doit comporter au moins 6 caractères.',
         save: 'Enregistrer',
         cancel: 'Annuler',
@@ -104,7 +106,9 @@ export const fr = {
     socialAuth: {},
     resendConfirmation: {
         title: 'Demander un code de confirmation de compte',
+        titleEmail: 'Veuillez saisir votre adresse email',
         message: "Veuillez renseigner votre adresse e-mail et nous vous enverrons un nouveau lien de confirmation de compte.",
+        messageEmail: "Nous n’avons pas pu récupérer votre @‌email. Nous en avons besoin pour vous notifier de la validation de vos articles/cours et par conséquent du versement de vos revenus.",
         email: 'Email',
         invaldEmail: 'Vous devez entrer une adresse email valide',
         sendLink: '(R)envoyer le lien de confirmation',
