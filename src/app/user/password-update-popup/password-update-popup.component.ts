@@ -51,7 +51,7 @@ export class PasswordUpdatePopupComponent implements OnInit {
   }
 
   passwordDoesMatch(): boolean {
-    return this.password?.value == this.matchingPassword?.value
+    return this.password?.value === this.matchingPassword?.value
   }
 
   public togglePasswordVisibility(el: string) {

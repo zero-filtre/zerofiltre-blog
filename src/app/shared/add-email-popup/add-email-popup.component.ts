@@ -29,18 +29,27 @@ export class AddEmailPopupComponent {
   initForm() {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.pattern('[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)@[A-Za-z0-9-]+(\.[A-Za-z0-9]+).[A-Za-z]{2,}')]],
+      matchingEmail: ['', [Validators.required, Validators.pattern('[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)@[A-Za-z0-9-]+(\.[A-Za-z0-9]+).[A-Za-z]{2,}')]],
     });
   }
 
   get email() { return this.form.get('email'); }
+  get matchingEmail() { return this.form.get('matchingEmail'); }
+
+  emailDoesMatch(): boolean {
+    return this.email?.value === this.matchingEmail?.value
+  }
+
+  cancel() {
+    this.dialogRef.close();
+  }
 
   saveEmail() {
     this.saving = true;
-    const dataToSend = { ...this.authService.currentUsr, email: this.email.value }
 
-    this.authService.updateUserProfile(dataToSend).subscribe({
-      next: (updatedUser: User) => {
-        this.sendConfirmationEmail(updatedUser.email);
+    this.authService.updateUserEmail(this.form.value).subscribe({
+      next: (_updatedUser: User) => {
+        this.sendConfirmationEmail(this.email.value);
       },
       error: (_error: HttpErrorResponse) => {
         this.notify.openSnackBarError("Echec de l'enregistrement de l'adresse", '')

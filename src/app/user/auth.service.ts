@@ -254,6 +254,12 @@ export class AuthService {
     }).pipe(shareReplay())
   }
 
+  updateUserEmail(emails: FormData): Observable<any> {
+    return this.http.post<string>(`${this.apiServerUrl}/user/updateEmail`, emails, {
+      responseType: 'text' as 'json'
+    }).pipe(shareReplay())
+  }
+
   updateUserProfile(profile: any): Observable<User> {
     return this.http.patch<User>(`${this.apiServerUrl}/user`, profile)
       .pipe(
@@ -312,7 +318,8 @@ export class AuthService {
     const validEmail = regex.test(user.email);
   
     if (validEmail) {
-      return;
+      // return;
+      this.openEmailModal();
     } else {
       this.openEmailModal();
     }
@@ -321,7 +328,7 @@ export class AuthService {
   openEmailModal() {
     this.modalService.open(AddEmailPopupComponent, {
       panelClass: 'popup-panel',
-      // disableClose: true,
+      disableClose: true,
     });
   }
 
