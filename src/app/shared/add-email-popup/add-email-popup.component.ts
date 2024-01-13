@@ -69,7 +69,8 @@ export class AddEmailPopupComponent {
       error: (_error: HttpErrorResponse) => {
         this.notify.openSnackBarError("Echec d'envoi du message de confirmation", '')
         this.saving = false;
-      }
+      },
+      complete: () => this.authService.logout()
     });
   }
 
