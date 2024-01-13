@@ -318,8 +318,7 @@ export class AuthService {
     const validEmail = regex.test(user.email);
   
     if (validEmail) {
-      // return;
-      this.openEmailModal();
+      return;
     } else {
       this.openEmailModal();
     }
