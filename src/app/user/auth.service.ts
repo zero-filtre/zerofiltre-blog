@@ -353,7 +353,7 @@ export class AuthService {
             this.router.navigateByUrl('/cours');
           }
 
-          this.checkUserEmail(usr);
+          // this.checkUserEmail(usr);
           this.loadUserAllSubs();
         },
         error: (_err: HttpErrorResponse) => {
