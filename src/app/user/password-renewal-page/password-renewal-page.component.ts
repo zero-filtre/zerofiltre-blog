@@ -19,10 +19,13 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
   public loading = false;
   public isTokenValid = false;
   public token!: string;
-  public form!: FormGroup;
   public successMessage!: boolean;
   public tokenSub!: Subscription;
   public savePasswordSub!: Subscription;
+
+  public form!: FormGroup;
+  public passwordVisible = false;
+  public matchingPasswordVisible = false;
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -37,16 +40,21 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
 
   public initForm(): void {
     this.form = this.formBuilder.group({
-      password: ['', [Validators.required, Validators.pattern(/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})$/)]],
+      password: ['', [Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}/)]],
       matchingPassword: ['', [Validators.required]],
     })
   }
 
   get password() { return this.form.get('password'); }
-  get matchingPassword() { return this.form.get('passwordConfirm'); }
+  get matchingPassword() { return this.form.get('matchingPassword'); }
 
   get passwordDoesMatch() {
     return this.password?.value === this.matchingPassword?.value;
+  }
+
+  public togglePasswordVisibility(el: string) {
+    if (el==='pwd') this.passwordVisible = !this.passwordVisible;
+    if (el==='matchPwd') this.matchingPasswordVisible = !this.matchingPasswordVisible;
   }
 
   public verifyToken(): void {
@@ -55,6 +63,8 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
       next: (_response: any) => {
         this.loading = false;
         this.isTokenValid = true;
+
+        this.initForm();
       },
       error: (_error: HttpErrorResponse) => {
         if (!this.token) this.messageService.cancel();
@@ -80,14 +90,13 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loading = true;
     this.token = this.route.snapshot.queryParamMap.get('token')!;
 
     if (isPlatformBrowser(this.platformId)) {
-      this.verifyToken();
+      if (this.token) {
+        this.verifyToken();
+      }
     }
-
-    this.initForm();
 
     this.seo.generateTags({
       title: this.translate.instant('meta.passwordRenewalTite'),
