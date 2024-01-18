@@ -90,6 +90,7 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.token = this.route.snapshot.queryParamMap.get('token')!;
 
     if (isPlatformBrowser(this.platformId)) {
