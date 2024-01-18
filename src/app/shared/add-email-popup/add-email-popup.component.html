@@ -14,9 +14,9 @@
         </div>
         <div class="mt-3 flex items-center gap-1 text-sm text-accent-500 font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                <path fill-rule="evenodd" d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
-            </svg>              
-            <span class="mt-0.5">Une fois votre email ajoutée, veuillez vous reconnecter svp.</span> 
+                <path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+            </svg>
+            <span class="mt-0.5">Une fois votre email enregistrée, veuillez vous reconnecter.</span> 
         </div>
     </div>
 
@@ -31,7 +31,7 @@
                         autofocus="autofocus" placeholder="johndoe@example.com">
                 </div>
                 <div *ngIf="email?.invalid && email?.dirty" class="">
-                    <div *ngIf="email?.invalid" class="mt-1 text-xs sm:text-sm text-error italic">
+                    <div *ngIf="email?.invalid" class="mt-1 text-xs text-error">
                         {{'resendConfirmation.invaldEmail' | translate}}
                     </div>
                 </div>
