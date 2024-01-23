@@ -143,7 +143,7 @@ export class PaymentPopupComponent implements OnInit {
   offresPro = [
     {
       title: 'Mensuel',
-      desc: 'Idéal pour les utilisations à grande échelle',
+      desc: 'Dépensez peu pour gagner gros',
       price: {
         cfa: {
           old: '2500 FCFA',
@@ -156,11 +156,8 @@ export class PaymentPopupComponent implements OnInit {
       },
       time: '/mois',
       pros: [
-        'Questions illimitées',
-        'Questions vocales',
-        'Sans annonces',
-        'Support technique 7j/7',
-        '20% de réduction'
+        'Tous les cours hors parcours mentorés 🌍',
+        'Tous les articles y compris les articles premium 📖'
       ],
       cons: [],
       subs: 'Sans engagement: Annulez à tout moment',
@@ -172,7 +169,7 @@ export class PaymentPopupComponent implements OnInit {
     },
     {
       title: 'Annuel',
-      desc: 'Idéal pour les utilisations à grande échelle',
+      desc: 'Économisez en prenant un abonnement annuel',
       price: {
         cfa: {
           old: '2500 FCFA',
@@ -185,11 +182,8 @@ export class PaymentPopupComponent implements OnInit {
       },
       time: '/mois',
       pros: [
-        'Questions illimitées',
-        'Questions vocales',
-        'Sans annonces',
-        'Support technique 7j/7',
-        '20% de réduction'
+        'Tous les cours hors parcours mentorés 🌍',
+        'Tous les articles y compris les articles premium 📖'
       ],
       cons: [],
       subs: 'Sans engagement: Annulez à tout moment',
@@ -203,8 +197,8 @@ export class PaymentPopupComponent implements OnInit {
 
   offresBasic = [
     {
-      title: '1 Fois',
-      desc: 'Idéal pour les utilisations à grande échelle',
+      title: 'Unique',
+      desc: 'Payez une seule fois et accédez au cours à vie',
       price: {
         cfa: {
           old: '2500 FCFA',
@@ -216,13 +210,7 @@ export class PaymentPopupComponent implements OnInit {
         }
       },
       time: '/mois',
-      pros: [
-        'Questions illimitées',
-        'Questions vocales',
-        'Sans annonces',
-        'Support technique 7j/7',
-        '20% de réduction'
-      ],
+      pros: [],
       cons: [],
       subs: 'Sans engagement: Annulez à tout moment',
       checkout: {
@@ -232,8 +220,8 @@ export class PaymentPopupComponent implements OnInit {
       order: 1
     },
     {
-      title: '3 Fois',
-      desc: 'Idéal pour les utilisations à grande échelle',
+      title: '3 X',
+      desc: 'Payez trois fois et accédez au cours à vie',
       price: {
         cfa: {
           old: '2500 FCFA',
@@ -245,13 +233,7 @@ export class PaymentPopupComponent implements OnInit {
         }
       },
       time: '/mois',
-      pros: [
-        'Questions illimitées',
-        'Questions vocales',
-        'Sans annonces',
-        'Support technique 7j/7',
-        '20% de réduction'
-      ],
+      pros: [],
       cons: [],
       subs: 'Sans engagement: Annulez à tout moment',
       checkout: {
@@ -265,7 +247,7 @@ export class PaymentPopupComponent implements OnInit {
   offresMentore = [
     {
       title: 'Tous les mois',
-      desc: 'En achetant un parcours mentoré',
+      desc: 'En prenant un parcours mentoré',
       price: {
         cfa: {
           old: '2500 FCFA',
@@ -299,7 +281,6 @@ export class PaymentPopupComponent implements OnInit {
     this.payload = this.data.payload;
     this.type = this.data.type;
     this.course = this.data.course;
-    console.log('COURSE: ', this.course.mentored);
   }
 
 }
