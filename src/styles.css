@@ -10,10 +10,14 @@ body {
 
 /* Always shox Snackbar popup on top of other elements */
 .cdk-overlay-pane:has(> .mat-snack-bar-container) {
-  @apply !mt-[72px] lg:!mt-16;
+  @apply !mt-[72px] lg:!mt-16 !max-w-screen-sm;
 }
 .mat-snack-bar-container {
   @apply lg:!max-w-none;
+}
+
+.cdk-overlay-pane {
+  @apply !max-w-screen-sm md:!max-w-none;
 }
 
 #privacypolicies-com---nb {

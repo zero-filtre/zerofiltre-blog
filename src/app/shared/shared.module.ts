@@ -58,6 +58,7 @@ import { BotSignupFormComponent } from './bot-signup-form/bot-signup-form.compon
 import { BotUserInfosComponent } from './bot-user-infos/bot-user-infos.component';
 import { BotPhoneVerificationComponent } from './bot-phone-verification/bot-phone-verification.component';
 import { AddEmailPopupComponent } from './add-email-popup/add-email-popup.component';
+import { PricePlanComponent } from './price-plan/price-plan.component';
 
 const components = [
   AppShellRenderDirective,
@@ -87,7 +88,8 @@ const components = [
   BotSignupFormComponent,
   BotUserInfosComponent,
   BotPhoneVerificationComponent,
-  AddEmailPopupComponent
+  AddEmailPopupComponent,
+  PricePlanComponent
 ];
 
 const modules = [

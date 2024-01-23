@@ -15,6 +15,7 @@ export interface Course {
     chapterCount: number;
     lessonsCount: number;
     author: User;
+    mentored: boolean;
     duration: string;
     editorIds: any[];
     price: number;

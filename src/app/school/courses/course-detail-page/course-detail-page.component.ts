@@ -196,42 +196,6 @@ export class CourseDetailPageComponent implements OnInit {
       });
   }
 
-  // makePayment(amount: any) {
-  //   const paymentHandler = (<any>window).StripeCheckout.configure({
-  //     key: this.STRIPE_PUBLIC_KEY,
-  //     locale: 'auto',
-  //     token: function (stripeToken: any) {
-  //       console.log('TOKEN: ', stripeToken);
-  //       alert('Stripe token generated!');
-  //     },
-  //   });
-  //   paymentHandler.open({
-  //     name: 'ZEROFILTRE',
-  //     description: 'Changez vos finances grace au code',
-  //     amount: amount * 100,
-  //   });
-  // }
-
-  // invokeStripe() {
-  //   if (!window.document.getElementById('stripe-script')) {
-  //     const script = window.document.createElement('script');
-  //     script.id = 'stripe-script';
-  //     script.type = 'text/javascript';
-  //     script.src = 'https://checkout.stripe.com/checkout.js';
-  //     script.onload = () => {
-  //       this.paymentHandler = (<any>window).StripeCheckout.configure({
-  //         key: this.STRIPE_PUBLIC_KEY,
-  //         locale: 'auto',
-  //         token: function (stripeToken: any) {
-  //           console.log(stripeToken);
-  //           alert('Payment connection has been successfull!');
-  //         },
-  //       });
-  //     };
-  //     window.document.body.appendChild(script);
-  //   }
-  // }
-
   extractVideoId(videoLink: any) {
     if (!videoLink) return;
     const params = new URL(videoLink).searchParams;
