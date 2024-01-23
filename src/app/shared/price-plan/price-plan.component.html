@@ -4,9 +4,9 @@
     <h3 class="mb-4 text-lg font-semibold text-center text-primary-50 {{offre.order == 2 && '!text-accent-500'}}">
         {{offre.title?.toUpperCase()}}</h3>
 
-    <p *ngIf="offre?.desc" class="font-light text-center text-gray-500 text-sm sm:text-[15px]">{{offre.desc}}</p>
+    <p *ngIf="offre?.desc" class="font-light text-center text-gray-500 text-base sm:text-[15px]">{{offre.desc}}</p>
 
-    <div class="flex justify-center items-baseline my-8">
+    <div class="flex justify-center items-baseline my-5 sm:my-8">
         <span *ngIf="price"
             class="mr-2 text-4xl lg:text-5xl font-extrabold text-primary-50 {{offre.order == 2 && '!text-accent-500'}}">
             <span *ngIf="isBuy" class="text-sm lg:text-xl">{{buyOption}} x</span> {{price|currency:'EUR'}}  <span *ngIf="isMentored" class="text-sm lg:text-xl">/mois</span><span

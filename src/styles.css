@@ -21,11 +21,11 @@ body {
 }
 
 .mat-dialog-container {
-  @apply !px-3 md:!px-6;
+  @apply !px-4 md:!px-6;
 }
 
 .cdk-global-overlay-wrapper {
-  @apply !overflow-y-auto !p-2;
+  @apply !overflow-y-auto !p-2 !py-6;
 }
 
 #privacypolicies-com---nb {

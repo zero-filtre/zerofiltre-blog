@@ -46,6 +46,8 @@ export class PaymentPopupComponent implements OnInit {
   }
 
   payOneTime() {
+    if (!this.verifyAuth()) return;
+
     this.loadingOne = true
     this.payload = { ...this.payload, mode: 'payment' }
 
@@ -60,6 +62,8 @@ export class PaymentPopupComponent implements OnInit {
   }
 
   payThreeTimes() {
+    if (!this.verifyAuth()) return;
+
     this.loadingThree = true;
     this.payload = { ...this.payload, mode: 'subscription', proPlan: false }
 
@@ -74,6 +78,8 @@ export class PaymentPopupComponent implements OnInit {
   }
 
   payProMonthly() {
+    if (!this.verifyAuth()) return;
+
     this.loadingMonth = true;
     this.payload = { ...this.payload, mode: 'subscription', proPlan: true, recurringInterval: 'month' }
 
@@ -88,6 +94,8 @@ export class PaymentPopupComponent implements OnInit {
   }
 
   payProYearly() {
+    if (!this.verifyAuth()) return;
+
     this.loadingYear = true;
     this.payload = { ...this.payload, mode: 'subscription', proPlan: true, recurringInterval: 'year' }
 
@@ -102,7 +110,7 @@ export class PaymentPopupComponent implements OnInit {
   }
 
   payMentoredMonthly() {
-    // if (!this.verifyAuth()) return;
+    if (!this.verifyAuth()) return;
 
     this.loadingMonthMentored = true;
     this.payload = { ...this.payload, productType: 'MENTORED', mode: 'subscription', proPlan: true, recurringInterval: 'month' }
@@ -117,27 +125,27 @@ export class PaymentPopupComponent implements OnInit {
       })
   }
 
-  // verifyAuth(): boolean {
-  //   const currUser = this.authService.currentUsr as User;
-  //   const loggedIn = !!currUser;
+  verifyAuth(): boolean {
+    const currUser = this.authService.currentUsr as User;
+    const loggedIn = !!currUser;
 
-  //   if (!loggedIn) {
-  //     this.router.navigate(
-  //       ['/login'],
-  //       {
-  //         relativeTo: this.route,
-  //         queryParams: { redirectURL: this.router.url },
-  //         // queryParamsHandling: 'merge',
-  //       });
+    if (!loggedIn) {
+      this.router.navigate(
+        ['/login'],
+        {
+          relativeTo: this.route,
+          queryParams: { redirectURL: this.router.url },
+          queryParamsHandling: 'merge',
+        });
 
-  //     this.dialogRef.close();
-  //     this.notify.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
+      this.dialogRef.close();
+      this.notify.openSnackBarInfo('Veuillez vous connecter pour effectuer votre achat 🙂', 'OK');
 
-  //     return false;
-  //   }
+      return false;
+    }
 
-  //   return true;
-  // }
+    return true;
+  }
 
 
   offresPro = [
