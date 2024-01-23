@@ -8,7 +8,7 @@
 
     <div class="flex justify-center items-baseline my-8">
         <span *ngIf="price"
-            class="mr-2 text-2xl lg:text-5xl font-extrabold text-primary-50 {{offre.order == 2 && '!text-accent-500'}}">
+            class="mr-2 text-4xl lg:text-5xl font-extrabold text-primary-50 {{offre.order == 2 && '!text-accent-500'}}">
             <span *ngIf="isBuy" class="text-sm lg:text-xl">{{buyOption}} x</span> {{price|currency:'EUR'}}  <span *ngIf="isMentored" class="text-sm lg:text-xl">/mois</span><span
                 class="text-xl lg:text-4xl ml-1"></span></span>
     </div>
@@ -41,7 +41,7 @@
     </ul>
 
     <button (click)="initPayment()"
-        class="cursor-pointer shadow-md border-4 border-primary-50 hover:bg-primary-500/40 rounded-lg px-5 py-2.5 bg-primary-500/20 transition-all duration-200 {{offre.order == 2 && 'border-2 border-accent-500 bg-accent-500/20 hover:bg-accent-500/40'}}"
+        class="cursor-pointer shadow-md border-4 border-primary-50 hover:bg-primary-500/40 rounded-lg px-5 py-2.5 bg-primary-500/20 transition-all duration-200 {{offre.order == 2 && '!border-accent-500 !bg-accent-500/20 hover:!bg-accent-500/40'}}"
         [disabled]="loading" [ngClass]="{'cursor-not-allowed': loading}">
         <div class="flex flex-col items-center gap-3 text-secondary">
             <div class="progress-wrapper grid place-content-center">

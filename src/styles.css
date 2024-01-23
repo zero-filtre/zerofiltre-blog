@@ -20,6 +20,14 @@ body {
   @apply !max-w-screen-sm md:!max-w-none;
 }
 
+.mat-dialog-container {
+  @apply !px-3 md:!px-6;
+}
+
+.cdk-global-overlay-wrapper {
+  @apply !overflow-y-auto !p-2;
+}
+
 #privacypolicies-com---nb {
   z-index: 888;
 }
@@ -67,6 +75,7 @@ img {
   max-width: 95rem;
   @apply mx-auto px-4 xl:px-[5%];
 }
+
 .payment-popup .mat-dialog-container {
    @apply bg-white rounded-2xl;
 }
