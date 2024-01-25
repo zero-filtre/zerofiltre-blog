@@ -78,10 +78,14 @@
                             <a aria-labelledby="Link to course detail page"
                                 routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
                                 class="article-preview hover:opacity-75">
-                                <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
+                                <div class="relative aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
                                         [sourceUrl]="course?.thumbnail!" [alt]="course?.title!">
                                     </app-image>
+
+                                    <div *ngIf="course.mentored" class="absolute bg-primary-50/40 rounded-br-lg top-0 h-12 w-12 flex items-center justify-center">
+                                        <app-mentored-icon></app-mentored-icon>
+                                    </div>
                                 </div>
                             </a>
 
