@@ -48,6 +48,14 @@ iframe {
   margin: auto;
 }
 
+.tooltip-xs {
+  @apply bg-secondary text-white text-xs;
+}
+
+.tooltip-sm {
+  @apply bg-secondary text-white text-sm whitespace-pre-line;
+}
+
 /* Extends forms plugin styles with our custom styles in one place */
 @layer base {
   [type="text"],

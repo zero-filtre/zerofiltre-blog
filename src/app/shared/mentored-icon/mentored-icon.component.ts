@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-mentored-icon',
@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./mentored-icon.component.css']
 })
 export class MentoredIconComponent {
+
+  @Input() classes: string;
+  @Input() size: number = 0;
+
+  sizeClass = `scale-[${this.size}]`
 
 }
