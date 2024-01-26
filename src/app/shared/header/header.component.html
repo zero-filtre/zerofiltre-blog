@@ -4,19 +4,14 @@
 
 <header class="header" [ngClass]="{'transparent' : seo.transparentHeader}">
     <mat-toolbar class="header-container">
-        <div class="flex justify-center items-center gap-20">
-            <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
-                <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
-                    <app-image [classes]="'max-w-[145px] sm:max-w-[175px]'" [sourceUrl]="appLogoUrl"
-                        [alt]="'Zerofiltre blog'">
-                    </app-image>
-                </div>
-            </a>
-            <button (click)="subscribeToPro()" class="lg:hidden border p-1.5 border-primary-500 rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
-                <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Passer PRO</p>
-            </button>
-        </div>
-
+        <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
+            <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
+                <app-image [classes]="'max-w-[145px] sm:max-w-[175px]'" [sourceUrl]="appLogoUrl"
+                    [alt]="'Zerofiltre blog'">
+                </app-image>
+            </div>
+        </a>
+           
         <div class="navbar-links hidden lg:flex items-center text-secondary">
             <button (click)="subscribeToPro()" class="mr-1 border border-primary-500 rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
                 <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Passer PRO</p>
@@ -158,12 +153,18 @@
 
         </div>
 
-        <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" class="lg:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-        </button>
+        <div class="lg:hidden flex justify-center items-center gap-5">
+            <button (click)="subscribeToPro()" class="lg:hidden border p-1.5 border-primary-500 rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
+                <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Passer PRO</p>
+            </button>
+
+            <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" class="lg:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
     </mat-toolbar>
 </header>
 
