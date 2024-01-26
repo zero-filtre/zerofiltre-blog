@@ -4,7 +4,7 @@
 
 <header class="header" [ngClass]="{'transparent' : seo.transparentHeader}">
     <mat-toolbar class="header-container">
-        <div class="flex justify-center items-center gap-4">
+        <div class="flex justify-center items-center gap-20">
             <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
                 <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
                     <app-image [classes]="'max-w-[145px] sm:max-w-[175px]'" [sourceUrl]="appLogoUrl"
@@ -12,14 +12,14 @@
                     </app-image>
                 </div>
             </a>
-            <button (click)="subscribeToPro()" class="lg:hidden mr-1 border border-primary-500 rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
-                <p class="text-sm sm:text-lg text-primary-500 uppercase font-extrabold px-1.5">Pro</p>
+            <button (click)="subscribeToPro()" class="lg:hidden border p-1.5 border-primary-500 rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
+                <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Passer PRO</p>
             </button>
         </div>
 
         <div class="navbar-links hidden lg:flex items-center text-secondary">
             <button (click)="subscribeToPro()" class="mr-1 border border-primary-500 rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
-                <p class="text-sm sm:text-lg text-primary-500 uppercase font-extrabold px-1.5">Pro</p>
+                <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Passer PRO</p>
             </button>
 
             <a *ngIf="activeCourseModule" aria-labelledby="Link to courses list page" class="navLink" routerLink="cours">

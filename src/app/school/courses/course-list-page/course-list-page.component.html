@@ -90,7 +90,7 @@
 
                                     <app-mentored-icon 
                                         *ngIf="course.mentored" 
-                                        [size]="4"
+                                        [size]="'scale-[4]'"
                                         [classes]="'absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 scale-0 transition-transform duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-100 bg-primary-500/30 h-20 w-20 rounded-xl'">
                                     </app-mentored-icon>
 
@@ -155,11 +155,14 @@
                                 <div class="mt-2">
                                     <a aria-labelledby="Link to course detail page"
                                         routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
-                                        class="article-title">
+                                        class="article-title flex justify-start items-center gap-2">
                                         <h4
                                             class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
                                             {{course?.title}}
                                         </h4>
+
+                                        <app-mentored-icon *ngIf="course.mentored" [size]="'scale-[2]'" [classes]="'h-12 w-10'">
+                                        </app-mentored-icon>
                                     </a>
 
                                     <p

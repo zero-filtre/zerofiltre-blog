@@ -8,8 +8,6 @@ import { Component, Input } from '@angular/core';
 export class MentoredIconComponent {
 
   @Input() classes: string;
-  @Input() size: number = 0;
-
-  sizeClass = `scale-[${this.size}]`
+  @Input() size: string;
 
 }
