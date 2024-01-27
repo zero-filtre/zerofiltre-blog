@@ -9,5 +9,6 @@ export class MentoredIconComponent {
 
   @Input() classes: string;
   @Input() size: string;
+  @Input() position: string = 'right';
 
 }

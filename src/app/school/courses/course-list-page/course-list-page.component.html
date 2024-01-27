@@ -150,17 +150,23 @@
                                 </div>
 
                                 <div class="mt-2">
-                                    <a aria-labelledby="Link to course detail page"
-                                        routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
-                                        class="article-title flex justify-start items-center gap-2">
-                                        <h4
-                                            class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
-                                            {{course?.title}}
-                                        </h4>
-
-                                        <app-mentored-icon *ngIf="course.mentored" [size]="'scale-[2]'" [classes]="'h-12 w-10'">
-                                        </app-mentored-icon>
-                                    </a>
+                                    <div class="flex justify-between items-center gap-2">
+                                        <a aria-labelledby="Link to course detail page"
+                                            routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
+                                            class="article-title">
+                                            <h4
+                                                class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
+                                                {{course?.title}}
+                                            </h4>
+                                        </a>
+                                        
+                                        <ng-template [ngIf]="course.mentored">
+                                            <app-mentored-icon [size]="'scale-[2]'" [classes]="'hidden lg:inline h-12 w-10'">
+                                            </app-mentored-icon>
+                                            <app-mentored-icon [size]="'scale-[2]'" [classes]="'lg:hidden h-12 w-10'" [position]="'left'">
+                                            </app-mentored-icon>
+                                        </ng-template>
+                                    </div>
 
                                     <p
                                         class="article-description mt-1 text-sm lg:text-base tracking-wide font-light text-skin-text leading-5 line-clamp-2">

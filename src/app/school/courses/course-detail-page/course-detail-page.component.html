@@ -14,7 +14,11 @@
             
             <div class="page-title site-container py-8 lg:pt-14 text-center space-y-5 lg:max-w-7xl mx-auto">
                 <app-mentored-icon *ngIf="course.mentored" [size]="'scale-[4]'"
-                    [classes]="'h-20 w-20 mx-auto'">
+                    [classes]="'hidden sm:block h-20 w-20 mx-auto'">
+                </app-mentored-icon>
+
+                <app-mentored-icon *ngIf="course.mentored" [size]="'scale-[4]'" [position]="'bottom'"
+                    [classes]="'sm:hidden h-20 w-20 mx-auto'">
                 </app-mentored-icon>
 
                 <h1>{{course?.title}}</h1>
