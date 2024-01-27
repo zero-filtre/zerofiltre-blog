@@ -77,24 +77,21 @@
                         <div class="article-card lg:grid grid-cols-3 gap-6">
                             <a aria-labelledby="Link to course detail page"
                                 routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
-                                class="article-preview"
+                                class="relative group/imagecard article-preview"
                                 [ngClass]="{'hover:opacity-75' : !course.mentored}"
                                 >
-                                <div class="relative group aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
-                                    
+                                <div class="relative aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
                                         [sourceUrl]="course?.thumbnail!" [alt]="course?.title!">
                                     </app-image>
-
-                                    <div class="absolute top-0 left-0 w-full h-full bg-black opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover:opacity-50 z-20"></div>
-
-                                    <app-mentored-icon 
-                                        *ngIf="course.mentored" 
-                                        [size]="'scale-[4]'"
-                                        [classes]="'absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 scale-0 transition-transform duration-300 ease-in-out group-hover:opacity-100 group-hover:scale-100 bg-primary-500/30 h-20 w-20 rounded-xl'">
-                                    </app-mentored-icon>
-
+                                    <div class="absolute top-0 left-0 w-full h-full bg-black opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover/imagecard:opacity-50 z-20"></div>
                                 </div>
+
+                                <app-mentored-icon 
+                                    *ngIf="course.mentored" 
+                                    [size]="'scale-[4]'"
+                                    [classes]="'absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 scale-0 transition-transform duration-300 ease-in-out group-hover/imagecard:opacity-100 group-hover/imagecard:scale-100 h-20 w-20 rounded-xl'">
+                                </app-mentored-icon>
                             </a>
 
                             <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
@@ -200,8 +197,8 @@
                                         </div>
 
                                         <div
-                                            class="flex items-center justify-end text-skin-inverted gap-2 flex-1 self-end text-right text-sm font-semibold">
-                                            <span matTooltip="suivent ce cours" [matTooltipPosition]="'below'" [matTooltipClass]="'tooltip-xs'"  class="enrol-total relative inline-flex items-end gap-1">
+                                            class="group flex items-center justify-end text-skin-inverted gap-2 flex-1 self-end text-right text-sm font-semibold">
+                                            <span class="enrol-total relative inline-flex items-end gap-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     class="w-6 h-6 inline text-accent-300" viewBox="0 0 16 16">
                                                     <path
@@ -212,15 +209,24 @@
                                                 </svg>
 
                                                 <span>{{course?.enrolledCount}}</span>
+
+                                                <span class="enrol-tooltip">
+                                                    suivent ce cours
+                                                </span>
                                             </span>
 
-                                            <span matTooltip="aiment ce cours" [matTooltipPosition]="'below'" [matTooltipClass]="'tooltip-xs'"  class="inline-flex enrol-total relative items-center gap-1 top-[1px]">
+                                            <span class="inline-flex enrol-total relative items-center gap-1 top-[1px]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="inline w-4 text-accent-300" viewBox="0 0 20 20" fill="currentColor">
                                                     <path fill-rule="evenodd"
                                                         d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
                                                         clip-rule="evenodd" />
                                                 </svg>
+                                                
                                                 <span>{{course?.reactions?.length}}</span>
+
+                                                <span class="enrol-tooltip">
+                                                    aiment ce cours
+                                                </span>
                                             </span>
                                         </div>
                                     </div>

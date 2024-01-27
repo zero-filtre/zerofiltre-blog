@@ -1,1 +1,8 @@
+.mentored-tooltip {
+  @apply absolute w-auto p-2 min-w-max top-14 sm:-top-10 -left-40 sm:left-10 rounded-md shadow-md
+      text-white bg-secondary text-xs font-medium transition-all duration-200 scale-0 opacity-0 origin-center;
+}
 
+.mentored-tooltip {
+  @apply group-hover/tooltip:scale-100 group-hover/tooltip:opacity-100 z-[99999];
+}
