@@ -1,0 +1,30 @@
+<!-- <div 
+    matTooltip="Ce parcours de par sa nature nécessite l'attribution d'un mentor afin d'accompagner l'étudiant.
+    De ce fait, il n'est donc pas inclus dans l'abonnement à la plateforme et nécessite un achat supplémentaire."
+    [matTooltipClass]="'tooltip-sm'" 
+    [matTooltipPosition]="'after'"
+    aria-label="Icon that shows a red tooltip" 
+    class="flex items-center justify-center {{classes}}"
+    >
+    <span class="{{size}}"></span>
+</div> -->
+
+<div 
+    class="group/tooltip flex items-center justify-center {{classes}}"
+    aria-label="Icon that shows a tooltip" 
+    >
+
+    <span class="relative">
+        <app-image [classes]="size" [alt]="'Cours mentoré'"
+            [sourceUrl]="iconUrl">
+        </app-image>
+
+        <span class="mentored-tooltip {{position}}">
+            <div class="flex flex-col gap-2 items-start max-w-xs text-left leading-5">
+                <p class="flex items-start gap-2"><span class="text-xl -mt-2 inline-block">.</span> Ce parcours de par sa nature nécessite l'attribution d'un mentor afin d'accompagner l'étudiant.</p>
+                <p class="flex items-start gap-2"><span class="text-xl -mt-2 inline-block">.</span> De ce fait, il n'est donc pas inclus dans l'abonnement à la plateforme et nécessite un achat supplémentaire.</p>
+            </div>
+        </span>
+    </span>
+
+</div>

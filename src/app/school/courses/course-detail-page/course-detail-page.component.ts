@@ -97,23 +97,22 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   buyCourse() {
+    // const currUser = this.authService.currentUsr as User;
+    // const loggedIn = !!currUser;
 
-    const currUser = this.authService.currentUsr as User;
-    const loggedIn = !!currUser;
-
-    if (!loggedIn) {
-      this.router.navigate(
-        ['/login'],
-        {
-          relativeTo: this.route,
-          queryParams: { redirectURL: this.router.url },
-          queryParamsHandling: 'merge',
-        });
+    // if (!loggedIn) {
+    //   this.router.navigate(
+    //     ['/login'],
+    //     {
+    //       relativeTo: this.route,
+    //       queryParams: { redirectURL: this.router.url },
+    //       queryParamsHandling: 'merge',
+    //     });
       
-      this.notify.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
+    //   this.notify.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
 
-      return;
-    }
+    //   return;
+    // }
 
     const payload = { productId: +this.courseID, productType: 'COURSE' }
     const type = 'basic'
@@ -195,42 +194,6 @@ export class CourseDetailPageComponent implements OnInit {
         next: (response) => this.setEachReactionTotal(response)
       });
   }
-
-  // makePayment(amount: any) {
-  //   const paymentHandler = (<any>window).StripeCheckout.configure({
-  //     key: this.STRIPE_PUBLIC_KEY,
-  //     locale: 'auto',
-  //     token: function (stripeToken: any) {
-  //       console.log('TOKEN: ', stripeToken);
-  //       alert('Stripe token generated!');
-  //     },
-  //   });
-  //   paymentHandler.open({
-  //     name: 'ZEROFILTRE',
-  //     description: 'Changez vos finances grace au code',
-  //     amount: amount * 100,
-  //   });
-  // }
-
-  // invokeStripe() {
-  //   if (!window.document.getElementById('stripe-script')) {
-  //     const script = window.document.createElement('script');
-  //     script.id = 'stripe-script';
-  //     script.type = 'text/javascript';
-  //     script.src = 'https://checkout.stripe.com/checkout.js';
-  //     script.onload = () => {
-  //       this.paymentHandler = (<any>window).StripeCheckout.configure({
-  //         key: this.STRIPE_PUBLIC_KEY,
-  //         locale: 'auto',
-  //         token: function (stripeToken: any) {
-  //           console.log(stripeToken);
-  //           alert('Payment connection has been successfull!');
-  //         },
-  //       });
-  //     };
-  //     window.document.body.appendChild(script);
-  //   }
-  // }
 
   extractVideoId(videoLink: any) {
     if (!videoLink) return;

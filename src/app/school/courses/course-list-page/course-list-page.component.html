@@ -53,7 +53,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"
                                 d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span class="hidden lg:inline text-primary-500 mt-0.5">Nouveau cours</span>
+                        <span class="hidden lg:inline text-primary-500">Nouveau cours</span>
                     </button>
                 </div>
             </div>
@@ -74,15 +74,24 @@
                 <ng-template [ngIf]="courses" *appShellNoRender>
                     <div *ngFor="let course of courses; let i=index" class="space-y-11">
 
-                        <div class="article-card lg:grid grid-cols-3 gap-6 group">
+                        <div class="article-card lg:grid grid-cols-3 gap-6">
                             <a aria-labelledby="Link to course detail page"
                                 routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
-                                class="article-preview hover:opacity-75">
-                                <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
+                                class="relative group/imagecard article-preview hover:opacity-75"
+                                >
+                                <!-- [ngClass]="{'hover:opacity-75' : !course.mentored}" -->
+                                <div class="relative aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
                                         [sourceUrl]="course?.thumbnail!" [alt]="course?.title!">
                                     </app-image>
+                                    <!-- <div class="absolute top-0 left-0 w-full h-full bg-black opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover/imagecard:opacity-50 z-20"></div> -->
                                 </div>
+
+                                <!-- <app-mentored-icon 
+                                    *ngIf="course.mentored" 
+                                    [size]="'scale-[4]'"
+                                    [classes]="'absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 scale-0 transition-transform duration-300 ease-in-out group-hover/imagecard:opacity-100 group-hover/imagecard:scale-100 h-20 w-20 rounded-xl'">
+                                </app-mentored-icon> -->
                             </a>
 
                             <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
@@ -141,14 +150,16 @@
                                 </div>
 
                                 <div class="mt-2">
-                                    <a aria-labelledby="Link to course detail page"
-                                        routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
-                                        class="article-title">
-                                        <h4
-                                            class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
-                                            {{course?.title}}
-                                        </h4>
-                                    </a>
+                                    <div class="flex justify-between items-center gap-2">
+                                        <a aria-labelledby="Link to course detail page"
+                                            routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
+                                            class="article-title">
+                                            <h4
+                                                class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
+                                                {{course?.title}}
+                                            </h4>
+                                        </a>
+                                    </div>
 
                                     <p
                                         class="article-description mt-1 text-sm lg:text-base tracking-wide font-light text-skin-text leading-5 line-clamp-2">
@@ -185,7 +196,14 @@
                                         </div>
 
                                         <div
-                                            class="flex items-center justify-end text-skin-inverted gap-2 flex-1 self-end text-right text-sm font-semibold">
+                                            class="group flex items-center justify-end text-skin-inverted gap-2 flex-1 self-end text-right text-sm font-semibold">
+                                            <ng-template [ngIf]="course.mentored">
+                                                <app-mentored-icon [size]="'w-7 relative top-[9px]'" [classes]="'hidden lg:inline mr-1'" [position]="'left'">
+                                                </app-mentored-icon>
+                                                <app-mentored-icon [size]="'w-7'" [classes]="'lg:hidden mr-1'" [position]="'bottom-lm'">
+                                                </app-mentored-icon>
+                                            </ng-template>
+                                            
                                             <span class="enrol-total relative inline-flex items-end gap-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     class="w-6 h-6 inline text-accent-300" viewBox="0 0 16 16">
@@ -209,7 +227,9 @@
                                                         d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
                                                         clip-rule="evenodd" />
                                                 </svg>
+                                                
                                                 <span>{{course?.reactions?.length}}</span>
+
                                                 <span class="enrol-tooltip">
                                                     aiment ce cours
                                                 </span>

@@ -11,7 +11,16 @@
     <div *appShellNoRender>
         <div *ngIf="course$|async as course" class="content flex flex-col">
 
+            
             <div class="page-title site-container py-8 lg:pt-14 text-center space-y-5 lg:max-w-7xl mx-auto">
+
+                <ng-template [ngIf]="course.mentored">
+                    <app-mentored-icon [size]="'w-full'" [classes]="'hidden sm:block w-36 mx-auto'">
+                    </app-mentored-icon>
+                    <app-mentored-icon [size]="'w-28'" [classes]="'sm:hidden w-32 mx-auto'" [position]="'bottom'">
+                    </app-mentored-icon>
+                </ng-template>
+
                 <h1>{{course?.title}}</h1>
                 <h2>{{course?.subTitle}}</h2>
             </div>
@@ -31,6 +40,20 @@
                         </div>
                     </div>
                 </section>
+
+                <div *ngIf="section.position == 1">
+                    <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
+                        class="mb-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
+                        <span class="text-center">Débuter le cours</span>
+
+                        <span class="mt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </span>
+                    </button>
+                </div>
             </ng-container>
 
             <section class="reactions !py-6 border bg-secondary grid place-items-center border-skin-border">
@@ -79,34 +102,35 @@
                 </div>
 
                 <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
-                    <ngx-skeleton-loader class="space-x-2" count="4" appearance="line"
-                        [theme]="{ 
+                    <ngx-skeleton-loader class="space-x-2" count="4" appearance="line" [theme]="{ 
                             'border-radius': '5px',
                                 height: '20px',
                                 width: '20px'
                             }">
                     </ngx-skeleton-loader>
                 </ng-container>
-            </section> 
+            </section>
 
             <section *ngIf="currentVideoId" class="presentation-video">
                 <div class="site-container">
-                    <app-youtube-video-player [videoId]="currentVideoId" [width]="800" [height]="450"></app-youtube-video-player>
+                    <app-youtube-video-player [videoId]="currentVideoId" [width]="800"
+                        [height]="450"></app-youtube-video-player>
                 </div>
             </section>
-            
+
             <section class="curriculum">
                 <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
-                    [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber" [canEdit]="canEditCourse" [mobileQuery]="mobileQuery"></app-curriculum>
+                    [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber" [canEdit]="canEditCourse"
+                    [mobileQuery]="mobileQuery"></app-curriculum>
             </section>
 
             <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
                 class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
-                <span class="text-center">Acheter ce cours</span>
+                <span class="text-center">Débuter le cours</span>
 
                 <span class="mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                 </span>

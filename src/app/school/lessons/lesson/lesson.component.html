@@ -38,7 +38,7 @@
 
                                     <div *ngIf="(!lesson?.free && !canAccessCourse) || !lesson?.video" class="h-full flex items-center justify-center bg-gray-900 rounded-sm shadow-lg">
                                         <div class="text-center text-skin-base">
-                                            <h5 class="text-sm sm:text-base mb-2 sm:mb-7 font-semibold text-error">Permission refusée</h5>
+                                            <h5 class="text-sm sm:text-base mb-1 sm:mb-7 font-semibold text-error">Accès refusé</h5>
                                             <div class="buy-box p-2 sm:p-6 border border-primary-500 rounded-lg">
                                                 <button (click)="buyCourse()">
                                                     <span class="text-sm sm:text-xl text-primary-500 uppercase font-semibold mr-2">
@@ -49,9 +49,9 @@
                                                 </button>
                                             </div>
 
-                                            <h3 class="my-2 sm:my-5 font-bold text-sm sm:text-2xl">OU</h3>
+                                            <h3 class="hidden sm:block my-2 sm:my-5 font-bold text-sm sm:text-2xl">OU</h3>
                                             
-                                            <div class="buy-box p-2 sm:p-6 border border-accent-400 rounded-lg">
+                                            <div class="buy-box mt-2 sm:mt-0 p-2 sm:p-6 border border-accent-400 rounded-lg">
                                                 <button (click)="subscribeToPro()">
                                                     <p class="text-sm sm:text-xl text-accent-400 uppercase font-semibold">Passer à Pro</p>
                                                     <p class="text-xs sm:text-sm">Débloquez tout le contenu Zerofiltre &amp;&amp; avantages

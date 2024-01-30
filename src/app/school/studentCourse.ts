@@ -40,7 +40,7 @@ export interface CourseEnrollment {
 // test('hey', USER_ROLES[1])
 
 
-export const PRODUCTS = ['COURSE', 'BOOTCAMP'] as const;
+export const PRODUCTS = ['COURSE', 'BOOTCAMP', 'MENTORED'] as const;
 export type ProductType = typeof PRODUCTS[number]
 
 export const MODES = ['subscription', 'payment'] as const;

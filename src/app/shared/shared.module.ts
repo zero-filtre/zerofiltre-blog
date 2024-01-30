@@ -21,6 +21,7 @@ import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -58,6 +59,8 @@ import { BotSignupFormComponent } from './bot-signup-form/bot-signup-form.compon
 import { BotUserInfosComponent } from './bot-user-infos/bot-user-infos.component';
 import { BotPhoneVerificationComponent } from './bot-phone-verification/bot-phone-verification.component';
 import { AddEmailPopupComponent } from './add-email-popup/add-email-popup.component';
+import { PricePlanComponent } from './price-plan/price-plan.component';
+import { MentoredIconComponent } from './mentored-icon/mentored-icon.component';
 
 const components = [
   AppShellRenderDirective,
@@ -87,7 +90,9 @@ const components = [
   BotSignupFormComponent,
   BotUserInfosComponent,
   BotPhoneVerificationComponent,
-  AddEmailPopupComponent
+  AddEmailPopupComponent,
+  PricePlanComponent,
+  MentoredIconComponent
 ];
 
 const modules = [
@@ -114,7 +119,8 @@ const modules = [
   DragDropModule,
   CdkAccordionModule,
   NgxIntlTelInputModule,
-  NgChartsModule
+  NgChartsModule,
+  MatTooltipModule
 ];
 
 @NgModule({

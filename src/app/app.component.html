@@ -15,13 +15,19 @@
     </div>
 
     <div>
-      <button (click)="subscribeToPro()" class="mb-2">
-        <p class="text-sm sm:text-lg text-primary-500 border border-primary-500 rounded-md uppercase font-extrabold p-1.5">
-          Pro</p>
+      <button *ngIf="authService.isPro; else notProUserBtn" disabled
+        class="mr-1 border border-primary-500 rounded-md shadow-sm bg-primary-100/20">
+        <p class="text-sm sm:text-lg text-primary-500 font-extrabold p-1.5">Tu es un PRO</p>
       </button>
+      <ng-template #notProUserBtn>
+        <button (click)="subscribeToPro()" class="mb-2">
+          <p class="text-sm sm:text-lg text-primary-500 border border-primary-500 rounded-md font-extrabold p-1.5">
+            Passer PRO</p>
+        </button>
+      </ng-template>
 
-      <a *ngIf="activeCourseModule" aria-labelledby="Link to courses list page" (click)="drawer.close()" class="sidenavLink"
-        routerLink="cours">
+      <a *ngIf="activeCourseModule" aria-labelledby="Link to courses list page" (click)="drawer.close()"
+        class="sidenavLink" routerLink="cours">
         <div>{{'navbar.courses' | translate}}</div>
       </a>
 
@@ -34,8 +40,8 @@
         <div>{{'navbar.portfolio' | translate}}</div>
       </a>
 
-      <a aria-labelledby="Link to contact page" (click)="drawer.close()" class="sidenavLink"  href="https://services.zerofiltre.tech/contact.html"
-        target="_blank">
+      <a aria-labelledby="Link to contact page" (click)="drawer.close()" class="sidenavLink"
+        href="https://services.zerofiltre.tech/contact.html" target="_blank">
         <div>Contact</div>
       </a>
 
@@ -73,8 +79,8 @@
         <div class="mt-2">
           <a aria-labelledby="Link to about page" routerLink="/user/profile" (click)="drawer.close()"
             class="flex items-center gap-3 py-3 px-1 border-y rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-              stroke-width="1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
@@ -83,52 +89,52 @@
 
           <a aria-labelledby="Link to user articles page" routerLink="/user/dashboard" (click)="drawer.close()"
             class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-              stroke-width="1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
             <span>{{'sidebar.myArticles' | translate}}</span>
           </a>
-          
-          <a *ngIf="activeCourseModule" aria-labelledby="Link to user student courses page" 
+
+          <a *ngIf="activeCourseModule" aria-labelledby="Link to user student courses page"
             routerLink="/user/dashboard/courses" (click)="drawer.close()"
             class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-              stroke-width="1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
             <span>{{'sidebar.myCourses' | translate}}</span>
           </a>
-          
+
           <a *ngIf="activeCourseModule" aria-labelledby="Link to user teacher courses page"
             routerLink="/user/dashboard/teacher/courses" (click)="drawer.close()"
             class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-              stroke-width="1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
             <span>{{'sidebar.myTrainings' | translate}}</span>
           </a>
-          
+
           <a *ngIf="activeCourseModule && authService?.isAdmin" aria-labelledby="Link to about page"
             routerLink="/user/dashboard/courses/all" (click)="drawer.close()"
             class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-              stroke-width="1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
             <span>{{'sidebar.allTrainings' | translate}}</span>
           </a>
-          
-          <a *ngIf="authService?.isAdmin" aria-labelledby="Link to about page" 
-            routerLink="/user/dashboard/admin" (click)="drawer.close()"
-           class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-              stroke-width="1.5">
+
+          <a *ngIf="authService?.isAdmin" aria-labelledby="Link to about page" routerLink="/user/dashboard/admin"
+            (click)="drawer.close()"
+            class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
@@ -137,8 +143,8 @@
 
           <button (click)="logout()" aria-labelledby="logout button"
             class="flex items-center gap-3 w-full text-left py-3 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-              class="w-5 h-5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
             </svg>
@@ -270,8 +276,8 @@
       <div class=" absolute bottom-0 inset-x-0 p-4">
         <button (click)="logout()" aria-labelledby="logout button"
           class="flex gap-3 w-full bg-error hover:bg-red-500 text-white items-center px-3 py-2 shadow-lg text-sm font-semibold rounded-md transition-all duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-6 h-6">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
           </svg>

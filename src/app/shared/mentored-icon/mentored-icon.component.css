@@ -1,0 +1,29 @@
+.mentored-tooltip {
+  @apply absolute p-2 min-w-[300px] max-w-xs rounded-md shadow-md
+      text-white bg-secondary text-xs font-medium transition-all duration-200 scale-0 opacity-0;
+}
+
+
+.mentored-tooltip.right {
+    @apply -top-10 left-10 origin-left;
+}
+.mentored-tooltip.bottom {
+    @apply top-24 -left-24 origin-center;
+}
+.mentored-tooltip.bottom-l {
+    @apply top-14 right-0 origin-right;
+}
+
+.mentored-tooltip.bottom-lm {
+    @apply top-8 -right-12 origin-right;
+}
+.mentored-tooltip.left {
+    @apply -top-10 right-8 origin-right;
+}
+.mentored-tooltip.top {
+    /* Do nothing */
+}
+
+.mentored-tooltip {
+  @apply group-hover/tooltip:scale-100 group-hover/tooltip:opacity-100 z-[99999];
+}

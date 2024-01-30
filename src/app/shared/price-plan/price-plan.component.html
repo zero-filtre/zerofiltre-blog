@@ -1,0 +1,60 @@
+<div
+    class="max-w-sm mx-auto w-full h-full sm:w-[384px] lg:col-span-1 flex flex-col items-center justify-start p-6 text-secondary bg-white rounded-xl shadow-xl border-y-8 border-primary-50 xl:p-8 {{offre.order == 2 && '!border-2 !border-y-8 !border-accent-500'}}">
+
+    <h3 class="mb-4 text-lg font-semibold text-center text-primary-50 {{offre.order == 2 && '!text-accent-500'}}">
+        {{offre.title?.toUpperCase()}}</h3>
+
+    <p *ngIf="offre?.desc" class="font-light text-center text-gray-500 text-base sm:text-[15px]">{{offre.desc}}</p>
+
+    <div class="flex justify-center items-baseline my-5 sm:my-8">
+        <span *ngIf="price"
+            class="mr-2 text-4xl lg:text-5xl font-extrabold text-primary-50 {{offre.order == 2 && '!text-accent-500'}}">
+            <span *ngIf="isBuy" class="text-sm lg:text-xl">{{buyOption}} x</span> {{price|currency:'EUR'}}  <span *ngIf="isMentored" class="text-sm lg:text-xl">/mois</span><span
+                class="text-xl lg:text-4xl ml-1"></span></span>
+    </div>
+
+    <p *ngIf="offre?.subs" class="text-gray-500 text-center text-sm mb-8">{{offre?.subs}}</p>
+
+    <!-- <ul *ngIf="offre?.pros.lenght || offre?.cons.lenght" role="list" class="mb-8 space-y-4 text-left"> -->
+    <ul role="list" class="mb-8 space-y-4 text-left">
+        <ng-container *ngFor="let pro of offre?.pros">
+            <li class="flex items-center space-x-3">
+                <svg class="flex-shrink-0 w-5 h-5 text-primary-600 " fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-sm text-gray-500">{{pro}}</span>
+            </li>
+        </ng-container>
+
+        <ng-container *ngFor="let con of offre?.cons">
+            <li class="flex items-center space-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                </svg>
+                <span class="text-sm text-gray-500">{{con}}</span>
+            </li>
+        </ng-container>
+    </ul>
+
+    <button (click)="initPayment()"
+        class="cursor-pointer text-white shadow-md hover:bg-primary-600 rounded-lg px-5 py-2.5 bg-primary-500 transition-all duration-200 {{offre.order == 2 && '!bg-accent-500 hover:!bg-accent-600'}}"
+        [disabled]="loading" [ngClass]="{'cursor-not-allowed': loading}">
+        <div class="flex flex-col items-center gap-3">
+            <div class="progress-wrapper grid place-content-center">
+                <div *ngIf="!loading" class="progress-content">{{action}}</div>
+                <svg *ngIf="loading" class="w-5 animate-spin text-secondary" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                    <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
+                        stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                        style="animation-play-state:paused"></circle>
+                </svg>
+            </div>
+        </div>
+    </button>
+
+</div>

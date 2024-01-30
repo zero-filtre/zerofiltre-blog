@@ -1,82 +1,50 @@
-<div class="p-5">
-    <ng-container  *ngIf="type !== 'pro'">
-        <div class="text-center text-skin-base">
-            <small class="font-bold text-sm text-primary-500">{{course.title}}</small>
-            <h1 class="mt-3">Vous pouvez payer en 3 reprises</h1>
-            <div class="flex flex-col lg:flex-row gap-10 justify-center items-center font-medium mt-12 lg:mt-8 text-lg">
-                <button (click)="payOneTime()" class="cursor-pointer" [disabled]="loadingOne" [ngClass]="{'cursor-not-allowed': loadingOne}">
-                    <div class="flex flex-col items-center gap-3 text-secondary">
-                        <div class="progress-wrapper shadow-md grid place-content-center border-4 border-primary-50 rounded-full h-20 w-20 hover:bg-primary-500 hover:bg-opacity-20 transition-all duration-200">
-                            <div *ngIf="!loadingOne" class="progress-content">1</div>
-                            <svg *ngIf="loadingOne" class="w-5 animate-spin text-secondary" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 100 100"
-                                preserveAspectRatio="xMidYMid">
-                                <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
-                                    stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                                    style="animation-play-state:paused"></circle>
-                            </svg>
-                        </div>
-                        <span class="flex gap-2 items-center">1 <span class="text-skin-base text-base">x</span> <span class="font-bold text-2xl">{{(course?.price/100)|currency:'EUR'}}</span></span>
-                    </div>
-                </button>
+<div>
+    <ng-container *ngIf="type !== 'pro'">
+        <div *ngIf="!course.mentored">
+            <div class="text-center text-skin-base">
+                <small class="font-bold text-lg lg:text-xl text-primary-500">{{course.title}}</small>
+                <h1 class="mt-1 text-sm sm:text-base">Vous pouvez payer en 3 fois.</h1>
+            </div>
 
-                <div class="relative lg:-top-3">OU</div>
+            <div
+                class="flex flex-col md:flex-row md:items-stretch text-center justify-center items-center mx-auto mt-5 gap-2 xl:gap-4">
+                <app-price-plan [offre]="offresBasic[0]" [loading]="loadingOne" [price]="course?.price/100"
+                    [action]="'Débuter le cours'" [isBuy]="true" [buyOption]="1" (paymentEvent)="payOneTime()"></app-price-plan>
 
-                <button (click)="payThreeTimes()" class="cursor-pointer" [disabled]="loadingThree" [ngClass]="{'cursor-not-allowed': loadingThree}">
-                    <div class="flex flex-col items-center gap-3 text-secondary">
-                        <div class="progress-wrapper shadow-md grid place-content-center border-4 border-primary-50 rounded-full h-20 w-20 hover:bg-primary-500 hover:bg-opacity-20 transition-all duration-200">
-                            <div *ngIf="!loadingThree" class="progress-content">3</div>
-                            <svg *ngIf="loadingThree" class="w-5 animate-spin text-secondary" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                                <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
-                                    stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                                    style="animation-play-state:paused"></circle>
-                            </svg>
-                        </div>
-                        <span class="flex gap-2 items-center">3 <span class="text-skin-base text-base">x</span> <span class="font-bold text-2xl">{{((course?.price/100)/3)|currency:'EUR'}}</span></span>
-                    </div>
-                </button>
+                <app-price-plan [offre]="offresBasic[1]" [loading]="loadingThree" [price]="((course?.price/100)/3)"
+                    [action]="'Débuter le cours'" [isBuy]="true" [buyOption]="3" (paymentEvent)="payThreeTimes()"></app-price-plan>
+            </div>
+        </div>
+
+        <div *ngIf="course.mentored">
+            <div class="text-center text-skin-base">
+                <small class="font-bold text-lg lg:text-xl text-primary-500">{{course.title}}</small>
+                <!-- <h1 class="mt-1">En achetant un parcours mentoré</h1> -->
+            </div>
+
+            <div
+                class="flex flex-col md:flex-row md:items-stretch text-center justify-center items-center mx-auto mt-5 gap-2 xl:gap-4">
+                <app-price-plan [offre]="offresMentore[0]" [loading]="loadingMonthMentored" [price]="course?.price/100"
+                    [action]="'Débuter le cours'" [isMentored]="true" (paymentEvent)="payMentoredMonthly()"></app-price-plan>
             </div>
         </div>
     </ng-container>
-    
+
+
     <ng-container *ngIf="type === 'pro'">
         <div class="text-center text-skin-base">
-            <small class="font-bold text-sm text-primary-500">Abonement PRO</small>
-            <h1 class="mt-3">Economisez en prenant un abonnement annuel</h1>
-            <div class="flex flex-col lg:flex-row gap-10 justify-center items-center font-medium mt-12 lg:mt-8 text-lg">
-                <button (click)="payProMonthly()" class="cursor-pointer" [disabled]="loadingMonth" [ngClass]="{'cursor-not-allowed': loadingMonth}">
-                    <div class="flex flex-col items-center gap-3 text-secondary">
-                        <div class="progress-wrapper shadow-md grid place-content-center border-4 border-primary-50 rounded-full w-20 h-20 hover:bg-primary-500 hover:bg-opacity-20 transition-all duration-200">
-                            <div *ngIf="!loadingMonth"class="progress-content">Mois</div>
-                            <svg *ngIf="loadingMonth" class="w-5 animate-spin text-secondary" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                                <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
-                                    stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                                    style="animation-play-state:paused"></circle>
-                            </svg>
-                        </div>
-                        <span><span class="font-bold text-2xl">{{(999/100)|currency:'EUR'}}</span> /mois</span>
-                    </div>
-                </button>
+            <small class="font-bold text-lg lg:text-xl text-primary-500">Abonement PRO</small>
+            <h1 class="mt-1 text-sm sm:text-base">Devenez un Ingénieur IT  qui <span class="text-accent-500">sort du lot</span></h1>
+        </div>
 
-                <div class="relative lg:-top-3">OU</div>
+        <!-- <div class="grid lg:grid-cols-2 sm:gap-2 xl:gap-4 mt-5"> -->
+        <div class="flex flex-col md:flex-row md:items-stretch text-center justify-center items-center mx-auto mt-5 gap-2 xl:gap-4">
+            <app-price-plan [offre]="offresPro[0]" [loading]="loadingMonth" [price]="(999/100)" [action]="'Souscrire'"
+                (paymentEvent)="payProMonthly()"></app-price-plan>
 
-                <button (click)="payProYearly()" class="cursor-pointer" [disabled]="loadingYear" [ngClass]="{'cursor-not-allowed': loadingYear}">
-                    <div class="flex flex-col items-center gap-3 text-secondary">
-                        <div class="progress-wrapper shadow-md grid place-content-center border-4 border-primary-50 rounded-full w-20 h-20 hover:bg-primary-500 hover:bg-opacity-20 transition-all duration-200">
-                            <div *ngIf="!loadingYear" class="progress-content">Année</div>
-                            <svg *ngIf="loadingYear" class="w-5 animate-spin text-secondary" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                                <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
-                                    stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                                    style="animation-play-state:paused"></circle>
-                            </svg>
-                        </div>
-                        <span><span class="font-bold text-2xl">{{(10989/100)|currency:'EUR'}}</span> /an</span>
-                    </div>
-                </button>
-            </div>
+            <app-price-plan [offre]="offresPro[1]" [loading]="loadingYear" [price]="(10989/100)" [action]="'Souscrire'"
+                (paymentEvent)="payProYearly()"></app-price-plan>
         </div>
     </ng-container>
+
 </div>

@@ -41,22 +41,21 @@ export class HeaderComponent implements OnInit {
   }
 
   subscribeToPro() {
+    // const currUser = this.authService.currentUsr as User;
+    // const loggedIn = !!currUser;
 
-    const currUser = this.authService.currentUsr as User;
-    const loggedIn = !!currUser;
+    // if (!loggedIn) {
+    //   this.router.navigate(
+    //     ['/login'],
+    //     {
+    //       queryParams: { redirectURL: this.router.url },
+    //       queryParamsHandling: 'merge',
+    //     });
 
-    if (!loggedIn) {
-      this.router.navigate(
-        ['/login'],
-        {
-          queryParams: { redirectURL: this.router.url },
-          queryParamsHandling: 'merge',
-        });
+    //   this.messageService.openSnackBarInfo('Veuillez vous connecter pour prendre votre abonnement PRO 🤗', 'OK');
 
-      this.messageService.openSnackBarInfo('Veuillez vous connecter pour prendre votre abonnement PRO 🤗', 'OK');
-
-      return;
-    }
+    //   return;
+    // }
 
     const payload = { productId: 1, productType: 'COURSE' }
     const type = 'pro'
