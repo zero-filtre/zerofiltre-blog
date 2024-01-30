@@ -6,7 +6,7 @@
                 <h2 class="flex justify-between items-center pb-4 lg:pb-6 lg:pl-2 font-black text-xl lg:text-2xl text-primary-500">
                     <a routerLink="{{'/cours/'+course?.id}}">{{course?.title}}</a>
 
-                    <app-mentored-icon *ngIf="course.mentored" [position]="'bottom-l'" [size]="'scale-[2]'" [classes]="'h-12 w-10'">
+                    <app-mentored-icon *ngIf="course.mentored" [position]="'bottom-l'" [size]="'w-24'" [classes]="'w-auto'">
                     </app-mentored-icon>
                 </h2>
 

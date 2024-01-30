@@ -13,6 +13,10 @@
 .mentored-tooltip.bottom-l {
     @apply top-14 right-0 origin-right;
 }
+
+.mentored-tooltip.bottom-lm {
+    @apply top-8 -right-12 origin-right;
+}
 .mentored-tooltip.left {
     @apply -top-10 right-8 origin-right;
 }

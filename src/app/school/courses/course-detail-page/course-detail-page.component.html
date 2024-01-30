@@ -13,13 +13,13 @@
 
             
             <div class="page-title site-container py-8 lg:pt-14 text-center space-y-5 lg:max-w-7xl mx-auto">
-                <app-mentored-icon *ngIf="course.mentored" [size]="'scale-[4]'"
-                    [classes]="'hidden sm:block h-20 w-20 mx-auto'">
-                </app-mentored-icon>
 
-                <app-mentored-icon *ngIf="course.mentored" [size]="'scale-[4]'" [position]="'bottom'"
-                    [classes]="'sm:hidden h-20 w-20 mx-auto'">
-                </app-mentored-icon>
+                <ng-template [ngIf]="course.mentored">
+                    <app-mentored-icon [size]="'w-full'" [classes]="'hidden sm:block w-44 mx-auto'">
+                    </app-mentored-icon>
+                    <app-mentored-icon [size]="'w-28'" [classes]="'sm:hidden w-32 mx-auto'" [position]="'bottom'">
+                    </app-mentored-icon>
+                </ng-template>
 
                 <h1>{{course?.title}}</h1>
                 <h2>{{course?.subTitle}}</h2>
