@@ -15,10 +15,15 @@
     </div>
 
     <div>
-      <button (click)="subscribeToPro()" class="mb-2">
+      <button *ngIf="!authService.isPro" (click)="subscribeToPro()" class="mb-2">
         <p class="text-sm sm:text-lg text-primary-500 border border-primary-500 rounded-md font-extrabold p-1.5">
           Passer PRO</p>
       </button>
+      <button *ngIf="authService.isPro" disabled
+        class="mr-1 border border-primary-500 rounded-md shadow-sm bg-primary-100/20">
+        <p class="text-sm sm:text-lg text-primary-500 font-extrabold p-1.5">Tu es un PRO</p>
+      </button>
+      
 
       <a *ngIf="activeCourseModule" aria-labelledby="Link to courses list page" (click)="drawer.close()" class="sidenavLink"
         routerLink="cours">

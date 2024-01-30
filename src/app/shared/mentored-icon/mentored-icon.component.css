@@ -8,7 +8,7 @@
     @apply -top-10 left-10 origin-left;
 }
 .mentored-tooltip.bottom {
-    @apply top-14 -left-36 origin-center;
+    @apply top-24 -left-24 origin-center;
 }
 .mentored-tooltip.bottom-l {
     @apply top-14 right-0 origin-right;
