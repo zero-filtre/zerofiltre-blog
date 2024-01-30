@@ -13,14 +13,16 @@
         </a>
 
         <div class="navbar-links hidden lg:flex items-center text-secondary">
-            <button *ngIf="!authService.isPro" (click)="subscribeToPro()"
-                class="mr-1 border border-primary-500 rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
-                <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Passer PRO</p>
-            </button>
-            <button *ngIf="authService.isPro" disabled
+            <button *ngIf="authService.isPro; else notProUserBtn" disabled
                 class="mr-1 border border-primary-500 rounded-md shadow-sm bg-primary-100/20">
                 <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Tu es un PRO</p>
             </button>
+            <ng-template #notProUserBtn>
+                <button (click)="subscribeToPro()"
+                    class="mr-1 border border-primary-500 rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
+                    <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Passer PRO</p>
+                </button>
+            </ng-template>
 
             <a *ngIf="activeCourseModule" aria-labelledby="Link to courses list page" class="navLink"
                 routerLink="cours">
@@ -161,15 +163,15 @@
         </div>
 
         <div class="lg:hidden flex justify-center items-center gap-5">
-            <button *ngIf="!authService.isPro" (click)="subscribeToPro()" class="mb-2">
-                <p
-                    class="text-sm sm:text-lg text-primary-500 border border-primary-500 rounded-md font-extrabold p-1.5">
-                    Passer PRO</p>
-            </button>
-            <button *ngIf="authService.isPro" disabled
+            <button *ngIf="authService.isPro; else notProUserBtnMobile" disabled
                 class="mr-1 border border-primary-500 rounded-md shadow-sm bg-primary-100/20">
                 <p class="text-sm sm:text-lg text-primary-500 font-extrabold p-1.5">Tu es un PRO</p>
             </button>
+            <ng-template #notProUserBtnMobile>
+                <button (click)="subscribeToPro()" class="mb-2">
+                    <p class="text-sm sm:text-lg text-primary-500 border border-primary-500 rounded-md font-extrabold p-1.5">Passer PRO</p>
+                </button>
+            </ng-template>
 
             <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" class="lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
