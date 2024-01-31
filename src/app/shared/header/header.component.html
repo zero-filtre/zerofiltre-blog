@@ -15,7 +15,7 @@
         <div class="navbar-links hidden lg:flex items-center text-secondary">
             <button *ngIf="authService.isPro; else notProUserBtn" disabled
                 class="mr-1 border border-primary-500 rounded-md shadow-sm bg-primary-100/20">
-                <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Tu es un PRO</p>
+                <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Tu es PRO</p>
             </button>
             <ng-template #notProUserBtn>
                 <button (click)="subscribeToPro()"
@@ -165,7 +165,7 @@
         <div class="lg:hidden flex justify-center items-center gap-5">
             <button *ngIf="authService.isPro; else notProUserBtnMobile" disabled
                 class="mr-1 border border-primary-500 rounded-md shadow-sm bg-primary-100/20">
-                <p class="text-sm sm:text-lg text-primary-500 font-extrabold p-1.5">Tu es un PRO</p>
+                <p class="text-sm sm:text-lg text-primary-500 font-extrabold p-1.5">Tu es PRO</p>
             </button>
             <ng-template #notProUserBtnMobile>
                 <button (click)="subscribeToPro()" class="mb-2">
