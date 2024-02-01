@@ -220,7 +220,7 @@ export class PaymentPopupComponent implements OnInit {
       time: '/mois',
       pros: [],
       cons: [],
-      subs: 'Sans engagement: Annulez à tout moment',
+      subs: '',
       checkout: {
         cfa: 'https://buy.stripe.com/dR64hQ1ZO1ccgcU3ce',
         eur: 'https://buy.stripe.com/5kAeWu5c01ccbWE7ss'
@@ -243,7 +243,7 @@ export class PaymentPopupComponent implements OnInit {
       time: '/mois',
       pros: [],
       cons: [],
-      subs: 'Sans engagement: Annulez à tout moment',
+      subs: '',
       checkout: {
         cfa: 'https://buy.stripe.com/dR64hQ1ZO1ccgcU3ce',
         eur: 'https://buy.stripe.com/5kAeWu5c01ccbWE7ss'
