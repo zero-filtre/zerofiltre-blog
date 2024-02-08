@@ -16,6 +16,7 @@ import { CourseEnrollment } from '../../studentCourse';
 import { PaymentService } from 'src/app/services/payment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -41,7 +42,7 @@ export class CourseDetailPageComponent implements OnInit {
   mobileQuery: MediaQueryList;
   // paymentHandler: any = null;
 
-  
+
 
   public loading!: boolean;
   private isPublished = new BehaviorSubject<any>(null);
@@ -108,7 +109,7 @@ export class CourseDetailPageComponent implements OnInit {
     //       queryParams: { redirectURL: this.router.url },
     //       queryParamsHandling: 'merge',
     //     });
-      
+
     //   this.notify.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
 
     //   return;
@@ -121,21 +122,21 @@ export class CourseDetailPageComponent implements OnInit {
 
   }
 
-  getCourse(): Observable<Course> {
+  getCourse() {
     this.isLoading = true;
 
-    return this.courseService.findCourseById(this.courseID)
+    this.courseService.findCourseById(this.courseID)
       .pipe(
-        catchError(err => {
-          this.isLoading = false;
-
-          if (err.status === 404) {
-            this.notify.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
-            this.navigate.back();
+        tap(data => {
+          if (data.status === 'PUBLISHED') {
+            this.isPublished.next(true);
+          } else {
+            this.isPublished.next(false);
           }
-          return throwError(() => err?.message)
-        }),
-        tap((data: Course) => {
+        })
+      )
+      .subscribe({
+        next: (data: Course) => {
           this.seo.generateTags({
             title: data.title,
             description: data.summary,
@@ -151,19 +152,27 @@ export class CourseDetailPageComponent implements OnInit {
           this.extractVideoId(data.video)
           this.setEachReactionTotal(data?.reactions);
 
-          if (data.status === 'PUBLISHED') {
-            this.isPublished.next(true);
-          } else {
-            this.isPublished.next(false);
+          return this.course
+        },
+        error: (err: HttpErrorResponse) => {
+          this.isLoading = false;
+
+          if (err.status === 404) {
+            this.notify.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
+            this.navigate.back();
           }
-        }),
-        shareReplay()
-      )
+          return throwError(() => err?.message)
+        },
+        complete: () => { 
+          this.isLoading = false;
+          return this.course 
+        }
+      })
   }
 
   orderSections(course: Course) {
     const list = course.sections
-    this.orderedSections = list.sort((a:Section, b: Section) => a.position - b.position)
+    this.orderedSections = list.sort((a: Section, b: Section) => a.position - b.position)
   }
 
   setEachReactionTotal(reactions: Reaction[]) {
@@ -203,23 +212,32 @@ export class CourseDetailPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.course$ = this.route.paramMap
-      .pipe(
-        switchMap(params => {
-          this.courseID = params.get('course_id');
+    // this.course$ = this.route.paramMap
+    //   .pipe(
+    //     switchMap(params => {
+    //       this.courseID = params.get('course_id');
 
-          this.chapters$ = this.chapterService
-            .fetchAllChapters(this.courseID);
-          
-          return this.getCourse();
-        })
-      );
+    //       this.chapters$ = this.chapterService
+    //         .fetchAllChapters(this.courseID);
+
+    //       return this.getCourse();
+    //     })
+    //   );
+
+    this.route.paramMap.subscribe(
+      params => {
+        this.courseID = params.get('course_id');
+        this.chapters$ = this.chapterService
+          .fetchAllChapters(this.courseID);
+        this.getCourse();
+      }
+    );
 
     this.courseEnrollment$ = this.route.data
       .pipe(
         map(({ sub }) => {
           if (sub === true) return;
-          
+
           this.isSubscriber = !!sub;
           return sub
         })

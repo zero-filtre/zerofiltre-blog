@@ -9,7 +9,7 @@
     </div>
 
     <div *appShellNoRender>
-        <div *ngIf="course$|async as course" class="content flex flex-col">
+        <div *ngIf="course && !loading" class="content flex flex-col">
 
             
             <div class="page-title site-container py-8 lg:pt-14 text-center space-y-5 lg:max-w-7xl mx-auto">
