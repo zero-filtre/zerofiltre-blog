@@ -222,10 +222,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     //   return;
     // }
 
-    const payload = { productId: 1, productType: 'COURSE' }
-    const type = 'pro'
+    // const payload = { productId: 1, productType: 'COURSE' }
+    // const type = 'pro'
 
-    this.paymentService.openPaymentDialog(payload, type);
+    // this.paymentService.openPaymentDialog(payload, type);
+
+    this.router.navigateByUrl('/pro');
 
   }
 

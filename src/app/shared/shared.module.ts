@@ -61,6 +61,7 @@ import { BotPhoneVerificationComponent } from './bot-phone-verification/bot-phon
 import { AddEmailPopupComponent } from './add-email-popup/add-email-popup.component';
 import { PricePlanComponent } from './price-plan/price-plan.component';
 import { MentoredIconComponent } from './mentored-icon/mentored-icon.component';
+import { ProPageComponent } from './pro-page/pro-page.component';
 
 const components = [
   AppShellRenderDirective,
@@ -92,7 +93,8 @@ const components = [
   BotPhoneVerificationComponent,
   AddEmailPopupComponent,
   PricePlanComponent,
-  MentoredIconComponent
+  MentoredIconComponent,
+  ProPageComponent
 ];
 
 const modules = [

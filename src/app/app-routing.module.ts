@@ -16,6 +16,7 @@ import { PaymentCanceledComponent } from './shared/payment-canceled/payment-canc
 import { PdfPreviewComponent } from './shared/ui/pdf-preview/pdf-preview.component';
 import { BotUserProfileComponent } from './shared/bot-user-profile/bot-user-profile.component';
 import { BotStatGuard } from './shared/guard/bot-stat.guard';
+import { ProPageComponent } from './shared/pro-page/pro-page.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,10 @@ const routes: Routes = [
     path: 'cours',
     loadChildren: () => import('./school/school.module').then((m) => m.SchoolModule),
     canLoad: [RouteGuard]
+  },
+  {
+    path: 'pro',
+    component: ProPageComponent
   },
   {
     path: 'wachatgpt',

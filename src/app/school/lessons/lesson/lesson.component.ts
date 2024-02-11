@@ -390,10 +390,12 @@ export class LessonComponent implements OnInit, OnDestroy {
     //   return;
     // }
 
-    const payload = { productId: +this.courseID, productType: 'COURSE' }
-    const type = 'pro'
+    // const payload = { productId: +this.courseID, productType: 'COURSE' }
+    // const type = 'pro'
 
-    this.paymentService.openPaymentDialog(payload, type, this.course);
+    // this.paymentService.openPaymentDialog(payload, type, this.course);
+
+    this.router.navigateByUrl('/pro');
 
   }
 
