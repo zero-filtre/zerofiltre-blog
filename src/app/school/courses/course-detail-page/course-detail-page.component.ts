@@ -230,6 +230,7 @@ export class CourseDetailPageComponent implements OnInit {
         this.getCourse(this.courseID);
       }
     );
+    
     this.chapters$ = this.chapterService
       .fetchAllChapters(this.courseID);
 

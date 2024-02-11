@@ -20,6 +20,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
 import { PaymentService } from 'src/app/services/payment.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 
 @Component({
@@ -73,8 +74,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   allChapters: Chapter[] = [];
   currentChapter: Chapter;
 
-  isSubscriber:boolean;
-  isCompleting:boolean;
+  isSubscriber: boolean;
+  isCompleting: boolean;
 
   durations = [];
 
@@ -86,10 +87,11 @@ export class LessonComponent implements OnInit, OnDestroy {
     private chapterService: ChapterService,
     private courseService: CourseService,
     private messageService: MessageService,
+    private navigate: NavigationService,
     private route: ActivatedRoute,
     private router: Router,
     private vimeo: VimeoService,
-    changeDetectorRef: ChangeDetectorRef, 
+    changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     private paymentService: PaymentService
   ) {
@@ -168,13 +170,9 @@ export class LessonComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.lesson$ = this.lessonService.findLessonById(lessonId)
-      .pipe(
-        catchError(err => {
-          this.loading = false;
-          return throwError(() => err?.message)
-        }),
-        tap((lesson: Lesson) => {
+    this.lessonService.findLessonById(lessonId)
+      .subscribe({
+        next: (lesson: Lesson) => {
           this.lesson = lesson;
 
           this.seo.generateTags({
@@ -193,13 +191,25 @@ export class LessonComponent implements OnInit, OnDestroy {
               this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
               this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
             }, 1000);
-          }else{
+          } else {
             this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
             this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
           }
-        }),
-        shareReplay()
-      )
+        },
+        error: err => {
+          this.loading = false;
+
+          if (err.status === 404) {
+            this.messageService.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
+            this.navigate.back();
+          }
+          return throwError(() => err?.message)
+        },
+        complete: () => {
+          this.loading = false;
+          return this.lesson;
+        }
+      })
   }
 
   loadCourseData(courseId: any) {
@@ -245,7 +255,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       )
   }
 
-  loadPrevNext(currentChapter: Chapter, allChapters: Chapter[], currentLessonId: any){
+  loadPrevNext(currentChapter: Chapter, allChapters: Chapter[], currentLessonId: any) {
 
     const { prev, next } = this.loadPrevNextHelper(currentChapter, allChapters, currentLessonId) || {};
 
@@ -259,12 +269,12 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   }
 
-  loadPrevNextHelper(currentChapter: Chapter, allChapters: Chapter[], currentLessonId: any){
+  loadPrevNextHelper(currentChapter: Chapter, allChapters: Chapter[], currentLessonId: any) {
     if (!currentLessonId) return null;
     if (!currentChapter) return null;
-    
+
     let currentChapterLessonList: Lesson[] = currentChapter?.lessons;
-    
+
     const currentChapterIndex = allChapters.findIndex(chap => chap.id == currentChapter.id);
     const currentLessonIndex = currentChapterLessonList?.findIndex(lesson => lesson.id == currentLessonId);
 
@@ -294,7 +304,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
     return { prev, next };
   }
-  
+
   capitalize(str: string): string {
     return capitalizeString(str);
   }
@@ -309,7 +319,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
         const videoId = lesson.video?.split('.com/')[1] || ''
         if (!videoId) {
-          
+
         }
 
         this.vimeo.getVideo(videoId)
@@ -337,22 +347,22 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   buyCourse() {
 
-    const currUser = this.authService.currentUsr as User;
-    const loggedIn = !!currUser;
+    // const currUser = this.authService.currentUsr as User;
+    // const loggedIn = !!currUser;
 
-    if (!loggedIn) {
-      this.router.navigate(
-        ['/login'],
-        {
-          relativeTo: this.route,
-          queryParams: { redirectURL: this.router.url },
-          queryParamsHandling: 'merge',
-        });
+    // if (!loggedIn) {
+    //   this.router.navigate(
+    //     ['/login'],
+    //     {
+    //       relativeTo: this.route,
+    //       queryParams: { redirectURL: this.router.url },
+    //       queryParamsHandling: 'merge',
+    //     });
 
-      this.messageService.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
+    //   this.messageService.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
 
-      return;
-    }
+    //   return;
+    // }
 
     const payload = { productId: +this.courseID, productType: 'COURSE' }
     const type = 'product'
@@ -363,22 +373,22 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   subscribeToPro() {
 
-    const currUser = this.authService.currentUsr as User;
-    const loggedIn = !!currUser;
+    // const currUser = this.authService.currentUsr as User;
+    // const loggedIn = !!currUser;
 
-    if (!loggedIn) {
-      this.router.navigate(
-        ['/login'],
-        {
-          relativeTo: this.route,
-          queryParams: { redirectURL: this.router.url },
-          queryParamsHandling: 'merge',
-        });
+    // if (!loggedIn) {
+    //   this.router.navigate(
+    //     ['/login'],
+    //     {
+    //       relativeTo: this.route,
+    //       queryParams: { redirectURL: this.router.url },
+    //       queryParamsHandling: 'merge',
+    //     });
 
-      this.messageService.openSnackBarInfo('Veuillez vous connecter pour prendre votre abonnement PRO 🤗', 'OK');
+    //   this.messageService.openSnackBarInfo('Veuillez vous connecter pour prendre votre abonnement PRO 🤗', 'OK');
 
-      return;
-    }
+    //   return;
+    // }
 
     const payload = { productId: +this.courseID, productType: 'COURSE' }
     const type = 'pro'
@@ -419,7 +429,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
     this.loadCourseData(this.courseID);
     this.loadAllChapters(this.courseID, this.lessonID);
-    
+
     this.route.paramMap.subscribe(
       params => {
         this.lessonID = params.get('lesson_id')!;
@@ -435,7 +445,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.isSubscriber = !!sub;
           this.courseEnrollmentID = sub?.id
           this.completedLessons = sub?.completedLessons;
-          this.completedLessonsIds = [...new Set(sub?.completedLessons?.map((l:Lesson) => l.id))] as number[];
+          this.completedLessonsIds = [...new Set(sub?.completedLessons?.map((l: Lesson) => l.id))] as number[];
           this.completed = this.isLessonCompleted(this.lesson);
           this.lessonsCount = sub?.course?.lessonsCount;
           this.loadCompleteProgressBar(this.completedLessonsIds);
