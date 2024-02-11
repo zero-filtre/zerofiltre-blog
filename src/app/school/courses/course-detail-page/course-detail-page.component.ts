@@ -122,10 +122,10 @@ export class CourseDetailPageComponent implements OnInit {
 
   }
 
-  getCourse() {
+  getCourse(courseId: string) {
     this.isLoading = true;
 
-    this.courseService.findCourseById(this.courseID)
+    this.courseService.findCourseById(courseId)
       .pipe(
         tap(data => {
           if (data.status === 'PUBLISHED') {
@@ -163,9 +163,9 @@ export class CourseDetailPageComponent implements OnInit {
           }
           return throwError(() => err?.message)
         },
-        complete: () => { 
+        complete: () => {
           this.isLoading = false;
-          return this.course 
+          return this.course
         }
       })
   }
@@ -227,11 +227,11 @@ export class CourseDetailPageComponent implements OnInit {
     this.route.paramMap.subscribe(
       params => {
         this.courseID = params.get('course_id');
-        this.chapters$ = this.chapterService
-          .fetchAllChapters(this.courseID);
-        this.getCourse();
+        this.getCourse(this.courseID);
       }
     );
+    this.chapters$ = this.chapterService
+      .fetchAllChapters(this.courseID);
 
     this.courseEnrollment$ = this.route.data
       .pipe(

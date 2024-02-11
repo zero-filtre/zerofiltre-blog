@@ -261,7 +261,7 @@ export const fr = {
     },
     meta: {
         homeTitle: 'Zerofiltre.tech | Zerofiltre.tech',
-        homeDescription: "La communauté d'experts de l'IT  qui changent des vies et des carrières grâce à la tech, tout ceci sans discrimination et sans filtres",
+        homeDescription: "Dopez vos compétences sur des sujets techniques afin de devenir un profil désiré par des entreprises !",
 
         articlesTitle: 'Tous les articles | Zerofiltre.tech',
         coursesTitle: 'Toutes nos formations | Zerofiltre.tech',
