@@ -174,11 +174,13 @@ export class LessonComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (lesson: Lesson) => {
           this.lesson = lesson;
+          const desc = lesson.summary || '';
+          const img = this.course.thumbnail || 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065'
 
           this.seo.generateTags({
             title: lesson.title,
-            description: lesson.summary || '',
-            image: this.course.thumbnail || 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065',
+            description: desc,
+            image: img,
           })
 
           this.completed = this.isLessonCompleted(lesson)
