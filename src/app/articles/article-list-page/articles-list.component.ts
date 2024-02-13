@@ -208,11 +208,6 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
           this.status = query.get('filter')!;
           this.tag = query.get('tag')!;
 
-          // const shouldOpenArticleDialog = query.get('articleDialog');
-          // if (shouldOpenArticleDialog) {
-          //   this.openArticleEntryDialog();
-          // }
-
           if (this.tag) {
             return this.fetchArticlesByTag(this.tag);
           }
@@ -239,10 +234,8 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
       title: this.translate.instant('meta.articlesTitle'),
       description: this.translate.instant('meta.articlesDescription'),
       author: 'Zerofiltre.tech',
-      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+      image: 'https://ik.imagekit.io/lfegvix1p/community1__PF0EdVIS.svg?updatedAt=1655393997070'
     });
-
-
   }
 
   ngOnDestroy(): void {
