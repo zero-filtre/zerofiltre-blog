@@ -177,8 +177,8 @@ export class LessonComponent implements OnInit, OnDestroy {
 
           this.seo.generateTags({
             title: lesson.title,
-            description: lesson.summary,
-            image: lesson.thumbnail,
+            description: lesson.summary || '',
+            image: this.course.thumbnail || 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065',
           })
 
           this.completed = this.isLessonCompleted(lesson)

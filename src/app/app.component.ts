@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -27,7 +27,6 @@ import {
 
 import { LoadEnvService } from './services/load-env.service';
 import { environment } from 'src/environments/environment';
-import { CourseService } from './school/courses/course.service';
 import { User } from './user/user.model';
 import { PaymentService } from './services/payment.service';
 
