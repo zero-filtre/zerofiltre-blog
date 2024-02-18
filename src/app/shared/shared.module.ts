@@ -62,6 +62,8 @@ import { AddEmailPopupComponent } from './add-email-popup/add-email-popup.compon
 import { PricePlanComponent } from './price-plan/price-plan.component';
 import { MentoredIconComponent } from './mentored-icon/mentored-icon.component';
 import { ProPageComponent } from './pro-page/pro-page.component';
+import { AdsSquareComponent } from './ads-square/ads-square.component';
+import { AdsRectangleComponent } from './ads-rectangle/ads-rectangle.component';
 
 const components = [
   AppShellRenderDirective,
@@ -94,7 +96,9 @@ const components = [
   AddEmailPopupComponent,
   PricePlanComponent,
   MentoredIconComponent,
-  ProPageComponent
+  ProPageComponent, 
+  AdsSquareComponent, 
+  AdsRectangleComponent
 ];
 
 const modules = [

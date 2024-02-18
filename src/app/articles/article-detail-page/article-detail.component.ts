@@ -58,9 +58,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   mobileQuery: MediaQueryList;
 
-  sponsorContentUrl = '/cours/1';
-  sponsorContentImageUrl = 'https://ik.imagekit.io/lfegvix1p/ddd-imagee_7A342RNOT.svg?updatedAt=1681558221642';
-
   giscusConfig = {
     'data-repo': 'zero-filtre/zerofiltre-blog',
     'data-repo-id': 'R_kgDOGhkG4Q',
