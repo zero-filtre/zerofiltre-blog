@@ -10,7 +10,7 @@ import { MessageService } from '../../../services/message.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
-import { Lesson, Resource } from '../lesson';
+import { CompletedLesson, Lesson, Resource } from '../lesson';
 import { ChapterService } from '../../chapters/chapter.service';
 import { FormGroup } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
@@ -449,7 +449,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.isSubscriber = !!sub;
           this.courseEnrollmentID = sub?.id
           this.completedLessons = sub?.completedLessons;
-          this.completedLessonsIds = [...new Set(sub?.completedLessons?.map((l: Lesson) => l.id))] as number[];
+          this.completedLessonsIds = [...new Set(sub?.completedLessons?.map((l: CompletedLesson) => l.lessonId))] as number[];
           this.completed = this.isLessonCompleted(this.lesson);
           this.lessonsCount = sub?.course?.lessonsCount;
           this.loadCompleteProgressBar(this.completedLessonsIds);
