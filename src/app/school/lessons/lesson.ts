@@ -13,6 +13,12 @@ export interface Lesson {
     number: number;
 }
 
+export type CompletedLesson = {
+    completedAt: string, 
+    enrollmentId: number, 
+    lessonId: number
+}
+
 export interface Resource {
     id?: number,
     lessonId: string;

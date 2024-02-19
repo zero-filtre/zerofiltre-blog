@@ -223,33 +223,8 @@
 
                         <!-- Sponsor Content -->
                         <ng-container *ngIf="(i+1)%3 === 0">
-                            <div class="sponsor-content overflow-hidden shadow-lg rounded-lg bg-skin-card group">
-                                <a [routerLink]="sponsorContentUrl" class="flex flex-col lg:flex-row items-center">
-                                    <div class="card-image flex-1 p-4">
-                                        <app-image [classes]="'object-cover w-[250px] lg:w-[52%] m-auto'"
-                                            [alt]="'apprener le DDD'" [sourceUrl]="sponsorContentImageUrl">
-                                        </app-image>
-                                    </div>
-                                    <div class="card-body flex-1 p-4 flex flex-col gap-4">
-                                        <h3 class="text-secondary">Apprenez et implémentez des modèles de conception
-                                            simples pour satisfaire
-                                            des besoins complexes
-                                        </h3>
-                                        <button
-                                            class="flex items-center justify-between lg:w-fit gap-2 px-4 py-2.5 rounded-md shadow-sm border border-primary-500 text-primary-500 group-hover:bg-primary-500 group-hover:text-white transition-all duration-300">
-                                            <span>En savoir plus</span>
-
-                                            <span class="mt-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                                </svg>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </a>
-                            </div>
+                            <!-- SHOULD OR NOT DISPLAY COURSES ADS -->
+                            <!-- <app-ads-rectangle></app-ads-rectangle> -->
                         </ng-container>
                     </div>
                 </ng-template>

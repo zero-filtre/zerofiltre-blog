@@ -1,7 +1,6 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, catchError, map, of } from 'rxjs';
-import { CourseService } from '../courses/course.service';
 import { Course } from '../courses/course';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';

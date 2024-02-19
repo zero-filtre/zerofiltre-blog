@@ -229,7 +229,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
       title: this.translate.instant('meta.coursesTitle'),
       description: this.translate.instant('meta.coursesDescription'),
       author: 'Zerofiltre.tech',
-      image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
+      image: 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065'
     });
   }
 

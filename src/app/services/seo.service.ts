@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,9 +12,14 @@ export class SeoService {
   transparentHeader!: boolean;
   isFooterMounted = true;
 
-  constructor(private title: Title, private meta: Meta, private router: Router) { }
+  constructor(private title: Title, private meta: Meta, private router: Router, private translate: TranslateService) { }
 
-  generateTags({ title = '', description = '', image = '', author = '' }) {
+  generateTags({ 
+    title = this.translate.instant('meta.homeTitle'),
+    description = this.translate.instant('meta.homeDescription'),
+    image = 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065', 
+    author = 'Zerofiltre.tech'
+  }) {
 
     this.title.setTitle(title);
     this.meta.updateTag({ property: 'description', content: description });
