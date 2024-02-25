@@ -142,6 +142,7 @@ export class CourseDetailPageComponent implements OnInit {
             description: data.summary,
             image: data.thumbnail,
             author: data.author?.fullName,
+            publishDate: data.publishedAt
           })
 
           this.isLoading = false;

@@ -142,6 +142,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
             description: response.summary,
             image: response.thumbnail,
             author: response.author?.fullName,
+            publishDate: response.publishedAt
           })
 
           this.nberOfReactions.next(response?.reactions?.length);
