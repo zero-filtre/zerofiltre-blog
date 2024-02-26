@@ -12,7 +12,12 @@ export class SeoService {
   transparentHeader!: boolean;
   isFooterMounted = true;
 
-  constructor(private title: Title, private meta: Meta, private router: Router, private translate: TranslateService) { }
+  constructor(
+    private title: Title,
+    private meta: Meta,
+    private router: Router,
+    private translate: TranslateService
+  ) { }
 
   generateTags({ 
     title = this.translate.instant('meta.homeTitle'),
