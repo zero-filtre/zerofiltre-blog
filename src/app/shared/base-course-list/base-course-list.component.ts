@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { JsonLdService } from 'ngx-seo';
 import { Subscription } from 'rxjs';
 import { Course } from 'src/app/school/courses/course';
 import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
@@ -12,6 +13,7 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-base-course-list',
@@ -19,6 +21,12 @@ import { User } from 'src/app/user/user.model';
   styleUrls: ['./base-course-list.component.css']
 })
 export class BaseCourseListComponent implements OnInit {
+
+  readonly blogUrl = environment.blogUrl;
+  readonly activeCourseModule = environment.courseRoutesActive === 'true';
+  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
+  siteUrl = this.prod ? "https://zerofiltre.tech" : "https://dev.zerofiltre.tech"
+
   courses: Course[];
 
   PUBLISHED = 'published';
@@ -50,6 +58,7 @@ export class BaseCourseListComponent implements OnInit {
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,
+    public jsonLd: JsonLdService,
     public router: Router,
     public route: ActivatedRoute,
     public courseService: CourseService,
@@ -100,6 +109,29 @@ export class BaseCourseListComponent implements OnInit {
 
   handleFetchedCourses = {
     next: ({ content, hasNext }: any) => {
+
+      const dataSchema = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": content.map((course: Course, index: number) => ({
+          "@type": "ListItem",
+          "position": index+1,
+          "item": {
+            "@type": "Course",
+            "url": `${this.siteUrl}/cours/${course.id}`,
+            "name": course.title,
+            "description": course.summary,
+            "provider": {
+              "@type": "Organization",
+              "name": "Zerofiltre",
+              "sameAs": "https://www.zerofiltre.tech"
+            }
+          }
+        }))
+      }
+
+      this.jsonLd.setData(dataSchema)
+
       this.courses = content;
 
       this.loading = false;

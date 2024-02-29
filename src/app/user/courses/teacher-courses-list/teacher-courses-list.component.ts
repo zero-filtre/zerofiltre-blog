@@ -12,6 +12,7 @@ import { SeoService } from 'src/app/services/seo.service';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { JsonLdService } from 'ngx-seo';
 
 @Component({
   selector: 'app-teacher-courses-list',
@@ -41,6 +42,7 @@ export class TeacherCoursesListComponent extends BaseCourseListComponent impleme
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,
+    public jsonLd: JsonLdService,
     public router: Router,
     public route: ActivatedRoute,
     public courseService: CourseService,
@@ -51,7 +53,7 @@ export class TeacherCoursesListComponent extends BaseCourseListComponent impleme
     @Inject(PLATFORM_ID) public platformId: any,
     public navigate: NavigationService,
   ) {
-    super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
+    super(loadEnvService, seo, jsonLd, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
   }
 
   isAuthor(course: Course): boolean {

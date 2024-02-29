@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SeoService } from 'src/app/services/seo.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { JsonLdService } from 'ngx-seo';
 
 @Component({
   selector: 'app-student-courses-list',
@@ -40,6 +41,7 @@ export class StudentCoursesListComponent extends BaseCourseListComponent impleme
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,
+    public jsonLd: JsonLdService,
     public router: Router,
     public route: ActivatedRoute,
     public courseService: CourseService,
@@ -50,7 +52,7 @@ export class StudentCoursesListComponent extends BaseCourseListComponent impleme
     @Inject(PLATFORM_ID) public platformId: any,
     public navigate: NavigationService,
   ) {
-    super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
+    super(loadEnvService, seo, jsonLd, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
   }
 
   onScroll() { }
