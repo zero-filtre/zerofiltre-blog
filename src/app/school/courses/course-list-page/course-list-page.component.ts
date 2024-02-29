@@ -14,6 +14,7 @@ import { sortByNameAsc } from 'src/app/services/utilities.service';
 import { TagService } from 'src/app/services/tag.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Course } from '../course';
+import { JsonLdService } from 'ngx-seo';
 
 @Component({
   selector: 'app-course-list-page',
@@ -47,6 +48,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,
+    private jsonLd: JsonLdService,
     public router: Router,
     public route: ActivatedRoute,
     public courseService: CourseService,
@@ -230,6 +232,33 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
       description: this.translate.instant('meta.coursesDescription'),
       author: 'Zerofiltre.tech',
       image: 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065'
+    });
+
+    this.jsonLd.setData({
+      '@context': 'http://schema.org',
+      '@type': 'Article',
+      'headline': 'Example Article',
+      'description': 'This is an example article.',
+      'author': {
+        '@type': 'Person',
+        'name': 'John Doe'
+      },
+      'datePublished': '2024-02-29',
+      'dateModified': '2024-02-29',
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Example Publisher',
+        'logo': {
+          '@type': 'ImageObject',
+          'url': 'https://www.example.com/logo.png'
+        }
+      },
+      'image': {
+        '@type': 'ImageObject',
+        'url': 'https://www.example.com/image.jpg',
+        'width': '800',
+        'height': '600'
+      }
     });
   }
 

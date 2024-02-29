@@ -43,6 +43,7 @@
     "ngx-doc-viewer": "^15.0.1",
     "ngx-intl-tel-input": "^3.2.0",
     "ngx-markdown": "^13.0.0",
+    "ngx-seo": "^6.0.0",
     "ngx-skeleton-loader": "^4.0.0",
     "prismjs": "^1.27.0",
     "prom-client": "^14.0.1",
