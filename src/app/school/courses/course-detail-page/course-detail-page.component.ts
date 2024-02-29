@@ -17,6 +17,7 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
+import { JsonLdService } from 'ngx-seo';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -68,6 +69,7 @@ export class CourseDetailPageComponent implements OnInit {
 
   constructor(
     private seo: SeoService,
+    private jsonLd: JsonLdService,
     private route: ActivatedRoute,
     private router: Router,
     private courseService: CourseService,
@@ -144,6 +146,20 @@ export class CourseDetailPageComponent implements OnInit {
             author: data.author?.fullName,
             publishDate: data.publishedAt
           })
+
+          const dataSchema = {
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "name": data.title,
+            "description": data.summary,
+            "provider": {
+              "@type": "Organization",
+              "name": "Zerofiltre",
+              "sameAs": "https://www.zerofiltre.tech"
+            }
+          }
+    
+          this.jsonLd.setData(dataSchema)
 
           this.isLoading = false;
           this.isSubscriber = this.courseService.isSubscriber(data.id);
