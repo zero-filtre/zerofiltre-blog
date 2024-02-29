@@ -260,6 +260,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
         'height': '600'
       }
     });
+    
   }
 
 
