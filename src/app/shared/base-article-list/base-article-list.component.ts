@@ -152,19 +152,23 @@ export class BaseArticleListComponent implements OnInit {
         "@context": "https://schema.org",
         "@type": "ItemList",
         "itemListElement": content.map((article: Article, index: number) => ({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          "headline": article.title,
-          "image": [article.thumbnail],
-          "url": `${this.siteUrl}/articles/${article.id}`,
-          "datePublished": article.publishedAt,
-          "dateModified": article.lastPublishedAt,
-          "author": [{
-            "@type": "Person",
-            "name": article.author.fullName,
-            "jobTitle": article.author.profession,
-            "url": article.author.website
-          }]
+          "@type": "ListItem",
+          "position": index+1,
+          "item": {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "url": `${this.siteUrl}/articles/${article.id}`,
+            "headline": article.title,
+            "image": [article.thumbnail],
+            "datePublished": article.publishedAt,
+            "dateModified": article.lastPublishedAt,
+            "author": [{
+              "@type": "Person",
+              "name": article.author.fullName,
+              "jobTitle": article.author.profession,
+              "url": article.author.website
+            }]
+          }
         }))
       }
 
