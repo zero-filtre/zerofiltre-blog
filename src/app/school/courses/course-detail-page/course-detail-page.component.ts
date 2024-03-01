@@ -150,14 +150,46 @@ export class CourseDetailPageComponent implements OnInit {
           const dataSchema = {
             "@context": "https://schema.org",
             "@type": "Course",
+            "author": data.author.fullName,
             "name": data.title,
             "description": data.summary,
+            "image": data.thumbnail,
+            // "hasCourseInstance": {
+            //   "@type": "CourseInstance",
+            //   "courseMode": ["distance learning","Online"],
+            //   "courseWorkload": "2 hours of lectures, 1 hour of lab work and 3 hours of independent study per week",
+            // },
+            "offers": {
+              "@type": "Offer",
+              "price": data.price.toString(),
+              "priceCurrency": "EUR"
+            },
             "provider": {
               "@type": "Organization",
               "name": "Zerofiltre",
               "sameAs": "https://www.zerofiltre.tech"
             }
           }
+
+          // const dataSchema = {
+          //   "@context": "https://schema.org",
+          //   "@type": "CourseInstance",
+          //   "author": data.author.fullName,
+          //   "datePublished": data.publishedAt,
+          //   "description": data.summary,
+          //   "image": data.thumbnail,
+          //   "courseWorkload": "2 hours of lectures, 1 hour of lab work and 3 hours of independent study per week",
+          //   "offers": {
+          //     "@type": "Offer",
+          //     "price": data.price.toString(),
+          //     "priceCurrency": "EUR"
+          //   },
+          //   "provider": {
+          //     "@type": "Organization",
+          //     "name": "Zerofiltre",
+          //     "sameAs": "https://www.zerofiltre.tech"
+          //   }
+          // }
     
           this.jsonLd.setData(dataSchema)
 
