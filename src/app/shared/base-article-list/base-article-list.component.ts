@@ -166,7 +166,7 @@ export class BaseArticleListComponent implements OnInit {
               "@type": "Person",
               "name": article.author.fullName,
               "jobTitle": article.author.profession,
-              "url": article.author.website
+              "url": `${this.siteUrl}/user/${article.author.id}`
             }]
           }
         }))

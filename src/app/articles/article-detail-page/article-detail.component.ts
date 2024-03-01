@@ -24,6 +24,12 @@ import { JsonLd } from 'ngx-seo/lib/json-ld';
   styleUrls: ['./article-detail.component.css']
 })
 export class ArticleDetailComponent implements OnInit, OnDestroy {
+  
+  readonly blogUrl = environment.blogUrl;
+  readonly activeCourseModule = environment.courseRoutesActive === 'true';
+  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
+  siteUrl = this.prod ? "https://zerofiltre.tech" : "https://dev.zerofiltre.tech"
+
   public article!: Article;
   public articleId!: string;
   public similarArticles!: Article[];
@@ -31,7 +37,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public loading!: boolean;
   private isPublished = new BehaviorSubject<any>(null);
   public isPublished$ = this.isPublished.asObservable();
-  readonly blogUrl = environment.blogUrl;
 
   public nberOfViews$: Observable<any>;
 
@@ -159,7 +164,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
               "@type": "Person",
               "name": response.author.fullName,
               "jobTitle": response.author.profession,
-              "url": response.author.website
+              "url": `${this.siteUrl}/user/${response.author.id}`
             }]
           } as JsonLd | any
 
