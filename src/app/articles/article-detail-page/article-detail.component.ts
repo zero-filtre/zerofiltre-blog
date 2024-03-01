@@ -15,6 +15,8 @@ import { MessageService } from 'src/app/services/message.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { isPlatformBrowser } from '@angular/common';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { JsonLdService } from 'ngx-seo';
+import { JsonLd } from 'ngx-seo/lib/json-ld';
 
 @Component({
   selector: 'app-article-detail',
@@ -80,6 +82,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private articleService: ArticleService,
     private seo: SeoService,
+    public jsonLd: JsonLdService,
     private router: Router,
     public authService: AuthService,
     public messageService: MessageService,
@@ -142,8 +145,25 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
             description: response.summary,
             image: response.thumbnail,
             author: response.author?.fullName,
-            publishDate: response.publishedAt
+            publishDate: response.publishedAt?.substring(0, 10)
           })
+
+          const dataSchema = {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": response.title,
+            "image": [response.thumbnail],
+            "datePublished": response.publishedAt?.substring(0, 10),
+            "dateModified": response.lastPublishedAt?.substring(0, 10),
+            "author": [{
+              "@type": "Person",
+              "name": response.author.fullName,
+              "jobTitle": response.author.profession,
+              "url": response.author.website
+            }]
+          } as JsonLd | any
+
+          this.jsonLd.setData(dataSchema)
 
           this.nberOfReactions.next(response?.reactions?.length);
           this.fireReactions.next(this.findTotalReactionByAction('FIRE', response?.reactions));

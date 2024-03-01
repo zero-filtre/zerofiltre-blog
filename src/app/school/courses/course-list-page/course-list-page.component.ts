@@ -233,34 +233,6 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
       author: 'Zerofiltre.tech',
       image: 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065'
     });
-
-    // this.jsonLd.setData({
-    //   '@context': 'http://schema.org',
-    //   '@type': 'Article',
-    //   'headline': 'Example Article',
-    //   'description': 'This is an example article.',
-    //   'author': {
-    //     '@type': 'Person',
-    //     'name': 'John Doe'
-    //   },
-    //   'datePublished': '2024-02-29',
-    //   'dateModified': '2024-02-29',
-    //   'publisher': {
-    //     '@type': 'Organization',
-    //     'name': 'Example Publisher',
-    //     'logo': {
-    //       '@type': 'ImageObject',
-    //       'url': 'https://www.example.com/logo.png'
-    //     }
-    //   },
-    //   'image': {
-    //     '@type': 'ImageObject',
-    //     'url': 'https://www.example.com/image.jpg',
-    //     'width': '800',
-    //     'height': '600'
-    //   }
-    // });
-    
   }
 
 

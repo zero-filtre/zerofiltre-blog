@@ -126,7 +126,7 @@ export class BaseCourseListComponent implements OnInit {
             },
             "description": course.summary,
             "image": course.thumbnail,
-            "datePublished": course.publishedAt.substring(0, 10),
+            "datePublished": course.publishedAt?.substring(0, 10),
             "hasCourseInstance": {
               "@type": "CourseInstance",
               "courseMode": "online",

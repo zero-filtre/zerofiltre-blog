@@ -145,7 +145,7 @@ export class CourseDetailPageComponent implements OnInit {
             description: data.summary,
             image: data.thumbnail,
             author: data.author?.fullName,
-            publishDate: data.publishedAt
+            publishDate: data.publishedAt?.substring(0, 10)
           })
 
           const dataSchema = {
@@ -158,7 +158,7 @@ export class CourseDetailPageComponent implements OnInit {
             "name": data.title,
             "description": data.summary,
             "image": data.thumbnail,
-            "datePublished": data.publishedAt.substring(0, 10),
+            "datePublished": data.publishedAt?.substring(0, 10),
             "hasCourseInstance": {
               "@type": "CourseInstance",
               "courseMode": "online",
