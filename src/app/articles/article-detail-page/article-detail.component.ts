@@ -153,8 +153,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
             "@type": "Article",
             "headline": response.title,
             "image": [response.thumbnail],
-            "datePublished": response.publishedAt?.substring(0, 10),
-            "dateModified": response.lastPublishedAt?.substring(0, 10),
+            "datePublished": response.publishedAt,
+            "dateModified": response.lastPublishedAt,
             "author": [{
               "@type": "Person",
               "name": response.author.fullName,

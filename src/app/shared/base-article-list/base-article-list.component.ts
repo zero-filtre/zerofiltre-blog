@@ -157,8 +157,8 @@ export class BaseArticleListComponent implements OnInit {
           "headline": article.title,
           "image": [article.thumbnail],
           "url": `${this.siteUrl}/articles/${article.id}`,
-          "datePublished": article.publishedAt?.substring(0, 10),
-          "dateModified": article.lastPublishedAt?.substring(0, 10),
+          "datePublished": article.publishedAt,
+          "dateModified": article.lastPublishedAt,
           "author": [{
             "@type": "Person",
             "name": article.author.fullName,
