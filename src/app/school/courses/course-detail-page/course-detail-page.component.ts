@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { JsonLdService } from 'ngx-seo';
+import { JsonLd } from 'ngx-seo/lib/json-ld';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -150,17 +151,22 @@ export class CourseDetailPageComponent implements OnInit {
           const dataSchema = {
             "@context": "https://schema.org",
             "@type": "Course",
-            "author": data.author.fullName,
+            "author": {
+              "@type": "Person",
+              "name": data.author.fullName
+            },
             "name": data.title,
             "description": data.summary,
             "image": data.thumbnail,
-            // "hasCourseInstance": {
-            //   "@type": "CourseInstance",
-            //   "courseMode": ["distance learning","Online"],
-            //   "courseWorkload": "2 hours of lectures, 1 hour of lab work and 3 hours of independent study per week",
-            // },
+            "datePublished": data.publishedAt.substring(0, 10),
+            "hasCourseInstance": {
+              "@type": "CourseInstance",
+              "courseMode": "online",
+              "CourseWorkload": "PT5H"
+            },
             "offers": {
               "@type": "Offer",
+              "category": "Intermediaire",
               "price": data.price.toString(),
               "priceCurrency": "EUR"
             },
@@ -169,28 +175,8 @@ export class CourseDetailPageComponent implements OnInit {
               "name": "Zerofiltre",
               "sameAs": "https://www.zerofiltre.tech"
             }
-          }
+          } as JsonLd | any
 
-          // const dataSchema = {
-          //   "@context": "https://schema.org",
-          //   "@type": "CourseInstance",
-          //   "author": data.author.fullName,
-          //   "datePublished": data.publishedAt,
-          //   "description": data.summary,
-          //   "image": data.thumbnail,
-          //   "courseWorkload": "2 hours of lectures, 1 hour of lab work and 3 hours of independent study per week",
-          //   "offers": {
-          //     "@type": "Offer",
-          //     "price": data.price.toString(),
-          //     "priceCurrency": "EUR"
-          //   },
-          //   "provider": {
-          //     "@type": "Organization",
-          //     "name": "Zerofiltre",
-          //     "sameAs": "https://www.zerofiltre.tech"
-          //   }
-          // }
-    
           this.jsonLd.setData(dataSchema)
 
           this.isLoading = false;

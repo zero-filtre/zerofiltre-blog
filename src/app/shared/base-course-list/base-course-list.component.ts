@@ -120,15 +120,21 @@ export class BaseCourseListComponent implements OnInit {
             "@type": "Course",
             "url": `${this.siteUrl}/cours/${course.id}`,
             "name": course.title,
+            "author": {
+              "@type": "Person",
+              "name": course.author.fullName
+            },
             "description": course.summary,
             "image": course.thumbnail,
+            "datePublished": course.publishedAt.substring(0, 10),
             "hasCourseInstance": {
               "@type": "CourseInstance",
-              "courseMode": ["distance learning","Online"],
-              "courseWorkload": "2 hours of lectures, 1 hour of lab work and 3 hours of independent study per week",
+              "courseMode": "online",
+              "CourseWorkload": "PT5H"
             },
             "offers": {
               "@type": "Offer",
+              "category": "Intermediaire",
               "price": course.price,
               "priceCurrency": "EUR"
             },
