@@ -14,6 +14,7 @@ import { sortByNameAsc } from 'src/app/services/utilities.service';
 import { TagService } from 'src/app/services/tag.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Course } from '../course';
+import { JsonLdService } from 'ngx-seo';
 
 @Component({
   selector: 'app-course-list-page',
@@ -47,6 +48,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,
+    public jsonLd: JsonLdService,
     public router: Router,
     public route: ActivatedRoute,
     public courseService: CourseService,
@@ -57,7 +59,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
     private tagService: TagService,
     @Inject(PLATFORM_ID) public platformId: any
   ) {
-    super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
+    super(loadEnvService, seo, jsonLd, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
   }
 
   fetchListOfTags(): void {

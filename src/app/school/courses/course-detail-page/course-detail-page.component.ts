@@ -17,6 +17,8 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
+import { JsonLdService } from 'ngx-seo';
+import { JsonLd } from 'ngx-seo/lib/json-ld';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -68,6 +70,7 @@ export class CourseDetailPageComponent implements OnInit {
 
   constructor(
     private seo: SeoService,
+    private jsonLd: JsonLdService,
     private route: ActivatedRoute,
     private router: Router,
     private courseService: CourseService,
@@ -142,7 +145,39 @@ export class CourseDetailPageComponent implements OnInit {
             description: data.summary,
             image: data.thumbnail,
             author: data.author?.fullName,
+            publishDate: data.publishedAt?.substring(0, 10)
           })
+
+          const dataSchema = {
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "author": {
+              "@type": "Person",
+              "name": data.author.fullName
+            },
+            "name": data.title,
+            "description": data.summary,
+            "image": data.thumbnail,
+            "datePublished": data.publishedAt?.substring(0, 10),
+            "hasCourseInstance": {
+              "@type": "CourseInstance",
+              "courseMode": "online",
+              "CourseWorkload": "PT5H"
+            },
+            "offers": {
+              "@type": "Offer",
+              "category": "Intermediaire",
+              "price": data.price.toString(),
+              "priceCurrency": "EUR"
+            },
+            "provider": {
+              "@type": "Organization",
+              "name": "Zerofiltre",
+              "sameAs": "https://www.zerofiltre.tech"
+            }
+          } as JsonLd | any
+
+          this.jsonLd.setData(dataSchema)
 
           this.isLoading = false;
           this.isSubscriber = this.courseService.isSubscriber(data.id);

@@ -15,6 +15,7 @@ import { BaseArticleListComponent } from '../../shared/base-article-list/base-ar
 import { NavigationService } from '../../services/navigation.service';
 import { TagService } from 'src/app/services/tag.service';
 import { MessageService } from 'src/app/services/message.service';
+import { JsonLdService } from 'ngx-seo';
 
 @Component({
   selector: 'app-articles-list',
@@ -51,6 +52,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,
+    public jsonLd: JsonLdService,
     public articleService: ArticleService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
@@ -64,7 +66,7 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
     public messageService: MessageService,
     @Inject(PLATFORM_ID) public platformId: any
   ) {
-    super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, messageService, platformId)
+    super(loadEnvService, seo, jsonLd, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, messageService, platformId)
   }
 
   fetchListOfTags(): void {

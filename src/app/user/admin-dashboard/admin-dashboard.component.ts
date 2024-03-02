@@ -10,6 +10,7 @@ import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from '../auth.service';
 import { BaseArticleListComponent } from '../../shared/base-article-list/base-article-list.component';
 import { MessageService } from 'src/app/services/message.service';
+import { JsonLdService } from 'ngx-seo';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -21,6 +22,7 @@ export class AdminDashboardComponent extends BaseArticleListComponent implements
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,
+    public jsonLd: JsonLdService,
     public articleService: ArticleService,
     public router: Router,
     public route: ActivatedRoute,
@@ -32,7 +34,7 @@ export class AdminDashboardComponent extends BaseArticleListComponent implements
     public messageService: MessageService,
     @Inject(PLATFORM_ID) public platformId: any
   ) {
-    super(loadEnvService, seo, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, messageService, platformId)
+    super(loadEnvService, seo, jsonLd, articleService, router, route, authService, translate, navigate, dialogEntryRef, dialogDeleteRef, messageService, platformId)
   }
 
   fetchAllArticlesAsAdmin(status: string) {

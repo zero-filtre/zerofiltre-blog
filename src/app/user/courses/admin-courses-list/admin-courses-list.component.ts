@@ -11,6 +11,7 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { BaseCourseListComponent } from 'src/app/shared/base-course-list/base-course-list.component';
 import { AuthService } from '../../auth.service';
+import { JsonLdService } from 'ngx-seo';
 
 @Component({
   selector: 'app-admin-courses-list',
@@ -40,6 +41,7 @@ export class AdminCoursesListComponent extends BaseCourseListComponent implement
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,
+    public jsonLd: JsonLdService,
     public router: Router,
     public route: ActivatedRoute,
     public courseService: CourseService,
@@ -49,7 +51,7 @@ export class AdminCoursesListComponent extends BaseCourseListComponent implement
     public dialogDeleteRef: MatDialog,
     @Inject(PLATFORM_ID) public platformId: any
   ) {
-    super(loadEnvService, seo, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
+    super(loadEnvService, seo, jsonLd, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
   }
 
   isAuthor(course: Course): boolean {

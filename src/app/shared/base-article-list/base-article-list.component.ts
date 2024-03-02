@@ -15,6 +15,8 @@ import { calcReadingTime, capitalizeString, nFormatter } from '../../services/ut
 import { ArticleEntryPopupComponent } from '../../articles/article-entry-popup/article-entry-popup.component';
 import { MessageService } from 'src/app/services/message.service';
 import { User } from 'src/app/user/user.model';
+import { JsonLdService } from 'ngx-seo';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-base-article-list',
@@ -22,6 +24,12 @@ import { User } from 'src/app/user/user.model';
   styleUrls: ['./base-article-list.component.css']
 })
 export class BaseArticleListComponent implements OnInit {
+
+  readonly blogUrl = environment.blogUrl;
+  readonly activeCourseModule = environment.courseRoutesActive === 'true';
+  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
+  siteUrl = this.prod ? "https://zerofiltre.tech" : "https://dev.zerofiltre.tech"
+
   articles!: Article[];
 
   PUBLISHED = 'published';
@@ -50,6 +58,7 @@ export class BaseArticleListComponent implements OnInit {
   constructor(
     public loadEnvService: LoadEnvService,
     public seo: SeoService,
+    public jsonLd: JsonLdService,
     public articleService: ArticleService,
     public router: Router,
     public route: ActivatedRoute,
@@ -138,6 +147,33 @@ export class BaseArticleListComponent implements OnInit {
 
   handleFetchedArticles = {
     next: ({ content, hasNext }: any) => {
+
+      const dataSchema = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": content.map((article: Article, index: number) => ({
+          "@type": "ListItem",
+          "position": index+1,
+          "item": {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "url": `${this.siteUrl}/articles/${article.id}`,
+            "headline": article.title,
+            "image": [article.thumbnail],
+            "datePublished": article.publishedAt,
+            "dateModified": article.lastPublishedAt,
+            "author": [{
+              "@type": "Person",
+              "name": article.author.fullName,
+              "jobTitle": article.author.profession,
+              "url": `${this.siteUrl}/user/${article.author.id}`
+            }]
+          }
+        }))
+      }
+
+      this.jsonLd.setData(dataSchema)
+
       this.articles = content;
       this.setArticlesReadingTime(this.articles);
 

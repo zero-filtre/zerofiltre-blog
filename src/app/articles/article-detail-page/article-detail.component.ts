@@ -15,6 +15,8 @@ import { MessageService } from 'src/app/services/message.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { isPlatformBrowser } from '@angular/common';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { JsonLdService } from 'ngx-seo';
+import { JsonLd } from 'ngx-seo/lib/json-ld';
 
 @Component({
   selector: 'app-article-detail',
@@ -22,6 +24,12 @@ import { MediaMatcher } from '@angular/cdk/layout';
   styleUrls: ['./article-detail.component.css']
 })
 export class ArticleDetailComponent implements OnInit, OnDestroy {
+  
+  readonly blogUrl = environment.blogUrl;
+  readonly activeCourseModule = environment.courseRoutesActive === 'true';
+  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
+  siteUrl = this.prod ? "https://zerofiltre.tech" : "https://dev.zerofiltre.tech"
+
   public article!: Article;
   public articleId!: string;
   public similarArticles!: Article[];
@@ -29,7 +37,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public loading!: boolean;
   private isPublished = new BehaviorSubject<any>(null);
   public isPublished$ = this.isPublished.asObservable();
-  readonly blogUrl = environment.blogUrl;
 
   public nberOfViews$: Observable<any>;
 
@@ -80,6 +87,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private articleService: ArticleService,
     private seo: SeoService,
+    public jsonLd: JsonLdService,
     private router: Router,
     public authService: AuthService,
     public messageService: MessageService,
@@ -142,7 +150,25 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
             description: response.summary,
             image: response.thumbnail,
             author: response.author?.fullName,
+            publishDate: response.publishedAt?.substring(0, 10)
           })
+
+          const dataSchema = {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": response.title,
+            "image": [response.thumbnail],
+            "datePublished": response.publishedAt,
+            "dateModified": response.lastPublishedAt,
+            "author": [{
+              "@type": "Person",
+              "name": response.author.fullName,
+              "jobTitle": response.author.profession,
+              "url": `${this.siteUrl}/user/${response.author.id}`
+            }]
+          } as JsonLd | any
+
+          this.jsonLd.setData(dataSchema)
 
           this.nberOfReactions.next(response?.reactions?.length);
           this.fireReactions.next(this.findTotalReactionByAction('FIRE', response?.reactions));

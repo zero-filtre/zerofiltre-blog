@@ -12,13 +12,19 @@ export class SeoService {
   transparentHeader!: boolean;
   isFooterMounted = true;
 
-  constructor(private title: Title, private meta: Meta, private router: Router, private translate: TranslateService) { }
+  constructor(
+    private title: Title,
+    private meta: Meta,
+    private router: Router,
+    private translate: TranslateService
+  ) { }
 
   generateTags({ 
     title = this.translate.instant('meta.homeTitle'),
     description = this.translate.instant('meta.homeDescription'),
     image = 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065', 
-    author = 'Zerofiltre.tech'
+    author = 'Zerofiltre.tech',
+    publishDate = ''
   }) {
 
     this.title.setTitle(title);
@@ -30,6 +36,7 @@ export class SeoService {
       { name: 'description', property: 'og:description', content: description },
       { name: 'image', property: 'og:image', content: image },
       { name: 'author', content: author },
+      { name: 'publish_date', content: publishDate },
       // Twitter Card
       { name: 'twitter:image', content: image },
       { name: 'twitter:card', content: 'summary' },
