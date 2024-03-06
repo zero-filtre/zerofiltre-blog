@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Course } from 'src/app/school/courses/course';
 import { PaymentConfig } from 'src/app/school/studentCourse';
 import { MessageService } from 'src/app/services/message.service';
 import { PaymentService } from 'src/app/services/payment.service';
+import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
 
@@ -27,6 +29,8 @@ export class ProPageComponent {
     private notify: MessageService,
     private authService: AuthService,
     private route: ActivatedRoute,
+    private seo: SeoService,
+    private translate: TranslateService
   ) { }
 
 
@@ -139,6 +143,11 @@ export class ProPageComponent {
   ]
 
   ngOnInit(): void {
-    //  Do nothing
+    this.seo.generateTags({
+      title: this.translate.instant('meta.proPageTitle'),
+      description: this.translate.instant('meta.proPageDesc'),
+      author: 'Zerofiltre.tech',
+      image: 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065'
+    });
   }
 }
