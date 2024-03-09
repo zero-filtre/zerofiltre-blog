@@ -370,7 +370,7 @@
 
             <div class="" aria-labelledby="article-tags">
                 <ng-template [ngIf]="tagList?.length">
-                    <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
+                    <!-- <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
                         <ng-container *ngFor="let tag of tagList">
                             <button (click)="sortByTag(tag?.name)" type="button" aria-labelledby="A tag"
                                 class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
@@ -382,7 +382,10 @@
                                     class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
                             </button>
                         </ng-container>
-                    </div>
+                    </div> -->
+
+                    <app-collapsible-tags [tagList]="tagList" (activeTagEvent)="setActiveTag($event)" (filterEvent)="sortByTag(activeTag)"></app-collapsible-tags>
+
                 </ng-template>
 
                 <ng-template [ngIf]="loading && !tagList?.length">

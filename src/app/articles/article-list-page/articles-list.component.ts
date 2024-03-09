@@ -85,10 +85,13 @@ export class ArticlesListComponent extends BaseArticleListComponent implements O
       })
   }
 
-  sortByTag(tagName: any): void {
-    this.openedTagsDropdown = false;
-    this.activeTag = tagName;
+  setActiveTag(tag: string) {
+    this.activeTag = tag;
+  }
 
+  sortByTag(tagName: string): void {
+    this.openedTagsDropdown = false;
+    // this.activeTag = tagName;
     this.router.navigateByUrl(`/articles?tag=${tagName}`)
 
     this.scrollyPageNumber = 0;

@@ -78,10 +78,13 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
       })
   }
 
+  setActiveTag(tag: string) {
+    this.activeTag = tag;
+  }
+
   sortByTag(tagName: any): void {
     this.openedTagsDropdown = false;
-    this.activeTag = tagName;
-
+    // this.activeTag = tagName;
     this.router.navigateByUrl(`/cours?tag=${tagName}`)
 
     this.scrollyPageNumber = 0;
