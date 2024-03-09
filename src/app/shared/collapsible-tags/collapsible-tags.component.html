@@ -1,6 +1,6 @@
-<div (click)="toggleSection()" class="border p-1" [@expandCollapse]="isOpen ? 'expanded' : 'collapsed'">
+<div (click)="toggleSection()" class="relative flex border p-1" [@expandCollapse]="isOpen ? 'expanded' : 'collapsed'" *appShellNoRender>
 
-    <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
+    <div class="tagList-container order-2 flex flex-wrap gap-1.5">
         <ng-container *ngFor="let tag of tagList">
             <button (click)="filterByTag(tag.name)" type="button" aria-labelledby="A tag"
                 [ngClass]="{'active-tag': activeTag == tag.name}"
@@ -12,5 +12,9 @@
             </button>
         </ng-container>
     </div>
+
+    <!-- <div class="absolute inset-x-0 bottom-0 bg-red-500 flex items-center justify-center">btn</div> -->
+    <!-- <div class="absolute inset-y-0 left-0 bg-red-500 flex items-center justify-center">btn</div> -->
+    <div class="bg-red-500 order-1 flex items-center justify-center">btn</div>
 
 </div>
