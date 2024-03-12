@@ -1,4 +1,4 @@
-<div (click)="toggleSection()" class="relative flex border p-1" [@expandCollapse]="isOpen ? 'expanded' : 'collapsed'" *appShellNoRender>
+<div class="relative flex gap-1" [@expandCollapse]="isOpen ? 'expanded' : 'collapsed'" *appShellNoRender>
 
     <div class="tagList-container order-2 flex flex-wrap gap-1.5">
         <ng-container *ngFor="let tag of tagList">
@@ -13,8 +13,27 @@
         </ng-container>
     </div>
 
-    <!-- <div class="absolute inset-x-0 bottom-0 bg-red-500 flex items-center justify-center">btn</div> -->
-    <!-- <div class="absolute inset-y-0 left-0 bg-red-500 flex items-center justify-center">btn</div> -->
-    <div class="bg-red-500 order-1 flex items-center justify-center">btn</div>
+    <!-- <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary-500 flex items-center justify-center h-12">
+        <button (click)="toggleSection()" class="text-white w-full h-full flex items-center justify-center" aria-label="User profile icon with a menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-5 h-5 transition-all duration-200"
+                [ngClass]="{'!rotate-90': isOpen}">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+        </button>
+    </div> -->
+
+    <div class="bg-primary-500 order-1 flex items-center justify-center rounded-s-xl">
+        
+        <button (click)="toggleSection()" class="text-white w-full h-full" aria-label="User profile icon with a menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-5 h-5 transition-all duration-200"
+                [ngClass]="{'!rotate-90': isOpen}">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+        </button>
+
+    </div>
+    <!-- <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary-500 flex items-center justify-center h-5 rounded-s-xl"></div> -->
 
 </div>
