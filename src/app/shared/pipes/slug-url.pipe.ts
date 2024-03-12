@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Article } from 'src/app/articles/article.model';
 import { Course } from 'src/app/school/courses/course';
 import { Lesson } from 'src/app/school/lessons/lesson';

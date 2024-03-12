@@ -123,7 +123,7 @@
                                             </button>
 
                                             <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
-                                                <a aria-labelledby="Link to article edit page" routerLink="{{article.id}}/edit"
+                                                <a aria-labelledby="Link to article edit page" routerLink="/articles/{{article|slugify}}/edit"
                                                     class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
@@ -148,7 +148,7 @@
                                 </div>
 
                                 <div class="mt-2">
-                                    <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
+                                    <a aria-labelledby="Link to about page" routerLink="/articles/{{article|slugify}}"
                                         class="article-title">
                                         <h4
                                             class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
