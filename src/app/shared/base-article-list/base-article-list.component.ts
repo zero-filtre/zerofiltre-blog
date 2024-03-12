@@ -17,6 +17,7 @@ import { MessageService } from 'src/app/services/message.service';
 import { User } from 'src/app/user/user.model';
 import { JsonLdService } from 'ngx-seo';
 import { environment } from 'src/environments/environment';
+import { SlugUrlPipe } from '../pipes/slug-url.pipe';
 
 @Component({
   selector: 'app-base-article-list',
@@ -68,7 +69,8 @@ export class BaseArticleListComponent implements OnInit {
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
     public messageService: MessageService,
-    @Inject(PLATFORM_ID) public platformId: any
+    @Inject(PLATFORM_ID) public platformId: any,
+    // public slugify: SlugUrlPipe
   ) { }
 
   setArticlesReadingTime(articles: Article[]): void {
@@ -157,6 +159,7 @@ export class BaseArticleListComponent implements OnInit {
           "item": {
             "@context": "https://schema.org",
             "@type": "Article",
+            // "url": `${this.siteUrl}/articles/${this.slugify.transform(article)}`,
             "url": `${this.siteUrl}/articles/${article.id}`,
             "headline": article.title,
             "image": [article.thumbnail],

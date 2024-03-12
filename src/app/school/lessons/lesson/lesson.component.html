@@ -233,7 +233,7 @@
             
                     <div class="lesson_pagination my-10">
                         <div *ngIf="lesson" class="flex gap-5 lg:gap-10 font-semibold">
-                            <a *ngIf="prevLesson$|async as prev" routerLink="{{'/cours/'+ (course|slugify) + '/' + prev.id}}"
+                            <a *ngIf="prevLesson$|async as prev" routerLink="{{'/cours/'+ (course|slugify) + '/' + (prev|slugify)}}"
                                 class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                                     stroke="currentColor" class="w-5 h-5 mt-0.5">
@@ -242,7 +242,7 @@
                                 <span class="w-full text-center">{{prev.title}}</span>
                             </a>
             
-                            <a *ngIf="nextLesson$|async as next" routerLink="{{'/cours/'+ (course|slugify) + '/' + next.id}}"
+                            <a *ngIf="nextLesson$|async as next" routerLink="{{'/cours/'+ (course|slugify) + '/' + (next|slugify)}}"
                                 class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
                                 <span class="w-full text-center">{{next.title}}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"

@@ -66,6 +66,7 @@ export class BaseCourseListComponent implements OnInit {
     public translate: TranslateService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
+    // public slugify: SlugUrlPipe
   ) { }
 
   get canCreateCourse() {
@@ -118,6 +119,7 @@ export class BaseCourseListComponent implements OnInit {
           "position": index+1,
           "item": {
             "@type": "Course",
+            // "url": `${this.siteUrl}/cours/${this.slugify.transform(course)}`,
             "url": `${this.siteUrl}/cours/${course.id}`,
             "name": course.title,
             "author": {

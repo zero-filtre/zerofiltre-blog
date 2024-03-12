@@ -21,6 +21,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
 import { PaymentService } from 'src/app/services/payment.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 
 
 @Component({
@@ -93,7 +94,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     private vimeo: VimeoService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private slugify: SlugUrlPipe
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -138,7 +140,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.isCompleting = false;
           this.completed = true;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
-          if (this.nextLesson) this.router.navigateByUrl(`cours/${this.courseID}/${this.nextLesson.id}`);
+          if (this.nextLesson) this.router.navigateByUrl(`cours/${this.slugify.transform(this.course)}/${this.slugify.transform(this.nextLesson)}`);
         })
     } else {
       this.courseService.markLessonAsInComplete(data)

@@ -126,14 +126,14 @@ export class CurriculumSidebarComponent implements OnInit {
     });
   }
 
-  openLessonInitDialog(chapterId: number, courseId: number): void {
+  openLessonInitDialog(chapterId: number, course: Course): void {
     this.dialogNewLessonRef.open(LessonInitPopupComponent, {
       width: '850px',
       height: '350px',
       panelClass: 'article-popup-panel',
       data: {
         chapterID: chapterId,
-        courseID: courseId,
+        course: course,
         history: this.router.url
       }
     });
