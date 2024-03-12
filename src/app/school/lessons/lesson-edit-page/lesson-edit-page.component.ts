@@ -486,8 +486,8 @@ export class LessonEditPageComponent implements OnInit {
   ngOnInit(): void {
     this.lesson$ = this.route.paramMap.pipe(
       switchMap(params => {
-        this.lessonID = params.get('lesson_id');
-        this.courseID = params.get('course_id');
+        this.lessonID = params.get('lesson_id')?.split('-')[0];
+        this.courseID = params.get('course_id')?.split('-')[0];
         return this.getLesson();
       })
     );

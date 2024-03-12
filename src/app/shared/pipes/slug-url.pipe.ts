@@ -13,7 +13,8 @@ export class SlugUrlPipe implements PipeTransform {
 
     const slug = object.id + '-' + object.title
     return slug.toLowerCase().trim()
-      .replace(/[^\w\-]+/g, ' ')
+      .replace(/[^\w\-çîéèœô]+/g, ' ')
+      .trim()
       .replace(/\s+/g, '-')
 
   }

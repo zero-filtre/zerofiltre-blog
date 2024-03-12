@@ -318,7 +318,7 @@ export class CourseEditPageComponent implements OnInit {
     this.course$ = this.route.paramMap
       .pipe(
         switchMap(params => {
-          this.courseID = params.get('course_id');
+          this.courseID = params.get('course_id')?.split('-')[0];
           this.fetchListOfTags();
           return this.getCourse();;
         })

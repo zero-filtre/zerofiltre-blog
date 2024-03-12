@@ -198,7 +198,7 @@
 
                                 <div class="actions flex items-center lg:gap-2 text-secondary">
                                     <button (click)="openSectionEditDialog(section)"
-                                        aria-labelledby="Button of section edit page" routerLink="/cours/{{course.id}}/edit/"
+                                        aria-labelledby="Button of section edit page" routerLink="/cours/{{course|slugify}}/edit/"
                                         class="flex items-end p-2 lg:px-4 lg:py-2 rounded-lg hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="w-4 lg:w-6 lg:h-6">
