@@ -78,7 +78,7 @@
                 <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles; let i=index" class="space-y-11">
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
-                            <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
+                            <a aria-labelledby="Link to about page" routerLink="/articles/{{article | slugify}}"
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -347,24 +347,7 @@
 
             <div class="" aria-labelledby="article-tags">
                 <ng-template [ngIf]="tagList">
-
-                    <!-- <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
-                        <ng-container *ngFor="let tag of tagList">
-                            <button (click)="sortByTag(tag.name)" type="button" aria-labelledby="A tag"
-                                [ngClass]="{'active-tag': activeTag == tag.name}"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span
-                                    class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
-                            </button>
-                        </ng-container>
-                    </div> -->
-
                     <app-collapsible-tags [tagList]="tagList" (activeTagEvent)="setActiveTag($event)" (filterEvent)="sortByTag(activeTag)"></app-collapsible-tags>
-
                 </ng-template>
 
                 <ng-template [ngIf]="loading && !tagList">

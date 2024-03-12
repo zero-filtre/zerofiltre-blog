@@ -315,7 +315,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.paramMap.subscribe(
       params => {
-        this.articleId = params.get('id')!;
+        const parsedParams = params.get('id')?.split('-')[0]
+        this.articleId = parsedParams!;
         this.getCurrentArticle(this.articleId);
       }
     );
