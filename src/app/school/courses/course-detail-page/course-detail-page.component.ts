@@ -247,21 +247,10 @@ export class CourseDetailPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.course$ = this.route.paramMap
-    //   .pipe(
-    //     switchMap(params => {
-    //       this.courseID = params.get('course_id');
-
-    //       this.chapters$ = this.chapterService
-    //         .fetchAllChapters(this.courseID);
-
-    //       return this.getCourse();
-    //     })
-    //   );
-
     this.route.paramMap.subscribe(
       params => {
-        this.courseID = params.get('course_id');
+        const parsedParams = params.get('course_id')?.split('-')[0]
+        this.courseID = parsedParams!;
         this.getCourse(this.courseID);
       }
     );

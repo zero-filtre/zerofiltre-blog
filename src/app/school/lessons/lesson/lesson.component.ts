@@ -428,15 +428,16 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.seo.unmountFooter();
-    this.courseID = this.route.snapshot.paramMap.get('course_id');
-    this.lessonID = this.route.snapshot.paramMap.get('lesson_id');
+    this.courseID = this.route.snapshot.paramMap.get('course_id')?.split('-')[0];
+    this.lessonID = this.route.snapshot.paramMap.get('lesson_id')?.split('-')[0];
 
     this.loadCourseData(this.courseID);
     this.loadAllChapters(this.courseID, this.lessonID);
 
     this.route.paramMap.subscribe(
       params => {
-        this.lessonID = params.get('lesson_id')!;
+        const parsedParams = params.get('lesson_id')?.split('-')[0]
+        this.lessonID = parsedParams!;
         this.loadLessonData(this.lessonID);
       }
     );

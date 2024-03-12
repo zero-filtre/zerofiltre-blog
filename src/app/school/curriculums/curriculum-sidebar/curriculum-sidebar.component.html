@@ -125,7 +125,7 @@
                                                     <div
                                                         class="lesson_link w-full group flex justify-between items-center gap-2">
                                                         <div class="w-full flex items-center gap-2 pr-3">
-                                                            <a routerLink="{{'/cours/'+course?.id+'/'+lesson?.id}}"
+                                                            <a routerLink="{{'/cours/'+(course|slugify)+'/'+(lesson|slugify)}}"
                                                                 [style.pointer-events]="lesson?.free && !canAccessCourse ? 'auto' : 'auto'"
                                                                 class="w-full flex items-center p-3 gap-2"
                                                                 (click)="mobileQuery.matches ? drawer?.toggle() : null">
