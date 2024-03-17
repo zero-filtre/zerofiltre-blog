@@ -11,15 +11,12 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
-import { calcReadingTime, capitalizeString, nFormatter } from '../../services/utilities.service';
+import { calcReadingTime, capitalizeString, nFormatter, slugify } from '../../services/utilities.service';
 import { ArticleEntryPopupComponent } from '../../articles/article-entry-popup/article-entry-popup.component';
 import { MessageService } from 'src/app/services/message.service';
 import { User } from 'src/app/user/user.model';
 import { JsonLdService } from 'ngx-seo';
 import { environment } from 'src/environments/environment';
-import { SlugUrlPipe } from '../pipes/slug-url.pipe';
-import { Course } from 'src/app/school/courses/course';
-import { Lesson } from 'src/app/school/lessons/lesson';
 
 @Component({
   selector: 'app-base-article-list',
@@ -149,16 +146,6 @@ export class BaseArticleListComponent implements OnInit {
     this.notScrolly = true;
   }
 
-  slugify(object: Article | Course | Lesson, ...args: any[]): any {
-
-    const slug = object?.id + '-' + object?.title
-    return slug.toLowerCase().trim()
-      .replace(/[^\w\-çîéèœôà]+/g, ' ')
-      .trim()
-      .replace(/\s+/g, '-')
-
-  }
-
   handleFetchedArticles = {
     next: ({ content, hasNext }: any) => {
 
@@ -171,7 +158,7 @@ export class BaseArticleListComponent implements OnInit {
           "item": {
             "@context": "https://schema.org",
             "@type": "Article",
-            "url": `${this.siteUrl}/articles/${this.slugify(article)}`,
+            "url": `${this.siteUrl}/articles/${slugify(article)}`,
             "headline": article.title,
             "image": [article.thumbnail],
             "datePublished": article.publishedAt,
