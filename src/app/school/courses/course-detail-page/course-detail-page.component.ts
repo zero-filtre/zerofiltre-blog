@@ -19,6 +19,8 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { JsonLdService } from 'ngx-seo';
 import { JsonLd } from 'ngx-seo/lib/json-ld';
+import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -80,6 +82,8 @@ export class CourseDetailPageComponent implements OnInit {
     private authService: AuthService,
     private paymentService: PaymentService,
     public dialogPaymentRef: MatDialog,
+    public slugify: SlugUrlPipe,
+    private location: Location,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
   ) {
@@ -140,6 +144,10 @@ export class CourseDetailPageComponent implements OnInit {
       )
       .subscribe({
         next: (data: Course) => {
+          const rootUrl = this.router.url.split('/')[1];
+          const sluggedUrl = `${rootUrl}/${this.slugify.transform(data)}`
+          this.location.replaceState(sluggedUrl);
+          
           this.seo.generateTags({
             title: data.title,
             description: data.summary,
@@ -147,6 +155,7 @@ export class CourseDetailPageComponent implements OnInit {
             author: data.author?.fullName,
             publishDate: data.publishedAt?.substring(0, 10)
           })
+
 
           const dataSchema = {
             "@context": "https://schema.org",

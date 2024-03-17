@@ -22,6 +22,7 @@ import { environment } from 'src/environments/environment';
 import { PaymentService } from 'src/app/services/payment.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -95,7 +96,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     private paymentService: PaymentService,
-    private slugify: SlugUrlPipe
+    private slugify: SlugUrlPipe,
+    private location: Location
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -176,6 +178,11 @@ export class LessonComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (lesson: Lesson) => {
           this.lesson = lesson;
+
+          const rootUrl = this.router.url.split('/')[1];
+          const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
+          this.location.replaceState(sluggedUrl);
+
           const desc = lesson?.summary || '';
           const img = this.course?.thumbnail || 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065'
 
@@ -227,7 +234,12 @@ export class LessonComponent implements OnInit, OnDestroy {
         tap(data => {
           this.loadingCourse = false;
           this.course = data;
-        })
+
+          const rootUrl = this.router.url.split('/')[1];
+          const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(this.lesson)}`
+          this.location.replaceState(sluggedUrl);
+        }),
+        shareReplay()
       )
   }
 
