@@ -11,7 +11,7 @@ import { Tag } from 'src/app/articles/article.model';
       state(
         'collapsed',
         style({
-          height: '100px',
+          height: '0',
           overflow: 'hidden',
         })
       ),
@@ -21,7 +21,7 @@ import { Tag } from 'src/app/articles/article.model';
           height: '*',
         })
       ),
-      transition('collapsed <=> expanded', [animate('300ms ease-in-out')]),
+      transition('collapsed <=> expanded', [animate('400ms ease-in-out')]),
     ]),
   ],
 })
@@ -43,10 +43,6 @@ export class CollapsibleTagsComponent {
   }
 
   isOpen: boolean = false;
-  tags: string[] = ['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5', 'Tag 6', 'Tag 6', 'Tag 6', 'Tag 6', 'Tag 6', 'Tag 6'
-    , 'Tag 6', 'Tag 6', 'Tag 6', 'Tag 6', 'Tag 6', 'Tag 6', 'Tag 6', 'Tag 6'
-    , 'Tag 6', 'Tag 6', 'Tag 6', 'Tag 6', 'Tag 6'
-    , 'Tag 6', 'Tag 6', 'Tag 6'];
 
   toggleSection(): void {
     this.isOpen = !this.isOpen;
