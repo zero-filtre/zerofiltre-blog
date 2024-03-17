@@ -5,10 +5,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { JsonLdService } from 'ngx-seo';
 import { Subscription } from 'rxjs';
+import { Article } from 'src/app/articles/article.model';
 import { Course } from 'src/app/school/courses/course';
 import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
 import { CourseInitPopupComponent } from 'src/app/school/courses/course-init-popup/course-init-popup.component';
 import { CourseService } from 'src/app/school/courses/course.service';
+import { Lesson } from 'src/app/school/lessons/lesson';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
@@ -66,7 +68,6 @@ export class BaseCourseListComponent implements OnInit {
     public translate: TranslateService,
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
-    // public slugify: SlugUrlPipe
   ) { }
 
   get canCreateCourse() {
@@ -108,6 +109,16 @@ export class BaseCourseListComponent implements OnInit {
     this.notScrolly = true;
   }
 
+  slugify(object: Article | Course | Lesson, ...args: any[]): any {
+
+    const slug = object?.id + '-' + object?.title
+    return slug.toLowerCase().trim()
+      .replace(/[^\w\-çîéèœôà]+/g, ' ')
+      .trim()
+      .replace(/\s+/g, '-')
+
+  }
+
   handleFetchedCourses = {
     next: ({ content, hasNext }: any) => {
 
@@ -119,8 +130,7 @@ export class BaseCourseListComponent implements OnInit {
           "position": index+1,
           "item": {
             "@type": "Course",
-            // "url": `${this.siteUrl}/cours/${this.slugify.transform(course)}`,
-            "url": `${this.siteUrl}/cours/${course.id}`,
+            "url": `${this.siteUrl}/cours/${this.slugify(course)}`,
             "name": course.title,
             "author": {
               "@type": "Person",
