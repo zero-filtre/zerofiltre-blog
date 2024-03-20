@@ -64,6 +64,8 @@ import { MentoredIconComponent } from './mentored-icon/mentored-icon.component';
 import { ProPageComponent } from './pro-page/pro-page.component';
 import { AdsSquareComponent } from './ads-square/ads-square.component';
 import { AdsRectangleComponent } from './ads-rectangle/ads-rectangle.component';
+import { CollapsibleTagsComponent } from './collapsible-tags/collapsible-tags.component';
+import { SlugUrlPipe } from './pipes/slug-url.pipe';
 
 const components = [
   AppShellRenderDirective,
@@ -76,6 +78,7 @@ const components = [
   AutoSaveButtonComponent,
   NotFoundPageComponent,
   VimeoUrlPipe,
+  SlugUrlPipe,
   UrlPipe,
   UploadFormComponent,
   YoutubeVideoPlayerComponent,
@@ -98,7 +101,8 @@ const components = [
   MentoredIconComponent,
   ProPageComponent, 
   AdsSquareComponent, 
-  AdsRectangleComponent
+  AdsRectangleComponent,
+  CollapsibleTagsComponent
 ];
 
 const modules = [

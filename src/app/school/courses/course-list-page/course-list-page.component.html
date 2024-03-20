@@ -76,22 +76,14 @@
 
                         <div class="article-card lg:grid grid-cols-3 gap-6">
                             <a aria-labelledby="Link to course detail page"
-                                routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
+                                routerLink="{{canAccessCourse(course) ? (course | slugify) + '/' + '?' : (course | slugify)}}"
                                 class="relative group/imagecard article-preview hover:opacity-75"
                                 >
-                                <!-- [ngClass]="{'hover:opacity-75' : !course.mentored}" -->
                                 <div class="relative aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
                                         [sourceUrl]="course?.thumbnail!" [alt]="course?.title!">
                                     </app-image>
-                                    <!-- <div class="absolute top-0 left-0 w-full h-full bg-black opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover/imagecard:opacity-50 z-20"></div> -->
                                 </div>
-
-                                <!-- <app-mentored-icon 
-                                    *ngIf="course?.mentored" 
-                                    [size]="'scale-[4]'"
-                                    [classes]="'absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 scale-0 transition-transform duration-300 ease-in-out group-hover/imagecard:opacity-100 group-hover/imagecard:scale-100 h-20 w-20 rounded-xl'">
-                                </app-mentored-icon> -->
                             </a>
 
                             <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
@@ -126,7 +118,7 @@
                                         </button>
 
                                         <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
-                                            <a aria-labelledby="Link to course edit page" routerLink="/cours/{{course.id}}/edit/"
+                                            <a aria-labelledby="Link to course edit page" routerLink="/cours/{{course|slugify}}/edit/"
                                                 class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                     class="w-5 h-5">
@@ -152,7 +144,7 @@
                                 <div class="mt-2">
                                     <div class="flex justify-between items-center gap-2">
                                         <a aria-labelledby="Link to course detail page"
-                                            routerLink="{{canAccessCourse(course) ? course.id + '/' + '?' : course.id}}"
+                                            routerLink="{{canAccessCourse(course) ? (course|slugify) + '/' + '?' : (course|slugify)}}"
                                             class="article-title">
                                             <h4
                                                 class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
@@ -361,7 +353,7 @@
     <aside class="col-span-2 hidden lg:block space-y-6 lg:space-y-10">
         <div class="tags space-y-6">
             <span
-                class="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
+                class="inline-flex sm:hidden items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
                 <svg class="mr-1.5 h-2 w-2 text-skin-base" fill="currentColor" viewBox="0 0 8 8">
                     <circle cx="4" cy="4" r="3"></circle>
                 </svg>
@@ -370,19 +362,7 @@
 
             <div class="" aria-labelledby="article-tags">
                 <ng-template [ngIf]="tagList?.length">
-                    <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
-                        <ng-container *ngFor="let tag of tagList">
-                            <button (click)="sortByTag(tag?.name)" type="button" aria-labelledby="A tag"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span
-                                    class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
-                            </button>
-                        </ng-container>
-                    </div>
+                    <app-collapsible-tags [tagList]="tagList" (activeTagEvent)="setActiveTag($event)" (filterEvent)="sortByTag(activeTag)"></app-collapsible-tags>
                 </ng-template>
 
                 <ng-template [ngIf]="loading && !tagList?.length">

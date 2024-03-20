@@ -21,6 +21,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
 import { PaymentService } from 'src/app/services/payment.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -93,7 +95,9 @@ export class LessonComponent implements OnInit, OnDestroy {
     private vimeo: VimeoService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private slugify: SlugUrlPipe,
+    private location: Location
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -138,7 +142,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.isCompleting = false;
           this.completed = true;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
-          if (this.nextLesson) this.router.navigateByUrl(`cours/${this.courseID}/${this.nextLesson.id}`);
+          if (this.nextLesson) this.router.navigateByUrl(`cours/${this.slugify.transform(this.course)}/${this.slugify.transform(this.nextLesson)}`);
         })
     } else {
       this.courseService.markLessonAsInComplete(data)
@@ -174,6 +178,11 @@ export class LessonComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (lesson: Lesson) => {
           this.lesson = lesson;
+
+          const rootUrl = this.router.url.split('/')[1];
+          const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
+          this.location.replaceState(sluggedUrl);
+
           const desc = lesson?.summary || '';
           const img = this.course?.thumbnail || 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065'
 
@@ -225,7 +234,12 @@ export class LessonComponent implements OnInit, OnDestroy {
         tap(data => {
           this.loadingCourse = false;
           this.course = data;
-        })
+
+          const rootUrl = this.router.url.split('/')[1];
+          const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(this.lesson)}`
+          this.location.replaceState(sluggedUrl);
+        }),
+        shareReplay()
       )
   }
 
@@ -428,15 +442,16 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.seo.unmountFooter();
-    this.courseID = this.route.snapshot.paramMap.get('course_id');
-    this.lessonID = this.route.snapshot.paramMap.get('lesson_id');
+    this.courseID = this.route.snapshot.paramMap.get('course_id')?.split('-')[0];
+    this.lessonID = this.route.snapshot.paramMap.get('lesson_id')?.split('-')[0];
 
     this.loadCourseData(this.courseID);
     this.loadAllChapters(this.courseID, this.lessonID);
 
     this.route.paramMap.subscribe(
       params => {
-        this.lessonID = params.get('lesson_id')!;
+        const parsedParams = params.get('lesson_id')?.split('-')[0]
+        this.lessonID = parsedParams!;
         this.loadLessonData(this.lessonID);
       }
     );

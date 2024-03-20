@@ -36,7 +36,7 @@ export class AuthorGuard implements CanActivate {
     | UrlTree {
     this.isAdminUser = this.authService.isAdmin;
     this.currentUsrId = this.authService?.currentUsr?.id;
-    this.articleId = route.params.id
+    this.articleId = route.params.id?.split('-')[0]
 
     return this.articleService.canEditArticle(this.currentUsrId, this.articleId, this.isAdminUser)
       .pipe(

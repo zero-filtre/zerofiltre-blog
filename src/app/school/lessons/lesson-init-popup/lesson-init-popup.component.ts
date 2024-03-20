@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { MessageService } from '../../../services/message.service';
 import { LessonService } from '../lesson.service';
+import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 
 @Component({
   selector: 'app-lesson-init-popup',
@@ -19,7 +20,8 @@ export class LessonInitPopupComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private lessonService: LessonService
+    private lessonService: LessonService,
+    private slugify: SlugUrlPipe
   ) { }
 
   onNoClick(): void {
@@ -48,11 +50,12 @@ export class LessonInitPopupComponent implements OnInit {
       .subscribe(lesson => {
         this.loading = false;
         this.dialogRef.close();
-        this.router.navigateByUrl(`/cours/${this.data.courseID}/${lesson.id}/edit`)
+        this.router.navigateByUrl(`/cours/${this.slugify.transform(this.data.course)}/${this.slugify.transform(lesson)}/edit`)
       })
   }
 
   ngOnInit(): void {
+    // console.log('DATA: ', this.data);
     // do nothing.
   }
 

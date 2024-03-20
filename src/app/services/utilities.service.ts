@@ -3,6 +3,8 @@ import { Article } from '../articles/article.model';
 
 import { Observable, throwError, timer } from 'rxjs';
 import { mergeMap, finalize, delay } from 'rxjs/operators';
+import { Course } from '../school/courses/course';
+import { Lesson } from '../school/lessons/lesson';
 
 @Injectable({
   providedIn: 'root',
@@ -128,4 +130,14 @@ export function sortByNameAsc(array: any) {
     if (nameA > nameB) return 1;
     return 0; //default return value (no sorting)
   });
+}
+
+export function slugify(object: Article | Course | Lesson, ...args: any[]): any {
+
+  const slug = object?.id + '-' + object?.title
+  return slug.toLowerCase().trim()
+    .replace(/[^\w\-çîéèœôà]+/g, ' ')
+    .trim()
+    .replace(/\s+/g, '-')
+
 }

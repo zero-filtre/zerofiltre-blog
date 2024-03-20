@@ -4,7 +4,7 @@
         <ng-container *ngIf="!loading">
             <div class="curriculum_wrapper max-w-3xl m-auto">
                 <h2 class="flex justify-between items-center pb-4 lg:pb-6 lg:pl-2 font-black text-xl lg:text-2xl text-primary-500">
-                    <a routerLink="{{'/cours/'+course?.id}}">{{course?.title}}</a>
+                    <a routerLink="{{'/cours/'+(course|slugify)}}">{{course?.title}}</a>
 
                     <app-mentored-icon *ngIf="course?.mentored" [position]="'bottom-l'" [size]="'w-24'" [classes]="'w-auto'">
                     </app-mentored-icon>
@@ -70,7 +70,7 @@
                                             </button>
 
                                             <mat-menu #menu="matMenu" class="font-normal text-secondary bg-primary-100">
-                                                <button (click)="openLessonInitDialog(chapter?.id, course?.id)"
+                                                <button (click)="openLessonInitDialog(chapter?.id, course)"
                                                     aria-labelledby="Add Lesson button"
                                                     class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -125,7 +125,7 @@
                                                     <div
                                                         class="lesson_link w-full group flex justify-between items-center gap-2">
                                                         <div class="w-full flex items-center gap-2 pr-3">
-                                                            <a routerLink="{{'/cours/'+course?.id+'/'+lesson?.id}}"
+                                                            <a routerLink="{{'/cours/'+(course|slugify)+'/'+(lesson|slugify)}}"
                                                                 [style.pointer-events]="lesson?.free && !canAccessCourse ? 'auto' : 'auto'"
                                                                 class="w-full flex items-center p-3 gap-2"
                                                                 (click)="mobileQuery.matches ? drawer?.toggle() : null">
@@ -200,7 +200,7 @@
                                                                     <mat-menu #menu="matMenu"
                                                                         class="font-normal text-skin-base bg-skin-bg">
                                                                         <a aria-labelledby="Link to lesson edit page"
-                                                                            routerLink="/cours/{{course?.id}}/{{lesson?.id}}/edit"
+                                                                            routerLink="/cours/{{course|slugify}}/{{lesson|slugify}}/edit"
                                                                             class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 fill="none" viewBox="0 0 24 24"

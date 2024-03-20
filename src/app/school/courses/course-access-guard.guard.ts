@@ -24,7 +24,7 @@ export class CourseAccessGuardGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const courseID = route.params?.course_id
+    const courseID = route.params?.course_id?.split('-')[0]
     const user = this.authService?.currentUsr as User
 
     if (isPlatformServer(this.platformId)) return true;

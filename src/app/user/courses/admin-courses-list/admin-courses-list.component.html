@@ -57,7 +57,7 @@
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
 
                             <a aria-labelledby="Link to course detail page"
-                                routerLink="{{'/cours/' + course.id + '/' + '?'}}"
+                                routerLink="{{'/cours/' + (course|slugify) + '/' + '?'}}"
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -101,7 +101,7 @@
                                         </button>
 
                                         <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
-                                            <a aria-labelledby="Link to course edit page" routerLink="/cours/{{course.id}}/edit/"
+                                            <a aria-labelledby="Link to course edit page" routerLink="/cours/{{course|slugify}}/edit/"
                                                 class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                     class="w-5 h-5">
@@ -127,7 +127,7 @@
                                 <div class="mt-2">
 
                                     <a aria-labelledby="Link to about page"
-                                        routerLink="{{'/cours/' + course.id + '/' + '?'}}"
+                                        routerLink="{{'/cours/' + (course|slugify) + '/' + '?'}}"
                                         class="article-title">
                                         <h4
                                             class="text-lg inline-block leading-6 font-semibold text-skin-inverted hover:text-primary-500 transition-all duration-200">

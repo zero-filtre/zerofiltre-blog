@@ -15,6 +15,7 @@ import localeFr from '@angular/common/locales/fr';
 import { httpInterceptorProviders } from './services/http-interceptors';
 import { AuthInterceptor } from './services/http-interceptors/auth.interceptor';
 import { JsonLdService } from 'ngx-seo';
+import { SlugUrlPipe } from './shared/pipes/slug-url.pipe';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -32,6 +33,7 @@ registerLocaleData(localeFr, 'fr');
   ],
   providers: [
     JsonLdService,
+    SlugUrlPipe,
     httpInterceptorProviders,
     AuthInterceptor,
     { provide: LOCALE_ID, useValue: "fr-FR" },

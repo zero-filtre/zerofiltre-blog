@@ -6,7 +6,7 @@
                 <ul>
                     <ng-container *ngFor="let course of recentCourses$ | async">
                         <li *ngIf="activeCourseModule"><a aria-labelledby="Link to about page"
-                                routerLink="cours/{{course?.id}}">{{capitalize(course?.title!)}}</a></li>
+                                routerLink="cours/{{(course|slugify)}}">{{capitalize(course?.title!)}}</a></li>
                     </ng-container>
                 </ul>
             </div>

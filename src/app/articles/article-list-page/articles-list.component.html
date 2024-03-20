@@ -78,7 +78,7 @@
                 <ng-template [ngIf]="articles" *appShellNoRender>
                     <div *ngFor="let article of articles; let i=index" class="space-y-11">
                         <div class="article-card lg:grid grid-cols-3 gap-6 group">
-                            <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
+                            <a aria-labelledby="Link to about page" routerLink="/articles/{{article | slugify}}"
                                 class="article-preview hover:opacity-75">
                                 <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
                                     <app-image [classes]="'object-cover transition-all duration-200'"
@@ -123,7 +123,7 @@
                                             </button>
 
                                             <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
-                                                <a aria-labelledby="Link to article edit page" routerLink="{{article.id}}/edit"
+                                                <a aria-labelledby="Link to article edit page" routerLink="/articles/{{article|slugify}}/edit"
                                                     class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
@@ -148,7 +148,7 @@
                                 </div>
 
                                 <div class="mt-2">
-                                    <a aria-labelledby="Link to about page" routerLink="/articles/{{article.id}}"
+                                    <a aria-labelledby="Link to about page" routerLink="/articles/{{article|slugify}}"
                                         class="article-title">
                                         <h4
                                             class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
@@ -338,7 +338,7 @@
     <aside class="col-span-2 hidden lg:block space-y-6 lg:space-y-10">
         <div class="tags space-y-6">
             <span
-                class="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
+                class="inline-flex sm:hidden items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
                 <svg class="mr-1.5 h-2 w-2 text-skin-base" fill="currentColor" viewBox="0 0 8 8">
                     <circle cx="4" cy="4" r="3"></circle>
                 </svg>
@@ -347,20 +347,7 @@
 
             <div class="" aria-labelledby="article-tags">
                 <ng-template [ngIf]="tagList">
-                    <div class="tagList-container flex flex-wrap gap-1.5" *appShellNoRender>
-                        <ng-container *ngFor="let tag of tagList">
-                            <button (click)="sortByTag(tag.name)" type="button" aria-labelledby="A tag"
-                                [ngClass]="{'active-tag': activeTag == tag.name}"
-                                class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                                <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
-                                    viewBox="0 0 8 8">
-                                    <circle cx="4" cy="4" r="3"></circle>
-                                </svg>
-                                <span
-                                    class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
-                            </button>
-                        </ng-container>
-                    </div>
+                    <app-collapsible-tags [tagList]="tagList" (activeTagEvent)="setActiveTag($event)" (filterEvent)="sortByTag(activeTag)"></app-collapsible-tags>
                 </ng-template>
 
                 <ng-template [ngIf]="loading && !tagList">

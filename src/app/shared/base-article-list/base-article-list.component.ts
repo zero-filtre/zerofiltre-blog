@@ -11,7 +11,7 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
-import { calcReadingTime, capitalizeString, nFormatter } from '../../services/utilities.service';
+import { calcReadingTime, capitalizeString, nFormatter, slugify } from '../../services/utilities.service';
 import { ArticleEntryPopupComponent } from '../../articles/article-entry-popup/article-entry-popup.component';
 import { MessageService } from 'src/app/services/message.service';
 import { User } from 'src/app/user/user.model';
@@ -68,7 +68,8 @@ export class BaseArticleListComponent implements OnInit {
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
     public messageService: MessageService,
-    @Inject(PLATFORM_ID) public platformId: any
+    @Inject(PLATFORM_ID) public platformId: any,
+    // public slugify: SlugUrlPipe
   ) { }
 
   setArticlesReadingTime(articles: Article[]): void {
@@ -157,7 +158,7 @@ export class BaseArticleListComponent implements OnInit {
           "item": {
             "@context": "https://schema.org",
             "@type": "Article",
-            "url": `${this.siteUrl}/articles/${article.id}`,
+            "url": `${this.siteUrl}/articles/${slugify(article)}`,
             "headline": article.title,
             "image": [article.thumbnail],
             "datePublished": article.publishedAt,

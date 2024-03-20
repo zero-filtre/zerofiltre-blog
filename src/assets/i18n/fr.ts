@@ -300,6 +300,9 @@ export const fr = {
 
         resendConfirmationAccountTitle: 'Renvoyer code de confirmation | Zerofiltre.tech',
         resendConfirmationAccountDescription: 'Demandez un nouveau lien de confirmation de compte sur la plateforme Zerofiltre.tech facilement',
+
+        proPageTitle: 'Devenez un profil désiré par des entreprises',
+        proPageDesc: 'DEVENEZ UN INGÉNIEUR IT QUI SORT DU LOT',
     },
     ddd: {
         buyButtonText: 'Achetez ce cours complet pour seulement 150 €'

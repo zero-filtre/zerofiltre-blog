@@ -323,7 +323,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   }
 
   ngOnInit(): void {
-    this.articleId = this.route.snapshot.paramMap.get('id')!;
+    this.articleId = this.route.snapshot.paramMap.get('id')?.split('-')[0]!;
     this.getArticle();
     this.fetchListOfTags();
 

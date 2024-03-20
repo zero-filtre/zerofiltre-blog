@@ -27,8 +27,8 @@ export class CourseEnrollmentResolver implements Resolve<boolean> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     const user = this.authService?.currentUsr as User
-    const courseID = route.params?.course_id
-    const lessonID = route.params?.lesson_id
+    const courseID = route.params?.course_id?.split('-')[0]
+    const lessonID = route.params?.lesson_id?.split('-')[0]
 
 
     if (!user) return of(true)

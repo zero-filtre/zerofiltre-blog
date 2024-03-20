@@ -11,6 +11,7 @@ import { CourseInitPopupComponent } from 'src/app/school/courses/course-init-pop
 import { CourseService } from 'src/app/school/courses/course.service';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { SeoService } from 'src/app/services/seo.service';
+import { slugify } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
 import { environment } from 'src/environments/environment';
@@ -118,7 +119,7 @@ export class BaseCourseListComponent implements OnInit {
           "position": index+1,
           "item": {
             "@type": "Course",
-            "url": `${this.siteUrl}/cours/${course.id}`,
+            "url": `${this.siteUrl}/cours/${slugify(course)}`,
             "name": course.title,
             "author": {
               "@type": "Person",

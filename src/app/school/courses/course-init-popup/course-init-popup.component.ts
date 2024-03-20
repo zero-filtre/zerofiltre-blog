@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
-import { MessageService } from '../../../services/message.service';
 import { CourseService } from '../course.service';
+import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 
 @Component({
   selector: 'app-course-init-popup',
@@ -20,6 +20,7 @@ export class CourseInitPopupComponent implements OnInit {
     private router: Router,
     private courseService: CourseService,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private slugify: SlugUrlPipe
   ) { }
 
   onNoClick(): void {
@@ -39,7 +40,7 @@ export class CourseInitPopupComponent implements OnInit {
       .subscribe(course => {
         this.dialogRef.close();
         this.loading = false;
-        this.router.navigateByUrl(`/cours/${course.id}/edit`)
+        this.router.navigateByUrl(`/cours/${this.slugify.transform(course)}/edit`)
       });
 
   }

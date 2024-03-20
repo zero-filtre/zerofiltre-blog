@@ -17,6 +17,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { JsonLdService } from 'ngx-seo';
 import { JsonLd } from 'ngx-seo/lib/json-ld';
+import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-article-detail',
@@ -91,6 +93,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     public authService: AuthService,
     public messageService: MessageService,
+    public slugify: SlugUrlPipe,
+    private location: Location,
     media: MediaMatcher,
     changeDetectorRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: any
@@ -141,6 +145,11 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: Article) => {
           this.article = response
+
+          const rootUrl = this.router.url.split('/')[1];
+          const sluggedUrl = `${rootUrl}/${this.slugify.transform(response)}`
+          this.location.replaceState(sluggedUrl);
+
           if (isPlatformBrowser(this.platformId)) {
             this.injectGiscus(this.giscusConfig);
           }
@@ -315,7 +324,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.paramMap.subscribe(
       params => {
-        this.articleId = params.get('id')!;
+        const parsedParams = params.get('id')?.split('-')[0]
+        this.articleId = parsedParams!;
         this.getCurrentArticle(this.articleId);
       }
     );
