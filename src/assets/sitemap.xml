@@ -12,243 +12,331 @@
     <priority>1.00</priority>
   </url>
 
+
+  
   <!-- ARTICLES ROUTES -->
+
   <url>
     <loc>https://zerofiltre.tech/articles</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
+
   <url>
-    <loc>https://zerofiltre.tech/articles/233</loc>
+    <loc>https://zerofiltre.tech/articles/292-optimisez-vos-images-docker-et-economisez</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/235</loc>
+    <loc>https://zerofiltre.tech/articles/231-utilisation-du-framework-express-avec-nodejs</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/228</loc>
+    <loc>https://zerofiltre.tech/articles/236-utilisation-des-directives-de-vuejs-pour-creer-des-interfaces-dynamiques</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/229</loc>
+    <loc>https://zerofiltre.tech/articles/291-locust-tirs-de-performance-as-code</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/224</loc>
+    <loc>https://zerofiltre.tech/articles/285-hpa-ou-keda-bien-choisir</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/224</loc>
+    <loc>https://zerofiltre.tech/articles/282-flutter-toast-2024-notifiez-vos-utilisateurs-avec-style</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/224</loc>
+    <loc>https://zerofiltre.tech/articles/281-kubernetes-pod-disruption-budget-pourquoi-et-comment</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/223</loc>
+    <loc>https://zerofiltre.tech/articles/280-r%C3%A9soudre-facilement-l-erreur-503-sous-kubernetes</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/181</loc>
+    <loc>https://zerofiltre.tech/articles/271-comment-devenir-productif</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/215</loc>
+    <loc>https://zerofiltre.tech/articles/253-flutter-dart-developpement-pilote-par-les-tests</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/211</loc>
+    <loc>https://zerofiltre.tech/articles/254-flutter-concevoir-ses-propres-snippets-sur-visual-studio-code</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/204</loc>
+    <loc>https://zerofiltre.tech/articles/261-le-pattern-builder</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/213</loc>
+    <loc>https://zerofiltre.tech/articles/250-flutter-enregistrer-les-preferences-d-utilisateur-avec-sharedpreferences</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/210</loc>
+    <loc>https://zerofiltre.tech/articles/266-le-pattern-strategie</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/209</loc>
+    <loc>https://zerofiltre.tech/articles/264-coder-et-decoder-du-qrcode-en-java</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/207</loc>
+    <loc>https://zerofiltre.tech/articles/259-le-pattern-memento</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/205</loc>
+    <loc>https://zerofiltre.tech/articles/244-faker-generez-facilement-des-donnees-de-test-sur-mongodb-atlas-avec-nodejs</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/206</loc>
+    <loc>https://zerofiltre.tech/articles/232-ameliorer-l-experience-utilisateur-avec-les-fichiers-lottie-dans-vos-projets-flutter-mobile-et-web</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/203</loc>
+    <loc>https://zerofiltre.tech/articles/233-les-meilleures-pratiques-de-developpement-python</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/202</loc>
+    <loc>https://zerofiltre.tech/articles/235-compteurs-prometheus-guide-complet</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/201</loc>
+    <loc>https://zerofiltre.tech/articles/228-simplifier-le-developpement-d-api-rest-avec-les-methodes-generiques-et-django-rest-framework</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/199</loc>
+    <loc>https://zerofiltre.tech/articles/229-wachatgpt-votre-ia-en-poche</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/198</loc>
+    <loc>https://zerofiltre.tech/articles/224-guide-simplifie-de-la-mise-en-place-d-une-stack-elastic-sous-k8s-cas-de-zerofiltre-tech</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/197</loc>
+    <loc>https://zerofiltre.tech/articles/223-12-factor-app-n-3-externalisation-de-la-configuration</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/192</loc>
+    <loc>https://zerofiltre.tech/articles/181-comment-rediger-un-article-it-qui-accroche</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/196</loc>
+    <loc>https://zerofiltre.tech/articles/215-gerer-la-perte-de-connexion-dans-une-application-angular</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/193</loc>
+    <loc>https://zerofiltre.tech/articles/211-ce-que-j-ai-retenu-du-entrepreneur-coaching-day-2022</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/191</loc>
+    <loc>https://zerofiltre.tech/articles/204-angular-architecture-propre-module-partage</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/190</loc>
+    <loc>https://zerofiltre.tech/articles/213-sonarcloud-nous-fait-gagner-de-l-argent</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/189</loc>
+    <loc>https://zerofiltre.tech/articles/210-casse-tete-gitignore-ignorer-tout-sauf-un-fichier</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/185</loc>
+    <loc>https://zerofiltre.tech/articles/209-protegez-vos-apis-gr-ce-au-rate-limiting</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/187</loc>
+    <loc>https://zerofiltre.tech/articles/207-prenez-le-controle-d-une-app-java-situe-sur-un-cluster-kubernetes-remote-debugging</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/186</loc>
+    <loc>https://zerofiltre.tech/articles/205-negligence-sur-la-coherence-cross-platform-nous-avons-paye-le-prix-cher</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/183</loc>
+    <loc>https://zerofiltre.tech/articles/206-owasp-devsecops-securisez-vos-deploiements</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/184</loc>
+    <loc>https://zerofiltre.tech/articles/203-subtilites-du-positionnement-sticky</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/172</loc>
+    <loc>https://zerofiltre.tech/articles/202-decouvrez-ces-trois-projets-nodejs-open-source-qui-vous-feront-gagner-du-temps</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/171</loc>
+    <loc>https://zerofiltre.tech/articles/201-twelve-factor-app-n-2-dependances-explicites-et-isolees</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/174</loc>
+    <loc>https://zerofiltre.tech/articles/199-choisissez-la-bonne-base-de-donnees-pour-votre-projet</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/173</loc>
+    <loc>https://zerofiltre.tech/articles/198-fonctions-pures</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/175</loc>
+    <loc>https://zerofiltre.tech/articles/197-securisez-vos-micro-services-sur-kubernetes-avec-nginx-et-oryoathkeeper</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/176</loc>
+    <loc>https://zerofiltre.tech/articles/192-injection-des-secrets-de-vault-aux-variables-d-environnement-du-conteneur</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/169</loc>
+    <loc>https://zerofiltre.tech/articles/196-reference-ou-valeur-en-javascript-stop-a-la-confusion</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/170</loc>
+    <loc>https://zerofiltre.tech/articles/193-git-3-regles-d-or-pour-avoir-0-degat</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/168</loc>
+    <loc>https://zerofiltre.tech/articles/191-angular-gestion-centralisee-des-erreurs-http</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/167</loc>
+    <loc>https://zerofiltre.tech/articles/190-envoyer-les-alertes-prometheus-par-whatsapp</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://zerofiltre.tech/articles/124</loc>
+    <loc>https://zerofiltre.tech/articles/189-twelve-factor-app-n-1-le-code-source</loc>
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.80</priority>
   </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/185-comment-ignorer-un-fichier-partiellement-juste-en-local</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/187-bouchonner-un-service-dans-une-application-angular-en-deux-etapes-simples</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/186-deployez-un-serveur-de-messagerie-en-2-mins</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/184-configuration-minimale-d-une-politique-de-re-jeu-des-requ-tes-echouees-dans-une-application-angular</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/183-les-cycles-de-vie-de-maven-stop-a-la-grosse-confusion</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/172-optimisez-la-performance-d-une-application-react-avec-la-memoisation</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/171-l-essentiel-a-savoir-sur-le-hook-useeffect-gerez-les-effets-de-bord-avec-assurance</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/174-mise-en-cache-des-requ-tes-avec-httpinterceptor-sur-angular</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/173-react-comment-eviter-la-desyncronisation-d-un-etat-derive-de-l-etat-principal</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/176-guide-de-poche-securite-des-apis-rest-avec-spring-security-cas-zerofiltre</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/175-cors-conf-minimaliste-mais-fonctionnelle-spring-rest-api-cas-de-zerofiltre</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/169-creer-un-bot-twitter-avec-python</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/170-implementez-une-file-d-attente-de-taches-distribuees-avec-flask-celery-redis</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/168-protegez-l-acces-a-vos-routes-dynamiques-dans-une-application-angular</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/167-creer-un-cluster-kubernetes-avec-vos-propres-serveurs</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/articles/124-generez-des-images-globallement-reconnues-pour-vos-utilisateurs-avec-gravatar</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
   <!-- END ARTICLES ROUTES -->
+
+
+  <!-- RANDOM ROUTES -->
 
   <url>
     <loc>https://zerofiltre.tech/wachatgpt</loc>
@@ -270,6 +358,9 @@
     <lastmod>2023-04-22T01:14:27+00:00</lastmod>
     <priority>0.64</priority>
   </url>
+
+  <!-- END RANDOM ROUTES -->
+
 
 
   <!-- COURSES ROUTES -->
