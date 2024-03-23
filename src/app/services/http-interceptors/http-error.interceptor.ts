@@ -104,10 +104,15 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       errorMessage = 'Une erreur est survenue. Veuillez essayer de nouveau ou contacter le support Zerofiltre (info@zerofiltre.tech)';
     } else {
       // Server side error
-      let serverErrorExist = !!error?.error?.error;
+      let serverErrorExist = !!error?.error?.error
+      let backEndError = JSON.parse(error?.error)
 
       if (serverErrorExist) {
         errorMessage = error.error.error.message;
+      }
+
+      if (backEndError) {
+        errorMessage = backEndError.error?.reason;
       }
 
       if (error.status === 401) {
