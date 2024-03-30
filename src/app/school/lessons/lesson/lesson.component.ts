@@ -70,6 +70,10 @@ export class LessonComponent implements OnInit, OnDestroy {
   CompletedText$ = new Subject<boolean>();
 
   docTypes = ['txt', 'doc', 'pdf'];
+  imageResources: Resource[] = [];
+  documentResources: Resource[] = [];
+  courseResources: Resource[] = [];
+
 
   completed: boolean;
 
@@ -167,6 +171,15 @@ export class LessonComponent implements OnInit, OnDestroy {
     return this.completedLessonsIds.includes(lesson?.id);
   }
 
+  findResourcesByType(type: string[] | string): Resource[] {
+    const resources = this.lesson.resources
+    if (Array.isArray(type)) {
+      return resources.filter(res =>  type.includes(res.type))
+    } else {
+      return resources.filter(res => res.type === type)
+    }
+  }
+
   loadLessonData(lessonId: any) {
     this.loading = true;
     if (lessonId == '?') {
@@ -196,6 +209,10 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.lessonVideo$ = this.vimeoService.getOneVideo(lesson?.video);
           this.loading = false;
           this.videoID = lesson?.video?.split('com/')[1]
+
+          this.imageResources = this.findResourcesByType('img');
+          this.documentResources = this.findResourcesByType(this.docTypes);
+          this.courseResources = this.findResourcesByType('course');
 
           if (!this.allChapters?.length) {
             setTimeout(() => {
