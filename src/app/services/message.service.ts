@@ -11,7 +11,7 @@ export class MessageService {
   private defaultVerticalPosition = 'top'
   private OK = 'OK';
   
-  DURATION_DEFAULT = 5;
+  DURATION_DEFAULT = 8;
 
   DURATION_SUCCESS = this.DURATION_DEFAULT;
   DURATION_WARNING = 10;
