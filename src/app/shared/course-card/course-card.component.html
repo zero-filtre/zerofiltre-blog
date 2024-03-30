@@ -1,7 +1,8 @@
 <div class="course-card lg:grid grid-cols-3 gap-6 group">
 
     <a aria-labelledby="Link to course detail page"
-        routerLink="{{'/cours/' + (course|slugify)+ '/?'}}"
+        href='{{"/cours/" + (course|slugify)+ "/" + parseUrl("?")}}'
+        target="_blank"
         class="article-preview hover:opacity-75">
         <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
             <app-image [classes]="'object-cover transition-all duration-200'"
@@ -69,7 +70,8 @@
         <div class="mt-2">
 
             <a aria-labelledby="Link to about page"
-                routerLink="{{'/cours/' + (course|slugify) + '/?'}}"
+                href='{{"/cours/" + (course|slugify)+ "/" + parseUrl("?")}}'
+                target="_blank"
                 class="course-title">
                 <h4
                     class="text-lg inline-block leading-6 font-semibold text-skin-inverted hover:text-primary-500 transition-all duration-200">

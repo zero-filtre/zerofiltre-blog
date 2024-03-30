@@ -262,6 +262,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   loadCourseData(courseId: any) {
+    console.log('LOAD COURSE: ', courseId);
+
     this.loadingCourse = true;
     this.course$ = this.courseService.findCourseById(courseId)
       .pipe(
@@ -486,11 +488,15 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.loadCourseData(this.courseID);
     this.loadAllChapters(this.courseID, this.lessonID);
 
+    console.log('DATA: ', this.courseID, this.lessonID);
+
     this.route.paramMap.subscribe(
       params => {
         const parsedParams = params.get('lesson_id')?.split('-')[0]
         this.lessonID = parsedParams!;
         this.loadLessonData(this.lessonID);
+
+        console.log('LOAD LESSON: ', this.lessonID);
       }
     );
 

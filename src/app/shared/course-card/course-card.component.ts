@@ -16,4 +16,8 @@ export class CourseCardComponent {
     public authService: AuthService,
   ) { }
 
+  parseUrl(url:string) {
+    return encodeURIComponent(url)
+  }
+
 }
