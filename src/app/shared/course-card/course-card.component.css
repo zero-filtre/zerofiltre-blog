@@ -1,0 +1,16 @@
+.enrol-tooltip {
+  @apply absolute w-auto p-2 min-w-max top-8 right-0 rounded-md shadow-md
+      text-white bg-secondary text-xs font-bold transition-all duration-200 scale-0 origin-center;
+}
+
+.enrol-total:hover .enrol-tooltip {
+  @apply group-hover:scale-100;
+}
+
+.active-tab {
+  @apply text-primary-500 border-primary-500;
+}
+
+.active-tag {
+  @apply bg-skin-card transition-all duration-75;
+}

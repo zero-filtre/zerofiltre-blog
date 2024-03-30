@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
-import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay } from 'rxjs';
+import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay, forkJoin } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
 import { Course } from '../../courses/course';
 import { AuthService } from '../../../user/auth.service';
@@ -72,7 +72,9 @@ export class LessonComponent implements OnInit, OnDestroy {
   docTypes = ['txt', 'doc', 'pdf'];
   imageResources: Resource[] = [];
   documentResources: Resource[] = [];
-  courseResources: Resource[] = [];
+  courseResources: Course[] = [];
+
+  // courseResources$: Observable<Resource[]>;
 
 
   completed: boolean;
@@ -180,6 +182,21 @@ export class LessonComponent implements OnInit, OnDestroy {
     }
   }
 
+  fetchCoursesResourceData(resources: Resource[]) {
+    const ids = resources.map(res => parseInt(res.url.split('/').pop() || ''))
+
+    const observables = ids.map(id => this.courseService.findCourseById(id));
+
+    forkJoin(observables).subscribe({
+      next: (courses: Course[]) => {
+        this.courseResources = courses;
+      },
+      error: (error) => {
+        console.error('Error fetching course data:', error);
+      }
+    });
+  }
+
   loadLessonData(lessonId: any) {
     this.loading = true;
     if (lessonId == '?') {
@@ -212,7 +229,11 @@ export class LessonComponent implements OnInit, OnDestroy {
 
           this.imageResources = this.findResourcesByType('img');
           this.documentResources = this.findResourcesByType(this.docTypes);
-          this.courseResources = this.findResourcesByType('course');
+          const courseResources = this.findResourcesByType('course');
+
+          if (courseResources?.length) {
+            this.fetchCoursesResourceData(courseResources)
+          }
 
           if (!this.allChapters?.length) {
             setTimeout(() => {
