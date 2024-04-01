@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
-import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay } from 'rxjs';
+import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay, forkJoin } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
 import { Course } from '../../courses/course';
 import { AuthService } from '../../../user/auth.service';
@@ -70,6 +70,12 @@ export class LessonComponent implements OnInit, OnDestroy {
   CompletedText$ = new Subject<boolean>();
 
   docTypes = ['txt', 'doc', 'pdf'];
+  imageResources: Resource[] = [];
+  documentResources: Resource[] = [];
+  courseResources: Course[] = [];
+
+  // courseResources$: Observable<Resource[]>;
+
 
   completed: boolean;
 
@@ -167,6 +173,30 @@ export class LessonComponent implements OnInit, OnDestroy {
     return this.completedLessonsIds.includes(lesson?.id);
   }
 
+  findResourcesByType(type: string[] | string): Resource[] {
+    const resources = this.lesson.resources
+    if (Array.isArray(type)) {
+      return resources.filter(res =>  type.includes(res.type))
+    } else {
+      return resources.filter(res => res.type === type)
+    }
+  }
+
+  fetchCoursesResourceData(resources: Resource[]) {
+    const ids = resources.map(res => parseInt(res.url.split('/').pop() || ''))
+
+    const observables = ids.map(id => this.courseService.findCourseById(id));
+
+    forkJoin(observables).subscribe({
+      next: (courses: Course[]) => {
+        this.courseResources = courses;
+      },
+      error: (error) => {
+        console.error('Error fetching course data:', error);
+      }
+    });
+  }
+
   loadLessonData(lessonId: any) {
     this.loading = true;
     if (lessonId == '?') {
@@ -197,6 +227,14 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.loading = false;
           this.videoID = lesson?.video?.split('com/')[1]
 
+          this.imageResources = this.findResourcesByType('img');
+          this.documentResources = this.findResourcesByType(this.docTypes);
+          const courseResources = this.findResourcesByType('course');
+
+          if (courseResources?.length) {
+            this.fetchCoursesResourceData(courseResources)
+          }
+
           if (!this.allChapters?.length) {
             setTimeout(() => {
               this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
@@ -224,6 +262,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   loadCourseData(courseId: any) {
+    console.log('LOAD COURSE: ', courseId);
+
     this.loadingCourse = true;
     this.course$ = this.courseService.findCourseById(courseId)
       .pipe(
@@ -448,11 +488,15 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.loadCourseData(this.courseID);
     this.loadAllChapters(this.courseID, this.lessonID);
 
+    console.log('DATA: ', this.courseID, this.lessonID);
+
     this.route.paramMap.subscribe(
       params => {
         const parsedParams = params.get('lesson_id')?.split('-')[0]
         this.lessonID = parsedParams!;
         this.loadLessonData(this.lessonID);
+
+        console.log('LOAD LESSON: ', this.lessonID);
       }
     );
 

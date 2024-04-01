@@ -66,6 +66,7 @@ import { AdsSquareComponent } from './ads-square/ads-square.component';
 import { AdsRectangleComponent } from './ads-rectangle/ads-rectangle.component';
 import { CollapsibleTagsComponent } from './collapsible-tags/collapsible-tags.component';
 import { SlugUrlPipe } from './pipes/slug-url.pipe';
+import { CourseCardComponent } from './course-card/course-card.component';
 
 const components = [
   AppShellRenderDirective,
@@ -102,7 +103,8 @@ const components = [
   ProPageComponent, 
   AdsSquareComponent, 
   AdsRectangleComponent,
-  CollapsibleTagsComponent
+  CollapsibleTagsComponent,
+  CourseCardComponent
 ];
 
 const modules = [

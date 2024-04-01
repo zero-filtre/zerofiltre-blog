@@ -1,3 +1,5 @@
+import { Course } from "../courses/course";
+
 export interface Lesson {
     id: number;
     title: string;
@@ -25,4 +27,5 @@ export interface Resource {
     type: string;
     url: string;
     name: string;
+    course?: Course;
 }
