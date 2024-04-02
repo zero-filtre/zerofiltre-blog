@@ -199,7 +199,7 @@
                                 </ng-container>
                             </div>
                             
-                            <div *ngIf="course?.mentored" class="courses_ressourses w-full flex flex-col space-y-11">
+                            <div *ngIf="courseResources?.length" class="courses_ressourses w-full flex flex-col space-y-11">
                                 <ng-container *ngFor="let res of courseResources; let i = index">
                                     <app-course-card [title]="res.title" [course]="res"></app-course-card>
                                 </ng-container>
