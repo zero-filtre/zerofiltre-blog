@@ -240,7 +240,10 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
 
 
   ngOnDestroy(): void {
-    // do nothing
+    if (isPlatformBrowser(this.platformId)) {
+      this.tags$.unsubscribe()
+      this.courses$.unsubscribe()
+    }
   }
 
 }

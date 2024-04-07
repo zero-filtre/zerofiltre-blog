@@ -5,7 +5,9 @@ module.exports = {
       fontFamily: {
         montserat: "'Montserrat', sans-serif",
         raleway: "'Raleway', sans-serif",
-        ubuntu: "'Ubuntu', sans-serif"
+        ubuntu: "'Ubuntu', sans-serif",
+        sohne: "'Leicht', sans-serif",
+        sohneK: "'Kraftig', sans-serif"
       },
       colors: {
         primary: {
