@@ -151,10 +151,8 @@ export class BaseCourseListComponent implements OnInit {
       this.jsonLd.setData(dataSchema)
 
       this.courses = content;
-
       this.loading = false;
       this.hasNext = hasNext;
-      this.notEmptyCourses = hasNext;
 
       if (this.courses.length === 0) {
         this.errorMessage = 'Aucun cours trouvé 😊!';
