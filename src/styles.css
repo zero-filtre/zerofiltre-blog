@@ -71,6 +71,19 @@ iframe {
   [type="radio"] {
     @apply h-4 w-4 lg:h-5 lg:w-5 text-primary-500 bg-skin-card focus:ring-0 focus:ring-offset-0 border-skin-border rounded;
   }
+
+  @font-face {
+    font-family: 'Leicht';
+    font-weight: 500;
+    src: url(./assets/fonts/Leicht.otf) format('otf');
+    /* src: url(./assets/fonts/Leicht.otf) format('otf'), url(./assets/fonts/Kraftig.otf) format('otf') */
+  }
+
+  @font-face {
+    font-family: 'Kraftig';
+    font-weight: 700;
+    src: url(./assets/fonts/Kraftig.otf) format('otf');
+  }
 }
 
 img {
