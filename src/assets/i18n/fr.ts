@@ -310,5 +310,8 @@ export const fr = {
     wachatgpt: {
         title: 'Wachatgpt - ChatGPT sur Whatsapp !',
         description: 'Cessez de dépenser des fortunes pour accéder à la connaissance. Accédez gratuitement à la connaissance 24h / 24, 7J / 7 sur WhatsApp !'
+    },
+    course: {
+        noMoreCourse: 'Plus aucun cours 😏!',
     }
 }

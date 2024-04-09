@@ -342,9 +342,9 @@
                 </div>
 
                 <!-- Alert no more Courses -->
-                <div *ngIf="notEmptyCourses" class="py-5">
+                <div *ngIf="notEmptyCourses && !loadingMore" class="py-5">
                     <div class="flex justify-center">
-                        <div class="text-skin-base text-sm font-bold">{{ 'articles.noMoreArticles' | translate }}</div>
+                        <div class="text-skin-base text-sm font-bold">{{ 'course.noMoreCourse' | translate }}</div>
                     </div>
                 </div>
             </div>
