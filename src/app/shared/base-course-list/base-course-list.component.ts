@@ -34,12 +34,12 @@ export class BaseCourseListComponent implements OnInit {
   DRAFT = 'draft';
   IN_REVIEW = 'in_review';
 
-  notEmptyCourses = false;
+  notEmptyCourses = true;
   noCourseAvailable: boolean = false;
 
   notScrolly = true;
   lastPage: number;
-  hasNext: boolean;
+  hasNext!: boolean;
   scrollyPageNumber = 0;
 
   pageNumber: number = 0;

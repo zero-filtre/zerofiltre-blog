@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="articles-wrapper articles-scrollable-list-panel py-12 space-y-12 lg:space-y-11 min-h-screen"
+            <div class="courses-wrapper articles-scrollable-list-panel py-12 space-y-12 lg:space-y-11 min-h-screen"
                 infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
 
                 <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
@@ -342,11 +342,11 @@
                 </div>
 
                 <!-- Alert no more Courses -->
-                <div *ngIf="notEmptyCourses" class="py-5">
+                <!-- <div *ngIf="notEmptyCourses && !loadingMore" class="py-5">
                     <div class="flex justify-center">
-                        <div class="text-skin-base text-sm font-bold">{{ 'articles.noMoreArticles' | translate }}</div>
+                        <div class="text-skin-base text-sm font-bold">{{ 'course.noMoreCourse' | translate }}</div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </main>
