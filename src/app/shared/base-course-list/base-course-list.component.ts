@@ -98,7 +98,6 @@ export class BaseCourseListComponent implements OnInit {
     const newCourses = [...content];
     this.loadingMore = false;
     this.hasNext = hasNext;
-    this.notEmptyCourses = hasNext;
 
     if (newCourses.length === 0) {
       this.notEmptyCourses = false;
