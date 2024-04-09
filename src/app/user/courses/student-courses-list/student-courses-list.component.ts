@@ -21,22 +21,14 @@ import { JsonLdService } from 'ngx-seo';
 })
 export class StudentCoursesListComponent extends BaseCourseListComponent implements OnInit, OnDestroy {
   courses$: Subscription;
-  // courses$: Observable<Course[]>;
-
   courses: any = [];
   pageSize: number = 5;
 
   IN_PROGRESS = 'in_progress';
   COMPLETED = 'completed';
 
-  noCoursesAvailable: boolean = false;
-  loadingMore: boolean = false;
-  notEmptyCourses: boolean = false;
-  loading: boolean = false;
-
   activePage: string = this.IN_PROGRESS;
   mainPage = true;
-
 
   constructor(
     public loadEnvService: LoadEnvService,

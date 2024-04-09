@@ -21,7 +21,6 @@ import { JsonLdService } from 'ngx-seo';
 })
 export class TeacherCoursesListComponent extends BaseCourseListComponent implements OnInit, OnDestroy {
   courses$: Subscription;
-
   courses: Course[] = [];
   pageSize: number = 5;
 
@@ -29,15 +28,8 @@ export class TeacherCoursesListComponent extends BaseCourseListComponent impleme
   DRAFT = 'draft';
   IN_REVIEW = 'in_review';
 
-
-  noCourseAvailable: boolean = false;
-  loadingMore: boolean = false;
-  notEmptyCourses: boolean = false;
-  loading: boolean = false;
-
   activePage: string = this.PUBLISHED;
   mainPage = true;
-
 
   constructor(
     public loadEnvService: LoadEnvService,
