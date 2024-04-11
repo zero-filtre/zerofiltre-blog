@@ -72,7 +72,7 @@
                 </div>
 
                 <div *appShellNoRender>
-                    <div *ngIf="courses?.length; else loader" class="space-y-11">
+                    <div *ngIf="courses?.length; else loader" class="grid lg:grid-cols-3 gap-y-11 gap-x-5">
                         <div *ngFor="let course of courses; let i=index">
                             <app-course-list-item [course]="course" (openDialogEvent)="openCourseDeleteDialog(course.id)"></app-course-list-item>
                         </div>

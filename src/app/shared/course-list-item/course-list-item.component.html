@@ -1,4 +1,4 @@
-<div class="course-card lg:grid grid-cols-3 gap-6 group">
+<div class="course-card gap-6 group">
     <a aria-labelledby="Link to course detail page"
         routerLink="{{canAccessCourse(course) ? (course | slugify) + '/' + '?' : (course | slugify)}}"
         class="relative group/imagecard article-preview hover:opacity-75">
@@ -9,7 +9,7 @@
         </div>
     </a>
 
-    <div class="col-span-2 article-text lg:flex flex-col justify-between mt-4 lg:mt-0">
+    <div class="col-span-2 article-text justify-between mt-4">
         <div class="flex justify-between items-start">
             <div class="article-tags-container flex flex-wrap items-center gap-1">
                 <a *ngFor="let tag of course?.tags" routerLink='/cours' [queryParams]="{tag:tag.name}"
