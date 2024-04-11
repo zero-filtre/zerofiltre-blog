@@ -152,9 +152,11 @@ export class BaseCourseListComponent implements OnInit {
       this.courses = content;
       this.loading = false;
       this.hasNext = hasNext;
+      this.noCourseAvailable = false;
 
       if (this.courses.length === 0) {
         this.errorMessage = 'Aucun cours trouvé 😊!';
+        this.noCourseAvailable = true;
       }
     },
     error: (_error: HttpErrorResponse) => {

@@ -70,7 +70,7 @@
 
                 <!-- Loading courses skeletons -->
                 <ng-template #loader>
-                    <div class="grid lg:grid-cols-4 gap-y-11 gap-x-5">
+                    <div *ngIf="loading" class="grid lg:grid-cols-4 gap-y-11 gap-x-5">
                         <div *ngFor="let elt of [].constructor(pageItemsLimit)">
                             <div class="skeleton-container gap-6">
                                 <div class="aspect-w-3 aspect-h-2">
@@ -146,18 +146,14 @@
                 </ng-template>
 
                 <!-- No Content Found Message -->
-                <ng-template [ngIf]="noCourseAvailable">
-                    <div class="flex flex-col justify-center items-center h-96 space-y-5">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-primary-500" fill="currentColor"
-                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
-                        </svg>
-                        <div class="text-sm font-semibold text-skin-base">
-                            {{ 'articles.noArticlesAvailable' | translate }}
-                        </div>
+                <div *ngIf="noCourseAvailable" class="flex flex-col justify-center items-center h-96 space-y-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 text-primary-600">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                    </svg>
+                    <div class="text-sm font-semibold text-skin-base">
+                        {{ 'course.noCourseAvailable' | translate }}
                     </div>
-                </ng-template>
+                </div>
 
                 <!-- Loading More Spinner -->
                 <div *ngIf="loadingMore" class="flex justify-center py-5">
