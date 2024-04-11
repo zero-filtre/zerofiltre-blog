@@ -1,5 +1,5 @@
 <main class="articles-list-container site-container lg:grid grid-cols-7 gap-10 lg:gap-20 py-5 lg:py-10 items-stretch">
-    <main class="col-span-5">
+    <main class="col-span-7">
         <div class="main-side-container max-w-xl mx-auto lg:max-w-none">
             <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
                 <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
@@ -23,28 +23,17 @@
 
                     <button type="button" (click)="sortBy(TAGS)" aria-current="false" aria-labelledby="Toggle to the tag articles tab"
                         [ngClass]="activePage === TAGS ? 'active-tab' : ''"
-                        class="lg:hidden relative text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        class="relative text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'app.tags' | translate}}</span>
                     </button>
                 </nav>
 
                 <div *ngIf="openedTagsDropdown"
-                    class="tagList-container lg:hidden flex flex-wrap justify-center absolute z-30 top-full gap-1.5 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%] bg-skin-bgMuted border shadow-2xl rounded-2xl overflow-y-scroll no-scrollbar">
-                    <ng-container *ngFor="let tag of tagList">
-                        <button type="button" (click)="sortByTag(tag?.name)" aria-current="false" aria-labelledby="a tag"
-                            [ngClass]="{'active-tag': activeTag == tag?.name}"
-                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
-                            <svg [ngStyle]="{'color': tag?.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
-                                viewBox="0 0 8 8">
-                                <circle cx="4" cy="4" r="3"></circle>
-                            </svg>
-                            <span
-                                class="truncate lowercase font-semibold group-hover:text-primary-500">{{tag?.name}}</span>
-                        </button>
-                    </ng-container>
+                    class="tagList-container flex flex-wrap justify-center absolute z-30 top-full gap-1.5 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%] lg:w-96 bg-skin-bgMuted border shadow-2xl rounded-2xl overflow-y-scroll no-scrollbar">
+                    <app-collapsible-tags [tagList]="tagList" [displayTitle]="false" [isOpen]="true" (activeTagEvent)="setActiveTag($event)" (filterEvent)="sortByTag(activeTag)"></app-collapsible-tags>
                 </div>
 
-                <div *ngIf="canCreateCourse">
+                <div *ngIf="canCreateCourse" class="relative lg:-top-2">
                     <button aria-label="Button to create a new course" (click)="openCourseEntryDialog()" type="button"
                         class="rounded-lg lg:shadow-lg lg:border lg:border-primary-500 lg:pl-0 lg:pr-2 flex lg:gap-0 items-center hover:shadow-md transition-all duration-300 lg:hover:bg-primary-100 lg:hover:bg-opacity-30">
                         <span class="sr-only">Nouveau cours</span>
@@ -72,7 +61,7 @@
                 </div>
 
                 <div *appShellNoRender>
-                    <div *ngIf="courses?.length; else loader" class="grid lg:grid-cols-3 gap-y-11 gap-x-5">
+                    <div *ngIf="courses?.length; else loader" class="grid lg:grid-cols-4 gap-y-11 gap-x-5">
                         <div *ngFor="let course of courses; let i=index">
                             <app-course-list-item [course]="course" (openDialogEvent)="openCourseDeleteDialog(course.id)"></app-course-list-item>
                         </div>
@@ -80,8 +69,8 @@
                 </div>
 
                 <!-- Loading courses skeletons -->
-                <ng-template #loader class="grid lg:grid-cols-3 gap-y-11 gap-x-5">
-                    <div class="grid lg:grid-cols-3 gap-y-11 gap-x-5">
+                <ng-template #loader>
+                    <div class="grid lg:grid-cols-4 gap-y-11 gap-x-5">
                         <div *ngFor="let elt of [].constructor(pageItemsLimit)">
                             <div class="skeleton-container gap-6">
                                 <div class="aspect-w-3 aspect-h-2">
@@ -191,7 +180,7 @@
         </div>
     </main>
 
-    <aside class="col-span-2 hidden lg:block space-y-6 lg:space-y-10">
+    <!-- <aside class="col-span-2 hidden space-y-6 lg:space-y-10">
         <div class="tags space-y-6">
             <span
                 class="inline-flex sm:hidden items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
@@ -230,5 +219,5 @@
         <div class="sticky top-28">
             <app-ads-square></app-ads-square>
         </div>
-    </aside>
+    </aside> -->
 </main>

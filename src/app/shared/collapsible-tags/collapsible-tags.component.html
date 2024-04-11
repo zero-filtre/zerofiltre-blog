@@ -15,9 +15,7 @@
 
 </div>
 
-<div class="relative mt-6 flex justify-center">
-    <!-- <div class="absolute inset-x-0 -top-10 bg-gradient-to-t from-[#F9FAFB]/90 h-10"></div> -->
-
+<div *ngIf="displayTitle" class="relative mt-6 flex justify-center">
     <button (click)="toggleSection()" class="inline-flex border items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
             class="w-4 h-4 border mr-2 rounded-full p-0.5 transition-all duration-200" [ngClass]="{'!rotate-90': isOpen}">
