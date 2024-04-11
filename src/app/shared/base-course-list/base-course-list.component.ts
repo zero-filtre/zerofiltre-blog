@@ -43,7 +43,7 @@ export class BaseCourseListComponent implements OnInit {
   scrollyPageNumber = 0;
 
   pageNumber: number = 0;
-  pageItemsLimit: number = 5;
+  pageItemsLimit: number = 6;
 
   loadingMore = false;
   loading = false;

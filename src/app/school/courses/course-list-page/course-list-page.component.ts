@@ -24,7 +24,6 @@ import { JsonLdService } from 'ngx-seo';
 export class CourseListPageComponent extends BaseCourseListComponent implements OnInit, OnDestroy {
   tagList: Tag[] = [];
   courses: any[] = [];
-  pageSize: number = 5;
 
   RECENT = 'recent';
   POPULAR = 'popular';
