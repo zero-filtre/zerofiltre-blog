@@ -27,6 +27,8 @@ import { Tag } from 'src/app/articles/article.model';
 })
 export class CollapsibleTagsComponent {
   @Input() tagList!: Tag[];
+  @Input() displayTitle = true;
+  @Input() isOpen = false;
   @Output() filterEvent = new EventEmitter<any>();
   @Output() activeTagEvent = new EventEmitter<any>();
 
@@ -42,7 +44,6 @@ export class CollapsibleTagsComponent {
     this.filterEvent.emit(tag);
   }
 
-  isOpen: boolean = false;
 
   toggleSection(): void {
     this.isOpen = !this.isOpen;

@@ -43,7 +43,7 @@ export class BaseCourseListComponent implements OnInit {
   scrollyPageNumber = 0;
 
   pageNumber: number = 0;
-  pageItemsLimit: number = 5;
+  pageItemsLimit: number = 8;
 
   loadingMore = false;
   loading = false;
@@ -152,9 +152,11 @@ export class BaseCourseListComponent implements OnInit {
       this.courses = content;
       this.loading = false;
       this.hasNext = hasNext;
+      this.noCourseAvailable = false;
 
       if (this.courses.length === 0) {
         this.errorMessage = 'Aucun cours trouvé 😊!';
+        this.noCourseAvailable = true;
       }
     },
     error: (_error: HttpErrorResponse) => {

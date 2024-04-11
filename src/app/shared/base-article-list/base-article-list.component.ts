@@ -43,6 +43,8 @@ export class BaseArticleListComponent implements OnInit {
   hasNext!: boolean;
   scrollyPageNumber = 0;
 
+  noArticlesAvailable: boolean = false;
+
   pageNumber: number = 0;
   pageItemsLimit: number = 5;
 
@@ -180,9 +182,11 @@ export class BaseArticleListComponent implements OnInit {
 
       this.loading = false;
       this.hasNext = hasNext;
+      this.noArticlesAvailable = false;
 
       if (this.articles.length === 0) {
         this.errorMessage = 'Aucun article trouvé 😊!';
+        this.noArticlesAvailable = true;
       }
     },
     error: (_error: HttpErrorResponse) => {

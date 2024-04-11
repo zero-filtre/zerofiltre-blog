@@ -313,5 +313,6 @@ export const fr = {
     },
     course: {
         noMoreCourse: 'Plus aucun cours 😏!',
+        noCourseAvailable: 'Aucun cours trouvé 😊!',
     }
 }
