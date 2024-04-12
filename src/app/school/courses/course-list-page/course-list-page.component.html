@@ -61,7 +61,7 @@
                 </div>
 
                 <div *appShellNoRender>
-                    <div *ngIf="courses?.length; else loader" class="grid lg:grid-cols-4 gap-y-11 gap-x-5">
+                    <div *ngIf="courses?.length; else loader" class="grid lg:grid-cols-4 gap-y-11 gap-x-6">
                         <div *ngFor="let course of courses; let i=index">
                             <app-course-list-item [course]="course" (openDialogEvent)="openCourseDeleteDialog(course.id)"></app-course-list-item>
                         </div>
@@ -70,7 +70,7 @@
 
                 <!-- Loading courses skeletons -->
                 <ng-template #loader>
-                    <div class="grid lg:grid-cols-4 gap-y-11 gap-x-5">
+                    <div class="grid lg:grid-cols-4 gap-y-11 gap-x-6">
                         <div *ngFor="let elt of [].constructor(pageItemsLimit)">
                             <div class="course-skeleton gap-6">
                                 <div class="aspect-w-3 aspect-h-2">
