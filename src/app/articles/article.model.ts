@@ -14,6 +14,7 @@ export interface Article {
   tags: Tag[];
   readingTime: number;
   viewsCount: number;
+  premium:boolean;
 }
 
 export interface File {
