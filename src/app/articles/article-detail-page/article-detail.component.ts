@@ -19,6 +19,7 @@ import { JsonLdService } from 'ngx-seo';
 import { JsonLd } from 'ngx-seo/lib/json-ld';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-article-detail',
@@ -107,6 +108,11 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   }
 
   private _mobileQueryListener: () => void;
+
+  canAccesPremium(article: Article) {
+    const user = this.authService?.currentUsr as User
+    return this.articleService.canAccesPremium(user, article);
+  }
 
   injectGiscus(data: any) {
     const scriptElement: HTMLScriptElement = document.createElement("script");

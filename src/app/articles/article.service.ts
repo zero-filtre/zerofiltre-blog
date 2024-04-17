@@ -4,6 +4,7 @@ import { BehaviorSubject, mergeMap, Observable, of, shareReplay, tap, map, EMPTY
 import { environment } from 'src/environments/environment';
 import { Article, Author, Tag } from './article.model';
 import { isPlatformServer } from '@angular/common';
+import { User } from '../user/user.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -27,6 +28,21 @@ export class ArticleService {
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformID: any
   ) { }
+
+  isAdminUser(user: User){
+    if (!user) return false;
+    return user.roles.includes("ROLE_ADMIN");
+  }
+
+  isProUser(user: User){
+    if (!user) return false;
+    return user.pro
+  }
+
+  canAccesPremium(user: User, article: Article): boolean {
+    if (!user) return false;
+    return article?.author?.id === user.id || this.isAdminUser(user) || this.isProUser(user) 
+  }
 
   public sortByDate(list: Article[]): Article[] {
     return list
