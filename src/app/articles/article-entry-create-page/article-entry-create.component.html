@@ -96,15 +96,12 @@
                         Video:
                     </label>
     
-                    <input (keyup)="typeInVideo(getValue($event))" id="video" required minlength="4" formControlName="video"
+                    <input (keyup)="typeInVideo(getValue($event))" id="video" formControlName="video"
                         class="w-full bg-transparent border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
                         placeholder="Entrez le lien youtube de la video..." autocomplete="off" />
     
-                    <div *ngIf="video?.invalid && video?.dirty" class="">
-                        <div *ngIf="video?.errors?.['required']" class="mt-2 text-xs sm:text-sm text-error italic">
-                            Veuillez ajouter un lien vers la video
-                        </div>
-                        <div *ngIf="video?.errors?.['minlength']" class="mt-2 text-xs sm:text-sm text-error italic">
+                    <div *ngIf="!isValidURL(video.value) && video?.dirty" class="">
+                        <div class="mt-2 text-xs sm:text-sm text-error italic">
                             Le lien est incorrect
                         </div>
                     </div>

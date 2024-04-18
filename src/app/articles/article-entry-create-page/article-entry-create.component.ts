@@ -90,8 +90,18 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
     this.tagsDropdownOpened = true
   }
 
-  extractVideoId(videoLink: any) {
+  isValidURL(url: string) {
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  extractVideoId(videoLink: string) {
     if (!videoLink) return;
+    if(!this.isValidURL(videoLink)) return;
     const params = new URL(videoLink).searchParams;
     this.currentVideoId = params.get('v');
   }
