@@ -15,6 +15,7 @@ export interface Article {
   readingTime: number;
   viewsCount: number;
   premium:boolean;
+  video: string;
 }
 
 export interface File {
