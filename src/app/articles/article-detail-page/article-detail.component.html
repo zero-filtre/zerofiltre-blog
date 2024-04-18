@@ -221,10 +221,29 @@
                 </div>
 
                 <div class="article-content">
-                    <div *ngIf="article" class="relative markdown-content mt-6 lg:mt-14">
+                    <div *ngIf="article" class="relative overflow-hidden markdown-content mt-6 lg:mt-14">
+                        <div *ngIf="article?.premium && !canAccesPremium(article)" class="absolute inset-0 bg-gradient-to-t from-skin-bg to-transparent"></div>
                         <app-markdown-preview [data]="article?.content"></app-markdown-preview>
-                        <div *ngIf="article?.premium && !canAccesPremium(article)" class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-b from-transparent to-secondary/50 blur-md"></div>
                     </div>
+
+                    <!-- <div class="relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-skin-bg to-transparent"></div>
+                        <p>
+                            Once upon a time, in a far-off land, there was a very lazy king who spent all day lounging on his throne.
+                            One day, his advisors came to him with a problem: the kingdom was running out of money.
+                        </p>
+                        <p>
+                            The king thought long and hard, and finally came up with a brilliant plan: he would tax the jokes in the
+                            kingdom. Jokester began sneaking into the castle in the middle of the night and leaving jokes all over the
+                            place: under the king's pillow, in his soup, even in the royal toilet. The king was furious, but he couldn't
+                            seem to stop Jokester.
+                        </p>
+                        <p>
+                            And then, one day, the people of the kingdom discovered that the jokes left by Jokester were so funny that
+                            they couldn't help but laugh. And once they started laughing, they couldn't stop.
+                        </p>
+                    </div> -->
+
                     <div *ngIf="article?.premium && !canAccesPremium(article)" class="mt-10 text-skin-base shadow-lg rounded-lg bg-skin-card p-6 max-w-xl mx-auto">
                         <p class="text-sm">Cet article est réservé aux abonnés. Déjà abonné ? <a routerLink="/login" class="underline">Connectez-vous</a></p>
                         <h3 class="text-2xl lg:text-3xl text-primary-500 font-extrabold py-3">Découvrez les meilleurs articles IT en français</h3>
