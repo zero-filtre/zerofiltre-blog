@@ -207,8 +207,14 @@
                 <div
                     class="article-cover-image shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
                     <ng-container *ngIf="article" class="">
-                        <app-image [classes]="'object-cover'" [sourceUrl]="article?.thumbnail!" [alt]="article?.title!">
-                        </app-image>
+                        <div *ngIf="currentVideoId; else thumbnailCover">
+                            <app-youtube-video-player [videoId]="currentVideoId" [width]="1000"
+                                [height]="455"></app-youtube-video-player>
+                        </div>
+                        <ng-template #thumbnailCover>
+                            <app-image [classes]="'object-cover'" [sourceUrl]="article?.thumbnail!" [alt]="article?.title!">
+                            </app-image>
+                        </ng-template>
                     </ng-container>
 
                     <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
@@ -221,8 +227,23 @@
                 </div>
 
                 <div class="article-content">
-                    <div *ngIf="article" class="markdown-content mt-6 lg:mt-14">
+                    <div *ngIf="article" class="relative overflow-hidden markdown-content mt-6 lg:mt-14">
+                        <div *ngIf="article?.premium && !canAccesPremium(article)" class="absolute inset-0 bg-gradient-to-t from-skin-bg to-transparent"></div>
                         <app-markdown-preview [data]="article?.content"></app-markdown-preview>
+                    </div>
+
+                    <div *ngIf="article?.premium && !canAccesPremium(article)" class="mt-10 text-skin-base shadow-lg rounded-lg bg-skin-card p-6 max-w-xl mx-auto">
+                        <p class="text-sm">Cet article est réservé aux abonnés. Déjà abonné ? <a routerLink="/login" class="underline">Connectez-vous</a></p>
+                        <h3 class="text-2xl lg:text-3xl text-primary-500 font-extrabold py-3">Découvrez les meilleurs articles IT en français</h3>
+                        <p>
+                            L'auteur a mis cet article à la disposition des membres premium uniquement. 
+                            Mettez à niveau pour débloquer instantanément cet article ainsi que d’autres avantages réservés aux pros.
+                        </p>
+
+                        <a routerLink="/pro"
+                            class="block mt-4 border border-primary-500 text-center rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
+                            <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5 py-2.5">Passer PRO</p>
+                        </a>
                     </div>
 
                     <ng-container *ngIf="loading" class="articleContentSkeletonLoader">

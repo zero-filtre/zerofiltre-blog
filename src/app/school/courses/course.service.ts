@@ -29,6 +29,11 @@ export class CourseService {
     return user.roles.includes("ROLE_ADMIN");
   }
 
+  isProUser(user: User){
+    if (!user) return false;
+    return user.pro
+  }
+
   canCreateCourse(user: User): boolean {
     if (!user) return false;
     return this.isAdminUser(user) || true;

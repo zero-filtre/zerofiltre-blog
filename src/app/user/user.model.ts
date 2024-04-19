@@ -15,6 +15,7 @@ export interface User {
     expired?: boolean;
     language?: string;
     plan?: PlanType;
+    pro?: boolean;
 }
 
 export const PLANS = { PRO: 'PRO', BASIC: 'BASIC' } as const;

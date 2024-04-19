@@ -58,8 +58,10 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   private SummaryText$ = new Subject<string>();
   private TagsText$ = new Subject<Tag[]>();
   private ThumbnailText$ = new Subject<string>();
+  private VideoText$ = new Subject<string>();
 
   savedArticle$!: Observable<Article>;
+  currentVideoId: string;
 
   tagList!: Tag[];
   savingMessage!: string;
@@ -88,6 +90,22 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
     this.tagsDropdownOpened = true
   }
 
+  isValidURL(url: string) {
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  extractVideoId(videoLink: string) {
+    if (!videoLink) return;
+    if(!this.isValidURL(videoLink)) return;
+    const params = new URL(videoLink).searchParams;
+    this.currentVideoId = params.get('v');
+  }
+
   fetchListOfTags(): void {
     this.tagService.getListOfTags().subscribe(
       (response: Tag[]) => {
@@ -113,6 +131,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
           this.article = response
           this.articleTitle = response.title!
           this.InitForm(this.article)
+          this.extractVideoId(response.video)
         }
       )
   }
@@ -154,7 +173,8 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
       summary: [articleSummary, [Validators.required]],
       content: [articleContent, [Validators.required]],
       thumbnail: [article.thumbnail],
-      tags: this.fb.array(article.tags.map(tag => this.buildTagItemFields(tag)))
+      tags: this.fb.array(article.tags.map(tag => this.buildTagItemFields(tag))),
+      video: [article.video],
     })
   }
 
@@ -163,6 +183,7 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
   get content() { return this.form.get('content'); }
   get thumbnail() { return this.form.get('thumbnail'); }
   get tags() { return this.form.get('tags') as FormArray; }
+  get video() { return this.form.get('video'); }
 
   buildTagItemFields(tag: Tag): FormGroup {
     return new FormGroup({
@@ -209,6 +230,10 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
 
   typeInSummary(content: string) {
     this.SummaryText$.next(content);
+  }
+
+  typeInVideo(content: string) {
+    this.VideoText$.next(content);
   }
 
   saveArticle() {
@@ -339,7 +364,8 @@ export class ArticleEntryCreateComponent implements OnInit, BaseComponent {
       this.TitleText$,
       this.EditorText$,
       this.SummaryText$,
-      this.ThumbnailText$
+      this.ThumbnailText$,
+      this.VideoText$
     ]
 
     fields.forEach((el: Observable<any>) => {

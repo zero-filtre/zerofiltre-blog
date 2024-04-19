@@ -19,6 +19,7 @@ import { JsonLdService } from 'ngx-seo';
 import { JsonLd } from 'ngx-seo/lib/json-ld';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-article-detail',
@@ -66,6 +67,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public hasHistory: boolean;
 
   mobileQuery: MediaQueryList;
+  currentVideoId: string;
 
   giscusConfig = {
     'data-repo': 'zero-filtre/zerofiltre-blog',
@@ -108,6 +110,11 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   private _mobileQueryListener: () => void;
 
+  canAccesPremium(article: Article) {
+    const user = this.authService?.currentUsr as User
+    return this.articleService.canAccesPremium(user, article);
+  }
+
   injectGiscus(data: any) {
     const scriptElement: HTMLScriptElement = document.createElement("script");
 
@@ -119,6 +126,22 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     }
 
     document.body.appendChild(scriptElement);
+  }
+
+  isValidURL(url: string) {
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  extractVideoId(videoLink: string) {
+    if (!videoLink) return;
+    if(!this.isValidURL(videoLink)) return;
+    const params = new URL(videoLink).searchParams;
+    this.currentVideoId = params.get('v');
   }
 
   public setDateFormat(date: any) {
@@ -145,6 +168,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: Article) => {
           this.article = response
+          this.extractVideoId(response.video)
 
           const rootUrl = this.router.url.split('/')[1];
           const sluggedUrl = `${rootUrl}/${this.slugify.transform(response)}`

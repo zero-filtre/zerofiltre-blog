@@ -26,7 +26,7 @@
                 </label>
 
                 <div class="article-image-preview-wrapper relative mt-5">
-                    <div *ngIf="!thumbnail?.value"
+                    <div *ngIf="!thumbnail?.value && !currentVideoId; else coverView"
                         class="label-image-preview relative aspect-w-4 aspect-h-2 overflow-hidden">
                         <label *ngIf="!uploading" for="file" (click)="fileUpload.click()"
                             class="preview-label group flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
@@ -64,20 +64,46 @@
 
                     </div>
 
-                    <div *ngIf="thumbnail?.value"
-                        class="image-wrapper shadow-lg overflow-hidden rounded-lg aspect-w-4 aspect-h-2">
-                        <app-image [classes]="'object-cover'" [sourceUrl]="thumbnail?.value!" [alt]="article?.title!">
-                        </app-image>
-                    </div>
+                    <ng-template #coverView>
+                        <div *ngIf="currentVideoId; else thumbnailCover" class="presentation-video">
+                            <app-youtube-video-player [videoId]="currentVideoId" [width]="1000"
+                                [height]="500"></app-youtube-video-player>
+                        </div>
 
-                    <div *ngIf="thumbnail?.value"
-                        class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center items-center w-12 h-12 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error"
-                        (click)="removeFile()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                            class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                        </svg>
+                        <ng-template #thumbnailCover>
+                            <div *ngIf="thumbnail?.value"
+                                class="image-wrapper shadow-lg overflow-hidden rounded-lg aspect-w-4 aspect-h-2">
+                                <app-image [classes]="'object-cover'" [sourceUrl]="thumbnail?.value!" [alt]="article?.title!">
+                                </app-image>
+                            </div>
+
+                            <div *ngIf="thumbnail?.value"
+                                class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center items-center w-12 h-12 mt-2 mr-2 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error"
+                                (click)="removeFile()">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                    class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                </svg>
+                            </div>
+                        </ng-template>
+                    </ng-template>
+
+                </div>
+
+                <div class="my-10">
+                    <label for="video" class="block text-base font-medium leading-5 text-skin-base mb-5">
+                        Video:
+                    </label>
+    
+                    <input (keyup)="typeInVideo(getValue($event))" id="video" formControlName="video"
+                        class="w-full bg-transparent border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
+                        placeholder="Entrez le lien youtube de la video..." autocomplete="off" />
+    
+                    <div *ngIf="!isValidURL(video.value) && video?.dirty" class="">
+                        <div class="mt-2 text-xs sm:text-sm text-error italic">
+                            Le lien est incorrect
+                        </div>
                     </div>
                 </div>
 

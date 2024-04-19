@@ -229,9 +229,9 @@
                 </div>
 
                 <ng-template #loader>
-                    <div *ngIf="loading">
+                    <div>
                         <div *ngFor="let elt of [].constructor(pageItemsLimit)">
-                            <div class="skeleton-container lg:grid grid-cols-3 gap-6 items-start">
+                            <div class="article-skeleton lg:grid grid-cols-3 gap-6 items-start">
                                 <div class="aspect-w-3 aspect-h-2">
                                     <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
                                         'border-radius': '8px',
@@ -305,14 +305,14 @@
                 </ng-template>
 
                 <!-- No Content Found Message -->
-                <div *ngIf="noArticlesAvailable" class="flex flex-col justify-center items-center h-96 space-y-4">
+                <!-- <div *ngIf="noArticlesAvailable" class="flex flex-col justify-center items-center h-96 space-y-4">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-20 text-primary-600">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
                     </svg>
                     <div class="text-sm font-semibold text-skin-base">
                         {{ 'articles.noArticlesAvailable' | translate }}
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Loading More Spinner -->
                 <div *ngIf="loadingMore" class="flex justify-center py-5">
