@@ -67,6 +67,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   public hasHistory: boolean;
 
   mobileQuery: MediaQueryList;
+  currentVideoId: string;
 
   giscusConfig = {
     'data-repo': 'zero-filtre/zerofiltre-blog',
@@ -127,6 +128,22 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     document.body.appendChild(scriptElement);
   }
 
+  isValidURL(url: string) {
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  extractVideoId(videoLink: string) {
+    if (!videoLink) return;
+    if(!this.isValidURL(videoLink)) return;
+    const params = new URL(videoLink).searchParams;
+    this.currentVideoId = params.get('v');
+  }
+
   public setDateFormat(date: any) {
     return formatDate(date)
   }
@@ -151,6 +168,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: Article) => {
           this.article = response
+          this.extractVideoId(response.video)
 
           const rootUrl = this.router.url.split('/')[1];
           const sluggedUrl = `${rootUrl}/${this.slugify.transform(response)}`
