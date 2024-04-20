@@ -66,9 +66,9 @@ export class MessageService {
   }
 
   // For non authenticated requests
-  authError(state: any) {
+  authError(state: any, message='') {
     const msg = this.translate.instant('login.authErrorMessage')
-    this.openSnackBarError(msg, this.OK);
+    this.openSnackBarError(message, this.OK);
 
     this.router.navigate(
       ['/login'],
