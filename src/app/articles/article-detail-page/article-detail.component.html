@@ -205,25 +205,27 @@
                 </header>
 
                 <div
-                    class="article-cover-image shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
+                    class="article-cover">
                     <ng-container *ngIf="article" class="">
-                        <div *ngIf="currentVideoId; else thumbnailCover">
-                            <app-youtube-video-player [videoId]="currentVideoId" [width]="1000"
+                        <div *ngIf="currentVideoId; else thumbnailCover" class="article-cover-video shadow-lg rounded-lg overflow-hidden mt-6 lg:mt-10 mx-auto">
+                            <app-youtube-video-player [videoId]="currentVideoId" [width]="1200"
                                 [height]="455"></app-youtube-video-player>
                         </div>
                         <ng-template #thumbnailCover>
-                            <app-image [classes]="'object-cover'" [sourceUrl]="article?.thumbnail!" [alt]="article?.title!">
-                            </app-image>
+                            <div class="article-cover-image shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
+                                <app-image [classes]="'object-cover'" [sourceUrl]="article?.thumbnail!" [alt]="article?.title!">
+                                </app-image>
+                            </div>
                         </ng-template>
                     </ng-container>
 
-                    <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
+                    <div *ngIf="loading" class="article-cover-skeleton shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
                         <ngx-skeleton-loader class="shadow-lg rounded-lg" count="1" appearance="line" [theme]="{ 
                                     'height.%': 100,
                                     'width.%': 100
                                 }">
                         </ngx-skeleton-loader>
-                    </ng-container>
+                    </div>
                 </div>
 
                 <div class="article-content">

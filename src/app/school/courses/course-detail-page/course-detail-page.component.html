@@ -114,7 +114,7 @@
             <section *ngIf="currentVideoId" class="presentation-video">
                 <div class="site-container">
                     <app-youtube-video-player [videoId]="currentVideoId" [width]="800"
-                        [height]="450"></app-youtube-video-player>
+                        [height]="mobileQuery.matches ? 400 : 450"></app-youtube-video-player>
                 </div>
             </section>
 
