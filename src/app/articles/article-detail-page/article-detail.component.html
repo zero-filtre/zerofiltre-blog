@@ -209,7 +209,7 @@
                     <ng-container *ngIf="article" class="">
                         <div *ngIf="currentVideoId; else thumbnailCover" class="article-cover-video shadow-lg rounded-lg overflow-hidden mt-6 lg:mt-10 mx-auto">
                             <app-youtube-video-player [videoId]="currentVideoId" [width]="1200"
-                                [height]="455"></app-youtube-video-player>
+                                [height]="mobileQuery.matches ? 350 : 455"></app-youtube-video-player>
                         </div>
                         <ng-template #thumbnailCover>
                             <div class="article-cover-image shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
@@ -230,7 +230,7 @@
 
                 <div class="article-content">
                     <div *ngIf="article" class="relative overflow-hidden markdown-content mt-6 lg:mt-14">
-                        <div *ngIf="article?.premium && !canAccesPremium(article)" class="absolute inset-0 bg-gradient-to-t from-skin-bg to-transparent"></div>
+                        <div *ngIf="article?.premium && !canAccesPremium(article)" class="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-skin-bg to-transparent"></div>
                         <app-markdown-preview [data]="article?.content"></app-markdown-preview>
                     </div>
 
