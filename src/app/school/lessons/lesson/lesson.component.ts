@@ -214,7 +214,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.location.replaceState(sluggedUrl);
 
           const desc = lesson?.summary || '';
-          const img = this.course?.thumbnail || 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065'
+          const img = this.course?.thumbnail || 'https://ik.imagekit.io/lfegvix1p/pro_vvcZRxQIU.png?updatedAt=1714202330763'
 
           this.seo.generateTags({
             title: lesson.title,
