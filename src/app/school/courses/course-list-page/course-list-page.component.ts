@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tag } from 'src/app/articles/article.model';
@@ -15,6 +15,7 @@ import { TagService } from 'src/app/services/tag.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Course } from '../course';
 import { JsonLdService } from 'ngx-seo';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-course-list-page',
@@ -43,6 +44,8 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   status: string;
   tag: string;
 
+  isGrid: boolean;
+  mobileQuery: MediaQueryList;
 
   constructor(
     public loadEnvService: LoadEnvService,
@@ -56,9 +59,22 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
     public dialogEntryRef: MatDialog,
     public dialogDeleteRef: MatDialog,
     private tagService: TagService,
-    @Inject(PLATFORM_ID) public platformId: any
+    @Inject(PLATFORM_ID) public platformId: any,
+    media: MediaMatcher,
+    changeDetectorRef: ChangeDetectorRef,
   ) {
     super(loadEnvService, seo, jsonLd, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
+    this.mobileQuery = media.matchMedia('(max-width: 1024px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  private _mobileQueryListener: () => void;
+
+  toggleListDisplay(): void {
+    this.isGrid = !this.isGrid;
+    localStorage.setItem('grid-list', JSON.stringify(this.isGrid));
+    this.openedTagsDropdown = false;
   }
 
   fetchListOfTags(): void {
@@ -199,7 +215,13 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   ngOnInit(): void {
 
     if (isPlatformBrowser(this.platformId)) {
-      this.fetchListOfTags()
+      if (this.mobileQuery.matches) {
+        this.isGrid = true;
+      } else {
+        this.isGrid = localStorage.getItem('grid-list') === null ? true : JSON.parse(localStorage.getItem('grid-list'));
+      }
+
+      this.fetchListOfTags();
 
       this.route.queryParamMap.subscribe(
         query => {
@@ -233,15 +255,16 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
       title: this.translate.instant('meta.coursesTitle'),
       description: this.translate.instant('meta.coursesDescription'),
       author: 'Zerofiltre.tech',
-      image: 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065'
+      image: 'https://ik.imagekit.io/lfegvix1p/pro_vvcZRxQIU.png?updatedAt=1714202330763'
     });
   }
 
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.tags$.unsubscribe()
-      this.courses$.unsubscribe()
+      this.tags$.unsubscribe();
+      this.courses$.unsubscribe();
+      this.mobileQuery.removeListener(this._mobileQueryListener);
     }
   }
 

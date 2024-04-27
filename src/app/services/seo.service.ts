@@ -22,7 +22,7 @@ export class SeoService {
   generateTags({ 
     title = this.translate.instant('meta.homeTitle'),
     description = this.translate.instant('meta.homeDescription'),
-    image = 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg?updatedAt=1655393997065', 
+    image = 'https://ik.imagekit.io/lfegvix1p/pro_vvcZRxQIU.png?updatedAt=1714202330763', 
     author = 'Zerofiltre.tech',
     publishDate = ''
   }) {
