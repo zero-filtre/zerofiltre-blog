@@ -75,7 +75,7 @@
                 </div>
 
                 <div *appShellNoRender>
-                    <div *ngIf="courses?.length; else loader" class="grid gap-y-11 {{isGrid ? 'lg:grid-cols-4 gap-x-6' : ''}}">
+                    <div *ngIf="courses?.length; else loader" class="grid gap-y-11 {{isGrid ? 'lg:grid-cols-3 gap-x-6' : ''}}">
                         <div *ngFor="let course of courses; let i=index">
                             <app-course-list-item [course]="course" [gridItem]="isGrid" (openDialogEvent)="openCourseDeleteDialog(course.id)"></app-course-list-item>
                         </div>
@@ -84,19 +84,18 @@
 
                 <!-- Loading courses skeletons -->
                 <ng-template #loader>
-                    <div class="grid gap-y-11 {{isGrid ? 'lg:grid-cols-4 gap-x-6' : ''}}">
+                    <div class="grid {{isGrid ? 'lg:grid-cols-3 gap-x-6 gap-y-11' : ''}}">
                         <div *ngFor="let elt of [].constructor(pageItemsLimit)">
-                            <div class="course-skeleton gap-6 {{isGrid ? 'shadow-lg rounded-xl' : 'grid lg:grid-cols-3 items-center'}}">
-                                <div class="aspect-w-3 aspect-h-2">
+                            <div class="course-skeleton gap-6 {{isGrid ? 'shadow-md rounded-xl' : 'grid lg:grid-cols-3 items-center'}}">
+                                <div class="relative aspect-w-3 aspect-h-2 overflow-hidden {{isGrid ? 'rounded-t-xl' : 'rounded-lg'}}">
                                     <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                                        'border-radius': '8px',
                                         'height.%': 100,
                                         'width.%': 100
                                         }">
                                     </ngx-skeleton-loader>
                                 </div>
 
-                                <div class="col-span-2 mt-4 {{isGrid ? 'p-4 pt-0' : ''}}">
+                                <div class="col-span-2 mt-5 {{isGrid ? 'p-5' : ''}}">
                                     <div class="tags-container flex space-x-3">
                                         <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
                                         'border-radius': '9999px',
