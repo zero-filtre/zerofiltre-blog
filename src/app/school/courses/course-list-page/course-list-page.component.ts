@@ -73,7 +73,8 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
 
   toggleListDisplay(): void {
     this.isGrid = !this.isGrid;
-    localStorage.setItem('grid-list', JSON.stringify(this.isGrid))
+    localStorage.setItem('grid-list', JSON.stringify(this.isGrid));
+    this.openedTagsDropdown = false;
   }
 
   fetchListOfTags(): void {
