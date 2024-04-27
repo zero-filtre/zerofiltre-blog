@@ -337,31 +337,16 @@
 
     <aside class="col-span-2 hidden lg:block space-y-6 lg:space-y-10">
         <div class="tags space-y-6">
-            <span
-                class="inline-flex sm:hidden items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
-                <svg class="mr-1.5 h-2 w-2 text-skin-base" fill="currentColor" viewBox="0 0 8 8">
-                    <circle cx="4" cy="4" r="3"></circle>
-                </svg>
-                {{ 'articles.tagTitle' | translate }}
-            </span>
-
             <div class="" aria-labelledby="article-tags">
-                <ng-template [ngIf]="tagList">
+                <div *ngIf="tagList; else tagLoader">
                     <app-collapsible-tags [tagList]="tagList" (activeTagEvent)="setActiveTag($event)" (filterEvent)="sortByTag(activeTag)"></app-collapsible-tags>
-                </ng-template>
+                </div>
 
-                <ng-template [ngIf]="loading && !tagList">
-                    <div class="tags-skeleton-container">
-                        <ngx-skeleton-loader class="flex space-x-1" count="3" appearance="line" [theme]="{ 
+                <ng-template #tagLoader>
+                    <div class="tags-skeleton-container flex justify-center">
+                        <ngx-skeleton-loader class="flex space-x-1" count="1" appearance="line" [theme]="{ 
                                 'border-radius': '9999px',
-                                 width: '80px',
-                                 height: '30px',
-                                 display: 'block'
-                                }">
-                        </ngx-skeleton-loader>
-                        <ngx-skeleton-loader class="flex space-x-1" count="2" appearance="line" [theme]="{ 
-                                'border-radius': '9999px',
-                                 width: '100px',
+                                 width: '150px',
                                  height: '30px',
                                  display: 'block'
                                 }">

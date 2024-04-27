@@ -43,6 +43,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   status: string;
   tag: string;
 
+  isGrid = true;
 
   constructor(
     public loadEnvService: LoadEnvService,
@@ -59,6 +60,10 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
     @Inject(PLATFORM_ID) public platformId: any
   ) {
     super(loadEnvService, seo, jsonLd, router, route, courseService, authService, translate, dialogEntryRef, dialogDeleteRef)
+  }
+
+  toggleListDisplay(): void {
+    this.isGrid = !this.isGrid;
   }
 
   fetchListOfTags(): void {

@@ -11,6 +11,7 @@ import { User } from 'src/app/user/user.model';
 })
 export class CourseListItemComponent {
   @Input() course: Course;
+  @Input() gridItem: boolean;
   @Output() openDialogEvent = new EventEmitter<any>();
 
   constructor(
