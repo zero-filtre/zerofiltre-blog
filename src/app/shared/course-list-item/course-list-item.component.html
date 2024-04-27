@@ -1,4 +1,4 @@
-<div class="course-card gap-6 group {{gridItem ? 'shadow-lg rounded-xl hover:scale-105 transition-transform ease-in-out duration-500' : 'grid lg:grid-cols-3'}}">
+<div class="course-card group {{gridItem ? 'size-full flex flex-col shadow-lg rounded-xl hover:scale-105 transition-transform ease-in-out duration-500' : 'grid lg:grid-cols-3 gap-6'}}">
     <a aria-labelledby="Link to course detail page"
         routerLink="{{canAccessCourse(course) ? (course | slugify) + '/' + '?' : (course | slugify)}}"
         class="relative group/imagecard article-preview hover:opacity-75">
@@ -9,7 +9,7 @@
         </div>
     </a>
 
-    <div class="col-span-2 course-text justify-between mt-4 {{gridItem ? 'p-4 pt-0' : 'lg:flex flex-col lg:mt-0'}}">
+    <div class="col-span-2 course-text justify-between mt-5 {{gridItem ? 'p-4 pt-0' : 'lg:flex flex-col lg:mt-0'}}">
     
         <div class="flex justify-between items-start">
             <div class="article-tags-container flex flex-wrap items-center gap-1">
