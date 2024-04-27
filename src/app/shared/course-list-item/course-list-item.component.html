@@ -9,7 +9,7 @@
         </div>
     </a>
 
-    <div class="col-span-2 course-text justify-between mt-5 {{gridItem ? 'p-4 pt-0' : 'lg:flex flex-col lg:mt-0'}}">
+    <div class="col-span-2 course-text justify-between {{gridItem ? 'p-5' : 'lg:flex flex-col'}}">
     
         <div class="flex justify-between items-start">
             <div class="article-tags-container flex flex-wrap items-center gap-1">
@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <div class="mt-2">
+        <div class="mt-3">
             <div class="flex justify-between items-center gap-2">
                 <a aria-labelledby="Link to course detail page"
                     routerLink="{{canAccessCourse(course) ? (course|slugify) + '/' + '?' : (course|slugify)}}"
@@ -77,11 +77,11 @@
             </div>
 
             <p
-                class="article-description mt-1 text-sm lg:text-base tracking-wide font-light text-skin-text leading-5 line-clamp-2">
+                class="article-description {{gridItem ? 'mt-3' : 'mt-1.5'}} text-sm lg:text-base tracking-wide font-light text-skin-text leading-5 line-clamp-2">
                 <ng-container *ngIf="course?.summary">{{course?.summary}}</ng-container>
             </p>
 
-            <div class="article-author mt-3 flex items-center">
+            <div class="article-author mt-4 flex items-center">
                 <div class="author-image flex-shrink-0">
                     <a aria-labelledby="Link to author profile"
                         [routerLink]="authService?.currentUsr?.id == course?.author?.id ? ['/user/profile'] : ['/user/' + course?.author?.id]">
