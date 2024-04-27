@@ -1,4 +1,4 @@
-<div class="course-card group {{gridItem ? 'size-full flex flex-col shadow-lg rounded-xl hover:scale-105 transition-transform ease-in-out duration-500' : 'grid lg:grid-cols-3 gap-6'}}">
+<div class="course-card group {{gridItem ? 'size-full flex flex-col shadow-lg rounded-xl lg:hover:scale-105 transition-transform ease-in-out duration-500' : 'grid lg:grid-cols-3 gap-6'}}">
     <a aria-labelledby="Link to course detail page"
         routerLink="{{canAccessCourse(course) ? (course | slugify) + '/' + '?' : (course | slugify)}}"
         class="relative group/imagecard article-preview hover:opacity-75">
