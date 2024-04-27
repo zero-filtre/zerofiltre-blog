@@ -43,7 +43,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   status: string;
   tag: string;
 
-  isGrid = true;
+  isGrid: boolean;
 
   constructor(
     public loadEnvService: LoadEnvService,
@@ -64,6 +64,7 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
 
   toggleListDisplay(): void {
     this.isGrid = !this.isGrid;
+    localStorage.setItem('grid-list', JSON.stringify(this.isGrid))
   }
 
   fetchListOfTags(): void {
@@ -204,7 +205,8 @@ export class CourseListPageComponent extends BaseCourseListComponent implements 
   ngOnInit(): void {
 
     if (isPlatformBrowser(this.platformId)) {
-      this.fetchListOfTags()
+      this.isGrid = localStorage.getItem('grid-list') === null ? true : JSON.parse(localStorage.getItem('grid-list'));
+      this.fetchListOfTags();
 
       this.route.queryParamMap.subscribe(
         query => {
