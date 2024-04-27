@@ -1,15 +1,18 @@
-<div class="course-card gap-6 group">
+<!-- <div class="course-card gap-6 group"> -->
+<div class="course-card shadow-lg rounded-xl gap-6 group">
     <a aria-labelledby="Link to course detail page"
         routerLink="{{canAccessCourse(course) ? (course | slugify) + '/' + '?' : (course | slugify)}}"
         class="relative group/imagecard article-preview hover:opacity-75">
-        <div class="relative aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
+        <!-- <div class="relative aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden"> -->
+        <div class="relative aspect-w-3 aspect-h-2 rounded-t-xl overflow-hidden">
             <app-image [classes]="'object-cover transition-all duration-200'" [sourceUrl]="course?.thumbnail!"
                 [alt]="course?.title!">
             </app-image>
         </div>
     </a>
 
-    <div class="col-span-2 article-text justify-between mt-4">
+    <!-- <div class="col-span-2 article-text justify-between mt-4"> -->
+    <div class="col-span-2 article-text justify-between mt-4 p-4">
         <div class="flex justify-between items-start">
             <div class="article-tags-container flex flex-wrap items-center gap-1">
                 <a *ngFor="let tag of course?.tags" routerLink='/cours' [queryParams]="{tag:tag.name}"
