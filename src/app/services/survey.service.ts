@@ -24,7 +24,7 @@ export class SurveyService {
   saveSurveyResults(json: object): Observable<any> {
     const data = JSON.stringify(json)
     return of(data)
-    return this.http.patch<any>(`${apiBase}/nps`, data, httpOptions)
+    return this.http.post<any>(`${apiBase}/nps`, data, httpOptions)
       .pipe(shareReplay())
   }
 }
