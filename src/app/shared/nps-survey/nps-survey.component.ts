@@ -12,7 +12,7 @@ const SURVEY_ID = 1;
 })
 export class NpsSurveyComponent {
 
-  @Input() jsonData: string;
+  @Input() jsonSchema: object;
   saving: boolean;
   completed: boolean;
   surveyModel: Model;
@@ -53,10 +53,9 @@ export class NpsSurveyComponent {
   }
 
   surveyComplete (survey: any) {
-    const userId = this.authService.currentUsr.id
+    const userId = this.authService?.currentUsr?.id
     survey.setValue("userId", userId);
-
-    this.saveResults(survey.data);
+    this.saveResults(survey.data)
   }
 
   ngOnInit() {
