@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, shareReplay } from 'rxjs';
+import { Observable, of, shareReplay } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 const httpOptions = {
@@ -21,8 +21,9 @@ export class SurveyService {
     private http: HttpClient
   ) { }
 
-  saveSurveyResults(json: string): Observable<any> {
+  saveSurveyResults(json: object): Observable<any> {
     const data = JSON.stringify(json)
+    return of(data)
     return this.http.patch<any>(`${apiBase}/nps`, data, httpOptions)
       .pipe(shareReplay())
   }
