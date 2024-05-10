@@ -3,18 +3,18 @@ import 'zone.js/dist/zone-node';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { join } from 'path';
-
+import axios from 'axios';
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
-import rateLimit from 'express-rate-limit'
-
+import rateLimit from 'express-rate-limit';
+import slugify from "slugify";
 
 const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   keyGenerator: (request, response) => String(request.headers['x-forwarded-for'])
 })
 
@@ -38,8 +38,8 @@ export function app(): express.Express {
 
   server.use(createMiddleware({
     app: server,
-    options:{
-      metricPrefix:'front_'
+    options: {
+      metricPrefix: 'front_'
     }
   }));
 
@@ -48,6 +48,153 @@ export function app(): express.Express {
 
     res.setHeader('Content-Type', getContentType());
     res.end(await getSummary());
+  });
+
+  server.get('/sitemaps.xml', async (req, res) => {
+
+    let courseBaseURL = 'https://zerofiltre.tech/cours/';
+
+    let article_data = await axios.get('https://blog-api.zerofiltre.tech/article?pageNumber=0&pageSize=10000&status=published')
+
+    let articles = article_data.data.content;
+
+    const articles_urls = articles.map(article => {
+
+      let slug = slugify(article.title, {
+        lower: true,
+        remove: /[*+~.()'"!:@]/g
+      });
+
+      let url = `https://zerofiltre.tech/articles/${article.id}-${slug}`;
+
+      let xml = `
+      <url>
+      <loc>${url}</loc>
+      <lastmod>${article.updatedAt}</lastmod>
+      <priority>0.80</priority>
+      </url>
+      `
+
+      return url;
+    });
+
+    let courses_data = await axios.get('https://blog-api.zerofiltre.tech/course?pageNumber=0&pageSize=10000&status=published')
+
+    const courses_url = await courses_data.data.content.map(async course => {
+
+      let courseXml="";
+
+      let courseUrl = `${courseBaseURL}${course.id}-${slugify(course.title, { lower: true })}`;
+
+      xml += `
+
+      <url>
+      <loc>${courseUrl}</loc>
+      <lastmod>${course.lastSavedAt}</lastmod>
+      <priority>0.80</priority>
+      </url>
+
+      `;
+
+      courseXml += xml
+
+      let chapters = await axios.get(`https://blog-api.zerofiltre.tech/chapter/course/${course.id}`)
+
+      chapters.data.forEach(chapter => {
+
+        chapter.lessons.forEach(lesson => {
+
+          let lessonUrl = `${courseUrl}/${lesson.id}-${slugify(lesson.title, { lower: true })}`;
+
+          let lessonXml = `
+
+          <url>
+          <loc>${lessonUrl}</loc>
+          <lastmod>${course.lastSavedAt}</lastmod>
+          <priority>0.80</priority>
+          </url>
+
+        `;
+
+        courseXml += lessonXml
+
+        });
+
+      });
+
+      return courseXml;
+
+    });
+
+    let xml = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    
+    <url>
+    <loc>https://zerofiltre.tech/</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
+
+  <!-- ARTICLES ROUTES -->
+
+  <url>
+    <loc>https://zerofiltre.tech/articles</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  
+  <!-- RANDOM ROUTES -->
+
+  <url>
+    <loc>https://zerofiltre.tech/wachatgpt</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/login</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/register</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://zerofiltre.tech/resetPassword</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+
+  <!-- END RANDOM ROUTES -->
+
+
+  <!-- COURSES ROUTES -->
+
+  <url>
+    <loc>https://zerofiltre.tech/cours</loc>
+    <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+    <priority>0.90</priority>
+  </url>
+
+    
+    \n\n`;
+
+    articles_urls.forEach(url => {
+      xml += url;
+    });
+
+    courses_url.forEach(course => {
+      xml += course;
+    });
+    
+    xml += '</urlset>';
+    
+    res.setHeader('Content-Type', 'text/xml');
+    res.end(xml);
+
   });
 
   // Example Express Rest API endpoints
