@@ -50,6 +50,14 @@ export function app(): express.Express {
     res.end(await getSummary());
   });
 
+ 
+  // Example Express Rest API endpoints
+  // server.get('/api/**', (req, res) => { });
+  // Serve static files from /browser
+  server.get('*.*', express.static(distFolder, {
+    maxAge: '1y'
+  }));
+
   server.get('/sitemaps.xml', async (req, res) => {
 
     let courseBaseURL = 'https://zerofiltre.tech/cours/';
@@ -196,13 +204,6 @@ export function app(): express.Express {
     res.end(xml);
 
   });
-
-  // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
-  // Serve static files from /browser
-  server.get('*.*', express.static(distFolder, {
-    maxAge: '1y'
-  }));
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
