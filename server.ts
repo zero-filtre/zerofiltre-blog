@@ -58,7 +58,7 @@ export function app(): express.Express {
     maxAge: '1y'
   }));
 
-  server.get('/sitemaps', async (req, res) => {
+  server.get('/sitemaps.xml', async (req, res) => {
 
     let courseBaseURL = 'https://zerofiltre.tech/cours/';
 
@@ -83,7 +83,7 @@ export function app(): express.Express {
       </url>
       `
 
-      return url;
+      return xml;
     });
 
     let courses_data = await axios.get('https://blog-api.zerofiltre.tech/course?pageNumber=0&pageSize=10000&status=published')
