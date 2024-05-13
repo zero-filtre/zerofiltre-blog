@@ -88,14 +88,13 @@ export function app(): express.Express {
 
     let courses_data = await axios.get('https://blog-api.zerofiltre.tech/course?pageNumber=0&pageSize=10000&status=published')
 
-    for (let i = 0; i < courses_data.data.content; i++) {
+    let courseXml = "";
+
+    for (let i = 0; i < courses_data.data.content.length; i++) {
 
       let course = courses_data.data.content[i];
 
-      let courseXml = "";
-
       let courseUrl = `${courseBaseURL}${course.id}-${slugify(course.title, { lower: true })}`;
-
 
       courseXml += `
 
@@ -193,6 +192,8 @@ export function app(): express.Express {
     articles_urls.forEach(url => {
       xml += url;
     });
+
+    xml+=courseXml;
 
     xml += '</urlset>';
 
