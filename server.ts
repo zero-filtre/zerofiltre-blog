@@ -106,29 +106,29 @@ export function app(): express.Express {
 
       courseXml += xml
 
-      let chapters = await axios.get(`https://blog-api.zerofiltre.tech/chapter/course/${course.id}`)
+      // let chapters = await axios.get(`https://blog-api.zerofiltre.tech/chapter/course/${course.id}`)
 
-      chapters.data.forEach(chapter => {
+      // chapters.data.forEach(chapter => {
 
-        chapter.lessons.forEach(lesson => {
+      //   chapter.lessons.forEach(lesson => {
 
-          let lessonUrl = `${courseUrl}/${lesson.id}-${slugify(lesson.title, { lower: true })}`;
+      //     let lessonUrl = `${courseUrl}/${lesson.id}-${slugify(lesson.title, { lower: true })}`;
 
-          let lessonXml = `
+      //     let lessonXml = `
 
-          <url>
-          <loc>${lessonUrl}</loc>
-          <lastmod>${course.lastSavedAt}</lastmod>
-          <priority>0.80</priority>
-          </url>
+      //     <url>
+      //     <loc>${lessonUrl}</loc>
+      //     <lastmod>${course.lastSavedAt}</lastmod>
+      //     <priority>0.80</priority>
+      //     </url>
 
-        `;
+      //   `;
 
-        courseXml += lessonXml
+      //   courseXml += lessonXml
 
-        });
+      //   });
 
-      });
+      // });
 
       return courseXml;
 
