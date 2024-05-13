@@ -23,61 +23,12 @@ export class NpsSurveyComponent {
     private authService: AuthService
   ) { }
 
-  surveyJson = {
-    elements: [
-      {
-        name: "firstName",
-        title: "Entrez votre nom:",
-        type: "text",
-        defaultValue: 'Jason'
-      }, {
-        name: "lastName",
-        title: "Entrez votre prénom:",
-        type: "text",
-        defaultValue: 'Derulo'
-      },
-      {
-        name: 'satisfaction',
-        title: 'À quel point êtes-vous satisfait de notre plateforme ?',
-        type: 'rating',
-        defaultValue: '5'
-      },
-      {
-        name: "subscribed",
-        type: "boolean",
-        renderAs: "checkbox",
-        title: "I agree to receive weekly newsletters 2",
-      },
-      {
-        name: "start-date",
-        title: "Select a vacation start date",
-        type: "text",
-        inputType: "date",
-        defaultValueExpression: "today()"
-      },
-      {
-        type: "rating",
-        name: "nps_score",
-        title: "On a scale of zero to ten, how likely are you to recommend our product to a friend or colleague?",
-        rateMin: 0,
-        rateMax: 10,
-      }
-      // {
-      //   "name": "subscribed",
-      //   "type": "checkbox",
-      //   "title": "I agree to receive weekly newsletters 1",
-      //   "defaultValue": true
-      // },
-    ]
-  };
-
   saveResults(resultData: object, options: any): void {
     options.showSaveInProgress();
     this.surveyService
       .saveSurveyResults(resultData)
       .subscribe({
         next: data => {
-          alert(data)
           options.showSaveSuccess("Enregistré avec succès!");
         },
         error: (err: HttpErrorResponse) => {
@@ -111,7 +62,7 @@ export class NpsSurveyComponent {
   }
 
   ngOnInit() {
-    const survey = new Model(this.surveyJson);
+    const survey = new Model(this.jsonSchema);
     this.surveyModel = survey;
     survey.onComplete.add((survey, options) => this.surveyComplete(survey, options));
   }

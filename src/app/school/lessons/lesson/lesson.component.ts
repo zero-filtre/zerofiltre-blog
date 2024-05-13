@@ -23,6 +23,8 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { NpsSurveyComponent } from 'src/app/shared/nps-survey/nps-survey.component';
 
 
 @Component({
@@ -74,9 +76,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   documentResources: Resource[] = [];
   courseResources: Course[] = [];
 
-  // courseResources$: Observable<Resource[]>;
-
-
   completed: boolean;
 
   allChapters: Chapter[] = [];
@@ -88,6 +87,55 @@ export class LessonComponent implements OnInit, OnDestroy {
   durations = [];
 
   userProgress: UserProgress = {};
+
+  surveyJson = {
+    elements: [
+      {
+        name: "firstName",
+        title: "Entrez votre nom:",
+        type: "text",
+        defaultValue: 'Jason'
+      }, {
+        name: "lastName",
+        title: "Entrez votre prénom:",
+        type: "text",
+        defaultValue: 'Derulo'
+      },
+      {
+        name: 'satisfaction',
+        title: 'À quel point êtes-vous satisfait de notre plateforme Zerofiltre ?',
+        type: 'rating',
+        defaultValue: '5'
+      },
+      {
+        name: "subscribed",
+        type: "boolean",
+        renderAs: "checkbox",
+        title: "J'accepte de recevoir des newsletters hebdomadaires",
+      },
+      {
+        name: "start-date",
+        title: "Sélectionnez une date de début de formation",
+        type: "text",
+        inputType: "date",
+        defaultValueExpression: "today()"
+      },
+      {
+        type: "rating",
+        name: "nps_score",
+        title: "Sur une échelle de zéro à dix, quelle est la probabilité que vous recommandiez notre produit à un ami ou un collègue ?",
+        rateMin: 0,
+        rateMax: 10,
+        defaultValue: '10'
+      }
+      // {
+      //   "name": "subscribed",
+      //   "type": "checkbox",
+      //   "title": "I agree to receive weekly newsletters 1",
+      //   "defaultValue": true
+      // },
+    ]
+  };
 
   constructor(
     private seo: SeoService,
@@ -105,7 +153,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     media: MediaMatcher,
     private paymentService: PaymentService,
     private slugify: SlugUrlPipe,
-    private location: Location
+    private location: Location,
+    private modalService: MatDialog,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -151,7 +200,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.completed = true;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
           
-          // if (this.nextLesson) this.router.navigateByUrl(`cours/${this.slugify.transform(this.course)}/${this.slugify.transform(this.nextLesson)}`);
+          if (this.nextLesson) this.router.navigateByUrl(`cours/${this.slugify.transform(this.course)}/${this.slugify.transform(this.nextLesson)}`);
           this.handleLessonCompletion(this.lesson.id, this.currentChapter, this.userProgress)
         })
     } else {
@@ -185,8 +234,11 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   showNPSFormDialog() {
-    // Code to display the NPS form dialog
-    alert('AFFICHAGE DU NPS FORM');
+    const modalRef = this.modalService.open(NpsSurveyComponent, {
+      panelClass: 'popup-panel-nps',
+    });
+
+    modalRef.componentInstance.jsonSchema = this.surveyJson;
   }
 
   handleLessonCompletion(lessonId: number, chapter: Chapter, userProgress: UserProgress) {
