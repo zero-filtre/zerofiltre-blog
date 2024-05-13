@@ -78,7 +78,7 @@ export function app(): express.Express {
       let xml = `
       <url>
       <loc>${url}</loc>
-      <lastmod>${article.updatedAt}</lastmod>
+      <lastmod>${article.lastSavedAt}</lastmod>
       <priority>0.80</priority>
       </url>
       `
