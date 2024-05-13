@@ -29,3 +29,9 @@ export interface Resource {
     name: string;
     course?: Course;
 }
+
+export interface UserProgress {
+    [chapterId: string]: {
+        completedLessons: Set<number>;
+    };
+}
