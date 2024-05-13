@@ -50,7 +50,7 @@ export function app(): express.Express {
     res.end(await getSummary());
   });
 
- 
+
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
@@ -88,13 +88,16 @@ export function app(): express.Express {
 
     let courses_data = await axios.get('https://blog-api.zerofiltre.tech/course?pageNumber=0&pageSize=10000&status=published')
 
-    const courses_url = await courses_data.data.content.map(async course => {
+    for (let i = 0; i < courses_data.data.content; i++) {
 
-      let courseXml="";
+      let course = courses_data.data.content[i];
+
+      let courseXml = "";
 
       let courseUrl = `${courseBaseURL}${course.id}-${slugify(course.title, { lower: true })}`;
 
-      xml += `
+
+      courseXml += `
 
       <url>
       <loc>${courseUrl}</loc>
@@ -104,35 +107,32 @@ export function app(): express.Express {
 
       `;
 
-      courseXml += xml
+      let chapters = await axios.get(`https://blog-api.zerofiltre.tech/chapter/course/${course.id}`)
 
-      // let chapters = await axios.get(`https://blog-api.zerofiltre.tech/chapter/course/${course.id}`)
+      chapters.data.forEach(chapter => {
 
-      // chapters.data.forEach(chapter => {
+        chapter.lessons.forEach(lesson => {
 
-      //   chapter.lessons.forEach(lesson => {
+          let lessonUrl = `${courseUrl}/${lesson.id}-${slugify(lesson.title, { lower: true })}`;
 
-      //     let lessonUrl = `${courseUrl}/${lesson.id}-${slugify(lesson.title, { lower: true })}`;
+          let lessonXml = `
 
-      //     let lessonXml = `
+          <url>
+          <loc>${lessonUrl}</loc>
+          <lastmod>${course.lastSavedAt}</lastmod>
+          <priority>0.80</priority>
+          </url>
 
-      //     <url>
-      //     <loc>${lessonUrl}</loc>
-      //     <lastmod>${course.lastSavedAt}</lastmod>
-      //     <priority>0.80</priority>
-      //     </url>
+        `;
 
-      //   `;
+          courseXml += lessonXml
 
-      //   courseXml += lessonXml
+        });
 
-      //   });
+      });
 
-      // });
 
-      return courseXml;
-
-    });
+    }
 
     let xml = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -197,9 +197,9 @@ export function app(): express.Express {
     courses_url.forEach(course => {
       xml += course;
     });
-    
+
     xml += '</urlset>';
-    
+
     res.setHeader('Content-Type', 'text/xml');
     res.end(xml);
 
