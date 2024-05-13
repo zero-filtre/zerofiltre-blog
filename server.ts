@@ -58,7 +58,7 @@ export function app(): express.Express {
     maxAge: '1y'
   }));
 
-  server.get('/sitemaps.xml', async (req, res) => {
+  server.get('/sitemap.xml', async (req, res) => {
 
     let courseBaseURL = 'https://zerofiltre.tech/cours/';
 
@@ -192,10 +192,6 @@ export function app(): express.Express {
 
     articles_urls.forEach(url => {
       xml += url;
-    });
-
-    courses_url.forEach(course => {
-      xml += course;
     });
 
     xml += '</urlset>';
