@@ -70,7 +70,11 @@ export function app(): express.Express {
 
       let slug = slugify(article.title, {
         lower: true,
-        remove: /[*+~.()'"!:@]/g
+        replacement: '-',
+        strict: true,
+        locale: 'fr',
+        remove: /[*+~.()'"!:@,]/g,
+        trim:true
       });
 
       let url = `https://zerofiltre.tech/articles/${article.id}-${slug}`;
@@ -94,7 +98,12 @@ export function app(): express.Express {
 
       let course = courses_data.data.content[i];
 
-      let courseUrl = `${courseBaseURL}${course.id}-${slugify(course.title, { lower: true })}`;
+      let courseUrl = `${courseBaseURL}${course.id}-${slugify(course.title, { lower: true,
+        replacement: '-',
+        strict: true,
+        locale: 'fr',
+        remove: /[*+~.()'"!:@,]/g,
+        trim:true })}`;
 
       courseXml += `
 
@@ -112,7 +121,12 @@ export function app(): express.Express {
 
         chapter.lessons.forEach(lesson => {
 
-          let lessonUrl = `${courseUrl}/${lesson.id}-${slugify(lesson.title, { lower: true })}`;
+          let lessonUrl = `${courseUrl}/${lesson.id}-${slugify(lesson.title, {    lower: true,
+            replacement: '-',
+            strict: true,
+            locale: 'fr',
+            remove: /[*+~.()'"!:@,]/g,
+            trim:true })}`;
 
           let lessonXml = `
 
@@ -193,7 +207,7 @@ export function app(): express.Express {
       xml += url;
     });
 
-    xml+=courseXml;
+    xml += courseXml;
 
     xml += '</urlset>';
 
