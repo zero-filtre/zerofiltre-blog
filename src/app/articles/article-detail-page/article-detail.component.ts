@@ -174,10 +174,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           const sluggedUrl = `${rootUrl}/${this.slugify.transform(response)}`
           this.location.replaceState(sluggedUrl);
 
-          if (isPlatformBrowser(this.platformId)) {
-            this.injectGiscus(this.giscusConfig);
-          }
-
           this.seo.generateTags({
             title: response.title,
             description: response.summary,
@@ -353,6 +349,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         this.getCurrentArticle(this.articleId);
       }
     );
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.injectGiscus(this.giscusConfig);
+    }
   }
 
   ngOnDestroy(): void {
