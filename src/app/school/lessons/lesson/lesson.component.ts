@@ -213,6 +213,8 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.isCompleting = false;
           this.completed = false;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
+          this.userProgress[this.currentChapter.id].completedLessons.delete(this.lesson.id);
+          console.log('USER PROGRESS: ', this.userProgress);
         })
     }
   }
@@ -253,7 +255,6 @@ export class LessonComponent implements OnInit, OnDestroy {
     if (this.isChapterCompleted(chapter, userProgress)) {
       this.showNPSFormDialog();
     }
-
     console.log('USER PROGRESS: ', userProgress, this.isChapterCompleted(chapter, userProgress));
   }
 
