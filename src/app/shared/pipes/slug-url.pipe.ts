@@ -11,10 +11,11 @@ export class SlugUrlPipe implements PipeTransform {
   transform(object: Article | Course | Lesson, ...args: any[]): any {
 
     const slug = object?.id + '-' + object?.title
-    return slug.toLowerCase().trim()
-      .replace(/[^\w\-çîéèœôà]+/g, ' ')
-      .trim()
+    return slug.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
       .replace(/\s+/g, '-')
+      .replace(/[*+~.()'"!:@,]/g, '')
+      .replace(/^-+|-+$/g, '');
 
   }
 
