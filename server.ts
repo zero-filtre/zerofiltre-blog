@@ -13,6 +13,12 @@ import cron from 'node-cron';
 import * as fs from 'fs';
 
 
+function formatDate(timestamp: string) {
+  // Extraire la partie de la date du timestamp
+  const datePart = timestamp.split('T')[0];
+  return datePart;
+}
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
@@ -49,7 +55,7 @@ async function gen_sitemaps() {
     let xml = `
     <url>
     <loc>${url}</loc>
-    <lastmod>${article.lastSavedAt}</lastmod>
+    <lastmod>${formatDate(article.lastSavedAt)}</lastmod>
     <priority>0.80</priority>
     </url>
     `
@@ -78,7 +84,7 @@ async function gen_sitemaps() {
 
     <url>
     <loc>${courseUrl}</loc>
-    <lastmod>${course.lastSavedAt}</lastmod>
+    <lastmod>${formatDate(course.lastSavedAt)}</lastmod>
     <priority>0.80</priority>
     </url>
 
@@ -103,7 +109,7 @@ async function gen_sitemaps() {
 
         <url>
         <loc>${lessonUrl}</loc>
-        <lastmod>${course.lastSavedAt}</lastmod>
+        <lastmod>${formatDate(course.lastSavedAt)}</lastmod>
         <priority>0.80</priority>
         </url>
 
