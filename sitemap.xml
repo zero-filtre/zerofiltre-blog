@@ -1,0 +1,1559 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <url>
+  <loc>https://zerofiltre.tech/</loc>
+  <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<!-- ARTICLES ROUTES -->
+
+<url>
+  <loc>https://zerofiltre.tech/articles</loc>
+  <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
+<!-- RANDOM ROUTES -->
+
+<url>
+  <loc>https://zerofiltre.tech/wachatgpt</loc>
+  <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://zerofiltre.tech/login</loc>
+  <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://zerofiltre.tech/register</loc>
+  <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://zerofiltre.tech/resetPassword</loc>
+  <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+<!-- END RANDOM ROUTES -->
+
+
+<!-- COURSES ROUTES -->
+
+<url>
+  <loc>https://zerofiltre.tech/cours</loc>
+  <lastmod>2023-04-22T01:14:27+00:00</lastmod>
+  <priority>0.90</priority>
+</url>
+
+  
+  
+
+
+    <url>
+    <loc>https://zerofiltre.tech/articles/293-kubernetes-resources-recommender-krr</loc>
+    <lastmod>2024-04-26</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/289-creer-un-chatbot-avec-flutter-en-6-lignes-de-code</loc>
+    <lastmod>2024-04-09</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/287-conquerir-lecosysteme-docker-sur-les-distributions-debian</loc>
+    <lastmod>2024-03-27</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/292-optimisez-vos-images-docker-et-economisez</loc>
+    <lastmod>2024-04-20</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/231-utilisation-du-framework-express-avec-nodejs</loc>
+    <lastmod>2024-03-17</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/236-utilisation-des-directives-de-vuejs-pour-creer-des-interfaces-dynamiques</loc>
+    <lastmod>2024-03-17</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/291-locust-ou-tirs-de-performance-as-code</loc>
+    <lastmod>2024-03-14</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/285-hpa-ou-keda-ou-bien-choisir</loc>
+    <lastmod>2024-03-14</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/282-flutter-toast-2024-ou-notifiez-vos-utilisateurs-avec-style</loc>
+    <lastmod>2024-02-08</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/281-kubernetes-pod-disruption-budget-ou-pourquoi-et-comment</loc>
+    <lastmod>2024-02-19</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/280-resoudre-facilement-lerreur-503-sous-kubernetes</loc>
+    <lastmod>2023-12-05</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/271-comment-devenir-productif</loc>
+    <lastmod>2023-11-16</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/253-flutter-et-dart-developpement-pilote-par-les-tests</loc>
+    <lastmod>2024-02-22</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/254-flutter-concevoir-ses-propres-snippets-sur-visual-studio-code</loc>
+    <lastmod>2023-10-23</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/261-le-pattern-builder</loc>
+    <lastmod>2023-10-16</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/250-flutter-enregistrer-les-preferences-dutilisateur-avec-sharedpreferences</loc>
+    <lastmod>2023-11-16</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/266-le-pattern-strategie</loc>
+    <lastmod>2023-09-24</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/264-coder-et-decoder-du-qrcode-en-java</loc>
+    <lastmod>2023-09-22</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/259-le-pattern-memento</loc>
+    <lastmod>2023-09-18</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/244-faker-generez-facilement-des-donnees-de-test-sur-mongodb-atlas-avec-nodejs</loc>
+    <lastmod>2023-07-10</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/232-ameliorer-lexperience-utilisateur-avec-les-fichiers-lottie-dans-vos-projets-flutter-mobile-et-web</loc>
+    <lastmod>2024-02-04</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/233-les-meilleures-pratiques-de-developpement-python</loc>
+    <lastmod>2023-04-11</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/235-compteurs-prometheus-guide-complet</loc>
+    <lastmod>2023-04-11</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/228-simplifier-le-developpement-dapi-rest-avec-les-methodes-generiques-et-django-rest-framework</loc>
+    <lastmod>2023-03-22</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/229-wachatgpt-votre-ia-en-poche</loc>
+    <lastmod>2023-10-09</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/224-guide-simplifie-de-la-mise-en-place-dune-stack-elastic-sous-k8s-cas-de-zerofiltretech</loc>
+    <lastmod>2024-02-04</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/223-12-factor-app-n-3-ou-externalisation-de-la-configuration</loc>
+    <lastmod>2023-02-21</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/181-comment-rediger-un-article-it-qui-accroche</loc>
+    <lastmod>2023-09-12</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/215-gerer-la-perte-de-connexion-dans-une-application-angular</loc>
+    <lastmod>2024-01-11</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/211-ce-que-jai-retenu-du-entrepreneur-coaching-day-2022</loc>
+    <lastmod>2022-10-26</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/204-angular-architecture-propre-module-partage</loc>
+    <lastmod>2022-10-15</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/213-sonarcloud-nous-fait-gagner-de-largent</loc>
+    <lastmod>2023-09-06</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/210-casse-tete-gitignore-ignorer-tout-sauf-un-fichier</loc>
+    <lastmod>2022-10-11</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/209-protegez-vos-apis-grace-au-rate-limiting</loc>
+    <lastmod>2022-10-11</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/207-prenez-le-controle-dune-app-java-situee-sur-un-cluster-kubernetes-remote-debugging</loc>
+    <lastmod>2023-02-22</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/205-negligence-sur-la-coherence-cross-platform-nous-avons-paye-le-prix-cher</loc>
+    <lastmod>2022-09-27</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/206-owasp-devsecops-securisez-vos-deploiements</loc>
+    <lastmod>2022-09-27</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/203-subtilites-du-positionnement-sticky</loc>
+    <lastmod>2024-03-20</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/202-decouvrez-ces-trois-projets-nodejs-open-source-qui-vous-feront-gagner-du-temps</loc>
+    <lastmod>2022-09-07</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/201-twelve-factor-app-n-2-ou-dependances-explicites-et-isolees</loc>
+    <lastmod>2023-02-17</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/199-choisissez-la-bonne-base-de-donnees-pour-votre-projet</loc>
+    <lastmod>2022-08-26</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/198-fonctions-pures</loc>
+    <lastmod>2022-08-23</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/197-securisez-vos-micro-services-sur-kubernetes-avec-nginx-et-oryoathkeeper</loc>
+    <lastmod>2022-08-19</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/192-injection-des-secrets-de-vault-aux-variables-denvironnement-du-conteneur</loc>
+    <lastmod>2022-08-13</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/196-reference-ou-valeur-en-javascript-stop-a-la-confusion</loc>
+    <lastmod>2022-08-11</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/193-git-3-regles-dor-pour-avoir-0-degat</loc>
+    <lastmod>2023-10-20</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/191-angular-gestion-centralisee-des-erreurs-http</loc>
+    <lastmod>2023-02-16</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/190-envoyer-les-alertes-prometheus-par-whatsapp</loc>
+    <lastmod>2022-08-06</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/189-twelve-factor-app-n-1-ou-le-code-source</loc>
+    <lastmod>2024-01-07</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/185-comment-ignorer-un-fichier-partiellement-juste-en-local</loc>
+    <lastmod>2022-07-28</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/187-bouchonner-un-service-dans-une-application-angular-en-deux-etapes-simples</loc>
+    <lastmod>2022-07-29</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/186-deployez-un-serveur-de-messagerie-en-2-mins</loc>
+    <lastmod>2024-03-17</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/184-configuration-minimale-dune-politique-de-re-jeu-des-requetes-echouees-dans-une-application-angular</loc>
+    <lastmod>2022-07-22</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/183-les-cycles-de-vie-de-maven-stop-a-la-grosse-confusion</loc>
+    <lastmod>2022-07-23</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/172-optimisez-la-performance-dune-application-react-avec-la-memoisation</loc>
+    <lastmod>2022-07-20</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/171-lessentiel-a-savoir-sur-le-hook-useeffect-gerez-les-effets-de-bord-avec-assurance</loc>
+    <lastmod>2022-08-24</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/174-mise-en-cache-des-requetes-avec-httpinterceptor-sur-angular</loc>
+    <lastmod>2022-07-20</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/173-react-comment-eviter-la-desyncronisation-dun-etat-derive-de-letat-principal</loc>
+    <lastmod>2022-08-18</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/176-guide-de-poche-securite-des-apis-rest-avec-spring-security-cas-zerofiltre</loc>
+    <lastmod>2022-11-26</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/175-cors-conf-minimaliste-mais-fonctionnelle-spring-rest-api-cas-de-zerofiltre</loc>
+    <lastmod>2022-09-02</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/169-creer-un-bot-twitter-avec-python</loc>
+    <lastmod>2022-07-15</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/170-implementez-une-file-dattente-de-taches-distribuees-avec-flask-celery-redis</loc>
+    <lastmod>2023-01-29</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/168-protegez-lacces-a-vos-routes-dynamiques-dans-une-application-angular</loc>
+    <lastmod>2022-07-27</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/167-creer-un-cluster-kubernetes-avec-vos-propres-serveurs</loc>
+    <lastmod>2022-08-01</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/124-generez-des-images-globallement-reconnues-pour-vos-utilisateurs-avec-gravatar</loc>
+    <lastmod>2022-07-19</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+
+    <url>
+    <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques</loc>
+    <lastmod>2024-04-07</lastmod>
+    <priority>0.80</priority>
+    </url>
+
+    
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/217-11-quest-ce-quun-log</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/218-12-voici-comment-correctement-formater-ses-logs</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/219-13-un-exemple-de-production-de-logs</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/220-21-quest-ce-quune-metrique-et-prometheus</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/221-22-decouvrer-le-prometheus-query-lnaguage-promql</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/222-23-explorez-vos-metriques-systeme-avec-promql</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/223-24-explorez-vos-metriques-applicatives-avec-promql</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/224-31-grafana-en-2mins</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/225-32-installez-grafana</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/226-33-planifiez-la-creation-de-votre-premier-dashboard-grafana</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/227-34-configurez-la-source-de-donnees-de-votre-premier-dashboard-grafana</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/228-35-construisez-le-graphique-de-votre-premier-dashboard-grafana</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/229-41-presentation-de-lecosysteme-loki</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/230-42-configurez-la-collecte-de-logs-avec-promtail</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/231-43-generez-des-logs-pour-loki</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/232-44-analyse-des-logs-generes-avec-grafana</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/233-quest-ce-que-alertmanager</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques/234-52-configuration-dalertmanager</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+    <url>
+    <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue</loc>
+    <lastmod>2024-04-07</lastmod>
+    <priority>0.80</priority>
+    </url>
+
+    
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue/201-11-definition-et-importance-de-lintegration-continue</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue/202-21-presentation-de-jenkins-ci</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue/247-22-a-vos-claviers-ou-installation-de-jenkins</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue/248-23-decrivez-vos-pipelines-avec-du-code</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue/249-24-a-vos-claviers-ou-creez-votre-premiere-pipeline-jenkins</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue/250-25-a-vos-claviers-ou-decrivez-votre-premiere-pipeline-jenkins-avec-le-fichier-jenkinsfile</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue/251-31-a-vos-claviers-ou-verification-sonar-avec-jenkins</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue/252-41-a-vos-claviers-ou-docker-push-avec-jenkins</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue/253-51-a-vos-claviers-ou-notification-par-email-avec-jenkins</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/31-evitez-le-desagrement-des-regressions-grace-a-lintegration-continue/254-61-configurez-correctement-les-roles-de-chaque-membre-de-votre-equipe</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+    <url>
+    <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes</loc>
+    <lastmod>2024-04-05</lastmod>
+    <priority>0.80</priority>
+    </url>
+
+    
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/203-11-mais-quest-ce-que-kubernetes</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/204-12-les-composants-dun-cluster-k8s</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/205-21-installation-de-kubectl-et-connexion-au-bac-a-sable</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/206-22-utilisez-lens-gratuitement-pour-vous-connecter-au-bac-a-sable</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/207-31-321-deploie</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/208-32-configurez-les-applications-deployees</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/209-41-persistons-les-donnees-de-notre-application-avec-des-volumes</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/210-51-explorons-les-concepts-dexposition-offerts-par-k8s</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/211-52-exposons-notre-application-sur-internet-grace-aux-ingress</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/212-53-adapter-lapplication-au-traffic-entrant-avec-hpa</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/213-61-empaquetez-pour-installer-plus-facilement</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/214-62-generez-votre-premier-chart-helm-pour-application-de-facturation</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/215-63-configurez-votre-chart-helm</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/32-orchestrez-le-doigt-dans-le-nez-vos-applications-sur-le-cloud-avec-kubernetes/216-64-generez-et-configurez-un-chart-pour-linstallation-dune-base-de-donnees</loc>
+        <lastmod>2024-04-05</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+    <url>
+    <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement</loc>
+    <lastmod>2024-04-27</lastmod>
+    <priority>0.80</priority>
+    </url>
+
+    
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/246-qualite-de-code-et-tdd</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/172-11-limportance-des-tests-dans-lusine-logicielle-moderne</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/173-12-decouvrez-lessentiel-des-categories-de-tests-a-adopter</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/174-13-une-introduction-au-test-driven-development</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/175-14-le-secret-pour-ecrirereconnaitre-un-bon-test-unitaire</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/176-15-un-test-est-inutile-sans-des-assertions-correctement-ecrites</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/177-16-simulez-lisolation-avec-des-simulacres</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/178-17-le-processus-complet-tdd-etapes-par-etapes</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/179-18-a-vos-claviers-ou-installation-des-outils-et-prerequis</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/180-19-a-vos-claviers-ou-codons-la-generation-de-jetons-dauthentification-avec-le-tdd</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/181-110-a-vos-claviers-ou-codez-le-jeton-dauthentification-initial-avec-le-tdd</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/182-21-decouvrez-lessentiel-de-sonarcloud</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/183-22-hack-ou-profitez-de-sonarcloud-pour-tous-les-systemes-dintegration-continue</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/29-maitrisez-la-qualite-du-code-ou-tests-et-qualite-au-coeur-de-votre-developpement/184-23-a-vos-claviers-ou-votre-premiere-analyse-avec-sonarcloud</loc>
+        <lastmod>2024-04-27</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+    <url>
+    <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker</loc>
+    <lastmod>2024-04-02</lastmod>
+    <priority>0.80</priority>
+    </url>
+
+    
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/245-0-pourquoi-monter-en-competences-sur-docker</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/185-11-quest-ce-que-la-conteneurisation</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/186-12-pourquoi-docker-pour-la-conteneurisation</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/187-21-docker-ou-pourquoi-fonctionne-t-il-si-bien</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/188-22-tp-ou-installation-de-docker-engine</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/189-31-les-conteneurs-docker</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/190-32-tp-ou-deploiement-dun-container-pour-une-bd-mysql</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/191-33-tp-ou-deploiement-dun-container-pour-une-appli-de-facturation</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/192-34-tp-ou-persister-les-donnees-dun-container-docker-dans-des-volumes</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/193-41-quest-ce-quune-image-est-elle-differente-dun-container</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/194-42-creez-vos-images-a-partir-du-dockerfile</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/195-43-tp-ou-creez-limage-docker-dune-application-de-transfert-dargent</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/196-44-publiez-votre-image-docker</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/197-51-composez-plusieurs-images-facilement-avec-compose</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/198-52-explorez-en-live-ce-qui-se-passe-dans-un-container-docker</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/199-53-mettez-en-reseau-les-container-docker</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/30-deployez-votre-application-dans-tout-environnement-grace-a-docker/200-54-une-image-docker-doit-etre-securisee-que-faire</loc>
+        <lastmod>2024-04-02</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+    <url>
+    <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build</loc>
+    <lastmod>2024-04-07</lastmod>
+    <priority>0.80</priority>
+    </url>
+
+    
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/35-01-introduction</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/90-02-votre-environnement-de-travail</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/40-10-description-du-projet-et-guide</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/36-11-limpact-des-pratiques-devops-sur-votre-fiche-de-paie</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/37-121-quest-ce-que-le-devops-les-etapes</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/38-122-quest-ce-que-le-devops-les-moteurs</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/39-13-quel-est-lapport-du-devops-pour-une-entreprise</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/80-20-description-du-projet-et-guide</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/81-21-trunk-based-development</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/83-212-les-astuces-git</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/82-22-tp-trunk-based-development</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/130-bonus-git-3-regles-0-degat</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/41-30-description-du-projet-et-guide</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/56-40-description-du-projet-et-guide</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/84-50-description-du-projet-et-guide</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/96-60-description-du-projet-et-guide</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/119-70-description-du-projet-et-guide</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/118-80-description-du-projet</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/110-811-quest-ce-que-linfraconfig-as-code</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/111-812-ansible-ou-terraform</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/112-813-concepts-principaux-terraform</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/113-815-votre-premiere-infra-aws-as-code</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/114-816-construisez-une-infra-de-plusieurs-machines</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/115-821-ansible-installation</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/116-822-configuration-ansible</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/3-full-cycle-devops-ou-elevez-le-developpement-au-dela-du-build/117-823-configurons-notre-infra-aws</loc>
+        <lastmod>2024-04-07</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+    <url>
+    <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design</loc>
+    <lastmod>2023-09-21</lastmod>
+    <priority>0.80</priority>
+    </url>
+
+    
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/1-quest-ce-que-le-ddd-en-realite</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/2-presentation-du-projet-a-realiser</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/3-dois-je-appliquer-le-ddd-methode</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/4-dois-je-appliquer-le-ddd-exercice</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/5-dois-je-appliquer-le-ddd-solution</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/7-le-role-des-patterns-strategiques</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/8-posez-des-questions-puissantes-pour-mieux-comprendre-le-besoin-du-client</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/9-posez-des-questions-puissantes-pour-mieux-comprendre-le-besoin-exercice</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/10-posez-des-questions-puissantes-pour-mieux-comprendre-le-besoin-solution</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/11-besoin-metier-enrichit-grace-aux-questions-puissantes</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/12-quest-ce-que-l-event-storming</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/13-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-1</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/14-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-2</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/15-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-3</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/16-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-4</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/33-isolez-les-besoins-metier-avec-les-bounded-context-en-respectant-un-lexique-comprehensible-de-tous-ubiquitous-language</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/17-faites-le-bon-choix-darchitecture-entre-les-bounded-contexts-context-mapping</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/18-esquissez-une-architecture-hexagonale-pour-chaque-bounded-context</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/19-le-role-des-patterns-tactiques</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/20-utilisez-pas-a-pas-les-agregats-pour-determiner-ce-quil-faut-coder-au-sein-des-bounded-context-1</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/21-utilisez-pas-a-pas-les-agregats-pour-determiner-ce-quil-faut-coder-au-sein-des-bounded-context-2</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/22-explorons-larchitecture-technique-detaillee-du-projet</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/23-installez-les-outils-et-prerequis</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/24-implementons-via-le-tdd-les-besoins-metier-des-aggregats-part-1-les-aggregats-ou-collaboration-bc</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/25-implementons-via-le-tdd-les-besoins-metier-des-aggregats-part-2-recap-de-la-logique-metier-a-coder-ou-collaboration-bc</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/26-implementons-via-le-tdd-les-besoins-metier-des-aggregats-part-2-codons-la-logique-metier-ou-collaboration-bc</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/34-implementons-via-le-tdd-les-besoins-metier-des-aggregats-part-3-codons-le-bc-de-facturation</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/27-implementer-la-complexite-technique-sans-polluer-le-domaine-que-coder</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/28-implementer-la-complexite-technique-sans-polluer-le-domaine-part-1-les-repositories-pour-nourrir-le-domaine-en-donnees</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/29-implementer-la-complexite-technique-sans-polluer-le-domaine-part-2-les-messages-asynchrones-entre-bc</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/30-implementer-la-complexite-technique-sans-polluer-le-domaine-part-3-les-apis-rest-a-lentree-de-lapplication</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/31-cablons-le-tout-en-testant-de-bout-en-bout</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/32-ce-que-vous-etes-desormais-capables-de-faire</loc>
+        <lastmod>2023-09-21</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      </urlset>
