@@ -1,5 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
+import { Chapter } from 'src/app/school/chapters/chapter';
+import { Course } from 'src/app/school/courses/course';
 import { SurveyService } from 'src/app/services/survey.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Model } from "survey-core";
@@ -14,6 +16,9 @@ import { Model } from "survey-core";
 export class NpsSurveyComponent {
 
   @Input() jsonSchema: object;
+  @Input() course: Course;
+  @Input() chapter: Chapter;
+
   saving: boolean;
   completed: boolean;
   surveyModel: Model;
@@ -29,6 +34,7 @@ export class NpsSurveyComponent {
       .saveSurveyResults(resultData)
       .subscribe({
         next: data => {
+          alert(data);
           options.showSaveSuccess("Enregistré avec succès!");
         },
         error: (err: HttpErrorResponse) => {
@@ -41,6 +47,8 @@ export class NpsSurveyComponent {
   surveyComplete(survey: any, options: any) {
     const userId = this.authService?.currentUsr?.id
     survey.setValue("userId", userId);
+    survey.setValue("courseId", this.course.id);
+    survey.setValue("chapterId", this.chapter.id);
 
     //   const resultData = Object.keys(survey.data)
     //     .map((key: string) => {

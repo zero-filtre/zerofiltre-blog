@@ -92,35 +92,35 @@ export class LessonComponent implements OnInit, OnDestroy {
     title: 'Dites-nous en 30 secondes ce que vous pensé de ce chapitre',
     elements: [
       {
-        name: "explications",
+        name: "explications_chapitre",
         title: "Comment évalueriez-vous la clarté des explications fournies dans ce chapitre ?",
         type: "radiogroup",
         choices: [
           {
-            value: 'pas_clair',
+            value: 'Pas clair',
             text: 'Pas clair'
           },
           {
-            value: 'peu_clair',
+            value: 'Peu clair',
             text: 'Peu clair'
           },
           {
-            value: 'moy_clair',
+            value: 'Moyennement clair',
             text: 'Moyennement clair'
           },
           {
-            value: 'tres_clair',
+            value: 'Très clair',
             text: 'Très clair'
           },
           {
-            value: 'ext_clair',
+            value: 'Extrêmement clair',
             text: 'Extrêmement clair'
           }
         ],
-        defaultValue: 'moy_clair'
+        defaultValue: 'Moyennement clair'
       }, 
       {
-        name: 'satisfaction',
+        name: 'note_satisfaction_chapitre',
         title: 'À quel point avez-vous trouvé ce chapitre intéressant ?',
         type: 'rating',
         defaultValue: '3',
@@ -130,7 +130,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         displayMode: "buttons"
       },
       {
-        name: "comprehension",
+        name: "note_comprehension_chapitre",
         type: "rating",
         title: "Évaluez votre compréhension du chapitre.",
         rateMin: 0,
@@ -144,7 +144,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         maxLength: 500
       },
       {
-        name: "recommandation",
+        name: "recommander_cours",
         type: "boolean",
         title: "Recommanderiez-vous ce cours à un ami ou un collègue ?",
         valueTrue: "Oui",
@@ -152,13 +152,13 @@ export class LessonComponent implements OnInit, OnDestroy {
         defaultValue: "Oui"
       },
       {
-        name: "recommandation_pourquoi",
+        name: "pourquoi_recommander",
         title: "Si oui, pourquoi ?",
         type: "comment",
         maxLength: 500
       },
       {
-        name: "outil_apprentissage",
+        name: "outil_apprentissage_chapitre",
         type: "checkbox",
         title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
         choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
@@ -170,13 +170,13 @@ export class LessonComponent implements OnInit, OnDestroy {
         separateSpecialChoices: true,
       },
       {
-        name: "outil_apprentissage_pourquoi",
+        name: "outil_apprentissage_chapitre_raisons",
         title: "Pouvez-vous expliquer comment cela vous a aidé ?",
         type: "comment",
         maxLength: 500
       },
       {
-        name: "satisfaction_globale",
+        name: "satisfaction_globale_chapitre",
         type: "rating",
         title: "Sur une échelle de 1 à 10, quelle est votre satisfaction globale concernant ce chapitre ?",
         rateMin: 0,
@@ -296,6 +296,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     });
 
     modalRef.componentInstance.jsonSchema = this.surveyJson;
+    modalRef.componentInstance.course = this.course;
+    modalRef.componentInstance.chapter = this.currentChapter;
   }
 
   handleLessonCompletion(lessonId: number, chapter: Chapter, userProgress: UserProgress) {
