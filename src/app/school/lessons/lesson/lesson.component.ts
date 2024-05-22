@@ -89,51 +89,106 @@ export class LessonComponent implements OnInit, OnDestroy {
   userProgress: UserProgress = {};
 
   surveyJson = {
+    title: 'Dites-nous en 30 secondes ce que vous pensé de ce chapitre',
     elements: [
       {
-        name: "firstName",
-        title: "Entrez votre nom:",
-        type: "text",
-        defaultValue: 'Jason'
-      }, {
-        name: "lastName",
-        title: "Entrez votre prénom:",
-        type: "text",
-        defaultValue: 'Derulo'
-      },
+        name: "explications",
+        title: "Comment évalueriez-vous la clarté des explications fournies dans ce chapitre ?",
+        type: "radiogroup",
+        choices: [
+          {
+            value: 'pas_clair',
+            text: 'Pas clair'
+          },
+          {
+            value: 'peu_clair',
+            text: 'Peu clair'
+          },
+          {
+            value: 'moy_clair',
+            text: 'Moyennement clair'
+          },
+          {
+            value: 'tres_clair',
+            text: 'Très clair'
+          },
+          {
+            value: 'ext_clair',
+            text: 'Extrêmement clair'
+          }
+        ],
+        defaultValue: 'moy_clair'
+      }, 
       {
         name: 'satisfaction',
-        title: 'À quel point êtes-vous satisfait de notre plateforme Zerofiltre ?',
+        title: 'À quel point avez-vous trouvé ce chapitre intéressant ?',
         type: 'rating',
+        defaultValue: '3',
+        rateType: "stars",
+        rateCount: 5,
+        rateMax: 5,
+        displayMode: "buttons"
+      },
+      {
+        name: "comprehension",
+        type: "rating",
+        title: "Évaluez votre compréhension du chapitre.",
+        rateMin: 0,
+        rateMax: 5,
+        defaultValue: '3'
+      },
+      {
+        name: "vos_impressions",
+        title: "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
+        type: "comment",
+        maxLength: 500
+      },
+      {
+        name: "recommandation",
+        type: "boolean",
+        title: "Recommanderiez-vous ce cours à un ami ou un collègue ?",
+        valueTrue: "Oui",
+        valueFalse: "Non",
+        defaultValue: "Oui"
+      },
+      {
+        name: "recommandation_pourquoi",
+        title: "Si oui, pourquoi ?",
+        type: "comment",
+        maxLength: 500
+      },
+      {
+        name: "outil_apprentissage",
+        type: "checkbox",
+        title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
+        choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
+        isRequired: false,
+        colCount: 2,
+        showNoneItem: false,
+        showOtherItem: true,
+        showSelectAllItem: true,
+        separateSpecialChoices: true,
+      },
+      {
+        name: "outil_apprentissage_pourquoi",
+        title: "Pouvez-vous expliquer comment cela vous a aidé ?",
+        type: "comment",
+        maxLength: 500
+      },
+      {
+        name: "satisfaction_globale",
+        type: "rating",
+        title: "Sur une échelle de 1 à 10, quelle est votre satisfaction globale concernant ce chapitre ?",
+        rateMin: 0,
+        rateMax: 10,
         defaultValue: '5'
       },
       {
-        name: "subscribed",
-        type: "boolean",
-        renderAs: "checkbox",
-        title: "J'accepte de recevoir des newsletters hebdomadaires",
-      },
-      {
-        name: "start-date",
-        title: "Sélectionnez une date de début de formation",
-        type: "text",
-        inputType: "date",
-        defaultValueExpression: "today()"
-      },
-      {
-        type: "rating",
-        name: "nps_score",
-        title: "Sur une échelle de zéro à dix, quelle est la probabilité que vous recommandiez notre produit à un ami ou un collègue ?",
-        rateMin: 0,
-        rateMax: 10,
-        defaultValue: '10'
+        name: "ameliorations_suggeres",
+        title: "Quelles améliorations suggéreriez-vous ?",
+        type: "comment",
+        maxLength: 500
       }
-      // {
-      //   "name": "subscribed",
-      //   "type": "checkbox",
-      //   "title": "I agree to receive weekly newsletters 1",
-      //   "defaultValue": true
-      // },
     ]
   };
 
