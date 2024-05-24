@@ -9,7 +9,7 @@
     <div class="flex justify-center items-baseline my-5 sm:my-8">
         <span *ngIf="price"
             class="mr-2 text-4xl lg:text-5xl font-extrabold text-primary-50 {{offre.order == 2 && '!text-accent-500'}}">
-            <span *ngIf="isBuy" class="text-sm lg:text-xl">{{buyOption}} x</span> {{price|currency:'EUR'}}  <span *ngIf="isMentored" class="text-sm lg:text-xl">/mois</span><span
+            <span *ngIf="isBuy" class="text-sm lg:text-xl">{{buyOption}} x</span> {{price}}  <span *ngIf="isMentored" class="text-sm lg:text-xl">/mois</span><span
                 class="text-xl lg:text-4xl ml-1"></span></span>
     </div>
 

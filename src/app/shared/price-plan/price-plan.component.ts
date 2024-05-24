@@ -9,13 +9,15 @@ export class PricePlanComponent {
   locale: string;
   isFR = false;
 
+  price: string;
+
   @Input() offre: any;
   @Input() loading: boolean;
   @Input() isBuy: boolean;
   @Input() isMentored: boolean;
-  @Input() price: number;
   @Input() action: string;
   @Input() buyOption: number;
+  @Input() country: string;
   @Output() paymentEvent = new EventEmitter<any>();
 
   initPayment() {
@@ -36,6 +38,11 @@ export class PricePlanComponent {
   }
 
   ngOnInit(): void {
-    // this.getLocation();
+    if(this.country=="CM"){
+      this.price = this.offre.price.cfa.new;
+    }
+    else{
+      this.price = this.offre.price.eur.new;
+    }
   }
 }

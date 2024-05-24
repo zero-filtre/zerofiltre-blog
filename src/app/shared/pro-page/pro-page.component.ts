@@ -8,6 +8,8 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
+import { GeoLocationService } from 'src/app/services/geolocaton.service';
+
 
 @Component({
   selector: 'app-pro-page',
@@ -16,12 +18,12 @@ import { User } from 'src/app/user/user.model';
 })
 export class ProPageComponent {
 
-  payload: PaymentConfig = { productId: 1, productType: 'COURSE', mode: 'subscription', proPlan: true }
+  payload: PaymentConfig = { productId: 1, productType: 'COURSE', mode: 'subscription', proPlan: true, paymentEmail: "philippechampion58@gmail.com", currency:"EUR" }
   type: string;
   course: Course;
   loadingMonth: boolean
   loadingYear: boolean
-
+  country: string;
 
   constructor(
     private payment: PaymentService,
@@ -30,15 +32,15 @@ export class ProPageComponent {
     private authService: AuthService,
     private route: ActivatedRoute,
     private seo: SeoService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private geoLocationService: GeoLocationService
   ) { }
-
 
   payProMonthly() {
     if (!this.verifyAuth()) return;
 
     this.loadingMonth = true;
-    this.payload = { ...this.payload, recurringInterval: 'month' }
+    this.payload = { ...this.payload, recurringInterval: 'month', currency: this.country == "CM" ? "XAF" : "EUR" }
 
     let popupWin = (window as any).open('about:blank', "_blank");
 
@@ -94,11 +96,11 @@ export class ProPageComponent {
       price: {
         cfa: {
           old: '2500 FCFA',
-          new: '2000 FCFA'
+          new: '6500 FCFA'
         },
         eur: {
           old: '5€',
-          new: '4€'
+          new: '9,99€'
         }
       },
       time: '/mois',
@@ -120,11 +122,11 @@ export class ProPageComponent {
       price: {
         cfa: {
           old: '2500 FCFA',
-          new: '2000 FCFA'
+          new: '73000 FCFA'
         },
         eur: {
           old: '5€',
-          new: '4€'
+          new: '109,89 €'
         }
       },
       time: '/mois',
@@ -149,5 +151,16 @@ export class ProPageComponent {
       image: 'https://ik.imagekit.io/lfegvix1p/pro_vvcZRxQIU.png?updatedAt=1714202330763',
       author: 'Zerofiltre.tech'
     });
+
+    this.country = 'CM';
+
+    // this.geoLocationService.getUserLocation().subscribe(
+    //   data => {
+    //     this.country = data.country;
+    //   },
+    //   error => {
+    //     console.error('Erreur lors de la récupération de la localisation:', error);
+    //   }
+    // );
   }
 }

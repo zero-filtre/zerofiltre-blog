@@ -59,5 +59,7 @@ export interface PaymentConfig {
     productType: ProductType,
     mode: ModeType,
     proPlan?: boolean,
-    recurringInterval?: IntervalType
+    recurringInterval?: IntervalType,
+    currency: string,
+    paymentEmail:string
 }
