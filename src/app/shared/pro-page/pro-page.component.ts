@@ -34,31 +34,65 @@ export class ProPageComponent {
     private geoLocationService: GeoLocationService
   ) {}
 
-  payProMonthly() {
+  payProMonthly(byCreditCard = true) {
     if (!this.verifyAuth()) return;
-
     this.loadingMonth = true;
-    this.payload = { ...this.payload, recurringInterval: 'month' };
+
+    let payload: PaymentConfig = {
+      ...this.payload,
+      recurringInterval: 'month',
+    };
+
+    if (!byCreditCard) {
+      payload = {
+        ...payload,
+        currency: 'XAF',
+        paymentEmail: this.authService?.currentUsr?.email,
+      };
+    }
 
     let popupWin = (window as any).open('about:blank', '_blank');
 
-    this.payment.checkoutProPlanMonthly(this.payload).subscribe((data) => {
-      this.loadingMonth = false;
-      popupWin.location.href = data;
+    this.payment.checkoutProPlanMonthly(payload).subscribe({
+      next: (data) => {
+        popupWin.location.href = data;
+      },
+      error: (e) => {
+        console.log(e);
+        this.loadingMonth = false;
+      },
+      complete: () => this.loadingMonth = false
     });
   }
 
-  payProYearly() {
+  payProYearly(byCreditCard = true) {
     if (!this.verifyAuth()) return;
-
     this.loadingYear = true;
-    this.payload = { ...this.payload, recurringInterval: 'year' };
+
+    let payload: PaymentConfig = {
+      ...this.payload,
+      recurringInterval: 'year',
+    };
+
+    if (!byCreditCard) {
+      payload = {
+        ...payload,
+        currency: 'XAF',
+        paymentEmail: this.authService?.currentUsr?.email,
+      };
+    }
 
     let popupWin = (window as any).open('about:blank', '_blank');
 
-    this.payment.checkoutProPlanYearly(this.payload).subscribe((data) => {
-      this.loadingYear = false;
-      popupWin.location.href = data;
+    this.payment.checkoutProPlanYearly(this.payload).subscribe({
+      next: (data) => {
+        popupWin.location.href = data;
+      },
+      error: (e) => {
+        console.log(e);
+        this.loadingYear = false;
+      },
+      complete: () => this.loadingYear = false
     });
   }
 
@@ -155,22 +189,6 @@ export class ProPageComponent {
       proPlan: true,
     };
 
-    this.geoLocationService.getUserLocation().subscribe({
-      next: (data: any) => {
-        this.country = data.country;
-        if (this.country == 'CM') {
-          this.payload = {
-            ...this.payload,
-            currency: 'XAF',
-            paymentEmail: this.authService?.currentUsr?.email,
-          };
-        } else {
-          this.payload = { ...this.payload, currency: 'EUR' };
-        }
-      },
-      error: (e) => {
-        console.error('Erreur lors de la récupération de la localisation:', e);
-      },
-    });
+    this.country = this.geoLocationService.userLocation;
   }
 }
