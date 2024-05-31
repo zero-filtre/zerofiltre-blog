@@ -22,7 +22,9 @@ export class GeoLocationService {
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
-    this.getUserLocation();
+    if (isPlatformBrowser(this.platformId)) {
+      this.getUserLocation();
+    }
   }
 
   private getUserLocation() {

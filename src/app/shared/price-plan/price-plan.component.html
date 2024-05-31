@@ -41,6 +41,9 @@
     </ul>
 
     <div *ngIf="isCM; else intPaymentButton" class="flex max-lg:flex-col items-center gap-3">
+
+        <!-- TODO:  Creer un composant bouton de paiement qui accepte un logo, un bg et un titre  -->
+
         <button (click)="initPayment(false)"
             class="cursor-pointer text-white shadow-md hover:bg-primary-600 rounded-lg px-5 py-2.5 bg-primary-500 transition-all duration-200 {{offre.order == 2 && '!bg-accent-500 hover:!bg-accent-600'}}"
             [disabled]="loading" [ngClass]="{'cursor-not-allowed': loading}">
