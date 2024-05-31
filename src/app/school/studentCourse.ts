@@ -52,14 +52,17 @@ export type IntervalType = typeof INTERVALS[number]
 export const STATUS = ['PUBLISHED', 'DRAFT', 'IN_REVIEW'] as const;
 export type StatusType = typeof STATUS[number]
 
+export const CURRENCIES = ['XAF', 'EUR'] as const;
+export type CurrencyType = typeof CURRENCIES[number]
+
 
 
 export interface PaymentConfig {
-    productId: number,
-    productType: ProductType,
-    mode: ModeType,
-    proPlan?: boolean,
-    recurringInterval?: IntervalType,
-    currency: string,
-    paymentEmail:string
+    productId: number;
+    productType: ProductType;
+    mode: ModeType;
+    proPlan?: boolean;
+    recurringInterval?: IntervalType;
+    currency?: CurrencyType;
+    paymentEmail?:string;
 }

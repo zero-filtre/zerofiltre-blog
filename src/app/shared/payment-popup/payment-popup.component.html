@@ -30,14 +30,12 @@
         </div>
     </ng-container>
 
-
-    <ng-container *ngIf="type === 'pro'">
+    <!-- <ng-container *ngIf="type === 'pro'">
         <div class="text-center text-skin-base">
             <small class="font-bold text-lg lg:text-xl text-primary-500">Abonement PRO</small>
             <h1 class="mt-1 text-sm sm:text-base">Devenez un Ingénieur IT  qui <span class="text-accent-500">sort du lot</span></h1>
         </div>
 
-        <!-- <div class="grid lg:grid-cols-2 sm:gap-2 xl:gap-4 mt-5"> -->
         <div class="flex flex-col md:flex-row md:items-stretch text-center justify-center items-center mx-auto mt-5 gap-2 xl:gap-4">
             <app-price-plan [offre]="offresPro[0]" [loading]="loadingMonth" [action]="'Souscrire'"
                 (paymentEvent)="payProMonthly()"></app-price-plan>
@@ -45,6 +43,6 @@
             <app-price-plan [offre]="offresPro[1]" [loading]="loadingYear"  [action]="'Souscrire'"
                 (paymentEvent)="payProYearly()"></app-price-plan>
         </div>
-    </ng-container>
+    </ng-container> -->
 
 </div>
