@@ -26,6 +26,10 @@ export class PaymentPopupComponent implements OnInit {
   loadingMonthMentored: boolean;
   country: string;
 
+  priceCfa: number;
+  priceEuro: number;
+  currentPrice: number;
+
   constructor(
     private payment: PaymentService,
     public dialogRef: MatDialogRef<PaymentPopupComponent>,
@@ -237,5 +241,9 @@ export class PaymentPopupComponent implements OnInit {
     this.type = this.data.type;
     this.course = this.data.course;
     this.country = this.geoLocationService.userLocation;
+
+    this.priceCfa = this.course.price;
+    this.priceEuro = this.course.price/100;
+    this.currentPrice = this.country == 'CM' ? this.priceCfa : this.priceEuro
   }
 }

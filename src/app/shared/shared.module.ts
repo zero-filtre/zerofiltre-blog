@@ -68,6 +68,7 @@ import { CollapsibleTagsComponent } from './collapsible-tags/collapsible-tags.co
 import { SlugUrlPipe } from './pipes/slug-url.pipe';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { CourseListItemComponent } from './course-list-item/course-list-item.component';
+import { PaymentButtonComponent } from './payment-button/payment-button.component';
 import { AnnouncementBannerComponent } from './announcement-banner/announcement-banner.component';
 
 const components = [
@@ -108,6 +109,7 @@ const components = [
   CollapsibleTagsComponent,
   CourseCardComponent,
   CourseListItemComponent,
+  PaymentButtonComponent,
   AnnouncementBannerComponent
 ];
 

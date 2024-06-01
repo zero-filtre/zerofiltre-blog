@@ -22,6 +22,8 @@ export class ProPageComponent {
   loadingMonth: boolean;
   loadingYear: boolean;
   country: string;
+  currentPriceMonth: number;
+  currentPriceYear: number;
 
   constructor(
     private payment: PaymentService,
@@ -124,12 +126,12 @@ export class ProPageComponent {
       desc: 'Dépensez peu pour gagner gros',
       price: {
         cfa: {
-          old: '2500 FCFA',
-          new: '6550 FCFA',
+          old: 2500,
+          new: 6550,
         },
         eur: {
-          old: '5€',
-          new: '9,99€',
+          old: 5,
+          new: 9.99
         },
       },
       time: '/mois',
@@ -150,12 +152,12 @@ export class ProPageComponent {
       desc: 'Économisez en prenant un abonnement annuel',
       price: {
         cfa: {
-          old: '2500 FCFA',
-          new: '73000 FCFA',
+          old: 2500,
+          new: 73000,
         },
         eur: {
-          old: '5€',
-          new: '109,89 €',
+          old: 5,
+          new: 109.89
         },
       },
       time: '/mois',
@@ -190,5 +192,7 @@ export class ProPageComponent {
     };
 
     this.country = this.geoLocationService.userLocation;
+    this.currentPriceMonth = this.country == 'CM' ? this.offresPro[0].price.cfa.new : this.offresPro[0].price.eur.new
+    this.currentPriceYear = this.country == 'CM' ? this.offresPro[1].price.cfa.new : this.offresPro[1].price.eur.new
   }
 }

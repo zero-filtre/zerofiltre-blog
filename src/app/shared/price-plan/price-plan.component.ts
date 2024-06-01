@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GeoLocationService } from 'src/app/services/geolocaton.service';
 
 @Component({
   selector: 'app-price-plan',
@@ -8,9 +7,10 @@ import { GeoLocationService } from 'src/app/services/geolocaton.service';
 })
 export class PricePlanComponent {
   isCM = false;
-  price: string;
+  currencyCode: string;
 
   @Input() offre: any;
+  @Input() price: any;
   @Input() loading: boolean;
   @Input() isBuy: boolean;
   @Input() isMentored: boolean;
@@ -26,10 +26,12 @@ export class PricePlanComponent {
   ngOnInit(): void {
     if (this.country == 'CM') {
       this.isCM = true;
-      this.price = this.offre.price.cfa.new;
+      this.currencyCode = 'XAF';
+      // this.price = this.offre.price.cfa.new;
     } else {
       this.isCM = false;
-      this.price = this.offre.price.eur.new;
+      this.currencyCode = 'EUR';
+      // this.price = this.offre.price.eur.new;
     }
   }
 }

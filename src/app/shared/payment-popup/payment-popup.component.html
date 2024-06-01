@@ -3,14 +3,17 @@
         <div *ngIf="!course?.mentored">
             <div class="text-center text-skin-base">
                 <small class="font-bold text-lg lg:text-xl text-primary-500">{{course.title}}</small>
-                <h1 class="mt-1 text-sm sm:text-base">Vous pouvez payer en <span class="text-accent-500">3 fois</span>.</h1>
+                <h1 class="mt-1 text-sm sm:text-base">Vous pouvez payer en <span class="text-accent-500">3 fois</span>.
+                </h1>
             </div>
             <div
                 class="flex flex-col md:flex-row md:items-stretch text-center justify-center items-center mx-auto mt-5 gap-2 xl:gap-4">
-                <app-price-plan [offre]="offresBasic[0]" [loading]="loadingOne"
-                    [action]="'Débuter le cours'" [isBuy]="true" [country]="" [buyOption]="1" (paymentEvent)="payOneTime($event)"></app-price-plan>
-                <app-price-plan [offre]="offresBasic[1]" [loading]="loadingThree" 
-                    [action]="'Débuter le cours'" [isBuy]="true" [country]="" [buyOption]="3" (paymentEvent)="payThreeTimes($event)"></app-price-plan>
+                <app-price-plan [offre]="offresBasic[0]" [loading]="loadingOne" [action]="'Payer'" [isBuy]="true"
+                    [country]="" [price]="currentPrice" [buyOption]="1"
+                    (paymentEvent)="payOneTime($event)"></app-price-plan>
+                <app-price-plan [offre]="offresBasic[1]" [loading]="loadingThree" [action]="'Payer'" [isBuy]="true"
+                    [country]="" [price]="currentPrice/3" [buyOption]="3"
+                    (paymentEvent)="payThreeTimes($event)"></app-price-plan>
             </div>
         </div>
 
@@ -21,8 +24,9 @@
             </div>
             <div
                 class="flex flex-col md:flex-row md:items-stretch text-center justify-center items-center mx-auto mt-5 gap-2 xl:gap-4">
-                <app-price-plan [offre]="offresMentore[0]" [loading]="loadingMonthMentored" 
-                    [action]="'Débuter le cours'" [isMentored]="true" [country]="" (paymentEvent)="payMentoredMonthly($event)"></app-price-plan>
+                <app-price-plan [offre]="offresMentore[0]" [loading]="loadingMonthMentored" [action]="'Payer'"
+                    [isMentored]="true" [country]="" [price]="currentPrice"
+                    (paymentEvent)="payMentoredMonthly($event)"></app-price-plan>
             </div>
         </div>
     </ng-container>
