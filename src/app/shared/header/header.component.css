@@ -9,7 +9,7 @@
 }
 
 .header {
-  @apply sticky top-0 shadow-sm py-2 z-40;
+  @apply sticky top-0 shadow-sm z-40;
 }
 
 .header.transparent {

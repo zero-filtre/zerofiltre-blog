@@ -3,7 +3,8 @@
 </div>
 
 <header class="header" [ngClass]="{'transparent' : seo.transparentHeader}">
-    <mat-toolbar class="header-container">
+    <app-announcement-banner [isBannerVisible]="isBannerVisible" [bannerText]="bannerText"></app-announcement-banner>
+    <mat-toolbar class="header-container h-20">
         <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
             <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
                 <app-image [classes]="'max-w-[145px] sm:max-w-[175px]'" [sourceUrl]="appLogoUrl"
