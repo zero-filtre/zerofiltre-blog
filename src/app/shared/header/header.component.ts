@@ -26,6 +26,9 @@ export class HeaderComponent implements OnInit {
   @Input() changingRoute!: boolean;
   @Input() drawer!: any;
 
+  bannerText = "Bootcamp | 'Mettez enfin en place le Domain Driven Design'  | les inscriptions sont enfin ouvertes ! "
+  isBannerVisible = true;
+
   constructor(
     private loadEnvService: LoadEnvService,
     public authService: AuthService,
