@@ -72,6 +72,7 @@ import { NpsSurveyComponent } from './nps-survey/nps-survey.component';
 import { SurveyModule } from 'survey-angular-ui';
 import { PaymentButtonComponent } from './payment-button/payment-button.component';
 import { AnnouncementBannerComponent } from './announcement-banner/announcement-banner.component';
+import { ReviewComponent } from './review/review.component';
 import { WhatsappButtonComponent } from './whatsapp-button/whatsapp-button.component';
 
 const components = [
@@ -115,6 +116,7 @@ const components = [
   NpsSurveyComponent,
   PaymentButtonComponent,
   AnnouncementBannerComponent,
+  ReviewComponent,
   WhatsappButtonComponent
 ];
 
