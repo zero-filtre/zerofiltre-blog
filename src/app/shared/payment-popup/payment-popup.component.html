@@ -1,50 +1,33 @@
 <div>
     <ng-container *ngIf="type !== 'pro'">
-        <div *ngIf="!course.mentored">
+        <div *ngIf="!course?.mentored">
             <div class="text-center text-skin-base">
                 <small class="font-bold text-lg lg:text-xl text-primary-500">{{course.title}}</small>
-                <h1 class="mt-1 text-sm sm:text-base">Vous pouvez payer en <span class="text-accent-500">3 fois</span>.</h1>
+                <h1 class="mt-1 text-sm sm:text-base">Vous pouvez payer en <span class="text-accent-500">3 fois</span>.
+                </h1>
             </div>
-
             <div
                 class="flex flex-col md:flex-row md:items-stretch text-center justify-center items-center mx-auto mt-5 gap-2 xl:gap-4">
-                <app-price-plan [offre]="offresBasic[0]" [loading]="loadingOne" [price]="course?.price/100"
-                    [action]="'Débuter le cours'" [isBuy]="true" [buyOption]="1" (paymentEvent)="payOneTime()"></app-price-plan>
-
-                <app-price-plan [offre]="offresBasic[1]" [loading]="loadingThree" [price]="((course?.price/100)/3)"
-                    [action]="'Débuter le cours'" [isBuy]="true" [buyOption]="3" (paymentEvent)="payThreeTimes()"></app-price-plan>
+                <app-price-plan [offre]="offresBasic[0]" [loading]="loadingOne" [action]="'Payer'" [isBuy]="true"
+                    [country]="" [price]="currentPrice" [buyOption]="1"
+                    (paymentEvent)="payOneTime($event)"></app-price-plan>
+                <app-price-plan [offre]="offresBasic[1]" [loading]="loadingThree" [action]="'Payer'" [isBuy]="true"
+                    [country]="" [price]="currentPrice/3" [buyOption]="3"
+                    (paymentEvent)="payThreeTimes($event)"></app-price-plan>
             </div>
         </div>
 
         <div *ngIf="course?.mentored">
             <div class="text-center text-skin-base">
                 <small class="font-bold text-lg lg:text-xl text-primary-500">{{course.title}}</small>
-                <!-- <h1 class="mt-1">En achetant un parcours mentoré</h1> -->
+                <h1 class="mt-1">En achetant un parcours mentoré</h1>
             </div>
-
             <div
                 class="flex flex-col md:flex-row md:items-stretch text-center justify-center items-center mx-auto mt-5 gap-2 xl:gap-4">
-                <app-price-plan [offre]="offresMentore[0]" [loading]="loadingMonthMentored" [price]="course?.price/100"
-                    [action]="'Débuter le cours'" [isMentored]="true" (paymentEvent)="payMentoredMonthly()"></app-price-plan>
+                <app-price-plan [offre]="offresMentore[0]" [loading]="loadingMonthMentored" [action]="'Payer'"
+                    [isMentored]="true" [country]="" [price]="currentPrice"
+                    (paymentEvent)="payMentoredMonthly($event)"></app-price-plan>
             </div>
         </div>
     </ng-container>
-
-
-    <ng-container *ngIf="type === 'pro'">
-        <div class="text-center text-skin-base">
-            <small class="font-bold text-lg lg:text-xl text-primary-500">Abonement PRO</small>
-            <h1 class="mt-1 text-sm sm:text-base">Devenez un Ingénieur IT  qui <span class="text-accent-500">sort du lot</span></h1>
-        </div>
-
-        <!-- <div class="grid lg:grid-cols-2 sm:gap-2 xl:gap-4 mt-5"> -->
-        <div class="flex flex-col md:flex-row md:items-stretch text-center justify-center items-center mx-auto mt-5 gap-2 xl:gap-4">
-            <app-price-plan [offre]="offresPro[0]" [loading]="loadingMonth" [price]="(999/100)" [action]="'Souscrire'"
-                (paymentEvent)="payProMonthly()"></app-price-plan>
-
-            <app-price-plan [offre]="offresPro[1]" [loading]="loadingYear" [price]="(10989/100)" [action]="'Souscrire'"
-                (paymentEvent)="payProYearly()"></app-price-plan>
-        </div>
-    </ng-container>
-
 </div>

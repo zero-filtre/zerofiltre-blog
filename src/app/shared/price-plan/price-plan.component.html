@@ -1,21 +1,20 @@
 <div
-    class="max-w-sm mx-auto w-full h-full sm:w-[384px] lg:col-span-1 flex flex-col items-center justify-start p-6 text-secondary bg-white rounded-xl shadow-xl border-y-8 border-primary-50 xl:p-8 {{offre.order == 2 && '!border-2 !border-y-8 !border-accent-500'}}">
+    class="max-w-sm mx-auto w-full h-full sm:w-[384px] lg:col-span-1 flex flex-col items-center justify-start p-6 text-secondary bg-white rounded-xl shadow-xl border-y-8 border-primary-600 xl:p-8 {{offre.order == 2 && '!border-2 !border-y-8 !border-accent-600'}}">
 
-    <h3 class="mb-4 text-lg font-semibold text-center text-primary-50 {{offre.order == 2 && '!text-accent-500'}}">
+    <h3 class="mb-4 text-lg font-semibold text-center text-primary-600 {{offre.order == 2 && '!text-accent-600'}}">
         {{offre.title?.toUpperCase()}}</h3>
 
     <p *ngIf="offre?.desc" class="font-light text-center text-gray-500 text-base sm:text-[15px]">{{offre.desc}}</p>
 
     <div class="flex justify-center items-baseline my-5 sm:my-8">
         <span *ngIf="price"
-            class="mr-2 text-4xl lg:text-5xl font-extrabold text-primary-50 {{offre.order == 2 && '!text-accent-500'}}">
-            <span *ngIf="isBuy" class="text-sm lg:text-xl">{{buyOption}} x</span> {{price|currency:'EUR'}}  <span *ngIf="isMentored" class="text-sm lg:text-xl">/mois</span><span
-                class="text-xl lg:text-4xl ml-1"></span></span>
+            class="mr-2 text-4xl lg:text-5xl font-extrabold text-primary-600 {{offre.order == 2 && '!text-accent-600'}}">
+            <span *ngIf="isBuy" class="text-sm lg:text-xl">{{buyOption}} x </span>{{price|currency:currencyCode}}<span *ngIf="isMentored"
+                class="text-sm lg:text-xl">/mois</span><span class="text-xl lg:text-4xl ml-1"></span></span>
     </div>
 
     <p *ngIf="offre?.subs" class="text-gray-500 text-center text-sm mb-8">{{offre?.subs}}</p>
 
-    <!-- <ul *ngIf="offre?.pros.lenght || offre?.cons.lenght" role="list" class="mb-8 space-y-4 text-left"> -->
     <ul role="list" class="mb-8 space-y-4 text-left">
         <ng-container *ngFor="let pro of offre?.pros">
             <li class="flex items-center space-x-3">
@@ -41,20 +40,56 @@
         </ng-container>
     </ul>
 
-    <button (click)="initPayment()"
-        class="cursor-pointer text-white shadow-md hover:bg-primary-600 rounded-lg px-5 py-2.5 bg-primary-500 transition-all duration-200 {{offre.order == 2 && '!bg-accent-500 hover:!bg-accent-600'}}"
-        [disabled]="loading" [ngClass]="{'cursor-not-allowed': loading}">
-        <div class="flex flex-col items-center gap-3">
-            <div class="progress-wrapper grid place-content-center">
-                <div *ngIf="!loading" class="progress-content">{{action}}</div>
-                <svg *ngIf="loading" class="w-5 animate-spin text-secondary" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                    <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
-                        stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                        style="animation-play-state:paused"></circle>
+    <div *ngIf="isCM; else intPaymentButton" class="flex flex-col w-full gap-2.5">
+
+        <app-payment-button bg="bg-primary-600" title="{{action}} par Mobile Money" [loading]="loading"
+            (clickAction)="initPayment(false)">
+            <!-- <app-image logo [alt]="'OM MOMO Logo'"
+                [sourceUrl]="'https://ik.imagekit.io/lfegvix1p/mobile-money_pN_6M2CkX.jpg?updatedAt=1717110902823'"
+                [classes]="'w-20'">
+            </app-image> -->
+
+            <div logo class="flex items-center gap-1">
+                <svg id="uuid-4e9e7267-a997-4c5c-a2b7-6be7dd6ddfe5" class="size-10" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 470.44 247.5">
+                    <g id="uuid-0a142595-124e-47e2-afea-cc80bf1e8088">
+                        <g>
+                            <path
+                                d="m193.88,24.9H52.4c-15.86,0-28.72,12.86-28.72,28.73s12.86,28.72,28.72,28.72h72.14L8.41,198.47c-11.22,11.22-11.22,29.4,0,40.62,11.22,11.22,29.4,11.22,40.62,0l116.12-116.12v72.13c0,15.86,12.86,28.73,28.73,28.73s28.72-12.86,28.72-28.73V53.62c0-15.86-12.86-28.73-28.72-28.73"
+                                style="fill:#000;fill-rule:evenodd;"></path>
+                            <path
+                                d="m276.56,222.6h141.48c15.86,0,28.73-12.86,28.73-28.72s-12.86-28.73-28.73-28.73h-72.13l116.12-116.12c11.22-11.22,11.22-29.4,0-40.62-11.22-11.22-29.4-11.22-40.62,0l-116.12,116.12V52.4c0-15.86-12.86-28.72-28.72-28.72s-28.73,12.86-28.73,28.72v141.48c0,15.86,12.86,28.72,28.73,28.72"
+                                style="fill:#ff7900;fill-rule:evenodd;"></path>
+                        </g>
+                    </g>
                 </svg>
+                <app-image logo [alt]="'OM MOMO Logo'"
+                    [sourceUrl]="'https://ik.imagekit.io/lfegvix1p/momo_logo_EFUu9g31-.png?updatedAt=1717241529901'"
+                    [classes]="'w-10'">
+                </app-image>
             </div>
-        </div>
-    </button>
+        </app-payment-button>
+
+        <app-payment-button bg="bg-accent-600" title="{{action}} par carte bancaire" [loading]="loading"
+            (clickAction)="initPayment()">
+            <svg logo xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-10">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+            </svg>
+        </app-payment-button>
+
+    </div>
+
+    <ng-template #intPaymentButton>
+        <app-payment-button bg="bg-primary-600 {{offre.order == 2 && '!bg-accent-600'}}"
+            title="{{action}} par carte bancaire" [loading]="loading" (clickAction)="initPayment()">
+            <svg logo xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-10">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+            </svg>
+        </app-payment-button>
+    </ng-template>
 
 </div>

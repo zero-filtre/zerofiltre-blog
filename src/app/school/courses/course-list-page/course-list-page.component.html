@@ -190,7 +190,7 @@
     </main>
 
     <aside *ngIf="!isGrid" class="col-span-2 hidden lg:block space-y-6 lg:space-y-10">
-        <div class="tags sticky top-28 space-y-6">
+        <div class="tags sticky top-36 space-y-6">
             <div class="" aria-labelledby="article-tags">
                 <div *ngIf="tagList; else tagLoader">
                     <app-collapsible-tags [tagList]="tagList" [isOpen]="true" (activeTagEvent)="setActiveTag($event)" (filterEvent)="sortByTag(activeTag)"></app-collapsible-tags>
@@ -224,7 +224,7 @@
             </div>
         </div>
 
-        <!-- <div class="sticky top-28">
+        <!-- <div class="sticky top-36">
             <app-ads-square></app-ads-square>
         </div> -->
     </aside>

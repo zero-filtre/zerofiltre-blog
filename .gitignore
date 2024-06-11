@@ -54,3 +54,5 @@ devlaunch.sh
 /e2e/node_modules
 /e2e/logs
 /e2e/tests_output
+
+secrets.sh
