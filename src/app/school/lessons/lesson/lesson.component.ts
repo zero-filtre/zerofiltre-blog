@@ -10,7 +10,7 @@ import { MessageService } from '../../../services/message.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
-import { CompletedLesson, Lesson, Resource } from '../lesson';
+import { CompletedLesson, Lesson, Resource, UserProgress } from '../lesson';
 import { ChapterService } from '../../chapters/chapter.service';
 import { FormGroup } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
@@ -23,6 +23,8 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { NpsSurveyComponent } from 'src/app/shared/nps-survey/nps-survey.component';
 
 
 @Component({
@@ -74,9 +76,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   documentResources: Resource[] = [];
   courseResources: Course[] = [];
 
-  // courseResources$: Observable<Resource[]>;
-
-
   completed: boolean;
 
   allChapters: Chapter[] = [];
@@ -86,6 +85,112 @@ export class LessonComponent implements OnInit, OnDestroy {
   isCompleting: boolean;
 
   durations = [];
+
+  userProgress: UserProgress = {};
+
+  surveyJson = {
+    title: 'Dites-nous en 30 secondes ce que vous pensé de ce chapitre',
+    elements: [
+      {
+        name: "explications_chapitre",
+        title: "Comment évalueriez-vous la clarté des explications fournies dans ce chapitre ?",
+        type: "radiogroup",
+        choices: [
+          {
+            value: 'Pas clair',
+            text: 'Pas clair'
+          },
+          {
+            value: 'Peu clair',
+            text: 'Peu clair'
+          },
+          {
+            value: 'Moyennement clair',
+            text: 'Moyennement clair'
+          },
+          {
+            value: 'Très clair',
+            text: 'Très clair'
+          },
+          {
+            value: 'Extrêmement clair',
+            text: 'Extrêmement clair'
+          }
+        ],
+        defaultValue: 'Moyennement clair'
+      }, 
+      {
+        name: 'note_satisfaction_chapitre',
+        title: 'À quel point avez-vous trouvé ce chapitre intéressant ?',
+        type: 'rating',
+        defaultValue: '3',
+        rateType: "stars",
+        rateCount: 5,
+        rateMax: 5,
+        displayMode: "buttons"
+      },
+      {
+        name: "note_comprehension_chapitre",
+        type: "rating",
+        title: "Évaluez votre compréhension du chapitre.",
+        rateMin: 0,
+        rateMax: 5,
+        defaultValue: '3'
+      },
+      {
+        name: "vos_impressions",
+        title: "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
+        type: "comment",
+        maxLength: 500
+      },
+      {
+        name: "recommander_cours",
+        type: "boolean",
+        title: "Recommanderiez-vous ce cours à un ami ou un collègue ?",
+        valueTrue: "Oui",
+        valueFalse: "Non",
+        defaultValue: "Oui"
+      },
+      {
+        name: "pourquoi_recommander",
+        title: "Si oui, pourquoi ?",
+        type: "comment",
+        maxLength: 500
+      },
+      {
+        name: "outil_apprentissage_chapitre",
+        type: "checkbox",
+        title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
+        choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
+        isRequired: false,
+        colCount: 2,
+        showNoneItem: false,
+        showOtherItem: true,
+        showSelectAllItem: true,
+        separateSpecialChoices: true,
+      },
+      {
+        name: "outil_apprentissage_chapitre_raisons",
+        title: "Pouvez-vous expliquer comment cela vous a aidé ?",
+        type: "comment",
+        maxLength: 500
+      },
+      {
+        name: "satisfaction_globale_chapitre",
+        type: "rating",
+        title: "Sur une échelle de 1 à 10, quelle est votre satisfaction globale concernant ce chapitre ?",
+        rateMin: 0,
+        rateMax: 10,
+        defaultValue: '5'
+      },
+      {
+        name: "ameliorations_suggeres",
+        title: "Quelles améliorations suggéreriez-vous ?",
+        type: "comment",
+        maxLength: 500
+      }
+    ]
+  };
 
   constructor(
     private seo: SeoService,
@@ -103,7 +208,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     media: MediaMatcher,
     private paymentService: PaymentService,
     private slugify: SlugUrlPipe,
-    private location: Location
+    private location: Location,
+    private modalService: MatDialog,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -148,7 +254,9 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.isCompleting = false;
           this.completed = true;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
+          
           if (this.nextLesson) this.router.navigateByUrl(`cours/${this.slugify.transform(this.course)}/${this.slugify.transform(this.nextLesson)}`);
+          this.handleLessonCompletion(this.lesson.id, this.currentChapter, this.userProgress)
         })
     } else {
       this.courseService.markLessonAsInComplete(data)
@@ -160,6 +268,8 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.isCompleting = false;
           this.completed = false;
           this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
+          this.userProgress[this.currentChapter.id].completedLessons.delete(this.lesson.id);
+          console.log('USER PROGRESS: ', this.userProgress);
         })
     }
   }
@@ -173,10 +283,42 @@ export class LessonComponent implements OnInit, OnDestroy {
     return this.completedLessonsIds.includes(lesson?.id);
   }
 
+  isChapterCompleted(chapter: Chapter, userProgress: UserProgress): boolean {
+    const chapterProgress = userProgress[chapter.id];
+    if (!chapterProgress) return false;
+
+    return chapter.lessons.every((lesson: Lesson) => chapterProgress.completedLessons.has(lesson.id));
+  }
+
+  showNPSFormDialog() {
+    const modalRef = this.modalService.open(NpsSurveyComponent, {
+      panelClass: 'popup-panel-nps',
+    });
+
+    modalRef.componentInstance.jsonSchema = this.surveyJson;
+    modalRef.componentInstance.course = this.course;
+    modalRef.componentInstance.chapter = this.currentChapter;
+  }
+
+  handleLessonCompletion(lessonId: number, chapter: Chapter, userProgress: UserProgress) {
+    if (!userProgress[chapter.id]) {
+      userProgress[chapter.id] = {
+        completedLessons: new Set<number>(),
+      };
+    }
+
+    userProgress[chapter.id].completedLessons.add(lessonId);
+
+    if (this.isChapterCompleted(chapter, userProgress)) {
+      this.showNPSFormDialog();
+    }
+    console.log('USER PROGRESS: ', userProgress, this.isChapterCompleted(chapter, userProgress));
+  }
+
   findResourcesByType(type: string[] | string): Resource[] {
     const resources = this.lesson.resources
     if (Array.isArray(type)) {
-      return resources.filter(res =>  type.includes(res.type))
+      return resources.filter(res => type.includes(res.type))
     } else {
       return resources.filter(res => res.type === type)
     }
@@ -262,7 +404,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   loadCourseData(courseId: any) {
-    console.log('LOAD COURSE: ', courseId);
 
     this.loadingCourse = true;
     this.course$ = this.courseService.findCourseById(courseId)
@@ -291,9 +432,10 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.loadingChapters = false;
           return throwError(() => err?.message)
         }),
-        tap(data => {
+        tap((data: Chapter[]) => {
           this.allChapters = data;
           this.loadingChapters = false;
+          this.updateUserProgressForEachChapter(data)
 
           // this.getEachLessonDuration(data);
 
@@ -400,25 +542,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   }
 
-
   buyCourse() {
-
-    // const currUser = this.authService.currentUsr as User;
-    // const loggedIn = !!currUser;
-
-    // if (!loggedIn) {
-    //   this.router.navigate(
-    //     ['/login'],
-    //     {
-    //       relativeTo: this.route,
-    //       queryParams: { redirectURL: this.router.url },
-    //       queryParamsHandling: 'merge',
-    //     });
-
-    //   this.messageService.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
-
-    //   return;
-    // }
 
     const payload = { productId: +this.courseID, productType: 'COURSE' }
     const type = 'product'
@@ -428,31 +552,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   subscribeToPro() {
-
-    // const currUser = this.authService.currentUsr as User;
-    // const loggedIn = !!currUser;
-
-    // if (!loggedIn) {
-    //   this.router.navigate(
-    //     ['/login'],
-    //     {
-    //       relativeTo: this.route,
-    //       queryParams: { redirectURL: this.router.url },
-    //       queryParamsHandling: 'merge',
-    //     });
-
-    //   this.messageService.openSnackBarInfo('Veuillez vous connecter pour prendre votre abonnement PRO 🤗', 'OK');
-
-    //   return;
-    // }
-
-    // const payload = { productId: +this.courseID, productType: 'COURSE' }
-    // const type = 'pro'
-
-    // this.paymentService.openPaymentDialog(payload, type, this.course);
-
     this.router.navigateByUrl('/pro');
-
   }
 
   async downloadFileContent(res: Resource) {
@@ -480,6 +580,22 @@ export class LessonComponent implements OnInit, OnDestroy {
     return ext === "txt";
   }
 
+  updateUserProgressForEachChapter(chapters: Chapter[]) {
+    chapters.forEach((chapter: Chapter) => {
+      chapter.lessons.forEach((lesson: Lesson) => {
+        if (!this.userProgress[chapter.id]) {
+          this.userProgress[chapter.id] = {
+            completedLessons: new Set<number>(),
+          };
+        }
+        
+        if (this.isLessonCompleted(lesson)) {
+          this.userProgress[chapter.id].completedLessons.add(lesson.id);
+        }
+      })
+    })
+  }
+
   ngOnInit(): void {
     this.seo.unmountFooter();
     this.courseID = this.route.snapshot.paramMap.get('course_id')?.split('-')[0];
@@ -488,15 +604,11 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.loadCourseData(this.courseID);
     this.loadAllChapters(this.courseID, this.lessonID);
 
-    console.log('DATA: ', this.courseID, this.lessonID);
-
     this.route.paramMap.subscribe(
       params => {
         const parsedParams = params.get('lesson_id')?.split('-')[0]
         this.lessonID = parsedParams!;
         this.loadLessonData(this.lessonID);
-
-        console.log('LOAD LESSON: ', this.lessonID);
       }
     );
 

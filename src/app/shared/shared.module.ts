@@ -68,6 +68,8 @@ import { CollapsibleTagsComponent } from './collapsible-tags/collapsible-tags.co
 import { SlugUrlPipe } from './pipes/slug-url.pipe';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { CourseListItemComponent } from './course-list-item/course-list-item.component';
+import { NpsSurveyComponent } from './nps-survey/nps-survey.component';
+import { SurveyModule } from 'survey-angular-ui';
 import { PaymentButtonComponent } from './payment-button/payment-button.component';
 import { AnnouncementBannerComponent } from './announcement-banner/announcement-banner.component';
 
@@ -109,6 +111,7 @@ const components = [
   CollapsibleTagsComponent,
   CourseCardComponent,
   CourseListItemComponent,
+  NpsSurveyComponent,
   PaymentButtonComponent,
   AnnouncementBannerComponent
 ];
@@ -138,7 +141,8 @@ const modules = [
   CdkAccordionModule,
   NgxIntlTelInputModule,
   NgChartsModule,
-  MatTooltipModule
+  MatTooltipModule,
+  SurveyModule
 ];
 
 @NgModule({
