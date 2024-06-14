@@ -26,7 +26,7 @@ export class GeoLocationService {
     @Inject(PLATFORM_ID) private platformId: any
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      this.getUserLocation();
+      // this.getUserLocation();
       this.getUserLocationBis();
     }
   }
@@ -53,7 +53,7 @@ export class GeoLocationService {
         }),
         tap(({ country, city, region }: any) => {
           this.subjectBis.next(country);
-          localStorage.setItem('location_bis', JSON.stringify(country));
+          localStorage.setItem(this.LOCATION_NAME, JSON.stringify(country));
         }),
         shareReplay()
       )
