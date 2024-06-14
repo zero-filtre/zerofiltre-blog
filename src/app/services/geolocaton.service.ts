@@ -13,21 +13,17 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class GeoLocationService {
-  private apiUrl = 'https://ipapi.co/json';  // Another api https://ipapi.co/json
+  private apiUrl = 'https://ipapi.co/json';
   private LOCATION_NAME = 'location';
   private subject = new BehaviorSubject<string>(null!);
   public location$ = this.subject.asObservable();
-
-  private subjectBis = new BehaviorSubject<string>(null!);
-  public locationBis$ = this.subjectBis.asObservable();
 
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: any
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      // this.getUserLocation();
-      this.getUserLocationBis();
+      this.getUserLocation();
     }
   }
 
@@ -39,20 +35,6 @@ export class GeoLocationService {
         }),
         tap(({ country, city, region }: any) => {
           this.subject.next(country);
-          localStorage.setItem(this.LOCATION_NAME, JSON.stringify(country));
-        }),
-        shareReplay()
-      )
-  }
-
-  private getUserLocationBis() {
-    this.locationBis$ = this.http.get<any>(this.apiUrlBis)
-      .pipe(
-        catchError(error => {
-          return throwError(() => error);
-        }),
-        tap(({ country, city, region }: any) => {
-          this.subjectBis.next(country);
           localStorage.setItem(this.LOCATION_NAME, JSON.stringify(country));
         }),
         shareReplay()
