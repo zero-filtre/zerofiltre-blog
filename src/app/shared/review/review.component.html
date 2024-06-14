@@ -32,17 +32,26 @@
     </div>
 </div> -->
 
-<figure class="md:flex bg-skin-cardMuted shadow rounded-xl p-8 md:p-0 dark:bg-slate-800 text-secondary overflow-hidden">
+<figure class="flex flex-col bg-skin-cardMuted shadow rounded-xl p-6 text-sm text-secondary overflow-hidden">
     <!-- <img class="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto" src="/sarah-dayan.jpg" alt=""
         width="384" height="512" /> -->
-    <svg xmlns="http://www.w3.org/2000/svg"
-        class="w-full bg-primary-600 border-primary-500 text-white fill-white"
-        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-    </svg>
-    <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-        <div class="flex items-center">
+    <div class="flex items-center gap-4">
+        <svg xmlns="http://www.w3.org/2000/svg"
+            class="size-14 rounded-full bg-primary-600 border-primary-500 text-white fill-white" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        <figcaption class="">
+            <div class="text-primary-600 font-medium text-base">{{ userName }}</div>
+            <div class="mt-1">
+                {{ userRole }}
+            </div>
+        </figcaption>
+    </div>
+
+    <div class="pt-6">
+        <!-- <div class="flex items-center">
             <ng-container *ngFor="let star of starsArray; let i = index">
                 <svg *ngIf="i < userStars" class="h-5 w-5 text-yellow-500" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20" fill="currentColor">
@@ -55,17 +64,14 @@
                         d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.04 3.187a1 1 0 00.95.69h3.356c.969 0 1.371 1.24.588 1.81l-2.717 1.975a1 1 0 00-.364 1.118l1.04 3.187c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.717 1.975c-.784.57-1.839-.197-1.54-1.118l1.04-3.187a1 1 0 00-.364-1.118L4.702 8.615c-.783-.57-.38-1.81.588-1.81h3.356a1 1 0 00.95-.69l1.04-3.187z" />
                 </svg>
             </ng-container>
-        </div>
+        </div> -->
+
         <blockquote>
-            <p class="text-lg font-medium">
+            <p class="leading-6">
                 “{{ userComment }}”
             </p>
         </blockquote>
-        <figcaption class="font-medium">
-            <div class="text-primary-600 dark:text-sky-400">{{ userName }}</div>
-            <div class="text-slate-700 dark:text-slate-500">
-                {{ userRole }}
-            </div>
-        </figcaption>
+
+
     </div>
 </figure>
