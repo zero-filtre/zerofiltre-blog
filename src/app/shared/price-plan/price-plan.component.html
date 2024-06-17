@@ -6,11 +6,11 @@
 
     <p *ngIf="offre?.desc" class="font-light text-center text-gray-500 text-base sm:text-[15px]">{{offre.desc}}</p>
 
-    <div class="flex justify-center items-baseline my-5 sm:my-8">
-        <span *ngIf="price"
-            class="mr-2 text-4xl lg:text-5xl font-extrabold text-primary-500 {{offre.order == 2 && '!text-accent-500'}}">
-            <span *ngIf="isBuy" class="text-sm lg:text-xl">{{buyOption}} x </span>{{price|currency:currencyCode}}<span *ngIf="isMentored"
-                class="text-sm lg:text-xl">/mois</span><span class="text-xl lg:text-4xl ml-1"></span></span>
+    <div class="flex justify-center items-center my-5 sm:my-8">
+        <span *ngIf="price" class=" flex items-center justify-center mr-2 text-2xl font-extrabold text-primary-500 {{offre.order == 2 && '!text-accent-500'}}">
+            <span *ngIf="isBuy" class="text-sm lg:text-xl mr-2">{{buyOption}}x</span>{{price.eur|currency:'EUR'}} <span class="-mt-1 mx-3">|</span> <span *ngIf="isBuy" class="text-sm lg:text-xl mr-2">{{buyOption}}x</span>{{price.xaf|currency:'XAF'}}<span *ngIf="isMentored"
+                class="text-sm lg:text-xl">/mois</span><span class="text-xl lg:text-4xl ml-1"></span>
+        </span>
     </div>
 
     <p *ngIf="offre?.subs" class="text-gray-500 text-center text-sm mb-8">{{offre?.subs}}</p>
@@ -18,7 +18,7 @@
     <ul role="list" class="mb-8 space-y-4 text-left">
         <ng-container *ngFor="let pro of offre?.pros">
             <li class="flex items-center space-x-3">
-                <svg class="flex-shrink-0 w-5 h-5 text-primary-500 " fill="currentColor" viewBox="0 0 20 20"
+                <svg class="flex-shrink-0 w-5 h-5 text-primary-500" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
                         d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -40,7 +40,7 @@
         </ng-container>
     </ul>
 
-    <div *ngIf="isCM; else intPaymentButton" class="flex flex-col w-full gap-2.5">
+    <div *ngIf="payByMobileMoney; else intPaymentButton" class="flex flex-col w-full gap-2.5">
 
         <app-payment-button bg="bg-primary-500" title="{{action}} par Mobile Money" [loading]="loading"
             (clickAction)="initPayment(false)">

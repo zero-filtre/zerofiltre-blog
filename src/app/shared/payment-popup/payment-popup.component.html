@@ -12,7 +12,7 @@
                     [country]="" [price]="currentPrice" [buyOption]="1"
                     (paymentEvent)="payOneTime($event)"></app-price-plan>
                 <app-price-plan [offre]="offresBasic[1]" [loading]="loadingThree" [action]="'Payer'" [isBuy]="true"
-                    [country]="" [price]="currentPrice/3" [buyOption]="3"
+                    [country]="" [price]="currentPriceThreeTimes" [buyOption]="3"
                     (paymentEvent)="payThreeTimes($event)"></app-price-plan>
             </div>
         </div>

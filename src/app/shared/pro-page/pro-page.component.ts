@@ -22,8 +22,8 @@ export class ProPageComponent {
   loadingMonth: boolean;
   loadingYear: boolean;
   country: string;
-  currentPriceMonth: number;
-  currentPriceYear: number;
+  currentPriceMonth: { xaf: number; eur: number };
+  currentPriceYear: { xaf: number; eur: number };
 
   constructor(
     private payment: PaymentService,
@@ -63,7 +63,7 @@ export class ProPageComponent {
         console.log(e);
         this.loadingMonth = false;
       },
-      complete: () => this.loadingMonth = false
+      complete: () => (this.loadingMonth = false),
     });
   }
 
@@ -94,7 +94,7 @@ export class ProPageComponent {
         console.log(e);
         this.loadingYear = false;
       },
-      complete: () => this.loadingYear = false
+      complete: () => (this.loadingYear = false),
     });
   }
 
@@ -131,7 +131,7 @@ export class ProPageComponent {
         },
         eur: {
           old: 5,
-          new: 9.99
+          new: 9.99,
         },
       },
       time: '/mois',
@@ -157,7 +157,7 @@ export class ProPageComponent {
         },
         eur: {
           old: 5,
-          new: 109.89
+          new: 109.89,
         },
       },
       time: '/mois',
@@ -192,7 +192,16 @@ export class ProPageComponent {
     };
 
     this.country = this.geoLocationService.userLocation;
-    this.currentPriceMonth = this.country == 'CM' ? this.offresPro[0].price.cfa.new : this.offresPro[0].price.eur.new
-    this.currentPriceYear = this.country == 'CM' ? this.offresPro[1].price.cfa.new : this.offresPro[1].price.eur.new
+    // this.currentPriceMonth = this.country == 'CM' ? this.offresPro[0].price.cfa.new : this.offresPro[0].price.eur.new
+    // this.currentPriceYear = this.country == 'CM' ? this.offresPro[1].price.cfa.new : this.offresPro[1].price.eur.new
+
+    this.currentPriceMonth = {
+      xaf: this.offresPro[0].price.cfa.new,
+      eur: this.offresPro[0].price.eur.new,
+    };
+    this.currentPriceYear = {
+      xaf: this.offresPro[1].price.cfa.new,
+      eur: this.offresPro[1].price.eur.new,
+    };
   }
 }

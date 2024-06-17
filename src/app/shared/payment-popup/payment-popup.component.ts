@@ -28,7 +28,8 @@ export class PaymentPopupComponent implements OnInit {
 
   priceCfa: number;
   priceEuro: number;
-  currentPrice: number;
+  currentPrice: { xaf: number; eur: number };
+  currentPriceThreeTimes: { xaf: number; eur: number };
 
   constructor(
     private payment: PaymentService,
@@ -244,6 +245,13 @@ export class PaymentPopupComponent implements OnInit {
 
     this.priceCfa = this.course.price;
     this.priceEuro = this.course.price/100;
-    this.currentPrice = this.country == 'CM' ? this.priceCfa : this.priceEuro
+    this.currentPrice = {
+      xaf: this.priceCfa,
+      eur: this.priceEuro
+    }
+    this.currentPriceThreeTimes = {
+      xaf: this.priceCfa/3,
+      eur: this.priceEuro/3
+    }
   }
 }
