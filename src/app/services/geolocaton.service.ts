@@ -13,7 +13,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class GeoLocationService {
-  private apiUrl = 'https://ipinfo.io/json';  // Another api https://ipapi.co/json
+  private apiUrl = 'https://ipapi.co/json';  // Another api https://ipapi.co/json
   private LOCATION_NAME = 'location';
   private subject = new BehaviorSubject<string>(null!);
   public location$ = this.subject.asObservable();
