@@ -10,13 +10,14 @@ export class PricePlanComponent {
   currencyCode: string;
 
   @Input() offre: any;
-  @Input() price: any;
+  @Input() price: { xaf: number; eur: number };
   @Input() loading: boolean;
   @Input() isBuy: boolean;
   @Input() isMentored: boolean;
   @Input() action: string;
   @Input() buyOption: number;
   @Input() country: string;
+  @Input() payByMobileMoney = false;
   @Output() paymentEvent = new EventEmitter<any>();
 
   initPayment(cb = true) {
