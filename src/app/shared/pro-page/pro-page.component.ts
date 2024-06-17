@@ -127,7 +127,7 @@ export class ProPageComponent {
       price: {
         cfa: {
           old: 2500,
-          new: 6550,
+          new: 6500,
         },
         eur: {
           old: 5,
