@@ -86,7 +86,7 @@ export class ProPageComponent {
 
     let popupWin = (window as any).open('about:blank', '_blank');
 
-    this.payment.checkoutProPlanYearly(this.payload).subscribe({
+    this.payment.checkoutProPlanYearly(payload).subscribe({
       next: (data) => {
         popupWin.location.href = data;
       },
@@ -153,7 +153,7 @@ export class ProPageComponent {
       price: {
         cfa: {
           old: 2500,
-          new: 73000,
+          new: 72000,
         },
         eur: {
           old: 5,
