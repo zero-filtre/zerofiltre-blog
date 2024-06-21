@@ -9,8 +9,7 @@ import { CourseEnrollment } from '../school/studentCourse';
 import { MessageService } from '../services/message.service';
 import { PLANS, ROLES, User } from './user.model';
 import { FileUploadService } from '../services/file-upload.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AddEmailPopupComponent } from '../shared/add-email-popup/add-email-popup.component';
+import { ModalService } from '../services/modal.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -51,9 +50,7 @@ export class AuthService {
     private messageService: MessageService,
     private courseService: CourseService,
     private fileUploadService: FileUploadService,
-    
-    private modalService: MatDialog,
-
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: any,
   ) {
     this.isLoggedIn$ = of(this.currentUsr).pipe(map(user => !!user));
@@ -313,25 +310,6 @@ export class AuthService {
       ).subscribe()
   }
 
-  checkUserEmail(user: User) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const validEmail = regex.test(user.email);
-  
-    if (validEmail) {
-      return;
-    } else {
-      this.openEmailModal();
-    }
-  }
-
-  openEmailModal() {
-    this.modalService.open(AddEmailPopupComponent, {
-      panelClass: 'popup-panel',
-      disableClose: true,
-    });
-  }
-
-
   private loadLoggedInUser(accessToken: string, tokenType: string, refreshToken = '') {
     this.getUser(accessToken, tokenType)
       .subscribe({
@@ -353,7 +331,7 @@ export class AuthService {
             this.router.navigateByUrl('/cours');
           }
 
-          this.checkUserEmail(usr);
+          this.modalService.checkUserEmail(usr);
           this.loadUserAllSubs();
         },
         error: (_err: HttpErrorResponse) => {
