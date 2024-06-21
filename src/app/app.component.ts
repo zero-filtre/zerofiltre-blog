@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, shareReplay, filter } from 'rxjs';
 import { FileUploadService } from './services/file-upload.service';
 import { MessageService } from './services/message.service';
+import { ModalService } from './services/modal.service';
 import { AddTargetToExternalLinks } from './services/utilities.service';
 import { AuthService } from './user/auth.service';
 
@@ -82,6 +83,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private router: Router,
     public authService: AuthService,
     private fileUploadService: FileUploadService,
+    private modalService: ModalService,
     public geoLocationService: GeoLocationService
   ) {
     this.setBrowserTranslationConfigs();
@@ -218,6 +220,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     if (isPlatformBrowser(this.platformId) && this.authService.currentUsr) {
       this.fileUploadService.xToken$.subscribe();
+      this.modalService.checkUserEmail(this.authService.currentUsr)
     }
   }
 }

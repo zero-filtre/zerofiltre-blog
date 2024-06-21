@@ -108,7 +108,7 @@ export const fr = {
         title: 'Demander un code de confirmation de compte',
         titleEmail: 'Veuillez saisir votre adresse email',
         message: "Veuillez renseigner votre adresse e-mail et nous vous enverrons un nouveau lien de confirmation de compte.",
-        messageEmail: "Nous n’avons pas pu récupérer votre @‌email. Nous en avons besoin pour vous notifier de la validation de vos articles/cours et par conséquent du versement de vos revenus.",
+        messageEmail: "Nous n’avons pas pu récupérer votre @‌email. C'est obligatoire pour le bon fonctionnement de votre profil.",
         email: 'Email',
         invaldEmail: 'Vous devez entrer une adresse email valide',
         sendLink: '(R)envoyer le lien de confirmation',
