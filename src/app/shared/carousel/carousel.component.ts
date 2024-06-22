@@ -1,4 +1,5 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, HostListener, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-carousel',
@@ -8,31 +9,35 @@ import { Component, HostListener, Input } from '@angular/core';
 export class CarouselComponent {
   @Input() userReviews: any[];
 
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+  ){}
+
   reviews = [
     {
       comment: 'This is a fantastic product!',
-      avatar: 'https://via.placeholder.com/150',
+      avatar: '',
       name: 'John Doe',
       role: 'CEO, Company',
       stars: 5
     },
     {
       comment: 'I love the service!',
-      avatar: 'https://via.placeholder.com/150',
+      avatar: '',
       name: 'Jane Smith',
       role: 'CTO, Another Company',
       stars: 5
     },
     {
       comment: 'Highly recommended.',
-      avatar: 'https://via.placeholder.com/150',
+      avatar: '',
       name: 'Bob Johnson',
       role: 'Manager, Some Company',
       stars: 5
     },
     {
       comment: 'Awesome product.',
-      avatar: 'https://via.placeholder.com/150',
+      avatar: '',
       name: 'Terry jane',
       role: 'Manager, Ets',
       stars: 5
@@ -40,28 +45,28 @@ export class CarouselComponent {
 
     {
       comment: 'This is a fantastic product!',
-      avatar: 'https://via.placeholder.com/150',
+      avatar: '',
       name: 'John Doe',
       role: 'CEO, Company',
       stars: 5
     },
     {
       comment: 'I love the service!',
-      avatar: 'https://via.placeholder.com/150',
+      avatar: '',
       name: 'Jane Smith',
       role: 'CTO, Another Company',
       stars: 5
     },
     {
       comment: 'Highly recommended.',
-      avatar: 'https://via.placeholder.com/150',
+      avatar: '',
       name: 'Bob Johnson',
       role: 'Manager, Some Company',
       stars: 5
     },
     {
       comment: 'Awesome product.',
-      avatar: 'https://via.placeholder.com/150',
+      avatar: '',
       name: 'Terry jane',
       role: 'Manager, Ets',
       stars: 5
@@ -73,7 +78,9 @@ export class CarouselComponent {
   currentIndex = 0;
 
   ngOnInit() {
-    this.startAutoplay();
+    if (isPlatformBrowser(this.platformId)) {
+      this.startAutoplay();
+    }
   }
 
   ngOnDestroy() {
