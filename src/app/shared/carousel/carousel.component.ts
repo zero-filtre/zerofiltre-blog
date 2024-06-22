@@ -96,7 +96,7 @@ export class CarouselComponent {
           this.currentIndex = 0
         }
       }
-    }, 5000);
+    }, 4000);
   }
 
   getTransformStyle() {

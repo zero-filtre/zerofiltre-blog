@@ -9,7 +9,7 @@
     </div>
 
     <div *appShellNoRender>
-        <div *ngIf="course && !loading" class="content flex flex-col">
+        <div *ngIf="course && !loading" class="content">
 
             
             <div class="page-title site-container py-8 lg:pt-14 text-center space-y-5 lg:max-w-7xl mx-auto">
@@ -54,9 +54,13 @@
                         </span>
                     </button>
                 </div>
+
+                <section *ngIf="section.position == 1" class="site-container mx-auto pt-8 pb-16 lg:py-16">
+                    <app-carousel></app-carousel>
+                </section>
             </ng-container>
 
-            <section class="reactions !py-6 border bg-secondary grid place-items-center border-skin-border">
+            <section class="reactions !py-6 border !bg-secondary grid place-items-center border-skin-border">
                 <!-- *ngIf="!loading && (isPublished$ | async)" -->
                 <div class="site-container pt-5 flex flex-wrap justify-center lg:justify-start">
                     <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
