@@ -44,11 +44,9 @@
                 </div>
             </div>
 
-            <section class="relative mt-10 max-w-7xl mx-auto focus:outline-none" tabindex="-1">
+            <!-- <section class="relative mt-10 max-w-7xl mx-auto focus:outline-none" tabindex="-1">
                 <h2 class="sr-only">Testimonials</h2>
-                <!-- <div class="grid grid-cols-1 gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3 max-h-[33rem] overflow-hidden"> -->
                 <div class="grid grid-cols-1 gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-2 max-h-[33rem]">
-                    
                     <app-review userImage="assets/user1.jpg" userName="Joe Don" userRole="Engenieur"
                         userComment="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius odio error at itaque temporibus beatae  veniam nam magni ab natus, provident quo repellat voluptates"
                         [userStars]="5">
@@ -57,18 +55,8 @@
                         userComment="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius odio error at itaque temporibus beatae  veniam nam magni ab natus, provident quo repellat voluptates quis"
                         [userStars]="4">
                     </app-review>
-                        
                 </div>
-
-                <!-- <div
-                    class="inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-white pt-32 pb-8 pointer-events-none dark:from-slate-900 absolute">
-                    <button
-                        class="relative bg-slate-900 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 text-sm text-white font-semibold h-12 px-6 rounded-lg flex items-center dark:bg-slate-700 dark:hover:bg-slate-600 pointer-events-auto">
-                        Voir plus...
-                    </button>
-                </div> -->
-            </section>
-
+            </section> -->
         </div>
 
         <div class="hidden md:block absolute bottom-[2%] left-4 xl:left-16">
@@ -88,6 +76,11 @@
                     fill="" />
             </svg>
         </div>
+
+    </section>
+
+    <section class="site-container mx-auto pt-8 pb-16 lg:py-16">
+        <app-carousel></app-carousel>
     </section>
 
     <section
