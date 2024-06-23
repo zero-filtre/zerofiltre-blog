@@ -49,6 +49,7 @@ export class HeaderComponent implements OnInit {
   }
 
   @HostListener('document:keydown.control.k', ['$event'])
+  @HostListener('document:keydown.meta.k', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     event.preventDefault();
     setTimeout(() => {

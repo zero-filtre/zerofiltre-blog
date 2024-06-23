@@ -32,6 +32,7 @@ export class ModalService {
   }
 
   public openSearchModal() {
+    this.dialogRef.closeAll()
     this.dialogRef.open(SearchPopupComponent, {
       panelClass: 'popup-search',
       disableClose: false,
