@@ -36,6 +36,7 @@ export class ModalService {
       panelClass: 'popup-search',
       disableClose: false,
       minHeight: '400px',
+      width: '700px'
     });
   }
 

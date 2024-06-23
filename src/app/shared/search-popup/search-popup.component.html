@@ -1,11 +1,30 @@
-<div class="flex items-center justify-center min-w-full lg:min-w-[600px] xl:min-w-[800px] pt-5 px-2">
-    <div class="min-w-full">
-        <input (keyup)="onSearchChange(getValue($event))" id="modalSearchBox" placeholder="Recherche..." class="border-0 text-lg font-medium outline-none ring-0 h-14 px-2 lg:px-4 bg-skin-bgMuted border-b-4 border-primary-500 w-full" />
-        <p *ngIf="results.length === 0" class="text-xs text-center text-gray-500 mt-2">Aucun résultat pour l'instant</p>
-        <ul *ngIf="results.length > 0" class="mt-2">
-            <li *ngFor="let result of results" class="p-2 hover:bg-gray-100 cursor-pointer">
-                <a [routerLink]="['/path', result.id]">{{ result.name }}</a>
-            </li>
-        </ul>
+<h2 mat-dialog-title class="sr-only">Effectuer une recherche</h2>
+<mat-dialog-content>
+    <!-- <mat-dialog-content class="mat-typography"> -->
+    <div class="flex items-center justify-center min-w-full pt-5 px-2">
+        <div class="min-w-full">
+            <input (keyup)="onSearchChange(getValue($event))" id="modalSearchBox" placeholder="Recherche..."
+                class="border-0 text-lg font-medium outline-none ring-0 h-14 px-2 lg:px-4 bg-skin-bgMuted border-b-4 border-primary-500 w-full" />
+            <p *ngIf="results.length === 0" class="text-xs text-center text-gray-500 mt-4">Aucun résultat pour l'instant
+            </p>
+            <ul *ngIf="results.length > 0" class="flex flex-col gap-2 mt-2">
+                <li *ngFor="let result of results" mat-button mat-dialog-close class="p-2 hover:bg-gray-100 cursor-pointer">
+                    <a *ngIf="isArticle(result)" routerLink="{{'/articles/'+(result|slugify)}}">
+                        <h2 class="font-semibold text-primary-500 text-lg">{{result.title}}</h2>
+                        <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.summary }}</p>
+                    </a>
+
+                    <a *ngIf="isCourse(result)" routerLink="{{'/cours/'+(result|slugify)}}">
+                        <h2 class="font-semibold text-primary-500 text-lg">{{result.title}}</h2>
+                        <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.summary }}</p>
+                    </a>
+
+                    <a *ngIf="isLesson(result)" routerLink="{{'/cours/'+(result|slugify)+'/'+(result|slugify)}}">
+                        <h2 class="font-semibold text-primary-500 text-lg">{{result.title}}</h2>
+                        <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.summary }}</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
+</mat-dialog-content>

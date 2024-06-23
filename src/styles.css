@@ -115,7 +115,7 @@ img {
 }
 
 .popup-search {
-  @apply max-sm:!w-full mx-4
+  @apply max-sm:!w-full mx-4 lg:!mt-10
 }
 
 .article-popup-panel .mat-dialog-container {
