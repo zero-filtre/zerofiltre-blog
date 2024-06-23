@@ -9,21 +9,18 @@ const httpOptions = {
   }),
 };
 
-const apiBase = 'https://api.vimeo.com';
-
 @Injectable({
   providedIn: 'root',
 })
-export class SurveyService {
+export class SearchService {
   readonly apiServerUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
 
-  saveSurveyResults(json: object): Observable<any> {
-    const data = JSON.stringify(json);
-    return of(data);
+  search(query: string): Observable<any> {
+    return of(query)
     return this.http
-      .post<any>(`${apiBase}/nps`, data, httpOptions)
+      .get<any>(`${this.apiServerUrl}/search?q=${query}`, httpOptions)
       .pipe(shareReplay());
   }
 }

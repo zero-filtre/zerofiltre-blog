@@ -74,6 +74,7 @@ import { PaymentButtonComponent } from './payment-button/payment-button.componen
 import { AnnouncementBannerComponent } from './announcement-banner/announcement-banner.component';
 import { ReviewComponent } from './review/review.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { SearchPopupComponent } from './search-popup/search-popup.component';
 import { WhatsappButtonComponent } from './whatsapp-button/whatsapp-button.component';
 
 const components = [
@@ -119,6 +120,7 @@ const components = [
   AnnouncementBannerComponent,
   ReviewComponent,
   CarouselComponent,
+  SearchPopupComponent,
   WhatsappButtonComponent
 ];
 

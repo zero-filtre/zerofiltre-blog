@@ -1,0 +1,11 @@
+<div class="flex items-center justify-center min-w-full lg:min-w-[600px] xl:min-w-[800px] pt-5 px-2">
+    <div class="min-w-full">
+        <input (keyup)="onSearchChange(getValue($event))" id="modalSearchBox" placeholder="Recherche..." class="border-0 text-lg font-medium outline-none ring-0 h-14 px-2 lg:px-4 bg-skin-bgMuted border-b-4 border-primary-500 w-full" />
+        <p *ngIf="results.length === 0" class="text-xs text-center text-gray-500 mt-2">Aucun résultat pour l'instant</p>
+        <ul *ngIf="results.length > 0" class="mt-2">
+            <li *ngFor="let result of results" class="p-2 hover:bg-gray-100 cursor-pointer">
+                <a [routerLink]="['/path', result.id]">{{ result.name }}</a>
+            </li>
+        </ul>
+    </div>
+</div>
