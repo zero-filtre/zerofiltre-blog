@@ -5,7 +5,7 @@
 <header class="header" [ngClass]="{'transparent' : seo.transparentHeader}">
     <app-announcement-banner [isBannerVisible]="isBannerVisible" [bannerText]="bannerText"></app-announcement-banner>
     <mat-toolbar class="header-container h-20">
-        <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
+        <a aria-labelledby="Link to home page" class="logo-link" routerLink="/">
             <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
                 <app-image [classes]="'max-w-[145px] sm:max-w-[175px]'" [sourceUrl]="appLogoUrl"
                     [alt]="'Zerofiltre blog'">
@@ -43,7 +43,7 @@
                 <div>Contact</div>
             </a>
 
-            <div class="flex gap-4">
+            <div class="flex gap-4 ml-4">
                 <button (click)="openSearchPopup()" class="h-auto outline-none ring-0 p-1.5 hidden md:flex justify-between items-center text-primary-50 font-normal bg-white bg-opacity-10 hover:bg-opacity-20 border border-primary-300 rounded-full hover:border-primary-500 
                     hover:drop-shadow-[0_0_7px_rgba(21,178,188,0.4)] transition-all duration-200">
                     <span class="w-4 mx-2">
@@ -183,8 +183,6 @@
 
                 </ng-container>
             </div>
-
-
         </div>
 
         <div class="lg:hidden flex justify-center items-center gap-5">
@@ -200,12 +198,33 @@
                 </button>
             </ng-template>
 
-            <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" class="lg:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
+            <div class="flex items-center gap-5">
+                <button (click)="openSearchPopup()" class="self-center flex outline-none ring-0 p-1.5 justify-between items-center text-primary-50 font-normal bg-white bg-opacity-10 hover:bg-opacity-20 rounded-full hover:border-primary-500 
+                    hover:drop-shadow-[0_0_7px_rgba(21,178,188,0.4)] transition-all duration-200">
+                    <span class="w-5">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="search" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                            class="svg-inline--fa fk-search fk-w-16 fk-9x">
+                            <g class="fk-group">
+                                <path fill="currentColor"
+                                d="M208 80a128 128 0 1 1-90.51 37.49A127.15 127.15 0 0 1 208 80m0-80C93.12 0 0 93.12 0 208s93.12 208 208 208 208-93.12 208-208S322.88 0 208 0z"
+                                    class="fk-secondary"></path>
+                                <path fill="currentColor"
+                                d="M504.9 476.7L476.6 505a23.9 23.9 0 0 1-33.9 0L343 405.3a24 24 0 0 1-7-17V372l36-36h16.3a24 24 0 0 1 17 7l99.7 99.7a24.11 24.11 0 0 1-.1 34z"
+                                    class="fk-primary">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                </button>
+                
+                <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" class="lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
+                    </svg>
+                </button>
+            </div>
         </div>
 
     </mat-toolbar>
