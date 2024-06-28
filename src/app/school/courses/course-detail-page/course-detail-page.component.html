@@ -55,9 +55,9 @@
                     </button>
                 </div>
 
-                <section *ngIf="section.position == 1" class="site-container mx-auto pt-8 pb-16 lg:py-16">
+                <ng-container *ngIf="section.position == 1">
                     <app-carousel></app-carousel>
-                </section>
+                </ng-container>
             </ng-container>
 
             <section class="reactions !py-6 border !bg-secondary grid place-items-center border-skin-border">

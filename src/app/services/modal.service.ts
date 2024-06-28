@@ -32,7 +32,6 @@ export class ModalService {
   }
 
   public openSearchModal() {
-    this.dialogRef.closeAll()
     this.dialogRef.open(SearchPopupComponent, {
       panelClass: 'popup-search',
       backdropClass: 'popup-search-overlay',
@@ -40,6 +39,14 @@ export class ModalService {
       minHeight: '400px',
       width: '700px'
     });
+  }
+
+  public toggleSearchModal(isOpen: boolean) {
+    if(isOpen) {
+      this.openSearchModal();
+    } else {
+      this.dialogRef.closeAll()
+    }
   }
 
 }

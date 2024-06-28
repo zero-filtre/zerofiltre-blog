@@ -1,10 +1,12 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { environment } from 'src/environments/environment';
+import { SearchPopupComponent } from '../search-popup/search-popup.component';
 
 @Component({
   selector: 'app-header',
@@ -26,6 +28,7 @@ export class HeaderComponent implements OnInit {
 
   bannerText = "Bootcamp | 'Mettez enfin en place le Domain Driven Design'  | les inscriptions sont enfin ouvertes ! "
   isBannerVisible = true;
+  isSearchModalOpen = false
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -45,19 +48,25 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // do nothing.
   }
 
-  @HostListener('document:keydown.control.k', ['$event'])
-  @HostListener('document:keydown.meta.k', ['$event'])
+  @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    event.preventDefault();
-    setTimeout(() => {
-      this.openSearchPopup();
-    }, 0);
+    if ((event.ctrlKey && event.key === 'k') || 
+        (event.metaKey && event.key === 'k') || 
+        event.key === '/') {
+      event.preventDefault();
+      this.toggleSearchModal();
+    }
+  }
+
+  toggleSearchModal() {
+    this.isSearchModalOpen = !this.isSearchModalOpen;
+    this.modaleService.toggleSearchModal(this.isSearchModalOpen);
   }
 
   openSearchPopup() {
+    this.isSearchModalOpen = !this.isSearchModalOpen;
     this.modaleService.openSearchModal();
   }
 
