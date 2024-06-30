@@ -7,6 +7,7 @@ import { Course } from '../school/courses/course';
 import { ArticleService } from '../articles/article.service';
 import { CourseService } from '../school/courses/course.service';
 import { Lesson } from '../school/lessons/lesson';
+import { ChapterService } from '../school/chapters/chapter.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -28,7 +29,8 @@ export class SearchService {
   constructor(
     private http: HttpClient,
     private articleService: ArticleService,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private chapterService: ChapterService
   ) {
     this.loadDataBaseData();
   }
@@ -39,7 +41,21 @@ export class SearchService {
       .subscribe((data: any) => (this.articles = data.content));
     this.courseService
       .fetchAllCoursesByFilter(0, 1000, this.PUBLISHED)
-      .subscribe((data: any) => (this.courses = data.content));
+      .subscribe((data: any) => {
+        this.courses = data.content;
+        this.courses.forEach((course) => {
+          this.chapterService
+            .fetchAllChapters(course.id)
+            .subscribe((chapters) => {
+              const arr = chapters.map((chapter) =>
+                chapter.lessons
+                  .map((lesson) => ({ ...lesson, courseId: +chapter.courseId }))
+                  .flat()
+              );
+              this.lessons = [...this.lessons, ...arr.flat()];
+            });
+        });
+      });
   }
 
   getSearchResults(query: string): (Article | Course | Lesson)[] {

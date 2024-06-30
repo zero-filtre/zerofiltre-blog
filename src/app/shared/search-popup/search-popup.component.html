@@ -19,7 +19,7 @@
                         <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.summary }}</p>
                     </a>
 
-                    <a *ngIf="isLesson(result)" routerLink="{{'/cours/'+(result|slugify)+'/'+(result|slugify)}}">
+                    <a *ngIf="isLesson(result)" routerLink="{{'/cours/'+(result.courseId)+'/'+(result|slugify)}}">
                         <h2 class="font-semibold text-primary-500 text-lg">{{result.title}}</h2>
                         <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.summary }}</p>
                     </a>

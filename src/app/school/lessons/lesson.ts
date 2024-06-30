@@ -10,6 +10,7 @@ export interface Lesson {
     free: boolean;
     type: any;
     duration: string;
+    courseId: number;
     chapterId: number;
     resources: Resource[];
     number: number;
