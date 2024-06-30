@@ -72,6 +72,7 @@ import { NpsSurveyComponent } from './nps-survey/nps-survey.component';
 import { SurveyModule } from 'survey-angular-ui';
 import { PaymentButtonComponent } from './payment-button/payment-button.component';
 import { AnnouncementBannerComponent } from './announcement-banner/announcement-banner.component';
+import { WhatsappButtonComponent } from './whatsapp-button/whatsapp-button.component';
 
 const components = [
   AppShellRenderDirective,
@@ -113,7 +114,8 @@ const components = [
   CourseListItemComponent,
   NpsSurveyComponent,
   PaymentButtonComponent,
-  AnnouncementBannerComponent
+  AnnouncementBannerComponent,
+  WhatsappButtonComponent
 ];
 
 const modules = [
