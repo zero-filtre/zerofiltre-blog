@@ -1,6 +1,9 @@
 <div
     class="fixed bottom-3 right-3 lg:bottom-5 lg:right-5 z-50 flex size-12 lg:size-14 items-center justify-center rounded-xl shadow-lg bg-green-500 p-1.5 font-mono text-xs text-white">
-    <a href="https://wa.me/33753428623?text=Salut" target="_blank">
-        <app-image [classes]="''" [sourceUrl]="'https://ik.imagekit.io/lfegvix1p/WhatsApp_icon_D5-ZAmWuV.svg?updatedAt=1680203681973'"></app-image>
+    <!-- href="//api.whatsapp.com/send?phone=33753428623&text=Salut" target="_blank" title="Share on whatsapp" -->
+    <a [href]="mobileQuery.matches ? mobileLink : desktopLink"
+        target="_blank" title="Share on whatsapp" class="animate-pulse">
+        <app-image [classes]="''"
+            [sourceUrl]="'https://ik.imagekit.io/lfegvix1p/WhatsApp_icon_D5-ZAmWuV.svg?updatedAt=1680203681973'"></app-image>
     </a>
 </div>
