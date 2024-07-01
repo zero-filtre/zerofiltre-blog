@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoadEnvService } from 'src/app/services/load-env.service';
-import { MessageService } from 'src/app/services/message.service';
-import { PaymentService } from 'src/app/services/payment.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
-import { User } from 'src/app/user/user.model';
 import { environment } from 'src/environments/environment';
+import { SearchPopupComponent } from '../search-popup/search-popup.component';
 
 @Component({
   selector: 'app-header',
@@ -28,14 +28,14 @@ export class HeaderComponent implements OnInit {
 
   bannerText = "Bootcamp | 'Mettez enfin en place le Domain Driven Design'  | les inscriptions sont enfin ouvertes ! "
   isBannerVisible = true;
+  isSearchModalOpen = false
 
   constructor(
     private loadEnvService: LoadEnvService,
     public authService: AuthService,
     private router: Router,
     public seo: SeoService,
-    private messageService: MessageService,
-    private paymentService: PaymentService
+    private modaleService: ModalService
   ) { }
 
   public logout() {
@@ -44,33 +44,30 @@ export class HeaderComponent implements OnInit {
   }
 
   subscribeToPro() {
-    // const currUser = this.authService.currentUsr as User;
-    // const loggedIn = !!currUser;
-
-    // if (!loggedIn) {
-    //   this.router.navigate(
-    //     ['/login'],
-    //     {
-    //       queryParams: { redirectURL: this.router.url },
-    //       queryParamsHandling: 'merge',
-    //     });
-
-    //   this.messageService.openSnackBarInfo('Veuillez vous connecter pour prendre votre abonnement PRO 🤗', 'OK');
-
-    //   return;
-    // }
-
-    // const payload = { productId: 1, productType: 'COURSE' }
-    // const type = 'pro'
-
-    // this.paymentService.openPaymentDialog(payload, type);
-
     this.router.navigateByUrl('/pro');
-
   }
 
   ngOnInit(): void {
-    // do nothing.
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if ((event.ctrlKey && event.key === 'k') || 
+        (event.metaKey && event.key === 'k') || 
+        event.key === '/') {
+      event.preventDefault();
+      this.toggleSearchModal();
+    }
+  }
+
+  toggleSearchModal() {
+    this.isSearchModalOpen = !this.isSearchModalOpen;
+    this.modaleService.toggleSearchModal(this.isSearchModalOpen);
+  }
+
+  openSearchPopup() {
+    this.isSearchModalOpen = !this.isSearchModalOpen;
+    this.modaleService.openSearchModal();
   }
 
 }
