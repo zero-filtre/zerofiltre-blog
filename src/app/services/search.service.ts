@@ -32,7 +32,7 @@ export class SearchService {
     private courseService: CourseService,
     private chapterService: ChapterService
   ) {
-    this.loadDataBaseData();
+    // this.loadDataBaseData();
   }
 
   loadDataBaseData(): void {
@@ -76,7 +76,7 @@ export class SearchService {
     const lowerCaseQuery = query.toLowerCase();
 
     const filteredArticles = articles.filter(
-      (article) => article.title.toLowerCase().includes(lowerCaseQuery)
+      (article) => article.title?.toLowerCase().includes(lowerCaseQuery)
       // article.summary.toLowerCase().includes(lowerCaseQuery) ||
       // article.content.toLowerCase().includes(lowerCaseQuery)
     );
@@ -97,10 +97,10 @@ export class SearchService {
   }
 
   search(query: string): Observable<any> {
-    return of({ results: this.getSearchResults(query) });
+    // return of({ results: this.getSearchResults(query) });
 
     return this.http
-      .get<any>(`${this.apiServerUrl}/search?q=${query}`, httpOptions)
+      .get<any>(`${this.apiServerUrl}/search?query=${query}`, httpOptions)
       .pipe(shareReplay());
   }
 }

@@ -47,7 +47,7 @@ export class SearchPopupComponent {
         debounceTime(500),
         distinctUntilChanged(),
         switchMap((query: string) => {
-          if (query.length > 0) {
+          if (query.length >= 3) {
             return this.searchService.search(query);
           } else {
             return new Observable((observer) => observer.next({ results: [] }));
