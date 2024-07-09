@@ -2,9 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
-import { Article } from 'src/app/articles/article.model';
-import { Course, SearchResultArticle, SearchResultCourse, SearchResultLesson, SearchResultsData } from 'src/app/school/courses/course';
-import { Lesson } from 'src/app/school/lessons/lesson';
+import { SearchResultArticle, SearchResultCourse, SearchResultLesson, SearchResultsData } from 'src/app/school/courses/course';
 import { SearchService } from 'src/app/services/search.service'
 
 @Component({
