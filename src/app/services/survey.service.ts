@@ -5,26 +5,25 @@ import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   }),
 };
 
 const apiBase = 'https://api.vimeo.com';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SurveyService {
   readonly apiServerUrl = environment.apiBaseUrl;
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   saveSurveyResults(json: object): Observable<any> {
-    const data = JSON.stringify(json)
-    return of(data)
-    return this.http.post<any>(`${apiBase}/nps`, data, httpOptions)
-      .pipe(shareReplay())
+    const data = JSON.stringify(json);
+    return of(data);
+    return this.http
+      .post<any>(`${apiBase}/nps`, data, httpOptions)
+      .pipe(shareReplay());
   }
 }

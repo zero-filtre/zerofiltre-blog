@@ -1,0 +1,34 @@
+<figure class="flex flex-col bg-skin-card rounded-lg shadow-lg p-6 text-sm text-secondary overflow-hidden h-full">
+    <div class="flex items-center gap-4">
+        <app-image [classes]="'object-cover size-14'" [sourceUrl]="userImage" [alt]="'avatar homme noir'"></app-image>
+        <figcaption class="">
+            <div class="text-primary-600 font-medium text-base">{{ userName }}</div>
+            <div class="mt-1">
+                {{ userRole }}
+            </div>
+        </figcaption>
+    </div>
+
+    <div class="pt-6">
+        <!-- <div class="flex items-center">
+            <ng-container *ngFor="let star of starsArray; let i = index">
+                <svg *ngIf="i < userStars" class="h-5 w-5 text-yellow-500" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.04 3.187a1 1 0 00.95.69h3.356c.969 0 1.371 1.24.588 1.81l-2.717 1.975a1 1 0 00-.364 1.118l1.04 3.187c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.717 1.975c-.784.57-1.839-.197-1.54-1.118l1.04-3.187a1 1 0 00-.364-1.118L4.702 8.615c-.783-.57-.38-1.81.588-1.81h3.356a1 1 0 00.95-.69l1.04-3.187z" />
+                </svg>
+                <svg *ngIf="i >= userStars" class="h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.04 3.187a1 1 0 00.95.69h3.356c.969 0 1.371 1.24.588 1.81l-2.717 1.975a1 1 0 00-.364 1.118l1.04 3.187c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.717 1.975c-.784.57-1.839-.197-1.54-1.118l1.04-3.187a1 1 0 00-.364-1.118L4.702 8.615c-.783-.57-.38-1.81.588-1.81h3.356a1 1 0 00.95-.69l1.04-3.187z" />
+                </svg>
+            </ng-container>
+        </div> -->
+
+        <blockquote>
+            <p class="leading-6 line-clamp-5">
+                “{{ userComment }}”
+            </p>
+        </blockquote>
+    </div>
+</figure>

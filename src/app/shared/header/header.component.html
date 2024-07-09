@@ -5,7 +5,7 @@
 <header class="header" [ngClass]="{'transparent' : seo.transparentHeader}">
     <app-announcement-banner [isBannerVisible]="isBannerVisible" [bannerText]="bannerText"></app-announcement-banner>
     <mat-toolbar class="header-container h-20">
-        <a aria-labelledby="Link to about page" class="logo-link" routerLink="/">
+        <a aria-labelledby="Link to home page" class="logo-link" routerLink="/">
             <div class="logo w-9/12 md:w-10/12 lg:w-11/12">
                 <app-image [classes]="'max-w-[145px] sm:max-w-[175px]'" [sourceUrl]="appLogoUrl"
                     [alt]="'Zerofiltre blog'">
@@ -43,124 +43,167 @@
                 <div>Contact</div>
             </a>
 
-            <ng-container class="navbar-links-hidden-on-server-rendering" *appShellNoRender>
-                <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" class="navLink"
-                    routerLink="/login">
-                    <div class="!font-medium text-primary-500">{{'navbar.login' | translate}}</div>
-                </a>
-                <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" class="navLink"
-                    routerLink="/register">
-                    <div>{{'navbar.register' | translate}}</div>
-                </a>
-
-                <button *ngIf="authService.currentUsr as currentUsr" [matMenuTriggerFor]="menu" #t="matMenuTrigger"
-                    class="user-profile-icon flex gap-2.5 items-center justify-center ml-4 border border-skin-borderBold p-1.5 rounded-full shadow-inner hover:bg-primary-50 hover:bg-opacity-10 transition-all duration-300"
-                    aria-label="User profile icon with a menu">
-
-                    <div class="profile-image">
-                        <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
-                            <app-image [classes]="'h-10 w-10 rounded-full'" [sourceUrl]="currentUsr?.profilePicture!"
-                                [alt]="currentUsr?.fullName">
-                            </app-image>
-                        </div>
-
-                        <div *ngIf="!currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-10 w-10 p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white rounded-full"
-                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        </div>
-                    </div>
-
-                    <div class="profile-arrow-down mr-2 relative top-0.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-5 h-5 text-skin-muted transition-all duration-200"
-                            [ngClass]="{'!rotate-90': t.menuOpen}">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            <div class="flex items-center gap-4 ml-4">
+                <button (click)="openSearchPopup()" class="xl:hidden self-center flex outline-none ring-0 p-1.5 justify-between items-center text-primary-50 font-normal bg-white bg-opacity-10 hover:bg-opacity-20 rounded-full hover:border-primary-500 
+                    hover:drop-shadow-[0_0_7px_rgba(21,178,188,0.4)] transition-all duration-200">
+                    <span class="w-5">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="search" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                            class="svg-inline--fa fk-search fk-w-16 fk-9x">
+                            <g class="fk-group">
+                                <path fill="currentColor"
+                                d="M208 80a128 128 0 1 1-90.51 37.49A127.15 127.15 0 0 1 208 80m0-80C93.12 0 0 93.12 0 208s93.12 208 208 208 208-93.12 208-208S322.88 0 208 0z"
+                                    class="fk-secondary"></path>
+                                <path fill="currentColor"
+                                d="M504.9 476.7L476.6 505a23.9 23.9 0 0 1-33.9 0L343 405.3a24 24 0 0 1-7-17V372l36-36h16.3a24 24 0 0 1 17 7l99.7 99.7a24.11 24.11 0 0 1-.1 34z"
+                                    class="fk-primary">
+                                </path>
+                            </g>
                         </svg>
-                    </div>
-
-                    <mat-menu #menu="matMenu" class="mt-2 text-skin-base w-64">
-                        <a aria-labelledby="Link to user profile page" routerLink="/user/profile"
-                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                            <span>{{'navbar.myProfile' | translate}}</span>
-                        </a>
-
-                        <a aria-labelledby="Link to user articles page" routerLink="/user/dashboard"
-                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                            <span>{{'sidebar.myArticles' | translate}}</span>
-                        </a>
-
-                        <a *ngIf="activeCourseModule" aria-labelledby="Link to user student courses page"
-                            routerLink="/user/dashboard/courses"
-                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                            <span>{{'sidebar.myCourses' | translate}}</span>
-                        </a>
-
-                        <a *ngIf="activeCourseModule" aria-labelledby="Link to user teacher courses page"
-                            routerLink="/user/dashboard/teacher/courses"
-                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                            <span>{{'sidebar.myTrainings' | translate}}</span>
-                        </a>
-
-                        <a *ngIf="activeCourseModule && authService?.isAdmin" aria-labelledby="Link to about page"
-                            routerLink="/user/dashboard/courses/all"
-                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                            <span>{{'sidebar.allTrainings' | translate}}</span>
-                        </a>
-
-                        <a *ngIf="authService?.isAdmin" aria-labelledby="Link to about page"
-                            routerLink="/user/dashboard/admin"
-                            class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                            <span>{{'profile.allAdminArticles' | translate}}</span>
-                        </a>
-
-                        <button (click)="logout()" aria-labelledby="logout button"
-                            class="flex items-center gap-3 px-4 py-3 hover:bg-skin-link hover:text-error text-sm w-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-                            </svg>
-                            <span>{{'navbar.logout' | translate}}</span>
-                        </button>
-                    </mat-menu>
+                    </span>
                 </button>
 
-            </ng-container>
+                <button (click)="openSearchPopup()" class="hidden xl:flex h-auto outline-none ring-0 p-1.5 justify-between items-center text-primary-50 font-normal bg-white bg-opacity-10 hover:bg-opacity-20 border border-primary-300 rounded-full hover:border-primary-500 
+                    hover:drop-shadow-[0_0_7px_rgba(21,178,188,0.4)] transition-all duration-200">
+                    <span class="w-4 mx-2">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="search" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                            class="svg-inline--fa fk-search fk-w-16 fk-9x">
+                            <g class="fk-group">
+                                <path fill="currentColor"
+                                    d="M208 80a128 128 0 1 1-90.51 37.49A127.15 127.15 0 0 1 208 80m0-80C93.12 0 0 93.12 0 208s93.12 208 208 208 208-93.12 208-208S322.88 0 208 0z"
+                                    class="fk-secondary"></path>
+                                <path fill="currentColor"
+                                    d="M504.9 476.7L476.6 505a23.9 23.9 0 0 1-33.9 0L343 405.3a24 24 0 0 1-7-17V372l36-36h16.3a24 24 0 0 1 17 7l99.7 99.7a24.11 24.11 0 0 1-.1 34z"
+                                    class="fk-primary">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                    <span class="mr-12 text-base">Recherche</span>
+                    <span class="mx-2 text-xs border border-primary-500 shadow-sm rounded-md p-1 px-2">/</span>
+                </button>
 
+                <ng-container class="navbar-links-hidden-on-server-rendering" *appShellNoRender>
+                    <div class="flex">
+                        <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" class="navLink"
+                            routerLink="/login">
+                            <div class="!font-medium text-primary-500">{{'navbar.login' | translate}}</div>
+                        </a>
+                        <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" class="navLink"
+                            routerLink="/register">
+                            <div>{{'navbar.register' | translate}}</div>
+                        </a>
+                    </div>
+
+                    <button *ngIf="authService.currentUsr as currentUsr" [matMenuTriggerFor]="menu" #t="matMenuTrigger"
+                        class="user-profile-icon flex gap-2.5 items-center justify-center border border-skin-borderBold p-1.5 rounded-full shadow-inner hover:bg-primary-50 hover:bg-opacity-10 transition-all duration-300"
+                        aria-label="User profile icon with a menu">
+
+                        <div class="profile-image">
+                            <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
+                                <app-image [classes]="'h-10 w-10 rounded-full'" [sourceUrl]="currentUsr?.profilePicture!"
+                                    [alt]="currentUsr?.fullName">
+                                </app-image>
+                            </div>
+
+                            <div *ngIf="!currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-10 w-10 p-2 border-2 bg-primary-500 border-primary-500 text-white fill-white rounded-full"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="profile-arrow-down mr-2 relative top-0.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5 text-skin-muted transition-all duration-200"
+                                [ngClass]="{'!rotate-90': t.menuOpen}">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </div>
+
+                        <mat-menu #menu="matMenu" class="mt-2 text-skin-base w-64">
+                            <a aria-labelledby="Link to user profile page" routerLink="/user/profile"
+                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                                <span>{{'navbar.myProfile' | translate}}</span>
+                            </a>
+
+                            <a aria-labelledby="Link to user articles page" routerLink="/user/dashboard"
+                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                <span>{{'sidebar.myArticles' | translate}}</span>
+                            </a>
+
+                            <a *ngIf="activeCourseModule" aria-labelledby="Link to user student courses page"
+                                routerLink="/user/dashboard/courses"
+                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                <span>{{'sidebar.myCourses' | translate}}</span>
+                            </a>
+
+                            <a *ngIf="activeCourseModule" aria-labelledby="Link to user teacher courses page"
+                                routerLink="/user/dashboard/teacher/courses"
+                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                <span>{{'sidebar.myTrainings' | translate}}</span>
+                            </a>
+
+                            <a *ngIf="activeCourseModule && authService?.isAdmin" aria-labelledby="Link to about page"
+                                routerLink="/user/dashboard/courses/all"
+                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                <span>{{'sidebar.allTrainings' | translate}}</span>
+                            </a>
+
+                            <a *ngIf="authService?.isAdmin" aria-labelledby="Link to about page"
+                                routerLink="/user/dashboard/admin"
+                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                <span>{{'profile.allAdminArticles' | translate}}</span>
+                            </a>
+
+                            <button (click)="logout()" aria-labelledby="logout button"
+                                class="flex items-center gap-3 px-4 py-3 hover:bg-skin-link hover:text-error text-sm w-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                                </svg>
+                                <span>{{'navbar.logout' | translate}}</span>
+                            </button>
+                        </mat-menu>
+                    </button>
+
+                </ng-container>
+            </div>
         </div>
 
         <div class="lg:hidden flex justify-center items-center gap-5">
@@ -170,17 +213,41 @@
             </button>
             <ng-template #notProUserBtnMobile>
                 <button (click)="subscribeToPro()" class="mb-2">
-                    <p class="text-sm sm:text-lg text-primary-500 border border-primary-500 rounded-md font-extrabold p-1.5">Passer PRO</p>
+                    <p
+                        class="text-sm sm:text-lg text-primary-500 border border-primary-500 rounded-md font-extrabold p-1.5">
+                        Passer PRO</p>
                 </button>
             </ng-template>
 
-            <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" class="lg:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
+            <div class="flex items-center gap-5">
+                <button (click)="openSearchPopup()" class="self-center flex outline-none ring-0 p-1.5 justify-between items-center text-primary-50 font-normal bg-white bg-opacity-10 hover:bg-opacity-20 rounded-full hover:border-primary-500 
+                    hover:drop-shadow-[0_0_7px_rgba(21,178,188,0.4)] transition-all duration-200">
+                    <span class="w-5">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="search" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                            class="svg-inline--fa fk-search fk-w-16 fk-9x">
+                            <g class="fk-group">
+                                <path fill="currentColor"
+                                d="M208 80a128 128 0 1 1-90.51 37.49A127.15 127.15 0 0 1 208 80m0-80C93.12 0 0 93.12 0 208s93.12 208 208 208 208-93.12 208-208S322.88 0 208 0z"
+                                    class="fk-secondary"></path>
+                                <path fill="currentColor"
+                                d="M504.9 476.7L476.6 505a23.9 23.9 0 0 1-33.9 0L343 405.3a24 24 0 0 1-7-17V372l36-36h16.3a24 24 0 0 1 17 7l99.7 99.7a24.11 24.11 0 0 1-.1 34z"
+                                    class="fk-primary">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                </button>
+                
+                <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" class="lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
+                    </svg>
+                </button>
+            </div>
         </div>
+
     </mat-toolbar>
 </header>
 

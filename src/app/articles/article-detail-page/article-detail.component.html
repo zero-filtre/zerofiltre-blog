@@ -228,7 +228,7 @@
                     </div>
                 </div>
 
-                <div class="article-content">
+                <article class="article-content">
                     <div *ngIf="article" class="relative overflow-hidden markdown-content mt-6 lg:mt-14">
                         <div *ngIf="article?.premium && !canAccesPremium(article)" class="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-skin-bg to-transparent"></div>
                         <app-markdown-preview [data]="article?.content"></app-markdown-preview>
@@ -256,7 +256,7 @@
                             }">
                         </ngx-skeleton-loader>
                     </ng-container>
-                </div>
+                </article>
 
                 <div class="article-socials-btns hidden lg:block mt-16 lg:w-fit mx-auto">
                     <p class="text-base text-skin-base text-center">

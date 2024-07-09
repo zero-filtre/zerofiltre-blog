@@ -114,6 +114,13 @@ img {
   @apply !h-[300px] sm:!h-[350px];
 }
 
+.popup-search {
+  @apply max-sm:!w-full mx-4 lg:!mt-10 lg:!fixed lg:!top-14
+}
+.popup-search-overlay {
+  @apply fixed inset-0 bg-gray-900 bg-opacity-70 backdrop-blur-sm z-40
+}
+
 .article-popup-panel .mat-dialog-container {
   @apply !rounded-2xl !flex bg-skin-bg justify-center items-center !p-4 sm:p-6;
 }
