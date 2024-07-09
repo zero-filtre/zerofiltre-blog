@@ -8,21 +8,29 @@
             <p *ngIf="results.length === 0" class="text-xs text-center text-gray-500 mt-4">Aucun résultat pour l'instant
             </p>
             <ul *ngIf="results.length > 0" class="flex flex-col gap-2 mt-2">
-                <li *ngFor="let result of results" mat-button mat-dialog-close class="p-2 hover:bg-gray-100 cursor-pointer">
-                    <a *ngIf="isArticle(result)" routerLink="{{'/articles/'+(result|slugify)}}">
+                <li *ngFor="let result of results" mat-button mat-dialog-close class="flex items-start justify-between gap-2 p-2 hover:bg-gray-100 cursor-pointer">
+                    <a *ngIf="isArticle(result)" routerLink="{{'/articles/'+result.id}}">
                         <h2 class="font-semibold text-primary-500 text-lg">{{result.title}}</h2>
                         <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.summary }}</p>
                     </a>
 
-                    <a *ngIf="isCourse(result)" routerLink="{{'/cours/'+(result|slugify)}}">
+                    <a *ngIf="isCourse(result)" routerLink="{{'/cours/'+result.id}}">
                         <h2 class="font-semibold text-primary-500 text-lg">{{result.title}}</h2>
                         <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.summary }}</p>
                     </a>
 
-                    <a *ngIf="isLesson(result)" routerLink="{{'/cours/'+(result.courseId)+'/'+(result|slugify)}}">
+                    <a *ngIf="isLesson(result)" routerLink="{{'/cours/'+(result.courseId)+'/'+result.id}}">
                         <h2 class="font-semibold text-primary-500 text-lg">{{result.title}}</h2>
-                        <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.summary }}</p>
+                        <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.content }}</p>
                     </a>
+
+                    <button type="button" aria-labelledby="A tag"
+                        class="flex items-center px-3 py-1 text-sm font-medium text-primary-500 rounded-full border border-skin-border bg-skin-card transition-all duration-200">
+                        <svg class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                            <circle cx="4" cy="4" r="3"></circle>
+                        </svg>
+                        <span class="truncate lowercase font-semibold group-hover:text-primary-500">{{showSearchResultBadgeLabel(result)}}</span>
+                    </button>
                 </li>
             </ul>
         </div>

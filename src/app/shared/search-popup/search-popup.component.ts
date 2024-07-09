@@ -1,8 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { Article } from 'src/app/articles/article.model';
-import { Course } from 'src/app/school/courses/course';
+import { Course, SearchResultArticle, SearchResultCourse, SearchResultLesson, SearchResultsData } from 'src/app/school/courses/course';
 import { Lesson } from 'src/app/school/lessons/lesson';
 import { SearchService } from 'src/app/services/search.service'
 
@@ -13,7 +14,7 @@ import { SearchService } from 'src/app/services/search.service'
 })
 export class SearchPopupComponent {
   query: string = '';
-  results: (Article | Course | Lesson)[] = []; 
+  results: (SearchResultCourse | SearchResultArticle | SearchResultLesson)[] = []; 
   private SearchText$ = new Subject<string>();
 
   constructor(
@@ -29,16 +30,29 @@ export class SearchPopupComponent {
     return (event.target as HTMLTextAreaElement).value;
   }
 
-  isArticle(result: any): result is Article {
-    return (result as Article).premium !== undefined 
+  isArticle(result: SearchResultCourse | SearchResultArticle | SearchResultLesson): result is SearchResultArticle {
+    return (result as SearchResultArticle).type == 'article' 
   }
   
-  isCourse(result: any): result is Course {
-    return (result as Course).lessonsCount !== undefined
+  isCourse(result: SearchResultCourse | SearchResultArticle | SearchResultLesson): result is SearchResultCourse {
+    return (result as SearchResultCourse).type == 'course'
   }
 
-  isLesson(result: any): result is Lesson {
-    return (result as Lesson).resources !== undefined
+  isLesson(result: SearchResultCourse | SearchResultArticle | SearchResultLesson): result is SearchResultLesson {
+    return (result as SearchResultLesson).type == 'lesson'
+  }
+
+  showSearchResultBadgeLabel(element: SearchResultCourse | SearchResultArticle | SearchResultLesson){
+    switch (element.type) {
+      case 'article':
+        return 'Article'
+      case 'course':
+        return 'Cours'
+      case 'lesson':
+        return 'Leçon'
+      default:
+        return null;
+    }
   }
 
   onChanges(element: Observable<string>): void {
@@ -48,15 +62,25 @@ export class SearchPopupComponent {
         distinctUntilChanged(),
         switchMap((query: string) => {
           if (query.length >= 3) {
-            return this.searchService.search(query);
+            return this.searchService.search(query)
+              .pipe(
+                catchError((error: HttpErrorResponse) => {
+                  return throwError(() => error);
+                }),
+                tap((data: SearchResultsData) => {
+                  this.results = [
+                    ...(data.courses || []).map(course => ({ ...course, type: 'course' })),
+                    ...(data.lessons || []).map(lesson => ({ ...lesson, type: 'lesson' })),
+                    ...(data.articles || []).map(article => ({ ...article, type: 'article' }))
+                  ]
+                })
+              )
           } else {
+            this.results = []
             return new Observable((observer) => observer.next({ results: [] }));
           }
         })
-      )
-      .subscribe((data: any) => {
-        this.results = data.results;
-      });
+      ).subscribe()
   }
 
   ngOnInit() {

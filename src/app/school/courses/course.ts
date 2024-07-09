@@ -42,3 +42,30 @@ export interface Reaction {
 
 const CourseStatuses = ['PUBLISHED','DRAFT','IN_REVIEW','COMPLETED','IN_PROGRESS'] as const;
 export type CourseStatus = typeof CourseStatuses[number];
+
+export type SearchResultCourse = {
+    id: number,
+    title: string,
+    subTitle: string,
+    summary: string,
+    type: string
+}
+export type SearchResultArticle = {
+    id: number,
+    title: string,
+    summary: string,
+    type: string
+}
+export type SearchResultLesson = {
+    id: number,
+    title: string,
+    content: string,
+    courseId: number,
+    type: string
+}
+
+export type SearchResultsData = {
+    courses: SearchResultCourse[],
+    articles: SearchResultArticle[],
+    lessons: SearchResultLesson[]
+}
