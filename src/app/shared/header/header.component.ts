@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   @Input() changingRoute!: boolean;
   @Input() drawer!: any;
 
-  bannerText = "Bootcamp | 'Mettez enfin en place le Domain Driven Design'  | les inscriptions sont enfin ouvertes ! "
+  bannerText = "Désormais, vous pouvez payer votre abonnement PRO par Mobile Money et Paypal!"
   isBannerVisible = true;
   isSearchModalOpen = false
 
