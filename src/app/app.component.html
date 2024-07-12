@@ -41,19 +41,9 @@
         <div>{{'navbar.portfolio' | translate}}</div>
       </a>
 
-      <a aria-labelledby="Link to contact page" (click)="drawer.close()" class="sidenavLink"
-        href="https://services.zerofiltre.tech/contact.html" target="_blank">
-        <div>Contact</div>
-      </a>
-
       <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" (click)="drawer.close()"
         class="sidenavLink login_btn" routerLink="/login">
-        <div class="!font-medium text-primary-500">{{'navbar.login' | translate}}</div>
-      </a>
-
-      <a aria-labelledby="Link to about page" *ngIf="!(authService.currentUsr)" (click)="drawer.close()"
-        class="sidenavLink signup_btn" routerLink="/register">
-        <div>{{'navbar.register' | translate}}</div>
+        <div class="!font-semibold text-primary-500">{{'navbar.login' | translate}}</div>
       </a>
 
       <div *ngIf="authService.currentUsr as currentUsr" class="border border-primary-500 rounded-lg p-4 mt-5">
