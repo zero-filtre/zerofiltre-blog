@@ -1,5 +1,4 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { ModalService } from 'src/app/services/modal.service';
@@ -19,7 +18,7 @@ export class HeaderComponent implements OnInit {
   readonly blogUrl = environment.blogUrl;
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
-  logoFull = 'https://ik.imagekit.io/lfegvix1p/logoblue_6whym-RBD.svg'
+  logoFull = 'https://ik.imagekit.io/lfegvix1p/Logo%20Horizontal_CPY64pImj.svg'
   logoShort = 'https://ik.imagekit.io/lfegvix1p/Logo%20Symbole_fFcHDpP7s.svg'
 
   prod = this.blogUrl.startsWith('https://dev.') ? false : true;
