@@ -7,6 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class AnnouncementBannerComponent {
   @Input() bannerText: string = 'This is an announcement!';
+  @Input() bannerLink: string = '#';
+  @Input() bannerActionBtn: string = 'Ici';
   @Input() isBannerVisible: boolean = false;
 
   closeBanner() {

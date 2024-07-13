@@ -26,8 +26,16 @@ export class HeaderComponent implements OnInit {
   @Input() changingRoute!: boolean;
   @Input() drawer!: any;
 
-  bannerText = "Désormais, vous pouvez payer votre abonnement PRO par Mobile Money et Paypal!"
-  isBannerVisible = true;
+  // bannerText = "Désormais, vous pouvez payer votre abonnement PRO par Mobile Money et Paypal!"
+  // bannerLink = "pro"
+  // bannerActionBtn = "Je deviens PRO"
+  // isBannerVisible = true;
+
+  readonly bannerText = environment.bannerText;
+  readonly bannerLink = environment.bannerLink;
+  readonly bannerActionBtn  = environment.bannerActionBtn;
+  readonly isBannerVisible = environment.bannerVisible === 'true';
+
   isSearchModalOpen = false
 
   constructor(
