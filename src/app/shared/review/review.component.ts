@@ -22,8 +22,8 @@ export class ReviewComponent {
   dafaultAvatars = [this.avatarHommeNoir, this.avatarFemmeNoir, this.avatarHommeBlanc, this.avatarFemmeBlanche]
 
   ngOnInit() {
-    if (!this.userImage) {
-      this.userImage = this.dafaultAvatars[Math.floor(Math.random() * this.dafaultAvatars.length)]
-    }
+    // if (!this.userImage) {
+    //   this.userImage = this.dafaultAvatars[Math.floor(Math.random() * this.dafaultAvatars.length)]
+    // }
   }
 }
