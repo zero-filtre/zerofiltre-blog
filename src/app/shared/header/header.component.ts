@@ -5,7 +5,6 @@ import { ModalService } from 'src/app/services/modal.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { environment } from 'src/environments/environment';
-import { SearchPopupComponent } from '../search-popup/search-popup.component';
 
 @Component({
   selector: 'app-header',
@@ -25,11 +24,6 @@ export class HeaderComponent implements OnInit {
 
   @Input() changingRoute!: boolean;
   @Input() drawer!: any;
-
-  // bannerText = "Désormais, vous pouvez payer votre abonnement PRO par Mobile Money et Paypal!"
-  // bannerLink = "pro"
-  // bannerActionBtn = "Je deviens PRO"
-  // isBannerVisible = true;
 
   readonly bannerText = environment.bannerText;
   readonly bannerLink = environment.bannerLink;
