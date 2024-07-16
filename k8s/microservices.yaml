@@ -133,6 +133,12 @@ spec:
                 configMapKeyRef:
                   name: zerofiltre-blog-front
                   key: banner_visible
+            
+            - name: BANNER_BACKGROUND_COLOR
+              valueFrom:
+                configMapKeyRef:
+                  name: zerofiltre-blog-front
+                  key: banner_background_color
 
             - name: SCHOOL_API_BASE
               valueFrom:

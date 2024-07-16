@@ -9,6 +9,7 @@ export class AnnouncementBannerComponent {
   @Input() bannerText: string = 'This is an announcement!';
   @Input() bannerLink: string = '#';
   @Input() bannerActionBtn: string = 'Ici';
+  @Input() bannerBgColor: string = '#15B2BC';
   @Input() isBannerVisible: boolean = false;
 
   closeBanner() {

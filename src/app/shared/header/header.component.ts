@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
   readonly bannerText = environment.bannerText;
   readonly bannerLink = environment.bannerLink;
   readonly bannerActionBtn  = environment.bannerActionBtn;
+  readonly bannerBgColor  = environment.bannerBgColor;
   readonly isBannerVisible = environment.bannerVisible === 'true';
 
   isSearchModalOpen = false

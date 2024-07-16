@@ -19,5 +19,6 @@ export default {
     bannerText: 'BANNER_TEXT',
     bannerLink: 'BANNER_LINK',
     bannerActionBtn: 'BANNER_ACTION_BTN',
-    bannerVisible: 'BANNER_VISIBLE'
+    bannerVisible: 'BANNER_VISIBLE',
+    bannerBgColor: 'BANNER_BACKGROUND_COLOR'
 }
