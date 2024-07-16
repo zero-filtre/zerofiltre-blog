@@ -16,4 +16,9 @@ export default {
     vimeoToken: 'VIMEO_TOKEN',
     vimeoClientID: 'VIMEO_CLIENT_ID',
     vimeoClientSecret: 'VIMEO_CLIENT_SECRET',
+    bannerText: 'BANNER_TEXT',
+    bannerLink: 'BANNER_LINK',
+    bannerActionBtn: 'BANNER_ACTION_BTN',
+    bannerVisible: 'BANNER_VISIBLE',
+    bannerBgColor: 'BANNER_BACKGROUND_COLOR'
 }
