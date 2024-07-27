@@ -12,6 +12,9 @@ import slugify from 'slugify';
 import cron from 'node-cron';
 import * as fs from 'fs';
 
+const http = require('http');
+const socketIo = require('socket.io');
+
 function formatDate(timestamp: string) {
   // Extraire la partie de la date du timestamp
   const datePart = timestamp.split('T')[0];
@@ -268,11 +271,30 @@ export function app(): express.Express {
 
 function run(): void {
   const port = process.env['PORT'] || 4000;
+  // const server = app();
+
+  const application = app();
+  const server = http.createServer(application);
+  const io = socketIo(server);
+
+  let onlineUsers = 0;
+
+  io.on('connection', (socket) => {
+    onlineUsers++;
+    io.emit('updateOnlineUsers', onlineUsers);
+    console.log('CONNEXION........!');
+
+    socket.on('disconnect', () => {
+      onlineUsers--;
+      io.emit('updateOnlineUsers', onlineUsers);
+      console.log('DECONNEXION........!');
+    });
+  });
 
   // Start up the Node server
-  const server = app();
   server.listen(port, async () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+    // console.log(`Node Express server listening on http://localhost:${port}`);
+    console.log(`CONNECTED USERS: ${onlineUsers}`);
     await gen_sitemaps();
     signalIsUp();
   });
