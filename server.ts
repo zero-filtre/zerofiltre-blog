@@ -278,23 +278,36 @@ function run(): void {
   const io = socketIo(server);
 
   let onlineUsers = 0;
+  const connections = new Set();
 
   io.on('connection', (socket) => {
     onlineUsers++;
-    io.emit('updateOnlineUsers', onlineUsers);
-    console.log('CONNEXION........!');
+    connections.add(socket);
 
-    socket.on('disconnect', () => {
+    io.emit('onlineUsers', onlineUsers);
+    io.emit('connections', connections);
+    console.log('CONNECTED USERS CX: ', onlineUsers, connections.size);
+
+    // socket.on('disconnect', () => {
+    //   onlineUsers--;
+    //   io.emit('onlineUsers', onlineUsers);
+    //   console.log('CONNECTED USERS DX 1: ', onlineUsers);
+    // });
+
+    socket.once('disconnect', function () {
       onlineUsers--;
-      io.emit('updateOnlineUsers', onlineUsers);
-      console.log('DECONNEXION........!');
+      connections.delete(socket);
+
+      io.emit('onlineUsers', onlineUsers);
+      io.emit('connections', connections);
+      console.log('CONNECTED USERS DX 2: ', connections.size);
     });
   });
 
-  // Start up the Node server
+
   server.listen(port, async () => {
-    // console.log(`Node Express server listening on http://localhost:${port}`);
-    console.log(`CONNECTED USERS: ${onlineUsers}`);
+    // console.log(`Node Express server listening on port: ${port}`);
+    console.log('PORT:: ', port);
     await gen_sitemaps();
     signalIsUp();
   });

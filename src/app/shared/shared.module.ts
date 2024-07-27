@@ -76,6 +76,7 @@ import { ReviewComponent } from './review/review.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { SearchPopupComponent } from './search-popup/search-popup.component';
 import { WhatsappButtonComponent } from './whatsapp-button/whatsapp-button.component';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 const components = [
   AppShellRenderDirective,
@@ -153,6 +154,8 @@ const modules = [
   SurveyModule
 ];
 
+const config: SocketIoConfig = { url: `http://localhost:${process.env['PORT']}`, options: {} };
+
 @NgModule({
   declarations: [...components],
   imports: [
@@ -171,7 +174,9 @@ const modules = [
         provide: TranslateLoader,
         useClass: TranslateUniversalLoader
       }
-    })
+    }),
+
+    SocketIoModule.forRoot(config)
   ],
   exports: [
     ...components,

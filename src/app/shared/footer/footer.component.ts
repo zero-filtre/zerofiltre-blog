@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { SeoService } from 'src/app/services/seo.service';
 import { Course } from 'src/app/school/courses/course';
 import { CourseService } from 'src/app/school/courses/course.service';
+import { OnlineUsersService } from 'src/app/services/online-users.service';
 
 @Component({
   selector: 'app-footer',
@@ -21,6 +22,8 @@ export class FooterComponent implements OnInit {
   recentCourses$!: Observable<Course[]>;
   PUBLISHED = 'published';
 
+  onlineUsers: number = 0;
+
   readonly servicesUrl = environment.servicesUrl;
   readonly blogUrl = environment.blogUrl;
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
@@ -32,6 +35,7 @@ export class FooterComponent implements OnInit {
     private articleService: ArticleService,
     private courseService: CourseService,
     private seo: SeoService,
+    private onlineUsersService: OnlineUsersService,
     @Inject(PLATFORM_ID) private platformID: any
   ) { }
 
@@ -77,6 +81,10 @@ export class FooterComponent implements OnInit {
       this.fetchRecentArticles();
       this.fetchRecentCpourses();
     }
+
+    this.onlineUsersService.onlineUsers$.subscribe(users => {
+      this.onlineUsers = users;
+    });
     
   }
 
