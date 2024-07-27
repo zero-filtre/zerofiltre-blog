@@ -16,8 +16,10 @@ import { httpInterceptorProviders } from './services/http-interceptors';
 import { AuthInterceptor } from './services/http-interceptors/auth.interceptor';
 import { JsonLdService } from 'ngx-seo';
 import { SlugUrlPipe } from './shared/pipes/slug-url.pipe';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 registerLocaleData(localeFr, 'fr');
+const config: SocketIoConfig = { url: 'http://localhost:4000', options: {} };
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ registerLocaleData(localeFr, 'fr');
     BrowserAnimationsModule,
     SharedModule,
     AppRoutingModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     JsonLdService,
