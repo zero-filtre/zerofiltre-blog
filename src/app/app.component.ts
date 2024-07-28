@@ -207,6 +207,22 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/pro');
   }
 
+  manageDisplayTheme(): void {
+    const selectedTheme = localStorage.getItem("theme");
+
+    if (selectedTheme) {
+      document.body.classList.add(selectedTheme);
+
+      // Else if the users OS preferences prefers dark mode
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      document.body.classList.add("dark");
+
+      // Else use light mode
+    } else {
+      document.body.classList.add("light");
+    }
+  }
+
   ngOnInit(): void {
     this.router.events
       .subscribe(({ url }: any) => {
@@ -214,6 +230,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       });
 
     if (isPlatformBrowser(this.platformId)) {
+      this.manageDisplayTheme()
       this.loadCopyToClipboardSvg();
       (window as any).onload = AddTargetToExternalLinks();
     }
