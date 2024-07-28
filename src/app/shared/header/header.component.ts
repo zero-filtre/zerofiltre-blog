@@ -1,4 +1,5 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadEnvService } from 'src/app/services/load-env.service';
 import { ModalService } from 'src/app/services/modal.service';
@@ -31,14 +32,16 @@ export class HeaderComponent implements OnInit {
   readonly bannerBgColor  = environment.bannerBgColor;
   readonly isBannerVisible = environment.bannerVisible === 'true';
 
-  isSearchModalOpen = false
+  isSearchModalOpen = false;
+  isDarkMode: boolean;
 
   constructor(
     private loadEnvService: LoadEnvService,
     public authService: AuthService,
     private router: Router,
     public seo: SeoService,
-    private modaleService: ModalService
+    private modaleService: ModalService,
+    @Inject(PLATFORM_ID) private platformId: any,
   ) { }
 
   public logout() {
@@ -51,6 +54,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.isDarkMode = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    }
   }
 
   @HostListener('document:keydown', ['$event'])

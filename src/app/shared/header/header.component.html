@@ -203,6 +203,8 @@
                     </button>
 
                 </ng-container>
+
+                <app-theme-toggle [isDarkMode]="isDarkMode"></app-theme-toggle>
             </div>
         </div>
 
@@ -240,6 +242,8 @@
                     </span>
                 </button>
                 
+                <app-theme-toggle [isDarkMode]="isDarkMode"></app-theme-toggle>
+                
                 <button type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()" class="lg:hidden text-secondary">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="size-7" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">
@@ -248,7 +252,6 @@
                 </button>
             </div>
         </div>
-
     </mat-toolbar>
 </header>
 
