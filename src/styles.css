@@ -8,6 +8,96 @@ body {
   overflow-x: hidden;
 }
 
+:root {
+  --primary-50: 0,194,203;
+  --primary-100: 160,218,225;
+  --primary-200: 115,204,214;
+  --primary-300: 74,195,205;
+  --primary-400: 31,190,200;
+  --primary-500: 21,178,188;
+  --primary-600: 15,166,175;
+  --primary-700: 9,150,159;
+  --primary-800: 5,124,134;
+  --primary-900: 4,102,108;
+
+  --secondary: 5,43,93;
+
+  --accent-100: 255,229,189;
+  --accent-200: 255,215,156;
+  --accent-300: 254,202,122;
+  --accent-400: 253,188,90;
+  --accent-500: 236,170,71;
+  --accent-600: 217,152,51;
+  --accent-700: 197,134,36;
+  --accent-800: 176,117,24;
+  --accent-900: 158,101,12;
+
+  --error: 245,95,68;
+
+  --grays-100: 238,241,244;
+  --grays-200: 249,250,251;
+  --grays-600: 75,85,99;
+
+  --skin-base: 107,114,128;
+  --skin-text: 55,65,81;
+  --skin-art: 5,43,93;
+  --skin-link: 243,244,246;
+  --skin-muted: 156,163,175;
+  --skin-inverted: 5,43,93;
+  --skin-border: 229,231,235;
+  --skin-card: 255,255,255;
+  --skin-cardMuted: 249,250,251;
+  --skin-borderBold: 209,213,219;
+  --skin-bg: 249,250,251;
+  --skin-bgMuted: 243,244,246;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-50: 0,194,203;
+    --primary-100: 160,218,225;
+    --primary-200: 115,204,214;
+    --primary-300: 74,195,205;
+    --primary-400: 31,190,200;
+    --primary-500: 21,178,188;
+    --primary-600: 15,166,175;
+    --primary-700: 9,150,159;
+    --primary-800: 5,124,134;
+    --primary-900: 4,102,108;
+  
+    --secondary: 5,43,93;
+  
+    --accent-100: 255,229,189;
+    --accent-200: 255,215,156;
+    --accent-300: 254,202,122;
+    --accent-400: 253,188,90;
+    --accent-500: 236,170,71;
+    --accent-600: 217,152,51;
+    --accent-700: 197,134,36;
+    --accent-800: 176,117,24;
+    --accent-900: 158,101,12;
+  
+    --error: 245,95,68;
+  
+    --grays-100: 238,241,244;
+    --grays-200: 249,250,251;
+    --grays-600: 75,85,99;
+  
+    --skin-base: 107,114,128;
+    --skin-text: 55,65,81;
+    --skin-art: 5,43,93;
+    --skin-link: 243,244,246;
+    --skin-muted: 156,163,175;
+    --skin-inverted: 5,43,93;
+    --skin-border: 229,231,235;
+    --skin-card: 255,255,255;
+    --skin-cardMuted: 249,250,251;
+    --skin-borderBold: 209,213,219;
+    --skin-bg: 249,250,251;
+    --skin-bgMuted: 243,244,246;
+  }
+}
+
 /* Always shox Snackbar popup on top of other elements */
 .cdk-overlay-pane:has(> .mat-snack-bar-container) {
   @apply !mt-[72px] lg:!mt-16 !max-w-screen-sm;

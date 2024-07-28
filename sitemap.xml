@@ -56,6 +56,24 @@
 
 
     <url>
+    <loc>https://zerofiltre.tech/articles/296-lutilite-des-skeleton-screens-dans-la-conception-dinterfaces-utilisateur</loc>
+    <lastmod>2024-07-21</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/297-comment-faire-un-debogage-sans-fil-sur-son-smartphone-android</loc>
+    <lastmod>2024-07-21</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/301-accedez-a-vos-clusters-k8s-via-openlens-gratuitement</loc>
+    <lastmod>2024-07-10</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
     <loc>https://zerofiltre.tech/articles/283-maitriser-les-widgets-flutter-une-fois-pour-toute</loc>
     <lastmod>2024-05-29</lastmod>
     <priority>0.80</priority>
@@ -117,7 +135,7 @@
     
     <url>
     <loc>https://zerofiltre.tech/articles/281-kubernetes-pod-disruption-budget-ou-pourquoi-et-comment</loc>
-    <lastmod>2024-02-19</lastmod>
+    <lastmod>2024-06-21</lastmod>
     <priority>0.80</priority>
     </url>
     
@@ -1389,7 +1407,7 @@
       
 
         <url>
-        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/13-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-1</loc>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/13-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-evenements</loc>
         <lastmod>2023-09-21</lastmod>
         <priority>0.80</priority>
         </url>
@@ -1397,7 +1415,7 @@
       
 
         <url>
-        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/14-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-2</loc>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/14-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-commandes</loc>
         <lastmod>2023-09-21</lastmod>
         <priority>0.80</priority>
         </url>
@@ -1405,7 +1423,7 @@
       
 
         <url>
-        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/15-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-3</loc>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/15-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-inputs-et-acteurs</loc>
         <lastmod>2023-09-21</lastmod>
         <priority>0.80</priority>
         </url>
@@ -1413,7 +1431,7 @@
       
 
         <url>
-        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/16-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-4</loc>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/16-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-systemes-externes</loc>
         <lastmod>2023-09-21</lastmod>
         <priority>0.80</priority>
         </url>
