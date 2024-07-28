@@ -1,13 +1,15 @@
-<section class="site-container mx-auto py-8 lg:py-16 !bg-gradient-to-t lg:bg-gradient-to-t from-grays-200 to-grays-200">
-    <div class="overflow-x-clip">
-        <h2 class="sr-only">Testimonials</h2>
-        <div class="flex transition-transform duration-1000 ease-in-out"
-        [ngStyle]="{'transform': getTransformStyle()}"
-        >
-            <div class="max-md:min-w-full md:min-w-[25%] px-2 max-h-[33rem]" *ngFor="let review of reviews">
-                <app-review [userImage]="review.avatar" [userName]="review.name" [userRole]="review.role"
-                    [userComment]="review.comment" [userStars]="review.stars">
-                </app-review>
+<section class="py-8 lg:py-16 bg-gradient-to-b lg:bg-gradient-to-r from-skin-bg to-grays-200">
+    <div class="site-container mx-auto">
+        <div class="overflow-x-clip">
+            <h2 class="sr-only">Testimonials</h2>
+            <div class="flex transition-transform duration-1000 ease-in-out"
+            [ngStyle]="{'transform': getTransformStyle()}"
+            >
+                <div class="max-md:min-w-full md:min-w-[25%] px-2 max-h-[33rem]" *ngFor="let review of reviews">
+                    <app-review [userImage]="review.avatar" [userName]="review.name" [userRole]="review.role"
+                        [userComment]="review.comment" [userStars]="review.stars">
+                    </app-review>
+                </div>
             </div>
         </div>
     </div>

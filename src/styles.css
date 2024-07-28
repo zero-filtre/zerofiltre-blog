@@ -9,34 +9,35 @@ body {
 }
 
 :root {
-  --primary-50: 0,194,203;
-  --primary-100: 160,218,225;
+  /* --primary-50: 0,194,203;
   --primary-200: 115,204,214;
-  --primary-300: 74,195,205;
   --primary-400: 31,190,200;
-  --primary-500: 21,178,188;
   --primary-600: 15,166,175;
   --primary-700: 9,150,159;
-  --primary-800: 5,124,134;
-  --primary-900: 4,102,108;
+  --primary-900: 4,102,108; */
+  
+  --primary-300: 74,195,205;
+  --primary-100: 160,218,225;
+  --primary-500: 21,178,188;
+  --primary-800: 4,102,108;
 
   --secondary: 5,43,93;
-
-  --accent-100: 255,229,189;
-  --accent-200: 255,215,156;
   --accent-300: 254,202,122;
   --accent-400: 253,188,90;
   --accent-500: 236,170,71;
+  --grays-200: 249,250,251;
+  --error: 245,95,68;
+
+  /* --accent-100: 255,229,189;
+  --accent-200: 255,215,156;
   --accent-600: 217,152,51;
   --accent-700: 197,134,36;
   --accent-800: 176,117,24;
-  --accent-900: 158,101,12;
+  --accent-900: 158,101,12; */
 
-  --error: 245,95,68;
 
-  --grays-100: 238,241,244;
-  --grays-200: 249,250,251;
-  --grays-600: 75,85,99;
+  /* --grays-100: 238,241,244;
+  --grays-600: 75,85,99; */
 
   --skin-base: 107,114,128;
   --skin-text: 55,65,81;
@@ -49,54 +50,137 @@ body {
   --skin-cardMuted: 249,250,251;
   --skin-borderBold: 209,213,219;
   --skin-bg: 249,250,251;
+  --skin-bg-secondary: 5,43,93;
   --skin-bgMuted: 243,244,246;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-50: 0,194,203;
-    --primary-100: 160,218,225;
-    --primary-200: 115,204,214;
-    --primary-300: 74,195,205;
-    --primary-400: 31,190,200;
-    --primary-500: 21,178,188;
-    --primary-600: 15,166,175;
-    --primary-700: 9,150,159;
-    --primary-800: 5,124,134;
-    --primary-900: 4,102,108;
-  
-    --secondary: 5,43,93;
-  
-    --accent-100: 255,229,189;
-    --accent-200: 255,215,156;
-    --accent-300: 254,202,122;
-    --accent-400: 253,188,90;
-    --accent-500: 236,170,71;
-    --accent-600: 217,152,51;
-    --accent-700: 197,134,36;
-    --accent-800: 176,117,24;
-    --accent-900: 158,101,12;
-  
-    --error: 245,95,68;
-  
-    --grays-100: 238,241,244;
-    --grays-200: 249,250,251;
-    --grays-600: 75,85,99;
-  
-    --skin-base: 107,114,128;
-    --skin-text: 55,65,81;
-    --skin-art: 5,43,93;
-    --skin-link: 243,244,246;
-    --skin-muted: 156,163,175;
-    --skin-inverted: 5,43,93;
-    --skin-border: 229,231,235;
-    --skin-card: 255,255,255;
-    --skin-cardMuted: 249,250,251;
-    --skin-borderBold: 209,213,219;
-    --skin-bg: 249,250,251;
-    --skin-bgMuted: 243,244,246;
-  }
+
+/* primary: {
+  50: '#00c2cb',
+  100: "#A0DAE1",
+  200: "#73CCD6",
+  300: "#4AC3CD",
+  400: "#1FBEC8",
+  500: "#15B2BC",
+  600: "#0FA6AF",
+  700: "#09969F",
+  800: "#057C86",
+  900: '#04666C'
+},
+secondary: "#052b5d",
+accent: {
+  100: '#FFE5BD',
+  200: '#FFD79C',
+  300: '#FECA7A',
+  400: '#fdbc5a',
+  500: '#ECAA47',
+  600: '#D99833',
+  700: '#C58624',
+  800: '#B07518',
+  900: '#9E650C'
+},
+error: "#f55f44",
+grays: {
+  100: "#eef1f4",
+  200: '#F9FAFB',
+  600: "#4B5563"
+},
+skin: {
+  base: "#6b7280",
+  text: "#374151",
+  art: "#052b5d",
+  link: "#f3f4f6",
+  muted: "#9ca3af",
+  inverted: "#052b5d",
+  border: "#e5e7eb",
+  card: "#fff",
+  cardMuted: "#f9fafb",
+  borderBold: "#d1d5db",
+  bg: "#f9fafb",
+  bgMuted: "#f3f4f6"
+} */
+
+/* .dark {
+  --primary-50: 255,255,255;
+  --primary-100: 255,255,255;
+  --primary-200: 255,255,255;
+  --primary-300: 255,255,255;
+  --primary-400: 255,255,255;
+  --primary-500: 236,170,71;
+  --primary-600: 255,255,255;
+  --primary-700: 255,255,255;
+  --primary-800: 255,255,255;
+  --primary-900: 255,255,255;
+
+  --secondary: 224,224,224;
+
+  --accent-100: 3,218,198;
+  --accent-200: 3,218,198;
+  --accent-300: 3,218,198;
+  --accent-400: 3,218,198;
+  --accent-500: 3,218,198;
+  --accent-600: 3,218,198;
+  --accent-700: 3,218,198;
+  --accent-800: 3,218,198;
+  --accent-900: 3,218,198;
+
+  --error: 207,102,121;
+
+  --grays-100: 255,255,255;
+  --grays-200: 255,255,255;
+  --grays-600: 255,255,255;
+
+  --skin-base: 107,114,128;
+  --skin-text: 224,224,224;
+  --skin-art: 5,43,93;
+  --skin-link: 243,244,246;
+  --skin-muted: 179,179,179;
+  --skin-inverted: 224,224,224;
+  --skin-border: 229,231,235;
+  --skin-card: 44,44,44;
+  --skin-cardMuted: 44,44,44;
+  --skin-borderBold: 209,213,219;
+  --skin-bg: 18,18,18; 
+  --skin-bgMuted: 30,30,30;
+} */
+
+.dark {
+
+  --primary-300: 255,255,255; 
+  --primary-100: 255,255,255; 
+  --primary-500: 255,255,255; 
+  --primary-800: 255,255,255; 
+
+  --secondary: 255,255,255; 
+  --accent-300: 236,170,71;
+  --accent-400: 253,188,90;
+  --accent-500: 236,170,71;
+  --grays-200: 75,80,85; 
+  --error: 245,95,68;
+
+  /* --error: 255,150,150; */
+
+  /* Skin Colors */
+  --skin-base: 205,205,205; /* Lightened for readability in dark mode */
+  --skin-text: 240,240,240; /* Lightened for text visibility */
+  --skin-text: 220,220,220; /* Lightened for readability */
+  --skin-link: 210,210,255; /* Lightened for visibility */
+  --skin-muted: 180,180,180; /* Muted color for secondary elements */
+  --skin-inverted: 255,255,255; /* White for inverted elements */
+  --skin-border: 100,100,100; /* Darker for borders */
+  --skin-card: 40,40,40; /* Darker card background */
+  --skin-cardMuted: 60,60,60; /* Muted card background */
+  --skin-borderBold: 80,80,80; /* Bolder border */
+  --skin-bg: 30,30,30; /* Main background */
+  --skin-bg-secondary: 30,30,30; /* Second background */
+  --skin-bgMuted: 50,50,50; /* Muted background */
 }
+
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+  }
+} */
 
 /* Always shox Snackbar popup on top of other elements */
 .cdk-overlay-pane:has(> .mat-snack-bar-container) {

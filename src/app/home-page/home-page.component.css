@@ -1,13 +1,13 @@
 .course-section {
-  background-image: linear-gradient(to right bottom, white 40%, #f9fafb);
+  /* background-image: linear-gradient(to right bottom, white 40%, #f9fafb); */
 }
 
 .blog-section {
-  background-image: linear-gradient(to left bottom, #057c86 40%, #15b2bc);
+  /* background-image: linear-gradient(to left bottom, #057c86 40%, #15b2bc); */
 }
 
 .service-section {
-  background-image: linear-gradient(to right bottom, white 40%, #f9fafb);
+  /* background-image: linear-gradient(to right bottom, white 40%, #f9fafb); */
 }
 
 /* background: linear-gradient(107deg, #14a6af 0%, #198b93cc 1%, #116d74 51%); */

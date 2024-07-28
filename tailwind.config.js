@@ -1,5 +1,6 @@
 module.exports = {
   content: ["./src/**/*.{html,ts,css}"],
+  darkMode: 'selector',
   theme: {
     extend: {
       fontFamily: {
@@ -52,6 +53,7 @@ module.exports = {
           cardMuted: "rgba(var(--skin-cardMuted))",
           borderBold: "rgba(var(--skin-borderBold))",
           bg: "rgba(var(--skin-bg))",
+          bgSecondary: "rgba(var(--skin-bg-secondary))",
           bgMuted: "rgba(var(--skin-bgMuted))"
         },
       },

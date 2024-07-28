@@ -1,6 +1,6 @@
 <main class="">
     <section
-        class="overflow-hidden relative course-section min-h-[600px] xl:min-h-[800px] pb-16 pt-4  md:pt-8 lg:py-16 grid place-items-center -mt-[80px] bg-gradient-to-b lg:bg-gradient-to-r from-white to-grays-200">
+        class="overflow-hidden relative course-section min-h-[600px] xl:min-h-[800px] pb-16 pt-4  md:pt-8 lg:py-16 grid place-items-center -mt-[80px] bg-gradient-to-b lg:bg-gradient-to-r from-skin-bg to-grays-200">
         <div class="site-container mx-auto mt-20 lg:mt-10">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
@@ -23,7 +23,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a *ngIf="activeCourseModule" aria-labelledby="Link to courses page" routerLink="cours"
-                            class="flex items-center justify-center gap-2 shadow-md text-base bg-primary-600 text-skin-bg py-2.5 px-4 rounded-md hover:bg-primary-700 focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center gap-2 shadow-md text-base bg-primary-500 text-skin-bg py-2.5 px-4 rounded-md hover:bg-primary-800 focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreCourses' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none"
@@ -60,7 +60,7 @@
         </div>
 
         <div class="hidden md:block absolute bottom-[2%] left-4 xl:left-16">
-            <svg class="h-5 w-5 sm:w-8 sm:h-8 fill-primary-600" width="44" height="43" viewBox="0 0 44 43" fill="none"
+            <svg class="h-5 w-5 sm:w-8 sm:h-8 fill-primary-500" width="44" height="43" viewBox="0 0 44 43" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M38.3042 0.19944L3.56542 10.2891C0.526382 11.1848 -0.577627 14.9881 1.61191 17.1687L26.4042 41.8591C28.5938 44.0397 32.3925 42.92 33.2757 39.8773L43.2223 5.0973C44.1054 2.0546 41.3769 -0.662718 38.3042 0.19944Z"
@@ -82,7 +82,7 @@
     <app-carousel></app-carousel>
 
     <section
-        class="blog-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-l from-primary-800 to-primary-500">
+        class="blog-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-l from-primary-800 to-primary-500 dark:from-skin-bg dark:to-grays-200 dark:bg-gradient-to-r">
         <div class="site-container mx-auto">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
@@ -90,7 +90,7 @@
                     <h1
                         class="text-3xl sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight text-white mb-10">
                         <!-- {{'home.blogTitle' | translate}} -->
-                        Rejoignez notre <span class="text-primary-500">communauté d'experts</span> afin de <span
+                        Rejoignez notre <span class="text-accent-400">communauté d'experts</span> afin de <span
                             class="text-accent-400">partager</span>
                         mais surtout <span class="text-accent-400">apprendre</span> d'ingénieurs passionnés par ce
                         qu'ils font !
@@ -107,7 +107,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a aria-labelledby="Link to about page" routerLink="/articles"
-                            class="flex items-center justify-center gap-2 shadow-md text-base bg-primary-600 text-skin-bg py-2.5 px-4 rounded-md hover:bg-primary-700 focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center gap-2 shadow-md text-base bg-primary-500 text-skin-bg py-2.5 px-4 rounded-md hover:bg-primary-800 focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreBlog' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -130,7 +130,7 @@
     </section>
 
     <section
-        class="service-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-r from-white to-grays-200">
+        class="service-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-r from-skin-bg to-grays-200">
         <div class="site-container mx-auto">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
@@ -151,7 +151,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a aria-labelledby="Link to about page" href="{{servicesUrl}}" target="_blank"
-                            class="flex items-center justify-center gap-2 shadow-md text-base bg-primary-600 text-skin-bg py-2.5 px-4 rounded-md hover:bg-primary-700 focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center gap-2 shadow-md text-base bg-primary-500 text-skin-bg py-2.5 px-4 rounded-md hover:bg-primary-800 focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreServices' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"

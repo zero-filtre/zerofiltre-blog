@@ -1,6 +1,6 @@
 .header,
 .header-container {
-  @apply bg-white;
+  @apply bg-skin-bg;
 }
 
 .header.transparent,

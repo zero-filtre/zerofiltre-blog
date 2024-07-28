@@ -11,7 +11,7 @@
 }
 
 .useful-links li > a:first-child {
-  @apply hover:text-skin-borderBold transition-all duration-200;
+  @apply hover:text-white transition-all duration-100;
 }
 
 .services,
