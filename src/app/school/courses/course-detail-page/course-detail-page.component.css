@@ -38,7 +38,7 @@ section {
 }
 
 section:nth-of-type(even) {
-  @apply bg-white;
+  @apply bg-skin-white;
 }
 
 section:nth-of-type(even).regular-section .image {
