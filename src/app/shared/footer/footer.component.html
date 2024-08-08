@@ -1,5 +1,5 @@
-<footer *ngIf="isMounted()" class="footer bg-skin-bgSecondary text-skin-white/70 pt-16 pb-36">
-    <div class="site-container md:grid gap-10">
+<footer *ngIf="isMounted()" class="footer bg-secondary dark:bg-skin-bg pt-16 pb-36">
+    <div class="site-container md:grid gap-10 dark:text-secondary/80 text-skin-white/80">
         <div class="useful-links">
             <div class="services order-1">
                 <p class="yellow-text title">NOS COURS</p>
@@ -81,7 +81,7 @@
                 <p class="yellow-text title">Nous contacter</p>
                 <ul>
                     <li>
-                        <span class="text-base">Email: </span> <a aria-labelledby="Link to about page"
+                        <span class="text-base text-skin-white dark:text-secondary">Email: </span> <a aria-labelledby="Link to about page"
                             class="yellow-text text-base"
                             href="mailto:info@zerofiltre.tech">info@zerofiltre.tech</a><br>
                     </li>
@@ -89,7 +89,7 @@
             </div>
         </div>
 
-        <div class="footer-end flex gap-5 justify-between items-start border-t-[1px] border-gray-600 pt-4 mt-20">
+        <div class="footer-end text-skin-white dark:text-secondary flex gap-5 justify-between items-start border-t-[1px] border-gray-600 pt-4 mt-20">
             <div class="font-light text-[15px]">
                 &copy; {{currentYear}}
                 <span class="text-primary-500 font-bold">Zerofiltre.</span> Tous droits reservés.
