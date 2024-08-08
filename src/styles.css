@@ -209,8 +209,12 @@ img {
   @apply mx-auto px-4 xl:px-[5%];
 }
 
+.mat-dialog-container {
+  @apply !bg-skin-bg
+}
+
 .payment-popup .mat-dialog-container {
-   @apply bg-white rounded-2xl;
+   @apply bg-skin-bg rounded-2xl;
 }
 
 .edit-section-popup-panel {
