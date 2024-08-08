@@ -12,11 +12,11 @@
     </div>
 </div>
 
-<div class="example-container" [class.site-container]="!mobileQuery.matches" [class.example-is-mobile]="mobileQuery.matches">
+<div class="example-container bg-skin-bg pb-10" [class.site-container]="!mobileQuery.matches" [class.example-is-mobile]="mobileQuery.matches">
     <mat-sidenav-container class="example-sidenav-container" tabIndex="-1">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="true"
-            fixedTopGap="0" [opened]="!mobileQuery.matches" class="pt-36 border-none lg:bg-transparent lg:min-w-[370px] !shadow-none">
-            <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art" *appShellNoRender>
+            fixedTopGap="0" [opened]="!mobileQuery.matches" class="pt-36 border-none lg:bg-transparent dark:bg-skin-bg lg:min-w-[370px] !shadow-none">
+            <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art mt-14" *appShellNoRender>
                 <app-curriculum-sidebar [drawer]="snav" [canEdit]="canEditCourse" [course]="course$|async"
                     [lessons]="lessons$ | async" [chapters]="chapters$ | async" [activeLessonID]="lessonID"
                     [canAccessCourse]="canAccessCourse" [loading]="loadingChapters" [completedLessonsIds]="completedLessonsIds"
@@ -26,7 +26,7 @@
         </mat-sidenav>
 
         <mat-sidenav-content>
-            <main class="text-skin-art min-h-screen">
+            <main class="text-skin-art min-h-screen bg-skin-bg">
                 <div class="lesson_content_wrapper p-4 lg:p-0 lg:pt-4 lg:pl-6" [ngClass]="{'lg:!pl-0':!snav.opened}" *appShellNoRender>
                     <div class="mx-auto" id="lesson_video_player">
                         <div class="vid_wrapper w-full h-full">
@@ -237,7 +237,7 @@
                         </div>
                     </div>
             
-                    <div class="lesson_pagination my-10">
+                    <div class="lesson_pagination mt-10">
                         <div *ngIf="lesson" class="flex gap-5 lg:gap-10 font-semibold">
                             <a *ngIf="prevLesson$|async as prev" routerLink="{{'/cours/'+ (course|slugify) + '/' + (prev|slugify)}}"
                                 class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-500/20 transition-all duration-300">
