@@ -2,7 +2,7 @@
     <nav class="top-nav font-semibold">
         <div class="site-container flex items-center justify-between gap-4 lg:gap-5 h-16">
             <button (click)="navigate.back()"
-                class="flex items-center justify-center bg-primary-50 text-white h-full w-16"
+                class="flex items-center justify-center bg-primary-50 text-skin-white h-full w-16"
                 aria-label="navigate back button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="group-hover:text-primary-300"
                     data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
@@ -13,7 +13,7 @@
 
             <h2 class="bg-primary-50 h-full grid place-items-center font-normal">
                 <a aria-labelledby="Link to teacher courses page" routerLink="/user/dashboard/teacher/courses"
-                    class="h-full pl-5 pr-2.5 text-lg text-white flex items-center lg:gap-1">
+                    class="h-full pl-5 pr-2.5 text-lg text-skin-white flex items-center lg:gap-1">
                     <span>Mes formations</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 relative top-[1px]" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -160,7 +160,7 @@
                         <app-image [classes]="'object-cover'" [sourceUrl]="thumbnail?.value!" [alt]="title.value">
                         </app-image>
 
-                        <div class="cover-close-btn absolute left-auto top-1 right-1 z-10 flex justify-center items-center w-12 h-12 text-sm leading-tight text-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error"
+                        <div class="cover-close-btn absolute left-auto top-1 right-1 z-10 flex justify-center items-center w-12 h-12 text-sm leading-tight text-skin-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error"
                             (click)="removeImage(thumbnail)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                 class="w-6 h-6">
@@ -223,7 +223,7 @@
 
                 <button (click)="openSectionEditDialog()" aria-labelledby="Add a new section button"
                     [disabled]="sections?.value.length > 3" [ngClass]="{'opacity-30': sections?.value.length > 3}"
-                    class="flex border w-fit items-center gap-3 rounded-md text-left text-white bg-primary-500 px-4 py-2 hover:bg-primary-600 text-sm lg:text-base transition-all duration-200">
+                    class="flex border w-fit items-center gap-3 rounded-md text-left text-skin-white bg-primary-500 px-4 py-2 hover:bg-primary-600 text-sm lg:text-base transition-all duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -283,7 +283,7 @@
             <div class="save-course flex justify-end my-20">
                 <ng-container *ngIf="form.invalid; else validBtn">
                     <button [disabled]="form.invalid || isLoading" aria-labelledby="button to update or submit a course"
-                        class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
+                        class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-skin-white bg-primary-300 bg-opacity-20">
                         <span>Enregistrer</span>
                     </button>
                 </ng-container>
@@ -291,7 +291,7 @@
                 <ng-template #validBtn>
                     <button type="submit" aria-labelledby="button to publish or submit an article" (click)="updateCourse()"
                         [disabled]="isSaving || isLoading" [ngClass]="{'opacity-50': isSaving || isLoading }"
-                        class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
+                        class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-skin-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
                         <span *ngIf="!isSaving">Enregistrer</span>
                         <svg *ngIf="isSaving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"

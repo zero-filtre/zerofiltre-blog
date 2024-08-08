@@ -1,6 +1,6 @@
 <div class="example-toolbar sticky top-[72px] lg:top-20 z-20 bg-primary-100">
     <div class="site-container flex items-center justify-between gap-4 lg:gap-5 h-16">
-        <button mat-icon-button (click)="snav.toggle()" class="flex items-center justify-center bg-primary-50 text-white h-full w-16">
+        <button mat-icon-button (click)="snav.toggle()" class="flex items-center justify-center bg-primary-50 text-skin-white h-full w-16">
             <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -211,7 +211,7 @@
                     <div *ngIf="isSubscriber" class="lesson_complete_btn my-10">
                         <div *ngIf="lesson" class="flex justify-center font-semibold">
                             <button *ngIf="!completed" (click)="toggleCompleted()" [disabled]="isCompleting" [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
-                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">
+                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-skin-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">
                                 <span>Marquer cette leçon terminée</span>
                                 <svg *ngIf="!isCompleting" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                                     stroke="currentColor" class="w-5 h-5 mt-0.5">
@@ -225,7 +225,7 @@
                                 </svg>
                             </button>
                             <button *ngIf="completed" (click)="toggleCompleted()" [disabled]="isCompleting" [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
-                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-white  bg-error hover:bg-red-500 transition-all duration-300">
+                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-skin-white  bg-error hover:bg-red-500 transition-all duration-300">
                                 Marquer cette leçon non terminée
                                 <svg *ngIf="isCompleting" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">

@@ -1,6 +1,6 @@
 .mentored-tooltip {
   @apply absolute p-2 min-w-[300px] max-w-xs rounded-md shadow-md
-      text-white bg-secondary text-xs font-medium transition-all duration-200 scale-0 opacity-0;
+      text-skin-white bg-secondary text-xs font-medium transition-all duration-200 scale-0 opacity-0;
 }
 
 

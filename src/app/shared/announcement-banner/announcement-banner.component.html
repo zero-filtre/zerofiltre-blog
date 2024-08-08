@@ -1,14 +1,14 @@
 <div *ngIf="isBannerVisible"
     class="w-full sticky top-0 lg:h-14 overflow-hidden slide-down-active transition-transform duration-500">
 
-    <div [ngStyle]="{'background': bannerBgColor}" class="w-full h-full max-lg:py-2 max-lg:text-balance flex items-center text-white">
+    <div [ngStyle]="{'background': bannerBgColor}" class="w-full h-full max-lg:py-2 max-lg:text-balance flex items-center text-skin-white">
         <div class="flex container mx-auto">
             <div class="mx-auto flex justify-center items-center text-center px-4 gap-3">
                 <div class="flex items-center text-sm space-x-3 animate-pulse">
                     <span class="scale-150">🚀</span>
                     <span>{{bannerText}}</span>
                 </div>
-                <a href={{bannerLink}} target="_blank" rel="noopener" class="text-white max-lg:text-balance focus:outline-none border rounded-sm border-white text-sm py-1.5 px-3 font-medium hover:bg-primary-500 transition-all duration-300 ease-in-out">
+                <a href={{bannerLink}} target="_blank" rel="noopener" class="text-skin-white max-lg:text-balance focus:outline-none border rounded-sm border-white text-sm py-1.5 px-3 font-medium hover:bg-primary-500 transition-all duration-300 ease-in-out">
                     {{bannerActionBtn}}
                 </a>
             </div>

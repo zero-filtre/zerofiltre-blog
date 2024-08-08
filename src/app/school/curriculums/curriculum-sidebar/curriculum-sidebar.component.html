@@ -24,7 +24,7 @@
 
                         <button (click)="publishCourse(course)" [disabled]="isPublishing"
                             [ngClass]="{'cursor-not-allowed bg-opacity-60 hover:bg-opacity-60': isPublishing}"
-                            class="flex items-center gap-1 mb-4 border shadow-lg rounded-md px-4 text-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">
+                            class="flex items-center gap-1 mb-4 border shadow-lg rounded-md px-4 text-skin-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">
                             <span class="line-clamp-1" [ngClass]="{'text-sm': isPublishing}">{{publishBtnText}}</span>
                             <svg *ngIf="isPublishing" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"
@@ -231,7 +231,7 @@
                                                                 </ng-container>
 
                                                                 <span *ngIf="durations.length"
-                                                                    [ngClass]="{'!text-white !bg-skin-base !opacity-50': !lesson?.free && !canAccessCourse}"
+                                                                    [ngClass]="{'!text-skin-white !bg-skin-base !opacity-50': !lesson?.free && !canAccessCourse}"
                                                                     class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-normale">
                                                                     <!-- {{durations[i][j]}} -->
                                                                 </span>

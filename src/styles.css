@@ -22,6 +22,7 @@ body {
   --error: 245,95,68;
 
   --skin-base: 107,114,128;
+  --skin-white: 255,255,255;
   --skin-text: 55,65,81;
   --skin-art: 5,43,93;
   --skin-link: 243,244,246;
@@ -98,8 +99,9 @@ skin: {
   --error: 255,150,150;
 
   --skin-base: 205,205,205; 
+  --skin-white: 30,30,30; 
   --skin-text: 240,240,240; 
-  --skin-text: 220,220,220; 
+  --skin-art: 220,220,220; 
   --skin-link: 210,210,255; 
   --skin-muted: 180,180,180;
   --skin-inverted: 255,255,255; 
@@ -159,11 +161,11 @@ iframe {
 }
 
 .tooltip-xs {
-  @apply bg-secondary text-white text-xs;
+  @apply bg-secondary text-skin-white text-xs;
 }
 
 .tooltip-sm {
-  @apply bg-secondary text-white text-sm whitespace-pre-line;
+  @apply bg-secondary text-skin-white text-sm whitespace-pre-line;
 }
 
 /* Extends forms plugin styles with our custom styles in one place */
@@ -280,14 +282,14 @@ img {
 .error-snackbar,
 .warning-snackbar,
 .info-snackbar {
-  @apply text-white;
+  @apply text-skin-white;
 }
 
 .success-snackbar button,
 .error-snackbar button,
 .warning-snackbar button,
 .info-snackbar button {
-  @apply text-white;
+  @apply text-skin-white;
 }
 
 /* Block code styles */

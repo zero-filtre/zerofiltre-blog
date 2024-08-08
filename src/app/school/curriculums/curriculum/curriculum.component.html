@@ -107,14 +107,14 @@
                                                     </div>
                                                     <button
                                                         *ngIf="lesson?.free || canAccessCourse || isSubscriber"
-                                                        class="lesson_button bg-primary-500 text-white px-2 py-1 rounded text-sm font-medium mr-3">
+                                                        class="lesson_button bg-primary-500 text-skin-white px-2 py-1 rounded text-sm font-medium mr-3">
                                                         <span *ngIf="!isSubscriber">Aperçu</span>
                                                         <span *ngIf="isSubscriber">Commencer</span>
                                                     </button>
                                                     <button
                                                         *ngIf="!lesson?.free && !canAccessCourse && !isSubscriber"
                                                         disabled
-                                                        class="lesson_button bg-primary-500 text-white px-2 py-1 rounded text-sm font-medium mr-3 opacity-50">Commencer</button>
+                                                        class="lesson_button bg-primary-500 text-skin-white px-2 py-1 rounded text-sm font-medium mr-3 opacity-50">Commencer</button>
                                                 </a>
                                             </li>
 

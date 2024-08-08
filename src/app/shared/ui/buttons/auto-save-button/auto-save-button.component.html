@@ -3,7 +3,7 @@
 
         <ng-container *ngIf="form.invalid; else validBtn">
             <button [disabled]="form.invalid || loading" aria-labelledby="button to publish or submit an artticle"
-                class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-white bg-primary-300 bg-opacity-20">
+                class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-skin-white bg-primary-300 bg-opacity-20">
                 <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">
                     {{ 'articleEntryEdit.publishBtn' | translate }}</span>
                 <span *ngIf="!isPublishing && !isPublished && !authService.isAdmin">
@@ -14,7 +14,7 @@
         <ng-template #validBtn>
             <button type="submit" aria-labelledby="button to publish or submit an article" (click)="initPublish()"
                 [disabled]="isSaving || isPublishing" [ngClass]="{'opacity-50': isSaving || isPublishing }"
-                class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
+                class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-skin-white bg-primary-300 hover:bg-primary-500 focus:outline-none transition-all duration-200">
                 <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">
                     {{ 'articleEntryEdit.publishBtn' | translate }}
                 </span>

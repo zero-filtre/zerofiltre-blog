@@ -17,7 +17,7 @@
 
         <ng-container *ngIf="!user?.profilePicture && !uploading">
             <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-full p-2 self-center border-2 bg-primary-500 border-primary-500 text-white fill-white"
+                class="w-full p-2 self-center border-2 bg-primary-500 border-primary-500 text-skin-white fill-white"
                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -40,7 +40,7 @@
     <div class="action-buttons mt-6 flex justify-center space-x-2">
         <button aria-labelledby="Add a profile picture button" [ngClass]="{'opacity-20': uploading}"
             [disabled]="uploading" (click)="fileUpload.click()" class=" group font-semibold flex justify-center items-center space-x-1 py-2 px-4 border border-transparent
-            text-sm rounded-full text-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
+            text-sm rounded-full text-skin-white bg-primary-300 hover:bg-primary-500 focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round"

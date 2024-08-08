@@ -43,6 +43,7 @@ module.exports = {
         },
         skin: {
           base: "rgba(var(--skin-base))",
+          white: "rgba(var(--skin-white))",
           text: "rgba(var(--skin-text))",
           art: "rgba(var(--skin-art))",
           link: "rgba(var(--skin-link))",
