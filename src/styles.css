@@ -102,12 +102,12 @@ skin: {
   --skin-white: 30,30,30; 
   --skin-text: 240,240,240; 
   --skin-art: 220,220,220; 
-  --skin-link: 210,210,255; 
+  --skin-link: 80,80,80; 
   --skin-muted: 180,180,180;
   --skin-inverted: 255,255,255; 
   --skin-border: 100,100,100; 
   --skin-card: 40,40,40; 
-  --skin-cardMuted: 60,60,60; 
+  --skin-cardMuted: 40,40,40; 
   --skin-borderBold: 80,80,80; 
   --skin-bg: 30,30,30; 
   --skin-bg-secondary: 30,30,30;

@@ -24,7 +24,7 @@
                                 [ngClass]="{'cursor-grab' : canEdit}">
 
                                 <div (click)="chapter?.lessons?.length && accordionItem.toggle()"
-                                    class="curriculum_chapter_title flex items-center justify-between gap-4 uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold">
+                                    class="curriculum_chapter_title flex items-center justify-between gap-4 uppercase opacity-90 bg-primary-100 text-secondary dark:text-skin-white p-3 font-semibold">
                                     {{chapter?.title}}
 
                                     <div *ngIf="chapter?.lessons?.length"
