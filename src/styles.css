@@ -9,13 +9,6 @@ body {
 }
 
 :root {
-  /* --primary-50: 0,194,203;
-  --primary-200: 115,204,214;
-  --primary-400: 31,190,200;
-  --primary-600: 15,166,175;
-  --primary-700: 9,150,159;
-  --primary-900: 4,102,108; */
-  
   --primary-300: 74,195,205;
   --primary-100: 160,218,225;
   --primary-500: 21,178,188;
@@ -27,17 +20,6 @@ body {
   --accent-500: 236,170,71;
   --grays-200: 249,250,251;
   --error: 245,95,68;
-
-  /* --accent-100: 255,229,189;
-  --accent-200: 255,215,156;
-  --accent-600: 217,152,51;
-  --accent-700: 197,134,36;
-  --accent-800: 176,117,24;
-  --accent-900: 158,101,12; */
-
-
-  /* --grays-100: 238,241,244;
-  --grays-600: 75,85,99; */
 
   --skin-base: 107,114,128;
   --skin-text: 55,65,81;
@@ -100,50 +82,6 @@ skin: {
   bgMuted: "#f3f4f6"
 } */
 
-/* .dark {
-  --primary-50: 255,255,255;
-  --primary-100: 255,255,255;
-  --primary-200: 255,255,255;
-  --primary-300: 255,255,255;
-  --primary-400: 255,255,255;
-  --primary-500: 236,170,71;
-  --primary-600: 255,255,255;
-  --primary-700: 255,255,255;
-  --primary-800: 255,255,255;
-  --primary-900: 255,255,255;
-
-  --secondary: 224,224,224;
-
-  --accent-100: 3,218,198;
-  --accent-200: 3,218,198;
-  --accent-300: 3,218,198;
-  --accent-400: 3,218,198;
-  --accent-500: 3,218,198;
-  --accent-600: 3,218,198;
-  --accent-700: 3,218,198;
-  --accent-800: 3,218,198;
-  --accent-900: 3,218,198;
-
-  --error: 207,102,121;
-
-  --grays-100: 255,255,255;
-  --grays-200: 255,255,255;
-  --grays-600: 255,255,255;
-
-  --skin-base: 107,114,128;
-  --skin-text: 224,224,224;
-  --skin-art: 5,43,93;
-  --skin-link: 243,244,246;
-  --skin-muted: 179,179,179;
-  --skin-inverted: 224,224,224;
-  --skin-border: 229,231,235;
-  --skin-card: 44,44,44;
-  --skin-cardMuted: 44,44,44;
-  --skin-borderBold: 209,213,219;
-  --skin-bg: 18,18,18; 
-  --skin-bgMuted: 30,30,30;
-} */
-
 .dark {
 
   --primary-300: 255,255,255; 
@@ -157,23 +95,21 @@ skin: {
   --accent-500: 236,170,71;
   --grays-200: 75,80,85; 
   --error: 245,95,68;
+  --error: 255,150,150;
 
-  /* --error: 255,150,150; */
-
-  /* Skin Colors */
-  --skin-base: 205,205,205; /* Lightened for readability in dark mode */
-  --skin-text: 240,240,240; /* Lightened for text visibility */
-  --skin-text: 220,220,220; /* Lightened for readability */
-  --skin-link: 210,210,255; /* Lightened for visibility */
-  --skin-muted: 180,180,180; /* Muted color for secondary elements */
-  --skin-inverted: 255,255,255; /* White for inverted elements */
-  --skin-border: 100,100,100; /* Darker for borders */
-  --skin-card: 40,40,40; /* Darker card background */
-  --skin-cardMuted: 60,60,60; /* Muted card background */
-  --skin-borderBold: 80,80,80; /* Bolder border */
-  --skin-bg: 30,30,30; /* Main background */
-  --skin-bg-secondary: 30,30,30; /* Second background */
-  --skin-bgMuted: 50,50,50; /* Muted background */
+  --skin-base: 205,205,205; 
+  --skin-text: 240,240,240; 
+  --skin-text: 220,220,220; 
+  --skin-link: 210,210,255; 
+  --skin-muted: 180,180,180;
+  --skin-inverted: 255,255,255; 
+  --skin-border: 100,100,100; 
+  --skin-card: 40,40,40; 
+  --skin-cardMuted: 60,60,60; 
+  --skin-borderBold: 80,80,80; 
+  --skin-bg: 30,30,30; 
+  --skin-bg-secondary: 30,30,30;
+  --skin-bgMuted: 50,50,50;
 }
 
 
