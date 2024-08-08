@@ -266,7 +266,7 @@ img {
 
 /* Message Notification styles */
 .success-snackbar {
-  @apply bg-primary-600;
+  @apply bg-primary-800;
 }
 
 .error-snackbar {

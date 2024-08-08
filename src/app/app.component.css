@@ -8,7 +8,7 @@
 }
 
 /* .sidenav .sidenavLink.login_btn {
-  @apply flex items-center my-2 justify-center gap-2 shadow-md text-base bg-primary-600 text-skin-white py-2.5 px-4 rounded-md hover:bg-primary-500 focus:outline-none transition-all duration-300;
+  @apply flex items-center my-2 justify-center gap-2 shadow-md text-base bg-primary-800 text-skin-white py-2.5 px-4 rounded-md hover:bg-primary-500 focus:outline-none transition-all duration-300;
 } */
 
 .sidenav .sidenavLink div {

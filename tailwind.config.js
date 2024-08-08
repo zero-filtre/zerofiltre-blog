@@ -18,7 +18,7 @@ module.exports = {
           300: "rgba(var(--primary-300))",
           400: "rgba(var(--primary-400))",
           500: "rgba(var(--primary-500))",
-          600: "rgba(var(--primary-600))",
+          600: "rgba(var(--primary-800))",
           700: "rgba(var(--primary-700))",
           800: "rgba(var(--primary-800))",
           900: "rgba(var(--primary-900))"

@@ -133,7 +133,7 @@
                                         class="flex flex-col items-center justify-center self-start mt-auto hover:bg-base-100 rounded">
                                         <div class="flex flex-col w-full">
                                             <div *ngIf="!isZIPFile(res) && !isTXTFile(res)" class="w-full shadow-lg rounded-lg p-2">
-                                                <ngx-doc-viewer class="border border-primary-600 rounded-sm mb-3" [url]="res.url" viewer="google"
+                                                <ngx-doc-viewer class="border border-primary-800 rounded-sm mb-3" [url]="res.url" viewer="google"
                                                     style="width:100%;height:50vh;"></ngx-doc-viewer>
                                                 <a href="{{res.url}}" target="_blank" rel="noopener" download="res.name">
                                                     <span
@@ -150,7 +150,7 @@
                                             </div>
                             
                                             <div *ngIf="isTXTFile(res)" class="w-full shadow-lg rounded-lg p-2">
-                                                <ngx-doc-viewer class="border border-primary-600 rounded-sm mb-3" [url]="res.url" viewer="google"
+                                                <ngx-doc-viewer class="border border-primary-800 rounded-sm mb-3" [url]="res.url" viewer="google"
                                                     style="width:100%;height:50vh;"></ngx-doc-viewer>
                                                 <span (click)="downloadFileContent(res)"
                                                     class="hover:text-primary-500 break-words flex justify-center gap-3 w-full text-center cursor-pointer">{{res.name}}
@@ -165,8 +165,8 @@
                             
                                             <div *ngIf="isZIPFile(res)" class="w-full group shadow-lg rounded-lg p-2">
                                                 <a href="{{res.url}}" target="_blank" rel="noopener" download="res.name">
-                                                    <div class="border border-primary-600 rounded-sm mb-3 p-20">
-                                                        <svg class="w-full h-full m-auto text-primary-600" fill="currentColor" version="1.1"
+                                                    <div class="border border-primary-800 rounded-sm mb-3 p-20">
+                                                        <svg class="w-full h-full m-auto text-primary-800" fill="currentColor" version="1.1"
                                                             id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px"
                                                             viewBox="0 0 31.519 31.519" xml:space="preserve">
@@ -211,7 +211,7 @@
                     <div *ngIf="isSubscriber" class="lesson_complete_btn my-10">
                         <div *ngIf="lesson" class="flex justify-center font-semibold">
                             <button *ngIf="!completed" (click)="toggleCompleted()" [disabled]="isCompleting" [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
-                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-skin-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">
+                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-skin-white bg-primary-500 hover:bg-primary-800 transition-all duration-300">
                                 <span>Marquer cette leçon terminée</span>
                                 <svg *ngIf="!isCompleting" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                                     stroke="currentColor" class="w-5 h-5 mt-0.5">
