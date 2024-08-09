@@ -4,8 +4,38 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  overflow-x: hidden;
+/* Extends forms plugin styles with our custom styles in one place */
+@layer base {
+  [type="text"],
+  [type="email"],
+  [type="password"],
+  [type="search"],
+  [multiple],
+  select {
+    @apply shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full placeholder-skin-muted focus:outline-none focus:placeholder-skin-muted font-normal text-skin-base sm:text-sm border-skin-border rounded-md;
+  }
+
+  [type="checkbox"],
+  [type="radio"] {
+    @apply h-4 w-4 lg:h-5 lg:w-5 text-primary-500 bg-skin-card focus:ring-0 focus:ring-offset-0 border-skin-border rounded;
+  }
+
+  @font-face {
+    font-family: 'Leicht';
+    font-weight: 500;
+    src: url(./assets/fonts/Leicht.otf) format('otf');
+    /* src: url(./assets/fonts/Leicht.otf) format('otf'), url(./assets/fonts/Kraftig.otf) format('otf') */
+  }
+
+  @font-face {
+    font-family: 'Kraftig';
+    font-weight: 700;
+    src: url(./assets/fonts/Kraftig.otf) format('otf');
+  }
+
+  * {
+    @apply transition-colors duration-200 ease-in-out;
+  }
 }
 
 :root {
@@ -119,6 +149,10 @@ skin: {
   }
 } */
 
+body {
+  overflow-x: hidden;
+}
+
 /* Always shox Snackbar popup on top of other elements */
 .cdk-overlay-pane:has(> .mat-snack-bar-container) {
   @apply !mt-[72px] lg:!mt-16 !max-w-screen-sm;
@@ -165,40 +199,6 @@ iframe {
 
 .tooltip-sm {
   @apply bg-secondary text-skin-white text-sm whitespace-pre-line;
-}
-
-/* Extends forms plugin styles with our custom styles in one place */
-@layer base {
-  [type="text"],
-  [type="email"],
-  [type="password"],
-  [type="search"],
-  [multiple],
-  select {
-    @apply shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full placeholder-skin-muted focus:outline-none focus:placeholder-skin-muted font-normal text-skin-base sm:text-sm border-skin-border rounded-md;
-  }
-
-  [type="checkbox"],
-  [type="radio"] {
-    @apply h-4 w-4 lg:h-5 lg:w-5 text-primary-500 bg-skin-card focus:ring-0 focus:ring-offset-0 border-skin-border rounded;
-  }
-
-  @font-face {
-    font-family: 'Leicht';
-    font-weight: 500;
-    src: url(./assets/fonts/Leicht.otf) format('otf');
-    /* src: url(./assets/fonts/Leicht.otf) format('otf'), url(./assets/fonts/Kraftig.otf) format('otf') */
-  }
-
-  @font-face {
-    font-family: 'Kraftig';
-    font-weight: 700;
-    src: url(./assets/fonts/Kraftig.otf) format('otf');
-  }
-
-  * {
-    @apply transition-colors duration-200 ease-in-out;
-  }
 }
 
 img {
