@@ -195,6 +195,10 @@ iframe {
     font-weight: 700;
     src: url(./assets/fonts/Kraftig.otf) format('otf');
   }
+
+  * {
+    @apply transition-colors duration-200 ease-in-out;
+  }
 }
 
 img {
