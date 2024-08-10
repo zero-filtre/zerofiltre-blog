@@ -3,6 +3,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { LoadEnvService } from '../services/load-env.service';
 import { SeoService } from '../services/seo.service';
+import { SurveyService } from '../services/survey.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home-page',
@@ -26,11 +28,24 @@ export class HomePageComponent implements OnInit, OnDestroy {
   public coursesHeroImage = 'https://ik.imagekit.io/lfegvix1p/Cours_pR5bDOPMu.svg'
   public servicesHeroImage = 'https://ik.imagekit.io/lfegvix1p/services_dsZIq509t.svg'
 
+  reviews: any[]
+
   constructor(
     private loadEnvService: LoadEnvService,
     private translate: TranslateService,
-    private seo: SeoService
+    private seo: SeoService,
+    private reviewService: SurveyService
   ) { }
+
+  fetchReviews() {
+    this.reviewService.getReviews()
+      .subscribe({
+        next: (data: any) => {
+          this.reviews = data
+        },
+        error: (e: HttpErrorResponse) => console.log(e)
+      })
+  }
 
   ngOnInit(): void {
     this.seo.generateTags({
