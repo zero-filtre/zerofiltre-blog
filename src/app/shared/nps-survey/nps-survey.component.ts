@@ -34,7 +34,6 @@ export class NpsSurveyComponent {
       .saveSurveyResults(resultData)
       .subscribe({
         next: data => {
-          alert(data);
           options.showSaveSuccess("Enregistré avec succès!");
         },
         error: (err: HttpErrorResponse) => {

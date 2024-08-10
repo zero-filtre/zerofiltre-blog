@@ -312,7 +312,6 @@ export class LessonComponent implements OnInit, OnDestroy {
     if (this.isChapterCompleted(chapter, userProgress)) {
       this.showNPSFormDialog();
     }
-    console.log('USER PROGRESS: ', userProgress, this.isChapterCompleted(chapter, userProgress));
   }
 
   findResourcesByType(type: string[] | string): Resource[] {
