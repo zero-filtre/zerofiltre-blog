@@ -92,7 +92,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     title: 'Dites-nous en 30 secondes ce que vous pensé de ce chapitre',
     elements: [
       {
-        name: "explications_chapitre",
+        name: "chapterExplanations",
         title: "Comment évalueriez-vous la clarté des explications fournies dans ce chapitre ?",
         type: "radiogroup",
         choices: [
@@ -117,78 +117,78 @@ export class LessonComponent implements OnInit, OnDestroy {
             text: 'Extrêmement clair'
           }
         ],
-        defaultValue: 'Moyennement clair'
+        defaultValue: 'Extrêmement clair'
       }, 
       {
-        name: 'note_satisfaction_chapitre',
+        name: 'chapterSatisfactionScore',
         title: 'À quel point avez-vous trouvé ce chapitre intéressant ?',
         type: 'rating',
-        defaultValue: '3',
+        defaultValue: '5',
         rateType: "stars",
         rateCount: 5,
         rateMax: 5,
         displayMode: "buttons"
       },
       {
-        name: "note_comprehension_chapitre",
+        name: "chapterUnderstandingScore",
         type: "rating",
         title: "Évaluez votre compréhension du chapitre.",
         rateMin: 0,
         rateMax: 5,
-        defaultValue: '3'
+        defaultValue: '5'
       },
+      // {
+      //   name: "vos_impressions",
+      //   title: "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
+      //   type: "comment",
+      //   maxLength: 500
+      // },
       {
-        name: "vos_impressions",
-        title: "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
-        type: "comment",
-        maxLength: 500
-      },
-      {
-        name: "recommander_cours",
+        name: "recommendCourse",
         type: "boolean",
         title: "Recommanderiez-vous ce cours à un ami ou un collègue ?",
         valueTrue: "Oui",
         valueFalse: "Non",
         defaultValue: "Oui"
       },
+      // {
+      //   name: "pourquoi_recommander",
+      //   title: "Si oui, pourquoi ?",
+      //   type: "comment",
+      //   maxLength: 500
+      // },
+      // {
+      //   name: "outil_apprentissage_chapitre",
+      //   type: "checkbox",
+      //   title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
+      //   choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
+      //   isRequired: false,
+      //   colCount: 2,
+      //   showNoneItem: false,
+      //   showOtherItem: true,
+      //   showSelectAllItem: true,
+      //   separateSpecialChoices: true,
+      // },
+      // {
+      //   name: "outil_apprentissage_chapitre_raisons",
+      //   title: "Pouvez-vous expliquer comment cela vous a aidé ?",
+      //   type: "comment",
+      //   maxLength: 500
+      // },
       {
-        name: "pourquoi_recommander",
-        title: "Si oui, pourquoi ?",
-        type: "comment",
-        maxLength: 500
-      },
-      {
-        name: "outil_apprentissage_chapitre",
-        type: "checkbox",
-        title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
-        choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
-        isRequired: false,
-        colCount: 2,
-        showNoneItem: false,
-        showOtherItem: true,
-        showSelectAllItem: true,
-        separateSpecialChoices: true,
-      },
-      {
-        name: "outil_apprentissage_chapitre_raisons",
-        title: "Pouvez-vous expliquer comment cela vous a aidé ?",
-        type: "comment",
-        maxLength: 500
-      },
-      {
-        name: "satisfaction_globale_chapitre",
+        name: "overallChapterSatisfaction",
         type: "rating",
         title: "Sur une échelle de 1 à 10, quelle est votre satisfaction globale concernant ce chapitre ?",
         rateMin: 0,
-        rateMax: 10,
+        rateMax: 5,
         defaultValue: '5'
       },
-      {
-        name: "ameliorations_suggeres",
-        title: "Quelles améliorations suggéreriez-vous ?",
-        type: "comment",
-        maxLength: 500
-      }
+      // {
+      //   name: "ameliorations_suggeres",
+      //   title: "Quelles améliorations suggéreriez-vous ?",
+      //   type: "comment",
+      //   maxLength: 500
+      // }
     ]
   };
 
