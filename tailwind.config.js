@@ -4,11 +4,16 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        montserat: "'Montserrat', sans-serif",
-        raleway: "'Raleway', sans-serif",
+        // montserat: "'Montserrat', sans-serif",
+        // raleway: "'Raleway', sans-serif",
         ubuntu: "'Ubuntu', sans-serif",
-        sohne: "'Leicht', sans-serif",
-        sohneK: "'Kraftig', sans-serif"
+        // sohne: "'Leicht', sans-serif",
+        // sohneK: "'Kraftig', sans-serif"
+
+        display: ['Inter', 'system-ui', 'sans-serif'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
+
+        inter: "'Inter', 'system-ui', sans-serif"
       },
       colors: {
         primary: {
