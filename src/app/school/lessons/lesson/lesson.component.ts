@@ -137,12 +137,12 @@ export class LessonComponent implements OnInit, OnDestroy {
         rateMax: 5,
         defaultValue: '5'
       },
-      // {
-      //   name: "vos_impressions",
-      //   title: "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
-      //   type: "comment",
-      //   maxLength: 500
-      // },
+      {
+        name: "vos_impressions_du_chapitre",
+        title: "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
+        type: "comment",
+        maxLength: 500
+      },
       {
         name: "recommendCourse",
         type: "boolean",
@@ -151,30 +151,30 @@ export class LessonComponent implements OnInit, OnDestroy {
         valueFalse: "Non",
         defaultValue: "Oui"
       },
-      // {
-      //   name: "pourquoi_recommander",
-      //   title: "Si oui, pourquoi ?",
-      //   type: "comment",
-      //   maxLength: 500
-      // },
-      // {
-      //   name: "outil_apprentissage_chapitre",
-      //   type: "checkbox",
-      //   title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
-      //   choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
-      //   isRequired: false,
-      //   colCount: 2,
-      //   showNoneItem: false,
-      //   showOtherItem: true,
-      //   showSelectAllItem: true,
-      //   separateSpecialChoices: true,
-      // },
-      // {
-      //   name: "outil_apprentissage_chapitre_raisons",
-      //   title: "Pouvez-vous expliquer comment cela vous a aidé ?",
-      //   type: "comment",
-      //   maxLength: 500
-      // },
+      {
+        name: "pourquoi_recommande_ce_coursr",
+        title: "Si oui, pourquoi ?",
+        type: "comment",
+        maxLength: 500
+      },
+      {
+        name: "outil_apprentissage_favoris_chapitre",
+        type: "checkbox",
+        title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
+        choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
+        isRequired: false,
+        colCount: 2,
+        showNoneItem: false,
+        showOtherItem: true,
+        showSelectAllItem: true,
+        separateSpecialChoices: true,
+      },
+      {
+        name: "outil_apprentissage_chapitre_raisons",
+        title: "Pouvez-vous expliquer comment cela vous a aidé ?",
+        type: "comment",
+        maxLength: 500
+      },
       {
         name: "overallChapterSatisfaction",
         type: "rating",
@@ -183,12 +183,12 @@ export class LessonComponent implements OnInit, OnDestroy {
         rateMax: 5,
         defaultValue: '5'
       },
-      // {
-      //   name: "ameliorations_suggeres",
-      //   title: "Quelles améliorations suggéreriez-vous ?",
-      //   type: "comment",
-      //   maxLength: 500
-      // }
+      {
+        name: "ameliorations_suggeres",
+        title: "Quelles améliorations suggéreriez-vous ?",
+        type: "comment",
+        maxLength: 500
+      }
     ]
   };
 
