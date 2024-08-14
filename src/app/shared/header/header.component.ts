@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
   logoFull = 'https://ik.imagekit.io/lfegvix1p/Logo%20Horizontal_CPY64pImj.svg'
+  logoFullWhite = 'https://ik.imagekit.io/lfegvix1p/Logo%20Horizontal%20Logotype%20Blanc_Mft-MadEs.svg'
   logoShort = 'https://ik.imagekit.io/lfegvix1p/Logo%20Symbole_fFcHDpP7s.svg'
 
   prod = this.blogUrl.startsWith('https://dev.') ? false : true;

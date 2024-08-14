@@ -18,7 +18,10 @@
                 </app-image>
             </div>
             <div class="logo hidden md:block md:w-6/12 lg:w-7/12">
-                <app-image [classes]="'w-full'" [sourceUrl]="logoFull"
+                <app-image [classes]="'dark:hidden w-full'" [sourceUrl]="logoFull"
+                    [alt]="'Zerofiltre blog'">
+                </app-image>
+                <app-image [classes]="'hidden dark:block w-full'" [sourceUrl]="logoFullWhite"
                     [alt]="'Zerofiltre blog'">
                 </app-image>
             </div>
