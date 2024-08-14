@@ -59,11 +59,10 @@
     --color-text-base: 107,114,128;
     --color-text-muted: 156,163,175;
     --color-text-inverted: 5,43,93;
-    --color-text-error: 245,95,68;
   
     --color-fill-primary: 255,255,255;
     --color-fill-secondary: 255,255,255;
-    --color-fill-danger: 255,255,255;
+    --color-fill-danger: 245,95,68;
 
     --color-button-accent: 255,255,255;
     --color-button-accent-hover: 255,255,255;
@@ -75,11 +74,10 @@
     --color-text-base: 107,114,128;
     --color-text-muted: 156,163,175;
     --color-text-inverted: 5,43,93;
-    --color-text-error: 245,95,68;
   
     --color-fill-primary: 255,255,255;
     --color-fill-secondary: 255,255,255;
-    --color-fill-danger: 255,255,255;
+    --color-fill-danger: 245,95,68;
 
     --color-button-accent: 255,255,255;
     --color-button-accent-hover: 255,255,255;
@@ -217,7 +215,7 @@ img {
 }
 
 .error-snackbar {
-  @apply bg-error;
+  @apply bg-skin-fill-danger;
 }
 
 .warning-snackbar {

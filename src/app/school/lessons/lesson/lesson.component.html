@@ -225,7 +225,7 @@
                                 </svg>
                             </button>
                             <button *ngIf="completed" (click)="toggleCompleted()" [disabled]="isCompleting" [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
-                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3   bg-error  transition-all duration-300">
+                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3   bg-skin-fill-danger  transition-all duration-300">
                                 Marquer cette leçon non terminée
                                 <svg *ngIf="isCompleting" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
