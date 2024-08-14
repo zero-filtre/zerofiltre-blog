@@ -38,10 +38,6 @@
     /* @apply transition-colors duration-100 ease-in-out; */
   }
 
-  body {
-    overflow-x: hidden;
-  }
-
   :root {
     /* --primary-800: 4,102,108;
     --secondary: 5,43,93;
@@ -63,6 +59,7 @@
     --color-fill-primary: 255,255,255;
     --color-fill-secondary: 255,255,255;
     --color-fill-danger: 245,95,68;
+    --color-fill-warning: 236,170,71;
 
     --color-button-accent: 255,255,255;
     --color-button-accent-hover: 255,255,255;
@@ -78,11 +75,16 @@
     --color-fill-primary: 255,255,255;
     --color-fill-secondary: 255,255,255;
     --color-fill-danger: 245,95,68;
+    --color-fill-warning: 236,170,71;
 
     --color-button-accent: 255,255,255;
     --color-button-accent-hover: 255,255,255;
 
     --color-button-muted: 255,255,255;
+  }
+
+  body {
+    overflow-x: hidden;
   }
 
 }

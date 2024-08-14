@@ -36,6 +36,7 @@ module.exports = {
           'fill-primary': withOpacity('--color-fill-primary'),
           'fill-secondary': withOpacity('--color-fill-secondary'),
           'fill-danger': withOpacity('--color-fill-danger'),
+          'fill-warning': withOpacity('--color-fill-warning'),
           'button-accent': withOpacity('--color-button-accent'),
           'button-accent-hover': withOpacity('--color-button-accent-hover'),
           'button-muted': withOpacity('--color-button-muted'),
