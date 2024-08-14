@@ -4,11 +4,11 @@
 }
 
 .sidenav .sidenavLink {
-  @apply  hover:text-primary-500 transition-all duration-200;
+  @apply   transition-all duration-200;
 }
 
 /* .sidenav .sidenavLink.login_btn {
-  @apply flex items-center my-2 justify-center gap-2 shadow-md text-base  text-skin-white py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300;
+  @apply flex items-center my-2 justify-center gap-2 shadow-md text-base   py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300;
 } */
 
 .sidenav .sidenavLink div {
@@ -16,17 +16,17 @@
 }
 
 .link-active {
-  @apply  text-skin-base shadow-md;
+  @apply  text-skin-muted shadow-md;
 }
 
 .link-inactive {
-  @apply text-skin-base;
+  @apply text-skin-muted;
 }
 
 .svg-active {
-  @apply text-skin-base;
+  @apply text-skin-muted;
 }
 
 .svg-inactive {
-  @apply text-skin-muted group-hover:text-skin-base;
+  @apply group-hover:text-skin-muted;
 }

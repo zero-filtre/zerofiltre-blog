@@ -13,12 +13,12 @@
   [type="search"],
   [multiple],
   select {
-    @apply shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full placeholder-skin-muted focus:outline-none focus:placeholder-skin-muted font-normal text-skin-base sm:text-sm border-skin-border rounded-md;
+    @apply shadow-sm   block w-full placeholder-skin-muted focus:outline-none focus:placeholder-skin-muted font-normal  sm:text-sm  rounded-md;
   }
 
   [type="checkbox"],
   [type="radio"] {
-    @apply h-4 w-4 lg:h-5 lg:w-5 text-primary-500  focus:ring-0 focus:ring-offset-0 border-skin-border rounded;
+    @apply h-4 w-4 lg:h-5 lg:w-5   focus:ring-0 focus:ring-offset-0  rounded;
   }
 
   @font-face {
@@ -66,6 +66,10 @@
   --skin-bg: 249,250,251;
   --skin-bg-secondary: 5,43,93;
   --skin-bgMuted: 243,244,246;
+
+  /* --color-button-accent-hover:; 
+  --color-button-accent-focus:; 
+  --color-button-accent-ring:; */
 
 
 }
@@ -151,11 +155,11 @@ iframe {
 }
 
 .tooltip-xs {
-  @apply bg-secondary text-skin-white text-xs;
+  @apply text-xs;
 }
 
 .tooltip-sm {
-  @apply bg-secondary text-skin-white text-sm whitespace-pre-line;
+  @apply text-sm whitespace-pre-line;
 }
 
 img {
@@ -239,21 +243,21 @@ img {
 }
 
 .info-snackbar {
-  @apply bg-secondary;
+  /* @apply ; */
 }
 
 .success-snackbar,
 .error-snackbar,
 .warning-snackbar,
 .info-snackbar {
-  @apply text-skin-white;
+  /* @apply ; */
 }
 
 .success-snackbar button,
 .error-snackbar button,
 .warning-snackbar button,
 .info-snackbar button {
-  @apply text-skin-white;
+  /* @apply ; */
 }
 
 /* Block code styles */
@@ -262,7 +266,7 @@ img {
 }
 
 .toolbar {
-  @apply flex absolute top-1.5 right-0 text-skin-muted hover:text-skin-border overflow-hidden;
+  @apply flex absolute top-1.5 right-0 overflow-hidden;
 }
 
 .toolbar-item {
@@ -278,7 +282,7 @@ img {
 
 /* Markdown preview styles */
 .markdown-content {
-  @apply marker:text-primary-500;
+  @apply marker:bg-white;
 }
 
 .markdown-content li {
@@ -314,7 +318,7 @@ img {
   @apply flex-1;
 }
 .cc-nb-text-container .cc-nb-text {
-  @apply !m-0 !text-skin-art !text-base;
+  @apply !m-0  !text-base;
 }
 
 .cc-nb-buttons-container {
@@ -323,7 +327,7 @@ img {
 
 .cc-nb-buttons-container .cc-nb-changep {
   border: 1px solid !important;
-  @apply !bg-transparent !border-skin-border !rounded-md !font-normal !text-skin-art;
+  @apply !bg-transparent  !rounded-md !font-normal ;
 }
 
 .cc-nb-buttons-container .cc-nb-okagree {

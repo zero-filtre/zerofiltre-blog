@@ -3,7 +3,7 @@
 }
 
 .tags-select {
-  @apply focus:ring-0 focus:ring-skin-muted;
+  @apply focus:ring-0;
 }
 
 .editor-textarea {
@@ -22,5 +22,5 @@
 
 .save-tooltip {
   @apply absolute w-auto p-2 m-2 min-w-max top-8 right-0 rounded-md shadow-md
-    text-skin-white  text-xs font-bold transition-all duration-100 scale-0 origin-right;
+      text-xs font-bold transition-all duration-100 scale-0 origin-right;
 }

@@ -1,9 +1,9 @@
 <div>
     <ng-container *ngIf="type !== 'pro'">
         <div *ngIf="!course?.mentored">
-            <div class="text-center text-skin-base">
-                <small class="font-bold text-lg lg:text-xl text-primary-500">{{course.title}}</small>
-                <h1 class="mt-1 text-sm sm:text-base">Vous pouvez payer en <span class="text-accent-500">3 fois</span>.
+            <div class="text-center ">
+                <small class="font-bold text-lg lg:text-xl ">{{course.title}}</small>
+                <h1 class="mt-1 text-sm sm:text-base">Vous pouvez payer en <span class="">3 fois</span>.
                 </h1>
             </div>
             <div
@@ -18,8 +18,8 @@
         </div>
 
         <div *ngIf="course?.mentored">
-            <div class="text-center text-skin-base">
-                <small class="font-bold text-lg lg:text-xl text-primary-500">{{course.title}}</small>
+            <div class="text-center ">
+                <small class="font-bold text-lg lg:text-xl ">{{course.title}}</small>
                 <h1 class="mt-1">En achetant un parcours mentoré</h1>
             </div>
             <div

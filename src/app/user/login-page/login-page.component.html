@@ -2,7 +2,7 @@
     <div class="login-content-wrapper flex items-center justify-center">
         <div class="max-w-md w-full space-y-8">
             <div>
-                <h2 class="text-center text-3xl font-extrabold text-skin-inverted">
+                <h2 class="text-center text-3xl font-extrabold ">
                     {{ 'login.title' | translate }}
                 </h2>
             </div>
@@ -37,7 +37,7 @@
                                 
                                 <button type="button" class="eye-btn group absolute top-2.5 right-2.5" (click)="togglePasswordVisibility()">
                                         <svg *ngIf="!passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                            class="h-5 w-5 text-skin-borderBold group-hover:text-primary-300">
+                                            class="h-5 w-5  ">
                                             <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                                             <path fill-rule="evenodd"
                                                 d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
@@ -45,7 +45,7 @@
                                         </svg>
 
                                         <svg *ngIf="passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" 
-                                            class="h-5 w-5 text-skin-borderBold group-hover:text-primary-300">
+                                            class="h-5 w-5  ">
                                             <path
                                                 d="M3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18zM22.676 12.553a11.249 11.249 0 01-2.631 4.31l-3.099-3.099a5.25 5.25 0 00-6.71-6.71L7.759 4.577a11.217 11.217 0 014.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113z" />
                                             <path
@@ -68,7 +68,7 @@
                 <div class="flex items-center justify-between">
                     <div class="text-sm">
                         <a aria-labelledby="Link to about page" routerLink="/resetPassword"
-                            class="font-semibold text-primary-500 hover:text-primary-300 transition-all">
+                            class="font-semibold   transition-all">
                             {{ 'login.forgotPassword' | translate }}
                         </a>
                     </div>
@@ -77,7 +77,7 @@
                 <div>
                     <button *ngIf="form.valid" type="submit" [disabled]="loading" [ngClass]="{'opacity-50': loading}"
                         aria-labelledby="Login button"
-                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-white  focus:outline-none">
+                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md   focus:outline-none">
                         <span *ngIf="!loading">{{ 'login.signin' | translate }}</span>
                         <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
@@ -89,7 +89,7 @@
                     </button>
 
                     <button *ngIf="form.invalid" [disabled]="form.invalid || loading" aria-labelledby="Login button"
-                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-white  bg-opacity-20">
+                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md   bg-opacity-20">
                         {{ 'login.signin' | translate }}
                     </button>
                 </div>
@@ -97,9 +97,9 @@
             </form>
 
             <div class="">
-                <p class="text-sm text-skin-base mb-2">Pas encore des nôtres ?</p>
+                <p class="text-sm  mb-2">Pas encore des nôtres ?</p>
                 <a aria-labelledby="Link to about page" routerLink="/register"
-                    class="inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm  text-sm text-skin-base  focus:outline-none w-full font-normal">
+                    class="inline-flex justify-center py-2 px-4 border  rounded-md shadow-sm  text-sm   focus:outline-none w-full font-normal">
                     <span class="sr-only">Creer mon compte</span>
                     {{ 'login.signup' | translate }}
                 </a>
@@ -108,7 +108,7 @@
             <div>
                 <div class="relative mt-5">
                     <div class="relative flex justify-center text-sm">
-                        <span class="px-2 text-skin-base font-normal">
+                        <span class="px-2  font-normal">
                             {{ 'login.continue' | translate }}
                         </span>
                     </div>
@@ -118,7 +118,7 @@
                     <div class="flex-1">
                         <a aria-labelledby="Link to about page" (click)="setRedirectURL()"
                             href="https://github.com/login/oauth/authorize?client_id={{GITHUB_CLIENT_ID}}&redirect_uri={{gitHubRedirectURL}}&scope=user:email"
-                            class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm  text-sm text-skin-base  focus:outline-none w-full font-normal">
+                            class="button inline-flex justify-center py-2 px-4 border  rounded-md shadow-sm  text-sm   focus:outline-none w-full font-normal">
                             <span class="sr-only">Continuer avec Github</span>
                             <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -131,12 +131,12 @@
                     <div class="flex-1">
                         <a aria-labelledby="Link to about page" (click)="setRedirectURL()"
                             href="https://stackoverflow.com/oauth/dialog?client_id={{STACK_OVERFLOW_CLIENT_ID}}&redirect_uri={{stackOverflowRedirectURL}}&scope=no_expiry"
-                            class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm  text-sm text-skin-base  focus:outline-none w-full font-normal">
+                            class="button inline-flex justify-center py-2 px-4 border  rounded-md shadow-sm  text-sm   focus:outline-none w-full font-normal">
                             <span class="sr-only">Continuer avec StackOverflow</span>
                             <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
                                 width="64" height="64">
                                 <path d="M28.16 32H2.475V20.58H5.32v8.575h19.956V20.58h2.884z" fill="#bcbbbb" />
-                                <path class="text-skin-muted"
+                                <path class=""
                                     d="M8.477 19.8l13.993 2.923.585-2.806-13.993-2.923zm1.832-6.704l12.94 6.04 1.208-2.572-12.94-6.08zm3.586-6.353l10.99 9.12 1.832-2.183-10.99-9.12zM20.99 0l-2.3 1.715 8.536 11.46 2.3-1.715zM8.166 26.27H22.43v-2.845H8.166v2.845z"
                                     fill="#f48024" />
                             </svg>

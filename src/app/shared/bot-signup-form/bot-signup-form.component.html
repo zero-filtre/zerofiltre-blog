@@ -1,7 +1,7 @@
 <main class="max-w-xl mx-auto">
-    <div *ngIf="sendingCode" class="flex gap-2 items-center text-skin-base">
+    <div *ngIf="sendingCode" class="flex gap-2 items-center ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-6 h-6 text-primary-500 animate-spin">
+            class="w-6 h-6  animate-spin">
             <path stroke-linecap="round" stroke-linejoin="round"
                 d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
         </svg>
@@ -18,13 +18,13 @@
 
     <div *ngIf="signupMode" class="signup">
 
-        <h2 class="text-2xl text-primary-500 font-medium mb-4 text-center">Remplissez vos informations manquantes en 3 minutes</h2>
+        <h2 class="text-2xl  font-medium mb-4 text-center">Remplissez vos informations manquantes en 3 minutes</h2>
 
         <div *ngIf="step === 1">
             <form [formGroup]="form" (ngSubmit)="nextStep()" class="space-y-4">
                 <div class="profile-edit-content flex flex-col space-y-4 px-4 py-6 rounded-lg  shadow-md">
                     <div>
-                        <label for="name" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="name" class="block text-sm font-semibold leading-5 ">
                             Nom
                         </label>
                         <div class="mt-2">
@@ -40,7 +40,7 @@
                     </div>
             
                     <div>
-                        <label for="prename" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="prename" class="block text-sm font-semibold leading-5 ">
                             Prénom
                         </label>
                         <div class="mt-2">
@@ -52,27 +52,27 @@
                     </div>
 
                     <div>
-                        <label for="gender" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="gender" class="block text-sm font-semibold leading-5 ">
                             Sexe
                         </label>
                         <div class="mt-2">
                             <div class="flex gap-3">
                                 <label class="flex items-center space-x-2">
                                     <input type="radio" formControlName="gender" value="M"
-                                        class="text-primary-500 form-radio focus:ring-primary-500">
-                                    <span class="text-skin-base">Homme</span>
+                                        class=" form-radio ">
+                                    <span class="">Homme</span>
                                 </label>
                                 <label class="flex items-center space-x-2">
                                     <input type="radio" formControlName="gender" value="F"
-                                        class="text-primary-500 form-radio focus:ring-primtext-primary-500">
-                                    <span class="text-skin-base">Femme</span>
+                                        class=" form-radio ">
+                                    <span class="">Femme</span>
                                 </label>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <label for="city" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="city" class="block text-sm font-semibold leading-5 ">
                             Ville de résidence
                         </label>
                         <div class="mt-2">
@@ -85,12 +85,12 @@
 
                 <div class="flex justify-end gap-5 mt-10">
                     <button type="button"
-                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-base   transition-all duration-200"
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md    transition-all duration-200"
                         (click)="cancel()">Annuler</button>
 
                     <button *ngIf="name.valid" type="submit" [disabled]="saving" [ngClass]="{'opacity-50': saving}"
                         aria-labelledby="Update profile button"
-                        class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md text-skin-white   focus:outline-none">
+                        class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md    focus:outline-none">
                         <svg *ngIf="saving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
                             preserveAspectRatio="xMidYMid">
@@ -102,7 +102,7 @@
                     </button>
                 
                     <button *ngIf="name.invalid" [disabled]="name.invalid || saving" aria-labelledby="Update profile button"
-                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-white  bg-opacity-20">
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md   bg-opacity-20">
                         Suivant
                     </button>
                 </div>
@@ -113,7 +113,7 @@
             <form [formGroup]="form" (ngSubmit)="signup()" class="space-y-4">
                 <div class="profile-edit-content flex flex-col space-y-4 px-4 py-6 rounded-lg  shadow-md">
                     <div>
-                        <label for="statut" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="statut" class="block text-sm font-semibold leading-5 ">
                             Statut
                         </label>
                         <div class="mt-2">
@@ -130,7 +130,7 @@
                     </div>
 
                     <div>
-                        <label for="domain" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="domain" class="block text-sm font-semibold leading-5 ">
                             Domaine
                         </label>
                         <div class="mt-2">
@@ -151,7 +151,7 @@
                     </div>
 
                     <div>
-                        <label for="password" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="password" class="block text-sm font-semibold leading-5 ">
                             Mot de passe
                         </label>
                         <div class="mt-2">
@@ -160,7 +160,7 @@
                                     class="" placeholder="••••••">
                                 <button type="button" class="eye-btn group absolute top-2.5 right-2.5" (click)="togglePasswordVisibility()">
                                     <svg *ngIf="!passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                        class="h-5 w-5 text-skin-borderBold group-hover:text-primary-500">
+                                        class="h-5 w-5  ">
                                         <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                                         <path fill-rule="evenodd"
                                             d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
@@ -168,7 +168,7 @@
                                     </svg>
                             
                                     <svg *ngIf="passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                        class="h-5 w-5 text-skin-borderBold group-hover:text-primary-500">
+                                        class="h-5 w-5  ">
                                         <path
                                             d="M3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18zM22.676 12.553a11.249 11.249 0 01-2.631 4.31l-3.099-3.099a5.25 5.25 0 00-6.71-6.71L7.759 4.577a11.217 11.217 0 014.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113z" />
                                         <path
@@ -195,12 +195,12 @@
 
                 <div class="flex justify-end gap-5 mt-10">
                     <button type="button"
-                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-base   transition-all duration-200"
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md    transition-all duration-200"
                         (click)="back()">Retour</button>
 
                     <button *ngIf="form.valid" type="submit" [disabled]="saving" [ngClass]="{'opacity-50': saving}"
                         aria-labelledby="Update profile button"
-                        class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md text-skin-white   focus:outline-none">
+                        class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md    focus:outline-none">
                         <svg *ngIf="saving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
                             preserveAspectRatio="xMidYMid">
@@ -212,7 +212,7 @@
                     </button>
                 
                     <button *ngIf="form.invalid" [disabled]="form.invalid || saving" aria-labelledby="Update profile button"
-                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-white  bg-opacity-20">
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md   bg-opacity-20">
                         <span>{{'profileEdit.updateBtn' | translate}}</span>
                     </button>
                 </div>

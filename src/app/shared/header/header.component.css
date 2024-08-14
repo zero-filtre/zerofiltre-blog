@@ -22,7 +22,7 @@
 }
 
 .header .navLink {
-  @apply hidden lg:block mx-4 last:mr-0 hover:text-primary-500 transition-all duration-200;
+  @apply hidden lg:block mx-4 last:mr-0  transition-all duration-200;
 }
 
 .header .navLink div {

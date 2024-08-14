@@ -2,7 +2,7 @@
     <div class="login-content-wrapper flex items-center justify-center">
         <div class="max-w-md w-full space-y-8">
             <div>
-                <h2 class="text-center text-3xl font-extrabold text-skin-inverted">
+                <h2 class="text-center text-3xl font-extrabold ">
                     {{'signup.title' | translate}}
                 </h2>
             </div>
@@ -54,7 +54,7 @@
                                 
                                 <button type="button" class="eye-btn group absolute top-2.5 right-2.5" (click)="togglePasswordVisibility()">
                                     <svg *ngIf="!passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                        class="h-5 w-5 text-skin-borderBold group-hover:text-primary-300">
+                                        class="h-5 w-5  ">
                                         <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                                         <path fill-rule="evenodd"
                                             d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
@@ -62,7 +62,7 @@
                                     </svg>
                                 
                                     <svg *ngIf="passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                        class="h-5 w-5 text-skin-borderBold group-hover:text-primary-300">
+                                        class="h-5 w-5  ">
                                         <path
                                             d="M3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18zM22.676 12.553a11.249 11.249 0 01-2.631 4.31l-3.099-3.099a5.25 5.25 0 00-6.71-6.71L7.759 4.577a11.217 11.217 0 014.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113z" />
                                         <path
@@ -107,7 +107,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <input id="remember_me" name="remember_me" type="checkbox" class="">
-                        <label for="remember_me" class="ml-2 block text-sm text-skin-base font-normal cursor-pointer">
+                        <label for="remember_me" class="ml-2 block text-sm  font-normal cursor-pointer">
                             {{'signup.newsletterInfo' | translate}}
                         </label>
                     </div>
@@ -116,9 +116,9 @@
                 <div>
                     <button *ngIf="form.valid && passwordDoesMatch" type="submit" [disabled]="loading"
                         aria-labelledby="Sign up button" [ngClass]="{'opacity-50': loading}"
-                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-white   focus:outline-none">
+                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md    focus:outline-none">
                         <span class="lock-btn absolute left-0 flex items-center pl-3">
-                            <svg class="h-5 w-5 fill-primary-500 group-hover:fill-primary-300"
+                            <svg class="h-5 w-5  "
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                 aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -138,9 +138,9 @@
 
                     <button *ngIf="form.invalid || !passwordDoesMatch" aria-labelledby="Sign up button"
                         [disabled]="form.invalid || loading || !passwordDoesMatch"
-                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-white  bg-opacity-20">
+                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md   bg-opacity-20">
                         <span class="lock-btn absolute left-0 flex items-center pl-3">
-                            <svg class="h-5 w-5 fill-primary-500 opacity-20" xmlns="http://www.w3.org/2000/svg"
+                            <svg class="h-5 w-5  opacity-20" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd"
                                     d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
@@ -154,7 +154,7 @@
 
             <div class="">
                 <a aria-labelledby="Link to about page" routerLink="/login"
-                    class="inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm  text-sm text-skin-base  focus:outline-none w-full font-normal">
+                    class="inline-flex justify-center py-2 px-4 border  rounded-md shadow-sm  text-sm   focus:outline-none w-full font-normal">
                     <span class="sr-only">{{'signup.login' | translate}}</span>
                     {{'signup.signin' | translate}}
                 </a>
@@ -163,7 +163,7 @@
             <div>
                 <div class="relative mt-5">
                     <div class="relative flex justify-center text-sm">
-                        <span class="px-2 text-skin-base font-normal">
+                        <span class="px-2  font-normal">
                             {{'signup.continue' | translate}}
                         </span>
                     </div>
@@ -173,7 +173,7 @@
                     <div class="flex-1">
                         <a aria-labelledby="Link to sign up with github"
                             href="https://github.com/login/oauth/authorize?client_id={{GITHUB_CLIENT_ID}}&redirect_uri={{gitHubRedirectURL}}&scope=user:email"
-                            class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm  text-sm text-skin-base  focus:outline-none w-full font-normal">
+                            class="button inline-flex justify-center py-2 px-4 border  rounded-md shadow-sm  text-sm   focus:outline-none w-full font-normal">
                             <span class="sr-only">Continuer avec Github</span>
                             <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -186,12 +186,12 @@
                     <div class="flex-1">
                         <a aria-labelledby="Link to sign up with stacckoverflow"
                             href="https://stackoverflow.com/oauth/dialog?client_id={{STACK_OVERFLOW_CLIENT_ID}}&redirect_uri={{stackOverflowRedirectURL}}&scope=no_expiry"
-                            class="button inline-flex justify-center py-2 px-4 border border-skin-border rounded-md shadow-sm  text-sm text-skin-base  focus:outline-none w-full font-normal">
+                            class="button inline-flex justify-center py-2 px-4 border  rounded-md shadow-sm  text-sm   focus:outline-none w-full font-normal">
                             <span class="sr-only">Continuer avec StackOverflow</span>
                             <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
                                 width="64" height="64">
                                 <path d="M28.16 32H2.475V20.58H5.32v8.575h19.956V20.58h2.884z" fill="#bcbbbb" />
-                                <path class="text-skin-muted"
+                                <path class=""
                                     d="M8.477 19.8l13.993 2.923.585-2.806-13.993-2.923zm1.832-6.704l12.94 6.04 1.208-2.572-12.94-6.08zm3.586-6.353l10.99 9.12 1.832-2.183-10.99-9.12zM20.99 0l-2.3 1.715 8.536 11.46 2.3-1.715zM8.166 26.27H22.43v-2.845H8.166v2.845z"
                                     fill="#f48024" />
                             </svg>

@@ -4,43 +4,43 @@
             <div class="admin-dashboard-navigation-btns flex lg:hidden mt-2 sm:mt-8">
                 <button aria-label="Navigate back button" (click)="navigate.back()"
                     class="flex items-center gap-1 font-semibold">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="text-primary-500"
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class=""
                         data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
                         <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
                     </svg>
-                    <span class="text-primary-500 hidden text-base">
+                    <span class=" hidden text-base">
                         {{'adminDashboard.backToProfileText' | translate}}
                     </span>
                 </button>
 
                 <div class="flex-1">
-                    <h1 class="text-primary-500 font-semibold text-xl sm:text-2xl text-center">
+                    <h1 class=" font-semibold text-xl sm:text-2xl text-center">
                         {{'profile.allAdminArticles' | translate}}
                     </h1>
                 </div>
             </div>
 
 
-            <div class="tabs-wrapper mt-8 border-b border-skin-border">
+            <div class="tabs-wrapper mt-8 border-b ">
                 <nav class="relative flex space-x-8 -mb-[2px]" aria-label="Tabs">
                     <button type="button" aria-current="page" (click)="sortBy(PUBLISHED)"
                         aria-labelledby="Toggle to published articles tab"
                         [ngClass]="activePage === PUBLISHED ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        class="   py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'adminDashboard.published' | translate}}</span>
                     </button>
 
                     <button type=" button" aria-current="false" (click)="sortBy(DRAFT)"
                         aria-labelledby="Toggle to draft articles tab"
                         [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        class="   py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'adminDashboard.draft' | translate}}</span>
                     </button>
 
                     <button type="button" aria-current="false" (click)="sortBy(IN_REVIEW)"
                         aria-labelledby="Toggle to in-review articles tab"
                         [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        class="   py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
                         <span>{{'adminDashboard.inReview' | translate}}</span>
                     </button>
                 </nav>
@@ -79,12 +79,12 @@
                                             [queryParams]="{tag:tag.name}"
                                             class="tag-item flex items-center space-x-2 group">
                                             <span
-                                                class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
+                                                class="inline-flex  items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border ">
                                                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
                                                     fill="currentColor" viewBox="0 0 8 8">
                                                     <circle cx="4" cy="4" r="3"></circle>
                                                 </svg>
-                                                <span class="hover:text-primary-500">
+                                                <span class="">
                                                     {{tag.name}}
                                                 </span>
 
@@ -97,7 +97,7 @@
                                             <button [matMenuTriggerFor]="menu"
                                                 class="rounded-full p-2 opacity-0 group-hover:opacity-100  transition-all duration-500"
                                                 aria-label="icon-button with a menu">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-secondary"
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 "
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
@@ -105,9 +105,9 @@
                                                 </svg>
                                             </button>
 
-                                            <mat-menu #menu="matMenu" class="font-normal text-skin-base ">
+                                            <mat-menu #menu="matMenu" class="font-normal  ">
                                                 <a aria-labelledby="Link to article edit page" routerLink="/articles/{{article|slugify}}/edit"
-                                                    class="flex items-end gap-3 px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
+                                                    class="flex items-end gap-3 px-4 py-2   text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -117,7 +117,7 @@
                                                     <span>{{ 'articleDetail.edit' | translate }}</span>
                                                 </a>
                                                 <button (click)="openArticleDeleteDialog(article?.id)" aria-labelledby="Delete article button"
-                                                    class="flex items-end gap-3 w-full text-left px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
+                                                    class="flex items-end gap-3 w-full text-left px-4 py-2   text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -134,13 +134,13 @@
                                     <a aria-labelledby="Link to about page" routerLink="/articles/{{article|slugify}}"
                                         class="article-title">
                                         <h4
-                                            class="text-lg inline-block leading-6 font-semibold text-skin-inverted hover:text-primary-500 transition-all duration-200">
+                                            class="text-lg inline-block leading-6 font-semibold   transition-all duration-200">
                                             {{capitalize(article?.title!)}}
                                         </h4>
                                     </a>
 
                                     <p
-                                        class="article-description mt-2 text-sm tracking-wide font-light text-skin-base leading-5 line-clamp-2">
+                                        class="article-description mt-2 text-sm tracking-wide font-light  leading-5 line-clamp-2">
                                         <ng-container *ngIf="article?.summary">{{article?.summary}}</ng-container>
                                     </p>
 
@@ -156,14 +156,14 @@
                                         </div>
 
                                         <div class="author-text ml-3">
-                                            <p class="text-sm font-semibold text-skin-inverted">
+                                            <p class="text-sm font-semibold ">
                                                 <a aria-labelledby="Link to about page"
                                                     [routerLink]="authService?.currentUsr?.id == article?.author?.id ? ['/user/profile'] : ['/user/' + article?.author?.id]"
                                                     class="hover:underline">
                                                     {{article?.author?.fullName}}
                                                 </a>
                                             </p>
-                                            <div class="flex space-x-1 text-sm text-skin-muted">
+                                            <div class="flex space-x-1 text-sm ">
                                                 <time [dateTime]="article?.publishedAt || article?.lastSavedAt | date">
                                                     {{article?.publishedAt || article?.lastSavedAt | date}}
                                                 </time>
@@ -175,10 +175,10 @@
                                         </div>
 
                                         <div
-                                            class="reactions-total flex items-center justify-end text-skin-inverted gap-2 flex-1 self-end text-right text-sm font-semibold">
+                                            class="reactions-total flex items-center justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
                                             <span class="inline-flex items-center gap-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="inline w-[18px] text-accent-300" fill="none"
+                                                    class="inline w-[18px] " fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -189,7 +189,7 @@
                                             </span>
 
                                             <span class="inline-flex items-center gap-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-4 text-accent-300" viewBox="0 0 20 20" fill="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-4 " viewBox="0 0 20 20" fill="currentColor">
                                                     <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
                                                 </svg>
                                                 <span>{{nFormater(article?.reactions?.length)}}</span>
@@ -278,18 +278,18 @@
 
                 <ng-template [ngIf]="errorMessage && articles?.length === 0">
                     <div class="flex flex-col justify-center items-center h-96 space-y-5">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-primary-500" fill="currentColor"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 " fill="currentColor"
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
                         </svg>
-                        <div class="text-sm font-semibold text-skin-base">{{errorMessage}}</div>
+                        <div class="text-sm font-semibold ">{{errorMessage}}</div>
                     </div>
                 </ng-template>
 
                 <!-- loadingMorespinner -->
                 <div *ngIf="loadingMore" class="flex justify-center py-5">
-                    <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                    <svg class="w-10 h-10 animate-spin " xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
                         preserveAspectRatio="xMidYMid">
                         <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
@@ -301,7 +301,7 @@
                 <!-- Alert no more Articles -->
                 <!-- <div *ngIf="notEmptyArticles && !loadingMore" class="py-5">
                     <div class="flex justify-center">
-                        <div class="text-skin-base text-sm font-bold">{{'adminDashboard.noMoreArticles' | translate}}
+                        <div class=" text-sm font-bold">{{'adminDashboard.noMoreArticles' | translate}}
                         </div>
                     </div>
                 </div> -->

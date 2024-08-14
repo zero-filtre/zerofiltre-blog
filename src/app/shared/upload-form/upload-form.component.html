@@ -5,25 +5,25 @@
                 *ngIf="uploadProgress">
             </mat-progress-bar>
             <mat-icon aria-label="cancel upload"
-                class="cancel-upload text-primary-200 cursor-pointer hover:text-error transition-colors duration-300"
+                class="cancel-upload  cursor-pointer hover:text-error transition-colors duration-300"
                 (click)="cancelUpload()" *ngIf="uploadProgress">
                 delete_forever</mat-icon>
         </div>
 
         <div class="name text-center">
-            <span class="text-xl text-skin-base">{{fileName}}</span>
+            <span class="text-xl ">{{fileName}}</span>
         </div>
 
         <div class="action-buttons flex justify-center gap-1 sm:gap-3">
             <button aria-labelledby="cancel"
-                class="px-4 py-2 border border-skin-border rounded-full shadow-sm  text-sm leading-5 font-semibold text-skin-base  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200"
+                class="px-4 py-2 border  rounded-full shadow-sm  text-sm leading-5 font-semibold   focus:outline-none focus:ring-2 focus:ring-offset-2  transition-all duration-200"
                 (click)="onNoClick()">
                 {{'app.cancel' | translate}}
             </button>
 
             <button type="submit" [disabled]="loading" (click)="uploadVideoFile(0)" [ngClass]="{'opacity-50 cursor-not-allowed': loading}"
                 aria-labelledby="Login button"
-                class="px-4 py-2 border-2 border-primary-500 rounded-full shadow-sm  text-sm leading-5 font-semibold text-skin-white hover:text-skin-white  hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
+                class="px-4 py-2 border-2  rounded-full shadow-sm  text-sm leading-5 font-semibold     focus:outline-none focus:ring-offset-2   transition-all duration-200">
 
                 <span *ngIf="!loading">Charger la video</span>
                 <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"

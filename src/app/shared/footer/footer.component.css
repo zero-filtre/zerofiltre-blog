@@ -23,7 +23,7 @@
 }
 
 .yellow-text {
-  @apply text-accent-400 font-bold;
+  @apply  font-bold;
 }
 
 .contact li:first-child {

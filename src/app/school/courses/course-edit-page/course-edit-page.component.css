@@ -4,7 +4,7 @@
 .editor-textarea {
   border: none;
   outline-color: transparent;
-  @apply focus:ring-1 ring-primary-500;
+  @apply focus:ring-1 ;
 }
 
 .drag_elts_parent {

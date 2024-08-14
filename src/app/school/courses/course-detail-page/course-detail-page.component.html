@@ -1,4 +1,4 @@
-<main class="text-skin-art min-h-screen">
+<main class=" min-h-screen">
     <div class="flex justify-center items-center h-[88vh]" *appShellRender>
         <svg class="w-40 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -43,7 +43,7 @@
 
                 <div *ngIf="section.position == 1">
                     <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
-                        class="mb-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm  text-skin-white font-normal  transition-all duration-300">
+                        class="mb-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm   font-normal  transition-all duration-300">
                         <span class="text-center">Débuter le cours</span>
 
                         <span class="mt-1">
@@ -60,7 +60,7 @@
                 </ng-container>
             </ng-container>
 
-            <section class="reactions !py-6 border  dark: grid place-items-center border-skin-border">
+            <section class="reactions !py-6 border  dark: grid place-items-center ">
                 <!-- *ngIf="!loading && (isPublished$ | async)" -->
                 <div class="site-container pt-5 flex flex-wrap justify-center lg:justify-start">
                     <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
@@ -73,7 +73,7 @@
                                 <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
                                     {{reaction.emoji}}
                                 </div>
-                                <div class="text-lg font-semibold text-skin-link dark:text-secondary">
+                                <div class="text-lg font-semibold  ">
                                     {{clapReactions$ | async}}
                                 </div>
                             </ng-container>
@@ -81,7 +81,7 @@
                                 <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
                                     {{reaction.emoji}}
                                 </div>
-                                <div class="text-lg font-semibold text-skin-link dark:text-secondary">
+                                <div class="text-lg font-semibold  ">
                                     {{fireReactions$ | async}}
                                 </div>
                             </ng-container>
@@ -89,7 +89,7 @@
                                 <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
                                     {{reaction.emoji}}
                                 </div>
-                                <div class="text-lg font-semibold text-skin-link dark:text-secondary">
+                                <div class="text-lg font-semibold  ">
                                     {{loveReactions$ | async}}
                                 </div>
                             </ng-container>
@@ -97,7 +97,7 @@
                                 <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
                                     {{reaction.emoji}}
                                 </div>
-                                <div class="text-lg font-semibold text-skin-link dark:text-secondary">
+                                <div class="text-lg font-semibold  ">
                                     {{likeReactions$ | async}}
                                 </div>
                             </ng-container>
@@ -129,7 +129,7 @@
             </section>
 
             <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
-                class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm  text-skin-white font-normal  transition-all duration-300">
+                class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm   font-normal  transition-all duration-300">
                 <span class="text-center">Débuter le cours</span>
 
                 <span class="mt-1">

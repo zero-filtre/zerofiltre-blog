@@ -1,19 +1,19 @@
 <main class="">
     <section
-        class="overflow-hidden relative course-section min-h-[600px] xl:min-h-[800px] pb-16 pt-4  md:pt-8 lg:py-16 grid place-items-center -mt-[80px] bg-gradient-to-b lg:bg-gradient-to-r from-skin-bg to-transparent">
+        class="overflow-hidden relative course-section min-h-[600px] xl:min-h-[800px] pb-16 pt-4  md:pt-8 lg:py-16 grid place-items-center -mt-[80px] bg-gradient-to-b lg:bg-gradient-to-br from-skin-hue via-skin-hue to-transparent">
         <div class="site-container mx-auto mt-20 lg:mt-10">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
                     class="text-block basis-2/3 text-center lg:text-left flex flex-col items-start lg:pt-10 lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pr-20">
                     <h1
-                        class="text-3xl sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight text-secondary mb-10">
+                        class="text-3xl sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight  mb-10">
                         <!-- {{'home.coursesTitle' | translate}} -->
-                        Dopez vos <span class="text-primary-500">compétences</span> sur des sujets techniques afin de
-                        devenir un <span class="text-accent-400">profil désiré</span> par des
+                        Dopez vos <span class="">compétences</span> sur des sujets techniques afin de
+                        devenir un <span class="">profil désiré</span> par des
                         entreprises !
                     </h1>
 
-                    <p class="leading-relaxed mb-14 lg:text-lg text-secondary font-light">
+                    <p class="leading-relaxed mb-14 lg:text-lg  font-light">
                         <!-- {{'home.coursesText' | translate}} -->
                         Vous souhaitez changer ou améliorer votre carrière?
                         Faites-vous accompagner par des experts du métier
@@ -23,7 +23,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a *ngIf="activeCourseModule" aria-labelledby="Link to courses page" routerLink="cours"
-                            class="flex items-center justify-center gap-2 shadow-md text-base  text-skin-bg py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center gap-2 shadow-md text-base   py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreCourses' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none"
@@ -60,7 +60,7 @@
         </div>
 
         <div class="hidden md:block absolute bottom-[2%] left-4 xl:left-16">
-            <svg class="h-5 w-5 sm:w-8 sm:h-8 fill-primary-500" width="44" height="43" viewBox="0 0 44 43" fill="none"
+            <svg class="h-5 w-5 sm:w-8 sm:h-8 " width="44" height="43" viewBox="0 0 44 43" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M38.3042 0.19944L3.56542 10.2891C0.526382 11.1848 -0.577627 14.9881 1.61191 17.1687L26.4042 41.8591C28.5938 44.0397 32.3925 42.92 33.2757 39.8773L43.2223 5.0973C44.1054 2.0546 41.3769 -0.662718 38.3042 0.19944Z"
@@ -69,7 +69,7 @@
         </div>
 
         <div class="hidden md:block absolute bottom-5 right-1/3 rotate-90">
-            <svg class="h-5 w-5 sm:w-6 sm:h-6 fill-accent-400" width="44" height="43" viewBox="0 0 44 43" fill="none"
+            <svg class="h-5 w-5 sm:w-6 sm:h-6 " width="44" height="43" viewBox="0 0 44 43" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M38.3042 0.19944L3.56542 10.2891C0.526382 11.1848 -0.577627 14.9881 1.61191 17.1687L26.4042 41.8591C28.5938 44.0397 32.3925 42.92 33.2757 39.8773L43.2223 5.0973C44.1054 2.0546 41.3769 -0.662718 38.3042 0.19944Z"
@@ -82,21 +82,21 @@
     <app-carousel></app-carousel>
 
     <section
-        class="blog-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-l from-primary-800 to-primary-500 dark:from-skin-bg dark:to-transparent dark:bg-gradient-to-r">
+        class="blog-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-br from-skin-hue via-skin-hue to-transparent">
         <div class="site-container mx-auto">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
                     class="text-block lg:order-2 basis-2/3 text-center lg:text-left flex flex-col items-start lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pl-20">
                     <h1
-                        class="text-3xl sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight text-skin-white dark:text-secondary mb-10">
+                        class="text-3xl sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight   mb-10">
                         <!-- {{'home.blogTitle' | translate}} -->
-                        Rejoignez notre <span class="text-accent-400">communauté d'experts</span> afin de <span
-                            class="text-accent-400">partager</span>
-                        mais surtout <span class="text-accent-400">apprendre</span> d'ingénieurs passionnés par ce
+                        Rejoignez notre <span class="">communauté d'experts</span> afin de <span
+                            class="">partager</span>
+                        mais surtout <span class="">apprendre</span> d'ingénieurs passionnés par ce
                         qu'ils font !
                     </h1>
 
-                    <p class="leading-relaxed mb-14 lg:text-lg text-skin-white dark:text-secondary font-light">
+                    <p class="leading-relaxed mb-14 lg:text-lg   font-light">
                         <!-- {{'home.blogText' | translate}} -->
                         Faire partie de la communauté zerofiltre c'est profiter d'astuces et
                         d'articles validés avec soin, mais aussi avoir la possibilité
@@ -107,7 +107,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a aria-labelledby="Link to about page" routerLink="/articles"
-                            class="flex items-center justify-center gap-2 shadow-md text-base  text-skin-bg py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center gap-2 shadow-md text-base   py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreBlog' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -130,19 +130,19 @@
     </section>
 
     <section
-        class="service-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-r from-skin-bg to-transparent">
+        class="service-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-br from-skin-hue via-skin-hue to-transparent">
         <div class="site-container mx-auto">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
                     class="text-block basis-2/3 text-center lg:text-left flex flex-col items-start lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pr-20">
                     <h1
-                        class="text-3xl sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight text-secondary mb-10">
+                        class="text-3xl sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight  mb-10">
                         <!-- {{'home.servicesTitle' | translate}} -->
-                        Nous fournissons des services à <span class="text-primary-500">valeur ajoutée</span> avec une
-                        approche taillée pour chaque <span class="text-accent-400">enterprise</span>.
+                        Nous fournissons des services à <span class="">valeur ajoutée</span> avec une
+                        approche taillée pour chaque <span class="">enterprise</span>.
                     </h1>
 
-                    <p class="leading-relaxed mb-14 lg:text-lg text-secondary font-light">
+                    <p class="leading-relaxed mb-14 lg:text-lg  font-light">
                         <!-- {{'home.servicesText' | translate}} -->
                         Notre équipe d’experts en développement d’applications d’entreprises, web et mobiles vous
                         délivrent le service adéquat comme vous l’imaginez et quand vous le voulez.
@@ -151,7 +151,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a aria-labelledby="Link to about page" href="{{servicesUrl}}" target="_blank"
-                            class="flex items-center justify-center gap-2 shadow-md text-base  text-skin-bg py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center gap-2 shadow-md text-base   py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreServices' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"

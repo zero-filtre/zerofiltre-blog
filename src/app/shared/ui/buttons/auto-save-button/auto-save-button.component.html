@@ -3,7 +3,7 @@
 
         <ng-container *ngIf="form.invalid; else validBtn">
             <button [disabled]="form.invalid || loading" aria-labelledby="button to publish or submit an artticle"
-                class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full text-skin-white  bg-opacity-20">
+                class="group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-full   bg-opacity-20">
                 <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">
                     {{ 'articleEntryEdit.publishBtn' | translate }}</span>
                 <span *ngIf="!isPublishing && !isPublished && !authService.isAdmin">
@@ -14,7 +14,7 @@
         <ng-template #validBtn>
             <button type="submit" aria-labelledby="button to publish or submit an article" (click)="initPublish()"
                 [disabled]="isSaving || isPublishing" [ngClass]="{'opacity-50': isSaving || isPublishing }"
-                class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full text-skin-white   focus:outline-none transition-all duration-200">
+                class="group font-semibold relative w-full flex justify-center gap-2 py-2 px-4 border border-transparent text-sm shadow-lg rounded-full    focus:outline-none transition-all duration-200">
                 <span *ngIf="(!isPublishing && isPublished) || authService.isAdmin">
                     {{ 'articleEntryEdit.publishBtn' | translate }}
                 </span>
@@ -36,7 +36,7 @@
 
 
     <button *ngIf="isSaving" class="relative group" aria-label="saving article">
-        <svg class="w-6 h-6 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+        <svg class="w-6 h-6 animate-spin " xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
             preserveAspectRatio="xMidYMid">
             <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
@@ -50,7 +50,7 @@
     </button>
 
     <button *ngIf="isSaved && !isSaving" class="relative group" aria-label="successfully saved">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none" viewBox="0 0 24 24"
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 " fill="none" viewBox="0 0 24 24"
             stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>

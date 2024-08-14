@@ -3,8 +3,8 @@
         class="editor-header shadow-sm mt-4 font-semibold relative flex items-center justify-between w-full ">
         <div class="flex items-center">
             <div (click)="setActiveTab('editor')"
-                class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer  sm:text-base">
-                <svg [ngClass]="activeTab == 'editor' ? 'text-primary-500' : ''" class="w-4 h-4"
+                class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold  cursor-pointer  sm:text-base">
+                <svg [ngClass]="activeTab == 'editor' ? '' : ''" class="w-4 h-4"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
                     fill="currentColor" stroke="currentColor">
                     <path
@@ -12,7 +12,7 @@
                     </path>
                 </svg>
                 <span class="hidden sm:block"
-                    [ngClass]="{'text-primary-500' : activeTab == 'editor', fullScreenOn : 'hidden sm:block'}">
+                    [ngClass]="{'' : activeTab == 'editor', fullScreenOn : 'hidden sm:block'}">
                     {{ 'articleEntryEdit.editTabText' | translate }}
                 </span>
                 <div [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
@@ -21,8 +21,8 @@
             </div>
 
             <div (click)="setActiveTab('preview')"
-                class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
-                <svg [ngClass]="activeTab == 'preview' ? 'text-primary-500' : ''" class="w-5 h-5"
+                class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold  cursor-pointer sm:text-base">
+                <svg [ngClass]="activeTab == 'preview' ? '' : ''" class="w-5 h-5"
                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                     aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -32,7 +32,7 @@
                     </path>
                 </svg>
                 <span class="hidden sm:block"
-                    [ngClass]="{'text-primary-500' : activeTab == 'preview', fullScreenOn : 'hidden sm:block'}">
+                    [ngClass]="{'' : activeTab == 'preview', fullScreenOn : 'hidden sm:block'}">
                     {{ 'articleEntryEdit.previewTabText' | translate }}
                 </span>
                 <div [ngClass]="activeTab == 'preview' ? 'active-tab' : ''"
@@ -41,14 +41,14 @@
             </div>
 
             <div (click)="setActiveTab('help')"
-                class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer sm:text-base">
-                <svg xmlns="http://www.w3.org/2000/svg" [ngClass]="activeTab == 'help' ? 'text-primary-500' : ''"
+                class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold  cursor-pointer sm:text-base">
+                <svg xmlns="http://www.w3.org/2000/svg" [ngClass]="activeTab == 'help' ? '' : ''"
                     class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span class="hidden sm:block"
-                    [ngClass]="{'text-primary-500' : activeTab == 'help', fullScreenOn : 'hidden sm:block'}">
+                    [ngClass]="{'' : activeTab == 'help', fullScreenOn : 'hidden sm:block'}">
                     {{ 'articleEntryEdit.helpTabText' | translate }}
                 </span>
                 <div [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
@@ -68,13 +68,13 @@
             </div>
 
             <button *ngIf="fullscreenBtn" aria-label="click here to enter full screen" (click)="toggleFullScreen()"
-                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base  hover:text-primary-500 transition-all duration-200">
+                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full    transition-all duration-200">
                 <mat-icon *ngIf="!fullScreenOn" class="">fullscreen</mat-icon>
                 <mat-icon *ngIf="fullScreenOn" class="">fullscreen_exit</mat-icon>
             </button>
 
             <div *ngIf="imageBtn"
-                class="add_image_btn relative cursor-pointer inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base  hover:text-primary-500 transition-all duration-200">
+                class="add_image_btn relative cursor-pointer inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full    transition-all duration-200">
                 <input class="sr-only" (change)="onFileSelected($event)" type="file" id="editorFileUpload"
                     name="editorFileUpload" #editorFileUpload accept="image/*">
                 <svg (click)="editorFileUpload.click()" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -88,7 +88,7 @@
 
         <ng-template #exitFullScreenBtn>
             <button *ngIf="fullscreenBtn" aria-label="click here to enter full screen" (click)="toggleFullScreen()"
-                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base  hover:text-primary-500 transition-all duration-200">
+                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full    transition-all duration-200">
                 <mat-icon *ngIf="!fullScreenOn" class="">fullscreen</mat-icon>
                 <mat-icon *ngIf="fullScreenOn" class="">fullscreen_exit</mat-icon>
             </button>
@@ -115,12 +115,12 @@
         </div>
 
         <div *ngIf="activeTab === 'help'"
-            class="help-container h-full overflow-y-scroll  p-4 pb-24 prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:p-1 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-code:mx-1 prose-ul:list-disc prose-ol:list-disc">
+            class="help-container h-full overflow-y-scroll  p-4 pb-24 prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none  prose-headings:font-bold prose-headings: prose-a: prose-code:bg-gray-900 prose-code:p-1 prose-code:rounded-md prose-code: prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-code:mx-1 prose-ul:list-disc prose-ol:list-disc">
             <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
             <p>
                 {{'articleEntryEdit.helpSubTitle' | translate}}
                 <a aria-labelledby="Link to about page" rel="noopener"
-                    class="text-primary-500 font-semibold no-underline" href="https://commonmark.org/help/"
+                    class=" font-semibold no-underline" href="https://commonmark.org/help/"
                     target="_blank"> Aide-mémoire
                 </a>
             </p>
@@ -136,13 +136,13 @@
                 <span class="mr-2">Code en ligne</span>
                 <br>
                 <span class="flex items-center  space-x-4">
-                    <span class=" p-1 text-primary-500 rounded-md">`backtick`</span>
+                    <span class=" p-1  rounded-md">`backtick`</span>
                     <markdown ngPreserveWhitespaces class="">
                         `backtick`
                     </markdown>
                 </span>
                 <span class="block mt-2 mr-2">Bloc de code</span>
-                <span class="block p-1  text-primary-500 ">
+                <span class="block p-1   ">
                     ```ext<br>Trois backticks suivi de l'extension de votre langage de
                     programmation puis entrez vos blocs de code ici.<br>```
                     <br>
@@ -180,22 +180,22 @@
             <h3>Liens</h3>
             <p>Vous pouvez ajouter <a aria-labelledby="Example markdown link" href="#_">des
                     liens</a> en ajoutant du texte à l'intérieur de
-                <span class="p-1  text-primary-500 ">[]</span> et le lien à
-                l'intérieur de <span class="p-1  text-primary-500 ">()</span>,
+                <span class="p-1   ">[]</span> et le lien à
+                l'intérieur de <span class="p-1   ">()</span>,
                 ainsi:
             </p>
-            <div class="p-1 font-semibold  text-primary-500 ">
+            <div class="p-1 font-semibold   ">
                 [link_text](https://google.com)</div>
             <hr>
             <h3>Listes</h3>
             <p>Pour ajouter une liste numérotée, vous pouvez simplement commencer par un nombre
                 et
-                un <span class="p-1  text-primary-500 ">.</span>, ainsi:<br><span
-                    class="block p-1 pl-5  text-primary-500 "> 1.
+                un <span class="p-1   ">.</span>, ainsi:<br><span
+                    class="block p-1 pl-5   "> 1.
                     Le premier élément de ma liste</span></p>
             <p>Pour une liste non ordonnée, vous pouvez ajouter un tiret <span
-                    class="p-1  text-primary-500 ">-</span>, ainsi:<br><span
-                    class="block p-1 pl-5  text-primary-500 "> - Le début de ma
+                    class="p-1   ">-</span>, ainsi:<br><span
+                    class="block p-1 pl-5   "> - Le début de ma
                     liste</span></p>
             <hr>
             <h3>Images</h3>
@@ -203,14 +203,14 @@
                 et
                 ajoutera une image à l'éditeur, ou
                 vous pouvez ajouter manuellement l'image en ajoutant un point d'exclamation
-                <span class="p-1  text-primary-500 ">!</span>, suivi du texte
+                <span class="p-1   ">!</span>, suivi du texte
                 alternatif
-                à l'intérieur de <span class="p-1  text-primary-500 ">[]</span>,
+                à l'intérieur de <span class="p-1   ">[]</span>,
                 et
-                l'URL de l'image à l'intérieur de <span class="p-1  text-primary-500 ">()</span>,
+                l'URL de l'image à l'intérieur de <span class="p-1   ">()</span>,
                 ainsi:
             </p>
-            <div class="p-1 font-semibold  text-primary-500 ">
+            <div class="p-1 font-semibold   ">
                 ![texte alternatif pour l'image](url_vers_image.png)
                 <div class="mt-5 break-words font-normal">
                     <span>
@@ -228,7 +228,7 @@
             <hr>
             <h3>Séparateur</h3>
             <p>Pour ajouter un séparateur, vous pouvez ajouter trois tirets ou trois
-                astérisques:<br><span class="block p-1 pl-5  text-primary-500 ">--- or
+                astérisques:<br><span class="block p-1 pl-5   ">--- or
                     ***</span>
             </p>
         </div>

@@ -6,17 +6,17 @@
         </svg>
     </button>
 
-    <h1 class="mb-10 text-center text-xl lg:text-4xl text-secondary underline underline-offset-4">Edition de la section
+    <h1 class="mb-10 text-center text-xl lg:text-4xl  underline underline-offset-4">Edition de la section
     </h1>
 
     <form [formGroup]="form" class="lg:max-w-4xl mx-auto">
         <div class="mb-10">
-            <label for="title" class="block text-base font-medium leading-5 text-skin-base mb-5">
+            <label for="title" class="block text-base font-medium leading-5  mb-5">
                 Titre:
             </label>
 
             <input id="title" required minlength="4" formControlName="title"
-                class="w-full bg-transparent border-b border-skin-border focus:border-primary-500 !pb-2 focus:outline-none placeholder:text-skin-muted text-secondary text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
+                class="w-full bg-transparent border-b   !pb-2 focus:outline-none   text-xl sm:text-2xl lg:text-5xl font-medium placeholder:font-medium placeholder:text-xl sm:placeholder:text-2xl lg:placeholder:text-5xl"
                 placeholder="Entrez le titre de la section..." autocomplete="off" />
 
             <div *ngIf="title?.invalid && title?.dirty" class="">
@@ -31,7 +31,7 @@
 
         <div class="mb-10">
             <div class="section-image-preview-wrapper">
-                <label for="image" class="block text-base font-medium leading-5 text-skin-base mb-5">
+                <label for="image" class="block text-base font-medium leading-5  mb-5">
                     Image:
                 </label>
 
@@ -39,19 +39,19 @@
                     <label *ngIf="!uploading" for="file" (click)="fileUpload.click()"
                         class="preview-label group flex items-center justify-center rounded-md cursor-pointer">
                         <div class="text-center">
-                            <svg class="mx-auto h-10 w-10 text-skin-muted" stroke="currentColor" fill="none"
+                            <svg class="mx-auto h-10 w-10 " stroke="currentColor" fill="none"
                                 viewBox="0 0 48 48">
                                 <path
                                     d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
-                            <p class="mt-1 text-xs text-skin-base leading-6">
+                            <p class="mt-1 text-xs  leading-6">
                                 <span
-                                    class="font-semibold text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                                    class="font-semibold  focus:outline-none focus:underline transition duration-150 ease-in-out">
                                     Télécharger un fichier
                                 </span>
                             </p>
-                            <p class="mt-1 text-xs text-skin-muted">
+                            <p class="mt-1 text-xs ">
                                 PNG, JPG, GIF up to 5MB
                             </p>
 
@@ -61,7 +61,7 @@
                     </label>
 
                     <div *ngIf="uploading" class="flex items-center justify-center shadow-lg rounded-lg border">
-                        <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+                        <svg class="w-10 h-10 animate-spin " xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
                             viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                             <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
@@ -76,7 +76,7 @@
                     <app-image [classes]="'object-cover'" [sourceUrl]="image?.value!" [alt]="title.value">
                     </app-image>
 
-                    <div class="cover-close-btn absolute left-auto top-1 right-1 z-10 flex justify-center items-center w-12 h-12 text-sm leading-tight text-skin-white  rounded-full opacity-80 cursor-pointer hover:opacity-100  hover:bg-error"
+                    <div class="cover-close-btn absolute left-auto top-1 right-1 z-10 flex justify-center items-center w-12 h-12 text-sm leading-tight   rounded-full opacity-80 cursor-pointer hover:opacity-100  hover:bg-error"
                         (click)="removeSectionImage()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             class="w-6 h-6">
@@ -89,7 +89,7 @@
         </div>
 
         <div class="mb-10">
-            <label for="content" class="block text-base font-medium leading-5 text-skin-base mb-5">
+            <label for="content" class="block text-base font-medium leading-5  mb-5">
                 Contenu:
             </label>
 
@@ -99,7 +99,7 @@
         </div>
 
         <div class="mb-10">
-            <label for="content" class="block text-base font-medium leading-5 text-skin-base mb-5">
+            <label for="content" class="block text-base font-medium leading-5  mb-5">
                 Position:
             </label>
             <mat-form-field appearance="fill">
@@ -115,14 +115,14 @@
 
         <div class="action-buttons flex justify-center gap-1 sm:gap-3 mt-10">
             <button aria-labelledby="cancel"
-                class="px-4 py-2 border border-skin-border rounded-full shadow-sm  text-sm leading-5 font-semibold text-skin-base  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200"
+                class="px-4 py-2 border  rounded-full shadow-sm  text-sm leading-5 font-semibold   focus:outline-none focus:ring-2 focus:ring-offset-2  transition-all duration-200"
                 (click)="onNoClick()">
                 {{'app.cancel' | translate}}
             </button>
 
             <button type="submit" [disabled]="loading || form.invalid" (click)="onCreateSection()"
                 [ngClass]="{'opacity-50': loading || form.invalid}" aria-labelledby="Save button"
-                class="px-4 py-2 border-2 border-primary-500 rounded-full shadow-sm  text-sm leading-5 font-semibold text-skin-white hover:text-skin-white  hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
+                class="px-4 py-2 border-2  rounded-full shadow-sm  text-sm leading-5 font-semibold     focus:outline-none focus:ring-offset-2   transition-all duration-200">
 
                 <span *ngIf="!loading">Enregistrer</span>
                 <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"

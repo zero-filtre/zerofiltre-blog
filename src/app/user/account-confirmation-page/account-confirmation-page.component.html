@@ -1,6 +1,6 @@
 <main class="site-container relative py-28 sm:py-36 max-w-7xl mx-auto">
     <div *ngIf="loading && !isTokenValid" class="flex items-center justify-center">
-        <svg class="w-20 h-20 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+        <svg class="w-20 h-20 animate-spin " xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
             preserveAspectRatio="xMidYMid">
             <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
@@ -15,7 +15,7 @@
         </p>
         <div class="text-sm mt-2">
             <a aria-labelledby="Link to about page" routerLink="/resendConfirmation" class="cursor-pointer"
-                class="font-semibold text-primary-500 hover:text-primary-300 underline transition-all">
+                class="font-semibold   underline transition-all">
                 {{'app.resendAccountConfirmationLinkText' | translate}}
             </a>
         </div>
@@ -27,18 +27,18 @@
 
             <div class="flex items-center gap-10 text-sm mt-5">
                 <a aria-labelledby="Link to about page" routerLink="/cours"
-                    class="font-semibold text-primary-500 hover:text-primary-300 underline transition-all">
+                    class="font-semibold   underline transition-all">
                     Liste de cours
                 </a>
                 <div>
                     <button aria-label="Button to create a new article" (click)="openArticleEntryDialog()" type="button"
-                        class="rounded-lg lg:border lg:border-primary-500 pl-2 pr-5 flex gap-1 items-center hover:shadow-md transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-skin-white fill-primary-500 border-primary-500"
+                        class="rounded-lg lg:border  pl-2 pr-5 flex gap-1 items-center hover:shadow-md transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10   "
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"
                                 d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span class="text-primary-500">Rédiger un article</span>
+                        <span class="">Rédiger un article</span>
                     </button>
                 </div>
             </div>
@@ -46,7 +46,7 @@
     </div>
 
     <div *ngIf="true" class="max-w-3xl mx-auto">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-28 w-28 text-primary-500" fill="none" viewBox="0 0 24 24"
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-28 w-28 " fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -54,18 +54,18 @@
         <p class="sm:text-2xl mt-5">{{'accountConfirmation.accountVeriedText' | translate}}</p>
         <div class="flex items-center gap-10 text-sm mt-5">
             <a aria-labelledby="Link to about page" routerLink="/cours"
-                class="font-semibold text-primary-500 hover:text-primary-300 underline transition-all">
+                class="font-semibold   underline transition-all">
                 Liste de cours
             </a>
             <div>
                 <button aria-label="Button to create a new article" (click)="openArticleEntryDialog()" type="button"
-                    class="rounded-lg lg:border lg:border-primary-500 pl-2 pr-5 flex gap-1 items-center hover:shadow-md transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-skin-white fill-primary-500 border-primary-500"
+                    class="rounded-lg lg:border  pl-2 pr-5 flex gap-1 items-center hover:shadow-md transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10   "
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"
                             d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span class="text-primary-500">Rédiger un article</span>
+                    <span class="">Rédiger un article</span>
                 </button>
             </div>
         </div>

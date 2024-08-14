@@ -4,17 +4,17 @@
             <div class="profile-edit-navigation-btns flex gap-1 lg:hidden">
                 <button (click)="navigate.back()" class="flex items-center gap-1 font-semibold"
                     aria-label="Naviate back button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="text-primary-500"
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class=""
                         data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
                         <path d="M9 4l-4.87 7H22v2H4.13L9 20H6.56L1 12l5.56-8z"></path>
                     </svg>
-                    <span class="text-primary-500 hidden text-base">
+                    <span class=" hidden text-base">
                         {{'profileEdit.backToProfileText' | translate}}
                     </span>
                 </button>
 
                 <div class="flex-1">
-                    <h1 class="text-primary-500 font-semibold text-lg text-center">{{'profileEdit.title' | translate}}
+                    <h1 class=" font-semibold text-lg text-center">{{'profileEdit.title' | translate}}
                     </h1>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div
                     class="profile-edit-content flex flex-col space-y-4 px-4 py-6 rounded-lg  shadow-md">
                     <div>
-                        <label for="fullName" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="fullName" class="block text-sm font-semibold leading-5 ">
                             {{'profileEdit.fullName' | translate}}
                         </label>
                         <div class="mt-2">
@@ -41,7 +41,7 @@
                     </div>
 
                     <div>
-                        <label for="pseudo" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="pseudo" class="block text-sm font-semibold leading-5 ">
                             {{'profileEdit.pseudo' | translate}}
                         </label>
                         <div class="mt-2">
@@ -53,7 +53,7 @@
                     </div>
 
                     <div>
-                        <label for="profession" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="profession" class="block text-sm font-semibold leading-5 ">
                             {{'profileEdit.profession' | translate}}
                         </label>
                         <div class="mt-2">
@@ -66,7 +66,7 @@
                     </div>
 
                     <div>
-                        <label for="website" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="website" class="block text-sm font-semibold leading-5 ">
                             {{'profileEdit.website' | translate}}
                         </label>
                         <div class="mt-2">
@@ -79,7 +79,7 @@
 
                     <div formArrayName="socialLinks">
 
-                        <label for="reseaux sociaux" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="reseaux sociaux" class="block text-sm font-semibold leading-5 ">
                             {{'profileEdit.socialLinks' | translate}}
                         </label>
 
@@ -88,7 +88,7 @@
 
                         <!-- <div class="relative flex" [formGroupName]="i">
                             <span
-                                class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input  text-skin-base sm:text-sm">
+                                class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input   sm:text-sm">
                                 {{social.value.platform}}
                             </span>
                             <input name="{{social.value.platform}}-link" type="text" id="{{social.value.platform}}-link"
@@ -106,7 +106,7 @@
                             <div class="relative" formGroupName="0">
                                 <div class="flex">
                                     <span
-                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input  text-skin-base sm:text-sm">
+                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input   sm:text-sm">
                                         Twitter
                                     </span>
                                     <input name="twitter-link" type="text" id="twitter-link" formControlName="link"
@@ -124,7 +124,7 @@
                             <div class="relative" formGroupName="1">
                                 <div class="flex">
                                     <span
-                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input  text-skin-base sm:text-sm">
+                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0 border-skin-input   sm:text-sm">
                                         Github
                                     </span>
                                     <input name="github-link" type="text" id="github-link" formControlName="link"
@@ -141,7 +141,7 @@
                             <div class="relative" formGroupName="2">
                                 <div class="flex">
                                     <span
-                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0  text-skin-base sm:text-sm">
+                                        class="inline-flex font-semibold items-center px-3 rounded-l-md border border-r-0   sm:text-sm">
                                         Stackoverflow
                                     </span>
                                     <input name="stackoverflow-link" type="text" id="stackoverflow-link"
@@ -161,7 +161,7 @@
                     </div>
 
                     <div>
-                        <label for="bio" class="block text-sm font-semibold leading-5 text-skin-muted">
+                        <label for="bio" class="block text-sm font-semibold leading-5 ">
                             {{'profileEdit.bio' | translate}}
                         </label>
                         <div class="mt-2">
@@ -177,7 +177,7 @@
                 <div class="action-btns-edit-profil mt-10">
                     <button *ngIf="form.valid" type="submit" [disabled]="loading" [ngClass]="{'opacity-50': loading}"
                         aria-labelledby="Update profile button"
-                        class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md text-skin-white   focus:outline-none">
+                        class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md    focus:outline-none">
                         <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px"
                             viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -190,7 +190,7 @@
 
                     <button *ngIf="form.invalid" [disabled]="form.invalid || loading"
                         aria-labelledby="Update profile button"
-                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-white  bg-opacity-20">
+                        class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md   bg-opacity-20">
                         {{'profileEdit.updateBtn' | translate}}
                     </button>
                 </div>

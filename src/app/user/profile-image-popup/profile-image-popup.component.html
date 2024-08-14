@@ -1,8 +1,8 @@
 <div class="profile-image-content-wrapper">
     <nav class="flex justify-between items-center">
-        <div class="text-skin-base text-lg">Photo de profil</div>
+        <div class=" text-lg">Photo de profil</div>
         <button type="button" aria-label="Close profile image popup" (click)="onNoClick()">
-            <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6 text-skin-base"
+            <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6 "
                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -17,14 +17,14 @@
 
         <ng-container *ngIf="!user?.profilePicture && !uploading">
             <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-full p-2 self-center border-2  border-primary-500 text-skin-white fill-white"
+                class="w-full p-2 self-center border-2    fill-white"
                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
         </ng-container>
         <ng-container *ngIf="uploading">
-            <svg class="w-10 h-10 z-10 self-center animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+            <svg class="w-10 h-10 z-10 self-center animate-spin " xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                 <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
                     stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
@@ -35,12 +35,12 @@
             (change)="onFileSelected($event)" accept="image/*">
     </div>
 
-    <hr class="border border-primary-500 rounded" />
+    <hr class="border  rounded" />
 
     <div class="action-buttons mt-6 flex justify-center space-x-2">
         <button aria-labelledby="Add a profile picture button" [ngClass]="{'opacity-20': uploading}"
             [disabled]="uploading" (click)="fileUpload.click()" class=" group font-semibold flex justify-center items-center space-x-1 py-2 px-4 border border-transparent
-            text-sm rounded-full text-skin-white   focus:outline-none">
+            text-sm rounded-full    focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -51,7 +51,7 @@
         </button>
         <button [ngClass]="{'opacity-20': uploading}" [disabled]="uploading" *ngIf="user?.profilePicture"
             (click)="deleteProfileImage()" aria-labelledby="Delete profile picture button"
-            class="px-4 py-2 border flex justify-center items-center space-x-1 border-skin-border rounded-full shadow-sm  text-sm leading-5 font-semibold text-skin-base  transition-all duration-200">
+            class="px-4 py-2 border flex justify-center items-center space-x-1  rounded-full shadow-sm  text-sm leading-5 font-semibold   transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round"

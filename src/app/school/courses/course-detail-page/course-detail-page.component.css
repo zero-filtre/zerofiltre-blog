@@ -9,7 +9,7 @@ h6 {
 
 h1,
 h3 {
-  @apply text-primary-500;
+  /* @apply ; */
 }
 
 h1 {

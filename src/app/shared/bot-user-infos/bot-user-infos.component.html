@@ -2,10 +2,10 @@
     <div *ngIf="!editMode" class="profile-content">
         <div class="user-credentials flex flex-col space-y-4 px-4 py-6 rounded-lg  shadow-md">
             <nav class="user-credentials-nav flex gap-2 items-center">
-                <h2 class="text-xl sm:text-3xl text-skin-base font-bold">Profil:</h2>
+                <h2 class="text-xl sm:text-3xl  font-bold">Profil:</h2>
                 <div class="edit-action-btn">
                     <button aria-labelledby="Link to about page" (click)="edit()"
-                        class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full text-skin-base  transition-all duration-200">
+                        class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full   transition-all duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
                             class="" width="24" height="24" focusable="false">
                             <path
@@ -17,38 +17,38 @@
             </nav>
     
             <div class="full-name text-base">
-                <label class="text-skin-muted">Nom</label>
-                <div class="text-skin-base">{{data.name}}</div>
+                <label class="">Nom</label>
+                <div class="">{{data.name}}</div>
             </div>
             
             <div class="full-name text-base">
-                <label class="text-skin-muted">Prénom</label>
-                <div class="text-skin-base">{{data.prename}}</div>
+                <label class="">Prénom</label>
+                <div class="">{{data.prename}}</div>
             </div>
 
             <div class="full-name text-base">
-                <label class="text-skin-muted">Téléphone</label>
-                <div class="text-skin-base">{{data.phone}}</div>
+                <label class="">Téléphone</label>
+                <div class="">{{data.phone}}</div>
             </div>
 
             <div class="full-name text-base">
-                <label class="text-skin-muted">Sexe</label>
-                <div class="text-skin-base">{{data.gender}}</div>
+                <label class="">Sexe</label>
+                <div class="">{{data.gender}}</div>
             </div>
 
             <div class="full-name text-base">
-                <label class="text-skin-muted">Ville</label>
-                <div class="text-skin-base">{{data.city}}</div>
+                <label class="">Ville</label>
+                <div class="">{{data.city}}</div>
             </div>
 
             <div class="full-name text-base">
-                <label class="text-skin-muted">Statut</label>
-                <div class="text-skin-base">{{data.statut}}</div>
+                <label class="">Statut</label>
+                <div class="">{{data.statut}}</div>
             </div>
 
             <div class="full-name text-base">
-                <label class="text-skin-muted">Domaine</label>
-                <div class="text-skin-base">{{data.domain}}</div>
+                <label class="">Domaine</label>
+                <div class="">{{data.domain}}</div>
             </div>
             
         </div>
@@ -58,7 +58,7 @@
         <form [formGroup]="form" (ngSubmit)="save()" class="space-y-4">
             <div class="profile-edit-content flex flex-col space-y-4 px-4 py-6 rounded-lg  shadow-md">
                 <div>
-                    <label for="name" class="block text-sm font-semibold leading-5 text-skin-muted">
+                    <label for="name" class="block text-sm font-semibold leading-5 ">
                         Nom
                     </label>
                     <div class="mt-2">
@@ -75,7 +75,7 @@
                 </div>
 
                 <div>
-                    <label for="prename" class="block text-sm font-semibold leading-5 text-skin-muted">
+                    <label for="prename" class="block text-sm font-semibold leading-5 ">
                         Prénom
                     </label>
                     <div class="mt-2">
@@ -86,7 +86,7 @@
                 </div>
 
                 <div>
-                    <label for="phone" class="block text-sm font-semibold leading-5 text-skin-muted">
+                    <label for="phone" class="block text-sm font-semibold leading-5 ">
                         Téléphone
                     </label>
                     <div class="mt-2">
@@ -97,7 +97,7 @@
                 </div>
 
                 <div>
-                    <label for="password" class="block text-sm font-semibold leading-5 text-skin-muted">
+                    <label for="password" class="block text-sm font-semibold leading-5 ">
                         Mot de passe
                     </label>
                     <div class="mt-2">
@@ -105,7 +105,7 @@
                             <input name="password" type="{{ passwordVisible ? 'text' : 'password' }}" id="password" formControlName="password" class="" placeholder="••••••">
                             <button type="button" class="eye-btn group absolute top-2.5 right-2.5" (click)="togglePasswordVisibility()">
                                 <svg *ngIf="!passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    class="h-5 w-5 text-skin-borderBold group-hover:text-primary-500">
+                                    class="h-5 w-5  ">
                                     <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                                     <path fill-rule="evenodd"
                                         d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
@@ -113,7 +113,7 @@
                                 </svg>
                             
                                 <svg *ngIf="passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    class="h-5 w-5 text-skin-borderBold group-hover:text-primary-500">
+                                    class="h-5 w-5  ">
                                     <path
                                         d="M3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18zM22.676 12.553a11.249 11.249 0 01-2.631 4.31l-3.099-3.099a5.25 5.25 0 00-6.71-6.71L7.759 4.577a11.217 11.217 0 014.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113z" />
                                     <path
@@ -127,25 +127,25 @@
                 </div>
 
                 <div>
-                    <label for="gender" class="block text-sm font-semibold leading-5 text-skin-muted">
+                    <label for="gender" class="block text-sm font-semibold leading-5 ">
                         Sexe
                     </label>
                     <div class="mt-2">
                         <div class="flex gap-3">
                             <label class="flex items-center space-x-2">
-                                <input type="radio" formControlName="gender" value="M" class="text-primary-500 form-radio focus:ring-primary-500">
-                                <span class="text-skin-base">Homme</span>
+                                <input type="radio" formControlName="gender" value="M" class=" form-radio ">
+                                <span class="">Homme</span>
                             </label>
                             <label class="flex items-center space-x-2">
-                                <input type="radio" formControlName="gender" value="F" class="text-primary-500 form-radio focus:ring-primtext-primary-500">
-                                <span class="text-skin-base">Femme</span>
+                                <input type="radio" formControlName="gender" value="F" class=" form-radio ">
+                                <span class="">Femme</span>
                             </label>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <label for="city" class="block text-sm font-semibold leading-5 text-skin-muted">
+                    <label for="city" class="block text-sm font-semibold leading-5 ">
                         Ville de résidence
                     </label>
                     <div class="mt-2">
@@ -156,7 +156,7 @@
                 </div>
 
                 <div>
-                    <label for="statut" class="block text-sm font-semibold leading-5 text-skin-muted">
+                    <label for="statut" class="block text-sm font-semibold leading-5 ">
                         Statut
                     </label>
                     <div class="mt-2">
@@ -173,7 +173,7 @@
                 </div>
 
                 <div>
-                    <label for="domain" class="block text-sm font-semibold leading-5 text-skin-muted">
+                    <label for="domain" class="block text-sm font-semibold leading-5 ">
                         Domaine
                     </label>
                     <div class="mt-2">
@@ -196,11 +196,11 @@
 
 
             <div class="flex justify-end gap-5 mt-10">
-                <button type="button" class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-base   transition-all duration-200" (click)="cancel()">Annuler</button>
+                <button type="button" class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md    transition-all duration-200" (click)="cancel()">Annuler</button>
 
                 <button *ngIf="form.valid" type="submit" [disabled]="saving" [ngClass]="{'opacity-50': saving}"
                     aria-labelledby="Update profile button"
-                    class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md text-skin-white   focus:outline-none">
+                    class="button group shadow-md font-semibold relative w-full flex justify-center space-x-2 py-2 px-4 border border-transparent text-sm rounded-md    focus:outline-none">
                     <svg *ngIf="saving" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
                         preserveAspectRatio="xMidYMid">
@@ -212,7 +212,7 @@
                 </button>
             
                 <button *ngIf="form.invalid" [disabled]="form.invalid || saving" aria-labelledby="Update profile button"
-                    class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md text-skin-white  bg-opacity-20">
+                    class="button group shadow-md font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md   bg-opacity-20">
                     {{'profileEdit.updateBtn' | translate}}
                 </button>
             </div>

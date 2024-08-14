@@ -16,12 +16,12 @@
                 <a *ngFor="let tag of course?.tags" routerLink='/cours' [queryParams]="{tag:tag.name}"
                     class="tag-item flex items-center space-x-2 group">
                     <span
-                        class="inline-flex text-skin-inverted items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border border-skin-borderBold">
+                        class="inline-flex  items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border ">
                         <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
                             viewBox="0 0 8 8">
                             <circle cx="4" cy="4" r="3"></circle>
                         </svg>
-                        <span class="hover:text-primary-500">
+                        <span class="">
                             {{tag.name}}
                         </span>
                     </span>
@@ -33,16 +33,16 @@
                 <button [matMenuTriggerFor]="menu"
                     class="rounded-full p-2 opacity-0 group-hover:opacity-100  transition-all duration-500"
                     aria-label="icon-button with a menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-secondary" fill="none" viewBox="0 0 24 24"
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 " fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                     </svg>
                 </button>
 
-                <mat-menu #menu="matMenu" class="font-normal text-skin-base ">
+                <mat-menu #menu="matMenu" class="font-normal  ">
                     <a aria-labelledby="Link to course edit page" routerLink="/cours/{{course|slugify}}/edit/"
-                        class="flex items-end gap-3 px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
+                        class="flex items-end gap-3 px-4 py-2   text-sm transition-all duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -52,7 +52,7 @@
                         <span>Modifier ce cours</span>
                     </a>
                     <button (click)="openDeleteDialog(course?.id)" aria-labelledby="Delete course button"
-                        class="flex items-end gap-3 w-full text-left px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
+                        class="flex items-end gap-3 w-full text-left px-4 py-2   text-sm transition-all duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -70,14 +70,14 @@
                     routerLink="{{canAccessCourse(course) ? (course|slugify) + '/' + '?' : (course|slugify)}}"
                     class="article-title">
                     <h4
-                        class="article-title text-lg lg:text-[1.3rem] inline-block leading-[1.7rem] font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">
+                        class="article-title text-lg lg:text-[1.3rem] inline-block leading-[1.7rem] font-semibold  transition-all duration-200 ">
                         {{course?.title}}
                     </h4>
                 </a>
             </div>
 
             <p
-                class="article-description {{gridItem ? 'mt-3' : 'mt-1.5'}} text-sm lg:text-base tracking-wide font-light text-skin-text leading-5 line-clamp-2">
+                class="article-description {{gridItem ? 'mt-3' : 'mt-1.5'}} text-sm lg:text-base tracking-wide font-light  leading-5 line-clamp-2">
                 <ng-container *ngIf="course?.summary">{{course?.summary}}</ng-container>
             </p>
 
@@ -92,21 +92,21 @@
                 </div>
 
                 <div class="author-text ml-3">
-                    <p class="text-[0.8rem] font-semibold text-skin-inverted">
+                    <p class="text-[0.8rem] font-semibold ">
                         <a aria-labelledby="Link to about page"
                             [routerLink]="authService?.currentUsr?.id == course?.author?.id ? ['/user/profile'] : ['/user/' + course?.author?.id]"
                             class="hover:underline">
                             {{course?.author?.fullName}}
                         </a>
                     </p>
-                    <div class="flex space-x-1 text-sm text-skin-muted">
+                    <div class="flex space-x-1 text-sm ">
                         <time [dateTime]="course?.publishedAt | date">{{course?.publishedAt |
                             date}}</time>
                     </div>
                 </div>
 
                 <div
-                    class="group flex items-center justify-end text-skin-inverted gap-2 flex-1 self-end text-right text-sm font-semibold">
+                    class="group flex items-center justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
                     <ng-template [ngIf]="course.mentored">
                         <app-mentored-icon [size]="'w-7 relative top-[9px]'" [classes]="'hidden lg:inline mr-1'"
                             [position]="'left'">
@@ -117,7 +117,7 @@
 
                     <span class="enrol-total relative inline-flex items-start gap-1.5">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            class="size-5 inline text-accent-300" viewBox="0 0 16 16">
+                            class="size-5 inline " viewBox="0 0 16 16">
                             <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                             <path fill-rule="evenodd"
                                 d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
@@ -132,7 +132,7 @@
                     </span>
 
                     <span class="enrol-total relative inline-flex items-start gap-1 top-[1px]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline size-4 text-accent-300" viewBox="0 0 20 20"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline size-4 " viewBox="0 0 20 20"
                             fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
