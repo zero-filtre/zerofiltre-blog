@@ -29,12 +29,16 @@ module.exports = {
           base: withOpacity('--color-text-base'),
           muted: withOpacity('--color-text-muted'),
           inverted: withOpacity('--color-text-inverted'),
+          success: withOpacity('--color-fill-success'),
+          warning: withOpacity('--color-fill-warning'),
+          danger: withOpacity('--color-fill-danger'),
         },
       },
       backgroundColor: {
         skin: {
           'fill-primary': withOpacity('--color-fill-primary'),
           'fill-secondary': withOpacity('--color-fill-secondary'),
+          'fill-success': withOpacity('--color-fill-success'),
           'fill-danger': withOpacity('--color-fill-danger'),
           'fill-warning': withOpacity('--color-fill-warning'),
           'button-accent': withOpacity('--color-button-accent'),
