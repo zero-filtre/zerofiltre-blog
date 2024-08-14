@@ -1,16 +1,16 @@
 progress {
-  @apply border  bg-white/30 rounded-sm overflow-hidden shadow-md w-full lg:w-[calc(100%-394px)];
+  @apply border  bg-transparent/30 rounded-sm overflow-hidden shadow-md w-full lg:w-[calc(100%-394px)];
   border: none;
   -webkit-appearance: none;
 }
 progress::-moz-progress-bar {
-  @apply bg-white;
+  @apply bg-transparent;
 }
 progress::-webkit-progress-bar {
   background: transparent;
 }
 progress::-webkit-progress-value {
-  @apply bg-white;
+  @apply bg-transparent;
 }
 
 #lesson_video_player {

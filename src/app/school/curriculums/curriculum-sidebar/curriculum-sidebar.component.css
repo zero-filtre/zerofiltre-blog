@@ -8,7 +8,7 @@
 }
 
 .scrollbar::-webkit-scrollbar-track {
-  @apply bg-white;
+  @apply bg-transparent;
 }
 
 .sidebar_curriculum {

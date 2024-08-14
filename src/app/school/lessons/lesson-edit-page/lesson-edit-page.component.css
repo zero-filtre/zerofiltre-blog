@@ -12,7 +12,7 @@
 }
 
 .tab {
-  @apply bg-white;
+  @apply bg-transparent;
 }
 
 .save-tooltip {
@@ -36,7 +36,7 @@ iframe {
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  @apply bg-white;
+  @apply bg-transparent;
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {

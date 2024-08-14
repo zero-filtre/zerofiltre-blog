@@ -30,7 +30,7 @@
 }
 
 ::ng-deep .mat-progress-bar-fill::after {
-  @apply !bg-white;
+  @apply !bg-transparent;
 }
 
 ::ng-deep .mat-progress-bar-buffer {

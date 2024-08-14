@@ -53,7 +53,7 @@
     --skin-bgMuted: 243,244,246; */
     
     --color-text-base: 107,114,128;
-    --color-text-muted: 156,163,175;
+    --color-text-muted: 50,50,50;
     --color-text-inverted: 5,43,93;
   
     --color-fill-primary: 255,255,255;
@@ -69,7 +69,7 @@
   
   .dark {
     --color-text-base: 107,114,128;
-    --color-text-muted: 156,163,175;
+    --color-text-muted: 50,50,50;
     --color-text-inverted: 5,43,93;
   
     --color-fill-primary: 255,255,255;
@@ -129,6 +129,10 @@
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.mat-drawer {
+  @apply !bg-transparent backdrop-blur-md;
 }
 
 iframe {
@@ -264,7 +268,7 @@ img {
 
 /* Markdown preview styles */
 .markdown-content {
-  @apply marker:bg-white;
+  @apply marker:bg-transparent;
 }
 
 .markdown-content li {
