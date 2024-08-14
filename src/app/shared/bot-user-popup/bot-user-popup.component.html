@@ -11,7 +11,7 @@
     <form *ngIf="nberForm && !authMode" [formGroup]="nberForm" (ngSubmit)="checkisSignup()" class="space-y-6">
         <div class="content">
             <ngx-intl-tel-input
-                [cssClass]="'w-full bg-transparent border-0 border-b  !pb-2 focus:outline-none focus:ring-0 focus:border-b-skin-fill   text-lg sm:text-xl lg:text-5xl font-medium placeholder:font-medium'"
+                [cssClass]="'w-full bg-transparent border-0 border-b  !pb-2 focus:outline-none focus:ring-0 focus:border-b-skin-fill-primary   text-lg sm:text-xl lg:text-5xl font-medium placeholder:font-medium'"
                 [preferredCountries]="[CountryISO.Cameroon, CountryISO.France]" [enableAutoCountrySelect]="true"
                 [enablePlaceholder]="true" [numberFormat]="placeholderNumberFormat" [searchCountryFlag]="true"
                 [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectedCountryISO]="currentCountry"

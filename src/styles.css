@@ -13,7 +13,7 @@
   [type="search"],
   [multiple],
   select {
-    @apply shadow-sm   block w-full placeholder-skin-muted focus:outline-none focus:placeholder-skin-muted font-normal  sm:text-sm  rounded-md;
+    @apply shadow-sm   block w-full focus:outline-none font-normal sm:text-sm rounded-md;
   }
 
   [type="checkbox"],
@@ -37,71 +37,56 @@
   * {
     /* @apply transition-colors duration-100 ease-in-out; */
   }
-}
 
-:root {
-  --primary-300: 74,195,205;
-  --primary-100: 160,218,225;
-  --primary-500: 21,178,188;
-  --primary-800: 4,102,108;
+  body {
+    overflow-x: hidden;
+  }
 
-  --secondary: 5,43,93;
-  --accent-300: 254,202,122;
-  --accent-400: 253,188,90;
-  --accent-500: 236,170,71;
-  --grays-200: 249,250,251;
-  --error: 245,95,68;
+  :root {
+    /* --primary-800: 4,102,108;
+    --secondary: 5,43,93;
+    --accent-500: 236,170,71;
+  
+    --skin-link: 243,244,246;
+    --skin-border: 229,231,235;
+    --skin-card: 255,255,255;
+    --skin-cardMuted: 249,250,251;
+    --skin-borderBold: 209,213,219;
+    --skin-bg: 249,250,251;
+    --skin-bg-secondary: 5,43,93;
+    --skin-bgMuted: 243,244,246; */
+    
+    --color-text-base: 107,114,128;
+    --color-text-muted: 156,163,175;
+    --color-text-inverted: 5,43,93;
+    --color-text-error: 245,95,68;
+  
+    --color-fill-primary: 255,255,255;
+    --color-fill-secondary: 255,255,255;
+    --color-fill-danger: 255,255,255;
 
-  --skin-base: 107,114,128;
-  --skin-white: 255,255,255;
-  --skin-text: 55,65,81;
-  --skin-art: 5,43,93;
-  --skin-link: 243,244,246;
-  --skin-muted: 156,163,175;
-  --skin-inverted: 5,43,93;
-  --skin-border: 229,231,235;
-  --skin-card: 255,255,255;
-  --skin-cardMuted: 249,250,251;
-  --skin-borderBold: 209,213,219;
-  --skin-bg: 249,250,251;
-  --skin-bg-secondary: 5,43,93;
-  --skin-bgMuted: 243,244,246;
+    --color-button-accent: 255,255,255;
+    --color-button-accent-hover: 255,255,255;
 
-  /* --color-button-accent-hover:; 
-  --color-button-accent-focus:; 
-  --color-button-accent-ring:; */
+    --color-button-muted: 255,255,255;
+  }
+  
+  .dark {
+    --color-text-base: 107,114,128;
+    --color-text-muted: 156,163,175;
+    --color-text-inverted: 5,43,93;
+    --color-text-error: 245,95,68;
+  
+    --color-fill-primary: 255,255,255;
+    --color-fill-secondary: 255,255,255;
+    --color-fill-danger: 255,255,255;
 
+    --color-button-accent: 255,255,255;
+    --color-button-accent-hover: 255,255,255;
 
-}
+    --color-button-muted: 255,255,255;
+  }
 
-.dark {
-
-  --primary-300: 255,255,255; 
-  --primary-100: 255,255,255; 
-  --primary-500: 255,255,255; 
-  --primary-800: 255,255,255; 
-
-  --secondary: 255,255,255; 
-  --accent-300: 236,170,71;
-  --accent-400: 253,188,90;
-  --accent-500: 236,170,71;
-  --grays-200: 75,80,85; 
-  --error: 255,150,150;
-
-  --skin-base: 205,205,205; 
-  --skin-white: 30,30,30; 
-  --skin-text: 240,240,240; 
-  --skin-art: 220,220,220; 
-  --skin-link: 80,80,80; 
-  --skin-muted: 180,180,180;
-  --skin-inverted: 255,255,255; 
-  --skin-border: 100,100,100; 
-  --skin-card: 40,40,40; 
-  --skin-cardMuted: 40,40,40; 
-  --skin-borderBold: 80,80,80; 
-  --skin-bg: 30,30,30; 
-  --skin-bg-secondary: 30,30,30;
-  --skin-bgMuted: 50,50,50;
 }
 
 
@@ -110,9 +95,6 @@
   }
 } */
 
-body {
-  overflow-x: hidden;
-}
 
 /* Always shox Snackbar popup on top of other elements */
 .cdk-overlay-pane:has(> .mat-snack-bar-container) {

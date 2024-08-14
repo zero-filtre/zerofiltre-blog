@@ -1,3 +1,12 @@
+function withOpacity(variableName) {
+  return ({ opacityValue }) => {
+    if (opacityValue !== undefined) {
+      return `rgba(var(${variableName}), ${opacityValue})`
+    }
+    return `rgb(var(${variableName}))`
+  }
+}
+
 module.exports = {
   content: ["./src/**/*.{html,ts,css}"],
   darkMode: 'selector',
@@ -15,52 +24,26 @@ module.exports = {
 
         inter: "'Inter', 'system-ui', sans-serif"
       },
-      colors: {
-        primary: {
-          50: "rgba(var(--primary-50))",
-          100: "rgba(var(--primary-100))",
-          200: "rgba(var(--primary-200))",
-          300: "rgba(var(--primary-300))",
-          400: "rgba(var(--primary-400))",
-          500: "rgba(var(--primary-500))",
-          600: "rgba(var(--primary-800))",
-          700: "rgba(var(--primary-700))",
-          800: "rgba(var(--primary-800))",
-          900: "rgba(var(--primary-900))"
-        },
-        secondary: "rgba(var(--secondary))",
-        accent: {
-          100: "rgba(var(--accent-100))",
-          200: "rgba(var(--accent-200))",
-          300: "rgba(var(--accent-300))",
-          400: "rgba(var(--accent-400))",
-          500: "rgba(var(--accent-500))",
-          600: "rgba(var(--accent-600))",
-          700: "rgba(var(--accent-700))",
-          800: "rgba(var(--accent-800))",
-          900: "rgba(var(--accent-900))"
-        },
-        error: "rgba(var(--error))",
-        grays: {
-          100: "rgba(var(--grays-100))",
-          200: "rgba(var(--grays-200))",
-          600: "rgba(var(--grays-600))"
-        },
+      textColor: {
         skin: {
-          base: "rgba(var(--skin-base))",
-          white: "rgba(var(--skin-white))",
-          text: "rgba(var(--skin-text))",
-          art: "rgba(var(--skin-art))",
-          link: "rgba(var(--skin-link))",
-          muted: "rgba(var(--skin-muted))",
-          inverted: "rgba(var(--skin-inverted))",
-          border: "rgba(var(--skin-border))",
-          card: "rgba(var(--skin-card))",
-          cardMuted: "rgba(var(--skin-cardMuted))",
-          borderBold: "rgba(var(--skin-borderBold))",
-          bg: "rgba(var(--skin-bg))",
-          bgSecondary: "rgba(var(--skin-bg-secondary))",
-          bgMuted: "rgba(var(--skin-bgMuted))"
+          base: withOpacity('--color-text-base'),
+          muted: withOpacity('--color-text-muted'),
+          inverted: withOpacity('--color-text-inverted'),
+        },
+      },
+      backgroundColor: {
+        skin: {
+          'fill-primary': withOpacity('--color-fill-primary'),
+          'fill-secondary': withOpacity('--color-fill-secondary'),
+          'fill-danger': withOpacity('--color-fill-danger'),
+          'button-accent': withOpacity('--color-button-accent'),
+          'button-accent-hover': withOpacity('--color-button-accent-hover'),
+          'button-muted': withOpacity('--color-button-muted'),
+        },
+      },
+      gradientColorStops: {
+        skin: {
+          hue: withOpacity('--color-fill-primary'),
         },
       },
       spacing: {
