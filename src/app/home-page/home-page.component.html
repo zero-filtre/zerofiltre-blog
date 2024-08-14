@@ -1,6 +1,6 @@
 <main class="">
     <section
-        class="overflow-hidden relative course-section min-h-[600px] xl:min-h-[800px] pb-16 pt-4  md:pt-8 lg:py-16 grid place-items-center -mt-[80px] bg-gradient-to-b lg:bg-gradient-to-r from-skin-bg to-grays-200">
+        class="overflow-hidden relative course-section min-h-[600px] xl:min-h-[800px] pb-16 pt-4  md:pt-8 lg:py-16 grid place-items-center -mt-[80px] bg-gradient-to-b lg:bg-gradient-to-r from-skin-bg to-transparent">
         <div class="site-container mx-auto mt-20 lg:mt-10">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
@@ -23,7 +23,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a *ngIf="activeCourseModule" aria-labelledby="Link to courses page" routerLink="cours"
-                            class="flex items-center justify-center gap-2 shadow-md text-base bg-primary-500 text-skin-bg py-2.5 px-4 rounded-md hover:bg-primary-800 focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center gap-2 shadow-md text-base  text-skin-bg py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreCourses' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none"
@@ -82,7 +82,7 @@
     <app-carousel></app-carousel>
 
     <section
-        class="blog-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-l from-primary-800 to-primary-500 dark:from-skin-bg dark:to-grays-200 dark:bg-gradient-to-r">
+        class="blog-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-l from-primary-800 to-primary-500 dark:from-skin-bg dark:to-transparent dark:bg-gradient-to-r">
         <div class="site-container mx-auto">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
@@ -107,7 +107,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a aria-labelledby="Link to about page" routerLink="/articles"
-                            class="flex items-center justify-center gap-2 shadow-md text-base bg-primary-500 text-skin-bg py-2.5 px-4 rounded-md hover:bg-primary-800 focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center gap-2 shadow-md text-base  text-skin-bg py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreBlog' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -130,7 +130,7 @@
     </section>
 
     <section
-        class="service-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-r from-skin-bg to-grays-200">
+        class="service-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-r from-skin-bg to-transparent">
         <div class="site-container mx-auto">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
@@ -151,7 +151,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a aria-labelledby="Link to about page" href="{{servicesUrl}}" target="_blank"
-                            class="flex items-center justify-center gap-2 shadow-md text-base bg-primary-500 text-skin-bg py-2.5 px-4 rounded-md hover:bg-primary-800 focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center gap-2 shadow-md text-base  text-skin-bg py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreServices' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"

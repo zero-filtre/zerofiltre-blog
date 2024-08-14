@@ -76,7 +76,7 @@
                     <app-image [classes]="'object-cover'" [sourceUrl]="image?.value!" [alt]="title.value">
                     </app-image>
 
-                    <div class="cover-close-btn absolute left-auto top-1 right-1 z-10 flex justify-center items-center w-12 h-12 text-sm leading-tight text-skin-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100  hover:bg-error"
+                    <div class="cover-close-btn absolute left-auto top-1 right-1 z-10 flex justify-center items-center w-12 h-12 text-sm leading-tight text-skin-white  rounded-full opacity-80 cursor-pointer hover:opacity-100  hover:bg-error"
                         (click)="removeSectionImage()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             class="w-6 h-6">
@@ -115,14 +115,14 @@
 
         <div class="action-buttons flex justify-center gap-1 sm:gap-3 mt-10">
             <button aria-labelledby="cancel"
-                class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200"
+                class="px-4 py-2 border border-skin-border rounded-full shadow-sm  text-sm leading-5 font-semibold text-skin-base  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200"
                 (click)="onNoClick()">
                 {{'app.cancel' | translate}}
             </button>
 
             <button type="submit" [disabled]="loading || form.invalid" (click)="onCreateSection()"
                 [ngClass]="{'opacity-50': loading || form.invalid}" aria-labelledby="Save button"
-                class="px-4 py-2 border-2 border-primary-500 rounded-full shadow-sm bg-primary-500 text-sm leading-5 font-semibold text-skin-white hover:text-skin-white hover:bg-primary-800 hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
+                class="px-4 py-2 border-2 border-primary-500 rounded-full shadow-sm  text-sm leading-5 font-semibold text-skin-white hover:text-skin-white  hover:border-primary-500 focus:outline-none focus:ring-offset-2 focus:ring-primary-500 focus:border-skin-border transition-all duration-200">
 
                 <span *ngIf="!loading">Enregistrer</span>
                 <svg *ngIf="loading" class="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg"

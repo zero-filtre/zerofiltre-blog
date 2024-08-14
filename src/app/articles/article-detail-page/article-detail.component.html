@@ -107,7 +107,7 @@
                                     <ng-container *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
                                         <div class="action-btns flex items-center gap-4">
                                             <button [matMenuTriggerFor]="menu"
-                                                class="relative rounded-full lg:w-10 lg:h-10 lg:-mr-2.5 mt-1 lg:-mt-1 flex items-center justify-center lg:hover:bg-skin-link transition-all duration-300"
+                                                class="relative rounded-full lg:w-10 lg:h-10 lg:-mr-2.5 mt-1 lg:-mt-1 flex items-center justify-center lg: transition-all duration-300"
                                                 aria-label="icon-button with a menu">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 text-secondary"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,9 +117,9 @@
                                                 </svg>
                                             </button>
 
-                                            <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
+                                            <mat-menu #menu="matMenu" class="font-normal text-skin-base ">
                                                 <a aria-labelledby="Link to article edit page" routerLink="/articles/{{article|slugify}}/edit"
-                                                    class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                    class="flex items-end gap-3 px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -129,7 +129,7 @@
                                                     <span>{{ 'articleDetail.edit' | translate }}</span>
                                                 </a>
                                                 <button (click)="openArticleDeleteDialog()" aria-labelledby="Delete article button"
-                                                    class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                    class="flex items-end gap-3 w-full text-left px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -234,7 +234,7 @@
                         <app-markdown-preview [data]="article?.content"></app-markdown-preview>
                     </div>
 
-                    <div *ngIf="article?.premium && !canAccesPremium(article)" class="mt-10 text-skin-base shadow-lg rounded-lg bg-skin-card p-6 max-w-xl mx-auto">
+                    <div *ngIf="article?.premium && !canAccesPremium(article)" class="mt-10 text-skin-base shadow-lg rounded-lg  p-6 max-w-xl mx-auto">
                         <p class="text-sm">Cet article est réservé aux abonnés. Déjà abonné ? <a routerLink="/login" class="underline">Connectez-vous</a></p>
                         <h3 class="text-2xl lg:text-3xl text-primary-500 font-extrabold py-3">Découvrez les meilleurs articles IT en français</h3>
                         <p>
@@ -266,7 +266,7 @@
                         <a aria-labelledby="Link to about page"
                             href="https://twitter.com/intent/tweet?url={{blogUrl}}/articles/{{article?.id}}&text={{article?.title}} par @{{trimAuthorName(article?.author?.fullName)}}"
                             target="_blank"
-                            class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted">
+                            class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm  text-sm leading-5 font-semibold text-skin-base ">
                             <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
                                     d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84">
@@ -277,7 +277,7 @@
                         <a aria-labelledby="Link to about page"
                             href="https://www.facebook.com/sharer/sharer.php?u={{blogUrl}}/articles/{{article?.id}}"
                             target="_blank"
-                            class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted">
+                            class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm  text-sm leading-5 font-semibold text-skin-base ">
                             <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path fill-rule="evenodd"
                                     d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
@@ -288,7 +288,7 @@
                         <a aria-labelledby="Link to about page"
                             href="https://www.linkedin.com/sharing/share-offsite/?url={{blogUrl}}/articles/{{article?.id}}"
                             target="_blank"
-                            class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted">
+                            class="inline-flex items-center py-2 px-4 border border-skin-border rounded-md shadow-sm  text-sm leading-5 font-semibold text-skin-base ">
                             <svg class="h-5 w-5 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
                                     d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8 19H5V8h3v11zM6.5 6.732c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476V19z">
@@ -487,7 +487,7 @@
                 </ng-container>
 
                 <div *ngIf="loginToAddReaction"
-                    class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
+                    class="mt-4 text-sm font-medium px-4 py-2  text-secondary shadow-md rounded-lg">
                     {{ 'articleDetail.loginToReactText' | translate }}
                 </div>
                 <div *ngIf="!loading && !(isPublished$ | async)"
@@ -554,7 +554,7 @@
                     </ng-container>
 
                     <div *ngIf="loginToAddReaction"
-                        class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
+                        class="mt-4 text-sm font-medium px-4 py-2  text-secondary shadow-md rounded-lg">
                         {{ 'articleDetail.loginToReactText' | translate }}
                     </div>
 
@@ -606,7 +606,7 @@
                     <a aria-label="Link to share the article on twitter"
                         href="https://twitter.com/intent/tweet?url={{blogUrl}}/articles/{{article?.id}}&text={{article?.title}} par @{{trimAuthorName(article?.author?.fullName)}}"
                         target="_blank"
-                        class="h-11 w-11 flex items-center justify-center border border-skin-border rounded-full shadow-sm bg-skin-card text-sm text-skin-base hover:bg-skin-cardMuted">
+                        class="h-11 w-11 flex items-center justify-center border border-skin-border rounded-full shadow-sm  text-sm text-skin-base ">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path
                                 d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84">
@@ -616,7 +616,7 @@
                     <a aria-label="Link to share the article on facebook"
                         href="https://www.facebook.com/sharer/sharer.php?u={{blogUrl}}/articles/{{article?.id}}"
                         target="_blank"
-                        class="h-11 w-11 flex items-center justify-center border border-skin-border rounded-full shadow-sm bg-skin-card text-sm text-skin-base hover:bg-skin-cardMuted">
+                        class="h-11 w-11 flex items-center justify-center border border-skin-border rounded-full shadow-sm  text-sm text-skin-base ">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path fill-rule="evenodd"
                                 d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
@@ -626,7 +626,7 @@
                     <a aria-label="Link to share the article on linkedin"
                         href="https://www.linkedin.com/sharing/share-offsite/?url={{blogUrl}}/articles/{{article?.id}}"
                         target="_blank"
-                        class="h-11 w-11 flex items-center justify-center border border-skin-border rounded-full shadow-sm bg-skin-card text-sm text-skin-base hover:bg-skin-cardMuted">
+                        class="h-11 w-11 flex items-center justify-center border border-skin-border rounded-full shadow-sm  text-sm text-skin-base ">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path
                                 d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8 19H5V8h3v11zM6.5 6.732c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476V19z">

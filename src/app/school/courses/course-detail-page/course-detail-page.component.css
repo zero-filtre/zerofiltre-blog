@@ -21,7 +21,7 @@ h2 {
 }
 
 h3 {
-  @apply text-2xl lg:text-3xl font-medium mb-12 relative after:absolute after:w-32 lg:after:w-24 after:h-1.5 after:bg-accent-400 after:-bottom-6 after:left-[calc(50%-4rem)] after:rounded-sm;
+  @apply text-2xl lg:text-3xl font-medium mb-12 relative after:absolute after:w-32 lg:after:w-24 after:h-1.5 after:bg-white after:-bottom-6 after:left-[calc(50%-4rem)] after:rounded-sm;
   @apply text-center;
 }
 
@@ -38,7 +38,7 @@ section {
 }
 
 section:nth-of-type(even) {
-  @apply bg-skin-white;
+  @apply bg-white;
 }
 
 section:nth-of-type(even).regular-section .image {

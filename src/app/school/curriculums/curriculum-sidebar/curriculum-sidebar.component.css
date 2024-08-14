@@ -4,11 +4,11 @@
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-primary-500 rounded-sm;
+  @apply  rounded-sm;
 }
 
 .scrollbar::-webkit-scrollbar-track {
-  @apply bg-primary-100;
+  @apply bg-white;
 }
 
 .sidebar_curriculum {

@@ -3,5 +3,5 @@
 }
 
 .active-tag {
-  @apply bg-skin-card transition-all duration-75;
+  @apply  transition-all duration-75;
 }

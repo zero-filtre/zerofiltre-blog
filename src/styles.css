@@ -18,7 +18,7 @@
 
   [type="checkbox"],
   [type="radio"] {
-    @apply h-4 w-4 lg:h-5 lg:w-5 text-primary-500 bg-skin-card focus:ring-0 focus:ring-offset-0 border-skin-border rounded;
+    @apply h-4 w-4 lg:h-5 lg:w-5 text-primary-500  focus:ring-0 focus:ring-offset-0 border-skin-border rounded;
   }
 
   @font-face {
@@ -170,11 +170,11 @@ img {
 }
 
 .mat-dialog-container {
-  @apply !bg-skin-bg
+  /* @apply ! */
 }
 
 .payment-popup .mat-dialog-container {
-   @apply bg-skin-bg rounded-2xl;
+   @apply  rounded-2xl;
 }
 
 .edit-section-popup-panel {
@@ -194,40 +194,40 @@ img {
   @apply max-sm:!w-full mx-4 lg:!mt-10 lg:!fixed lg:!top-14
 }
 .popup-search-overlay {
-  @apply fixed inset-0 bg-gray-900 bg-opacity-70 backdrop-blur-sm z-40
+  @apply fixed inset-0  bg-opacity-70 backdrop-blur-sm z-40
 }
 
 .article-popup-panel .mat-dialog-container {
-  @apply !rounded-2xl !flex bg-skin-bg justify-center items-center !p-4 sm:p-6;
+  @apply !rounded-2xl !flex  justify-center items-center !p-4 sm:p-6;
 }
 
 .popup-panel .mat-dialog-container {
-  @apply !rounded-2xl !flex bg-skin-bg justify-center items-center !p-4 sm:!p-4 lg:!p-5 w-fit;
+  @apply !rounded-2xl !flex  justify-center items-center !p-4 sm:!p-4 lg:!p-5 w-fit;
 }
 
 .popup-panel-nps .mat-dialog-container {
-  @apply !rounded-2xl bg-skin-bg;
+  @apply !rounded-2xl ;
 } 
 
 .password-popup-panel .mat-dialog-container {
-  @apply !rounded-2xl bg-skin-bg;
+  @apply !rounded-2xl ;
 }
 
 .delete-account-popup-panel .mat-dialog-container {
-  @apply !rounded-2xl bg-skin-bg;
+  @apply !rounded-2xl ;
 }
 
 .profile-image-popup-panel .mat-dialog-container {
-  @apply !rounded-2xl bg-skin-bg sm:!min-w-[390px];
+  @apply !rounded-2xl  sm:!min-w-[390px];
 }
 
 .delete-article-popup-panel .mat-dialog-container {
-  @apply !rounded-2xl bg-skin-bg;
+  @apply !rounded-2xl ;
 }
 
 /* Message Notification styles */
 .success-snackbar {
-  @apply bg-primary-800;
+  /* @apply ; */
 }
 
 .error-snackbar {
@@ -235,7 +235,7 @@ img {
 }
 
 .warning-snackbar {
-  @apply bg-accent-600;
+  /* @apply ; */
 }
 
 .info-snackbar {
@@ -295,7 +295,7 @@ img {
 
 /* Cookie confirmation message container */
 #privacypolicies-com---nb {
-  @apply font-ubuntu w-screen h-auto shadow-2xl bg-skin-bg;
+  @apply font-ubuntu w-screen h-auto shadow-2xl ;
 }
 
 .privacypolicies-com---nb-simple {
@@ -327,7 +327,7 @@ img {
 }
 
 .cc-nb-buttons-container .cc-nb-okagree {
-  @apply !bg-skin-inverted !rounded-md !shadow-lg;
+  @apply !rounded-md !shadow-lg;
 }
 
 .cc-nb-buttons-container .cc-nb-reject {

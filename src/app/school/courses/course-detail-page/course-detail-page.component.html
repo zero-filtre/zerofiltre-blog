@@ -43,7 +43,7 @@
 
                 <div *ngIf="section.position == 1">
                     <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
-                        class="mb-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-skin-white font-normal hover:bg-primary-500 transition-all duration-300">
+                        class="mb-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm  text-skin-white font-normal  transition-all duration-300">
                         <span class="text-center">Débuter le cours</span>
 
                         <span class="mt-1">
@@ -60,7 +60,7 @@
                 </ng-container>
             </ng-container>
 
-            <section class="reactions !py-6 border bg-secondary dark:bg-skin-bg grid place-items-center border-skin-border">
+            <section class="reactions !py-6 border  dark: grid place-items-center border-skin-border">
                 <!-- *ngIf="!loading && (isPublished$ | async)" -->
                 <div class="site-container pt-5 flex flex-wrap justify-center lg:justify-start">
                     <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
@@ -129,7 +129,7 @@
             </section>
 
             <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
-                class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-skin-white font-normal hover:bg-primary-500 transition-all duration-300">
+                class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm  text-skin-white font-normal  transition-all duration-300">
                 <span class="text-center">Débuter le cours</span>
 
                 <span class="mt-1">

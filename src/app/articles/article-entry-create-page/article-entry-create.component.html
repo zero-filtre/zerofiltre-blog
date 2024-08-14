@@ -78,7 +78,7 @@
                             </div>
 
                             <div *ngIf="thumbnail?.value"
-                                class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center items-center w-12 h-12 mt-2 mr-2 text-sm leading-tight text-skin-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error"
+                                class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center items-center w-12 h-12 mt-2 mr-2 text-sm leading-tight text-skin-white  rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error"
                                 (click)="removeFile()">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                     class="w-6 h-6">
@@ -198,7 +198,7 @@
 
                         <div class="mt-5">
                             <div (click)="openTagsDropdown()"
-                                class="selected-tags-container bg-skin-cardMuted cursor-pointer relative flex flex-wrap p-2 min-h-[50px] gap-1 rounded-xl shadow-md">
+                                class="selected-tags-container  cursor-pointer relative flex flex-wrap p-2 min-h-[50px] gap-1 rounded-xl shadow-md">
                                 <ng-container *ngFor="let tag of tags.controls; let i = index">
                                     <span [formGroupName]="i"
                                         class="inline-flex items-center leading-none px-2.5 py-1.5 text-sm text-skin-inverted font-semibold rounded-full border">
@@ -222,9 +222,9 @@
                             </div>
 
                             <ul *ngIf="tagsDropdownOpened"
-                                class="multiselect-tags-dropdown mt-1 bg-skin-card border shadow-md rounded-xl max-h-80 overflow-x-auto">
+                                class="multiselect-tags-dropdown mt-1  border shadow-md rounded-xl max-h-80 overflow-x-auto">
                                 <ng-container *ngFor="let tag of tagList; let i = index">
-                                    <li class="tagItem flex items-center gap-2 text-skin-base hover:bg-slate-100 px-4 py-2 cursor-pointer"
+                                    <li class="tagItem flex items-center gap-2 text-skin-base  px-4 py-2 cursor-pointer"
                                         (click)="addtag(tag)">
                                         <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
                                             fill="currentColor" viewBox="0 0 8 8">

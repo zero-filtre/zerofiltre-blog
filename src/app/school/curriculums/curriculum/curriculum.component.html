@@ -24,7 +24,7 @@
                                 [ngClass]="{'cursor-grab' : canEdit}">
 
                                 <div (click)="chapter?.lessons?.length && accordionItem.toggle()"
-                                    class="curriculum_chapter_title flex items-center justify-between gap-4 uppercase opacity-90 bg-primary-100 text-secondary dark:text-skin-white p-3 font-semibold">
+                                    class="curriculum_chapter_title flex items-center justify-between gap-4 uppercase opacity-90  text-secondary dark:text-skin-white p-3 font-semibold">
                                     {{chapter?.title}}
 
                                     <div *ngIf="chapter?.lessons?.length"
@@ -65,7 +65,7 @@
                                             <li cdkDrag [cdkDragDisabled]="!canEdit || mobileQuery.matches"
                                                 id="{{lesson.id}}" *ngIf="lesson?.chapterId === chapter?.id"
                                                 [ngClass]="{'cursor-grab' : canEdit}"
-                                                class="curriculum_chapter_lesson_elt hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
+                                                class="curriculum_chapter_lesson_elt   transition-all duration-200">
                                                 <a routerLink="{{'/cours/'+(course|slugify)+'/'+(lesson|slugify)}}"
                                                     [style.pointer-events]="lesson?.number && !canAccessCourse ? 'auto' : 'auto'"
                                                     class="lesson_link w-full p-3 pr-0 flex justify-between items-center gap-2">
@@ -103,18 +103,18 @@
                                                         <span
                                                             class="lesson_name font-normal line-clamp-2 lg:line-clamp-none"
                                                             [ngClass]="{'text-primary-500': (lesson?.free || canAccessCourse || isSubscriber)}">{{capitalize(lesson.title)}}</span>
-                                                        <!-- <span class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-normal">{{lesson.duration}}</span> -->
+                                                        <!-- <span class="lesson_duration rounded-md p-1  text-xs text-secondary font-normal">{{lesson.duration}}</span> -->
                                                     </div>
                                                     <button
                                                         *ngIf="lesson?.free || canAccessCourse || isSubscriber"
-                                                        class="lesson_button bg-primary-500 text-skin-white px-2 py-1 rounded text-sm font-medium mr-3">
+                                                        class="lesson_button  text-skin-white px-2 py-1 rounded text-sm font-medium mr-3">
                                                         <span *ngIf="!isSubscriber">Aperçu</span>
                                                         <span *ngIf="isSubscriber">Commencer</span>
                                                     </button>
                                                     <button
                                                         *ngIf="!lesson?.free && !canAccessCourse && !isSubscriber"
                                                         disabled
-                                                        class="lesson_button bg-primary-500 text-skin-white px-2 py-1 rounded text-sm font-medium mr-3 opacity-50">Commencer</button>
+                                                        class="lesson_button  text-skin-white px-2 py-1 rounded text-sm font-medium mr-3 opacity-50">Commencer</button>
                                                 </a>
                                             </li>
 

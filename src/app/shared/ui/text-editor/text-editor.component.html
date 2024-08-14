@@ -1,9 +1,9 @@
 <div class="editor_md shadow-md">
     <div
-        class="editor-header shadow-sm mt-4 font-semibold relative flex items-center justify-between w-full bg-skin-card">
+        class="editor-header shadow-sm mt-4 font-semibold relative flex items-center justify-between w-full ">
         <div class="flex items-center">
             <div (click)="setActiveTab('editor')"
-                class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer hover:bg-skin-muted sm:text-base">
+                class="relative tab flex p-4 space-x-1 items-center text-sm font-semibold text-skin-base cursor-pointer  sm:text-base">
                 <svg [ngClass]="activeTab == 'editor' ? 'text-primary-500' : ''" class="w-4 h-4"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
                     fill="currentColor" stroke="currentColor">
@@ -16,7 +16,7 @@
                     {{ 'articleEntryEdit.editTabText' | translate }}
                 </span>
                 <div [ngClass]="activeTab == 'editor' ? 'active-tab' : ''"
-                    class="green-border bg-primary-500 h-1 w-full absolute -inset-x-1 -bottom-0.5 scale-0">
+                    class="green-border  h-1 w-full absolute -inset-x-1 -bottom-0.5 scale-0">
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
                     {{ 'articleEntryEdit.previewTabText' | translate }}
                 </span>
                 <div [ngClass]="activeTab == 'preview' ? 'active-tab' : ''"
-                    class="green-border bg-primary-500 h-1 w-full absolute -inset-x-1 -bottom-0.5 scale-0">
+                    class="green-border  h-1 w-full absolute -inset-x-1 -bottom-0.5 scale-0">
                 </div>
             </div>
 
@@ -52,7 +52,7 @@
                     {{ 'articleEntryEdit.helpTabText' | translate }}
                 </span>
                 <div [ngClass]="activeTab == 'help' ? 'active-tab' : ''"
-                    class="green-border bg-primary-500 h-1 w-full absolute -inset-x-1 -bottom-0.5 scale-0">
+                    class="green-border  h-1 w-full absolute -inset-x-1 -bottom-0.5 scale-0">
                 </div>
             </div>
         </div>
@@ -68,13 +68,13 @@
             </div>
 
             <button *ngIf="fullscreenBtn" aria-label="click here to enter full screen" (click)="toggleFullScreen()"
-                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base  hover:text-primary-500 transition-all duration-200">
                 <mat-icon *ngIf="!fullScreenOn" class="">fullscreen</mat-icon>
                 <mat-icon *ngIf="fullScreenOn" class="">fullscreen_exit</mat-icon>
             </button>
 
             <div *ngIf="imageBtn"
-                class="add_image_btn relative cursor-pointer inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+                class="add_image_btn relative cursor-pointer inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base  hover:text-primary-500 transition-all duration-200">
                 <input class="sr-only" (change)="onFileSelected($event)" type="file" id="editorFileUpload"
                     name="editorFileUpload" #editorFileUpload accept="image/*">
                 <svg (click)="editorFileUpload.click()" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -88,7 +88,7 @@
 
         <ng-template #exitFullScreenBtn>
             <button *ngIf="fullscreenBtn" aria-label="click here to enter full screen" (click)="toggleFullScreen()"
-                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200">
+                class="toggle_fullScreen_btn inline-flex items-center justify-center h-9 w-9 mx-1 shadow-sm rounded-full text-skin-base  hover:text-primary-500 transition-all duration-200">
                 <mat-icon *ngIf="!fullScreenOn" class="">fullscreen</mat-icon>
                 <mat-icon *ngIf="fullScreenOn" class="">fullscreen_exit</mat-icon>
             </button>
@@ -97,25 +97,25 @@
 
     <div class="tabs-content-wrapper" [formGroup]="form" [ngStyle]="{'height': height+'vh'}">
         <ng-container *ngIf="content?.invalid && content?.dirty" class="">
-            <div *ngIf="content?.errors?.['required']" class="p-4 bg-white text-xs sm:text-sm text-error italic">
+            <div *ngIf="content?.errors?.['required']" class="p-4  text-xs sm:text-sm text-error italic">
                 {{ 'articleEntryEdit.missingArticleContent' | translate }}
             </div>
         </ng-container>
 
         <ng-container *ngIf="activeTab === 'editor'">
             <textarea #editor (keydown)="handleTab($event, false);" formControlName="content" id="content" required
-                class="editor-textarea bg-white text-lg text-[#111] p-4 pb-24 w-full h-full"
+                class="editor-textarea  text-lg text-[#111] p-4 pb-24 w-full h-full"
                 placeholder="{{ 'articleEntryEdit.articleContentPlaceholder' | translate }}">
             </textarea>
         </ng-container>
 
         <div *ngIf="activeTab === 'preview'"
-            class="markdown-preview-container markdown-content h-full overflow-y-scroll bg-skin-bg w-full p-4 pb-24">
+            class="markdown-preview-container markdown-content h-full overflow-y-scroll  w-full p-4 pb-24">
             <app-markdown-preview [data]="content?.value"></app-markdown-preview>
         </div>
 
         <div *ngIf="activeTab === 'help'"
-            class="help-container h-full overflow-y-scroll bg-skin-card p-4 pb-24 prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:p-1 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-code:mx-1 prose-ul:list-disc prose-ol:list-disc">
+            class="help-container h-full overflow-y-scroll  p-4 pb-24 prose lg:prose-xl prose-p:text-lg lg:prose-p:text-xl max-w-none text-secondary prose-headings:font-bold prose-headings:text-secondary prose-a:text-primary-500 prose-code:bg-gray-900 prose-code:p-1 prose-code:rounded-md prose-code:text-accent-300 prose-code:font-normal prose-code:before:hidden prose-code:after:hidden prose-code:mx-1 prose-ul:list-disc prose-ol:list-disc">
             <h2>{{'articleEntryEdit.helpTitle' | translate}}</h2>
             <p>
                 {{'articleEntryEdit.helpSubTitle' | translate}}
@@ -135,14 +135,14 @@
             <p>
                 <span class="mr-2">Code en ligne</span>
                 <br>
-                <span class="flex items-center bg-primary-100 space-x-4">
-                    <span class="bg-primary-100 p-1 text-primary-500 rounded-md">`backtick`</span>
+                <span class="flex items-center  space-x-4">
+                    <span class=" p-1 text-primary-500 rounded-md">`backtick`</span>
                     <markdown ngPreserveWhitespaces class="">
                         `backtick`
                     </markdown>
                 </span>
                 <span class="block mt-2 mr-2">Bloc de code</span>
-                <span class="block p-1  text-primary-500 bg-primary-100">
+                <span class="block p-1  text-primary-500 ">
                     ```ext<br>Trois backticks suivi de l'extension de votre langage de
                     programmation puis entrez vos blocs de code ici.<br>```
                     <br>
@@ -180,22 +180,22 @@
             <h3>Liens</h3>
             <p>Vous pouvez ajouter <a aria-labelledby="Example markdown link" href="#_">des
                     liens</a> en ajoutant du texte à l'intérieur de
-                <span class="p-1  text-primary-500 bg-primary-100">[]</span> et le lien à
-                l'intérieur de <span class="p-1  text-primary-500 bg-primary-100">()</span>,
+                <span class="p-1  text-primary-500 ">[]</span> et le lien à
+                l'intérieur de <span class="p-1  text-primary-500 ">()</span>,
                 ainsi:
             </p>
-            <div class="p-1 font-semibold  text-primary-500 bg-primary-100">
+            <div class="p-1 font-semibold  text-primary-500 ">
                 [link_text](https://google.com)</div>
             <hr>
             <h3>Listes</h3>
             <p>Pour ajouter une liste numérotée, vous pouvez simplement commencer par un nombre
                 et
-                un <span class="p-1  text-primary-500 bg-primary-100">.</span>, ainsi:<br><span
-                    class="block p-1 pl-5  text-primary-500 bg-primary-100"> 1.
+                un <span class="p-1  text-primary-500 ">.</span>, ainsi:<br><span
+                    class="block p-1 pl-5  text-primary-500 "> 1.
                     Le premier élément de ma liste</span></p>
             <p>Pour une liste non ordonnée, vous pouvez ajouter un tiret <span
-                    class="p-1  text-primary-500 bg-primary-100">-</span>, ainsi:<br><span
-                    class="block p-1 pl-5  text-primary-500 bg-primary-100"> - Le début de ma
+                    class="p-1  text-primary-500 ">-</span>, ainsi:<br><span
+                    class="block p-1 pl-5  text-primary-500 "> - Le début de ma
                     liste</span></p>
             <hr>
             <h3>Images</h3>
@@ -203,14 +203,14 @@
                 et
                 ajoutera une image à l'éditeur, ou
                 vous pouvez ajouter manuellement l'image en ajoutant un point d'exclamation
-                <span class="p-1  text-primary-500 bg-primary-100">!</span>, suivi du texte
+                <span class="p-1  text-primary-500 ">!</span>, suivi du texte
                 alternatif
-                à l'intérieur de <span class="p-1  text-primary-500 bg-primary-100">[]</span>,
+                à l'intérieur de <span class="p-1  text-primary-500 ">[]</span>,
                 et
-                l'URL de l'image à l'intérieur de <span class="p-1  text-primary-500 bg-primary-100">()</span>,
+                l'URL de l'image à l'intérieur de <span class="p-1  text-primary-500 ">()</span>,
                 ainsi:
             </p>
-            <div class="p-1 font-semibold  text-primary-500 bg-primary-100">
+            <div class="p-1 font-semibold  text-primary-500 ">
                 ![texte alternatif pour l'image](url_vers_image.png)
                 <div class="mt-5 break-words font-normal">
                     <span>
@@ -228,7 +228,7 @@
             <hr>
             <h3>Séparateur</h3>
             <p>Pour ajouter un séparateur, vous pouvez ajouter trois tirets ou trois
-                astérisques:<br><span class="block p-1 pl-5  text-primary-500 bg-primary-100">--- or
+                astérisques:<br><span class="block p-1 pl-5  text-primary-500 ">--- or
                     ***</span>
             </p>
         </div>

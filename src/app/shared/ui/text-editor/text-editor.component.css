@@ -9,5 +9,5 @@
 }
 
 .tab {
-  @apply hover:bg-skin-link;
+  @apply bg-white;
 }

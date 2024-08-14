@@ -4,7 +4,7 @@
         <ng-container *ngFor="let tag of tagList">
             <button (click)="filterByTag(tag.name)" type="button" aria-labelledby="A tag"
                 [ngClass]="{'active-tag': activeTag == tag.name}"
-                class="group flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                class="group flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover: transition-all duration-200">
                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
                     <circle cx="4" cy="4" r="3"></circle>
                 </svg>
@@ -16,7 +16,7 @@
 </div>
 
 <div *ngIf="displayTitle" class="relative mt-6 flex justify-center">
-    <button (click)="toggleSection()" class="inline-flex border items-center px-2 py-1 rounded-md text-sm font-medium bg-skin-link text-skin-base ">
+    <button (click)="toggleSection()" class="inline-flex border items-center px-2 py-1 rounded-md text-sm font-medium  text-skin-base ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
             class="w-4 h-4 border mr-2 rounded-full p-0.5 transition-all duration-200" [ngClass]="{'!rotate-90': isOpen}">
             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

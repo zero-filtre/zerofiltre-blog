@@ -1,6 +1,6 @@
 .header,
 .header-container {
-  @apply bg-skin-bg;
+  @apply bg-transparent;
 }
 
 .header.transparent,
@@ -30,7 +30,7 @@
 }
 
 ::ng-deep .mat-progress-bar-fill::after {
-  @apply !bg-primary-500;
+  @apply !bg-white;
 }
 
 ::ng-deep .mat-progress-bar-buffer {

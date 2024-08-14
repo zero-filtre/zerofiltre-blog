@@ -10,7 +10,7 @@ export class AdsSquareComponent {
   @Input() imageUrl: string;
   @Input() text: string;
 
-  defaultColor = 'border-primary-500 text-primary-500 group-hover:bg-primary-500'
+  defaultColor = 'border-primary-500 text-primary-500 group-'
 
   ads = [
     {
@@ -23,7 +23,7 @@ export class AdsSquareComponent {
       url: '/cours/3',
       image: 'https://ik.imagekit.io/lfegvix1p/annonce_build_and_run_elevez_le_dev_au_dela_du_build_k8fX8AYfF.png?updatedAt=1708359934013',
       text: "Restez compétitifs sur le marché du logiciel en devenant des devs qui 'RUN' ce qu'ils 'BUILD'",
-      color: 'border-accent-400 text-accent-400 group-hover:bg-accent-400'
+      color: 'border-accent-400 text-accent-400 group-hover:'
     }
   ]
 

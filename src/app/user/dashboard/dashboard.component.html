@@ -105,7 +105,7 @@
                                     <div *ngIf="authService.currentUsr as currentUsr">
                                         <div *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
                                             <button [matMenuTriggerFor]="menu"
-                                                class="rounded-full p-2 opacity-0 group-hover:opacity-100 hover:bg-skin-link transition-all duration-500"
+                                                class="rounded-full p-2 opacity-0 group-hover:opacity-100  transition-all duration-500"
                                                 aria-label="icon-button with a menu">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-secondary"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -115,9 +115,9 @@
                                                 </svg>
                                             </button>
 
-                                            <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
+                                            <mat-menu #menu="matMenu" class="font-normal text-skin-base ">
                                                 <a aria-labelledby="Link to article edit page" routerLink="/articles/{{article|slugify}}/edit"
-                                                    class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                    class="flex items-end gap-3 px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -127,7 +127,7 @@
                                                     <span>{{ 'articleDetail.edit' | translate }}</span>
                                                 </a>
                                                 <button (click)="openArticleDeleteDialog(article?.id)" aria-labelledby="Delete article button"
-                                                    class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                    class="flex items-end gap-3 w-full text-left px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"

@@ -12,12 +12,12 @@
 }
 
 .tab {
-  @apply hover:bg-skin-link;
+  @apply bg-white;
 }
 
 .save-tooltip {
   @apply absolute w-auto p-2 m-2 min-w-max top-8 right-0 rounded-md shadow-md
-    text-skin-white bg-secondary text-xs font-bold transition-all duration-100 scale-0 origin-right;
+    text-skin-white  text-xs font-bold transition-all duration-100 scale-0 origin-right;
 }
 
 .vimeo_video {
@@ -36,9 +36,9 @@ iframe {
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-  @apply bg-primary-100;
+  @apply bg-white;
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-  @apply bg-primary-50;
+  @apply ;
 }

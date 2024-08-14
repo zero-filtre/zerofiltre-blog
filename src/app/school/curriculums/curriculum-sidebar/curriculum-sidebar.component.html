@@ -13,7 +13,7 @@
                 <ng-container *ngIf="canEdit">
                     <div class="flex gap-3">
                         <button (click)="openChapterInitDialog(course?.id)"
-                            class="flex items-center gap-1 mb-4 border shadow-lg rounded-md p-4 text-primary-500 hover:bg-skin-link transition-all duration-300">
+                            class="flex items-center gap-1 mb-4 border shadow-lg rounded-md p-4 text-primary-500  transition-all duration-300">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -24,7 +24,7 @@
 
                         <button (click)="publishCourse(course)" [disabled]="isPublishing"
                             [ngClass]="{'cursor-not-allowed bg-opacity-60 hover:bg-opacity-60': isPublishing}"
-                            class="flex items-center gap-1 mb-4 border shadow-lg rounded-md px-4 text-skin-white bg-primary-500 hover:bg-primary-800 transition-all duration-300">
+                            class="flex items-center gap-1 mb-4 border shadow-lg rounded-md px-4 text-skin-white   transition-all duration-300">
                             <span class="line-clamp-1" [ngClass]="{'text-sm': isPublishing}">{{publishBtnText}}</span>
                             <svg *ngIf="isPublishing" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"
@@ -53,13 +53,13 @@
                                     [ngClass]="{'cursor-grab' : canEdit}">
 
                                     <div (click)="chapter?.lessons?.length && accordionItem.toggle()"
-                                        class="curriculum_chapter_title uppercase opacity-90 shadow-md rounded-sm group flex items-center justify-between bg-primary-100 text-secondary dark:text-skin-white p-3 font-semibold mb-1">
+                                        class="curriculum_chapter_title uppercase opacity-90 shadow-md rounded-sm group flex items-center justify-between  text-secondary dark:text-skin-white p-3 font-semibold mb-1">
                                         <span>{{chapter?.title}}</span>
 
                                         <!-- Contextuel menu for editing Chapter -->
                                         <div *ngIf="canEdit">
                                             <button [matMenuTriggerFor]="menu"
-                                                class="rounded-full p-2 hover:bg-skin-card transition-all duration-500"
+                                                class="rounded-full p-2 hover: transition-all duration-500"
                                                 aria-label="icon-button with a menu">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-secondary"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -69,10 +69,10 @@
                                                 </svg>
                                             </button>
 
-                                            <mat-menu #menu="matMenu" class="font-normal text-secondary bg-primary-100">
+                                            <mat-menu #menu="matMenu" class="font-normal text-secondary ">
                                                 <button (click)="openLessonInitDialog(chapter?.id, course)"
                                                     aria-labelledby="Add Lesson button"
-                                                    class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                    class="flex items-end gap-3 w-full text-left px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
@@ -83,7 +83,7 @@
                                                 </button>
                                                 <button (click)="openChapterUpdateDialog(chapter)"
                                                     aria-labelledby="Delete chapter button"
-                                                    class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                    class="flex items-end gap-3 w-full text-left px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
@@ -94,7 +94,7 @@
                                                 </button>
                                                 <button (click)="openChapterDeleteDialog(chapter?.id)"
                                                     aria-labelledby="Delete chapter button"
-                                                    class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                    class="flex items-end gap-3 w-full text-left px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
@@ -120,8 +120,8 @@
 
                                                 <li cdkDrag [cdkDragDisabled]="!canEdit || mobileQuery.matches"
                                                     id="{{lesson.id}}" *ngIf="lesson?.chapterId === chapter?.id"
-                                                    [ngClass]="{'!bg-skin-link': isActiveLesson(lesson.id), '!text-skin-base opacity-80': !lesson?.free && !canAccessCourse, 'cursor-grab' : canEdit}"
-                                                    class="curriculum_chapter_lesson_elt text-primary-500 hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
+                                                    [ngClass]="{'': isActiveLesson(lesson.id), '!text-skin-base opacity-80': !lesson?.free && !canAccessCourse, 'cursor-grab' : canEdit}"
+                                                    class="curriculum_chapter_lesson_elt text-primary-500   transition-all duration-200">
                                                     <div
                                                         class="lesson_link w-full group flex justify-between items-center gap-2">
                                                         <div class="w-full flex items-center gap-2 pr-3">
@@ -186,7 +186,7 @@
                                                                 <!-- Contextual menu for editing Lesson -->
                                                                 <ng-container *ngIf="canEdit">
                                                                     <button [matMenuTriggerFor]="menu"
-                                                                        class="rounded-full p-2 lg:opacity-0 group-hover:opacity-100 hover:bg-skin-card transition-all duration-500"
+                                                                        class="rounded-full p-2 lg:opacity-0 group-hover:opacity-100 hover: transition-all duration-500"
                                                                         aria-label="icon-button with a menu">
                                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                                             class="w-4 text-secondary" fill="none"
@@ -198,10 +198,10 @@
                                                                     </button>
 
                                                                     <mat-menu #menu="matMenu"
-                                                                        class="font-normal text-skin-base bg-skin-bg">
+                                                                        class="font-normal text-skin-base ">
                                                                         <a aria-labelledby="Link to lesson edit page"
                                                                             routerLink="/cours/{{course|slugify}}/{{lesson|slugify}}/edit"
-                                                                            class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                                            class="flex items-end gap-3 px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 fill="none" viewBox="0 0 24 24"
                                                                                 stroke-width="1.5" stroke="currentColor"
@@ -216,7 +216,7 @@
                                                                         <button
                                                                             (click)="openLessonDeleteDialog(lesson?.id)"
                                                                             aria-labelledby="Delete article button"
-                                                                            class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                                            class="flex items-end gap-3 w-full text-left px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 fill="none" viewBox="0 0 24 24"
                                                                                 stroke-width="1.5" stroke="currentColor"
@@ -231,8 +231,8 @@
                                                                 </ng-container>
 
                                                                 <span *ngIf="durations.length"
-                                                                    [ngClass]="{'!text-skin-white !bg-skin-base !opacity-50': !lesson?.free && !canAccessCourse}"
-                                                                    class="lesson_duration rounded-md p-1 bg-accent-400 text-xs text-secondary font-normale">
+                                                                    [ngClass]="{'!text-skin-white  !opacity-50': !lesson?.free && !canAccessCourse}"
+                                                                    class="lesson_duration rounded-md p-1  text-xs text-secondary font-normale">
                                                                     <!-- {{durations[i][j]}} -->
                                                                 </span>
                                                             </div>

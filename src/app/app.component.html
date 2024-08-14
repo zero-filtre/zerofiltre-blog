@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container !overflow-visible bg-skin-bg">
+<mat-sidenav-container class="sidenav-container !overflow-visible ">
   <ng-container *ngIf="subscribedCourses$ | async"></ng-container>
   <!-- <ng-container *ngIf="geoLocationService.location$ | async"></ng-container> -->
 
@@ -17,7 +17,7 @@
 
     <div>
       <button *ngIf="authService.isPro; else notProUserBtn" disabled
-        class="mr-1 border border-primary-500 rounded-md shadow-sm bg-primary-100/20">
+        class="mr-1 border border-primary-500 rounded-md shadow-sm ">
         <p class="text-sm sm:text-lg text-primary-500 font-extrabold p-1.5">Tu es PRO</p>
       </button>
       <ng-template #notProUserBtn>
@@ -55,7 +55,7 @@
 
             <ng-container *ngIf="!currentUsr?.profilePicture">
               <svg xmlns="http://www.w3.org/2000/svg"
-                class="h-10 w-10 p-2 border-2 bg-primary-500 border-primary-500 text-skin-white fill-white rounded-full"
+                class="h-10 w-10 p-2 border-2  border-primary-500 text-skin-white fill-white rounded-full"
                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -69,7 +69,7 @@
 
         <div class="mt-2">
           <a aria-labelledby="Link to about page" routerLink="/user/profile" (click)="drawer.close()"
-            class="flex items-center gap-3 py-3 px-1 border-y rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="flex items-center gap-3 py-3 px-1 border-y rounded-md  hover:text-primary-500 text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -79,7 +79,7 @@
           </a>
 
           <a aria-labelledby="Link to user articles page" routerLink="/user/dashboard" (click)="drawer.close()"
-            class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="flex items-center gap-3 py-3 px-1 border-b  hover:text-primary-500 text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -90,7 +90,7 @@
 
           <a *ngIf="activeCourseModule" aria-labelledby="Link to user student courses page"
             routerLink="/user/dashboard/courses" (click)="drawer.close()"
-            class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="flex items-center gap-3 py-3 px-1 border-b  hover:text-primary-500 text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -101,7 +101,7 @@
 
           <a *ngIf="activeCourseModule" aria-labelledby="Link to user teacher courses page"
             routerLink="/user/dashboard/teacher/courses" (click)="drawer.close()"
-            class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="flex items-center gap-3 py-3 px-1 border-b  hover:text-primary-500 text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -112,7 +112,7 @@
 
           <a *ngIf="activeCourseModule && authService?.isAdmin" aria-labelledby="Link to about page"
             routerLink="/user/dashboard/courses/all" (click)="drawer.close()"
-            class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="flex items-center gap-3 py-3 px-1 border-b  hover:text-primary-500 text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -123,7 +123,7 @@
 
           <a *ngIf="authService?.isAdmin" aria-labelledby="Link to about page" routerLink="/user/dashboard/admin"
             (click)="drawer.close()"
-            class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="flex items-center gap-3 py-3 px-1 border-b  hover:text-primary-500 text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -133,7 +133,7 @@
           </a>
 
           <button (click)="logout()" aria-labelledby="logout button"
-            class="flex items-center gap-3 w-full text-left py-3 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="flex items-center gap-3 w-full text-left py-3 px-1 rounded-md  hover:text-primary-500 text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -167,7 +167,7 @@
 
   <!-- PROFILE SIDEBAR -->
   <mat-sidenav *appShellNoRender
-    class="profile-sidebar !hidden lg:!block bg-skin-bgMuted shadow-sm border-0 rounded-none !fixed w-full max-w-xs"
+    class="profile-sidebar !hidden lg:!block  shadow-sm border-0 rounded-none !fixed w-full max-w-xs"
     mode="side" [opened]="checkRouteUrl()">
 
     <div class="profile-sidebar-container relative pt-32 px-10 text-skin-base h-full">
@@ -267,7 +267,7 @@
 
       <div class=" absolute bottom-0 inset-x-0 p-4">
         <button (click)="logout()" aria-labelledby="logout button"
-          class="flex gap-3 w-full bg-error hover:bg-red-500 text-skin-white items-center px-3 py-2 shadow-lg text-sm font-semibold rounded-md transition-all duration-300">
+          class="flex gap-3 w-full bg-error  text-skin-white items-center px-3 py-2 shadow-lg text-sm font-semibold rounded-md transition-all duration-300">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round"

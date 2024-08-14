@@ -29,31 +29,31 @@
 
             <mat-menu #menu="matMenu" class="mt-2 text-skin-base font-semibold">
                 <a aria-labelledby="Link to about page" routerLink="/articles"
-                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    class="block px-4 py-2  hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.allArticles' | translate}}</span>
                 </a>
                 <a aria-labelledby="Link to about page" routerLink="/user/dashboard"
-                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    class="block px-4 py-2  hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.myArticles' | translate}}</span>
                 </a>
                 <a aria-labelledby="Link to my student courses dashboard" routerLink="/user/dashboard/courses"
-                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    class="block px-4 py-2  hover:text-primary-500 text-xs transition-all duration-200">
                     <span class="truncate">{{'sidebar.myCourses' | translate}}</span>
                 </a>
                 <a aria-labelledby="Link to my teacher courses dashboard" routerLink="/user/dashboard/teacher/courses"
-                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    class="block px-4 py-2  hover:text-primary-500 text-xs transition-all duration-200">
                     <span class="truncate">{{'sidebar.myTrainings' | translate}}</span>
                 </a>
                 <a aria-labelledby="Link to all courses dashboard" *ngIf="authService?.isAdmin" routerLink="/user/dashboard/courses/all"
-                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    class="block px-4 py-2  hover:text-primary-500 text-xs transition-all duration-200">
                     <span class="truncate">{{'sidebar.allTrainings' | translate}}</span>
                 </a>
                 <a aria-labelledby="Link to about page" *ngIf="authService?.isAdmin" routerLink="/user/dashboard/admin"
-                    class="block px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    class="block px-4 py-2  hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.allAdminArticles' | translate}}</span>
                 </a>
                 <a aria-labelledby="Link to about page" routerLink="edit"
-                    class="hidden px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+                    class="hidden px-4 py-2  hover:text-primary-500 text-xs transition-all duration-200">
                     <span>{{'profile.editMyInfos' | translate}}</span>
                 </a>
             </mat-menu>
@@ -72,7 +72,7 @@
 
                     <ng-container *ngIf="!user?.profilePicture">
                         <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-full h-full rounded-full p-2 border-2 bg-primary-500 border-primary-500 text-skin-white fill-white"
+                            class="w-full h-full rounded-full p-2 border-2  border-primary-500 text-skin-white fill-white"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -113,7 +113,7 @@
         </div>
 
         <div class="profile-content mt-10">
-            <div class="user-credentials flex flex-col space-y-4 px-4 py-6 rounded-lg bg-skin-bgMuted shadow-md">
+            <div class="user-credentials flex flex-col space-y-4 px-4 py-6 rounded-lg  shadow-md">
                 <nav class="user-credentials-nav flex justify-between items-center">
                     <div class="text-xl sm:text-2xl text-skin-base font-bold">Infos</div>
                 </nav>

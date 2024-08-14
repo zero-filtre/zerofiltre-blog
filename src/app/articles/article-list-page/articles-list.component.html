@@ -33,11 +33,11 @@
                 </nav>
 
                 <div *ngIf="openedTagsDropdown"
-                    class="tagList-container lg:hidden flex flex-wrap justify-center absolute z-30 top-full gap-1.5 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%] bg-skin-bgMuted border shadow-2xl rounded-2xl overflow-y-scroll no-scrollbar">
+                    class="tagList-container lg:hidden flex flex-wrap justify-center absolute z-30 top-full gap-1.5 p-3 mt-4 max-h-[50vh] sm:max-h-[80vh] w-[85%] sm:w-[70%]  border shadow-2xl rounded-2xl overflow-y-scroll no-scrollbar">
                     <ng-container *ngFor="let tag of tagList">
                         <button (click)="sortByTag(tag.name)" type="button" aria-current="false" aria-labelledby="a tag"
                             [ngClass]="{'active-tag': activeTag == tag.name}"
-                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover:bg-skin-card transition-all duration-200">
+                            class="group inline-flex items-center px-3 py-1 text-sm font-medium text-skin-inverted rounded-full border border-skin-border hover: transition-all duration-200">
                             <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor"
                                 viewBox="0 0 8 8">
                                 <circle cx="4" cy="4" r="3"></circle>
@@ -113,7 +113,7 @@
                                         <div *ngIf="authService.currentUsr as currentUsr">
                                             <div *ngIf="isAuthor(currentUsr, article) || authService.isAdmin">
                                                 <button [matMenuTriggerFor]="menu"
-                                                    class="rounded-full p-2 opacity-0 group-hover:opacity-100 hover:bg-skin-link transition-all duration-500"
+                                                    class="rounded-full p-2 opacity-0 group-hover:opacity-100  transition-all duration-500"
                                                     aria-label="icon-button with a menu">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-secondary"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -123,9 +123,9 @@
                                                     </svg>
                                                 </button>
 
-                                                <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
+                                                <mat-menu #menu="matMenu" class="font-normal text-skin-base ">
                                                     <a aria-labelledby="Link to article edit page" routerLink="/articles/{{article|slugify}}/edit"
-                                                        class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                        class="flex items-end gap-3 px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                             class="w-5 h-5">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -135,7 +135,7 @@
                                                         <span>{{ 'articleDetail.edit' | translate }}</span>
                                                     </a>
                                                     <button (click)="openArticleDeleteDialog(article?.id)" aria-labelledby="Delete article button"
-                                                        class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                                        class="flex items-end gap-3 w-full text-left px-4 py-2  hover:text-primary-500 text-sm transition-all duration-200">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                             class="w-5 h-5">
                                                             <path stroke-linecap="round" stroke-linejoin="round"

@@ -1,16 +1,16 @@
 progress {
-  @apply border border-primary-500 bg-primary-500/30 rounded-sm overflow-hidden shadow-md w-full lg:w-[calc(100%-394px)];
+  @apply border border-primary-500 bg-white/30 rounded-sm overflow-hidden shadow-md w-full lg:w-[calc(100%-394px)];
   border: none;
   -webkit-appearance: none;
 }
 progress::-moz-progress-bar {
-  @apply bg-primary-500;
+  @apply bg-white;
 }
 progress::-webkit-progress-bar {
   background: transparent;
 }
 progress::-webkit-progress-value {
-  @apply bg-primary-500;
+  @apply bg-white;
 }
 
 #lesson_video_player {

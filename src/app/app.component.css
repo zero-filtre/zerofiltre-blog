@@ -4,11 +4,11 @@
 }
 
 .sidenav .sidenavLink {
-  @apply hover:bg-skin-link hover:text-primary-500 transition-all duration-200;
+  @apply  hover:text-primary-500 transition-all duration-200;
 }
 
 /* .sidenav .sidenavLink.login_btn {
-  @apply flex items-center my-2 justify-center gap-2 shadow-md text-base bg-primary-800 text-skin-white py-2.5 px-4 rounded-md hover:bg-primary-500 focus:outline-none transition-all duration-300;
+  @apply flex items-center my-2 justify-center gap-2 shadow-md text-base  text-skin-white py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300;
 } */
 
 .sidenav .sidenavLink div {
@@ -16,7 +16,7 @@
 }
 
 .link-active {
-  @apply bg-skin-bg text-skin-base shadow-md;
+  @apply  text-skin-base shadow-md;
 }
 
 .link-inactive {

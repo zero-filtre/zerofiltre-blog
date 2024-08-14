@@ -1,7 +1,7 @@
-<div class="edit-toolbar sticky top-[72px] lg:top-20 z-20 bg-primary-100">
+<div class="edit-toolbar sticky top-[72px] lg:top-20 z-20 ">
     <nav class="top-nav font-semibold">
         <div class="site-container flex items-center justify-between gap-4 lg:gap-5 h-16">
-            <a routerLink="/cours/{{courseID}}/{{lessonID}}" class="flex items-center justify-center bg-primary-50 text-skin-white h-full w-16"
+            <a routerLink="/cours/{{courseID}}/{{lessonID}}" class="flex items-center justify-center  text-skin-white h-full w-16"
                 aria-label="navigate back button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="group-hover:text-primary-300"
                     data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
@@ -16,7 +16,7 @@
                 </app-auto-save-button>
             </ng-container>
 
-            <h2 class="bg-primary-50 h-full grid place-items-center font-normal">
+            <h2 class=" h-full grid place-items-center font-normal">
                 <a aria-labelledby="Link to about page" routerLink="/user/dashboard/teacher/courses"
                     class="h-full pl-5 pr-2.5 text-lg text-skin-white flex items-center lg:gap-1">
                     <span>Mes formations</span>
@@ -128,7 +128,7 @@
                         </div>
 
                         <div *ngIf="video?.value"
-                            class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center items-center w-12 h-12 mt-2 mr-2 text-sm leading-tight text-skin-white bg-gray-700 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error"
+                            class="cover-close-btn absolute top-0 right-0 z-10 flex justify-center items-center w-12 h-12 mt-2 mr-2 text-sm leading-tight text-skin-white  rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error"
                             (click)="deleteVideo(lesson)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                 class="w-6 h-6">
@@ -149,7 +149,7 @@
                         class="w-full text-secondary border-2 border-dashed rounded p-5 grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-3 lg:justify-start flex-wrap mt-[-10px]">
                         <ng-container *ngFor="let res of resources?.value; let i = index">
                             <div *ngIf="res.type == 'img'"
-                                class="flex flex-col items-center justify-center hover:bg-base-100 rounded">
+                                class="flex flex-col items-center justify-center  rounded">
                                 <a href="{{res.url}}" target="_blank" rel="noopener" download="res.name">
                                     <app-image [sourceUrl]="res.url" [classes]="'w-full'"></app-image>
                                 </a>
@@ -162,7 +162,7 @@
                                     </svg>
                                 </span>
 
-                                <div class="ressource-remove-btn flex justify-center items-center w-8 h-8 mt-4 text-sm text-skin-white bg-secondary rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
+                                <div class="ressource-remove-btn flex justify-center items-center w-8 h-8 mt-4 text-sm text-skin-white  rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
                                     (click)="deleteRessource(res, i)">
                                     <span class="-mt-0.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -175,7 +175,7 @@
                             </div>
 
                             <div *ngIf="docTypes.includes(res.type)"
-                                class="flex flex-col items-center justify-center self-start mt-auto hover:bg-base-100 rounded">
+                                class="flex flex-col items-center justify-center self-start mt-auto  rounded">
 
                                 <div class="flex flex-col w-full">
                                     <div *ngIf="!isZIPFile(res) && !isTXTFile(res)" class="w-full">
@@ -235,7 +235,7 @@
                                     </div>
                                 </div>
 
-                                <div class="ressource-remove-btn flex justify-center items-center w-8 h-8 mt-4 text-sm text-skin-white bg-secondary rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
+                                <div class="ressource-remove-btn flex justify-center items-center w-8 h-8 mt-4 text-sm text-skin-white  rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-error transition-all duration-200"
                                     (click)="deleteRessource(res, i)">
                                     <span class="-mt-0.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -249,7 +249,7 @@
                         </ng-container>
 
                         <label *ngIf="!resUploading" for="file" (click)="fileUpload.click()"
-                            class="group text-skin-base flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
+                            class="group text-skin-base flex flex-col items-center justify-center  p-5 rounded cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-10 w-10 group-hover:text-primary-500"
                                 viewBox="0 0 512 512">
                                 <path

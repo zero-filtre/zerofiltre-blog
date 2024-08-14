@@ -1,5 +1,5 @@
 <div *ngIf="seo.transparentHeader" class="min-h-[4px] hidden">
-    <mat-progress-bar *ngIf="changingRoute" class="bg-primary-500" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="changingRoute" class="" mode="indeterminate"></mat-progress-bar>
 </div>
 
 <header class="header" [ngClass]="{'transparent' : seo.transparentHeader}">
@@ -29,7 +29,7 @@
 
         <div class="navbar-links hidden lg:flex items-center text-secondary">
             <button *ngIf="authService.isPro; else notProUserBtn" disabled
-                class="mr-1 border border-primary-500 rounded-md shadow-sm bg-primary-100/20">
+                class="mr-1 border border-primary-500 rounded-md shadow-sm ">
                 <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5">Tu es PRO</p>
             </button>
             <ng-template #notProUserBtn>
@@ -53,7 +53,7 @@
             </a>
 
             <div class="flex items-center gap-4 ml-4">
-                <button (click)="openSearchPopup()" class="xl:hidden self-center flex outline-none ring-0 p-1.5 justify-between items-center text-secondary font-normal bg-white bg-opacity-10 hover:bg-opacity-20 rounded-full hover:border-secondary 
+                <button (click)="openSearchPopup()" class="xl:hidden self-center flex outline-none ring-0 p-1.5 justify-between items-center text-secondary font-normal  bg-opacity-10 hover:bg-opacity-20 rounded-full hover:border-secondary 
                     hover:drop-shadow-[0_0_7px_rgba(21,178,188,0.4)] transition-all duration-200">
                     <span class="w-5">
                         <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="search" role="img"
@@ -72,7 +72,7 @@
                     </span>
                 </button>
 
-                <button (click)="openSearchPopup()" class="hidden xl:flex h-auto outline-none ring-0 p-1.5 justify-between items-center text-secondary font-normal bg-white bg-opacity-10 hover:bg-opacity-20 border border-secondary rounded-full hover:border-secondary 
+                <button (click)="openSearchPopup()" class="hidden xl:flex h-auto outline-none ring-0 p-1.5 justify-between items-center text-secondary font-normal  bg-opacity-10 hover:bg-opacity-20 border border-secondary rounded-full hover:border-secondary 
                     transition-all duration-200">
                     <span class="w-4 mx-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="search" role="img"
@@ -100,7 +100,7 @@
                     </a>
 
                     <button *ngIf="authService.currentUsr as currentUsr" [matMenuTriggerFor]="menu" #t="matMenuTrigger"
-                        class="user-profile-icon flex gap-2.5 items-center justify-center border border-skin-borderBold p-1.5 rounded-full shadow-inner hover:bg-primary-50 hover:bg-opacity-10 transition-all duration-300"
+                        class="user-profile-icon flex gap-2.5 items-center justify-center border border-skin-borderBold p-1.5 rounded-full shadow-inner  hover:bg-opacity-10 transition-all duration-300"
                         aria-label="User profile icon with a menu">
 
                         <div class="profile-image">
@@ -112,7 +112,7 @@
 
                             <div *ngIf="!currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-10 w-10 p-2 border-2 bg-primary-500 border-primary-500 text-skin-white fill-white rounded-full"
+                                    class="h-10 w-10 p-2 border-2  border-primary-500 text-skin-white fill-white rounded-full"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -128,9 +128,9 @@
                             </svg>
                         </div>
 
-                        <mat-menu #menu="matMenu" class="mt-2 text-skin-base w-64 bg-skin-bg">
+                        <mat-menu #menu="matMenu" class="mt-2 text-skin-base w-64 ">
                             <a aria-labelledby="Link to user profile page" routerLink="/user/profile"
-                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                                class="flex items-center gap-3 px-4 py-3 border-b  hover:text-primary-500 text-sm transition-all duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -140,7 +140,7 @@
                             </a>
 
                             <a aria-labelledby="Link to user articles page" routerLink="/user/dashboard"
-                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                class="flex items-center gap-3 px-4 py-3 border-b  hover:text-primary-500 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -151,7 +151,7 @@
 
                             <a *ngIf="activeCourseModule" aria-labelledby="Link to user student courses page"
                                 routerLink="/user/dashboard/courses"
-                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                class="flex items-center gap-3 px-4 py-3 border-b  hover:text-primary-500 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -162,7 +162,7 @@
 
                             <a *ngIf="activeCourseModule" aria-labelledby="Link to user teacher courses page"
                                 routerLink="/user/dashboard/teacher/courses"
-                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                class="flex items-center gap-3 px-4 py-3 border-b  hover:text-primary-500 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -173,7 +173,7 @@
 
                             <a *ngIf="activeCourseModule && authService?.isAdmin" aria-labelledby="Link to about page"
                                 routerLink="/user/dashboard/courses/all"
-                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                class="flex items-center gap-3 px-4 py-3 border-b  hover:text-primary-500 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -184,7 +184,7 @@
 
                             <a *ngIf="authService?.isAdmin" aria-labelledby="Link to about page"
                                 routerLink="/user/dashboard/admin"
-                                class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                class="flex items-center gap-3 px-4 py-3 border-b  hover:text-primary-500 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -194,7 +194,7 @@
                             </a>
 
                             <button (click)="logout()" aria-labelledby="logout button"
-                                class="flex items-center gap-3 px-4 py-3 hover:bg-skin-link hover:text-error text-sm w-full">
+                                class="flex items-center gap-3 px-4 py-3  hover:text-error text-sm w-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -213,7 +213,7 @@
 
         <div class="lg:hidden flex justify-center items-center gap-5">
             <button *ngIf="authService.isPro; else notProUserBtnMobile" disabled
-                class="mr-1 border border-primary-500 rounded-md shadow-sm bg-primary-100/20">
+                class="mr-1 border border-primary-500 rounded-md shadow-sm ">
                 <p class="text-sm sm:text-lg text-primary-500 font-extrabold p-1.5">Tu es PRO</p>
             </button>
             <ng-template #notProUserBtnMobile>
@@ -226,7 +226,7 @@
             </ng-template>
 
             <div class="flex items-center gap-5">
-                <button (click)="openSearchPopup()" class="self-center flex outline-none ring-0 p-1.5 justify-between items-center text-primary-50 font-normal bg-white bg-opacity-10 hover:bg-opacity-20 rounded-full hover:border-primary-500 
+                <button (click)="openSearchPopup()" class="self-center flex outline-none ring-0 p-1.5 justify-between items-center text-primary-50 font-normal  bg-opacity-10 hover:bg-opacity-20 rounded-full hover:border-primary-500 
                     hover:drop-shadow-[0_0_7px_rgba(21,178,188,0.4)] transition-all duration-200">
                     <span class="w-5">
                         <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="search" role="img"
@@ -259,5 +259,5 @@
 </header>
 
 <div *ngIf="!seo.transparentHeader" class="min-h-[5px]">
-    <mat-progress-bar *ngIf="changingRoute" class="bg-primary-500" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="changingRoute" class="" mode="indeterminate"></mat-progress-bar>
 </div>
