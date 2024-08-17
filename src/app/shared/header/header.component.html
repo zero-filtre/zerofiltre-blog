@@ -29,17 +29,17 @@
 
         <div class="navbar-links hidden lg:flex items-center ">
             <button *ngIf="authService.isPro; else notProUserBtn" disabled
-                class="mr-1 border  rounded-md shadow-sm ">
-                <p class="text-sm sm:text-lg  font-extrabold px-1.5">Tu es PRO</p>
+                class="mr-1 rounded-md shadow-md ">
+                <p class="text-sm sm:text-lg bg-skin-fill-success font-extrabold px-1.5">Tu es PRO</p>
             </button>
             <ng-template #notProUserBtn>
                 <button (click)="subscribeToPro()"
-                    class="mr-1 border  rounded-md hover:shadow-sm transition-all duration-300">
-                    <p class="text-sm sm:text-lg  font-extrabold px-1.5">Passer PRO</p>
+                    class="mr-1 bg-skin-fill-success rounded-md lg:hover:scale-105 shadow-md transition-all duration-300">
+                    <p class="text-sm sm:text-lg font-extrabold px-2">Passer PRO</p>
                 </button>
             </ng-template>
 
-            <a *ngIf="activeCourseModule" aria-labelledby="Link to courses list page" class="navLink"
+            <a *ngIf="activeCourseModule" aria-labelledby="Link to courses list page" class="navLink md:hover:text-skin-warning"
                 routerLink="cours">
                 <div>{{'navbar.courses' | translate}}</div>
             </a>
@@ -213,13 +213,13 @@
 
         <div class="lg:hidden flex justify-center items-center gap-5">
             <button *ngIf="authService.isPro; else notProUserBtnMobile" disabled
-                class="mr-1 border  rounded-md shadow-sm ">
-                <p class="text-sm sm:text-lg  font-extrabold p-1.5">Tu es PRO</p>
+                class="mr-1 rounded-md shadow-md ">
+                <p class="text-sm sm:text-lg bg-skin-fill-success font-extrabold p-1.5">Tu es PRO</p>
             </button>
             <ng-template #notProUserBtnMobile>
                 <button (click)="subscribeToPro()">
                     <p
-                        class="text-sm sm:text-lg  border  rounded-md font-extrabold p-1.5">
+                        class="text-sm sm:text-lg bg-skin-fill-success rounded-md font-extrabold p-2">
                         Passer PRO
                     </p>
                 </button>
