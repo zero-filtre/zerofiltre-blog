@@ -69,24 +69,37 @@
   }
   
   .dark {
-    --color-text-base: 107,114,128;
-    --color-text-muted: 50,50,50;
+    --color-text-base: 255,255,255;
+    --color-text-muted: 178,190,205;
     --color-text-inverted: 5,43,93;
   
-    --color-fill-primary: 255,255,255;
-    --color-fill-secondary: 255,255,255;
+    --color-fill-primary: 18,24,27;
+    --color-fill-secondary: 42,46,53;
+    --color-fill-via: 32,39,55;
     --color-fill-danger: 245,95,68;
     --color-fill-warning: 236,170,71;
     --color-fill-success: 236,170,71;
 
-    --color-button-accent: 255,255,255;
-    --color-button-accent-hover: 255,255,255;
+    --color-button-accent: 5,43,93;
+    --color-button-accent-hover: 5,53,93;
 
     --color-button-muted: 255,255,255;
   }
 
+  
   body {
     overflow-x: hidden;
+  }
+
+  .sidenav-container {
+    background: rgb(var(--color-fill-primary),1);
+    color: rgb(var(--color-text-muted),1);
+  }
+  
+  .sidenav-container.ovelay {
+    background: linear-gradient(176deg, rgb(18, 24, 2) 25%, rgb(32, 39, 55) 100%);
+    min-height: 100vh;
+    background-attachment: fixed;
   }
 
 }
@@ -135,6 +148,10 @@
 
 .mat-drawer {
   @apply !bg-transparent backdrop-blur-md;
+}
+
+.mat-toolbar {
+  color: var(--color-text-base);
 }
 
 iframe {

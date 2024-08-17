@@ -1,12 +1,12 @@
 <main class="">
     <section
-        class="overflow-hidden relative course-section min-h-[600px] xl:min-h-[800px] pb-16 pt-4  md:pt-8 lg:py-16 grid place-items-center -mt-[80px] bg-gradient-to-b lg:bg-gradient-to-br from-skin-hue via-skin-hue to-transparent">
+        class="overflow-hidden relative course-section min-h-[600px] xl:min-h-[800px] pb-16 pt-4  md:pt-8 lg:py-16 grid place-items-center -mt-[80px]">
         <div class="site-container mx-auto mt-20 lg:mt-10">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
                     class="text-block basis-2/3 text-center lg:text-left flex flex-col items-start lg:pt-10 lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pr-20">
                     <h1
-                        class="text-3xl sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight  mb-10">
+                        class="text-3xl text-skin-base sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight  mb-10">
                         <!-- {{'home.coursesTitle' | translate}} -->
                         Dopez vos <span class="">compétences</span> sur des sujets techniques afin de
                         devenir un <span class="">profil désiré</span> par des
@@ -21,9 +21,9 @@
                     </p>
 
                     <div
-                        class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
+                        class="w-full  text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a *ngIf="activeCourseModule" aria-labelledby="Link to courses page" routerLink="cours"
-                            class="flex items-center justify-center gap-2 shadow-md text-base   py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center bg-skin-button-accent hover:bg-skin-button-accent-hover text-skin-base gap-2 shadow-md text-base   py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreCourses' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none"
@@ -82,13 +82,13 @@
     <app-carousel></app-carousel>
 
     <section
-        class="blog-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-br from-skin-hue via-skin-hue to-transparent">
+        class="blog-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center">
         <div class="site-container mx-auto">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
                     class="text-block lg:order-2 basis-2/3 text-center lg:text-left flex flex-col items-start lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pl-20">
                     <h1
-                        class="text-3xl sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight   mb-10">
+                        class="text-3xl text-skin-base sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight   mb-10">
                         <!-- {{'home.blogTitle' | translate}} -->
                         Rejoignez notre <span class="">communauté d'experts</span> afin de <span
                             class="">partager</span>
@@ -107,7 +107,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a aria-labelledby="Link to about page" routerLink="/articles"
-                            class="flex items-center justify-center gap-2 shadow-md text-base   py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center bg-skin-button-accent hover:bg-skin-button-accent-hover text-skin-base gap-2 shadow-md text-base   py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreBlog' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -130,13 +130,13 @@
     </section>
 
     <section
-        class="service-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center bg-gradient-to-b lg:bg-gradient-to-br from-skin-hue via-skin-hue to-transparent">
+        class="service-section  min-h-[600px] xl:min-h-[800px] pt-8 pb-16 lg:py-16 grid place-items-center">
         <div class="site-container mx-auto">
             <div class="flex flex-col lg:flex-row justify-between">
                 <div
                     class="text-block basis-2/3 text-center lg:text-left flex flex-col items-start lg:mx-0 mt-8 sm:mt-9 lg:mt-0 lg:pr-20">
                     <h1
-                        class="text-3xl sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight  mb-10">
+                        class="text-3xl text-skin-base sm:text-4xl md:text-5xl xl:leading-[1.2] font-extrabold tracking-tight  mb-10">
                         <!-- {{'home.servicesTitle' | translate}} -->
                         Nous fournissons des services à <span class="">valeur ajoutée</span> avec une
                         approche taillée pour chaque <span class="">enterprise</span>.
@@ -151,7 +151,7 @@
                     <div
                         class="w-full text-center font-semibold grid grid-cols-1 gap-2 sm:gap-5 sm:flex justify-center lg:justify-start">
                         <a aria-labelledby="Link to about page" href="{{servicesUrl}}" target="_blank"
-                            class="flex items-center justify-center gap-2 shadow-md text-base   py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
+                            class="flex items-center justify-center bg-skin-button-accent hover:bg-skin-button-accent-hover text-skin-base gap-2 shadow-md text-base   py-2.5 px-4 rounded-md  focus:outline-none transition-all duration-300">
                             <span>{{'home.exploreServices' | translate}}</span>
                             <span class="hidden md:block mt-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"

@@ -3,7 +3,7 @@
 }
 
 .useful-links .title {
-  @apply pb-4 text-sm lg:text-base;
+  @apply pb-4 text-skin-base text-sm lg:text-base;
 }
 
 .useful-links li {

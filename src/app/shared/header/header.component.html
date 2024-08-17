@@ -2,7 +2,7 @@
     <mat-progress-bar *ngIf="changingRoute" class="" mode="indeterminate"></mat-progress-bar>
 </div>
 
-<header class="header backdrop-blur-md" [ngClass]="{'transparent' : seo.transparentHeader}">
+<header class="header backdrop-blur-md text-skin-base font-semibold" [ngClass]="{'transparent' : seo.transparentHeader}">
     <app-announcement-banner 
         [isBannerVisible]="isBannerVisible" 
         [bannerText]="bannerText"
