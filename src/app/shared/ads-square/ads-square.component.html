@@ -1,5 +1,5 @@
 <div
-    class="overflow-hidden max-w-md mx-auto shadow-lg rounded-lg  group">
+    class="overflow-hidden bg-skin-fill-secondary max-w-md mx-auto shadow-lg rounded-lg  group">
     <a [routerLink]="currentAd.url" class="">
         <div class="card-image p-4">
             <app-image [classes]="'object-cover m-auto w-[250px]'" [alt]="'apprener le DDD'"
@@ -11,7 +11,7 @@
                 {{currentAd.text}}
             </h3>
             <button
-                class="flex items-center justify-between gap-2 px-4 py-2.5 rounded-md shadow-sm border {{currentAd.color}}  transition-all duration-300">
+                class="flex items-center justify-between text-skin-base bg-skin-button-muted hover:bg-opacity-70 gap-2 px-4 py-2.5 rounded-md shadow-sm {{currentAd.color}}  transition-all duration-300">
                 <span>En savoir plus</span>
 
                 <span class="hidden md:block mt-1">

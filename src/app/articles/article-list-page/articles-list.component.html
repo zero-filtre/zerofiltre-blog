@@ -152,7 +152,7 @@
                                         <a aria-labelledby="Link to about page" routerLink="/articles/{{article|slugify}}"
                                             class="article-title">
                                             <h4
-                                                class="article-title text-lg lg:text-2xl inline-block leading-6 font-semibold  transition-all duration-200 ">
+                                                class="article-title text-skin-base text-lg lg:text-2xl inline-block leading-6 font-semibold  transition-all duration-200 ">
                                                 {{capitalize(article?.title!)}}
                                             </h4>
                                         </a>
@@ -174,7 +174,7 @@
                                             </div>
 
                                             <div class="author-text ml-3">
-                                                <p class="text-sm font-semibold ">
+                                                <p class="text-sm font-semibold text-skin-base">
                                                     <a aria-labelledby="Link to about page"
                                                         [routerLink]="authService?.currentUsr?.id == article?.author?.id ? ['/user/profile'] : ['/user/' + article?.author?.id]"
                                                         class="hover:underline">
@@ -192,7 +192,7 @@
                                             </div>
 
                                             <div
-                                                class="reactions-total flex items-center justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
+                                                class="reactions-total text-skin-warning flex items-center justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
                                                 <span class="inline-flex items-center gap-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                         class="inline w-[18px] " fill="none"

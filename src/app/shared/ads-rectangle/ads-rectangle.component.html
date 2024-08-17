@@ -1,4 +1,4 @@
-<div class="overflow-hidden shadow-lg rounded-lg  group">
+<div class="overflow-hidden bg-skin-fill-secondary shadow-lg rounded-lg  group">
     <a [routerLink]="currentAd.url" class="flex flex-col lg:flex-row items-center">
         <div class="card-image flex-1 p-4">
             <app-image [classes]="'object-cover w-[250px] lg:w-[52%] m-auto'"
@@ -10,7 +10,7 @@
                 {{currentAd.text}}
             </h3>
             <button
-                class="flex items-center justify-between lg:w-fit gap-2 px-4 py-2.5 rounded-md shadow-sm border {{currentAd.color}}  transition-all duration-300">
+                class="flex items-center justify-between text-skin-base bg-skin-button-muted hover:bg-opacity-70 lg:w-fit gap-2 px-4 py-2.5 rounded-md shadow-sm {{currentAd.color}}  transition-all duration-300">
                 <span>En savoir plus</span>
 
                 <span class="mt-1">
