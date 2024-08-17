@@ -77,8 +77,8 @@
     --color-fill-secondary: 42,46,53;
     --color-fill-via: 32,39,55;
     --color-fill-danger: 245,95,68;
-    --color-fill-warning: 236,170,71;
-    --color-fill-success: 236,170,71;
+    --color-fill-warning: 253,188,90;
+    --color-fill-success: 4,102,108;
 
     --color-button-accent: 5,43,93;
     --color-button-accent-hover: 5,53,93;
@@ -92,8 +92,8 @@
   }
 
   .sidenav-container {
-    background: rgb(var(--color-fill-primary),1);
-    color: rgb(var(--color-text-muted),1);
+    background: rgba(var(--color-fill-primary),1);
+    color: rgba(var(--color-text-muted),1);
   }
   
   .sidenav-container.ovelay {
@@ -167,6 +167,24 @@ iframe {
   @apply text-sm whitespace-pre-line;
 }
 
+.enrol-tooltip {
+  @apply absolute w-auto p-2 min-w-max top-8 right-0 rounded-md shadow-md
+        text-xs font-medium transition-all duration-200 scale-0 origin-center bg-skin-fill-secondary;
+}
+
+.enrol-total:hover .enrol-tooltip {
+  @apply group-hover:scale-100;
+}
+
+.active-tab {
+  border-color: rgb(var(--color-text-base),1);
+  color: rgba(var(--color-text-base),1);
+}
+
+.active-tag {
+  @apply  transition-all duration-75 bg-skin-fill-secondary;
+}
+
 img {
   @apply max-h-full text-xs text-transparent;
   aspect-ratio: attr(width) / attr(height);
@@ -179,7 +197,7 @@ img {
 }
 
 .mat-dialog-container {
-  /* @apply ! */
+  @apply !bg-skin-fill-secondary
 }
 
 .payment-popup .mat-dialog-container {

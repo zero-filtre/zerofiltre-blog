@@ -1,4 +1,4 @@
-<div class="course-card group {{gridItem ? 'size-full flex flex-col shadow-lg rounded-xl lg:hover:scale-105 transition-transform ease-in-out duration-500' : 'grid lg:grid-cols-3 gap-6'}}">
+<div class="course-card group {{gridItem ? 'size-full bg-skin-fill-secondary flex flex-col shadow-lg rounded-xl lg:hover:scale-105 transition-transform ease-in-out duration-500' : 'grid lg:grid-cols-3 gap-6'}}">
     <a aria-labelledby="Link to course detail page"
         routerLink="{{canAccessCourse(course) ? (course | slugify) + '/' + '?' : (course | slugify)}}"
         class="relative group/imagecard article-preview hover:opacity-75">
@@ -21,7 +21,7 @@
                             viewBox="0 0 8 8">
                             <circle cx="4" cy="4" r="3"></circle>
                         </svg>
-                        <span class="">
+                        <span class="text-skin-base">
                             {{tag.name}}
                         </span>
                     </span>
@@ -70,7 +70,7 @@
                     routerLink="{{canAccessCourse(course) ? (course|slugify) + '/' + '?' : (course|slugify)}}"
                     class="article-title">
                     <h4
-                        class="article-title text-lg lg:text-[1.3rem] inline-block leading-[1.7rem] font-semibold  transition-all duration-200 ">
+                        class="article-title text-skin-base text-lg lg:text-[1.3rem] inline-block leading-[1.7rem] font-semibold  transition-all duration-200 ">
                         {{course?.title}}
                     </h4>
                 </a>
@@ -95,7 +95,7 @@
                     <p class="text-[0.8rem] font-semibold ">
                         <a aria-labelledby="Link to about page"
                             [routerLink]="authService?.currentUsr?.id == course?.author?.id ? ['/user/profile'] : ['/user/' + course?.author?.id]"
-                            class="hover:underline">
+                            class="hover:underline text-skin-base">
                             {{course?.author?.fullName}}
                         </a>
                     </p>
@@ -106,9 +106,9 @@
                 </div>
 
                 <div
-                    class="group flex items-center justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
+                    class="group text-skin-warning flex items-end justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
                     <ng-template [ngIf]="course.mentored">
-                        <app-mentored-icon [size]="'w-7 relative top-[9px]'" [classes]="'hidden lg:inline mr-1'"
+                        <app-mentored-icon [size]="'w-7'" [classes]="'hidden lg:inline mr-1'"
                             [position]="'left'">
                         </app-mentored-icon>
                         <app-mentored-icon [size]="'w-7'" [classes]="'lg:hidden mr-1'" [position]="'bottom-lm'">

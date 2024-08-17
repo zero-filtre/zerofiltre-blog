@@ -1,7 +1,1 @@
-.active-tab {
-  /* @apply  ; */
-}
 
-.active-tag {
-  @apply  transition-all duration-75;
-}

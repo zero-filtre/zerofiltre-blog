@@ -4,11 +4,11 @@
         <ng-container *ngFor="let tag of tagList">
             <button (click)="filterByTag(tag.name)" type="button" aria-labelledby="A tag"
                 [ngClass]="{'active-tag': activeTag == tag.name}"
-                class="group flex items-center px-3 py-1 text-sm font-medium  rounded-full border  hover: transition-all duration-200">
+                class="group bg-opacity-10 flex items-center px-3 py-1 text-sm font-medium  rounded-full border  hover: transition-all duration-200">
                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
                     <circle cx="4" cy="4" r="3"></circle>
                 </svg>
-                <span class="truncate lowercase font-semibold ">{{tag?.name}}</span>
+                <span class="truncate lowercase text-skin-base font-semibold ">{{tag?.name}}</span>
             </button>
         </ng-container>
     </div>
