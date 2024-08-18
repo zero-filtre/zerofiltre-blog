@@ -24,7 +24,29 @@ module.exports = {
 
         inter: "'Inter', 'system-ui', sans-serif"
       },
-      textColor: {
+      // textColor: {
+      //   skin: {
+      //     base: withOpacity('--color-text-base'),
+      //     muted: withOpacity('--color-text-muted'),
+      //     inverted: withOpacity('--color-text-inverted'),
+      //     success: withOpacity('--color-fill-success'),
+      //     warning: withOpacity('--color-fill-warning'),
+      //     danger: withOpacity('--color-fill-danger'),
+      //   },
+      // },
+      // backgroundColor: {
+      //   skin: {
+      //     'fill-primary': withOpacity('--color-fill-primary'),
+      //     'fill-secondary': withOpacity('--color-fill-secondary'),
+      //     'fill-success': withOpacity('--color-fill-success'),
+      //     'fill-danger': withOpacity('--color-fill-danger'),
+      //     'fill-warning': withOpacity('--color-fill-warning'),
+      //     'button-accent': withOpacity('--color-button-accent'),
+      //     'button-accent-hover': withOpacity('--color-button-accent-hover'),
+      //     'button-muted': withOpacity('--color-button-muted'),
+      //   },
+      // },
+      colors: {
         skin: {
           base: withOpacity('--color-text-base'),
           muted: withOpacity('--color-text-muted'),
@@ -32,10 +54,7 @@ module.exports = {
           success: withOpacity('--color-fill-success'),
           warning: withOpacity('--color-fill-warning'),
           danger: withOpacity('--color-fill-danger'),
-        },
-      },
-      backgroundColor: {
-        skin: {
+      
           'fill-primary': withOpacity('--color-fill-primary'),
           'fill-secondary': withOpacity('--color-fill-secondary'),
           'fill-success': withOpacity('--color-fill-success'),
