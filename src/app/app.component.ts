@@ -208,17 +208,19 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   manageDefaultTheme(): void {
-    const selectedTheme = localStorage.theme;
-
-    if (selectedTheme) {
-      document.body.classList.add(selectedTheme);
-      // Else if the users OS preferences prefers dark mode
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      document.body.classList.add("dark");
-      // Else use light mode
-    } else {
-      document.body.classList.add("light");
-    }
+    
+    document.body.classList.remove("light");
+    document.body.classList.add("dark");
+    localStorage.setItem("theme", 'dark');
+    
+    // const selectedTheme = localStorage.theme;
+    // if (selectedTheme) {
+    //   document.body.classList.add(selectedTheme);
+    // } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    //   document.body.classList.add("dark");
+    // } else {
+    //   document.body.classList.add("light");
+    // }
   }
 
   ngOnInit(): void {
