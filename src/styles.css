@@ -97,7 +97,7 @@
   }
   
   .sidenav-container.ovelay {
-    background: linear-gradient(176deg, rgb(18, 24, 2) 25%, rgb(32, 39, 55) 100%);
+    background: linear-gradient(176deg, rgb(var(--color-fill-primary)) 50%, rgb(var(--color-fill-via)) 100%);
     min-height: 100vh;
     background-attachment: fixed;
   }
