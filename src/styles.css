@@ -81,8 +81,7 @@
     --color-fill-success: 4,102,108;
     --color-fill-hue: 32,39,55;
 
-    --color-button-accent: 5,43,93;
-    --color-button-accent-hover: 5,53,93;
+    --color-fill-accent-hover: 5,53,93;
 
     --color-button-muted: 4,102,108;
   }

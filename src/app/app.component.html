@@ -3,7 +3,7 @@
   <!-- <ng-container *ngIf="geoLocationService.location$ | async"></ng-container> -->
 
   <!-- APP MOBILE SIDENAV -->
-  <mat-sidenav #drawer class="sidenav mobile-sidebar-menu lg:!hidden relative" position="end" fixedInViewport
+  <mat-sidenav #drawer class="sidenav mobile-sidebar-menu text-skin-base lg:!hidden relative" position="end" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'over'" [opened]="false">
 
     <div class="absolute top-6 right-6 w-fit" (click)="drawer.close()">
@@ -17,12 +17,12 @@
 
     <div>
       <button *ngIf="authService.isPro; else notProUserBtn" disabled
-        class="mr-1 border  rounded-md shadow-sm ">
-        <p class="text-sm sm:text-lg  font-extrabold p-1.5">Tu es PRO</p>
+        class="mr-1 rounded-md shadow-sm bg-skin-fill-success">
+        <p class="text-sm sm:text-lg  font-extrabold p-2">Tu es PRO</p>
       </button>
       <ng-template #notProUserBtn>
-        <button (click)="subscribeToPro()" class="mb-2">
-          <p class="text-sm sm:text-lg  border  rounded-md font-extrabold p-1.5">
+        <button (click)="subscribeToPro()" class="mb-2 bg-skin-fill-success">
+          <p class="text-sm sm:text-lg rounded-md font-extrabold p-2">
             Passer PRO</p>
         </button>
       </ng-template>
@@ -69,7 +69,7 @@
 
         <div class="mt-2">
           <a aria-labelledby="Link to about page" routerLink="/user/profile" (click)="drawer.close()"
-            class="flex items-center gap-3 py-3 px-1 border-y rounded-md   text-xs transition-all duration-200">
+            class="flex items-center gap-3 py-3 px-1 border-y  text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -133,7 +133,7 @@
           </a>
 
           <button (click)="logout()" aria-labelledby="logout button"
-            class="flex items-center gap-3 w-full text-left py-3 px-1 rounded-md   text-xs transition-all duration-200">
+            class="flex items-center text-skin-danger gap-3 w-full text-left py-3 px-1 rounded-md   text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round"

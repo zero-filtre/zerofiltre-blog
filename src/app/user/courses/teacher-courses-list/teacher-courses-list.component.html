@@ -44,7 +44,7 @@
 
                 <div *ngIf="canCreateCourse" class="relative lg:-top-2">
                     <button aria-label="Button to create a new course" (click)="openCourseEntryDialog()" type="button"
-                        class="rounded-lg lg:shadow-lg lg:border  lg:pl-0 lg:pr-2 flex lg:gap-0 items-center hover:shadow-md transition-all duration-300">
+                        class="rounded-lg bg-skin-button-accent hover:bg-skin-button-accent-hover text-skin-base lg:shadow-lg lg:pr-2 lg:pl-1 lg:py-0.5 flex lg:gap-0 items-center hover:shadow-md transition-all duration-300">
                         <span class="sr-only">Nouveau cours</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10   "
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -91,7 +91,7 @@
                                         <a *ngFor="let tag of course?.tags" routerLink='/cours' [queryParams]="{tag:tag.name}"
                                             class="tag-item flex items-center space-x-2 group">
                                             <span
-                                                class="inline-flex  items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border ">
+                                                class="inline-flex text-skin-base  items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border ">
                                                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
                                                     <circle cx="4" cy="4" r="3"></circle>
                                                 </svg>
@@ -146,7 +146,7 @@
                                         routerLink="{{'/cours/' + (course|slugify) + '/' + '?'}}"
                                         class="article-title">
                                         <h4
-                                            class="text-lg inline-block leading-6 font-semibold   transition-all duration-200">
+                                            class="text-lg text-skin-base inline-block leading-6 font-semibold   transition-all duration-200">
                                             {{course?.title}}
                                         </h4>
                                     </a>
@@ -168,7 +168,7 @@
                                         </div>
 
                                         <div class="author-text ml-3">
-                                            <p class="text-sm font-semibold ">
+                                            <p class="text-sm text-skin-base font-semibold ">
                                                 <a aria-labelledby="Link to about page"
                                                     [routerLink]="authService?.currentUsr?.id == course?.author?.id ? ['/user/profile'] : ['/user/' + course?.author?.id]"
                                                     class="hover:underline">
@@ -186,7 +186,7 @@
                                         </div>
 
                                         <div
-                                            class="flex items-center justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
+                                            class="flex text-skin-warning items-center justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
                                             <span class="enrol-total relative inline-flex items-end gap-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     class="w-6 h-6 inline " viewBox="0 0 16 16">
