@@ -75,10 +75,11 @@
   
     --color-fill-primary: 18,24,27;
     --color-fill-secondary: 42,46,53;
-    --color-fill-via: 32,39,55;
+    --color-fill-accent: 5,43,93;
     --color-fill-danger: 245,95,68;
     --color-fill-warning: 253,188,90;
     --color-fill-success: 4,102,108;
+    --color-fill-hue: 32,39,55;
 
     --color-button-accent: 5,43,93;
     --color-button-accent-hover: 5,53,93;
@@ -97,7 +98,7 @@
   }
   
   .sidenav-container.ovelay {
-    background: linear-gradient(176deg, rgb(var(--color-fill-primary)) 50%, rgb(var(--color-fill-via)) 100%);
+    background: linear-gradient(176deg, rgb(var(--color-fill-primary)) 50%, rgb(var(--color-fill-hue)) 100%);
     min-height: 100vh;
     background-attachment: fixed;
   }

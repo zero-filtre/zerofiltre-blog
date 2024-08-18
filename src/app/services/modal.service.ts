@@ -37,7 +37,7 @@ export class ModalService {
       backdropClass: 'popup-search-overlay',
       disableClose: false,
       minHeight: '400px',
-      width: '700px'
+      width: '850px'
     });
   }
 

@@ -57,6 +57,7 @@ module.exports = {
       
           'fill-primary': withOpacity('--color-fill-primary'),
           'fill-secondary': withOpacity('--color-fill-secondary'),
+          'fill-accent': withOpacity('--color-fill-accent'),
           'fill-success': withOpacity('--color-fill-success'),
           'fill-danger': withOpacity('--color-fill-danger'),
           'fill-warning': withOpacity('--color-fill-warning'),
