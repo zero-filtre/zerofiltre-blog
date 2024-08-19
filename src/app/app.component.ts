@@ -210,7 +210,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   manageDefaultTheme(): void {
     
     document.body.classList.remove("light");
-    document.body.classList.add("dark");
     localStorage.setItem("theme", 'dark');
     
     // const selectedTheme = localStorage.theme;

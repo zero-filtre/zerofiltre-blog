@@ -38,20 +38,19 @@
     /* @apply transition-colors duration-100 ease-in-out; */
   }
 
-  :root {
-    /* --primary-800: 4,102,108;
-    --secondary: 5,43,93;
-    --accent-500: 236,170,71;
-  
-    --skin-link: 243,244,246;
-    --skin-border: 229,231,235;
-    --skin-card: 255,255,255;
-    --skin-cardMuted: 249,250,251;
-    --skin-borderBold: 209,213,219;
-    --skin-bg: 249,250,251;
-    --skin-bg-secondary: 5,43,93;
-    --skin-bgMuted: 243,244,246; */
-    
+  /* --primary-800: 4,102,108;
+  --secondary: 5,43,93;
+  --accent-500: 236,170,71;
+
+  --skin-link: 243,244,246;
+  --skin-border: 229,231,235;
+  --skin-card: 255,255,255;
+  --skin-cardMuted: 249,250,251;
+  --skin-borderBold: 209,213,219;
+  --skin-bg: 249,250,251;
+  --skin-bg-secondary: 5,43,93;
+  --skin-bgMuted: 243,244,246; */
+  /* :root {
     --color-text-base: 107,114,128;
     --color-text-muted: 50,50,50;
     --color-text-inverted: 5,43,93;
@@ -66,7 +65,7 @@
     --color-button-accent-hover: 255,255,255;
 
     --color-button-muted: 255,255,255;
-  }
+  } */
   
   .dark {
     --color-text-base: 255,255,255;
