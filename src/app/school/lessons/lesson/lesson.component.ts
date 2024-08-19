@@ -178,7 +178,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       {
         name: "overallChapterSatisfaction",
         type: "rating",
-        title: "Sur une échelle de 1 à 10, quelle est votre satisfaction globale concernant ce chapitre ?",
+        title: "Sur une échelle de 1 à 5, quelle est votre satisfaction globale concernant ce chapitre ?",
         rateMin: 0,
         rateMax: 5,
         defaultValue: '5'
