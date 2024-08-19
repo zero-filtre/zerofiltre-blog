@@ -55,6 +55,7 @@ module.exports = {
           success: withOpacity('--color-fill-success'),
           warning: withOpacity('--color-fill-warning'),
           danger: withOpacity('--color-fill-danger'),
+          secondary: withOpacity('--color-text-secondary'),
       
           'fill-primary': withOpacity('--color-fill-primary'),
           'fill-secondary': withOpacity('--color-fill-secondary'),

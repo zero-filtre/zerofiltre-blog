@@ -70,8 +70,9 @@
   
   .dark {
     --color-text-base: 255,255,255;
-    --color-text-muted: 178,190,205;
+    --color-text-muted: 209, 213, 219;
     --color-text-inverted: 5,43,93;
+    --color-text-secondary: 178,190,205;
   
     --color-fill-primary: 18,24,27;
     --color-fill-secondary: 42,46,53;
