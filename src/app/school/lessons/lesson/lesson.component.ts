@@ -89,7 +89,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   userProgress: UserProgress = {};
 
   surveyJson = {
-    title: 'Dites-nous en 30 secondes ce que vous pensé de ce chapitre',
+    title: 'Dites-nous en 30 secondes ce que vous pensez de ce chapitre',
     elements: [
       {
         name: "chapterExplanations",
@@ -138,7 +138,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         defaultValue: '5'
       },
       {
-        name: "vos_impressions_du_chapitre",
+        name: "chapterImpressions",
         title: "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
         type: "comment",
         maxLength: 500
@@ -152,13 +152,13 @@ export class LessonComponent implements OnInit, OnDestroy {
         defaultValue: "Oui"
       },
       {
-        name: "pourquoi_recommande_ce_coursr",
+        name: "whyRecommendingThisCourse",
         title: "Si oui, pourquoi ?",
         type: "comment",
         maxLength: 500
       },
       {
-        name: "outil_apprentissage_favoris_chapitre",
+        name: "favoriteLearningToolOfTheChapter",
         type: "checkbox",
         title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
         choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
@@ -170,7 +170,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         separateSpecialChoices: true,
       },
       {
-        name: "outil_apprentissage_chapitre_raisons",
+        name: "reasonFavoriteLearningToolOfTheChapter",
         title: "Pouvez-vous expliquer comment cela vous a aidé ?",
         type: "comment",
         maxLength: 500
@@ -184,7 +184,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         defaultValue: '5'
       },
       {
-        name: "ameliorations_suggeres",
+        name: "improvementSuggestion",
         title: "Quelles améliorations suggéreriez-vous ?",
         type: "comment",
         maxLength: 500
