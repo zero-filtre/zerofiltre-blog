@@ -9,7 +9,7 @@
 
 <main class="article-container site-container py-8 lg:py-14" *appShellNoRender>
 
-    <article class="flex flex-col lg:grid lg:grid-cols-7 gap-10 lg:gap-20 lg:items-stretch">
+    <article class="flex flex-col text-skin-base lg:grid lg:grid-cols-7 gap-10 lg:gap-20 lg:items-stretch">
         <main class="col-span-5 order-1 lg:order-none">
             <div class="main-side-container">
                 <header class="article-header space-y-6 lg:space-y-4">
@@ -230,11 +230,11 @@
 
                 <article class="article-content">
                     <div *ngIf="article" class="relative overflow-hidden markdown-content mt-6 lg:mt-14">
-                        <div *ngIf="article?.premium && !canAccesPremium(article)" class="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-skin-hue to-transparent"></div>
+                        <div *ngIf="article?.premium && !canAccesPremium(article)" class="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-skin-fill-primary to-transparent"></div>
                         <app-markdown-preview [data]="article?.content"></app-markdown-preview>
                     </div>
 
-                    <div *ngIf="article?.premium && !canAccesPremium(article)" class="mt-10  shadow-lg rounded-lg  p-6 max-w-xl mx-auto">
+                    <div *ngIf="article?.premium && !canAccesPremium(article)" class="mt-10 bg-skin-fill-secondary text-skin-muted  shadow-lg rounded-lg  p-6 max-w-xl mx-auto">
                         <p class="text-sm">Cet article est réservé aux abonnés. Déjà abonné ? <a routerLink="/login" class="underline">Connectez-vous</a></p>
                         <h3 class="text-2xl lg:text-3xl  font-extrabold py-3">Découvrez les meilleurs articles IT en français</h3>
                         <p>
@@ -243,7 +243,7 @@
                         </p>
 
                         <a routerLink="/pro"
-                            class="block mt-4 border  text-center rounded-md hover:shadow-sm transition-all duration-300">
+                            class="block mt-4 text-center rounded-md bg-skin-button-accent hover:bg-skin-button-accent-hover text-skin-base transition-all duration-300">
                             <p class="text-sm sm:text-lg  font-extrabold px-1.5 py-2.5">Passer PRO</p>
                         </a>
                     </div>
