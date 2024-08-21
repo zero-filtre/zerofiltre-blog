@@ -1,7 +1,7 @@
 <section class="curriculum">
     <div class="site-container">
         <div class="curriculum_wrapper max-w-3xl m-auto">
-            <h2 class="pb-5 text-center lg:!text-2xl  uppercase opacity-90">Contenu du cours</h2>
+            <h2 class="pb-5 text-center lg:!text-2xl text-skin-base uppercase opacity-90">Contenu du cours</h2>
 
             <cdk-accordion [multi]="true">
 
@@ -24,7 +24,7 @@
                                 [ngClass]="{'cursor-grab' : canEdit}">
 
                                 <div (click)="chapter?.lessons?.length && accordionItem.toggle()"
-                                    class="curriculum_chapter_title flex items-center justify-between gap-4 uppercase opacity-90   dark: p-3 font-semibold">
+                                    class="curriculum_chapter_title text-skin-base bg-skin-fill-secondary flex items-center justify-between gap-4 uppercase opacity-90   dark: p-3 font-semibold">
                                     {{chapter?.title}}
 
                                     <div *ngIf="chapter?.lessons?.length"
@@ -65,7 +65,7 @@
                                             <li cdkDrag [cdkDragDisabled]="!canEdit || mobileQuery.matches"
                                                 id="{{lesson.id}}" *ngIf="lesson?.chapterId === chapter?.id"
                                                 [ngClass]="{'cursor-grab' : canEdit}"
-                                                class="curriculum_chapter_lesson_elt   transition-all duration-200">
+                                                class="curriculum_chapter_lesson_elt bg-skin-fill-primary hover:bg-skin-fill-accent/50 transition-all duration-200">
                                                 <a routerLink="{{'/cours/'+(course|slugify)+'/'+(lesson|slugify)}}"
                                                     [style.pointer-events]="lesson?.number && !canAccessCourse ? 'auto' : 'auto'"
                                                     class="lesson_link w-full p-3 pr-0 flex justify-between items-center gap-2">

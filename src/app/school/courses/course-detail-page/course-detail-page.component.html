@@ -21,7 +21,7 @@
                     </app-mentored-icon>
                 </ng-template>
 
-                <h1>{{course?.title}}</h1>
+                <h1 class="text-skin-base">{{course?.title}}</h1>
                 <h2>{{course?.subTitle}}</h2>
             </div>
 
@@ -43,7 +43,7 @@
 
                 <div *ngIf="section.position == 1">
                     <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
-                        class="mb-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm   font-normal  transition-all duration-300">
+                        class="mb-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-skin-button-accent hover:bg-skin-button-accent-hover text-skin-base font-normal  transition-all duration-300">
                         <span class="text-center">Débuter le cours</span>
 
                         <span class="mt-1">
@@ -60,8 +60,7 @@
                 </ng-container>
             </ng-container>
 
-            <section class="reactions !py-6 border  dark: grid place-items-center ">
-                <!-- *ngIf="!loading && (isPublished$ | async)" -->
+            <!-- <section class="reactions !py-6 border  dark: grid place-items-center ">
                 <div class="site-container pt-5 flex flex-wrap justify-center lg:justify-start">
                     <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
                         class="group px-4 flex items-center justify-center transition-all duration-300"
@@ -113,7 +112,7 @@
                             }">
                     </ngx-skeleton-loader>
                 </ng-container>
-            </section>
+            </section> -->
 
             <section *ngIf="currentVideoId" class="presentation-video">
                 <div class="site-container">
@@ -129,7 +128,7 @@
             </section>
 
             <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
-                class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm   font-normal  transition-all duration-300">
+                class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-skin-button-accent hover:bg-skin-button-accent-hover text-skin-base font-normal  transition-all duration-300">
                 <span class="text-center">Débuter le cours</span>
 
                 <span class="mt-1">

@@ -21,7 +21,7 @@ h2 {
 }
 
 h3 {
-  @apply text-2xl lg:text-3xl font-medium mb-12 relative after:absolute after:w-32 lg:after:w-24 after:h-1.5 after:bg-transparent after:-bottom-6 after:left-[calc(50%-4rem)] after:rounded-sm;
+  @apply text-skin-base text-2xl lg:text-3xl font-medium mb-12 relative after:absolute after:w-32 lg:after:w-24 after:h-1.5 after:bg-skin-fill-warning after:-bottom-6 after:left-[calc(50%-4rem)] after:rounded-sm;
   @apply text-center;
 }
 
