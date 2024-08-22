@@ -186,7 +186,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       {
         name: "improvementSuggestion",
         title: "Quelles améliorations suggéreriez-vous ?",
-        type: "comment",
+        type: 'comment',
         maxLength: 500
       }
     ]
