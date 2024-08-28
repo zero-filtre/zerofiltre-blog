@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
 import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay } from 'rxjs';
-import { Course, Reaction, Section } from '../course';
+import { Course, Reaction, Review, Section } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
 import { MessageService } from '../../../services/message.service';
@@ -21,6 +21,7 @@ import { JsonLdService } from 'ngx-seo';
 import { JsonLd } from 'ngx-seo/lib/json-ld';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
+import { SurveyService } from 'src/app/services/survey.service';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -46,6 +47,7 @@ export class CourseDetailPageComponent implements OnInit {
   mobileQuery: MediaQueryList;
   // paymentHandler: any = null;
 
+  reviews: Review[] = [] 
 
 
   public loading!: boolean;
@@ -81,6 +83,7 @@ export class CourseDetailPageComponent implements OnInit {
     private navigate: NavigationService,
     private authService: AuthService,
     private paymentService: PaymentService,
+    private surveyService: SurveyService,
     public dialogPaymentRef: MatDialog,
     public slugify: SlugUrlPipe,
     private location: Location,
@@ -104,29 +107,38 @@ export class CourseDetailPageComponent implements OnInit {
     return this.courseService.canEditCourse(user, this.course);
   }
 
+  formatReview(review: Review): Review {
+    const commentText = review.chapterImpressions || review.chapterExplanations || review.whyRecommendingThisCourse || review.improvementSuggestion
+    const scoreRate = review.chapterSatisfactionScore || review.chapterUnderstandingScore || review.overallChapterSatisfaction
+
+    let data = {
+      ...review,
+      comment: commentText,
+      avatar: "",
+      role: "Role Test",
+      stars: scoreRate,
+      name: "Name Test"
+    }
+
+    return data
+  }
+
+  getReviews() {
+    this.surveyService.getReviews()
+      .subscribe((data: Review[]) => {
+        const formatedreviews = data
+          .map(review => this.formatReview(review))
+          .filter(review => review.comment !== '')
+
+        this.reviews = formatedreviews;
+      })
+  }
+
   buyCourse() {
-    // const currUser = this.authService.currentUsr as User;
-    // const loggedIn = !!currUser;
-
-    // if (!loggedIn) {
-    //   this.router.navigate(
-    //     ['/login'],
-    //     {
-    //       relativeTo: this.route,
-    //       queryParams: { redirectURL: this.router.url },
-    //       queryParamsHandling: 'merge',
-    //     });
-
-    //   this.notify.openSnackBarInfo('Veuillez vous connecter pour acheter ce cours 🙂', 'OK');
-
-    //   return;
-    // }
-
     const payload = { productId: +this.courseID, productType: 'COURSE' }
     const type = 'basic'
 
     this.paymentService.openPaymentDialog(payload, type, this.course);
-
   }
 
   getCourse(courseId: string) {
@@ -231,17 +243,6 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   addReaction(action: string): any {
-    // const currentUsr = this.authService?.currentUsr;
-
-    // if (!currentUsr) {
-    //   this.loginToAddReaction = true;
-    //   return;
-    // }
-    // if (this.userHasAlreadyReactOnArticleFiftyTimes()) {
-    //   this.maxNberOfReaction = true;
-    //   return;
-    // };
-
     this.courseService.addReactionToCourse(this.courseID, action)
       .subscribe({
         next: (response) => this.setEachReactionTotal(response)
@@ -263,6 +264,8 @@ export class CourseDetailPageComponent implements OnInit {
         this.getCourse(this.courseID);
       }
     );
+
+    this.getReviews();
     
     this.chapters$ = this.chapterService
       .fetchAllChapters(this.courseID);

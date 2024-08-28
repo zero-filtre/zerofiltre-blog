@@ -1,5 +1,6 @@
 import { Component, HostListener, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Review } from 'src/app/school/courses/course';
 
 @Component({
   selector: 'app-carousel',
@@ -7,7 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./carousel.component.css']
 })
 export class CarouselComponent {
-  @Input() userReviews: any[];
+  @Input() userReviews: Review[];
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -18,7 +19,7 @@ export class CarouselComponent {
   avatarHommeBlanc = 'https://ik.imagekit.io/lfegvix1p/Homme%20Blanc_oobxMT8KK.svg?updatedAt=1719058562779';
   avatarFemmeBlanche = 'https://ik.imagekit.io/lfegvix1p/Femme%20Blanche_N_xj-DOPJ.svg?updatedAt=1719058562581';
 
-  reviews = [
+  reviews: Review[] = [
     {
       comment: "J'ai suivi le parcours DDD dans le cadre de mon travail en tant que développeur senior, et il m'a vraiment aidé à structurer mon approche du développement logiciel. En appliquant les techniques apprises, j'ai pu améliorer la qualité du code et faciliter la collaboration avec les experts métier. Un cours essentiel pour tout professionnel du développement.",
       avatar: this.avatarHommeNoir,
@@ -98,6 +99,7 @@ export class CarouselComponent {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.startAutoplay();
+      this.reviews = [...this.userReviews, ...this.reviews]
     }
   }
 

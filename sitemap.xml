@@ -56,6 +56,24 @@
 
 
     <url>
+    <loc>https://zerofiltre.tech/articles/296-lutilite-des-skeleton-screens-dans-la-conception-dinterfaces-utilisateur</loc>
+    <lastmod>2024-07-21</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/297-comment-faire-un-debogage-sans-fil-sur-son-smartphone-android</loc>
+    <lastmod>2024-08-05</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
+    <loc>https://zerofiltre.tech/articles/301-accedez-a-vos-clusters-k8s-via-openlens-gratuitement</loc>
+    <lastmod>2024-07-10</lastmod>
+    <priority>0.80</priority>
+    </url>
+    
+    <url>
     <loc>https://zerofiltre.tech/articles/283-maitriser-les-widgets-flutter-une-fois-pour-toute</loc>
     <lastmod>2024-05-29</lastmod>
     <priority>0.80</priority>
@@ -117,7 +135,7 @@
     
     <url>
     <loc>https://zerofiltre.tech/articles/281-kubernetes-pod-disruption-budget-ou-pourquoi-et-comment</loc>
-    <lastmod>2024-02-19</lastmod>
+    <lastmod>2024-06-21</lastmod>
     <priority>0.80</priority>
     </url>
     
@@ -164,8 +182,8 @@
     </url>
     
     <url>
-    <loc>https://zerofiltre.tech/articles/264-coder-et-decoder-du-qrcode-en-java</loc>
-    <lastmod>2023-09-22</lastmod>
+    <loc>https://zerofiltre.tech/articles/264-5-mins-pour-coder-et-decoder-du-qrcode-en-java</loc>
+    <lastmod>2024-08-16</lastmod>
     <priority>0.80</priority>
     </url>
     
@@ -225,7 +243,7 @@
     
     <url>
     <loc>https://zerofiltre.tech/articles/181-comment-rediger-un-article-it-qui-accroche</loc>
-    <lastmod>2023-09-12</lastmod>
+    <lastmod>2024-08-01</lastmod>
     <priority>0.80</priority>
     </url>
     
@@ -451,6 +469,262 @@
     <priority>0.80</priority>
     </url>
     
+
+    <url>
+    <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux</loc>
+    <lastmod>2024-08-15</lastmod>
+    <priority>0.80</priority>
+    </url>
+
+    
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/154-guide-du-projet-de-fin-sur-le-reseau</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/244-guide-du-projet-de-fin-sur-les-se</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/134-ce-que-nous-allons-faire</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/135-quest-ce-quun-reseau</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/136-les-topologies-de-reseaux</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/137-les-tailles-de-reseau</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/138-le-fameux-reseau-internet</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/139-le-web-est-il-different-de-internet</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/140-les-protocoles-du-web</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/141-le-protocole-tcpip</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/142-les-protocoles-http-et-https</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/144-les-navigateurs-web</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/147-les-serveurs-dns</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/148-les-liens-hypertext</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/149-les-evolutions-du-web</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/150-introduction</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/151-les-systemes-dexploitation</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/153-presentation-de-linux</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/155-les-commandes-basiques-architecture-os</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/157-les-commandes-basiques-cd-et-ls</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/158-les-commandes-basiques-mkdir</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/162-les-commandes-basiques-rmdir</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/164-les-commandes-basiques-touch-et-cat</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/165-les-commandes-basiques-rm-cp-et-mv</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/166-les-commandes-avancees-controle-a-distance</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/167-les-commandes-avancees-gestion-des-processus</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/168-les-commandes-avancees-gestion-du-reseau</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/169-les-commandes-avancees-gestion-des-utilisateurs</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/171-les-commandes-avancees-gestion-des-permissions</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/243-les-commandes-avancees-gestion-des-packages</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
+
+        <url>
+        <loc>https://zerofiltre.tech/cours/25-les-bases-en-reseau-et-systemes-dexploitation-pour-le-devoudevops-talentueux/258-conclusion</loc>
+        <lastmod>2024-08-15</lastmod>
+        <priority>0.80</priority>
+        </url>
+
+      
 
     <url>
     <loc>https://zerofiltre.tech/cours/33-exploitez-les-mines-dor-que-sont-les-logs-et-les-metriques</loc>
@@ -1389,7 +1663,7 @@
       
 
         <url>
-        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/13-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-1</loc>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/13-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-evenements</loc>
         <lastmod>2023-09-21</lastmod>
         <priority>0.80</priority>
         </url>
@@ -1397,7 +1671,7 @@
       
 
         <url>
-        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/14-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-2</loc>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/14-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-commandes</loc>
         <lastmod>2023-09-21</lastmod>
         <priority>0.80</priority>
         </url>
@@ -1405,7 +1679,7 @@
       
 
         <url>
-        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/15-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-3</loc>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/15-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-inputs-et-acteurs</loc>
         <lastmod>2023-09-21</lastmod>
         <priority>0.80</priority>
         </url>
@@ -1413,7 +1687,7 @@
       
 
         <url>
-        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/16-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-4</loc>
+        <loc>https://zerofiltre.tech/cours/1-mettez-enfin-en-place-le-domain-driven-design/16-realisez-l-event-storming-afin-dextraire-le-concentre-du-besoin-metier-systemes-externes</loc>
         <lastmod>2023-09-21</lastmod>
         <priority>0.80</priority>
         </url>
