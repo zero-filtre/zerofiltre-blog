@@ -47,9 +47,6 @@ export class CourseDetailPageComponent implements OnInit {
   mobileQuery: MediaQueryList;
   // paymentHandler: any = null;
 
-  reviews: Review[] = [] 
-
-
   public loading!: boolean;
   private isPublished = new BehaviorSubject<any>(null);
   public isPublished$ = this.isPublished.asObservable();
@@ -105,33 +102,6 @@ export class CourseDetailPageComponent implements OnInit {
   get canEditCourse() {
     const user = this.authService?.currentUsr as User
     return this.courseService.canEditCourse(user, this.course);
-  }
-
-  formatReview(review: Review): Review {
-    const commentText = review.chapterImpressions || review.chapterExplanations || review.whyRecommendingThisCourse || review.improvementSuggestion
-    const scoreRate = review.chapterSatisfactionScore || review.chapterUnderstandingScore || review.overallChapterSatisfaction
-
-    let data = {
-      ...review,
-      comment: commentText,
-      avatar: "",
-      role: "Role Test",
-      stars: scoreRate,
-      name: "Name Test"
-    }
-
-    return data
-  }
-
-  getReviews() {
-    this.surveyService.getReviews()
-      .subscribe((data: Review[]) => {
-        const formatedreviews = data
-          .map(review => this.formatReview(review))
-          .filter(review => review.comment !== '')
-
-        this.reviews = formatedreviews;
-      })
   }
 
   buyCourse() {
@@ -265,8 +235,6 @@ export class CourseDetailPageComponent implements OnInit {
       }
     );
 
-    this.getReviews();
-    
     this.chapters$ = this.chapterService
       .fetchAllChapters(this.courseID);
 

@@ -71,20 +71,20 @@ export type SearchResultsData = {
 }
 
 export type Review =  {
-    id?: 6,
-    courseId?: 1,
+    id?: number,
+    courseId?: number,
     
     chapterExplanations?: string,
-    chapterSatisfactionScore?: 5,
-    chapterUnderstandingScore?: 5,
+    chapterSatisfactionScore?: number,
+    chapterUnderstandingScore?: number,
     recommendCourse?: true,
-    overallChapterSatisfaction?: 5,
+    overallChapterSatisfaction?: number,
     chapterImpressions?: string,
     whyRecommendingThisCourse?: string,
     favoriteLearningToolOfTheChapter?: string[],
     reasonFavoriteLearningToolOfTheChapter?: string,
     improvementSuggestion?: string,
-    reviewAuthorId?: 2,
+    reviewAuthorId?: number,
     
     comment: string,
     avatar: string,
