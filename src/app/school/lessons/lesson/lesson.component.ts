@@ -352,7 +352,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
           const rootUrl = this.router.url.split('/')[1];
           const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
-          this.location.replaceState(sluggedUrl);
+          // this.location.replaceState(sluggedUrl);
 
           const desc = lesson?.summary || '';
           const img = this.course?.thumbnail || 'https://ik.imagekit.io/lfegvix1p/pro_vvcZRxQIU.png?updatedAt=1714202330763'
@@ -417,7 +417,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
           const rootUrl = this.router.url.split('/')[1];
           const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(this.lesson)}`
-          this.location.replaceState(sluggedUrl);
+          // this.location.replaceState(sluggedUrl);
         }),
         shareReplay()
       )
