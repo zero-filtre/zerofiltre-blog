@@ -65,7 +65,7 @@
                                             <li cdkDrag [cdkDragDisabled]="!canEdit || mobileQuery.matches"
                                                 id="{{lesson.id}}" *ngIf="lesson?.chapterId === chapter?.id"
                                                 [ngClass]="{'cursor-grab' : canEdit}"
-                                                class="curriculum_chapter_lesson_elt bg-skin-fill-primary hover:bg-skin-fill-accent/50 transition-all duration-200">
+                                                class="curriculum_chapter_lesson_elt bg-skin-fill-primary hover:bg-skin-fill-accent/70 transition-all duration-200">
                                                 <a routerLink="{{'/cours/'+(course|slugify)+'/'+(lesson|slugify)}}"
                                                     [style.pointer-events]="lesson?.number && !canAccessCourse ? 'auto' : 'auto'"
                                                     class="lesson_link w-full p-3 pr-0 flex justify-between items-center gap-2">

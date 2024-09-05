@@ -146,7 +146,7 @@
   scrollbar-width: none; /* Firefox */
 }
 
-.mat-drawer {
+header .mat-drawer {
   @apply !bg-transparent backdrop-blur-md;
 }
 

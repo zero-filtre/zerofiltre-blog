@@ -1,6 +1,6 @@
-<div class="example-toolbar sticky top-[72px] lg:top-20 z-20 ">
+<div class="example-toolbar sticky top-[72px] lg:top-20 z-20 shadow-2xl bg-skin-fill-secondary/20 backdrop-blur-md">
     <div class="site-container flex items-center justify-between gap-4 lg:gap-5 h-14">
-        <button mat-icon-button (click)="snav.toggle()" class="flex items-center justify-center   h-full w-16">
+        <button mat-icon-button (click)="snav.toggle()" class="flex items-center justify-center bg-skin-fill-accent h-full w-16">
             <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -13,10 +13,10 @@
 </div>
 
 <div class="example-container  pb-10" [class.site-container]="!mobileQuery.matches" [class.example-is-mobile]="mobileQuery.matches">
-    <mat-sidenav-container class="example-sidenav-container" tabIndex="-1">
+    <mat-sidenav-container class="example-sidenav-container bg-transparent text-skin-muted" tabIndex="-1">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="true"
             fixedTopGap="0" [opened]="!mobileQuery.matches" class="pt-36 border-none lg:bg-transparent dark: lg:min-w-[370px] !shadow-none">
-            <aside aria-labelledby="course-curriculum-sidebar" class=" mt-14" *appShellNoRender>
+            <aside aria-labelledby="course-curriculum-sidebar !text-skin-muted" class="mt-4" *appShellNoRender>
                 <app-curriculum-sidebar [drawer]="snav" [canEdit]="canEditCourse" [course]="course$|async"
                     [lessons]="lessons$ | async" [chapters]="chapters$ | async" [activeLessonID]="lessonID"
                     [canAccessCourse]="canAccessCourse" [loading]="loadingChapters" [completedLessonsIds]="completedLessonsIds"
@@ -86,7 +86,7 @@
                     <div class="lesson_content mb-14">
                         <div *ngIf="lesson" class="markdown-content mt-3 lg:mt-5">
                             <div
-                                class="lesson_name mb-6 lg:mb-8 text-3xl w-full font-black  tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
+                                class="lesson_name mb-6 lg:mb-8 text-3xl w-full font-black text-skin-base tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
                                 <h1>{{capitalize(lesson?.title)}}</h1>
                             </div>
                             <app-markdown-preview [data]="lesson?.content"></app-markdown-preview>
@@ -209,9 +209,9 @@
                     </div>
             
                     <div *ngIf="isSubscriber" class="lesson_complete_btn my-10">
-                        <div *ngIf="lesson" class="flex justify-center font-semibold">
+                        <div *ngIf="lesson" class="flex justify-center text-skin-base font-medium">
                             <button *ngIf="!completed" (click)="toggleCompleted()" [disabled]="isCompleting" [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
-                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3    transition-all duration-300">
+                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 bg-skin-fill-accent transition-all duration-300">
                                 <span>Marquer cette leçon terminée</span>
                                 <svg *ngIf="!isCompleting" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                                     stroke="currentColor" class="w-5 h-5 mt-0.5">
@@ -225,7 +225,7 @@
                                 </svg>
                             </button>
                             <button *ngIf="completed" (click)="toggleCompleted()" [disabled]="isCompleting" [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
-                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3   bg-skin-fill-danger  transition-all duration-300">
+                                class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 bg-skin-fill-danger transition-all duration-300">
                                 Marquer cette leçon non terminée
                                 <svg *ngIf="isCompleting" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -237,10 +237,10 @@
                         </div>
                     </div>
             
-                    <div class="lesson_pagination mt-10">
+                    <div class="lesson_pagination text-skin-base mt-10">
                         <div *ngIf="lesson" class="flex gap-5 lg:gap-10 font-semibold">
                             <a *ngIf="prevLesson$|async as prev" routerLink="{{'/cours/'+ (course|slugify) + '/' + (prev|slugify)}}"
-                                class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3  border  /20 transition-all duration-300">
+                                class="flex items-center justify-between cursor-pointer gap-2 w-full rounded-md p-4 py-3 border hover:bg-skin-fill-accent/70 transition-all duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                                     stroke="currentColor" class="w-5 h-5 mt-0.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -249,7 +249,7 @@
                             </a>
             
                             <a *ngIf="nextLesson$|async as next" routerLink="{{'/cours/'+ (course|slugify) + '/' + (next|slugify)}}"
-                                class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3  border  /20 transition-all duration-300">
+                                class="flex items-center justify-between cursor-pointer gap-2 w-full rounded-md p-4 py-3 border hover:bg-skin-fill-accent/70  transition-all duration-300">
                                 <span class="w-full text-center">{{next.title}}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                                     stroke="currentColor" class="w-5 h-5 mt-0.5">

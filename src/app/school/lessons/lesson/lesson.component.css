@@ -4,13 +4,13 @@ progress {
   -webkit-appearance: none;
 }
 progress::-moz-progress-bar {
-  @apply bg-transparent;
+  @apply bg-skin-muted/70
 }
 progress::-webkit-progress-bar {
-  background: transparent;
+  @apply bg-skin-muted/70
 }
 progress::-webkit-progress-value {
-  @apply bg-transparent;
+  @apply bg-skin-fill-accent
 }
 
 #lesson_video_player {
