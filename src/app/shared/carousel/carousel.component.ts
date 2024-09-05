@@ -107,9 +107,40 @@ export class CarouselComponent {
   loading: boolean;
 
   formatReview(review: Review): Observable<Review> {
-    const commentText = review.chapterImpressions || review.chapterExplanations || review.whyRecommendingThisCourse || review.improvementSuggestion;
-    const scoreRate = review.chapterSatisfactionScore || review.chapterUnderstandingScore || review.overallChapterSatisfaction;
-  
+    const commentHash = {
+      a: { text: review.chapterImpressions, len: review.chapterImpressions.replace(/\s+/g, '').length },
+      b: { text: review.chapterExplanations, len: review.chapterExplanations.replace(/\s+/g, '').length },
+      c: { text: review.whyRecommendingThisCourse, len: review.whyRecommendingThisCourse.replace(/\s+/g, '').length },
+      d: { text: review.improvementSuggestion, len: review.improvementSuggestion.replace(/\s+/g, '').length },
+    }
+
+    let commentText = '';
+    let maxLen = -1;
+
+    for (const key in commentHash) {
+      if (commentHash[key].len > maxLen) {
+        maxLen = commentHash[key].len;
+        commentText = commentHash[key].text;
+      }
+    }
+
+    const scoretHash = {
+      a: review.chapterSatisfactionScore,
+      b: review.chapterSatisfactionScore,
+      c: review.chapterSatisfactionScore,
+    }
+
+    let scoreRate = 0;
+    let maxScore = -1;
+
+    for (const key in scoretHash) {
+      if (scoretHash[key] > maxScore) {
+        maxLen = scoretHash[key];
+        scoreRate = scoretHash[key];
+      }
+    }
+
+    
     return this.userService.findUserProfile(review.reviewAuthorId.toString())
       .pipe(
         map((author: User) => {
