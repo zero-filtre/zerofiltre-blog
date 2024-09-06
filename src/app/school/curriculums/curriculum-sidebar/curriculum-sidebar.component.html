@@ -175,7 +175,7 @@
                                                                 </span>
 
                                                                 <span
-                                                                    [ngClass]="{'!font-black text-skin-base lg:text-2xl' : isActiveLesson(lesson.id), 'font-black' : isActiveLesson(lesson.id) && !lesson.free && !canAccessCourse}"
+                                                                    [ngClass]="{'!font-black text-skin-base lg:text-2xl' : isActiveLesson(lesson.id), 'font-black text-skin-base' : isActiveLesson(lesson.id) && !lesson.free && !canAccessCourse}"
                                                                     class="lesson_name font-normal line-clamp-2 lg:line-clamp-none">
                                                                     {{capitalize(lesson?.title)}}
                                                                 </span>
