@@ -16,7 +16,7 @@
 }
 
 .link-active {
-  @apply  text-skin-muted shadow-md;
+  @apply text-skin-base shadow-lg bg-skin-fill-accent;
 }
 
 .link-inactive {
@@ -24,7 +24,7 @@
 }
 
 .svg-active {
-  @apply text-skin-muted;
+  @apply text-skin-base;
 }
 
 .svg-inactive {

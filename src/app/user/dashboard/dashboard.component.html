@@ -87,7 +87,7 @@
                                     <div class="article-tags-container flex flex-wrap items-center gap-1">
                                         <a *ngFor="let tag of article?.tags" routerLink='/articles'
                                             [queryParams]="{tag:tag.name}"
-                                            class="tag-item flex items-center space-x-2 group">
+                                            class="tag-item text-skin-base flex items-center space-x-2 group">
                                             <span
                                                 class="inline-flex  items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border ">
                                                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2"
@@ -144,7 +144,7 @@
                                     <a aria-labelledby="Link to about page" routerLink="/articles/{{article|slugify}}"
                                         class="article-title">
                                         <h4
-                                            class="text-lg inline-block leading-6 font-semibold   transition-all duration-200">
+                                            class="text-lg inline-block leading-6 font-semibold text-skin-base transition-all duration-200">
                                             {{capitalize(article?.title!)}}
                                         </h4>
                                     </a>
@@ -169,7 +169,7 @@
                                             <p class="text-sm font-semibold ">
                                                 <a aria-labelledby="Link to about page"
                                                     [routerLink]="authService?.currentUsr?.id == article?.author?.id ? ['/user/profile'] : ['/user/' + article?.author?.id]"
-                                                    class="hover:underline">
+                                                    class="hover:underline text-skin-base">
                                                     {{article?.author?.fullName}}
                                                 </a>
                                             </p>
@@ -185,7 +185,7 @@
                                         </div>
 
                                         <div
-                                            class="reactions-total flex items-center justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
+                                            class="reactions-total text-skin-warning flex items-center justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
                                             <span class="inline-flex items-center gap-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                     class="inline w-[18px] " fill="none"

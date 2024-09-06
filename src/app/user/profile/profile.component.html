@@ -169,13 +169,13 @@
                 </div>
     
                 <div class="profile-content mt-10">
-                    <div class="user-credentials flex flex-col space-y-4 px-4 py-6 rounded-lg  shadow-md">
+                    <div class="user-credentials bg-skin-fill-secondary flex flex-col space-y-4 px-4 py-6 rounded-lg  shadow-md">
                         <nav class="user-credentials-nav flex justify-between items-center">
                             <div class="text-xl sm:text-2xl  font-bold">Infos</div>
     
                             <div class="edit-action-btn">
                                 <a aria-labelledby="Link to about page" routerLink="edit"
-                                    class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full   transition-all duration-200">
+                                    class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full bg-skin-fill-primary/10 transition-all duration-200">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
                                         fill="currentColor" class="" width="24" height="24" focusable="false">
                                         <path
@@ -187,51 +187,51 @@
                         </nav>
     
                         <div class="full-name text-base">
-                            <label class="">{{'profile.fullName' | translate}}</label>
+                            <label class="text-skin-base font-medium">{{'profile.fullName' | translate}}</label>
                             <div class="">{{currentUsr?.fullName}}</div>
                         </div>
     
                         <div class="pseudo text-base">
-                            <label class="">{{'profile.pseudo' | translate}}</label>
+                            <label class="text-skin-base font-medium">{{'profile.pseudo' | translate}}</label>
                             <div class="">{{currentUsr?.pseudoName}}</div>
                         </div>
     
                         <div class="profession text-base">
-                            <label class="">{{'profile.profession' | translate}}</label>
+                            <label class="text-skin-base font-medium">{{'profile.profession' | translate}}</label>
                             <div class="">{{currentUsr?.profession}}</div>
                         </div>
     
                         <div class="email text-base">
-                            <label class="">{{'profile.email' | translate}}</label>
+                            <label class="text-skin-base font-medium">{{'profile.email' | translate}}</label>
                             <div class="">{{currentUsr?.email}}</div>
                         </div>
     
                         <div class="flex justify-between items-center">
                             <div class="bio text-base">
-                                <label class="">{{'profile.bio' | translate}}</label>
+                                <label class="text-skin-base font-medium">{{'profile.bio' | translate}}</label>
                                 <div class="">{{currentUsr?.bio}}</div>
                             </div>
                         </div>
     
                         <div class="registeredOn text-base">
-                            <label class="">{{'profile.registeredOn' | translate}}</label>
+                            <label class="text-skin-base font-medium">{{'profile.registeredOn' | translate}}</label>
                             <div class="">{{currentUsr?.registeredOn | date}}</div>
                         </div>
                     </div>
     
                     <div
-                        class="user-password flex justify-between items-center px-4 py-6 rounded-lg  shadow-md mt-5">
+                        class="user-password bg-skin-fill-secondary flex justify-between items-center px-4 py-6 rounded-lg  shadow-md mt-5">
                         <div class="password text-base">
-                            <label class="">{{'profile.password' | translate}}</label>
+                            <label class="text-skin-base font-medium">{{'profile.password' | translate}}</label>
                             <div class="space-x-1">
                                 <ng-container *ngFor="let elt of [].constructor(8)">
-                                    <span class="h-2 w-2 inline-block  rounded-full"></span>
+                                    <span class="h-2 w-2 inline-block text-white rounded-full">.</span>
                                 </ng-container>
                             </div>
                         </div>
     
                         <button (click)="openPasswordEntryDialog()" aria-label="Edit password button"
-                            class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full   transition-all duration-200">
+                            class="inline-flex group items-center justify-center h-10 w-10 sm:h-14 sm:w-14 p-1 hover:shadow-sm rounded-full bg-skin-fill-primary/10 transition-all duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
                                 fill="currentColor" class="" width="24" height="24" focusable="false">
                                 <path
@@ -243,11 +243,11 @@
     
                     <div class="action-btns flex gap-3 flex-col lg:flex-row justify-between mt-12">
                         <a href="{{stripeRoute}}" target="_blank"
-                            class="px-4 py-2 text-center shadow-lg  font-semibold text-xs sm:text-sm rounded-full  hover: transition-all duration-200">
+                            class="px-4 py-2 text-center shadow-lg border  font-semibold text-xs sm:text-sm rounded-full  hover: transition-all duration-200">
                             Gérer ma facturation
                         </a>
                         <button (click)="openAccountDeleteDialog()" aria-labelledby="Delete account button"
-                            class="px-4 py-2 shadow-lg  font-semibold text-xs sm:text-sm rounded-full bg-skin-fill-danger  transition-all duration-200">
+                            class="px-4 py-2 shadow-lg  font-semibold text-xs sm:text-sm rounded-full bg-skin-fill-danger text-skin-base transition-all duration-200">
                             {{'profile.deleteMyAccount' | translate}}
                         </button>
                     </div>

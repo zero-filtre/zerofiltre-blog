@@ -70,7 +70,7 @@
                                     <!-- Liste des tags du cours -->
                                     <div class="article-tags-container flex flex-wrap items-center gap-1">
                                         <a *ngFor="let tag of course?.tags" routerLink='/cours' [queryParams]="{tag:tag.name}"
-                                            class="tag-item flex items-center space-x-2 group">
+                                            class="tag-item text-skin-base flex items-center space-x-2 group">
                                             <span
                                                 class="inline-flex  items-center leading-none px-2.5 py-1.5 text-sm font-semibold rounded-full border ">
                                                 <svg [ngStyle]="{'color': tag.colorCode}" class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
@@ -127,7 +127,7 @@
                                         routerLink="{{'/cours/' + (course|slugify) + '/' + '?'}}"
                                         class="course-title">
                                         <h4
-                                            class="text-lg inline-block leading-6 font-semibold   transition-all duration-200">
+                                            class="text-lg inline-block leading-6 font-semibold text-skin-base transition-all duration-200">
                                             {{course?.title}}
                                         </h4>
                                     </a>
@@ -152,22 +152,18 @@
                                             <p class="text-sm font-semibold ">
                                                 <a aria-labelledby="Link to about page"
                                                     [routerLink]="authService?.currentUsr?.id == course?.author?.id ? ['/user/profile'] : ['/user/' + course?.author?.id]"
-                                                    class="hover:underline">
+                                                    class="hover:underline text-skin-base">
                                                     {{course?.author?.fullName}}
                                                 </a>
                                             </p>
                                             <div class="flex space-x-1 text-sm ">
                                                 <time [dateTime]="course?.publishedAt | date">{{course?.publishedAt |
                                                     date}}</time>
-                                                <!-- <span aria-hidden="true">·</span>
-                                                <span>
-                                                    15{{ 'articles.ofReadTime' | translate}}
-                                                </span> -->
                                             </div>
                                         </div>
 
                                         <div
-                                            class="flex items-center justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
+                                            class="flex items-center text-skin-warning justify-end  gap-2 flex-1 self-end text-right text-sm font-semibold">
                                             <span class="enrol-total relative inline-flex items-end gap-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     class="w-6 h-6 inline " viewBox="0 0 16 16">

@@ -3,7 +3,7 @@
   <!-- <ng-container *ngIf="geoLocationService.location$ | async"></ng-container> -->
 
   <!-- APP MOBILE SIDENAV -->
-  <mat-sidenav #drawer class="sidenav mobile-sidebar-menu text-skin-base lg:!hidden relative" position="end" fixedInViewport
+  <mat-sidenav #drawer class="sidenav bg-transparent mobile-sidebar-menu text-skin-base lg:!hidden relative" position="end" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'over'" [opened]="false">
 
     <div class="absolute top-6 right-6 w-fit" (click)="drawer.close()">
@@ -167,7 +167,7 @@
 
   <!-- PROFILE SIDEBAR -->
   <mat-sidenav *appShellNoRender
-    class="profile-sidebar !hidden lg:!block  shadow-sm border-0 rounded-none !fixed w-full max-w-xs"
+    class="profile-sidebar !hidden lg:!block bg-transparent shadow-lg border-0 border-r-2 rounded-none !fixed w-full max-w-xs"
     mode="side" [opened]="checkRouteUrl()">
 
     <div class="profile-sidebar-container relative pt-32 px-10  h-full">
@@ -265,9 +265,9 @@
         </a>
       </div>
 
-      <div class=" absolute bottom-0 inset-x-0 p-4">
+      <div class="absolute bottom-0 inset-x-0 p-4">
         <button (click)="logout()" aria-labelledby="logout button"
-          class="flex gap-3 w-full bg-skin-fill-danger   items-center px-3 py-2 shadow-lg text-sm font-semibold rounded-md transition-all duration-300">
+          class="flex gap-3 w-full bg-skin-fill-danger text-skin-base items-center justify-center px-3 py-2 shadow-lg text-sm font-semibold rounded-md transition-all duration-300">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round"
