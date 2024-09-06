@@ -2,7 +2,7 @@
     <div class="login-content-wrapper flex items-center justify-center">
         <div class="max-w-md w-full space-y-8">
             <div>
-                <h2 class="text-center text-3xl font-extrabold ">
+                <h2 class="text-center text-skin-base text-3xl font-extrabold ">
                     {{'signup.title' | translate}}
                 </h2>
             </div>
@@ -113,10 +113,10 @@
                     </div>
                 </div> -->
 
-                <div>
+                <div class="text-skin-base">
                     <button *ngIf="form.valid && passwordDoesMatch" type="submit" [disabled]="loading"
                         aria-labelledby="Sign up button" [ngClass]="{'opacity-50': loading}"
-                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md    focus:outline-none">
+                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border text-sm rounded-md    focus:outline-none">
                         <span class="lock-btn absolute left-0 flex items-center pl-3">
                             <svg class="h-5 w-5  "
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -138,7 +138,7 @@
 
                     <button *ngIf="form.invalid || !passwordDoesMatch" aria-labelledby="Sign up button"
                         [disabled]="form.invalid || loading || !passwordDoesMatch"
-                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border border-transparent text-sm rounded-md   bg-opacity-20">
+                        class="button group font-semibold relative w-full flex justify-center py-2 px-4 border text-sm rounded-md bg-opacity-20">
                         <span class="lock-btn absolute left-0 flex items-center pl-3">
                             <svg class="h-5 w-5  opacity-20" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -154,7 +154,7 @@
 
             <div class="">
                 <a aria-labelledby="Link to about page" routerLink="/login"
-                    class="inline-flex justify-center py-2 px-4 border  rounded-md shadow-sm  text-sm   focus:outline-none w-full font-normal">
+                    class="inline-flex text-skin-base justify-center py-2 px-4 border rounded-md shadow-sm text-sm focus:outline-none w-full font-normal">
                     <span class="sr-only">{{'signup.login' | translate}}</span>
                     {{'signup.signin' | translate}}
                 </a>
