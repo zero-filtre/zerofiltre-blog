@@ -177,14 +177,9 @@ export class CarouselComponent {
         })
       )
       .subscribe({
-        next: (formattedReviews: Review[]) => {
-          this.loading = false;
-          this.reviews = [...formattedReviews, ...this.defaultReviews];
-        },
-        error: (e: any) => {
-          console.log(e)
-          this.loading = false
-        }
+        next: (formattedReviews: Review[]) => this.reviews = [...formattedReviews, ...this.defaultReviews],
+        error: (e: any) => this.reviews = [...this.defaultReviews],
+        complete: () => this.loading = false
       });
   }
 
