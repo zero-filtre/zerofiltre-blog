@@ -39,7 +39,12 @@
                         <span>{{course?.enrolledCount}}</span>
 
                         <span class="enrol-tooltip">
-                            {{course?.enrolledCount}} personnes suivent ce cours
+                            {{ course?.enrolledCount | i18nPlural: {
+                                '=0': 'Aucune personne ne suit ce cours',
+                                '=1': 'Une personne suit ce cours',
+                                'other': '# personnes suivent ce cours'
+                              } 
+                            }}
                         </span>
                     </span>
 
@@ -50,7 +55,12 @@
 
                         <span>{{course?.reactions?.length}}</span>
                         <span class="enrol-tooltip">
-                            {{course?.reactions?.length}} personnes aiment ce cours
+                            {{ course?.reactions?.length | i18nPlural: {
+                                '=0': "Pas encore de like sur ce cours",
+                                '=1': 'Une personne aime ce cours',
+                                'other': '# personnes aiment ce cours'
+                              } 
+                            }}
                         </span>
                     </span>
                 </div>
