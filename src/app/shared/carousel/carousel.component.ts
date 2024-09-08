@@ -5,7 +5,6 @@ import { AuthService } from 'src/app/user/auth.service';
 import { forkJoin, map, mergeMap, Observable } from 'rxjs';
 import { User } from 'src/app/user/user.model';
 import { SurveyService } from 'src/app/services/survey.service';
-import { error } from 'console';
 
 @Component({
   selector: 'app-carousel',
