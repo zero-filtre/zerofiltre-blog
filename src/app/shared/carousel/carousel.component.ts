@@ -103,7 +103,7 @@ export class CarouselComponent {
   intervalId: any;
   currentIndex = 0;
 
-  reviews: Review[]
+  reviewsArray: Review[]
   loading: boolean;
 
   formatReview(review: Review): Observable<Review> {
@@ -170,15 +170,16 @@ export class CarouselComponent {
           if (!this.courseId) {
             return formattedReviews
             .filter(review => review.comment !== '')
+          } else {
+            return formattedReviews
+              .filter(review => review.comment !== '')
+              .filter(review => review.courseId == this.courseId)
           }
-          return formattedReviews
-            .filter(review => review.comment !== '')
-            .filter(review => review.courseId == this.courseId)
         })
       )
       .subscribe({
-        next: (formattedReviews: Review[]) => this.reviews = [...formattedReviews, ...this.defaultReviews],
-        error: (e: any) => this.reviews = [...this.defaultReviews],
+        next: (formattedReviews: Review[]) => this.reviewsArray = [...formattedReviews, ...this.defaultReviews],
+        error: (e: any) => this.reviewsArray = [...this.defaultReviews],
         complete: () => this.loading = false
       });
   }
@@ -196,9 +197,9 @@ export class CarouselComponent {
 
   startAutoplay() {
     this.intervalId = setInterval(() => {
-      this.currentIndex = (this.currentIndex + 1) % this.reviews.length;
+      this.currentIndex = (this.currentIndex + 1) % this.reviewsArray.length;
       if (window.innerWidth > 768) {
-        if (this.currentIndex >= this.reviews.length/4) {
+        if (this.currentIndex >= this.reviewsArray.length/4) {
           this.currentIndex = 0
         }
       }
