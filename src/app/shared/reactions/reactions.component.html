@@ -1,0 +1,53 @@
+<section class="reactions flex justify-start items-center">
+    <div class="py-5 flex flex-wrap text-secondary">
+        <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
+            class="group px-4 flex items-center justify-center transition-all duration-300"
+            attr.aria-label="{{reaction.action}} button">
+
+            <div
+                class="reaction-wrapper flex flex-col gap-3 lg:gap-4 group-hover:-translate-y-2 transition-all ease-in duration-200">
+                <ng-container *ngIf="reaction.action === 'clap'">
+                    <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
+                        {{reaction.emoji}}
+                    </div>
+                    <div class="text-base font-medium">
+                        {{clapReactions$ | async}}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="reaction.action === 'fire'">
+                    <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
+                        {{reaction.emoji}}
+                    </div>
+                    <div class="text-base font-medium">
+                        {{fireReactions$ | async}}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="reaction.action === 'love'">
+                    <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
+                        {{reaction.emoji}}
+                    </div>
+                    <div class="text-base font-medium">
+                        {{loveReactions$ | async}}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="reaction.action === 'like'">
+                    <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
+                        {{reaction.emoji}}
+                    </div>
+                    <div class="text-base font-medium">
+                        {{likeReactions$ | async}}
+                    </div>
+                </ng-container>
+            </div>
+        </button>
+    </div>
+
+    <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
+        <ngx-skeleton-loader class="space-x-2" count="4" appearance="line" [theme]="{ 
+                'border-radius': '5px',
+                    height: '20px',
+                    width: '20px'
+                }">
+        </ngx-skeleton-loader>
+    </ng-container>
+</section>

@@ -53,21 +53,6 @@ export class CourseDetailPageComponent implements OnInit {
 
   private nberOfReactions = new BehaviorSubject<number>(0);
   public nberOfReactions$ = this.nberOfReactions.asObservable();
-  public typesOfReactions = <any>[
-    { action: 'clap', emoji: '👏' },
-    { action: 'fire', emoji: '🔥' },
-    { action: 'love', emoji: '💖' },
-    { action: 'like', emoji: '👍' },
-  ];
-
-  private fireReactions = new BehaviorSubject<number>(0);
-  public fireReactions$ = this.fireReactions.asObservable();
-  private clapReactions = new BehaviorSubject<number>(0);
-  public clapReactions$ = this.clapReactions.asObservable();
-  private loveReactions = new BehaviorSubject<number>(0);
-  public loveReactions$ = this.loveReactions.asObservable();
-  private likeReactions = new BehaviorSubject<number>(0);
-  public likeReactions$ = this.likeReactions.asObservable();
 
   constructor(
     private seo: SeoService,
@@ -176,7 +161,6 @@ export class CourseDetailPageComponent implements OnInit {
           this.course = data;
           this.orderSections(data);
           this.extractVideoId(data.video)
-          this.setEachReactionTotal(data?.reactions);
 
           return this.course
         },
@@ -199,24 +183,6 @@ export class CourseDetailPageComponent implements OnInit {
   orderSections(course: Course) {
     const list = course.sections
     this.orderedSections = list.sort((a: Section, b: Section) => a.position - b.position)
-  }
-
-  setEachReactionTotal(reactions: Reaction[]) {
-    this.fireReactions.next(this.findTotalReactionByAction('FIRE', reactions));
-    this.clapReactions.next(this.findTotalReactionByAction('CLAP', reactions));
-    this.loveReactions.next(this.findTotalReactionByAction('LOVE', reactions));
-    this.likeReactions.next(this.findTotalReactionByAction('LIKE', reactions));
-  }
-
-  findTotalReactionByAction(action: string, reactions: Reaction[]): number {
-    return reactions.filter((reaction: Reaction) => reaction.action === action).length;
-  }
-
-  addReaction(action: string): any {
-    this.courseService.addReactionToCourse(this.courseID, action)
-      .subscribe({
-        next: (response) => this.setEachReactionTotal(response)
-      });
   }
 
   extractVideoId(videoLink: any) {

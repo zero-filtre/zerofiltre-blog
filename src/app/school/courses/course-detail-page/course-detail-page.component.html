@@ -60,61 +60,6 @@
                 </ng-container>
             </ng-container>
 
-            <section class="reactions !py-6 border !bg-secondary grid place-items-center border-skin-border">
-                <!-- *ngIf="!loading && (isPublished$ | async)" -->
-                <div class="site-container pt-5 flex flex-wrap justify-center lg:justify-start">
-                    <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
-                        class="group px-4 flex items-center justify-center transition-all duration-300"
-                        attr.aria-label="{{reaction.action}} button">
-
-                        <div
-                            class="reaction-wrapper flex flex-col gap-3 lg:gap-4 group-hover:-translate-y-2 transition-all ease-in duration-200">
-                            <ng-container *ngIf="reaction.action === 'clap'">
-                                <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
-                                    {{reaction.emoji}}
-                                </div>
-                                <div class="text-lg font-semibold text-skin-link">
-                                    {{clapReactions$ | async}}
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="reaction.action === 'fire'">
-                                <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
-                                    {{reaction.emoji}}
-                                </div>
-                                <div class="text-lg font-semibold text-skin-link">
-                                    {{fireReactions$ | async}}
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="reaction.action === 'love'">
-                                <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
-                                    {{reaction.emoji}}
-                                </div>
-                                <div class="text-lg font-semibold text-skin-link">
-                                    {{loveReactions$ | async}}
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="reaction.action === 'like'">
-                                <div class="group-hover:scale-[4] scale-[2.5] transition-all ease-in duration-200">
-                                    {{reaction.emoji}}
-                                </div>
-                                <div class="text-lg font-semibold text-skin-link">
-                                    {{likeReactions$ | async}}
-                                </div>
-                            </ng-container>
-                        </div>
-                    </button>
-                </div>
-
-                <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
-                    <ngx-skeleton-loader class="space-x-2" count="4" appearance="line" [theme]="{ 
-                            'border-radius': '5px',
-                                height: '20px',
-                                width: '20px'
-                            }">
-                    </ngx-skeleton-loader>
-                </ng-container>
-            </section>
-
             <section *ngIf="currentVideoId" class="presentation-video">
                 <div class="site-container">
                     <app-youtube-video-player [videoId]="currentVideoId" [width]="800"
