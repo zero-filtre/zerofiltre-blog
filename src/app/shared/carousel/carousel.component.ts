@@ -98,12 +98,12 @@ export class CarouselComponent {
     }
   ];
 
+  reviewsArray: Review[] = [...this.defaultReviews];
+  loading: boolean;
+
   translateX = 0;
   intervalId: any;
   currentIndex = 0;
-
-  reviewsArray: Review[]
-  loading: boolean;
 
   formatReview(review: Review): Observable<Review> {
     const commentHash = {
@@ -169,16 +169,16 @@ export class CarouselComponent {
           if (!this.courseId) {
             return formattedReviews
             .filter(review => review.comment !== '')
-          } else {
-            return formattedReviews
-              .filter(review => review.comment !== '')
-              .filter(review => review.courseId == this.courseId)
-          }
+          } 
+
+          return formattedReviews
+            .filter(review => review.comment !== '')
+            .filter(review => review.courseId == this.courseId)
         })
       )
       .subscribe({
-        next: (formattedReviews: Review[]) => this.reviewsArray = [...formattedReviews, ...this.defaultReviews],
-        error: (e: any) => this.reviewsArray = [...this.defaultReviews],
+        next: (formattedReviews: Review[]) => this.reviewsArray = [...formattedReviews, ...this.reviewsArray],
+        error: (e: any) => console.log(e),
         complete: () => this.loading = false
       });
   }
