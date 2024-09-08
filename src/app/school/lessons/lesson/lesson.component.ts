@@ -89,10 +89,10 @@ export class LessonComponent implements OnInit, OnDestroy {
   userProgress: UserProgress = {};
 
   surveyJson = {
-    title: 'Dites-nous en 30 secondes ce que vous pensé de ce chapitre',
+    title: 'Dites-nous en 30 secondes ce que vous pensez de ce chapitre',
     elements: [
       {
-        name: "explications_chapitre",
+        name: "chapterExplanations",
         title: "Comment évalueriez-vous la clarté des explications fournies dans ce chapitre ?",
         type: "radiogroup",
         choices: [
@@ -117,34 +117,34 @@ export class LessonComponent implements OnInit, OnDestroy {
             text: 'Extrêmement clair'
           }
         ],
-        defaultValue: 'Moyennement clair'
+        defaultValue: 'Extrêmement clair'
       }, 
       {
-        name: 'note_satisfaction_chapitre',
+        name: 'chapterSatisfactionScore',
         title: 'À quel point avez-vous trouvé ce chapitre intéressant ?',
         type: 'rating',
-        defaultValue: '3',
+        defaultValue: '5',
         rateType: "stars",
         rateCount: 5,
         rateMax: 5,
         displayMode: "buttons"
       },
       {
-        name: "note_comprehension_chapitre",
+        name: "chapterUnderstandingScore",
         type: "rating",
         title: "Évaluez votre compréhension du chapitre.",
         rateMin: 0,
         rateMax: 5,
-        defaultValue: '3'
+        defaultValue: '5'
       },
       {
-        name: "vos_impressions",
+        name: "chapterImpressions",
         title: "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
         type: "comment",
         maxLength: 500
       },
       {
-        name: "recommander_cours",
+        name: "recommendCourse",
         type: "boolean",
         title: "Recommanderiez-vous ce cours à un ami ou un collègue ?",
         valueTrue: "Oui",
@@ -152,13 +152,13 @@ export class LessonComponent implements OnInit, OnDestroy {
         defaultValue: "Oui"
       },
       {
-        name: "pourquoi_recommander",
+        name: "whyRecommendingThisCourse",
         title: "Si oui, pourquoi ?",
         type: "comment",
         maxLength: 500
       },
       {
-        name: "outil_apprentissage_chapitre",
+        name: "favoriteLearningToolOfTheChapter",
         type: "checkbox",
         title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
         choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
@@ -170,23 +170,23 @@ export class LessonComponent implements OnInit, OnDestroy {
         separateSpecialChoices: true,
       },
       {
-        name: "outil_apprentissage_chapitre_raisons",
+        name: "reasonFavoriteLearningToolOfTheChapter",
         title: "Pouvez-vous expliquer comment cela vous a aidé ?",
         type: "comment",
         maxLength: 500
       },
       {
-        name: "satisfaction_globale_chapitre",
+        name: "overallChapterSatisfaction",
         type: "rating",
-        title: "Sur une échelle de 1 à 10, quelle est votre satisfaction globale concernant ce chapitre ?",
+        title: "Sur une échelle de 1 à 5, quelle est votre satisfaction globale concernant ce chapitre ?",
         rateMin: 0,
-        rateMax: 10,
+        rateMax: 5,
         defaultValue: '5'
       },
       {
-        name: "ameliorations_suggeres",
+        name: "improvementSuggestion",
         title: "Quelles améliorations suggéreriez-vous ?",
-        type: "comment",
+        type: 'comment',
         maxLength: 500
       }
     ]
@@ -312,7 +312,6 @@ export class LessonComponent implements OnInit, OnDestroy {
     if (this.isChapterCompleted(chapter, userProgress)) {
       this.showNPSFormDialog();
     }
-    console.log('USER PROGRESS: ', userProgress, this.isChapterCompleted(chapter, userProgress));
   }
 
   findResourcesByType(type: string[] | string): Resource[] {
@@ -353,7 +352,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
           const rootUrl = this.router.url.split('/')[1];
           const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
-          this.location.replaceState(sluggedUrl);
+          // this.location.replaceState(sluggedUrl);
 
           const desc = lesson?.summary || '';
           const img = this.course?.thumbnail || 'https://ik.imagekit.io/lfegvix1p/pro_vvcZRxQIU.png?updatedAt=1714202330763'
@@ -418,7 +417,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
           const rootUrl = this.router.url.split('/')[1];
           const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(this.lesson)}`
-          this.location.replaceState(sluggedUrl);
+          // this.location.replaceState(sluggedUrl);
         }),
         shareReplay()
       )

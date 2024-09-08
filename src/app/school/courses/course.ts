@@ -69,3 +69,26 @@ export type SearchResultsData = {
     articles: SearchResultArticle[],
     lessons: SearchResultLesson[]
 }
+
+export type Review =  {
+    id?: number,
+    courseId?: number,
+    
+    chapterExplanations?: string,
+    chapterSatisfactionScore?: number,
+    chapterUnderstandingScore?: number,
+    recommendCourse?: true,
+    overallChapterSatisfaction?: number,
+    chapterImpressions?: string,
+    whyRecommendingThisCourse?: string,
+    favoriteLearningToolOfTheChapter?: string[],
+    reasonFavoriteLearningToolOfTheChapter?: string,
+    improvementSuggestion?: string,
+    reviewAuthorId?: number,
+    
+    comment: string,
+    avatar: string,
+    name: string,
+    role: string,
+    stars: number
+}

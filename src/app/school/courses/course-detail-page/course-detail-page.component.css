@@ -66,3 +66,13 @@ ol > li:before {
 }
 
 /* CURRICULUM STYLES */
+
+
+.enrol-tooltip {
+  @apply absolute w-auto p-2 min-w-max top-12 right-4 rounded-md shadow-md
+      text-white bg-secondary text-xs font-medium transition-all duration-200 scale-0 origin-center;
+}
+
+.enrol-total:hover .enrol-tooltip {
+  @apply group-hover:scale-100;
+}

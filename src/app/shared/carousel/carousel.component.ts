@@ -1,5 +1,10 @@
 import { Component, HostListener, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Review } from 'src/app/school/courses/course';
+import { AuthService } from 'src/app/user/auth.service';
+import { forkJoin, map, mergeMap, Observable } from 'rxjs';
+import { User } from 'src/app/user/user.model';
+import { SurveyService } from 'src/app/services/survey.service';
 
 @Component({
   selector: 'app-carousel',
@@ -7,9 +12,11 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./carousel.component.css']
 })
 export class CarouselComponent {
-  @Input() userReviews: any[];
+  @Input() courseId: number;
 
   constructor(
+    private userService: AuthService,
+    private surveyService: SurveyService,
     @Inject(PLATFORM_ID) private platformId: any,
   ){}
 
@@ -18,7 +25,7 @@ export class CarouselComponent {
   avatarHommeBlanc = 'https://ik.imagekit.io/lfegvix1p/Homme%20Blanc_oobxMT8KK.svg?updatedAt=1719058562779';
   avatarFemmeBlanche = 'https://ik.imagekit.io/lfegvix1p/Femme%20Blanche_N_xj-DOPJ.svg?updatedAt=1719058562581';
 
-  reviews = [
+  defaultReviews: Review[] = [
     {
       comment: "J'ai suivi le parcours DDD dans le cadre de mon travail en tant que développeur senior, et il m'a vraiment aidé à structurer mon approche du développement logiciel. En appliquant les techniques apprises, j'ai pu améliorer la qualité du code et faciliter la collaboration avec les experts métier. Un cours essentiel pour tout professionnel du développement.",
       avatar: this.avatarHommeNoir,
@@ -95,9 +102,89 @@ export class CarouselComponent {
   intervalId: any;
   currentIndex = 0;
 
+  reviews: Review[]
+  loading: boolean;
+
+  formatReview(review: Review): Observable<Review> {
+    const commentHash = {
+      a: { text: review.chapterImpressions, len: review.chapterImpressions.replace(/\s+/g, '').length },
+      b: { text: review.chapterExplanations, len: review.chapterExplanations.replace(/\s+/g, '').length },
+      c: { text: review.whyRecommendingThisCourse, len: review.whyRecommendingThisCourse.replace(/\s+/g, '').length },
+      d: { text: review.improvementSuggestion, len: review.improvementSuggestion.replace(/\s+/g, '').length },
+    }
+
+    let commentText = '';
+    let maxLen = -1;
+
+    for (const key in commentHash) {
+      if (commentHash[key].len > maxLen) {
+        maxLen = commentHash[key].len;
+        commentText = commentHash[key].text;
+      }
+    }
+
+    const scoretHash = {
+      a: review.chapterSatisfactionScore,
+      b: review.chapterSatisfactionScore,
+      c: review.chapterSatisfactionScore,
+    }
+
+    let scoreRate = 0;
+    let maxScore = -1;
+
+    for (const key in scoretHash) {
+      if (scoretHash[key] > maxScore) {
+        maxLen = scoretHash[key];
+        scoreRate = scoretHash[key];
+      }
+    }
+
+    
+    return this.userService.findUserProfile(review.reviewAuthorId.toString())
+      .pipe(
+        map((author: User) => {
+          return {
+            ...review,
+            comment: commentText,
+            avatar: author.profilePicture,
+            role: author.profession,
+            stars: scoreRate,
+            name: author.fullName
+          };
+        })
+      );
+  }
+  
+  getReviews() {
+    this.loading = true;
+    this.surveyService.getReviews()
+      .pipe(
+        mergeMap((reviews: Review[]) => {
+          const formattedReviews$ = reviews
+            .map(review => this.formatReview(review));
+  
+          return forkJoin(formattedReviews$);
+        }),
+        map((formattedReviews: Review[]) => {
+          if (!this.courseId) {
+            return formattedReviews
+            .filter(review => review.comment !== '')
+          }
+          return formattedReviews
+            .filter(review => review.comment !== '')
+            .filter(review => review.courseId == this.courseId)
+        })
+      )
+      .subscribe((formattedReviews: Review[]) => {
+        this.loading = false;
+        this.reviews = [...formattedReviews, ...this.defaultReviews];
+      });
+  }
+
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.startAutoplay();
+      this.getReviews();
     }
   }
 

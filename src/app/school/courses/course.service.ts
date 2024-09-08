@@ -149,7 +149,7 @@ export class CourseService {
       .pipe(shareReplay());
   }
 
-  addReactionToCourse(courseId: string, action: string): Observable<any> {
+  addReactionToCourse(courseId: number, action: string): Observable<any> {
     return this.http.post<string>(`${this.apiServerUrl}/reaction?articleId=0&courseId=${courseId}&action=${action}`, {})
       .pipe(shareReplay());
   }

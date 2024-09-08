@@ -9,7 +9,6 @@ const httpOptions = {
   }),
 };
 
-const apiBase = 'https://api.vimeo.com';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +20,32 @@ export class SurveyService {
 
   saveSurveyResults(json: object): Observable<any> {
     const data = JSON.stringify(json);
-    return of(data);
     return this.http
-      .post<any>(`${apiBase}/nps`, data, httpOptions)
+      .post<any>(`${this.apiServerUrl}/reviews`, data, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  getReviews(): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiServerUrl}/reviews`)
+      .pipe(shareReplay());
+  }
+
+  getReviewById(reviewId: number): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiServerUrl}/reviews/${reviewId}`)
+      .pipe(shareReplay());
+  }
+
+  updateReviewById(reviewId: number): Observable<any> {
+    return this.http
+      .patch<any>(`${this.apiServerUrl}/reviews/${reviewId}`, httpOptions)
+      .pipe(shareReplay());
+  }
+
+  deleteReviewById(reviewId: number): Observable<any> {
+    return this.http
+      .delete<any>(`${this.apiServerUrl}/reviews/${reviewId}`, httpOptions)
       .pipe(shareReplay());
   }
 }

@@ -10,6 +10,8 @@
                     </app-mentored-icon>
                 </h2>
 
+                <app-reactions [course]="course" [loading]="loading"></app-reactions>
+
                 <ng-container *ngIf="canEdit">
                     <div class="flex gap-3">
                         <button (click)="openChapterInitDialog(course?.id)"

@@ -34,7 +34,6 @@ export class NpsSurveyComponent {
       .saveSurveyResults(resultData)
       .subscribe({
         next: data => {
-          alert(data);
           options.showSaveSuccess("Enregistré avec succès!");
         },
         error: (err: HttpErrorResponse) => {
@@ -46,8 +45,8 @@ export class NpsSurveyComponent {
 
   surveyComplete(survey: any, options: any) {
     const userId = this.authService?.currentUsr?.id
-    survey.setValue("userId", userId);
-    survey.setValue("courseId", this.course.id);
+    // survey.setValue("userId", userId);
+    // survey.setValue("courseId", this.course.id);
     survey.setValue("chapterId", this.chapter.id);
 
     //   const resultData = Object.keys(survey.data)
@@ -65,6 +64,11 @@ export class NpsSurveyComponent {
     //     }).filter(item => item !== null);
 
     const resultData = survey.data
+    const recommendCourseValue = resultData["recommendCourse"]
+
+    if (recommendCourseValue !== null) {
+      resultData["recommendCourse"] = recommendCourseValue == "Oui" ? true : false
+    }
 
     this.saveResults(resultData, options);
   }
