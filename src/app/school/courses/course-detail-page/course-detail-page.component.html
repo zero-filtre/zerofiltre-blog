@@ -23,6 +23,38 @@
 
                 <h1>{{course?.title}}</h1>
                 <h2>{{course?.subTitle}}</h2>
+
+                <div
+                    class="group flex items-center justify-center text-skin-inverted gap-2 text-right text-sm font-medium">
+
+                    <span class="enrol-total relative inline-flex items-end gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="size-10 inline text-accent-300" viewBox="0 0 16 16">
+                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                            <path fill-rule="evenodd"
+                                d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+                            <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                        </svg>
+
+                        <span>{{course?.enrolledCount}}</span>
+
+                        <span class="enrol-tooltip">
+                            {{course?.enrolledCount}} personnes suivent ce cours
+                        </span>
+                    </span>
+
+                    <span class="enrol-total relative inline-flex items-end top-[1px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline size-10 text-accent-300">
+                            <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                        </svg>
+
+                        <span>{{course?.reactions?.length}}</span>
+                        <span class="enrol-tooltip">
+                            {{course?.reactions?.length}} personnes aiment ce cours
+                        </span>
+                    </span>
+                </div>
+
             </div>
 
             <ng-container *ngFor="let section of orderedSections; let i = index">
