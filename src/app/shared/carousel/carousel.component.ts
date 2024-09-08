@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/user/auth.service';
 import { forkJoin, map, mergeMap, Observable } from 'rxjs';
 import { User } from 'src/app/user/user.model';
 import { SurveyService } from 'src/app/services/survey.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-carousel',
@@ -175,9 +176,15 @@ export class CarouselComponent {
             .filter(review => review.courseId == this.courseId)
         })
       )
-      .subscribe((formattedReviews: Review[]) => {
-        this.loading = false;
-        this.reviews = [...formattedReviews, ...this.defaultReviews];
+      .subscribe({
+        next: (formattedReviews: Review[]) => {
+          this.loading = false;
+          this.reviews = [...formattedReviews, ...this.defaultReviews];
+        },
+        error: (e: any) => {
+          console.log(e)
+          this.loading = false
+        }
       });
   }
 
