@@ -12,8 +12,7 @@ import { SurveyService } from 'src/app/services/survey.service';
   styleUrls: ['./carousel.component.css']
 })
 export class CarouselComponent {
-  // @Input() userReviews: Review[];
-  @Input() courseId: number = 0;
+  @Input() courseId: number;
 
   constructor(
     private userService: AuthService,
@@ -166,11 +165,15 @@ export class CarouselComponent {
   
           return forkJoin(formattedReviews$);
         }),
-        map((formattedReviews: Review[]) => 
-          formattedReviews
+        map((formattedReviews: Review[]) => {
+          if (!this.courseId) {
+            return formattedReviews
+            .filter(review => review.comment !== '')
+          }
+          return formattedReviews
             .filter(review => review.comment !== '')
             .filter(review => review.courseId == this.courseId)
-        )
+        })
       )
       .subscribe((formattedReviews: Review[]) => {
         this.loading = false;
