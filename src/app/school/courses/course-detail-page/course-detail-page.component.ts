@@ -185,10 +185,20 @@ export class CourseDetailPageComponent implements OnInit {
     this.orderedSections = list.sort((a: Section, b: Section) => a.position - b.position)
   }
 
-  extractVideoId(videoLink: any) {
+  isValidURL(url: string) {
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  extractVideoId(videoLink: string) {
     if (!videoLink) return;
+    if(!this.isValidURL(videoLink)) return;
     const params = new URL(videoLink).searchParams;
-    this.currentVideoId = params.get('v');
+    this.currentVideoId = params.get('v') as string;
   }
 
   ngOnInit(): void {
