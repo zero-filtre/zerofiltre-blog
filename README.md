@@ -4,12 +4,18 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Setup and Install dependencies
 
-Run the following in a terminal
+Make sure you have the angular CLI installed
+  1. Check version
+  `ng -v`
+  2. Installation (If not yet installed)
+  `npm install -g @angular/cli@15`
+
+Run the following in a terminal to get started
 
 ```
 git clone https://github.com/zero-filtre/zerofiltre-blog.git
 cd zerofiltre-blog
-npm install
+npm install --force
 ```
 
 ## Run Development server
@@ -29,27 +35,31 @@ export const environment = {
   gitHubRedirectURL: "",
   stackOverflowRedirectURL: "",
   ovhAuthName: "",
+  courseRoutesActive:'true',
+  servicesUrl: '',
+  vimeoToken: '',
+  vimeoClientSecret: '',
+  schoolApi: '',
+  coursesUrl: '',
+  stripePublicKey: '',
+  vimeoClientID: '',
+  bannerText: 'Désormais, vous pouvez payer votre abonnement PRO par Mobile Money et Paypal!',
+  bannerLink: 'https://google.com',
+  bannerActionBtn: 'Je deviens PRO',
+  bannerBgColor: '#333',
+  bannerVisible: 'false'
 };
 ```
 
 Run `ng serve` for a **client-side** dev server.  
 Run `npm run dev:ssr` for a **server-side** dev server.  
-Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Run Development JSON server
-
-Run the following
-
-```ts
-mpm install -g json-server
-npm run json:server
-```
+Navigate to `http://localhost:4200/`. The app will automatically reload if you make any change in the source files.
 
 ## Build
 
-Run `ng build` to build the **client-side project** bundle. The build artifacts will be stored in the `dist/` directory.
+Run `ng build` to build the **client-side project** bundle. The build artefacts will be stored in the `dist/` directory.
 
-Run `npm run build:ssr` to build the **server-side project** bundle. The build artifacts will be stored in the `dist/` directory.  
+Run `npm run build:ssr` to build the **server-side project** bundle. The build artefacts will be stored in the `dist/` directory.  
 Run `npm run serve:ssr` and navigate to `http://localhost:4000/` to browse the app.
 
 ## Running unit tests
