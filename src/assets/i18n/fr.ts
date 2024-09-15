@@ -140,7 +140,7 @@ export const fr = {
         callToShareText: 'Vous avez aimé, alors partagez !',
         maxNberReactionText: '🚨 Nombre max de reactions sur cet article atteint !',
         loginToReactText: '🚨 Vous devez vous connecter pour réagir sur cet article',
-        publishToReactText: 'Vous pourrez reagir sur cet article apres sa publication.'
+        publishToReactText: 'Vous pourrez reagir sur cet article après sa publication.'
     },
     articleEntryPopup: {
         titlePlaceholder: 'Tout commence par un titre!',
@@ -314,5 +314,7 @@ export const fr = {
     course: {
         noMoreCourse: 'Plus aucun cours 😏!',
         noCourseAvailable: 'Aucun cours trouvé 😊!',
+        loginToReactText: '🚨 Vous devez vous connecter pour réagir sur ce cours',
+        publishToReactText: 'Vous pourrez reagir sur ce cours après sa publication.'
     }
 }

@@ -1,4 +1,4 @@
-<section class="reactions flex justify-start items-center">
+<!-- <section class="reactions flex justify-start items-center">
     <div class="py-5 flex flex-wrap text-secondary">
         <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
             class="group px-4 flex items-center justify-center transition-all duration-300"
@@ -50,4 +50,64 @@
                 }">
         </ngx-skeleton-loader>
     </ng-container>
-</section>
+</section> -->
+
+<div class="reactions py-3 mb-6 lg:pl-2 border-y border-skin-border">
+    <div *ngIf="!loading && (course.status === 'PUBLISHED')"
+        class="reactions-container flex flex-wrap justify-center lg:justify-start gap-3">
+        <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
+            class="group flex items-center justify-center transition-all duration-300"
+            attr.aria-label="{{reaction.action}} button">
+
+            <div
+                class="reaction-wrapper flex items-center space-x-1 group-hover:-translate-y-2 transition-all ease-in duration-200">
+                <ng-container *ngIf="reaction.action === 'clap'">
+                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                        {{reaction.emoji}}
+                    </div>
+                    <div class="text-sm font-semibold text-primary-500">
+                        {{clapReactions$ | async}}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="reaction.action === 'fire'">
+                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                        {{reaction.emoji}}
+                    </div>
+                    <div class="text-sm font-semibold text-primary-500">
+                        {{fireReactions$ | async}}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="reaction.action === 'love'">
+                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                        {{reaction.emoji}}
+                    </div>
+                    <div class="text-sm font-semibold text-primary-500">
+                        {{loveReactions$ | async}}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="reaction.action === 'like'">
+                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
+                        {{reaction.emoji}}
+                    </div>
+                    <div class="text-sm font-semibold text-primary-500">
+                        {{likeReactions$ | async}}
+                    </div>
+                </ng-container>
+            </div>
+        </button>
+    </div>
+
+    <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
+        <ngx-skeleton-loader class="space-x-2" count="4" appearance="line" [theme]="{ 
+                                        'border-radius': '5px',
+                                            height: '20px',
+                                            width: '20px'
+                                        }">
+        </ngx-skeleton-loader>
+    </ng-container>
+
+    <div *ngIf="!loading && (course.status !== 'PUBLISHED')"
+        class="text-sm font-medium px-4 py-2 text-secondary">
+        {{ 'course.publishToReactText' | translate }}
+    </div>
+</div>

@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Course, Reaction } from 'src/app/school/courses/course';
 import { CourseService } from 'src/app/school/courses/course.service';
+import { MessageService } from 'src/app/services/message.service';
+import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   selector: 'app-reactions',
@@ -13,7 +15,9 @@ export class ReactionsComponent {
   @Input() loading: boolean;
 
   constructor(
-    private courseService: CourseService
+    private courseService: CourseService,
+    private authService: AuthService,
+    private notify: MessageService
   ){}
 
   public typesOfReactions = <any>[
@@ -45,6 +49,18 @@ export class ReactionsComponent {
   }
 
   addReaction(action: string): any {
+    const currentUsr = this.authService?.currentUsr;
+
+    if (!currentUsr) {
+      this.notify.openSnackBarError('🚨 Vous devez vous connecter pour réagir sur ce cours', 'OK')
+      return;
+    }
+
+    if(this.course.status !== 'PUBLISHED') {
+      this.notify.openSnackBarError('Vous pourrez reagir sur ce cours apres sa publication.', 'OK')
+      return;
+    }
+
     this.courseService.addReactionToCourse(this.course.id, action)
       .subscribe({
         next: (response) => this.setEachReactionTotal(response)
