@@ -131,11 +131,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   //   document.body.appendChild(scriptElement);
   // }
 
-
-
-
-
-
   isValidURL(url: string) {
     try {
       new URL(url);
@@ -359,7 +354,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     );
 
     if (isPlatformBrowser(this.platformId)) {
-   
+      // this.injectGiscus(this.giscusConfig);
     }
   }
 
