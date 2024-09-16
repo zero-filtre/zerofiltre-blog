@@ -77,6 +77,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { SearchPopupComponent } from './search-popup/search-popup.component';
 import { WhatsappButtonComponent } from './whatsapp-button/whatsapp-button.component';
 import { ReactionsComponent } from './reactions/reactions.component';
+import { ArticlesCardComponent } from '../articles/article-card/articles-card.component';
 
 const components = [
   AppShellRenderDirective,
@@ -123,7 +124,8 @@ const components = [
   CarouselComponent,
   SearchPopupComponent,
   WhatsappButtonComponent,
-  ReactionsComponent
+  ReactionsComponent,
+  ArticlesCardComponent
 ];
 
 const modules = [
