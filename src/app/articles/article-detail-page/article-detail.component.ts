@@ -78,7 +78,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     'data-strict': '0',
     'data-reactions-enabled': '1',
     'data-emit-metadata': '0',
-    'data-input-position': 'top',
+    'data-input-position': 'none',
     'data-theme': 'light',
     'data-lang': 'fr',
     'data-loading': 'lazy',
@@ -115,18 +115,23 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return this.articleService.canAccesPremium(user, article);
   }
 
-  injectGiscus(data: any) {
-    const scriptElement: HTMLScriptElement = document.createElement("script");
 
-    scriptElement.src = "https://giscus.app/client.js";
-    scriptElement.async = true;
 
-    for (let key in data) {
-      scriptElement.setAttribute(key, data[key]);
-    }
 
-    document.body.appendChild(scriptElement);
-  }
+
+
+  // injectGiscus(data: any) {
+  //   const scriptElement: HTMLScriptElement = document.createElement("script");
+
+  //   scriptElement.src = "https://giscus.app/client.js";
+  //   scriptElement.async = true;
+
+  //   for (let key in data) {
+  //     scriptElement.setAttribute(key, data[key]);
+  //   }
+
+  //   document.body.appendChild(scriptElement);
+  // }
 
   isValidURL(url: string) {
     try {
@@ -351,7 +356,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     );
 
     if (isPlatformBrowser(this.platformId)) {
-      this.injectGiscus(this.giscusConfig);
+      // this.injectGiscus(this.giscusConfig);
     }
   }
 
