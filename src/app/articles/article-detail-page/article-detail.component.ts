@@ -120,18 +120,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
 
 
-  // injectGiscus(data: any) {
-  //   const scriptElement: HTMLScriptElement = document.createElement("script");
-
-  //   scriptElement.src = "https://giscus.app/client.js";
-  //   scriptElement.async = true;
-
-  //   for (let key in data) {
-  //     scriptElement.setAttribute(key, data[key]);
-  //   }
-
-  //   document.body.appendChild(scriptElement);
-  // }
 
   isValidURL(url: string) {
     try {
@@ -356,7 +344,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     );
 
     if (isPlatformBrowser(this.platformId)) {
-      // this.injectGiscus(this.giscusConfig);
+   
     }
   }
 
