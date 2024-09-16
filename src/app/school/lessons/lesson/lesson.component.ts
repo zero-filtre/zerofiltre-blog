@@ -165,7 +165,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         isRequired: false,
         colCount: 2,
         showNoneItem: false,
-        showOtherItem: true,
+        showOtherItem: false,
         showSelectAllItem: true,
         separateSpecialChoices: true,
       },
@@ -293,6 +293,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   showNPSFormDialog() {
     const modalRef = this.modalService.open(NpsSurveyComponent, {
       panelClass: 'popup-panel-nps',
+      backdropClass: 'popup-search-overlay',
+      disableClose: true
     });
 
     modalRef.componentInstance.jsonSchema = this.surveyJson;

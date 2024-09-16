@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Chapter } from 'src/app/school/chapters/chapter';
 import { Course } from 'src/app/school/courses/course';
+import { MessageService } from 'src/app/services/message.service';
 import { SurveyService } from 'src/app/services/survey.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { Model } from "survey-core";
@@ -25,7 +27,9 @@ export class NpsSurveyComponent {
 
   constructor(
     private surveyService: SurveyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private notify: MessageService,
+    public dialogRef: MatDialogRef<NpsSurveyComponent>
   ) { }
 
   saveResults(resultData: object, options: any): void {
@@ -35,11 +39,16 @@ export class NpsSurveyComponent {
       .subscribe({
         next: data => {
           options.showSaveSuccess("Enregistré avec succès!");
+          this.notify.openSnackBarSuccess("Merci pour votre avis!", "")
         },
         error: (err: HttpErrorResponse) => {
           console.error(err);
           options.showSaveError("Echec d'enregistrement");
-        }
+          this.notify.openSnackBarError("Echec d'enregistrement, veuillez réessayer", "Ok")
+        },
+        complete: () => setTimeout(() => {
+          this.dialogRef.close()
+        }, 1500)
       })
   }
 
