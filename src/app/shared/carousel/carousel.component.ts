@@ -107,10 +107,10 @@ export class CarouselComponent {
 
   formatReview(review: Review): Observable<Review> {
     const commentHash = {
-      a: { text: review.chapterImpressions, len: review.chapterImpressions.replace(/\s+/g, '').length },
-      b: { text: review.chapterExplanations, len: review.chapterExplanations.replace(/\s+/g, '').length },
-      c: { text: review.whyRecommendingThisCourse, len: review.whyRecommendingThisCourse.replace(/\s+/g, '').length },
-      d: { text: review.improvementSuggestion, len: review.improvementSuggestion.replace(/\s+/g, '').length },
+      a: { text: review.chapterImpressions, len: review.chapterImpressions?.replace(/\s+/g, '').length || 0 },
+      b: { text: review.chapterExplanations, len: review.chapterExplanations?.replace(/\s+/g, '').length || 0 },
+      c: { text: review.whyRecommendingThisCourse, len: review.whyRecommendingThisCourse?.replace(/\s+/g, '').length || 0 },
+      d: { text: review.improvementSuggestion, len: review.improvementSuggestion?.replace(/\s+/g, '').length || 0 },
     }
 
     let commentText = '';
