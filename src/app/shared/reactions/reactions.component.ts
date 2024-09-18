@@ -6,6 +6,7 @@ import { Course, Reaction } from 'src/app/school/courses/course';
 import { CourseService } from 'src/app/school/courses/course.service';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from 'src/app/user/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-reactions',
@@ -19,7 +20,10 @@ export class ReactionsComponent {
  @Output() reactionEvent = new EventEmitter<string>();
   
   constructor(
-
+    private courseService: CourseService,
+    private authService: AuthService,
+    private notify: MessageService,
+    private modalService: ModalService,
   ){}
 
   public typesOfReactions = <any>[
@@ -59,8 +63,24 @@ findTotalReactionByAction(action: string, reactions: Reaction[]): number {
     return reactions.filter((reaction: Reaction) => reaction.action === action).length;
   }
 
-  
+  addReaction(action: string): any {
+    const currentUsr = this.authService?.currentUsr;
 
+    if (!currentUsr) {
+      this.modalService.openLoginModal()
+      return;
+    }
+
+    if(this.course.status !== 'PUBLISHED') {
+      this.notify.openSnackBarError('Vous pourrez reagir sur ce cours apres sa publication.', 'OK')
+      return;
+    }
+
+    this.courseService.addReactionToCourse(this.course.id, action)
+      .subscribe({
+        next: (response) => this.setEachReactionTotal(response)
+      });
+  }
 
   ngOnInit(): void{
 this.setEachReactionTotal(this.obj.reactions)

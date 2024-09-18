@@ -3,14 +3,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { User } from '../user/user.model';
 import { AddEmailPopupComponent } from '../shared/add-email-popup/add-email-popup.component';
 import { SearchPopupComponent } from '../shared/search-popup/search-popup.component';
-
+import { LoginModalComponent } from '../shared/login-modal/login-modal.component';
+import { ActivatedRoute, Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
 
   constructor(
-    private dialogRef: MatDialog
+    private dialogRef: MatDialog,
+    private router: Router,
+    private route:ActivatedRoute
   ) { }
 
   checkUserEmail(user: User) {
@@ -47,6 +50,29 @@ export class ModalService {
     } else {
       this.dialogRef.closeAll()
     }
+  }
+
+  public openLoginModal() {
+    
+      this.router.navigate(
+        ['/cours'],
+        {
+          relativeTo: this.route,
+          queryParams: { redirectURL: this.router.url, articleDialog: true },
+          queryParamsHandling: 'merge',
+        });
+
+      
+
+   
+    
+
+    this.dialogRef.open(LoginModalComponent,{
+      panelClass:'popup-login',
+     
+      width: '500px',
+      
+    })
   }
 
 }
