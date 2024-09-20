@@ -341,7 +341,9 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   loadLessonData(lessonId: any) {
+
     this.loading = true;
+
     if (lessonId == '?') {
       this.loading = false;
       return;
@@ -367,7 +369,6 @@ export class LessonComponent implements OnInit, OnDestroy {
 
           this.completed = this.isLessonCompleted(lesson)
           this.lessonVideo$ = this.vimeoService.getOneVideo(lesson?.video);
-          this.loading = false;
           this.videoID = lesson?.video?.split('com/')[1]
 
           this.imageResources = this.findResourcesByType('img');
@@ -389,8 +390,6 @@ export class LessonComponent implements OnInit, OnDestroy {
           }
         },
         error: err => {
-          this.loading = false;
-
           if (err.status === 404) {
             this.messageService.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
             this.navigate.back();
@@ -399,7 +398,6 @@ export class LessonComponent implements OnInit, OnDestroy {
         },
         complete: () => {
           this.loading = false;
-          return this.lesson;
         }
       })
   }

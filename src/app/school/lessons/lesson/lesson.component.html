@@ -30,7 +30,8 @@
                 <div class="lesson_content_wrapper p-4 lg:p-0 lg:pt-4 lg:pl-6" [ngClass]="{'lg:!pl-0':!snav.opened}" *appShellNoRender>
                     <div class="mx-auto" id="lesson_video_player">
                         <div class="vid_wrapper w-full h-full">
-                            <ng-container *ngIf="lesson">
+                            
+                            <div class="vid_wrapper w-full h-full" *ngIf="!loading && lesson; else novideo">
                                 <ng-container *ngIf="lesson.video">
                                     <iframe *ngIf="canAccessCourse || lesson.free" [src]="lesson.video | vimeoUrl" webkitallowfullscreen mozallowfullscreen 
                                         allowfullscreen width="100%" height="100%" allow="autoplay; fullscreen; picture-in-picture" class="bg-gray-900 rounded-sm shadow-lg" title="Lesson video">
@@ -71,15 +72,15 @@
                                         </div>
                                     </div>
                                 </ng-container>
-                            </ng-container>
+                            </div>
             
-                            <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
+                            <ng-template #novideo class="lessonCoverVideoSkeletonLoader">
                                 <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
                                                                                         'height.%': 100,
                                                                                         'width.%': 100
                                                                                     }">
                                 </ngx-skeleton-loader>
-                            </ng-container>
+                            </ng-template>
                         </div>
                     </div>
             
