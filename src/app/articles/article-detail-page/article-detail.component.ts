@@ -20,6 +20,7 @@ import { JsonLd } from 'ngx-seo/lib/json-ld';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
 import { User } from 'src/app/user/user.model';
+import { Reaction } from 'src/app/school/courses/course';
 
 @Component({
   selector: 'app-article-detail',
@@ -78,7 +79,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     'data-strict': '0',
     'data-reactions-enabled': '1',
     'data-emit-metadata': '0',
-    'data-input-position': 'top',
+    'data-input-position': 'none',
     'data-theme': 'light',
     'data-lang': 'fr',
     'data-loading': 'lazy',
@@ -115,18 +116,54 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return this.articleService.canAccesPremium(user, article);
   }
 
-  injectGiscus(data: any) {
-    const scriptElement: HTMLScriptElement = document.createElement("script");
 
-    scriptElement.src = "https://giscus.app/client.js";
-    scriptElement.async = true;
 
-    for (let key in data) {
-      scriptElement.setAttribute(key, data[key]);
+
+  // injectGiscus(data: any) {
+  //   const scriptElement: HTMLScriptElement = document.createElement("script");
+
+  //   scriptElement.src = "https://giscus.app/client.js";
+  //   scriptElement.async = true;
+
+  //   for (let key in data) {
+  //     scriptElement.setAttribute(key, data[key]);
+  //   }
+
+  //   document.body.appendChild(scriptElement);
+  // }
+
+  message:string;
+
+  addReaction($event) {
+    
+ const currentUsr = this.authService?.currentUsr;
+
+    if (!currentUsr) {
+      this.messageService.openSnackBarError('🚨 Vous devez vous connecter pour réagir sur ce cours', 'OK')
+      return;
     }
 
-    document.body.appendChild(scriptElement);
+    if(this.article.status !== 'PUBLISHED') {
+      this.messageService.openSnackBarError('Vous pourrez reagir sur ce cours apres sa publication.', 'OK')
+      return;
+    }
+
+    this.articleService.addReactionToAnArticle(this.article.id, $event)
+      .subscribe({
+       
+        next: (response) => {
+         this.article  = {...this.article,reactions:response}
+        }
+      });
+
+      
+
+     
+   
   }
+
+ 
+
 
   isValidURL(url: string) {
     try {
@@ -200,10 +237,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
           this.jsonLd.setData(dataSchema)
 
           this.nberOfReactions.next(response?.reactions?.length);
-          this.fireReactions.next(this.findTotalReactionByAction('FIRE', response?.reactions));
-          this.clapReactions.next(this.findTotalReactionByAction('CLAP', response?.reactions));
-          this.loveReactions.next(this.findTotalReactionByAction('LOVE', response?.reactions));
-          this.likeReactions.next(this.findTotalReactionByAction('LIKE', response?.reactions));
+         //handle reaction change
+
 
           this.articleHasTags = response?.tags.length > 0
           calcReadingTime(response);
@@ -296,32 +331,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return artileReactions.filter((reaction: any) => reaction?.authorId === currentUsr?.id).length === 49;
   }
 
-  public findTotalReactionByAction(action: string, reactions: []): number {
-    return reactions.filter((reaction: any) => reaction.action === action).length;
-  }
 
-  public addReaction(action: string): any {
-    const currentUsr = this.authService?.currentUsr;
 
-    if (!currentUsr) {
-      this.loginToAddReaction = true;
-      return;
-    }
-    if (this.userHasAlreadyReactOnArticleFiftyTimes()) {
-      this.maxNberOfReaction = true;
-      return;
-    };
-
-    this.articleService.addReactionToAnArticle(this.articleId, action).subscribe({
-      next: (response) => {
-        this.nberOfReactions.next(response.length);
-        this.fireReactions.next(this.findTotalReactionByAction('FIRE', response));
-        this.clapReactions.next(this.findTotalReactionByAction('CLAP', response));
-        this.loveReactions.next(this.findTotalReactionByAction('LOVE', response));
-        this.likeReactions.next(this.findTotalReactionByAction('LIKE', response));
-      }
-    });
-  }
+   
+  
 
   public openArticleDeleteDialog(): void {
     this.dialogRef.open(DeleteArticlePopupComponent, {
@@ -351,7 +364,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     );
 
     if (isPlatformBrowser(this.platformId)) {
-      this.injectGiscus(this.giscusConfig);
+   
     }
   }
 

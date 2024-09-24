@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                 </ng-container>
-
+                             
                                 <ng-container *ngIf="!lesson?.video">
                                     <div class="text-base lg:text-xl text-skin-base h-full flex items-center justify-center bg-skin-link">
                                         <div>
@@ -93,16 +93,18 @@
                             <app-markdown-preview [data]="lesson?.content"></app-markdown-preview>
                         </div>
             
-                        <ng-container *ngIf="loading" class="articleContentSkeletonLoader">
-                            <ngx-skeleton-loader class="block mt-2 lg:mt-8" count="10" appearance="line" [theme]="{ 
-                                                                        'border-radius': '5px',
-                                                                            'height.px': 20,
-                                                                            'width.%': 100
-                                                                        }">
-                            </ngx-skeleton-loader>
-                        </ng-container>
-                    </div>
+                            <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
+                                <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+                                                                                        'height.%': 100,
+                                                                                        'width.%': 100
+                                                                                    }">
+                                </ngx-skeleton-loader>
+                            </ng-container>
+                        </div>
+                 
             
+                 
+             
                     <div *ngIf="lesson" [ngClass]="{'hidden':!lesson.resources?.length}"
                         class="lesson_ressources_wrapper mb-5">
 

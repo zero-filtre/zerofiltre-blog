@@ -141,3 +141,4 @@ export function slugify(object: Article | Course | Lesson, ...args: any[]): any 
     .replace(/\s+/g, '-')
 
 }
+
