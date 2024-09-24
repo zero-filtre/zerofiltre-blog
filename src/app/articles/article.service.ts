@@ -175,20 +175,14 @@ export class ArticleService {
       );
   }
 
-  public addReactionToAnArticle(articleId: string, action: string): Observable<any> {
+
+  public addReactionToAnArticle(articleId: number, action: string): Observable<any> {
     return this.http.post<string>(`${this.apiServerUrl}/reaction?articleId=${articleId}&action=${action}`, {})
       .pipe(
         tap(_ => this.refreshData = true),
         shareReplay()
       );
   }
-  // public addReactionToAnArticles(articleId: number, action: string): Observable<any> {
-  //   return this.http.post<string>(`${this.apiServerUrl}/reaction?articleId=${articleId}&action=${action}`, {})
-  //     .pipe(
-  //       tap(_ => this.refreshData = true),
-  //       shareReplay()
-  //     );
-  // }
 
   public canEditArticle(currentUsrId: any, articleId: any, isAdminUser: boolean): Observable<any> {
     return this.findArticleById(articleId)

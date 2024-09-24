@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
@@ -13,14 +13,13 @@ import { AuthService } from 'src/app/user/auth.service';
   styleUrls: ['./reactions.component.css']
 })
 export class ReactionsComponent {
-  @Input() course: Course;
-  @Input() loading: boolean;
-  @Input() article?: Article;
-
+ @Input() loading: boolean;
+@Input() obj: Article | Course;
+ 
+ @Output() reactionEvent = new EventEmitter<string>();
+  
   constructor(
-    private courseService: CourseService,
-    private authService: AuthService,
-    private notify: MessageService
+
   ){}
 
   public typesOfReactions = <any>[
@@ -40,55 +39,31 @@ export class ReactionsComponent {
   public likeReactions$ = this.likeReactions.asObservable();
 
 
+ 
+
+  sendReactionType($event) {
+
+    this.reactionEvent.emit($event)
+
+
+  }
+
   setEachReactionTotal(reactions: Reaction[]) {
     this.fireReactions.next(this.findTotalReactionByAction('FIRE', reactions));
     this.clapReactions.next(this.findTotalReactionByAction('CLAP', reactions));
     this.loveReactions.next(this.findTotalReactionByAction('LOVE', reactions));
     this.likeReactions.next(this.findTotalReactionByAction('LIKE', reactions));
   }
-
-  findTotalReactionByAction(action: string, reactions: Reaction[]): number {
+  
+findTotalReactionByAction(action: string, reactions: Reaction[]): number {
     return reactions.filter((reaction: Reaction) => reaction.action === action).length;
   }
 
-  addReaction(action: string): any {
-    const currentUsr = this.authService?.currentUsr;
-
-    if (!currentUsr) {
-      this.notify.openSnackBarError('🚨 Vous devez vous connecter pour réagir sur ce cours', 'OK')
-      return;
-    }
-
-    if(this.course.status !== 'PUBLISHED') {
-      this.notify.openSnackBarError('Vous pourrez reagir sur ce cours apres sa publication.', 'OK')
-      return;
-    }
-
-    this.courseService.addReactionToCourse(this.course.id, action)
-      .subscribe({
-        next: (response) => this.setEachReactionTotal(response)
-      });
-
-      // if (this.article) {
-      //   this.articleService.addReactionToAnArticles(this.article.id, action)
-      //     .subscribe({
-      //       next: (response) => this.setEachReactionTotal(response)
-      //     });
-      // }
-    
-    
-  }
-
+  
 
 
   ngOnInit(): void{
-    if(this.course){
-      this.setEachReactionTotal(this.course.reactions);
-    }
+this.setEachReactionTotal(this.obj.reactions)
 
-    if (this.article){
-      this.setEachReactionTotal(this.article.reactions) 
-    }
-   
   }
 }

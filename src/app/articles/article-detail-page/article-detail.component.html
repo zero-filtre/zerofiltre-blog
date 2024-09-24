@@ -306,8 +306,9 @@
                         class="reactions-container flex flex-wrap justify-center  gap-3">
 
                         <app-reactions
-                        [article]="article"
-                        [loading]="loading">
+                        [obj]="article"
+                        [loading]="loading"
+                        (reactionEvent)="addReaction($event)">
                       </app-reactions>
                   
 
