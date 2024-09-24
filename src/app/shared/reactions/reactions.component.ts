@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Article } from 'src/app/articles/article.model';
+import { ArticleService } from 'src/app/articles/article.service';
 import { Course, Reaction } from 'src/app/school/courses/course';
 import { CourseService } from 'src/app/school/courses/course.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -13,6 +15,7 @@ import { AuthService } from 'src/app/user/auth.service';
 export class ReactionsComponent {
   @Input() course: Course;
   @Input() loading: boolean;
+  @Input() article?: Article;
 
   constructor(
     private courseService: CourseService,
@@ -65,9 +68,27 @@ export class ReactionsComponent {
       .subscribe({
         next: (response) => this.setEachReactionTotal(response)
       });
+
+      // if (this.article) {
+      //   this.articleService.addReactionToAnArticles(this.article.id, action)
+      //     .subscribe({
+      //       next: (response) => this.setEachReactionTotal(response)
+      //     });
+      // }
+    
+    
   }
 
+
+
   ngOnInit(): void{
-    this.setEachReactionTotal(this.course.reactions);
+    if(this.course){
+      this.setEachReactionTotal(this.course.reactions);
+    }
+
+    if (this.article){
+      this.setEachReactionTotal(this.article.reactions) 
+    }
+   
   }
 }

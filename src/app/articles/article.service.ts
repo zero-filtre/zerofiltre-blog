@@ -182,6 +182,13 @@ export class ArticleService {
         shareReplay()
       );
   }
+  // public addReactionToAnArticles(articleId: number, action: string): Observable<any> {
+  //   return this.http.post<string>(`${this.apiServerUrl}/reaction?articleId=${articleId}&action=${action}`, {})
+  //     .pipe(
+  //       tap(_ => this.refreshData = true),
+  //       shareReplay()
+  //     );
+  // }
 
   public canEditArticle(currentUsrId: any, articleId: any, isAdminUser: boolean): Observable<any> {
     return this.findArticleById(articleId)
