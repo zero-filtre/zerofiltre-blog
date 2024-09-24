@@ -7,6 +7,7 @@ import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../../user/auth.service'
 import { MatDialogRef } from '@angular/material/dialog';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -34,7 +35,8 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalRef: MatDialogRef<LoginModalComponent>
+    private modalRef: MatDialogRef<LoginModalComponent>,
+    private modalService: ModalService
   ) { }
 
   public InitForm(): void {
@@ -79,6 +81,12 @@ export class LoginModalComponent implements OnInit, OnDestroy {
   public setRedirectURL() {
     this.authService.setRedirectUrlValue(this.redirectURL);
   }
+
+  public showSignUpForm(){
+    this.modalRef.close()
+    this.modalService.openSignUpModal()
+  }
+
 
   ngOnInit(): void {
     this.InitForm();

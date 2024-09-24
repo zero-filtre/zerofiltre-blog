@@ -79,6 +79,7 @@ import { WhatsappButtonComponent } from './whatsapp-button/whatsapp-button.compo
 import { ReactionsComponent } from './reactions/reactions.component';
 import { ArticlesCardComponent } from '../articles/article-card/articles-card.component';
 import { LoginModalComponent } from './login-modal/login-modal.component';
+import { SignupModalComponent } from './signup-modal/signup-modal.component';
 
 const components = [
   AppShellRenderDirective,
@@ -126,7 +127,9 @@ const components = [
   SearchPopupComponent,
   WhatsappButtonComponent,
   ReactionsComponent,
-  ArticlesCardComponent
+  ArticlesCardComponent,
+  LoginModalComponent,
+  SignupModalComponent
 ];
 
 const modules = [
@@ -159,7 +162,7 @@ const modules = [
 ];
 
 @NgModule({
-  declarations: [...components, LoginModalComponent],
+  declarations: [...components],
   imports: [
     ...modules,
     MarkdownModule.forRoot(),
