@@ -1,3 +1,4 @@
+
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,14 +7,17 @@ import { LoadEnvService } from 'src/app/services/load-env.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
-import { AuthService } from '../auth.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { LoginModalComponent } from 'src/app/shared/login-modal/login-modal.component';
+import { AuthService } from 'src/app/user/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
-  selector: 'app-sign-up-page',
-  templateUrl: './sign-up-page.component.html',
-  styleUrls: ['./sign-up-page.component.css']
+  selector: 'app-signup-modal',
+  templateUrl: './signup-modal.component.html',
+  styleUrls: ['./signup-modal.component.css']
 })
-export class SignUpPageComponent implements OnInit, OnDestroy {
+export class SignupModalComponent {
   public form!: FormGroup;
   public loading: boolean = false;
   public readonly GITHUB_CLIENT_ID = environment.GITHUB_CLIENT_ID;
@@ -30,7 +34,10 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private messageService: MessageService,
     private seo: SeoService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private modalService: ModalService,
+    private modalRef: MatDialogRef<SignupModalComponent>,
+   
   ) { }
 
   public InitForm(): void {
@@ -77,7 +84,14 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
       author: 'Zerofiltre.tech',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
+
+   
   }
+  public showLoginForm(){
+    this.modalRef.close()
+    this.modalService.openLoginModal()
+  }
+
 
   ngOnDestroy(): void {
     this.form.reset();
@@ -85,3 +99,5 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
   }
 
 }
+
+

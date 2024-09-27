@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { LoadEnvService } from '../services/load-env.service';
 import { MessageService } from '../services/message.service';
 import { AuthService } from './auth.service';
+import { ModalService } from '../services/modal.service'
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class AuthGuard implements CanActivate {
     private loadEnvService: LoadEnvService,
     private authService: AuthService,
     private messageService: MessageService,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -30,6 +32,8 @@ export class AuthGuard implements CanActivate {
       const isLoggedIn = !!user;
       if (!isLoggedIn) {
         this.messageService.authError(state)
+        this.modalService.openLoginModal()
+        
       }
       return isLoggedIn;
     }
