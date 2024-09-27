@@ -47,7 +47,7 @@ export class MessageService {
   public openSnackBarWarning(message: string, action: string, duration = this.DURATION_WARNING, vtPosition = this.defaultVerticalPosition, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'warning-snackbar', 'error', duration, vtPosition, hoPosition)
   }
-  
+
   public openSnackBarInfo(message: string, action: string, duration = this.DURATION_INFO, vtPosition = this.defaultVerticalPosition, hoPosition = this.defaultHorizontalPosition) {
     this.openSnackBar(message, action, 'info-snackbar', 'info', duration, vtPosition, hoPosition)
   }
@@ -73,7 +73,7 @@ export class MessageService {
   authError(state: any, message='') {
     const msg = this.translate.instant('login.authErrorMessage')
     this.openSnackBarError(message, this.OK);
-    this.modalService.openLoginModal();
+    // this.modalService.openLoginModal();
 
     // this.router.navigate(
     //   ['/login'],
