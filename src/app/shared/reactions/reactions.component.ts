@@ -10,17 +10,15 @@ import { AuthService } from 'src/app/user/auth.service';
 @Component({
   selector: 'app-reactions',
   templateUrl: './reactions.component.html',
-  styleUrls: ['./reactions.component.css']
+  styleUrls: ['./reactions.component.css'],
 })
 export class ReactionsComponent {
- @Input() loading: boolean;
-@Input() obj: Article | Course;
- 
- @Output() reactionEvent = new EventEmitter<string>();
-  
-  constructor(
+  @Input() loading: boolean;
+  @Input() obj: Article | Course;
 
-  ){}
+  @Output() reactionEvent = new EventEmitter<string>();
+
+  constructor() {}
 
   public typesOfReactions = <any>[
     { action: 'clap', emoji: '👏' },
@@ -38,14 +36,8 @@ export class ReactionsComponent {
   private likeReactions = new BehaviorSubject<number>(0);
   public likeReactions$ = this.likeReactions.asObservable();
 
-
- 
-
-  sendReactionType($event) {
-
-    this.reactionEvent.emit($event)
-
-
+  sendReactionType(reactionType: string) {
+    this.reactionEvent.emit(reactionType);
   }
 
   setEachReactionTotal(reactions: Reaction[]) {
@@ -54,16 +46,13 @@ export class ReactionsComponent {
     this.loveReactions.next(this.findTotalReactionByAction('LOVE', reactions));
     this.likeReactions.next(this.findTotalReactionByAction('LIKE', reactions));
   }
-  
-findTotalReactionByAction(action: string, reactions: Reaction[]): number {
-    return reactions.filter((reaction: Reaction) => reaction.action === action).length;
+
+  findTotalReactionByAction(action: string, reactions: Reaction[]): number {
+    return reactions.filter((reaction: Reaction) => reaction.action === action)
+      .length;
   }
 
-  
-
-
-  ngOnInit(): void{
-this.setEachReactionTotal(this.obj.reactions)
-
+  ngOnInit(): void {
+    this.setEachReactionTotal(this.obj.reactions);
   }
 }

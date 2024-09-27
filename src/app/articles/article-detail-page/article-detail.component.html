@@ -118,19 +118,23 @@
                                             </button>
 
                                             <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
-                                                <a aria-labelledby="Link to article edit page" routerLink="/articles/{{article|slugify}}/edit"
+                                                <a aria-labelledby="Link to article edit page"
+                                                    routerLink="/articles/{{article|slugify}}/edit"
                                                     class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                                                     </svg>
-                                            
+
                                                     <span>{{ 'articleDetail.edit' | translate }}</span>
                                                 </a>
-                                                <button (click)="openArticleDeleteDialog()" aria-labelledby="Delete article button"
+                                                <button (click)="openArticleDeleteDialog()"
+                                                    aria-labelledby="Delete article button"
                                                     class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-5 h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -204,22 +208,25 @@
                     </ng-container>
                 </header>
 
-                <div
-                    class="article-cover">
+                <div class="article-cover">
                     <ng-container *ngIf="article" class="">
-                        <div *ngIf="currentVideoId; else thumbnailCover" class="article-cover-video shadow-lg rounded-lg overflow-hidden mt-6 lg:mt-10 mx-auto">
+                        <div *ngIf="currentVideoId; else thumbnailCover"
+                            class="article-cover-video shadow-lg rounded-lg overflow-hidden mt-6 lg:mt-10 mx-auto">
                             <app-youtube-video-player [videoId]="currentVideoId" [width]="1200"
                                 [height]="mobileQuery.matches ? 350 : 455"></app-youtube-video-player>
                         </div>
                         <ng-template #thumbnailCover>
-                            <div class="article-cover-image shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
-                                <app-image [classes]="'object-cover'" [sourceUrl]="article?.thumbnail!" [alt]="article?.title!">
+                            <div
+                                class="article-cover-image shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
+                                <app-image [classes]="'object-cover'" [sourceUrl]="article?.thumbnail!"
+                                    [alt]="article?.title!">
                                 </app-image>
                             </div>
                         </ng-template>
                     </ng-container>
 
-                    <div *ngIf="loading" class="article-cover-skeleton shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
+                    <div *ngIf="loading"
+                        class="article-cover-skeleton shadow-lg rounded-lg overflow-hidden aspect-w-4 aspect-h-2 mt-6 lg:mt-10 mx-auto">
                         <ngx-skeleton-loader class="shadow-lg rounded-lg" count="1" appearance="line" [theme]="{ 
                                     'height.%': 100,
                                     'width.%': 100
@@ -230,16 +237,21 @@
 
                 <article class="article-content">
                     <div *ngIf="article" class="relative overflow-hidden markdown-content mt-6 lg:mt-14">
-                        <div *ngIf="article?.premium && !canAccesPremium(article)" class="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-skin-bg to-transparent"></div>
+                        <div *ngIf="article?.premium && !canAccesPremium(article)"
+                            class="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-skin-bg to-transparent"></div>
                         <app-markdown-preview [data]="article?.content"></app-markdown-preview>
                     </div>
 
-                    <div *ngIf="article?.premium && !canAccesPremium(article)" class="mt-10 text-skin-base shadow-lg rounded-lg bg-skin-card p-6 max-w-xl mx-auto">
-                        <p class="text-sm">Cet article est réservé aux abonnés. Déjà abonné ? <a routerLink="/login" class="underline">Connectez-vous</a></p>
-                        <h3 class="text-2xl lg:text-3xl text-primary-500 font-extrabold py-3">Découvrez les meilleurs articles IT en français</h3>
+                    <div *ngIf="article?.premium && !canAccesPremium(article)"
+                        class="mt-10 text-skin-base shadow-lg rounded-lg bg-skin-card p-6 max-w-xl mx-auto">
+                        <p class="text-sm">Cet article est réservé aux abonnés. Déjà abonné ? <a routerLink="/login"
+                                class="underline">Connectez-vous</a></p>
+                        <h3 class="text-2xl lg:text-3xl text-primary-500 font-extrabold py-3">Découvrez les meilleurs
+                            articles IT en français</h3>
                         <p>
-                            L'auteur a mis cet article à la disposition des membres premium uniquement. 
-                            Mettez à niveau pour débloquer instantanément cet article ainsi que d’autres avantages réservés aux pros.
+                            L'auteur a mis cet article à la disposition des membres premium uniquement.
+                            Mettez à niveau pour débloquer instantanément cet article ainsi que d’autres avantages
+                            réservés aux pros.
                         </p>
 
                         <a routerLink="/pro"
@@ -298,82 +310,11 @@
                         </a>
                     </div>
                 </div>
-                
-             
 
-                <div class="reactions hidden lg:block lg:order-none py-6 border-t border-skin-border">
-                    <div *ngIf="!loading && (isPublished$ | async)"
-                        class="reactions-container flex flex-wrap justify-center  gap-3">
-
-                        <app-reactions
-                        [obj]="article"
-                        [loading]="loading"
-                        (reactionEvent)="addReaction($event)">
-                      </app-reactions>
-                  
-
-                        <!-- <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
-                            class="group flex items-center justify-center transition-all duration-300"
-                            attr.aria-label="{{reaction.action}} button">
-
-                            <div
-                                class="reaction-wrapper flex items-center space-x-1 group-hover:-translate-y-2 transition-all ease-in duration-200">
-                                <ng-container *ngIf="reaction.action === 'clap'">
-                                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                        {{reaction.emoji}}
-                                    </div>
-                                    <div class="text-sm font-semibold text-primary-500">
-                                        {{clapReactions$ | async}}
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngIf="reaction.action === 'fire'">
-                                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                        {{reaction.emoji}}
-                                    </div>
-                                    <div class="text-sm font-semibold text-primary-500">
-                                        {{fireReactions$ | async}}
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngIf="reaction.action === 'love'">
-                                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                        {{reaction.emoji}}
-                                    </div>
-                                    <div class="text-sm font-semibold text-primary-500">
-                                        {{loveReactions$ | async}}
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngIf="reaction.action === 'like'">
-                                    <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                        {{reaction.emoji}}
-                                    </div>
-                                    <div class="text-sm font-semibold text-primary-500">
-                                        {{likeReactions$ | async}}
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </button> -->
-                    </div>
-
-                    <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
-                        <ngx-skeleton-loader class="space-x-2" count="4" appearance="line" [theme]="{ 
-                                                        'border-radius': '5px',
-                                                            height: '20px',
-                                                            width: '20px'
-                                                        }">
-                        </ngx-skeleton-loader>
-                    </ng-container>
-
-                    <div *ngIf="loginToAddReaction"
-                        class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
-                        {{ 'articleDetail.loginToReactText' | translate }}
-                    </div>
-
-                    <div *ngIf="!loading && !(isPublished$ | async)"
-                        class="mt-4 text-sm font-medium px-4 py-2 text-secondary">
-                        {{ 'articleDetail.publishToReactText' | translate }}
-                    </div>
+                <div class="reactions-container mt-10 lg:mt-6 lg:order-none flex justify-center">
+                    <app-reactions [obj]="article" [loading]="loading" (reactionEvent)="addReaction($event)">
+                    </app-reactions>
                 </div>
-
 
             </div>
         </main>
@@ -511,7 +452,7 @@
             <div class="sticky-content lg:sticky top-36 order-2 lg:space-y-10">
                 <app-ads-square></app-ads-square>
 
-                
+
                 <div *ngIf="similarArticles?.length"
                     class="related-articles lg:order-none pt-6 space-y-6 border-t mt-6 border-skin-border">
                     <h2 class="text-sm text-center lg:text-left leading-4 uppercase text-skin-base font-semibold">
@@ -583,73 +524,6 @@
                     </a>
                 </div>
             </div>
-
-            
-
-            <!-- <div class="reactions  lg:hidden block lg:order-none py-6 border-t border-skin-border">
-                <div *ngIf="!loading && (isPublished$ | async)"
-                    class="reactions-container flex flex-wrap justify-center  gap-3">
-                    <button *ngFor="let reaction of typesOfReactions" (click)="addReaction(reaction.action)"
-                        class="group flex items-center justify-center transition-all duration-300"
-                        attr.aria-label="{{reaction.action}} button">
-
-                        <div
-                            class="reaction-wrapper flex items-center space-x-1 group-hover:-translate-y-2 transition-all ease-in duration-200">
-                            <ng-container *ngIf="reaction.action === 'clap'">
-                                <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                    {{reaction.emoji}}
-                                </div>
-                                <div class="text-sm font-semibold text-primary-500">
-                                    {{clapReactions$ | async}}
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="reaction.action === 'fire'">
-                                <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                    {{reaction.emoji}}
-                                </div>
-                                <div class="text-sm font-semibold text-primary-500">
-                                    {{fireReactions$ | async}}
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="reaction.action === 'love'">
-                                <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                    {{reaction.emoji}}
-                                </div>
-                                <div class="text-sm font-semibold text-primary-500">
-                                    {{loveReactions$ | async}}
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="reaction.action === 'like'">
-                                <div class="group-hover:scale-125 transition-all ease-in duration-200">
-                                    {{reaction.emoji}}
-                                </div>
-                                <div class="text-sm font-semibold text-primary-500">
-                                    {{likeReactions$ | async}}
-                                </div>
-                            </ng-container>
-                        </div>
-                    </button>
-                </div>
-
-                <ng-container *ngIf="loading" class="articleReactionButtonsSkeletonLoader">
-                    <ngx-skeleton-loader class="space-x-2" count="4" appearance="line" [theme]="{ 
-                                                    'border-radius': '5px',
-                                                        height: '20px',
-                                                        width: '20px'
-                                                    }">
-                    </ngx-skeleton-loader>
-                </ng-container>
-
-                <div *ngIf="loginToAddReaction"
-                    class="mt-4 text-sm font-medium px-4 py-2 bg-skin-link text-secondary shadow-md rounded-lg">
-                    {{ 'articleDetail.loginToReactText' | translate }}
-                </div>
-
-                <div *ngIf="!loading && !(isPublished$ | async)"
-                    class="mt-4 text-sm font-medium px-4 py-2 text-secondary">
-                    {{ 'articleDetail.publishToReactText' | translate }}
-                </div>
-            </div> -->
 
         </aside>
     </article>

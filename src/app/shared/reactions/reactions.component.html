@@ -1,6 +1,4 @@
-
-
-<div class="reactions py-3 mb-6 lg:pl-2 border-y border-skin-border">
+<div class="reactions py-3 lg:pl-2 border-y border-skin-border">
     <div *ngIf="!loading && (obj.status === 'PUBLISHED')"
         class="reactions-container flex flex-wrap justify-center lg:justify-start gap-3">
         <button *ngFor="let reaction of typesOfReactions" (click)="sendReactionType(reaction.action)"
@@ -54,8 +52,7 @@
         </ngx-skeleton-loader>
     </ng-container>
 
-    <div *ngIf="!loading && (obj.status !== 'PUBLISHED')"
-        class="text-sm font-medium px-4 py-2 text-secondary">
+    <div *ngIf="!loading && (obj.status !== 'PUBLISHED')" class="text-sm font-medium px-4 py-2 text-secondary">
         {{ 'course.publishToReactText' | translate }}
     </div>
-</div> 
+</div>
