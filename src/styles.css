@@ -122,7 +122,7 @@ img {
 }
 
 .popup-login {
-  @apply max-sm:!w-full mx-4 lg:!mt-10 lg:!fixed lg:!top-14
+  @apply max-sm:!w-full mx-4 lg:mx-0
 }
 
 .article-popup-panel .mat-dialog-container {

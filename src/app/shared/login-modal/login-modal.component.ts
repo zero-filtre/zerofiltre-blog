@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from '../../user/auth.service'
 import { MatDialogRef } from '@angular/material/dialog';
 import { ModalService } from 'src/app/services/modal.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -36,7 +37,8 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private modalRef: MatDialogRef<LoginModalComponent>,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private messageService: MessageService
   ) { }
 
   public InitForm(): void {
@@ -61,15 +63,9 @@ export class LoginModalComponent implements OnInit, OnDestroy {
         this.modalRef.close()
       },
       error: (_error: any) => {
+        debugger
         this.loading = false
-       
-        // this.router.navigate(
-        //   ['/login'],
-        //   {
-        //     relativeTo: this.route,
-        //     queryParams: { redirectURL: this.redirectURL },
-        //     queryParamsHandling: 'merge',
-        //   });
+        this.messageService.loadUserFailed();
       },
       complete: () => {
         this.loading = false;

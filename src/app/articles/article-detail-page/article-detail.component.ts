@@ -32,6 +32,7 @@ import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
 import { User } from 'src/app/user/user.model';
 import { Reaction } from 'src/app/school/courses/course';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-article-detail',
@@ -97,7 +98,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private location: Location,
     media: MediaMatcher,
     changeDetectorRef: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) private platformId: any
+    @Inject(PLATFORM_ID) private platformId: any,
+    private modalService: ModalService
   ) {
     this.hasHistory = this.router.navigated;
 
@@ -132,10 +134,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     const currentUsr = this.authService?.currentUsr;
 
     if (!currentUsr) {
-      this.messageService.openSnackBarError(
-        '🚨 Vous devez vous connecter pour réagir sur ce cours',
-        'OK'
-      );
+      this.modalService.openLoginModal();
       return;
     }
 

@@ -20,6 +20,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { MessageService } from 'src/app/services/message.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-curriculum-sidebar',
@@ -52,7 +53,8 @@ export class CurriculumSidebarComponent implements OnInit {
     private dialogNewLessonRef: MatDialog,
     private dialogDeleteLessonRef: MatDialog,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private modalService: ModalService
   ) {}
 
   dropLessons(event: CdkDragDrop<Lesson[]>) {
@@ -222,10 +224,7 @@ export class CurriculumSidebarComponent implements OnInit {
     const currentUsr = this.authService?.currentUsr;
 
     if (!currentUsr) {
-      this.messageService.openSnackBarError(
-        '🚨 Vous devez vous connecter pour réagir sur ce cours',
-        'OK'
-      );
+      this.modalService.openLoginModal();
       return;
     }
 
