@@ -63,13 +63,8 @@ export class LoginModalComponent implements OnInit, OnDestroy {
         this.modalRef.close()
       },
       error: (_error: any) => {
-        debugger
-        this.loading = false
-        this.messageService.loadUserFailed();
-      },
-      complete: () => {
         this.loading = false;
-
+        this.messageService.loadUserFailed();
       }
     })
   }
