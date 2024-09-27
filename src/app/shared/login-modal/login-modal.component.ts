@@ -64,7 +64,6 @@ export class LoginModalComponent implements OnInit, OnDestroy {
       },
       error: (_error: any) => {
         this.loading = false;
-        this.messageService.loadUserFailed();
       }
     })
   }
@@ -82,7 +81,7 @@ export class LoginModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.InitForm();
 
-    this.redirectURL = this.route.snapshot.queryParamMap.get('redirectURL')!;
+    this.redirectURL = this.router.url;
     this.articleDialog = this.route.snapshot.queryParamMap.get('articleDialog')!;
 
     this.seo.generateTags({
