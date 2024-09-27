@@ -7,9 +7,6 @@ import { MessageService } from 'src/app/services/message.service';
 import { SeoService } from 'src/app/services/seo.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
-import { MatDialogRef } from '@angular/material/dialog';
-import { LoginModalComponent } from 'src/app/shared/login-modal/login-modal.component';
-import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -33,9 +30,7 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private messageService: MessageService,
     private seo: SeoService,
-    private translate: TranslateService,
-    private modalRef: MatDialogRef<LoginModalComponent>,
-   
+    private translate: TranslateService
   ) { }
 
   public InitForm(): void {
@@ -73,7 +68,6 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
     })
   }
 
-
   ngOnInit(): void {
     this.InitForm();
 
@@ -83,8 +77,6 @@ export class SignUpPageComponent implements OnInit, OnDestroy {
       author: 'Zerofiltre.tech',
       image: 'https://i.ibb.co/p3wfyWR/landing-illustration-1.png'
     });
-
-    this.modalRef.close()
   }
 
   ngOnDestroy(): void {
