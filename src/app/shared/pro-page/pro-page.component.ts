@@ -9,6 +9,7 @@ import { SeoService } from 'src/app/services/seo.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
 import { GeoLocationService } from 'src/app/services/geolocaton.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-pro-page',
@@ -33,7 +34,8 @@ export class ProPageComponent {
     private route: ActivatedRoute,
     private seo: SeoService,
     private translate: TranslateService,
-    private geoLocationService: GeoLocationService
+    private geoLocationService: GeoLocationService,
+    private modalService: ModalService
   ) {}
 
   payProMonthly(byCreditCard = true) {
@@ -103,17 +105,12 @@ export class ProPageComponent {
     const loggedIn = !!currUser;
 
     if (!loggedIn) {
-      this.router.navigate(['/login'], {
-        relativeTo: this.route,
-        queryParams: { redirectURL: this.router.url },
-        queryParamsHandling: 'merge',
-      });
-
+      this.modalService.openLoginModal();
       this.notify.openSnackBarInfo(
         'Veuillez vous connecter pour effectuer votre achat 🙂',
-        'OK'
+        'OK', 5,'bottom', 'center'
       );
-
+      
       return false;
     }
 

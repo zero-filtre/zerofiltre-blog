@@ -98,7 +98,7 @@ img {
 }
 
 .payment-popup .mat-dialog-container {
-   @apply bg-white rounded-2xl;
+  @apply bg-white rounded-2xl;
 }
 
 .edit-section-popup-panel {

@@ -53,6 +53,6 @@ export class ReactionsComponent {
   }
 
   ngOnInit(): void {
-    this.setEachReactionTotal(this.obj.reactions);
+    this.setEachReactionTotal(this.obj?.reactions);
   }
 }

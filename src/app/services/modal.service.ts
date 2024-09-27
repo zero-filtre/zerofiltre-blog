@@ -55,6 +55,7 @@ export class ModalService {
   public openLoginModal() {
     this.dialogRef.open(LoginModalComponent, {
       panelClass: 'popup-login',
+      backdropClass: 'popup-search-overlay',
       width: '500px',
     });
   }

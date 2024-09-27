@@ -135,6 +135,11 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
     if (!currentUsr) {
       this.modalService.openLoginModal();
+      this.messageService.openSnackBarInfo(
+        'Veuillez vous connecter pour réagir sur cet article  🙂',
+        'OK', 5,'bottom', 'center'
+      );
+
       return;
     }
 
@@ -143,11 +148,12 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         'Vous pourrez réagir sur cet article après sa publication.',
         'OK'
       );
+      
       return;
     }
 
     this.articleService
-      .addReactionToAnArticle(this.article.id, reactionType)
+      .addReactionToAnArticle(this.article.id!, reactionType)
       .subscribe({
         next: (response) => {
           this.article = { ...this.article, reactions: response };

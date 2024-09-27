@@ -225,14 +225,20 @@ export class CurriculumSidebarComponent implements OnInit {
 
     if (!currentUsr) {
       this.modalService.openLoginModal();
+      this.messageService.openSnackBarInfo(
+        'Veuillez vous connecter pour réagir sur ce cours 🙂',
+        'OK', 5,'bottom', 'center'
+      );
+
       return;
     }
 
     if (this.course.status !== 'PUBLISHED') {
-      this.messageService.openSnackBarError(
+      this.messageService.openSnackBarInfo(
         'Vous pourrez réagir sur ce cours après sa publication.',
-        'OK'
+        'OK', 5,'bottom', 'center'
       );
+
       return;
     }
 
