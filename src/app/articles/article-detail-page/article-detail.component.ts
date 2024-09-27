@@ -128,7 +128,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   //   document.body.appendChild(scriptElement);
   // }
 
-  message: string;
 
   addReaction(reactionType: string) {
     const currentUsr = this.authService?.currentUsr;
@@ -144,11 +143,11 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     }
 
     if (this.article.status !== 'PUBLISHED') {
-      this.messageService.openSnackBarError(
+      this.messageService.openSnackBarInfo(
         'Vous pourrez réagir sur cet article après sa publication.',
         'OK'
       );
-      
+
       return;
     }
 

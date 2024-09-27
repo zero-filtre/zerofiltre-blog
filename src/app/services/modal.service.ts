@@ -63,6 +63,7 @@ export class ModalService {
   public openSignUpModal() {
     this.dialogRef.open(SignupModalComponent, {
       panelClass: 'popup-login',
+      backdropClass: 'popup-search-overlay',
       width: '500px',
     });
   }
