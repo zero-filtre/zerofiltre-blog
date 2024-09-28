@@ -70,18 +70,8 @@ export class MessageService {
   }
 
   // For non authenticated requests
-  authError(state: any, message='') {
-    const msg = this.translate.instant('login.authErrorMessage')
+  authError(message = this.translate.instant('login.authErrorMessage')) {
     this.openSnackBarError(message, this.OK);
-    // this.modalService.openLoginModal();
-
-    // this.router.navigate(
-    //   ['/login'],
-    //   {
-    //     relativeTo: state,
-    //     queryParams: { redirectURL: state.url },
-    //     queryParamsHandling: 'merge',
-    //   });
   }
 
   // When a route/module is not allowed

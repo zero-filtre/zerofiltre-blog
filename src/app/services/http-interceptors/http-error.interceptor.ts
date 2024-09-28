@@ -114,7 +114,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
         if (error.status === 401) {
           this.authService.logout();
-          this.messageService.authError(this.router, errorMessage);
+          this.messageService.authError(errorMessage);
         }
       }
       
