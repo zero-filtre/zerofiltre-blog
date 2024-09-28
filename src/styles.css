@@ -125,6 +125,10 @@ img {
   @apply max-sm:!w-full mx-4 lg:mx-0
 }
 
+.popup-login .mat-dialog-container {
+  @apply !rounded-xl
+}
+
 .article-popup-panel .mat-dialog-container {
   @apply !rounded-2xl !flex bg-skin-bg justify-center items-center !p-4 sm:p-6;
 }
