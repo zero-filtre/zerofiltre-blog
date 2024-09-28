@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
 import { ArticleService } from 'src/app/articles/article.service';
@@ -27,32 +27,51 @@ export class ReactionsComponent {
     { action: 'like', emoji: '👍' },
   ];
 
-  private fireReactions = new BehaviorSubject<number>(0);
-  public fireReactions$ = this.fireReactions.asObservable();
-  private clapReactions = new BehaviorSubject<number>(0);
-  public clapReactions$ = this.clapReactions.asObservable();
-  private loveReactions = new BehaviorSubject<number>(0);
-  public loveReactions$ = this.loveReactions.asObservable();
-  private likeReactions = new BehaviorSubject<number>(0);
-  public likeReactions$ = this.likeReactions.asObservable();
+  public reactionCounts: any = {};
 
   sendReactionType(reactionType: string) {
     this.reactionEvent.emit(reactionType);
   }
 
-  setEachReactionTotal(reactions: Reaction[]) {
-    this.fireReactions.next(this.findTotalReactionByAction('FIRE', reactions));
-    this.clapReactions.next(this.findTotalReactionByAction('CLAP', reactions));
-    this.loveReactions.next(this.findTotalReactionByAction('LOVE', reactions));
-    this.likeReactions.next(this.findTotalReactionByAction('LIKE', reactions));
+  calculateReactionCounts() {
+    const reactions = this.obj.reactions || [];
+
+    const counts = {
+      clap: 0,
+      fire: 0,
+      love: 0,
+      like: 0,
+    };
+
+    reactions.forEach((reaction: Reaction) => {
+      switch (reaction.action) {
+        case 'CLAP':
+         counts.clap++;
+          break;
+        case 'FIRE':
+          counts.fire++;
+          break;
+        case 'LOVE':
+          counts.love++;
+          break;
+        case 'LIKE':
+          counts.like++;
+          break;
+        default:
+          break;
+      }
+    });
+
+    this.reactionCounts = counts;
   }
 
-  findTotalReactionByAction(action: string, reactions: Reaction[]): number {
-    return reactions.filter((reaction: Reaction) => reaction.action === action)
-      .length;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['obj'] && this.obj) {
+      this.calculateReactionCounts();
+    }
   }
 
   ngOnInit(): void {
-    this.setEachReactionTotal(this.obj?.reactions);
+    this.calculateReactionCounts();
   }
 }

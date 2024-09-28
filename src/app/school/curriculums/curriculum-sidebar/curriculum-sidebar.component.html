@@ -1,7 +1,7 @@
 <!-- overflow-scroll -->
 <div class="sidebar_curriculum scrollbar lg:max-w-[370px]">
     <div class="px-1.5 pt-5 lg:pr-8 lg:pl-0">
-        <ng-container *ngIf="!loading">
+        <ng-container *ngIf="course; else sideBarSkeleton">
             <div class="curriculum_wrapper max-w-3xl m-auto">
                 <h2
                     class="flex justify-between items-center pb-4 lg:pb-6 lg:pl-2 font-black text-xl lg:text-2xl text-primary-500">
@@ -257,17 +257,16 @@
                     </div>
 
                 </cdk-accordion>
-
             </div>
         </ng-container>
 
-        <ng-container *ngIf="loading" class="articleContentSkeletonLoader">
+        <ng-template #sideBarSkeleton>
             <ngx-skeleton-loader class="block" count="40" appearance="line" [theme]="{ 
                                                                 'border-radius': '5px',
                                                                     'height.px': 50,
                                                                     'width.%': 100
                                                                 }">
             </ngx-skeleton-loader>
-        </ng-container>
+        </ng-template>
     </div>
 </div>

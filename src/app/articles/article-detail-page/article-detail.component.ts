@@ -145,7 +145,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     if (this.article.status !== 'PUBLISHED') {
       this.messageService.openSnackBarInfo(
         'Vous pourrez réagir sur cet article après sa publication.',
-        'OK'
+        'OK', 5, 'top', 'center'
       );
 
       return;

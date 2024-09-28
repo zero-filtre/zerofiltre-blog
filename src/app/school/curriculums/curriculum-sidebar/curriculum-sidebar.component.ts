@@ -236,7 +236,7 @@ export class CurriculumSidebarComponent implements OnInit {
     if (this.course.status !== 'PUBLISHED') {
       this.messageService.openSnackBarInfo(
         'Vous pourrez réagir sur ce cours après sa publication.',
-        'OK', 5,'bottom', 'center'
+        'OK', 5,'top', 'center'
       );
 
       return;
