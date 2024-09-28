@@ -9,6 +9,7 @@ import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
 import { GeoLocationService } from 'src/app/services/geolocaton.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-payment-popup',
@@ -40,7 +41,8 @@ export class PaymentPopupComponent implements OnInit {
     private route: ActivatedRoute,
     private geoLocationService: GeoLocationService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private modalService: ModalService
   ) {}
 
   onNoClick(): void {
@@ -139,16 +141,12 @@ export class PaymentPopupComponent implements OnInit {
     const loggedIn = !!currUser;
 
     if (!loggedIn) {
-      this.router.navigate(['/login'], {
-        relativeTo: this.route,
-        queryParams: { redirectURL: this.router.url },
-        queryParamsHandling: 'merge',
-      });
-
       this.dialogRef.close();
+      this.modalService.openLoginModal();
+
       this.notify.openSnackBarInfo(
         'Veuillez vous connecter pour effectuer votre achat 🙂',
-        'OK'
+        'OK', 5,'bottom', 'center'
       );
 
       return false;

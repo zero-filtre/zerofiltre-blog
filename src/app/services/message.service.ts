@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ModalService } from './modal.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,34 +19,37 @@ export class MessageService {
   DURATION_INFO = this.DURATION_DEFAULT;
   DURATION_ERROR = this.DURATION_DEFAULT;
 
-
-
   constructor(
     private snackBar: MatSnackBar,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private modalService: ModalService
   ) { }
 
-  private openSnackBar(message: string, action: string, className: string, type: string, duration: number, hoPosition: any) {
+  private openSnackBar(message: string, action: string, className: string, type: string, duration: number, vtPosition: any, hoPosition: any) {
     this.snackBar.open(message, action, {
       horizontalPosition: hoPosition,
-      verticalPosition: this.defaultVerticalPosition as any,
+      verticalPosition: vtPosition,
       duration: duration * 1000,
       panelClass: [className, type],
     });
+
   }
 
-  public openSnackBarSuccess(message: string, action: string, duration = this.DURATION_SUCCESS, hoPosition = this.defaultHorizontalPosition) {
-    this.openSnackBar(message, action, 'success-snackbar', 'success', duration, hoPosition)
+  public openSnackBarSuccess(message: string, action: string, duration = this.DURATION_SUCCESS, vtPosition = this.defaultVerticalPosition, hoPosition = this.defaultHorizontalPosition) {
+    this.openSnackBar(message, action, 'success-snackbar', 'success', duration, vtPosition, hoPosition)
   }
-  public openSnackBarError(message: string, action: string, duration = this.DURATION_ERROR, hoPosition = this.defaultHorizontalPosition) {
-    this.openSnackBar(message, action, 'error-snackbar', 'error', duration, hoPosition)
+
+  public openSnackBarError(message: string, action: string, duration = this.DURATION_ERROR, vtPosition = this.defaultVerticalPosition, hoPosition = this.defaultHorizontalPosition) {
+    this.openSnackBar(message, action, 'error-snackbar', 'error', duration, vtPosition, hoPosition)
   }
-  public openSnackBarWarning(message: string, action: string, duration = this.DURATION_WARNING, hoPosition = this.defaultHorizontalPosition) {
-    this.openSnackBar(message, action, 'warning-snackbar', 'error', duration, hoPosition)
+
+  public openSnackBarWarning(message: string, action: string, duration = this.DURATION_WARNING, vtPosition = this.defaultVerticalPosition, hoPosition = this.defaultHorizontalPosition) {
+    this.openSnackBar(message, action, 'warning-snackbar', 'error', duration, vtPosition, hoPosition)
   }
-  public openSnackBarInfo(message: string, action: string, duration = this.DURATION_INFO, hoPosition = this.defaultHorizontalPosition) {
-    this.openSnackBar(message, action, 'info-snackbar', 'info', duration, hoPosition)
+
+  public openSnackBarInfo(message: string, action: string, duration = this.DURATION_INFO, vtPosition = this.defaultVerticalPosition, hoPosition = this.defaultHorizontalPosition) {
+    this.openSnackBar(message, action, 'info-snackbar', 'info', duration, vtPosition, hoPosition)
   }
 
   public cancel() {
@@ -69,14 +73,15 @@ export class MessageService {
   authError(state: any, message='') {
     const msg = this.translate.instant('login.authErrorMessage')
     this.openSnackBarError(message, this.OK);
+    // this.modalService.openLoginModal();
 
-    this.router.navigate(
-      ['/login'],
-      {
-        relativeTo: state,
-        queryParams: { redirectURL: state.url },
-        queryParamsHandling: 'merge',
-      });
+    // this.router.navigate(
+    //   ['/login'],
+    //   {
+    //     relativeTo: state,
+    //     queryParams: { redirectURL: state.url },
+    //     queryParamsHandling: 'merge',
+    //   });
   }
 
   // When a route/module is not allowed

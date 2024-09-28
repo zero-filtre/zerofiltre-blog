@@ -164,7 +164,7 @@ export class AuthService {
       )
   }
 
-  login(credentials: FormData, redirectURL: any): Observable<any> {
+  login(credentials: FormData, redirectURL: string): Observable<any> {
     return this.http.post<any>(`${this.apiServerUrl}/auth`, credentials, {
       observe: 'response'
     }).pipe(

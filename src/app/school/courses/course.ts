@@ -37,7 +37,7 @@ export interface Section {
 export interface Reaction {
     articleId: string;
     courseId: string;
-    action: string
+    action: 'CLAP' | 'FIRE' | 'LOVE' | 'LIKE';
 }
 
 const CourseStatuses = ['PUBLISHED','DRAFT','IN_REVIEW','COMPLETED','IN_PROGRESS'] as const;

@@ -48,20 +48,23 @@
                         <label for="password" class="sr-only">{{'signup.password' | translate}}</label>
                         <div class="">
                             <div class="relative">
-                                <input name="password" type="{{ passwordVisible ? 'text' : 'password' }}" id="password" required minlength="6"
-                                    formControlName="password" class="" autocomplete="off"
+                                <input name="password" type="{{ passwordVisible ? 'text' : 'password' }}" id="password"
+                                    required minlength="6" formControlName="password" class="" autocomplete="off"
                                     placeholder="{{'signup.password' | translate}}">
-                                
-                                <button type="button" class="eye-btn group absolute top-2.5 right-2.5" (click)="togglePasswordVisibility()">
-                                    <svg *ngIf="!passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+
+                                <button type="button" class="eye-btn group absolute top-2.5 right-2.5"
+                                    (click)="togglePasswordVisibility()">
+                                    <svg *ngIf="!passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor"
                                         class="h-5 w-5 text-skin-borderBold group-hover:text-primary-300">
                                         <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
                                         <path fill-rule="evenodd"
                                             d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                
-                                    <svg *ngIf="passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+
+                                    <svg *ngIf="passwordVisible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor"
                                         class="h-5 w-5 text-skin-borderBold group-hover:text-primary-300">
                                         <path
                                             d="M3.53 2.47a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18zM22.676 12.553a11.249 11.249 0 01-2.631 4.31l-3.099-3.099a5.25 5.25 0 00-6.71-6.71L7.759 4.577a11.217 11.217 0 014.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113z" />
@@ -103,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-<!-- 
+                <!-- 
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <input id="remember_me" name="remember_me" type="checkbox" class="">

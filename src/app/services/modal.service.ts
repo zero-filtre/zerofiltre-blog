@@ -7,21 +7,19 @@ import { LoginModalComponent } from '../shared/login-modal/login-modal.component
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignupModalComponent } from '../shared/signup-modal/signup-modal.component';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ModalService {
-
   constructor(
     private dialogRef: MatDialog,
     private router: Router,
-    private route:ActivatedRoute,
-
-  ) { }
+    private route: ActivatedRoute
+  ) {}
 
   checkUserEmail(user: User) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const validEmail = regex.test(user.email!);
-  
+
     if (validEmail) {
       return;
     } else {
@@ -42,46 +40,31 @@ export class ModalService {
       backdropClass: 'popup-search-overlay',
       disableClose: false,
       minHeight: '400px',
-      width: '700px'
+      width: '700px',
     });
   }
 
   public toggleSearchModal(isOpen: boolean) {
-    if(isOpen) {
+    if (isOpen) {
       this.openSearchModal();
     } else {
-      this.dialogRef.closeAll()
+      this.dialogRef.closeAll();
     }
   }
 
   public openLoginModal() {
-    
-  
-
-   
-    
-
-    this.dialogRef.open(LoginModalComponent,{
-      panelClass:'popup-login',
-     
+    this.dialogRef.open(LoginModalComponent, {
+      panelClass: 'popup-login',
+      backdropClass: 'popup-search-overlay',
       width: '500px',
-      
-    })
+    });
   }
 
   public openSignUpModal() {
-    
-    
-
- 
-  
-
-  this.dialogRef.open(SignupModalComponent,{
-    panelClass:'popup-login',
-   
-    width: '500px',
-    
-  })
-}
-
+    this.dialogRef.open(SignupModalComponent, {
+      panelClass: 'popup-login',
+      backdropClass: 'popup-search-overlay',
+      width: '500px',
+    });
+  }
 }

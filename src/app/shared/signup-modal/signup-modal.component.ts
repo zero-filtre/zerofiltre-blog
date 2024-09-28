@@ -68,6 +68,7 @@ export class SignupModalComponent {
     this.authService.signup(this.form.value).subscribe({
       next: (_response: any) => {
         this.messageService.signUpSuccess();
+        this.modalRef.close();
       },
       error: (_error: HttpErrorResponse) => {
         this.loading = false;
@@ -87,11 +88,11 @@ export class SignupModalComponent {
 
    
   }
+
   public showLoginForm(){
     this.modalRef.close()
     this.modalService.openLoginModal()
   }
-
 
   ngOnDestroy(): void {
     this.form.reset();

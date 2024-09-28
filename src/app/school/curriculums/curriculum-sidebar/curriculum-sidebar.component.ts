@@ -14,14 +14,18 @@ import { capitalizeString } from 'src/app/services/utilities.service';
 import { CourseService } from '../../courses/course.service';
 import { Observable, catchError, of, tap, throwError } from 'rxjs';
 
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { MessageService } from 'src/app/services/message.service';
-
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-curriculum-sidebar',
   templateUrl: './curriculum-sidebar.component.html',
-  styleUrls: ['./curriculum-sidebar.component.css']
+  styleUrls: ['./curriculum-sidebar.component.css'],
 })
 export class CurriculumSidebarComponent implements OnInit {
   @Input() drawer!: any;
@@ -36,11 +40,9 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() durations!: any[];
   @Input() mobileQuery: MediaQueryList;
 
-
   currentRoute: string;
   isPublishing: boolean;
   publishBtnText: string;
-  
 
   constructor(
     public authService: AuthService,
@@ -51,45 +53,60 @@ export class CurriculumSidebarComponent implements OnInit {
     private dialogNewLessonRef: MatDialog,
     private dialogDeleteLessonRef: MatDialog,
     private router: Router,
-    private messageService: MessageService
-  ) { }
+    private messageService: MessageService,
+    private modalService: ModalService
+  ) {}
 
   dropLessons(event: CdkDragDrop<Lesson[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
 
       const currPosition = event.currentIndex;
       const prevPosition = event.previousIndex;
-      const draggedElement = event.item.dropContainer.data[event.currentIndex] as Lesson
+      const draggedElement = event.item.dropContainer.data[
+        event.currentIndex
+      ] as Lesson;
 
       if (currPosition != prevPosition) {
-        this.courseService.moveLesson(draggedElement.chapterId, draggedElement.id, currPosition)
-          .subscribe(_data => console.log('DRAGGED LESSON'));
+        this.courseService
+          .moveLesson(draggedElement.chapterId, draggedElement.id, currPosition)
+          .subscribe((_data) => console.log('DRAGGED LESSON'));
       }
-    } 
+    }
   }
 
   dropChapters(event: CdkDragDrop<Chapter[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
 
       const currPosition = event.currentIndex + 1;
       const prevPosition = event.previousIndex + 1;
-      const draggedElement = event.item.dropContainer.data[event.currentIndex] as Chapter
+      const draggedElement = event.item.dropContainer.data[
+        event.currentIndex
+      ] as Chapter;
 
       if (currPosition != prevPosition) {
-        this.courseService.moveChapter(draggedElement.id, currPosition)
-          .subscribe(_data => console.log('DRAGGED CHAPTER'))
+        this.courseService
+          .moveChapter(draggedElement.id, currPosition)
+          .subscribe((_data) => console.log('DRAGGED CHAPTER'));
       }
     }
   }
 
   sortByNumber(list: any[]) {
-    return list.sort((a,b) => a.number - b.number);
+    return list.sort((a, b) => a.number - b.number);
   }
 
   isActiveLesson(lessonID: number) {
-    return lessonID == this.activeLessonID
+    return lessonID == this.activeLessonID;
   }
 
   openChapterInitDialog(courseId: number): void {
@@ -99,8 +116,8 @@ export class CurriculumSidebarComponent implements OnInit {
       panelClass: 'article-popup-panel',
       data: {
         courseId,
-        history: this.router.url
-      }
+        history: this.router.url,
+      },
     });
   }
 
@@ -111,8 +128,8 @@ export class CurriculumSidebarComponent implements OnInit {
       panelClass: 'article-popup-panel',
       data: {
         chapter,
-        history: this.router.url
-      }
+        history: this.router.url,
+      },
     });
   }
 
@@ -121,8 +138,8 @@ export class CurriculumSidebarComponent implements OnInit {
       panelClass: 'delete-article-popup-panel',
       data: {
         chapterId,
-        history: this.router.url
-      }
+        history: this.router.url,
+      },
     });
   }
 
@@ -134,8 +151,8 @@ export class CurriculumSidebarComponent implements OnInit {
       data: {
         chapterID: chapterId,
         course: course,
-        history: this.router.url
-      }
+        history: this.router.url,
+      },
     });
   }
 
@@ -144,8 +161,8 @@ export class CurriculumSidebarComponent implements OnInit {
       panelClass: 'delete-article-popup-panel',
       data: {
         lessonId,
-        history: this.router.url
-      }
+        history: this.router.url,
+      },
     });
   }
 
@@ -155,35 +172,83 @@ export class CurriculumSidebarComponent implements OnInit {
 
   publishCourse(course: Course) {
     this.isPublishing = true;
-    this.publishBtnText = this.authService.isAdmin ? 'Publication' : 'Soumission';
+    this.publishBtnText = this.authService.isAdmin
+      ? 'Publication'
+      : 'Soumission';
 
-    const { subTitle, summary } = course
+    const { subTitle, summary } = course;
     if (subTitle == null) {
-      course = {...course, subTitle: 'Ce sous titre est à titre indicatif, vous devrez le changer!'};
+      course = {
+        ...course,
+        subTitle:
+          'Ce sous titre est à titre indicatif, vous devrez le changer!',
+      };
     }
     if (summary == null) {
-      course = { ...course, summary: 'Ce sommaire est à titre indicatif, vous devrez le changer!' };
+      course = {
+        ...course,
+        summary: 'Ce sommaire est à titre indicatif, vous devrez le changer!',
+      };
     }
 
-    this.courseService.publishCourse(course)
+    this.courseService
+      .publishCourse(course)
       .pipe(
-        catchError(err => {
-        this.isPublishing = false;
-        this.publishBtnText = this.authService.isAdmin ? 'Publier' : 'Soumettre'
-        return throwError(() => err)
-        }),
-        tap(_data => {
-          const msg = this.authService.isAdmin ? 'Publication reussie !' : 'Soumission reussie !'
+        catchError((err) => {
           this.isPublishing = false;
-          this.publishBtnText = this.authService.isAdmin ? 'Publier' : 'Soumettre'
-          this.messageService.openSnackBarSuccess(msg, 'OK')
+          this.publishBtnText = this.authService.isAdmin
+            ? 'Publier'
+            : 'Soumettre';
+          return throwError(() => err);
+        }),
+        tap((_data) => {
+          const msg = this.authService.isAdmin
+            ? 'Publication reussie !'
+            : 'Soumission reussie !';
+          this.isPublishing = false;
+          this.publishBtnText = this.authService.isAdmin
+            ? 'Publier'
+            : 'Soumettre';
+          this.messageService.openSnackBarSuccess(msg, 'OK');
         })
-      ).subscribe()
+      )
+      .subscribe();
   }
 
   isLessonCompleted(lesson: Lesson): Observable<boolean> {
-    const res = this.completedLessonsIds?.includes(lesson?.id)
+    const res = this.completedLessonsIds?.includes(lesson?.id);
     return of(res);
+  }
+
+  addReaction(reactionType: string) {
+    const currentUsr = this.authService?.currentUsr;
+
+    if (!currentUsr) {
+      this.modalService.openLoginModal();
+      this.messageService.openSnackBarInfo(
+        'Veuillez vous connecter pour réagir sur ce cours 🙂',
+        'OK', 5,'bottom', 'center'
+      );
+
+      return;
+    }
+
+    if (this.course.status !== 'PUBLISHED') {
+      this.messageService.openSnackBarInfo(
+        'Vous pourrez réagir sur ce cours après sa publication.',
+        'OK', 5,'top', 'center'
+      );
+
+      return;
+    }
+
+    this.courseService
+      .addReactionToCourse(this.course.id, reactionType)
+      .subscribe({
+        next: (response) => {
+          this.course = { ...this.course, reactions: response };
+        },
+      });
   }
 
   ngOnInit(): void {

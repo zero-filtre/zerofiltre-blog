@@ -1,9 +1,20 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
-import { calcReadingTime, capitalizeString, formatDate } from 'src/app/services/utilities.service';
+import {
+  calcReadingTime,
+  capitalizeString,
+  formatDate,
+} from 'src/app/services/utilities.service';
 import { environment } from 'src/environments/environment';
 import { Article } from '../article.model';
 import { ArticleService } from '../article.service';
@@ -21,18 +32,20 @@ import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
 import { User } from 'src/app/user/user.model';
 import { Reaction } from 'src/app/school/courses/course';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-article-detail',
   templateUrl: './article-detail.component.html',
-  styleUrls: ['./article-detail.component.css']
+  styleUrls: ['./article-detail.component.css'],
 })
 export class ArticleDetailComponent implements OnInit, OnDestroy {
-  
   readonly blogUrl = environment.blogUrl;
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
   prod = this.blogUrl.startsWith('https://dev.') ? false : true;
-  siteUrl = this.prod ? "https://zerofiltre.tech" : "https://dev.zerofiltre.tech"
+  siteUrl = this.prod
+    ? 'https://zerofiltre.tech'
+    : 'https://dev.zerofiltre.tech';
 
   public article!: Article;
   public articleId!: string;
@@ -46,21 +59,6 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   private nberOfReactions = new BehaviorSubject<number>(0);
   public nberOfReactions$ = this.nberOfReactions.asObservable();
-  public typesOfReactions = <any>[
-    { action: 'clap', emoji: '👏' },
-    { action: 'fire', emoji: '🔥' },
-    { action: 'love', emoji: '💖' },
-    { action: 'like', emoji: '👍' },
-  ];
-
-  private fireReactions = new BehaviorSubject<number>(0);
-  public fireReactions$ = this.fireReactions.asObservable();
-  private clapReactions = new BehaviorSubject<number>(0);
-  public clapReactions$ = this.clapReactions.asObservable();
-  private loveReactions = new BehaviorSubject<number>(0);
-  public loveReactions$ = this.loveReactions.asObservable();
-  private likeReactions = new BehaviorSubject<number>(0);
-  public likeReactions$ = this.likeReactions.asObservable();
 
   public articleSub!: Subscription;
   public loginToAddReaction!: boolean;
@@ -83,8 +81,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     'data-theme': 'light',
     'data-lang': 'fr',
     'data-loading': 'lazy',
-    'crossorigin': 'anonymous',
-  }
+    crossorigin: 'anonymous',
+  };
 
   constructor(
     private loadEnvService: LoadEnvService,
@@ -100,7 +98,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private location: Location,
     media: MediaMatcher,
     changeDetectorRef: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) private platformId: any
+    @Inject(PLATFORM_ID) private platformId: any,
+    private modalService: ModalService
   ) {
     this.hasHistory = this.router.navigated;
 
@@ -112,12 +111,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   private _mobileQueryListener: () => void;
 
   canAccesPremium(article: Article) {
-    const user = this.authService?.currentUsr as User
+    const user = this.authService?.currentUsr as User;
     return this.articleService.canAccesPremium(user, article);
   }
-
-
-
 
   // injectGiscus(data: any) {
   //   const scriptElement: HTMLScriptElement = document.createElement("script");
@@ -132,38 +128,37 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   //   document.body.appendChild(scriptElement);
   // }
 
-  message:string;
 
-  addReaction($event) {
-    
- const currentUsr = this.authService?.currentUsr;
+  addReaction(reactionType: string) {
+    const currentUsr = this.authService?.currentUsr;
 
     if (!currentUsr) {
-      this.messageService.openSnackBarError('🚨 Vous devez vous connecter pour réagir sur ce cours', 'OK')
+      this.modalService.openLoginModal();
+      this.messageService.openSnackBarInfo(
+        'Veuillez vous connecter pour réagir sur cet article  🙂',
+        'OK', 5,'bottom', 'center'
+      );
+
       return;
     }
 
-    if(this.article.status !== 'PUBLISHED') {
-      this.messageService.openSnackBarError('Vous pourrez reagir sur ce cours apres sa publication.', 'OK')
+    if (this.article.status !== 'PUBLISHED') {
+      this.messageService.openSnackBarInfo(
+        'Vous pourrez réagir sur cet article après sa publication.',
+        'OK', 5, 'top', 'center'
+      );
+
       return;
     }
 
-    this.articleService.addReactionToAnArticle(this.article.id, $event)
+    this.articleService
+      .addReactionToAnArticle(this.article.id!, reactionType)
       .subscribe({
-       
         next: (response) => {
-         this.article  = {...this.article,reactions:response}
-        }
+          this.article = { ...this.article, reactions: response };
+        },
       });
-
-      
-
-     
-   
   }
-
- 
-
 
   isValidURL(url: string) {
     try {
@@ -176,13 +171,13 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   extractVideoId(videoLink: string) {
     if (!videoLink) return;
-    if(!this.isValidURL(videoLink)) return;
+    if (!this.isValidURL(videoLink)) return;
     const params = new URL(videoLink).searchParams;
     this.currentVideoId = params.get('v');
   }
 
   public setDateFormat(date: any) {
-    return formatDate(date)
+    return formatDate(date);
   }
 
   public trimAuthorName(name: string | any) {
@@ -191,9 +186,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   public getCurrentArticle(articleId: string): void {
     this.loading = true;
-    this.articleService.findArticleById(articleId)
+    this.articleService
+      .findArticleById(articleId)
       .pipe(
-        tap(art => {
+        tap((art) => {
           if (art.status === 'PUBLISHED') {
             this.isPublished.next(true);
             this.incrementNberOfViews(this.articleId);
@@ -204,11 +200,11 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response: Article) => {
-          this.article = response
-          this.extractVideoId(response.video)
+          this.article = response;
+          this.extractVideoId(response.video);
 
           const rootUrl = this.router.url.split('/')[1];
-          const sluggedUrl = `${rootUrl}/${this.slugify.transform(response)}`
+          const sluggedUrl = `${rootUrl}/${this.slugify.transform(response)}`;
           this.location.replaceState(sluggedUrl);
 
           this.seo.generateTags({
@@ -216,31 +212,32 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
             description: response.summary,
             image: response.thumbnail,
             author: response.author?.fullName,
-            publishDate: response.publishedAt?.substring(0, 10)
-          })
+            publishDate: response.publishedAt?.substring(0, 10),
+          });
 
           const dataSchema = {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": response.title,
-            "image": [response.thumbnail],
-            "datePublished": response.publishedAt,
-            "dateModified": response.lastPublishedAt,
-            "author": [{
-              "@type": "Person",
-              "name": response.author.fullName,
-              "jobTitle": response.author.profession,
-              "url": `${this.siteUrl}/user/${response.author.id}`
-            }]
-          } as JsonLd | any
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: response.title,
+            image: [response.thumbnail],
+            datePublished: response.publishedAt,
+            dateModified: response.lastPublishedAt,
+            author: [
+              {
+                '@type': 'Person',
+                name: response.author.fullName,
+                jobTitle: response.author.profession,
+                url: `${this.siteUrl}/user/${response.author.id}`,
+              },
+            ],
+          } as JsonLd | any;
 
-          this.jsonLd.setData(dataSchema)
+          this.jsonLd.setData(dataSchema);
 
           this.nberOfReactions.next(response?.reactions?.length);
-         //handle reaction change
+          //handle reaction change
 
-
-          this.articleHasTags = response?.tags.length > 0
+          this.articleHasTags = response?.tags.length > 0;
           calcReadingTime(response);
 
           this.fetchSimilarArticles();
@@ -248,101 +245,126 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         },
         error: (_error: HttpErrorResponse) => {
           this.loading = false;
-          this.messageService.openSnackBarError("Oops cet article est n'existe pas 😣!", '');
+          this.messageService.openSnackBarError(
+            "Oops cet article est n'existe pas 😣!",
+            ''
+          );
           this.router.navigateByUrl('/articles');
-        }
-      })
+        },
+      });
   }
 
   public fetchSimilarArticles(): void {
-    if (!this.article?.tags.length) return
+    if (!this.article?.tags.length) return;
 
     let randomTagIndex = Math.floor(Math.random() * this.article?.tags.length);
-    let randomTagName = this.article?.tags[randomTagIndex]?.name
+    let randomTagName = this.article?.tags[randomTagIndex]?.name;
 
-    const selectedArticles = <any>[]
-    let filteredArticles = <any>[]
+    const selectedArticles = <any>[];
+    let filteredArticles = <any>[];
 
-    this.articleService.findAllArticlesByTag(0, 20, randomTagName)
+    this.articleService
+      .findAllArticlesByTag(0, 20, randomTagName)
       .subscribe(({ content, numberOfElements }: any) => {
         if (numberOfElements > 1) {
-          filteredArticles = content.filter((article: Article) => article.id !== this.article.id);
+          filteredArticles = content.filter(
+            (article: Article) => article.id !== this.article.id
+          );
 
-          const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
-          selectedArticles.push(filteredArticles[randomArticleIndex])
+          const randomArticleIndex = Math.floor(
+            Math.random() * filteredArticles.length
+          );
+          selectedArticles.push(filteredArticles[randomArticleIndex]);
 
-          const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+          const newRandomArticleIndex = Math.floor(
+            Math.random() * filteredArticles.length
+          );
 
           if (newRandomArticleIndex !== randomArticleIndex) {
-            selectedArticles.push(filteredArticles[newRandomArticleIndex])
+            selectedArticles.push(filteredArticles[newRandomArticleIndex]);
           }
 
-          this.similarArticles = [...selectedArticles]
+          this.similarArticles = [...selectedArticles];
         } else {
           if (this.article?.tags.length == 1) {
             return;
-          } else if ((this.article?.tags.length - 1) == randomTagIndex && randomTagIndex != 0) {
+          } else if (
+            this.article?.tags.length - 1 == randomTagIndex &&
+            randomTagIndex != 0
+          ) {
             randomTagIndex -= 1;
           } else {
             randomTagIndex += 1;
           }
-          randomTagName = this.article?.tags[randomTagIndex]?.name
+          randomTagName = this.article?.tags[randomTagIndex]?.name;
 
-          this.articleService.findAllArticlesByTag(0, 20, randomTagName)
+          this.articleService
+            .findAllArticlesByTag(0, 20, randomTagName)
             .subscribe(({ content }: any) => {
-              filteredArticles = content.filter((article: Article) => article.id !== this.article.id);
+              filteredArticles = content.filter(
+                (article: Article) => article.id !== this.article.id
+              );
 
               if (filteredArticles.length) {
-                const randomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
-                selectedArticles.push(filteredArticles[randomArticleIndex])
+                const randomArticleIndex = Math.floor(
+                  Math.random() * filteredArticles.length
+                );
+                selectedArticles.push(filteredArticles[randomArticleIndex]);
 
-                const newRandomArticleIndex = Math.floor(Math.random() * filteredArticles.length);
+                const newRandomArticleIndex = Math.floor(
+                  Math.random() * filteredArticles.length
+                );
 
                 if (newRandomArticleIndex !== randomArticleIndex) {
-                  selectedArticles.push(filteredArticles[newRandomArticleIndex])
+                  selectedArticles.push(
+                    filteredArticles[newRandomArticleIndex]
+                  );
                 }
 
-                this.similarArticles = [...selectedArticles]
+                this.similarArticles = [...selectedArticles];
               }
-            })
+            });
         }
-      })
+      });
   }
 
   public isAuthor(user: any, article: Article): boolean {
-    return user?.id === article?.author?.id
+    return user?.id === article?.author?.id;
   }
 
   public authorHasSocials(): boolean {
-    return this.article?.author?.socialLinks.length > 0
+    return this.article?.author?.socialLinks.length > 0;
   }
 
   public authorHasSocialLinkFor(platform: string): boolean {
-    return this.article?.author?.socialLinks.some((profile: any) => profile.platform === platform && profile.link)
+    return this.article?.author?.socialLinks.some(
+      (profile: any) => profile.platform === platform && profile.link
+    );
   }
 
   public authorPlatformLink(platform: string): string {
-    return this.article?.author?.socialLinks.find((profile: any) => profile.platform === platform)?.link
+    return this.article?.author?.socialLinks.find(
+      (profile: any) => profile.platform === platform
+    )?.link;
   }
 
   public userHasAlreadyReactOnArticleFiftyTimes(): boolean {
     const artileReactions = this.article?.reactions;
     const currentUsr = this.authService?.currentUsr;
-    return artileReactions.filter((reaction: any) => reaction?.authorId === currentUsr?.id).length === 49;
+    return (
+      artileReactions.filter(
+        (reaction: any) => reaction?.authorId === currentUsr?.id
+      ).length === 49
+    );
   }
-
-
-
-   
-  
 
   public openArticleDeleteDialog(): void {
     this.dialogRef.open(DeleteArticlePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
         id: this.articleId,
-        history: this.router.url
-      }
+        history: this.router.url,
+      },
     });
   }
 
@@ -351,20 +373,17 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   }
 
   public incrementNberOfViews(aricleId: string) {
-    this.nberOfViews$ = this.articleService.incrementViews(aricleId)
+    this.nberOfViews$ = this.articleService.incrementViews(aricleId);
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(
-      params => {
-        const parsedParams = params.get('id')?.split('-')[0]
-        this.articleId = parsedParams!;
-        this.getCurrentArticle(this.articleId);
-      }
-    );
+    this.route.paramMap.subscribe((params) => {
+      const parsedParams = params.get('id')?.split('-')[0];
+      this.articleId = parsedParams!;
+      this.getCurrentArticle(this.articleId);
+    });
 
     if (isPlatformBrowser(this.platformId)) {
-   
     }
   }
 
@@ -373,5 +392,4 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
       this.articleSub.unsubscribe();
     }
   }
-
 }
