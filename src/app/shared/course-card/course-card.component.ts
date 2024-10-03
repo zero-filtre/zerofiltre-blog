@@ -10,10 +10,9 @@ import { User } from 'src/app/user/user.model';
 @Component({
   selector: 'app-course-card',
   templateUrl: './course-card.component.html',
-  styleUrls: ['./course-card.component.css']
+  styleUrls: ['./course-card.component.css'],
 })
 export class CourseCardComponent {
-
   @Input() title: string;
   @Input() course: Course;
 
@@ -22,15 +21,14 @@ export class CourseCardComponent {
     private courseService: CourseService,
     private dialogDeleteRef: MatDialog,
     private router: Router
+  ) {}
 
-  ) { }
-
-  parseUrl(url:string) {
-    return encodeURIComponent(url)
+  parseUrl(url: string) {
+    return encodeURIComponent(url);
   }
 
   canEditCourse(course: Course) {
-    const user = this.authService?.currentUsr as User
+    const user = this.authService?.currentUsr as User;
     return this.courseService.canEditCourse(user, course);
   }
 
@@ -39,9 +37,24 @@ export class CourseCardComponent {
       panelClass: 'delete-article-popup-panel',
       data: {
         courseId,
-        history: this.router.url
-      }
+        history: this.router.url,
+      },
     });
   }
 
+  downloadCoursePdf(courseId: number): void {
+    this.courseService.downloadPdf(courseId).subscribe({
+      next: (pdfBlob) => {
+        const url = window.URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'course.pdf';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.error('Download failed', err);
+      },
+    });
+  }
 }
