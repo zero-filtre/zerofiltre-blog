@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Course } from 'src/app/school/courses/course';
 import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
 import { CourseService } from 'src/app/school/courses/course.service';
+import { slugify } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
 
@@ -48,7 +49,7 @@ export class CourseCardComponent {
         const url = window.URL.createObjectURL(pdfBlob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'course.pdf';
+        link.download = `${slugify(this.course)}.pdf`;
         link.click();
         window.URL.revokeObjectURL(url);
       },
