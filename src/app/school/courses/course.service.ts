@@ -169,9 +169,9 @@ export class CourseService {
       .pipe(shareReplay());
   }
 
-  downloadPdf(courseId: number): Observable<any> {
+  downloadPdf(courseId: number): Observable<Blob> {
     return this.http.get(`${this.apiServerUrl}/enrollment/certificate?courseId=${courseId}`, {
-      // responseType: 'blob'  // Ensure you get the PDF as a Blob.
-    });
+      responseType: 'blob'
+    }).pipe(shareReplay());
   }
 }

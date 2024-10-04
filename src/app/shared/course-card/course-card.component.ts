@@ -49,7 +49,7 @@ export class CourseCardComponent {
         const url = window.URL.createObjectURL(pdfBlob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `${slugify(this.course)}.pdf`;
+        link.download = `Certificat_de_fin_de_parcours_${this.course.id}.pdf`;
         link.click();
         window.URL.revokeObjectURL(url);
       },
