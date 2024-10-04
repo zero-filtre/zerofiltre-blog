@@ -88,6 +88,39 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   userProgress: UserProgress = {};
 
+
+
+  // giscusConfig = (lesson: Lesson) => ({
+  //   'data-repo': 'zero-filtre/zerofiltre-blog',
+  //   'data-repo-id': 'R_kgDOGhkG4Q',
+  //   'data-category': 'Announcements',
+  //   'data-category-id': 'DIC_kwDOGhkG4c4CW2nQ',
+  //   'data-mapping': 'specific',
+  //   'data-term': `${lesson.title}`, 
+  //   'data-reactions-enabled': '1',
+  //   'data-input-position': 'top',
+  //   'data-theme': 'light',
+  //   'data-loading': 'lazy',
+  //   crossorigin: 'anonymous',
+  // });
+  
+  giscusConfig = {
+    'data-repo': 'zero-filtre/zerofiltre-blog',
+    'data-repo-id': 'R_kgDOGhkG4Q',
+    'data-category': 'Announcements',
+    'data-category-id': 'DIC_kwDOGhkG4c4CW2nQ',
+    'data-mapping': 'url',
+    'data-strict': '0',
+    'data-reactions-enabled': '1',
+    'data-emit-metadata': '0',
+    'data-input-position': 'none',
+    'data-theme': 'light',
+    'data-lang': 'fr',
+    'data-loading': 'lazy',
+    crossorigin: 'anonymous',
+  };
+
+
   surveyJson = {
     title: 'Dites-nous en 30 secondes ce que vous pensez de ce chapitre',
     elements: [
@@ -227,6 +260,20 @@ export class LessonComponent implements OnInit, OnDestroy {
     return this.courseService.canEditCourse(user, this.course);
   }
 
+  injectGiscus(lesson:Lesson) {
+    const scriptElement: HTMLScriptElement = document.createElement("script");
+
+    scriptElement.src = "https://giscus.app/client.js";
+    scriptElement.async = true;
+
+    for (let key in this.giscusConfig) {
+      scriptElement.setAttribute(key, this.giscusConfig[key]);
+    }
+
+    document.body.appendChild(scriptElement);
+  }
+
+
   @HostListener('document:keydown.control.b', ['$event'])
   @HostListener('document:keydown.meta.b', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
@@ -353,7 +400,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (lesson: Lesson) => {
           this.lesson = lesson;
-
+          this.injectGiscus(lesson)
           const rootUrl = this.router.url.split('/')[1];
           const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
           // this.location.replaceState(sluggedUrl);
@@ -627,6 +674,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           return sub
         })
       )
+      
   }
 
   ngOnDestroy(): void {
