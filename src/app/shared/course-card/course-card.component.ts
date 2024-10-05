@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Course } from 'src/app/school/courses/course';
 import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
 import { CourseService } from 'src/app/school/courses/course.service';
-import { slugify } from 'src/app/services/utilities.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
 
@@ -15,6 +14,7 @@ import { User } from 'src/app/user/user.model';
 })
 export class CourseCardComponent {
   @Input() title: string;
+  @Input() canDownloadCertificate = false;
   @Input() course: Course;
 
   constructor(
