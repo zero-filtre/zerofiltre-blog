@@ -111,7 +111,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     'data-category-id': 'DIC_kwDOGhkG4c4CW2nQ',
     'data-mapping': 'url',
     'data-strict': '0',
-    'data-reactions-enabled': '1',
+    'data-reactions-enabled': '0',
     'data-emit-metadata': '0',
     'data-input-position': 'none',
     'data-theme': 'light',
@@ -260,7 +260,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     return this.courseService.canEditCourse(user, this.course);
   }
 
-  injectGiscus(lesson:Lesson) {
+  injectGiscus() {
     const scriptElement: HTMLScriptElement = document.createElement("script");
 
     scriptElement.src = "https://giscus.app/client.js";
@@ -400,9 +400,10 @@ export class LessonComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (lesson: Lesson) => {
           this.lesson = lesson;
-          this.injectGiscus(lesson)
-          const rootUrl = this.router.url.split('/')[1];
-          const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
+          this.injectGiscus()
+
+          // const rootUrl = this.router.url.split('/')[1];
+          // const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
           // this.location.replaceState(sluggedUrl);
 
           const desc = lesson?.summary || '';
@@ -462,8 +463,8 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.loadingCourse = false;
           this.course = data;
 
-          const rootUrl = this.router.url.split('/')[1];
-          const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(this.lesson)}`
+          // const rootUrl = this.router.url.split('/')[1];
+          // const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(this.lesson)}`
           // this.location.replaceState(sluggedUrl);
         }),
         shareReplay()

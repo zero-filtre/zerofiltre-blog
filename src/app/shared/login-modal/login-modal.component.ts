@@ -77,6 +77,9 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     this.modalService.openSignUpModal()
   }
 
+  public closeModal() {
+    this.modalRef.close();
+  }
 
   ngOnInit(): void {
     this.InitForm();

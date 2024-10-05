@@ -102,19 +102,21 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     
     if (error.status === 0) {
       // Client side Error
-
       errorMessage = 'Une erreur est survenue. Veuillez essayer de nouveau ou contacter le support Zerofiltre (info@zerofiltre.tech)';
     } else {
       // Server side error
-
-      let serverErrorExist = !!error?.error?.error
+      let serverError = JSON.stringify(error?.error)
       
-      if (serverErrorExist) {
-        errorMessage = error.error.error.message;
+      if (!!serverError) {
+        const errorObj = JSON.parse(serverError)
+
+        if (!!errorObj?.error?.message) {
+          errorMessage = errorObj?.error?.message
+        }
 
         if (error.status === 401) {
           this.authService.logout();
-          this.messageService.authError(this.router, errorMessage);
+          this.messageService.authError(errorMessage);
         }
       }
       

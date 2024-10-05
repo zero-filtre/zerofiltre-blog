@@ -59,6 +59,8 @@ export class StudentCoursesListComponent extends BaseCourseListComponent impleme
     return this.courseService.canEditCourse(user, course);
   }
 
+  canDownloadCertificate = false;
+
   sortByTab(tab: string) {
     this.courses = [];
 
@@ -79,6 +81,12 @@ export class StudentCoursesListComponent extends BaseCourseListComponent impleme
   fetchAllCoursesByStatus(status: string) {
     this.loading = true;
     const payload = { pageSize: this.pageItemsLimit, pageNumber: this.pageNumber, completed: status }
+
+    if (status == 'completed') {
+      this.canDownloadCertificate = true;
+    } else {
+      this.canDownloadCertificate = false;
+    }
 
     this.subscription$ = this.courseService
       .findAllSubscribedCourses(payload)

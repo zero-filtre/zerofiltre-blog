@@ -168,4 +168,10 @@ export class CourseService {
     return this.http.patch<any>(`${this.apiServerUrl}/chapter/${chapterId}?toNumber=${position}`, null, httpOptions)
       .pipe(shareReplay());
   }
+
+  downloadPdf(courseId: number): Observable<Blob> {
+    return this.http.get(`${this.apiServerUrl}/enrollment/certificate?courseId=${courseId}`, {
+      responseType: 'blob'
+    }).pipe(shareReplay());
+  }
 }

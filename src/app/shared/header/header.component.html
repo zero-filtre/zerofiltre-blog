@@ -100,7 +100,7 @@
                         class="user-profile-icon flex gap-2.5 items-center justify-center border border-skin-borderBold p-1.5 rounded-full shadow-inner hover:bg-primary-50 hover:bg-opacity-10 transition-all duration-300"
                         aria-label="User profile icon with a menu">
 
-                        <div class="profile-image">
+                        <div class="profile-image w-max">
                             <div *ngIf="currentUsr?.profilePicture" class="flex items-center text-sm space-x-2">
                                 <app-image [classes]="'h-10 w-10 rounded-full'" [sourceUrl]="currentUsr?.profilePicture!"
                                     [alt]="currentUsr?.fullName">
