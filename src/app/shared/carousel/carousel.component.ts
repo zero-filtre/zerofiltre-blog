@@ -1,10 +1,11 @@
 import { Component, HostListener, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Review } from 'src/app/school/courses/course';
+import { Course, Review } from 'src/app/school/courses/course';
 import { AuthService } from 'src/app/user/auth.service';
-import { forkJoin, map, mergeMap, Observable } from 'rxjs';
+import { catchError, forkJoin, map, mergeMap, Observable, of } from 'rxjs';
 import { User } from 'src/app/user/user.model';
 import { SurveyService } from 'src/app/services/survey.service';
+import { CourseService } from 'src/app/school/courses/course.service';
 
 @Component({
   selector: 'app-carousel',
@@ -16,6 +17,7 @@ export class CarouselComponent {
 
   constructor(
     private userService: AuthService,
+    private courseService: CourseService,
     private surveyService: SurveyService,
     @Inject(PLATFORM_ID) private platformId: any,
   ){}
@@ -107,10 +109,10 @@ export class CarouselComponent {
 
   formatReview(review: Review): Observable<Review> {
     const commentHash = {
+      // b: { text: review.chapterExplanations, len: review.chapterExplanations?.replace(/\s+/g, '').length || 0 },
+      // d: { text: review.improvementSuggestion, len: review.improvementSuggestion?.replace(/\s+/g, '').length || 0 },
       a: { text: review.chapterImpressions, len: review.chapterImpressions?.replace(/\s+/g, '').length || 0 },
-      b: { text: review.chapterExplanations, len: review.chapterExplanations?.replace(/\s+/g, '').length || 0 },
-      c: { text: review.whyRecommendingThisCourse, len: review.whyRecommendingThisCourse?.replace(/\s+/g, '').length || 0 },
-      d: { text: review.improvementSuggestion, len: review.improvementSuggestion?.replace(/\s+/g, '').length || 0 },
+      c: { text: review.whyRecommendingThisCourse, len: review.whyRecommendingThisCourse?.replace(/\s+/g, '').length || 0 }
     }
 
     let commentText = '';
@@ -123,36 +125,52 @@ export class CarouselComponent {
       }
     }
 
-    const scoretHash = {
+    const scoreHash = {
       a: review.chapterSatisfactionScore,
-      b: review.chapterSatisfactionScore,
-      c: review.chapterSatisfactionScore,
+      b: review.chapterUnderstandingScore,
+      c: review.overallChapterSatisfaction,
     }
 
     let scoreRate = 0;
     let maxScore = -1;
 
-    for (const key in scoretHash) {
-      if (scoretHash[key] > maxScore) {
-        maxLen = scoretHash[key];
-        scoreRate = scoretHash[key];
+    for (const key in scoreHash) {
+      if (scoreHash[key] > maxScore) {
+        maxLen = scoreHash[key];
+        scoreRate = scoreHash[key];
       }
     }
 
-    
     return this.userService.findUserProfile(review.reviewAuthorId.toString())
       .pipe(
-        map((author: User) => {
-          return {
+        mergeMap((author: User) => {
+          const currentReviewValue = {
             ...review,
             comment: commentText,
             avatar: author.profilePicture,
             role: author.profession,
             stars: scoreRate,
-            name: author.fullName
-          };
+            name: author.fullName,
+          }
+
+          if (!(review.courseId > 0)) {
+            return of(currentReviewValue)
+          }
+
+          return this.courseService.findCourseById(review.courseId)
+            .pipe(
+              map((course: Course) => ({
+                ...currentReviewValue,
+                courseTitle: course.title
+              }))
+            )
+        }),
+        catchError(error => {
+          console.error('Error fetching course or author', error);
+          return of({ ...review, comment: commentText, avatar: '', role: '', stars: 0, name: '', courseTitle: '' });
         })
-      );
+      )
+    
   }
   
   getReviews() {
@@ -168,12 +186,12 @@ export class CarouselComponent {
         map((formattedReviews: Review[]) => {
           if (!this.courseId) {
             return formattedReviews
-            .filter(review => review.comment !== '')
+            .filter(review => (review.comment !== '' && review.comment?.replace(/\s+/g, '').length >= 68))
           } 
 
           return formattedReviews
-            .filter(review => review.comment !== '')
             .filter(review => review.courseId == this.courseId)
+            .filter(review => (review.comment !== '' && review.comment?.replace(/\s+/g, '').length >= 68))
         })
       )
       .subscribe({

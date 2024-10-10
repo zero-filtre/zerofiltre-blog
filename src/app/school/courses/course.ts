@@ -73,6 +73,7 @@ export type SearchResultsData = {
 export type Review =  {
     id?: number,
     courseId?: number,
+    courseTitle?: string,
     
     chapterExplanations?: string,
     chapterSatisfactionScore?: number,

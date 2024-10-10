@@ -1,10 +1,10 @@
 <figure class="flex flex-col bg-skin-card rounded-lg shadow-lg p-6 text-sm text-secondary overflow-hidden h-full">
     <div class="flex items-center gap-4">
-        <app-image [classes]="'object-cover size-14 rounded-full'" [sourceUrl]="userImage" [alt]="'avatar homme noir'"></app-image>
+        <app-image [classes]="'object-cover size-14 rounded-full'" [sourceUrl]="review.avatar" [alt]="'avatar homme noir'"></app-image>
         <figcaption class="">
-            <div class="text-primary-600 font-medium text-base">{{ userName }}</div>
+            <div class="text-primary-600 font-medium text-base">{{ review.name }}</div>
             <div class="mt-0.5 font-medium">
-                {{ userRole }}
+                {{ review.role }}
             </div>
         </figcaption>
     </div>
@@ -12,12 +12,12 @@
     <div class="pt-5">
         <div class="flex items-center mb-1">
             <ng-container *ngFor="let star of starsArray; let i = index">
-                <svg *ngIf="i < userStars" class="h-5 w-5 text-accent-400" xmlns="http://www.w3.org/2000/svg"
+                <svg *ngIf="i < review.stars" class="h-5 w-5 text-accent-400" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20" fill="currentColor">
                     <path
                         d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.04 3.187a1 1 0 00.95.69h3.356c.969 0 1.371 1.24.588 1.81l-2.717 1.975a1 1 0 00-.364 1.118l1.04 3.187c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.717 1.975c-.784.57-1.839-.197-1.54-1.118l1.04-3.187a1 1 0 00-.364-1.118L4.702 8.615c-.783-.57-.38-1.81.588-1.81h3.356a1 1 0 00.95-.69l1.04-3.187z" />
                 </svg>
-                <svg *ngIf="i >= userStars" class="h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
+                <svg *ngIf="i >= review.stars" class="h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20" fill="currentColor">
                     <path
                         d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.04 3.187a1 1 0 00.95.69h3.356c.969 0 1.371 1.24.588 1.81l-2.717 1.975a1 1 0 00-.364 1.118l1.04 3.187c.3.921-.755 1.688-1.54 1.118L10 13.347l-2.717 1.975c-.784.57-1.839-.197-1.54-1.118l1.04-3.187a1 1 0 00-.364-1.118L4.702 8.615c-.783-.57-.38-1.81.588-1.81h3.356a1 1 0 00.95-.69l1.04-3.187z" />
@@ -27,8 +27,15 @@
 
         <blockquote>
             <p class="leading-6 line-clamp-5">
-                “{{ userComment }}”
+                “{{ review.comment }}”
             </p>
         </blockquote>
+
+        <div *ngIf="review.courseTitle" class="mt-3 font-bold flex items-start gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                <path d="M10.75 16.82A7.462 7.462 0 0 1 15 15.5c.71 0 1.396.098 2.046.282A.75.75 0 0 0 18 15.06v-11a.75.75 0 0 0-.546-.721A9.006 9.006 0 0 0 15 3a8.963 8.963 0 0 0-4.25 1.065V16.82ZM9.25 4.065A8.963 8.963 0 0 0 5 3c-.85 0-1.673.118-2.454.339A.75.75 0 0 0 2 4.06v11a.75.75 0 0 0 .954.721A7.506 7.506 0 0 1 5 15.5c1.579 0 3.042.487 4.25 1.32V4.065Z" />
+            </svg>
+            {{ review.courseTitle }}
+        </div>
     </div>
 </figure>
