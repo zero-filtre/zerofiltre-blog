@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Review } from 'src/app/school/courses/course';
 
 @Component({
   selector: 'app-review',
@@ -6,11 +7,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./review.component.css']
 })
 export class ReviewComponent {
-  @Input() userImage!: string;
-  @Input() userName!: string;
-  @Input() userRole!: string;
-  @Input() userComment!: string;
-  @Input() userStars!: number;
+
+  @Input() review: Review;
 
   starsArray: number[] = Array(5).fill(0);
 
@@ -22,8 +20,6 @@ export class ReviewComponent {
   dafaultAvatars = [this.avatarHommeNoir, this.avatarFemmeNoir, this.avatarHommeBlanc, this.avatarFemmeBlanche]
 
   ngOnInit() {
-    // if (!this.userImage) {
-    //   this.userImage = this.dafaultAvatars[Math.floor(Math.random() * this.dafaultAvatars.length)]
-    // }
+    // Do nothing
   }
 }
