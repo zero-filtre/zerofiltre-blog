@@ -98,7 +98,7 @@ export class CarouselComponent {
       role: 'Apprenant',
       stars: 4
     }
-  ];
+  ].map(rev => ({...rev, courseTitle: 'Mettez (enfin) en place le Domain Driven Design'}))
 
   reviewsArray: Review[] = [...this.defaultReviews];
   loading: boolean;
