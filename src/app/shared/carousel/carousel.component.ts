@@ -1,10 +1,11 @@
 import { Component, HostListener, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Review } from 'src/app/school/courses/course';
+import { Course, Review } from 'src/app/school/courses/course';
 import { AuthService } from 'src/app/user/auth.service';
-import { forkJoin, map, mergeMap, Observable } from 'rxjs';
+import { catchError, forkJoin, map, mergeMap, Observable, of } from 'rxjs';
 import { User } from 'src/app/user/user.model';
 import { SurveyService } from 'src/app/services/survey.service';
+import { CourseService } from 'src/app/school/courses/course.service';
 
 @Component({
   selector: 'app-carousel',
@@ -16,6 +17,7 @@ export class CarouselComponent {
 
   constructor(
     private userService: AuthService,
+    private courseService: CourseService,
     private surveyService: SurveyService,
     @Inject(PLATFORM_ID) private platformId: any,
   ){}
@@ -139,20 +141,36 @@ export class CarouselComponent {
       }
     }
 
-    
     return this.userService.findUserProfile(review.reviewAuthorId.toString())
       .pipe(
-        map((author: User) => {
-          return {
+        mergeMap((author: User) => {
+          const currentReviewValue = {
             ...review,
             comment: commentText,
             avatar: author.profilePicture,
             role: author.profession,
             stars: scoreRate,
-            name: author.fullName
-          };
+            name: author.fullName,
+          }
+
+          if (!(review.courseId > 0)) {
+            return of(currentReviewValue)
+          }
+
+          return this.courseService.findCourseById(review.courseId)
+            .pipe(
+              map((course: Course) => ({
+                ...currentReviewValue,
+                courseTitle: course.title
+              }))
+            )
+        }),
+        catchError(error => {
+          console.error('Error fetching course or author', error);
+          return of({ ...review, comment: commentText, avatar: '', role: '', stars: 0, name: '', courseTitle: '' });
         })
-      );
+      )
+    
   }
   
   getReviews() {
