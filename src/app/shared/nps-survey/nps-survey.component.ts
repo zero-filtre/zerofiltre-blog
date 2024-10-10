@@ -38,13 +38,12 @@ export class NpsSurveyComponent {
       .saveSurveyResults(resultData)
       .subscribe({
         next: data => {
-          options.showSaveSuccess("Enregistré avec succès!");
-          this.notify.openSnackBarSuccess("Merci pour votre avis!", "")
+          options.showSaveSuccess("Merci pour votre avis 🤗");
+          // this.notify.openSnackBarSuccess("Merci pour votre avis!", "")
         },
         error: (err: HttpErrorResponse) => {
-          console.error(err);
-          options.showSaveError("Echec d'enregistrement");
-          this.notify.openSnackBarError("Echec d'enregistrement, veuillez réessayer", "Ok")
+          options.showSaveError("Echec d'enregistrement, veuillez réessayer");
+          // this.notify.openSnackBarError("Echec d'enregistrement, veuillez réessayer", "Ok")
         },
         complete: () => setTimeout(() => {
           this.dialogRef.close()
@@ -58,28 +57,24 @@ export class NpsSurveyComponent {
     // survey.setValue("courseId", this.course.id);
     survey.setValue("chapterId", this.chapter.id);
 
-    //   const resultData = Object.keys(survey.data)
-    //     .map((key: string) => {
-    //       const question = survey.getQuestionByName(key);
-    //       if (!!question) {
-    //         return ({
-    //           name: key,
-    //           value: question.value,
-    //           title: question.displayValue,
-    //           displayValue: question.displayValue
-    //         })
-    //       }
-    //       return null
-    //     }).filter(item => item !== null);
+    const surveyData = survey.data
+    const recommendCourseValue = surveyData["recommendCourse"]
 
-    const resultData = survey.data
-    const recommendCourseValue = resultData["recommendCourse"]
-
-    if (recommendCourseValue !== null) {
-      resultData["recommendCourse"] = recommendCourseValue == "Oui" ? true : false
+    if (recommendCourseValue !== undefined) {
+      surveyData["recommendCourse"] = recommendCourseValue == "Oui" ? true : false
     }
 
-    this.saveResults(resultData, options);
+    const dataToSend = {
+      ...surveyData,
+      recommendCourse: true,
+      chapterUnderstandingScore: 5,
+      favoriteLearningToolOfTheChapter: [],
+      reasonFavoriteLearningToolOfTheChapter: "",
+      overallChapterSatisfaction: 5,
+      improvementSuggestion: "",
+    }
+
+    this.saveResults(dataToSend, options);
   }
 
   ngOnInit() {
