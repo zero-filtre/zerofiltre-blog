@@ -107,10 +107,10 @@ export class CarouselComponent {
 
   formatReview(review: Review): Observable<Review> {
     const commentHash = {
+      // b: { text: review.chapterExplanations, len: review.chapterExplanations?.replace(/\s+/g, '').length || 0 },
+      // d: { text: review.improvementSuggestion, len: review.improvementSuggestion?.replace(/\s+/g, '').length || 0 },
       a: { text: review.chapterImpressions, len: review.chapterImpressions?.replace(/\s+/g, '').length || 0 },
-      b: { text: review.chapterExplanations, len: review.chapterExplanations?.replace(/\s+/g, '').length || 0 },
-      c: { text: review.whyRecommendingThisCourse, len: review.whyRecommendingThisCourse?.replace(/\s+/g, '').length || 0 },
-      d: { text: review.improvementSuggestion, len: review.improvementSuggestion?.replace(/\s+/g, '').length || 0 },
+      c: { text: review.whyRecommendingThisCourse, len: review.whyRecommendingThisCourse?.replace(/\s+/g, '').length || 0 }
     }
 
     let commentText = '';
@@ -123,19 +123,19 @@ export class CarouselComponent {
       }
     }
 
-    const scoretHash = {
+    const scoreHash = {
       a: review.chapterSatisfactionScore,
-      b: review.chapterSatisfactionScore,
-      c: review.chapterSatisfactionScore,
+      b: review.chapterUnderstandingScore,
+      c: review.overallChapterSatisfaction,
     }
 
     let scoreRate = 0;
     let maxScore = -1;
 
-    for (const key in scoretHash) {
-      if (scoretHash[key] > maxScore) {
-        maxLen = scoretHash[key];
-        scoreRate = scoretHash[key];
+    for (const key in scoreHash) {
+      if (scoreHash[key] > maxScore) {
+        maxLen = scoreHash[key];
+        scoreRate = scoreHash[key];
       }
     }
 
@@ -168,12 +168,12 @@ export class CarouselComponent {
         map((formattedReviews: Review[]) => {
           if (!this.courseId) {
             return formattedReviews
-            .filter(review => review.comment !== '')
+            .filter(review => (review.comment !== '' && review.comment?.replace(/\s+/g, '').length >= 68))
           } 
 
           return formattedReviews
-            .filter(review => review.comment !== '')
             .filter(review => review.courseId == this.courseId)
+            .filter(review => (review.comment !== '' && review.comment?.replace(/\s+/g, '').length >= 68))
         })
       )
       .subscribe({

@@ -123,35 +123,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   surveyJson = {
     title: 'Dites-nous en 30 secondes ce que vous pensez de ce chapitre',
-    elements: [
-      {
-        name: "chapterExplanations",
-        title: "Comment évalueriez-vous la clarté des explications fournies dans ce chapitre ?",
-        type: "radiogroup",
-        choices: [
-          {
-            value: 'Pas clair',
-            text: 'Pas clair'
-          },
-          {
-            value: 'Peu clair',
-            text: 'Peu clair'
-          },
-          {
-            value: 'Moyennement clair',
-            text: 'Moyennement clair'
-          },
-          {
-            value: 'Très clair',
-            text: 'Très clair'
-          },
-          {
-            value: 'Extrêmement clair',
-            text: 'Extrêmement clair'
-          }
-        ],
-        defaultValue: 'Extrêmement clair'
-      }, 
+    elements: [ 
       {
         name: 'chapterSatisfactionScore',
         title: 'À quel point avez-vous trouvé ce chapitre intéressant ?',
@@ -163,65 +135,95 @@ export class LessonComponent implements OnInit, OnDestroy {
         displayMode: "buttons"
       },
       {
-        name: "chapterUnderstandingScore",
-        type: "rating",
-        title: "Évaluez votre compréhension du chapitre.",
-        rateMin: 0,
-        rateMax: 5,
-        defaultValue: '5'
-      },
-      {
         name: "chapterImpressions",
         title: "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
         type: "comment",
         maxLength: 500
       },
       {
-        name: "recommendCourse",
-        type: "boolean",
-        title: "Recommanderiez-vous ce cours à un ami ou un collègue ?",
-        valueTrue: "Oui",
-        valueFalse: "Non",
-        defaultValue: "Oui"
-      },
-      {
         name: "whyRecommendingThisCourse",
-        title: "Si oui, pourquoi ?",
+        // title: "Si oui, pourquoi ?",
+        title: "Dites-nous pourquoi vous recommanderiez ce cours à un ami ou un collègue",
         type: "comment",
         maxLength: 500
       },
       {
-        name: "favoriteLearningToolOfTheChapter",
-        type: "checkbox",
-        title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
-        choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
-        isRequired: false,
-        colCount: 2,
-        showNoneItem: false,
-        showOtherItem: false,
-        showSelectAllItem: true,
-        separateSpecialChoices: true,
+        name: "chapterExplanations",
+        title: "Comment évalueriez-vous la clarté des explications fournies dans ce chapitre ?",
+        type: "radiogroup",
+        choices: [
+          // {
+          //   value: 'Pas clair',
+          //   text: 'Pas clair'
+          // },
+          {
+            value: 'Peu clair',
+            text: 'Peu clair'
+          },
+          {
+            value: 'Moyennement clair',
+            text: 'Moyennement clair'
+          },
+          // {
+          //   value: 'Très clair',
+          //   text: 'Très clair'
+          // },
+          {
+            value: 'Extrêmement clair',
+            text: 'Extrêmement clair'
+          }
+        ],
+        defaultValue: 'Extrêmement clair'
       },
-      {
-        name: "reasonFavoriteLearningToolOfTheChapter",
-        title: "Pouvez-vous expliquer comment cela vous a aidé ?",
-        type: "comment",
-        maxLength: 500
-      },
-      {
-        name: "overallChapterSatisfaction",
-        type: "rating",
-        title: "Sur une échelle de 1 à 5, quelle est votre satisfaction globale concernant ce chapitre ?",
-        rateMin: 0,
-        rateMax: 5,
-        defaultValue: '5'
-      },
-      {
-        name: "improvementSuggestion",
-        title: "Quelles améliorations suggéreriez-vous ?",
-        type: 'comment',
-        maxLength: 500
-      }
+
+      // {
+      //   name: "chapterUnderstandingScore",
+      //   type: "rating",
+      //   title: "Évaluez votre compréhension du chapitre.",
+      //   rateMin: 0,
+      //   rateMax: 5,
+      //   defaultValue: '5'
+      // },
+      // {
+      //   name: "recommendCourse",
+      //   type: "boolean",
+      //   title: "Recommanderiez-vous ce cours à un ami ou un collègue ?",
+      //   valueTrue: "Oui",
+      //   valueFalse: "Non",
+      //   defaultValue: "Oui"
+      // },
+      // {
+      //   name: "favoriteLearningToolOfTheChapter",
+      //   type: "checkbox",
+      //   title: "Quels aspects du chapitre vous ont le plus aidé à apprendre ?",
+      //   choices: ["Vidéos explicatives", "Description détaillée", "Exercices pratiques", "Discussions interactives"],
+      //   isRequired: false,
+      //   colCount: 2,
+      //   showNoneItem: false,
+      //   showOtherItem: false,
+      //   showSelectAllItem: true,
+      //   separateSpecialChoices: true,
+      // },
+      // {
+      //   name: "reasonFavoriteLearningToolOfTheChapter",
+      //   title: "Pouvez-vous expliquer comment cela vous a aidé ?",
+      //   type: "comment",
+      //   maxLength: 500
+      // },
+      // {
+      //   name: "overallChapterSatisfaction",
+      //   type: "rating",
+      //   title: "Sur une échelle de 1 à 5, quelle est votre satisfaction globale concernant ce chapitre ?",
+      //   rateMin: 0,
+      //   rateMax: 5,
+      //   defaultValue: '5'
+      // },
+      // {
+      //   name: "improvementSuggestion",
+      //   title: "Quelles améliorations suggéreriez-vous ?",
+      //   type: 'comment',
+      //   maxLength: 500
+      // }
     ]
   };
 
@@ -580,7 +582,6 @@ export class LessonComponent implements OnInit, OnDestroy {
             chapterLessonsDurations.push(duration)
             if (i == chapterLastLessonIndex) {
               this.durations.push(chapterLessonsDurations)
-              console.log('DURATIONS VALID: ', this.durations);
             }
           })
 
