@@ -55,22 +55,25 @@ export class HeaderComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if ((event.ctrlKey && event.key === 'k') || 
-        (event.metaKey && event.key === 'k') || 
-        event.key === '/') {
-      event.preventDefault();
-      this.toggleSearchModal();
-    }
-  }
+    if ((event.ctrlKey && event.key === 'k') || (event.metaKey && event.key === 'k') || event.key === '/') {
+      const target = event.target as HTMLElement;
 
-  toggleSearchModal() {
-    this.isSearchModalOpen = !this.isSearchModalOpen;
-    this.modaleService.toggleSearchModal(this.isSearchModalOpen);
+      if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA') {
+        event.preventDefault();
+        this.openSearchPopup();
+      }
+
+    }
+    
   }
 
   openSearchPopup() {
-    this.isSearchModalOpen = !this.isSearchModalOpen;
-    this.modaleService.openSearchModal();
+    this.isSearchModalOpen = true;
+    const dialogRef = this.modaleService.openSearchModal();
+    
+    dialogRef.afterClosed().subscribe(() => {
+      this.isSearchModalOpen = false;
+    });
   }
 
 }

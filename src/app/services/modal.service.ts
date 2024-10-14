@@ -35,21 +35,13 @@ export class ModalService {
   }
 
   public openSearchModal() {
-    this.dialogRef.open(SearchPopupComponent, {
+    return this.dialogRef.open(SearchPopupComponent, {
       panelClass: 'popup-search',
       backdropClass: 'popup-search-overlay',
       disableClose: false,
       minHeight: '400px',
       width: '700px',
     });
-  }
-
-  public toggleSearchModal(isOpen: boolean) {
-    if (isOpen) {
-      this.openSearchModal();
-    } else {
-      this.dialogRef.closeAll();
-    }
   }
 
   public openLoginModal() {
