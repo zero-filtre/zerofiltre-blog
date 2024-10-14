@@ -93,7 +93,7 @@ export class CarouselComponent {
     },
     {
       comment: "J'ai vraiment apprécié le parcours sur le Domain Driven Design. Il m'a permis de mieux comprendre les concepts clés du DDD et comment les mettre en pratique. Le formateur est très compétent et passionné par le sujet. Je le recommande vivement à tous ceux qui souhaitent en savoir plus sur le DDD.",
-      avatar: this.avatarFemmeNoir,
+      avatar: this.avatarHommeNoir,
       name: 'GUEI Roland',
       role: 'Apprenant',
       stars: 4
