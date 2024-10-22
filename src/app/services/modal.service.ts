@@ -6,6 +6,7 @@ import { SearchPopupComponent } from '../shared/search-popup/search-popup.compon
 import { LoginModalComponent } from '../shared/login-modal/login-modal.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignupModalComponent } from '../shared/signup-modal/signup-modal.component';
+import { TipsModalComponent } from '../tips-modal/tips-modal.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -56,6 +57,16 @@ export class ModalService {
     this.dialogRef.open(SignupModalComponent, {
       panelClass: 'popup-login',
       backdropClass: 'popup-search-overlay',
+      width: '500px',
+    });
+  }
+
+  public openTipsModal(tip: string) {
+    this.dialogRef.open(TipsModalComponent, {
+      data: tip,
+      panelClass: 'popup-login',
+      backdropClass: 'popup-search-overlay',
+      disableClose: true,
       width: '500px',
     });
   }
