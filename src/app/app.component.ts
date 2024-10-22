@@ -241,6 +241,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.modalService.checkUserEmail(this.authService.currentUsr);
     }
 
-    this.showTip();
+    // this.showTip();
   }
 }
