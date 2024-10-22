@@ -88,10 +88,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  // openTipsModal(): void{
-
-  // }
-
   ngOnDestroy(): void {
     this.seo.disableTransparentHeader();
   }
