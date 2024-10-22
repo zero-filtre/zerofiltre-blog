@@ -5,10 +5,6 @@ import { LoadEnvService } from '../services/load-env.service';
 import { SeoService } from '../services/seo.service';
 import { SurveyService } from '../services/survey.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TipsService } from '../services/tips.service';
-import { response } from 'express';
-import { error } from 'console';
-import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-home-page',
@@ -44,8 +40,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private seo: SeoService,
     private reviewService: SurveyService,
-    private tipsService: TipsService,
-    private modalService: ModalService
   ) {}
 
   fetchReviews() {
@@ -67,25 +61,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     });
 
     this.seo.enanableTransparentHeader();
-
-    this.showTip();
-  }
-
-  showTip() {
-    const lastShownDate = localStorage.getItem('lastTipDate');
-    const today = new Date().toISOString().split('T')[0];
-    if (lastShownDate !== today) {
-      this.tipsService.getTipOfTheDay().subscribe(
-        (response: string) => {
-          this.modalService.openTipsModal(response);
-
-          localStorage.setItem('lastTipDate', today);
-        },
-        (error) => {
-          console.error('Error fetching tip of the day:', error);
-        }
-      );
-    }
   }
 
   ngOnDestroy(): void {

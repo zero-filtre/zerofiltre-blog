@@ -29,6 +29,7 @@ import {
 import { LoadEnvService } from './services/load-env.service';
 import { environment } from 'src/environments/environment';
 import { GeoLocationService } from './services/geolocaton.service';
+import { TipsService } from './services/tips.service';
 
 declare var Prism: any;
 
@@ -42,8 +43,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.logCopySuccessMessage(event);
   }
 
-  readonly servicesUrl = environment.servicesUrl
-  readonly coursesUrl = environment.coursesUrl
+  readonly servicesUrl = environment.servicesUrl;
+  readonly coursesUrl = environment.coursesUrl;
   readonly blogUrl = environment.blogUrl;
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
@@ -84,7 +85,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     public authService: AuthService,
     private fileUploadService: FileUploadService,
     private modalService: ModalService,
-    public geoLocationService: GeoLocationService
+    public geoLocationService: GeoLocationService,
+    private tipsService: TipsService
   ) {
     this.setBrowserTranslationConfigs();
   }
@@ -93,7 +95,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (routerEvent instanceof NavigationStart) {
       this.changingRoute = true;
     }
-    if (routerEvent instanceof NavigationEnd ||
+    if (
+      routerEvent instanceof NavigationEnd ||
       routerEvent instanceof NavigationCancel ||
       routerEvent instanceof NavigationError
     ) {
@@ -194,17 +197,32 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.router.events
       .pipe(filter((event): event is RouterEvent => event instanceof RouterEvent))
-      .subscribe(e => {
+      .subscribe((e) => {
         setTimeout(() => {
           this.checkRouteChange(e);
         }, 0);
-      })
+      });
   }
 
   subscribedCourses$: Observable<any[]>;
 
   subscribeToPro() {
     this.router.navigateByUrl('/pro');
+  }
+
+  showTip() {
+    const lastShownDate = localStorage.getItem('lastTipDate');
+    const today = new Date().toISOString().split('T')[0];
+    if (lastShownDate !== today) {
+      this.tipsService.getTipOfTheDay().subscribe({
+        next: (response: string) => {
+          this.modalService.openTipsModal(response);
+        },
+        error: (error) => {
+          console.error('Error fetching tip of the day:', error);
+        },
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -220,7 +238,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     if (isPlatformBrowser(this.platformId) && this.authService.currentUsr) {
       this.fileUploadService.xToken$.subscribe();
-      this.modalService.checkUserEmail(this.authService.currentUsr)
+      this.modalService.checkUserEmail(this.authService.currentUsr);
     }
+
+    this.showTip();
   }
 }
