@@ -45,7 +45,7 @@ export class CourseEnrollmentResolver implements Resolve<boolean> {
             const subIds = JSON.parse(localStorage?.getItem('_subs'));
             localStorage?.setItem('_subs', JSON.stringify(subIds.filter(id => id != courseID)));
 
-            if (!this.authService.isPro) return of(true);
+            // if (!this.authService.isPro) return of(true);
 
             return this.courseService.subscribeToCourse(+courseID)
               .pipe(
