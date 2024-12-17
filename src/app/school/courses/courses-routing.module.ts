@@ -17,9 +17,9 @@ const routes: Routes = [
     path: ':course_id',
     component: CourseDetailPageComponent,
     canActivate: [CourseAccessGuardGuard],
-    resolve: {
-      sub: CourseEnrollmentResolver
-    },
+    // resolve: {
+    //   sub: CourseEnrollmentResolver
+    // },
   },
   {
     path: ':course_id/edit',

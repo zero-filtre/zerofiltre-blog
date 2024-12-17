@@ -41,7 +41,7 @@ export class CourseService {
 
   canAccessCourse(user: User, course: Course): boolean {
     if (!user) return false;
-    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) || this.isSubscriber(course?.id);
+    return course?.author?.id === user.id || course?.editorIds?.includes(user.id) || this.isAdminUser(user) || this.isSubscriber(course?.id) || this.isProUser(user);
   }
 
   canEditCourse(user: User, course: Course): boolean {

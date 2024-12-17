@@ -25,12 +25,12 @@ import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { NpsSurveyComponent } from 'src/app/shared/nps-survey/nps-survey.component';
-
+import { EnrollmentService } from 'src/app/services/enrollment.service';
 
 @Component({
   selector: 'app-course-content',
   templateUrl: './lesson.component.html',
-  styleUrls: ['./lesson.component.css']
+  styleUrls: ['./lesson.component.css'],
 })
 export class LessonComponent implements OnInit, OnDestroy {
   readonly accessToken = environment.vimeoToken;
@@ -64,7 +64,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
-  courseEnrollment$: Observable<CourseEnrollment>;
+  courseEnrollment$: Observable<boolean | CourseEnrollment>;
   prevLesson$: Observable<any>;
   nextLesson$: Observable<any>;
   nextLesson: Lesson;
@@ -88,22 +88,20 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   userProgress: UserProgress = {};
 
-
-
   // giscusConfig = (lesson: Lesson) => ({
   //   'data-repo': 'zero-filtre/zerofiltre-blog',
   //   'data-repo-id': 'R_kgDOGhkG4Q',
   //   'data-category': 'Announcements',
   //   'data-category-id': 'DIC_kwDOGhkG4c4CW2nQ',
   //   'data-mapping': 'specific',
-  //   'data-term': `${lesson.title}`, 
+  //   'data-term': `${lesson.title}`,
   //   'data-reactions-enabled': '1',
   //   'data-input-position': 'top',
   //   'data-theme': 'light',
   //   'data-loading': 'lazy',
   //   crossorigin: 'anonymous',
   // });
-  
+
   giscusConfig = {
     'data-repo': 'zero-filtre/zerofiltre-blog',
     'data-repo-id': 'R_kgDOGhkG4Q',
@@ -120,37 +118,39 @@ export class LessonComponent implements OnInit, OnDestroy {
     crossorigin: 'anonymous',
   };
 
-
   surveyJson = {
     title: 'Dites-nous en 30 secondes ce que vous pensez de ce chapitre',
-    elements: [ 
+    elements: [
       {
         name: 'chapterSatisfactionScore',
         title: 'À quel point avez-vous trouvé ce chapitre intéressant ?',
         type: 'rating',
         defaultValue: '5',
-        rateType: "stars",
+        rateType: 'stars',
         rateCount: 5,
         rateMax: 5,
-        displayMode: "buttons"
+        displayMode: 'buttons',
       },
       {
-        name: "chapterImpressions",
-        title: "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
-        type: "comment",
-        maxLength: 500
+        name: 'chapterImpressions',
+        title:
+          "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
+        type: 'comment',
+        maxLength: 500,
       },
       {
-        name: "whyRecommendingThisCourse",
+        name: 'whyRecommendingThisCourse',
         // title: "Si oui, pourquoi ?",
-        title: "Dites-nous pourquoi vous recommanderiez ce cours à un ami ou un collègue",
-        type: "comment",
-        maxLength: 500
+        title:
+          'Dites-nous pourquoi vous recommanderiez ce cours à un ami ou un collègue',
+        type: 'comment',
+        maxLength: 500,
       },
       {
-        name: "chapterExplanations",
-        title: "Comment évalueriez-vous la clarté des explications fournies dans ce chapitre ?",
-        type: "radiogroup",
+        name: 'chapterExplanations',
+        title:
+          'Comment évalueriez-vous la clarté des explications fournies dans ce chapitre ?',
+        type: 'radiogroup',
         choices: [
           // {
           //   value: 'Pas clair',
@@ -158,11 +158,11 @@ export class LessonComponent implements OnInit, OnDestroy {
           // },
           {
             value: 'Peu clair',
-            text: 'Peu clair'
+            text: 'Peu clair',
           },
           {
             value: 'Moyennement clair',
-            text: 'Moyennement clair'
+            text: 'Moyennement clair',
           },
           // {
           //   value: 'Très clair',
@@ -170,10 +170,10 @@ export class LessonComponent implements OnInit, OnDestroy {
           // },
           {
             value: 'Extrêmement clair',
-            text: 'Extrêmement clair'
-          }
+            text: 'Extrêmement clair',
+          },
         ],
-        defaultValue: 'Extrêmement clair'
+        defaultValue: 'Extrêmement clair',
       },
 
       // {
@@ -224,7 +224,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       //   type: 'comment',
       //   maxLength: 500
       // }
-    ]
+    ],
   };
 
   constructor(
@@ -245,6 +245,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     private slugify: SlugUrlPipe,
     private location: Location,
     private modalService: MatDialog,
+    private enrollmentService: EnrollmentService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -254,18 +255,20 @@ export class LessonComponent implements OnInit, OnDestroy {
   private _mobileQueryListener: () => void;
 
   get canAccessCourse() {
-    const user = this.authService?.currentUsr as User
-    return this.courseService.canAccessCourse(user, this.course) || this.isSubscriber
+    const user = this.authService?.currentUsr as User;
+    return (
+      this.courseService.canAccessCourse(user, this.course) || this.isSubscriber
+    );
   }
   get canEditCourse() {
-    const user = this.authService?.currentUsr as User
+    const user = this.authService?.currentUsr as User;
     return this.courseService.canEditCourse(user, this.course);
   }
 
   injectGiscus() {
-    const scriptElement: HTMLScriptElement = document.createElement("script");
+    const scriptElement: HTMLScriptElement = document.createElement('script');
 
-    scriptElement.src = "https://giscus.app/client.js";
+    scriptElement.src = 'https://giscus.app/client.js';
     scriptElement.async = true;
 
     for (let key in this.giscusConfig) {
@@ -274,7 +277,6 @@ export class LessonComponent implements OnInit, OnDestroy {
 
     document.body.appendChild(scriptElement);
   }
-
 
   @HostListener('document:keydown.control.b', ['$event'])
   @HostListener('document:keydown.meta.b', ['$event'])
@@ -294,38 +296,62 @@ export class LessonComponent implements OnInit, OnDestroy {
     // const isCourseFullyCompleted = this.completeProgressVal == Math.round(100 * ((this.lessonsCount - 1) / this.lessonsCount)) ? true : false
 
     if (!this.completed) {
-      this.courseService.markLessonAsComplete(data)
-        .pipe(catchError(err => {
-          this.isCompleting = false;
-          return throwError(() => err)
-        }))
-        .subscribe(data => {
+      this.courseService
+        .markLessonAsComplete(data)
+        .pipe(
+          catchError((err) => {
+            this.isCompleting = false;
+            return throwError(() => err);
+          })
+        )
+        .subscribe((data) => {
           this.isCompleting = false;
           this.completed = true;
-          this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
-          
-          if (this.nextLesson) this.router.navigateByUrl(`cours/${this.slugify.transform(this.course)}/${this.slugify.transform(this.nextLesson)}`);
-          this.handleLessonCompletion(this.lesson.id, this.currentChapter, this.userProgress)
-        })
+          this.completeProgressVal = Math.round(
+            100 *
+            ([...new Set(data.completedLessons)].length / this.lessonsCount)
+          );
+
+          if (this.nextLesson)
+            this.router.navigateByUrl(
+              `cours/${this.slugify.transform(
+                this.course
+              )}/${this.slugify.transform(this.nextLesson)}`
+            );
+          this.handleLessonCompletion(
+            this.lesson.id,
+            this.currentChapter,
+            this.userProgress
+          );
+        });
     } else {
-      this.courseService.markLessonAsInComplete(data)
-        .pipe(catchError(err => {
-          this.isCompleting = false;
-          return throwError(() => err)
-        }))
-        .subscribe(data => {
+      this.courseService
+        .markLessonAsInComplete(data)
+        .pipe(
+          catchError((err) => {
+            this.isCompleting = false;
+            return throwError(() => err);
+          })
+        )
+        .subscribe((data) => {
           this.isCompleting = false;
           this.completed = false;
-          this.completeProgressVal = Math.round(100 * ([...new Set(data.completedLessons)].length / this.lessonsCount));
-          this.userProgress[this.currentChapter.id].completedLessons.delete(this.lesson.id);
+          this.completeProgressVal = Math.round(
+            100 *
+            ([...new Set(data.completedLessons)].length / this.lessonsCount)
+          );
+          this.userProgress[this.currentChapter.id].completedLessons.delete(
+            this.lesson.id
+          );
           console.log('USER PROGRESS: ', this.userProgress);
-        })
+        });
     }
   }
 
   loadCompleteProgressBar(lessonsIds: number[]) {
     const completedLessonCount = lessonsIds?.length;
-    this.completeProgressVal = Math.round(100 * (completedLessonCount / this.lessonsCount)) || 0
+    this.completeProgressVal =
+      Math.round(100 * (completedLessonCount / this.lessonsCount)) || 0;
   }
 
   isLessonCompleted(lesson: Lesson): boolean {
@@ -336,14 +362,16 @@ export class LessonComponent implements OnInit, OnDestroy {
     const chapterProgress = userProgress[chapter.id];
     if (!chapterProgress) return false;
 
-    return chapter.lessons.every((lesson: Lesson) => chapterProgress.completedLessons.has(lesson.id));
+    return chapter.lessons.every((lesson: Lesson) =>
+      chapterProgress.completedLessons.has(lesson.id)
+    );
   }
 
   showNPSFormDialog() {
     const modalRef = this.modalService.open(NpsSurveyComponent, {
       panelClass: 'popup-panel-nps',
       backdropClass: 'popup-search-overlay',
-      disableClose: true
+      disableClose: true,
     });
 
     modalRef.componentInstance.jsonSchema = this.surveyJson;
@@ -351,7 +379,11 @@ export class LessonComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.chapter = this.currentChapter;
   }
 
-  handleLessonCompletion(lessonId: number, chapter: Chapter, userProgress: UserProgress) {
+  handleLessonCompletion(
+    lessonId: number,
+    chapter: Chapter,
+    userProgress: UserProgress
+  ) {
     if (!userProgress[chapter.id]) {
       userProgress[chapter.id] = {
         completedLessons: new Set<number>(),
@@ -366,18 +398,20 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   findResourcesByType(type: string[] | string): Resource[] {
-    const resources = this.lesson.resources
+    const resources = this.lesson.resources;
     if (Array.isArray(type)) {
-      return resources.filter(res => type.includes(res.type))
+      return resources.filter((res) => type.includes(res.type));
     } else {
-      return resources.filter(res => res.type === type)
+      return resources.filter((res) => res.type === type);
     }
   }
 
   fetchCoursesResourceData(resources: Resource[]) {
-    const ids = resources.map(res => parseInt(res.url.split('/').pop() || ''))
+    const ids = resources.map((res) =>
+      parseInt(res.url.split('/').pop() || '')
+    );
 
-    const observables = ids.map(id => this.courseService.findCourseById(id));
+    const observables = ids.map((id) => this.courseService.findCourseById(id));
 
     forkJoin(observables).subscribe({
       next: (courses: Course[]) => {
@@ -385,12 +419,11 @@ export class LessonComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error fetching course data:', error);
-      }
+      },
     });
   }
 
   loadLessonData(lessonId: any) {
-
     this.loading = true;
 
     if (lessonId == '?') {
@@ -398,155 +431,185 @@ export class LessonComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.lessonService.findLessonById(lessonId)
-      .subscribe({
-        next: (lesson: Lesson) => {
-          this.lesson = lesson;
-          this.injectGiscus()
+    this.lessonService.findLessonById(lessonId).subscribe({
+      next: (lesson: Lesson) => {
+        this.lesson = lesson;
+        this.injectGiscus();
 
-          // const rootUrl = this.router.url.split('/')[1];
-          // const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
-          // this.location.replaceState(sluggedUrl);
+        // const rootUrl = this.router.url.split('/')[1];
+        // const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
+        // this.location.replaceState(sluggedUrl);
 
-          const desc = lesson?.summary || '';
-          const img = this.course?.thumbnail || 'https://ik.imagekit.io/lfegvix1p/pro_vvcZRxQIU.png?updatedAt=1714202330763'
+        const desc = lesson?.summary || '';
+        const img =
+          this.course?.thumbnail ||
+          'https://ik.imagekit.io/lfegvix1p/pro_vvcZRxQIU.png?updatedAt=1714202330763';
 
-          this.seo.generateTags({
-            title: lesson.title,
-            description: desc,
-            image: img
-          })
+        this.seo.generateTags({
+          title: lesson.title,
+          description: desc,
+          image: img,
+        });
 
-          this.completed = this.isLessonCompleted(lesson)
-          this.lessonVideo$ = this.vimeoService.getOneVideo(lesson?.video);
-          this.videoID = lesson?.video?.split('com/')[1]
+        this.completed = this.isLessonCompleted(lesson);
+        this.lessonVideo$ = this.vimeoService.getOneVideo(lesson?.video);
+        this.videoID = lesson?.video?.split('com/')[1];
 
-          this.imageResources = this.findResourcesByType('img');
-          this.documentResources = this.findResourcesByType(this.docTypes);
-          const courseResources = this.findResourcesByType('course');
+        this.imageResources = this.findResourcesByType('img');
+        this.documentResources = this.findResourcesByType(this.docTypes);
+        const courseResources = this.findResourcesByType('course');
 
-          if (courseResources?.length) {
-            this.fetchCoursesResourceData(courseResources)
-          }
-
-          if (!this.allChapters?.length) {
-            setTimeout(() => {
-              this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
-              this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
-            }, 1000);
-          } else {
-            this.currentChapter = this.allChapters.find(chap => lesson.chapterId == chap.id);
-            this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
-          }
-        },
-        error: err => {
-          if (err.status === 404) {
-            this.messageService.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
-            this.navigate.back();
-          }
-          return throwError(() => err?.message)
-        },
-        complete: () => {
-          this.loading = false;
+        if (courseResources?.length) {
+          this.fetchCoursesResourceData(courseResources);
         }
-      })
+
+        if (!this.allChapters?.length) {
+          setTimeout(() => {
+            this.currentChapter = this.allChapters.find(
+              (chap) => lesson.chapterId == chap.id
+            );
+            this.loadPrevNext(this.currentChapter, this.allChapters, lessonId);
+          }, 1000);
+        } else {
+          this.currentChapter = this.allChapters.find(
+            (chap) => lesson.chapterId == chap.id
+          );
+          this.loadPrevNext(this.currentChapter, this.allChapters, lessonId);
+        }
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          this.messageService.openSnackBarError(
+            "Oops ce cours est n'existe pas 😣!",
+            ''
+          );
+          this.navigate.back();
+        }
+        return throwError(() => err?.message);
+      },
+      complete: () => {
+        this.loading = false;
+      },
+    });
   }
 
   loadCourseData(courseId: any) {
-
     this.loadingCourse = true;
-    this.course$ = this.courseService.findCourseById(courseId)
-      .pipe(
-        catchError(err => {
-          this.loadingCourse = false;
-          return throwError(() => err?.message)
-        }),
-        tap(data => {
-          this.loadingCourse = false;
-          this.course = data;
+    this.course$ = this.courseService.findCourseById(courseId).pipe(
+      catchError((err) => {
+        this.loadingCourse = false;
+        return throwError(() => err?.message);
+      }),
+      tap((data) => {
+        this.loadingCourse = false;
+        this.course = data;
 
-          // const rootUrl = this.router.url.split('/')[1];
-          // const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(this.lesson)}`
-          // this.location.replaceState(sluggedUrl);
-        }),
-        shareReplay()
-      )
+        // const rootUrl = this.router.url.split('/')[1];
+        // const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(this.lesson)}`
+        // this.location.replaceState(sluggedUrl);
+      }),
+      shareReplay()
+    );
   }
 
   loadAllChapters(courseId: any, lessonId: any) {
     this.loadingChapters = true;
-    this.chapters$ = this.chapterService.fetchAllChapters(courseId)
-      .pipe(
-        catchError(err => {
-          this.loadingChapters = false;
-          return throwError(() => err?.message)
-        }),
-        tap((data: Chapter[]) => {
-          this.allChapters = data;
-          this.loadingChapters = false;
-          this.updateUserProgressForEachChapter(data)
+    this.chapters$ = this.chapterService.fetchAllChapters(courseId).pipe(
+      catchError((err) => {
+        this.loadingChapters = false;
+        return throwError(() => err?.message);
+      }),
+      tap((data: Chapter[]) => {
+        this.allChapters = data;
+        this.loadingChapters = false;
+        this.updateUserProgressForEachChapter(data);
 
-          // this.getEachLessonDuration(data);
+        // this.getEachLessonDuration(data);
 
-          if (lessonId === '?') {
-            this.lesson = data[0]?.lessons[0]
-            this.lessonID = this.lesson?.id;
-            this.lesson$ = of(this.lesson);
-            this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
+        if (lessonId === '?') {
+          this.lesson = data[0]?.lessons[0];
+          this.lessonID = this.lesson?.id;
+          this.lesson$ = of(this.lesson);
+          this.lessonVideo$ = this.vimeoService.getOneVideo(
+            this.lesson?.video
+          );
 
-            this.currentChapter = data[0];
-            this.loadPrevNext(this.currentChapter, this.allChapters, lessonId)
-          }
-        }),
-        shareReplay()
-      )
+          this.currentChapter = data[0];
+          this.loadPrevNext(this.currentChapter, this.allChapters, lessonId);
+        }
+      }),
+      shareReplay()
+    );
   }
 
-  loadPrevNext(currentChapter: Chapter, allChapters: Chapter[], currentLessonId: any) {
+  loadPrevNext(
+    currentChapter: Chapter,
+    allChapters: Chapter[],
+    currentLessonId: any
+  ) {
+    const { prev, next } =
+      this.loadPrevNextHelper(currentChapter, allChapters, currentLessonId) ||
+      {};
 
-    const { prev, next } = this.loadPrevNextHelper(currentChapter, allChapters, currentLessonId) || {};
-
-    this.prevLesson$ = of(prev)
-      .pipe(map((data: Lesson) => data))
-    this.nextLesson$ = of(next)
-      .pipe(map((data: Lesson) => {
+    this.prevLesson$ = of(prev).pipe(map((data: Lesson) => data));
+    this.nextLesson$ = of(next).pipe(
+      map((data: Lesson) => {
         this.nextLesson = data;
         return data;
-      }))
-
+      })
+    );
   }
 
-  loadPrevNextHelper(currentChapter: Chapter, allChapters: Chapter[], currentLessonId: any) {
+  loadPrevNextHelper(
+    currentChapter: Chapter,
+    allChapters: Chapter[],
+    currentLessonId: any
+  ) {
     if (!currentLessonId) return null;
     if (!currentChapter) return null;
 
     let currentChapterLessonList: Lesson[] = currentChapter?.lessons;
 
-    const currentChapterIndex = allChapters.findIndex(chap => chap.id == currentChapter.id);
-    const currentLessonIndex = currentChapterLessonList?.findIndex(lesson => lesson.id == currentLessonId);
+    const currentChapterIndex = allChapters.findIndex(
+      (chap) => chap.id == currentChapter.id
+    );
+    const currentLessonIndex = currentChapterLessonList?.findIndex(
+      (lesson) => lesson.id == currentLessonId
+    );
 
-    let prev = null, next = null;
-    const prevChapterLastLessonIndex = allChapters[currentChapterIndex - 1]?.lessons?.length - 1;
+    let prev = null,
+      next = null;
+    const prevChapterLastLessonIndex =
+      allChapters[currentChapterIndex - 1]?.lessons?.length - 1;
     const currentChapterLastLessonIndex = currentChapter?.lessons?.length - 1;
     const nextChapterFirstLessonIndex = 0;
-    const lastChapterIndex = allChapters?.length - 1
+    const lastChapterIndex = allChapters?.length - 1;
 
     if (currentLessonIndex < 0) {
       prev = null;
     } else if (currentLessonIndex == 0 && currentChapterIndex > 0) {
-      const prevChapterLastLesson = allChapters[currentChapterIndex - 1]?.lessons[prevChapterLastLessonIndex]
+      const prevChapterLastLesson =
+        allChapters[currentChapterIndex - 1]?.lessons[
+        prevChapterLastLessonIndex
+        ];
       prev = prevChapterLastLesson;
     } else {
-      prev = currentChapterLessonList[currentLessonIndex - 1]
+      prev = currentChapterLessonList[currentLessonIndex - 1];
     }
 
     if (currentLessonIndex < 0) {
       next = currentChapterLessonList[1];
-    } else if (currentLessonIndex == currentChapterLastLessonIndex && currentChapterIndex < lastChapterIndex) {
-      const nextChapterFirstLesson = allChapters[currentChapterIndex + 1]?.lessons[nextChapterFirstLessonIndex];
+    } else if (
+      currentLessonIndex == currentChapterLastLessonIndex &&
+      currentChapterIndex < lastChapterIndex
+    ) {
+      const nextChapterFirstLesson =
+        allChapters[currentChapterIndex + 1]?.lessons[
+        nextChapterFirstLessonIndex
+        ];
       next = nextChapterFirstLesson;
     } else {
-      next = currentChapterLessonList[currentLessonIndex + 1]
+      next = currentChapterLessonList[currentLessonIndex + 1];
     }
 
     return { prev, next };
@@ -557,46 +620,42 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   getEachLessonDuration(chapters: Chapter[]) {
-
     chapters.forEach((chap: Chapter) => {
-      const chapterLessonsDurations = []
+      const chapterLessonsDurations = [];
       const chapterLastLessonIndex = chap.lessons?.length - 1;
 
       chap?.lessons.forEach((lesson: Lesson, i) => {
-
-        const videoId = lesson.video?.split('.com/')[1] || ''
+        const videoId = lesson.video?.split('.com/')[1] || '';
         if (!videoId) {
-
         }
 
-        this.vimeo.getVideo(videoId)
-          .pipe(catchError(err => {
-            chapterLessonsDurations.push('');
-            if (i == chapterLastLessonIndex) {
-              this.durations.push(chapterLessonsDurations)
-              console.log('DURATIONS: ', this.durations);
-            }
-            return throwError(() => err?.message);
-          }))
+        this.vimeo
+          .getVideo(videoId)
+          .pipe(
+            catchError((err) => {
+              chapterLessonsDurations.push('');
+              if (i == chapterLastLessonIndex) {
+                this.durations.push(chapterLessonsDurations);
+                console.log('DURATIONS: ', this.durations);
+              }
+              return throwError(() => err?.message);
+            })
+          )
           .subscribe(({ duration }) => {
-            chapterLessonsDurations.push(duration)
+            chapterLessonsDurations.push(duration);
             if (i == chapterLastLessonIndex) {
-              this.durations.push(chapterLessonsDurations)
+              this.durations.push(chapterLessonsDurations);
             }
-          })
-
+          });
       });
-    })
-
+    });
   }
 
   buyCourse() {
-
-    const payload = { productId: +this.courseID, productType: 'COURSE' }
-    const type = 'product'
+    const payload = { productId: +this.courseID, productType: 'COURSE' };
+    const type = 'product';
 
     this.paymentService.openPaymentDialog(payload, type, this.course);
-
   }
 
   subscribeToPro() {
@@ -607,25 +666,25 @@ export class LessonComponent implements OnInit, OnDestroy {
     const response = await fetch(res.url);
     const blob = await response.blob();
     const _url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a')
+    const a = document.createElement('a');
 
-    a.setAttribute('href', _url)
-    a.setAttribute('download', res.name)
-    a.click()
+    a.setAttribute('href', _url);
+    a.setAttribute('download', res.name);
+    a.click();
   }
 
   isZIPFile(res: Resource): boolean {
-    const parts = res.url.split('.')
-    const ext = parts[parts.length - 1]
+    const parts = res.url.split('.');
+    const ext = parts[parts.length - 1];
 
-    return ext === "zip";
+    return ext === 'zip';
   }
 
   isTXTFile(res: Resource): boolean {
-    const parts = res.url.split('.')
-    const ext = parts[parts.length - 1]
+    const parts = res.url.split('.');
+    const ext = parts[parts.length - 1];
 
-    return ext === "txt";
+    return ext === 'txt';
   }
 
   updateUserProgressForEachChapter(chapters: Chapter[]) {
@@ -636,52 +695,76 @@ export class LessonComponent implements OnInit, OnDestroy {
             completedLessons: new Set<number>(),
           };
         }
-        
+
         if (this.isLessonCompleted(lesson)) {
           this.userProgress[chapter.id].completedLessons.add(lesson.id);
         }
-      })
-    })
+      });
+    });
   }
 
   ngOnInit(): void {
+    const user = this.authService?.currentUsr;
+
     this.seo.unmountFooter();
-    this.courseID = this.route.snapshot.paramMap.get('course_id')?.split('-')[0];
-    this.lessonID = this.route.snapshot.paramMap.get('lesson_id')?.split('-')[0];
+    this.courseID = this.route.snapshot.paramMap
+      .get('course_id')
+      ?.split('-')[0];
+    this.lessonID = this.route.snapshot.paramMap
+      .get('lesson_id')
+      ?.split('-')[0];
 
     this.loadCourseData(this.courseID);
     this.loadAllChapters(this.courseID, this.lessonID);
 
-    this.route.paramMap.subscribe(
-      params => {
-        const parsedParams = params.get('lesson_id')?.split('-')[0]
-        this.lessonID = parsedParams!;
-        this.loadLessonData(this.lessonID);
-      }
-    );
+    this.route.paramMap.subscribe((params) => {
+      const parsedParams = params.get('lesson_id')?.split('-')[0];
+      this.lessonID = parsedParams!;
+      this.loadLessonData(this.lessonID);
 
-    this.courseEnrollment$ = this.route.data
-      .pipe(
-        map(({ sub }) => {
-          if (sub === true) return;
+      this.courseEnrollment$ = this.enrollmentService
+        .checkSubscriptionAndEnroll(user.id, this.courseID)
+        .pipe(
+          map((result: CourseEnrollment) => {
+            this.isSubscriber = !!result;
+            this.courseEnrollmentID = result?.id;
+            this.completedLessons = result?.completedLessons;
+            this.completedLessonsIds = [
+              ...new Set(
+                result?.completedLessons?.map(
+                  (compLesson: any) => compLesson.lessonId
+                )
+              ),
+            ] as number[];
+            this.completed = this.isLessonCompleted(this.lesson);
+            this.lessonsCount = result?.course?.lessonsCount;
+            this.loadCompleteProgressBar(this.completedLessonsIds);
 
-          this.isSubscriber = !!sub;
-          this.courseEnrollmentID = sub?.id
-          this.completedLessons = sub?.completedLessons;
-          this.completedLessonsIds = [...new Set(sub?.completedLessons?.map((l: CompletedLesson) => l.lessonId))] as number[];
-          this.completed = this.isLessonCompleted(this.lesson);
-          this.lessonsCount = sub?.course?.lessonsCount;
-          this.loadCompleteProgressBar(this.completedLessonsIds);
+            return !!result;
+          })
+        );
+    });
 
-          return sub
-        })
-      )
-      
+    // this.courseEnrollment$ = this.route.data
+    //   .pipe(
+    //     map(({ sub }) => {
+    //       if (sub === true) return;
+
+    //       this.isSubscriber = !!sub;
+    //       this.courseEnrollmentID = sub?.id
+    //       this.completedLessons = sub?.completedLessons;
+    //       this.completedLessonsIds = [...new Set(sub?.completedLessons?.map((l: CompletedLesson) => l.lessonId))] as number[];
+    //       this.completed = this.isLessonCompleted(this.lesson);
+    //       this.lessonsCount = sub?.course?.lessonsCount;
+    //       this.loadCompleteProgressBar(this.completedLessonsIds);
+
+    //       return sub
+    //     })
+    //   )
   }
 
   ngOnDestroy(): void {
     this.seo.mountFooter();
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
-
 }

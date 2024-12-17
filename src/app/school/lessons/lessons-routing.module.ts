@@ -12,9 +12,9 @@ const routes: Routes = [
     path: ':lesson_id',
     component: LessonComponent,
     canActivate: [LessonAccessGuard],
-    resolve: {
-      sub: CourseEnrollmentResolver
-    },
+    // resolve: {
+    //   sub: CourseEnrollmentResolver
+    // },
   },
   {
     path: ':lesson_id/edit',

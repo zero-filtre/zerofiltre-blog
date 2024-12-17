@@ -84,7 +84,7 @@
                 </section>
 
                 <div *ngIf="section.position == 1">
-                    <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
+                    <button *ngIf="!(courseEnrollment$|async) && !isCheckingEnrollment && isPublished$|async" (click)="buyCourse()"
                         class="mb-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
                         <span class="text-center">Débuter le cours</span>
 
@@ -115,7 +115,7 @@
                     [mobileQuery]="mobileQuery"></app-curriculum>
             </section>
 
-            <button *ngIf="!(courseEnrollment$|async) && isPublished$|async" (click)="buyCourse()"
+            <button *ngIf="!isSubscriber && !isCheckingEnrollment && isPublished$|async" (click)="buyCourse()"
                 class="my-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
                 <span class="text-center">Débuter le cours</span>
 

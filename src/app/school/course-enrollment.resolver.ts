@@ -1,64 +1,91 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import {
-  Router, Resolve,
+  Resolve,
+  ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  ActivatedRouteSnapshot
+  Router,
 } from '@angular/router';
-import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
-import { LoadEnvService } from '../services/load-env.service';
-import { MessageService } from '../services/message.service';
-import { AuthService } from '../user/auth.service';
-import { User } from '../user/user.model';
-import { CourseService } from './courses/course.service';
+import { Observable, of, EMPTY } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
+import { MessageService } from '../services/message.service';
+import { CourseService } from './courses/course.service';
+import { AuthService } from '../user/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CourseEnrollmentResolver implements Resolve<boolean> {
   constructor(
-    private loadEnvService: LoadEnvService,
-    private messageService: MessageService,
     private courseService: CourseService,
     private authService: AuthService,
+    private messageService: MessageService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformID: any
-  ) { }
+  ) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    const user = this.authService?.currentUsr as User
-    const courseID = route.params?.course_id?.split('-')[0]
-    const lessonID = route.params?.lesson_id?.split('-')[0]
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
+    if (!isPlatformBrowser(this.platformID)) return EMPTY;
 
+    const user = this.authService?.currentUsr;
+    const courseId = route.params['course_id']?.split('-')[0];
 
-    if (!user) return of(true)
-
-    const data = { courseId: courseID , userId: user.id }
-    if (isPlatformBrowser(this.platformID)){
-      this.messageService.cancel();
-      
-      return this.courseService.findSubscribedByCourseId(data)
-        .pipe(
-          catchError(_ => {
-            
-            this.messageService.cancel();
-            const subIds = JSON.parse(localStorage?.getItem('_subs'));
-            localStorage?.setItem('_subs', JSON.stringify(subIds.filter(id => id != courseID)));
-
-            // if (!this.authService.isPro) return of(true);
-
-            return this.courseService.subscribeToCourse(+courseID)
-              .pipe(
-                catchError(_ => of(true)),
-                tap(data => {
-                  if (!lessonID) this.router.navigateByUrl(`/cours/${courseID}${"/%3F"}`)
-                })
-              )
-
-          })
-        )
-    }else {
-      return EMPTY
+    if (!user || !courseId) {
+      return of(true);
     }
+
+    this.messageService.cancel();
+
+    return this.checkSubscription(user.id, courseId);
+  }
+
+  /**
+   * Vérifie l'abonnement de l'utilisateur, avec enrôlement si nécessaire.
+   */
+  private checkSubscription(
+    userId: string,
+    courseId: string
+  ): Observable<boolean> {
+    return this.courseService
+      .findSubscribedByCourseId({ courseId, userId })
+      .pipe(
+        map(() => true), // Abonnement trouvé, navigation autorisée
+        catchError(() => {
+          // Erreur : tenter l'enrôlement
+          this.messageService.cancel();
+          return this.enrollUser(courseId);
+        }),
+        catchError(() => {
+          // En cas d'échec d'enrôlement, permettre la navigation
+          this.messageService.cancel();
+          return of(true);
+        })
+      );
+  }
+
+  /**
+   * Enrôle automatiquement l'utilisateur au cours.
+   */
+  private enrollUser(courseId: string): Observable<boolean> {
+    this.cleanLocalSubscriptions(courseId);
+
+    return this.courseService.subscribeToCourse(+courseId).pipe(
+      tap(() =>
+        console.log(`Utilisateur enrôlé automatiquement au cours ${courseId}`)
+      ),
+      map(() => true)
+    );
+  }
+
+  /**
+   * Nettoie les abonnements obsolètes dans le localStorage.
+   */
+  private cleanLocalSubscriptions(courseId: string): void {
+    const subIds = JSON.parse(localStorage.getItem('_subs') || '[]');
+    const updatedSubs = subIds.filter((id: string) => id !== courseId);
+    localStorage.setItem('_subs', JSON.stringify(updatedSubs));
   }
 }
