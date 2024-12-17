@@ -22,25 +22,26 @@ import { JsonLd } from 'ngx-seo/lib/json-ld';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
 import { SurveyService } from 'src/app/services/survey.service';
+import { EnrollmentService } from 'src/app/services/enrollment.service';
 
 @Component({
   selector: 'app-course-detail-page',
   templateUrl: './course-detail-page.component.html',
-  styleUrls: ['./course-detail-page.component.css']
+  styleUrls: ['./course-detail-page.component.css'],
 })
 export class CourseDetailPageComponent implements OnInit {
   STRIPE_PUBLIC_KEY = environment.stripePublicKey;
 
   courseID: string;
   course$: Observable<Course>;
-  chapters$: Observable<Chapter[]>
+  chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
   course: Course;
 
-  courseEnrollment$: Observable<CourseEnrollment>;
+  courseEnrollment$: Observable<boolean | CourseEnrollment>;
   isSubscriber: boolean;
   isLoading: boolean;
-
+  isCheckingEnrollment: boolean;
 
   currentVideoId: string;
   orderedSections: Section[];
@@ -71,6 +72,7 @@ export class CourseDetailPageComponent implements OnInit {
     private location: Location,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
+    private enrollmentService: EnrollmentService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -80,18 +82,18 @@ export class CourseDetailPageComponent implements OnInit {
   private _mobileQueryListener: () => void;
 
   get canAccessCourse() {
-    const user = this.authService?.currentUsr as User
+    const user = this.authService?.currentUsr as User;
     return this.courseService.canAccessCourse(user, this.course);
   }
 
   get canEditCourse() {
-    const user = this.authService?.currentUsr as User
+    const user = this.authService?.currentUsr as User;
     return this.courseService.canEditCourse(user, this.course);
   }
 
   buyCourse() {
-    const payload = { productId: +this.courseID, productType: 'COURSE' }
-    const type = 'basic'
+    const payload = { productId: +this.courseID, productType: 'COURSE' };
+    const type = 'basic';
 
     this.paymentService.openPaymentDialog(payload, type, this.course);
   }
@@ -99,9 +101,10 @@ export class CourseDetailPageComponent implements OnInit {
   getCourse(courseId: string) {
     this.isLoading = true;
 
-    this.courseService.findCourseById(courseId)
+    this.courseService
+      .findCourseById(courseId)
       .pipe(
-        tap(data => {
+        tap((data) => {
           if (data.status === 'PUBLISHED') {
             this.isPublished.next(true);
           } else {
@@ -112,77 +115,81 @@ export class CourseDetailPageComponent implements OnInit {
       .subscribe({
         next: (data: Course) => {
           const rootUrl = this.router.url.split('/')[1];
-          const sluggedUrl = `${rootUrl}/${this.slugify.transform(data)}`
+          const sluggedUrl = `${rootUrl}/${this.slugify.transform(data)}`;
           this.location.replaceState(sluggedUrl);
-          
+
           this.seo.generateTags({
             title: data.title,
             description: data.summary,
             image: data.thumbnail,
             author: data.author?.fullName,
-            publishDate: data.publishedAt?.substring(0, 10)
-          })
-
+            publishDate: data.publishedAt?.substring(0, 10),
+          });
 
           const dataSchema = {
-            "@context": "https://schema.org",
-            "@type": "Course",
-            "author": {
-              "@type": "Person",
-              "name": data.author.fullName
+            '@context': 'https://schema.org',
+            '@type': 'Course',
+            author: {
+              '@type': 'Person',
+              name: data.author.fullName,
             },
-            "name": data.title,
-            "description": data.summary,
-            "image": data.thumbnail,
-            "datePublished": data.publishedAt?.substring(0, 10),
-            "hasCourseInstance": {
-              "@type": "CourseInstance",
-              "courseMode": "online",
-              "CourseWorkload": "PT5H"
+            name: data.title,
+            description: data.summary,
+            image: data.thumbnail,
+            datePublished: data.publishedAt?.substring(0, 10),
+            hasCourseInstance: {
+              '@type': 'CourseInstance',
+              courseMode: 'online',
+              CourseWorkload: 'PT5H',
             },
-            "offers": {
-              "@type": "Offer",
-              "category": "Intermediaire",
-              "price": data.price.toString(),
-              "priceCurrency": "EUR"
+            offers: {
+              '@type': 'Offer',
+              category: 'Intermediaire',
+              price: data.price.toString(),
+              priceCurrency: 'EUR',
             },
-            "provider": {
-              "@type": "Organization",
-              "name": "Zerofiltre",
-              "sameAs": "https://www.zerofiltre.tech"
-            }
-          } as JsonLd | any
+            provider: {
+              '@type': 'Organization',
+              name: 'Zerofiltre',
+              sameAs: 'https://www.zerofiltre.tech',
+            },
+          } as JsonLd | any;
 
-          this.jsonLd.setData(dataSchema)
+          this.jsonLd.setData(dataSchema);
 
           this.isLoading = false;
           this.isSubscriber = this.courseService.isSubscriber(data.id);
 
           this.course = data;
           this.orderSections(data);
-          this.extractVideoId(data.video)
+          this.extractVideoId(data.video);
 
-          return this.course
+          return this.course;
         },
         error: (err: HttpErrorResponse) => {
           this.isLoading = false;
 
           if (err.status === 404) {
-            this.notify.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
+            this.notify.openSnackBarError(
+              "Oops ce cours est n'existe pas 😣!",
+              ''
+            );
             this.navigate.back();
           }
-          return throwError(() => err?.message)
+          return throwError(() => err?.message);
         },
         complete: () => {
           this.isLoading = false;
-          return this.course
-        }
-      })
+          return this.course;
+        },
+      });
   }
 
   orderSections(course: Course) {
-    const list = course.sections
-    this.orderedSections = list.sort((a: Section, b: Section) => a.position - b.position)
+    const list = course.sections;
+    this.orderedSections = list.sort(
+      (a: Section, b: Section) => a.position - b.position
+    );
   }
 
   isValidURL(url: string) {
@@ -196,33 +203,41 @@ export class CourseDetailPageComponent implements OnInit {
 
   extractVideoId(videoLink: string) {
     if (!videoLink) return;
-    if(!this.isValidURL(videoLink)) return;
+    if (!this.isValidURL(videoLink)) return;
     const params = new URL(videoLink).searchParams;
     this.currentVideoId = params.get('v') as string;
   }
 
   ngOnInit(): void {
+    const user = this.authService?.currentUsr;
 
-    this.route.paramMap.subscribe(
-      params => {
-        const parsedParams = params.get('course_id')?.split('-')[0]
-        this.courseID = parsedParams!;
-        this.getCourse(this.courseID);
-      }
-    );
+    this.route.paramMap.subscribe((params) => {
+      const parsedParams = params.get('course_id')?.split('-')[0];
+      this.courseID = parsedParams!;
+      this.getCourse(this.courseID);
 
-    this.chapters$ = this.chapterService
-      .fetchAllChapters(this.courseID);
+      this.isCheckingEnrollment = true;
+      this.courseEnrollment$ = this.enrollmentService
+        .checkSubscriptionAndEnroll(user.id, this.courseID)
+        .pipe(
+          map((result: boolean) => {
+            this.isCheckingEnrollment = false;
+            this.isSubscriber = !!result;
+            return !!result;
+          })
+        );
+    });
 
-    this.courseEnrollment$ = this.route.data
-      .pipe(
-        map(({ sub }) => {
-          if (sub === true) return;
+    this.chapters$ = this.chapterService.fetchAllChapters(this.courseID);
 
-          this.isSubscriber = !!sub;
-          return sub
-        })
-      )
+    // this.courseEnrollment$ = this.route.data.pipe(
+    //   map(({ sub }) => {
+    //     if (sub === true) return;
+
+    //     this.isSubscriber = !!sub;
+    //     return sub;
+    //   })
+    // );
   }
 
   ngOnDestroy(): void {
