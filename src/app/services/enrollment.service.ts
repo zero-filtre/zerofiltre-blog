@@ -51,9 +51,9 @@ export class EnrollmentService {
 
     return this.courseService.subscribeToCourse(+courseId).pipe(
       tap(() => {
-        console.log(`Utilisateur enrôlé automatiquement au cours ${courseId}`);
-        this.updateLocalSubscriptions(courseId);
         this.navigateToCourse(courseId, lessonId);
+        this.updateLocalSubscriptions(courseId);
+        console.log(`Utilisateur enrôlé automatiquement au cours ${courseId}`);
       }),
       // map(() => true),
       map((data: CourseEnrollment) => data)
