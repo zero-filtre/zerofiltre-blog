@@ -1,79 +1,112 @@
 <div class="example-toolbar sticky top-[72px] lg:top-20 z-20 bg-primary-100">
+    <ng-container *ngIf="courseEnrollment$|async"></ng-container>
+
     <div class="site-container flex items-center justify-between gap-4 lg:gap-5 h-16">
-        <button mat-icon-button (click)="snav.toggle()" class="flex items-center justify-center bg-primary-50 text-white h-full w-16">
+        <button mat-icon-button (click)="snav.toggle()"
+            class="flex items-center justify-center bg-primary-50 text-white h-full w-16">
             <svg xmlns="http://www.w3.org/2000/svg" aria-label="Side nav toggle icon" class="h-6 w-6" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
         </button>
-        
-        <progress *ngIf="courseEnrollment$|async"  id="bluebar" class="progress_bar h-10" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="completeProgressVal" max="100"></progress>
-        <progress *ngIf="!isSubscriber"  id="bluebar" class="progress_bar h-10 opacity-0" [ngClass]="{'sidebar-closed':!snav.opened}" [value]="0" max="100"></progress>
+
+        <progress *ngIf="isSubscriber" id="bluebar" class="progress_bar h-10"
+            [ngClass]="{'sidebar-closed':!snav.opened}" [value]="completeProgressVal" max="100"></progress>
+        <progress *ngIf="!isSubscriber" id="bluebar" class="progress_bar h-10 opacity-0"
+            [ngClass]="{'sidebar-closed':!snav.opened}" [value]="0" max="100"></progress>
     </div>
 </div>
 
-<div class="example-container" [class.site-container]="!mobileQuery.matches" [class.example-is-mobile]="mobileQuery.matches">
+<div class="example-container" [class.site-container]="!mobileQuery.matches"
+    [class.example-is-mobile]="mobileQuery.matches">
     <mat-sidenav-container class="example-sidenav-container" tabIndex="-1">
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="true"
-            fixedTopGap="0" [opened]="!mobileQuery.matches" class="pt-36 border-none lg:bg-transparent lg:min-w-[370px] !shadow-none">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="true" fixedTopGap="0"
+            [opened]="!mobileQuery.matches" class="pt-36 border-none lg:bg-transparent lg:min-w-[370px] !shadow-none">
             <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art" *appShellNoRender>
                 <app-curriculum-sidebar [drawer]="snav" [canEdit]="canEditCourse" [course]="course$|async"
                     [lessons]="lessons$ | async" [chapters]="chapters$ | async" [activeLessonID]="lessonID"
-                    [canAccessCourse]="canAccessCourse" [loading]="loadingChapters" [completedLessonsIds]="completedLessonsIds"
-                    [durations]="durations" [mobileQuery]="mobileQuery">
+                    [canAccessCourse]="canAccessCourse" [loading]="loadingChapters"
+                    [completedLessonsIds]="completedLessonsIds" [durations]="durations" [mobileQuery]="mobileQuery">
                 </app-curriculum-sidebar>
             </aside>
         </mat-sidenav>
 
         <mat-sidenav-content>
-            <main class="text-skin-art min-h-screen">
-                <div class="lesson_content_wrapper p-4 lg:p-0 lg:pt-4 lg:pl-6" [ngClass]="{'lg:!pl-0':!snav.opened}" *appShellNoRender>
+            <div *ngIf="isCheckingEnrollment" class="loading-container">
+                <div class="flex justify-center items-center h-[88vh]">
+                    <svg class="w-40 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="2" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+                            style="animation-play-state:paused"></circle>
+                    </svg>
+                </div>
+            </div>
+
+            <main *ngIf="!isCheckingEnrollment" class="text-skin-art min-h-screen">
+                <div class="lesson_content_wrapper p-4 lg:p-0 lg:pt-4 lg:pl-6" [ngClass]="{'lg:!pl-0':!snav.opened}"
+                    *appShellNoRender>
                     <div class="mx-auto" id="lesson_video_player">
                         <div class="vid_wrapper w-full h-full">
-                            
+
                             <div class="vid_wrapper w-full h-full" *ngIf="!loading && lesson; else novideo">
                                 <ng-container *ngIf="lesson.video">
-                                    <iframe *ngIf="canAccessCourse || lesson.free" [src]="lesson.video | vimeoUrl" webkitallowfullscreen mozallowfullscreen 
-                                        allowfullscreen width="100%" height="100%" allow="autoplay; fullscreen; picture-in-picture" class="bg-gray-900 rounded-sm shadow-lg" title="Lesson video">
+                                    <iframe *ngIf="canAccessCourse || lesson.free" [src]="lesson.video | vimeoUrl"
+                                        webkitallowfullscreen mozallowfullscreen allowfullscreen width="100%"
+                                        height="100%" allow="autoplay; fullscreen; picture-in-picture"
+                                        class="bg-gray-900 rounded-sm shadow-lg" title="Lesson video">
                                     </iframe>
 
-                                    <div *ngIf="(!lesson?.free && !canAccessCourse) || !lesson?.video" class="h-full flex items-center justify-center bg-gray-900 rounded-sm shadow-lg">
+                                    <div *ngIf="(!lesson?.free && !canAccessCourse) || !lesson?.video"
+                                        class="h-full flex items-center justify-center bg-gray-900 rounded-sm shadow-lg">
                                         <div class="text-center text-skin-base">
-                                            <h5 class="text-sm sm:text-base mb-1 sm:mb-7 font-semibold text-error">Accès refusé</h5>
+                                            <h5 class="text-sm sm:text-base mb-1 sm:mb-7 font-semibold text-error">Accès
+                                                refusé</h5>
                                             <div class="buy-box p-2 sm:p-6 border border-primary-500 rounded-lg">
                                                 <button (click)="buyCourse()">
-                                                    <span class="text-sm sm:text-xl text-primary-500 uppercase font-semibold mr-2">
+                                                    <span
+                                                        class="text-sm sm:text-xl text-primary-500 uppercase font-semibold mr-2">
                                                         Achetez ce cours
                                                     </span>
-                                                    <span class="text-sm sm:text-xl font-medium">pour {{(course?.price/100)|currency:'EUR'}}</span>
-                                                    <p class="text-xs sm:text-sm">Accès à vie pour un prix incroyablement bas</p>
+                                                    <span class="text-sm sm:text-xl font-medium">pour
+                                                        {{(course?.price/100)|currency:'EUR'}}</span>
+                                                    <p class="text-xs sm:text-sm">Accès à vie pour un prix
+                                                        incroyablement bas</p>
                                                 </button>
                                             </div>
 
-                                            <h3 class="hidden sm:block my-2 sm:my-5 font-bold text-sm sm:text-2xl">OU</h3>
-                                            
-                                            <div class="buy-box mt-2 sm:mt-0 p-2 sm:p-6 border border-accent-400 rounded-lg">
+                                            <h3 class="hidden sm:block my-2 sm:my-5 font-bold text-sm sm:text-2xl">OU
+                                            </h3>
+
+                                            <div
+                                                class="buy-box mt-2 sm:mt-0 p-2 sm:p-6 border border-accent-400 rounded-lg">
                                                 <button (click)="subscribeToPro()">
-                                                    <p class="text-sm sm:text-xl text-accent-400 uppercase font-semibold">Passer à Pro</p>
-                                                    <p class="text-xs sm:text-sm">Débloquez tout le contenu Zerofiltre &amp;&amp; avantages
+                                                    <p
+                                                        class="text-sm sm:text-xl text-accent-400 uppercase font-semibold">
+                                                        Passer à Pro</p>
+                                                    <p class="text-xs sm:text-sm">Débloquez tout le contenu Zerofiltre
+                                                        &amp;&amp; avantages
                                                         bonus</p>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </ng-container>
-                             
+
                                 <ng-container *ngIf="!lesson?.video">
-                                    <div class="text-base lg:text-xl text-skin-base h-full flex items-center justify-center bg-skin-link">
+                                    <div
+                                        class="text-base lg:text-xl text-skin-base h-full flex items-center justify-center bg-skin-link">
                                         <div>
-                                            <app-image [sourceUrl]="'https://ik.imagekit.io/lfegvix1p/No_video_r2eSRddth.png?updatedAt=1683447891407'"
+                                            <app-image
+                                                [sourceUrl]="'https://ik.imagekit.io/lfegvix1p/No_video_r2eSRddth.png?updatedAt=1683447891407'"
                                                 [classes]="'w-1/6 m-auto'"></app-image>
                                             <p class="text-center mt-6">Pas de vidéo pour cette leçon.</p>
                                         </div>
                                     </div>
                                 </ng-container>
                             </div>
-            
+
                             <ng-template #novideo class="lessonCoverVideoSkeletonLoader">
                                 <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
                                                                                         'height.%': 100,
@@ -83,7 +116,7 @@
                             </ng-template>
                         </div>
                     </div>
-            
+
                     <div class="lesson_content mb-14">
                         <div *ngIf="lesson" class="markdown-content mt-3 lg:mt-5">
                             <div
@@ -92,36 +125,38 @@
                             </div>
                             <app-markdown-preview [data]="lesson?.content"></app-markdown-preview>
                         </div>
-            
-                            <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
-                                <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
+
+                        <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
+                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
                                                                                         'height.%': 100,
                                                                                         'width.%': 100
                                                                                     }">
-                                </ngx-skeleton-loader>
-                            </ng-container>
-                        </div>
-                 
-            
-                 
-             
+                            </ngx-skeleton-loader>
+                        </ng-container>
+                    </div>
+
                     <div *ngIf="lesson" [ngClass]="{'hidden':!lesson.resources?.length}"
                         class="lesson_ressources_wrapper mb-5">
 
-                        <label for="lesson_ressourses" class="block text-base font-semibold leading-5 text-skin-base ml-3">
+                        <label for="lesson_ressourses"
+                            class="block text-base font-semibold leading-5 text-skin-base ml-3">
                             Ressources
                         </label>
 
-                        <div class="lesson_ressourses w-full border-2 border-dashed rounded p-5 flex flex-col gap-6 mt-[-10px]">
-                            <div class="file_ressourses w-full text-secondary grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 lg:justify-start gap-3 flex-wrap">
+                        <div
+                            class="lesson_ressourses w-full border-2 border-dashed rounded p-5 flex flex-col gap-6 mt-[-10px]">
+                            <div
+                                class="file_ressourses w-full text-secondary grid justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 lg:justify-start gap-3 flex-wrap">
                                 <ng-container *ngFor="let res of imageResources; let i = index">
-                                    <div *ngIf="res.type == 'img'" class="flex shadow-sm flex-col items-center justify-center hover:bg-base-100 rounded">
+                                    <div *ngIf="res.type == 'img'"
+                                        class="flex shadow-sm flex-col items-center justify-center hover:bg-base-100 rounded">
                                         <a href="{{res.url}}" target="_blank" rel="noopener" download="res.name">
                                             <app-image [sourceUrl]="res.url" [classes]="'w-full'"></app-image>
                                         </a>
                                         <span (click)="downloadFileContent(res)"
                                             class="hover:text-primary-500 break-words mt-2 flex justify-center gap-3 text-center w-full cursor-pointer">{{res.name}}
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor" class="w-5 h-5">
                                                 <path
                                                     d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
                                                 <path
@@ -135,14 +170,17 @@
                                     <div *ngIf="docTypes.includes(res.type)"
                                         class="flex flex-col items-center justify-center self-start mt-auto hover:bg-base-100 rounded">
                                         <div class="flex flex-col w-full">
-                                            <div *ngIf="!isZIPFile(res) && !isTXTFile(res)" class="w-full shadow-lg rounded-lg p-2">
-                                                <ngx-doc-viewer class="border border-primary-600 rounded-sm mb-3" [url]="res.url" viewer="google"
+                                            <div *ngIf="!isZIPFile(res) && !isTXTFile(res)"
+                                                class="w-full shadow-lg rounded-lg p-2">
+                                                <ngx-doc-viewer class="border border-primary-600 rounded-sm mb-3"
+                                                    [url]="res.url" viewer="google"
                                                     style="width:100%;height:50vh;"></ngx-doc-viewer>
-                                                <a href="{{res.url}}" target="_blank" rel="noopener" download="res.name">
+                                                <a href="{{res.url}}" target="_blank" rel="noopener"
+                                                    download="res.name">
                                                     <span
                                                         class="hover:text-primary-500 break-words flex justify-center gap-3 w-full text-center">{{res.name}}
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                                            class="w-5 h-5">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                            fill="currentColor" class="w-5 h-5">
                                                             <path
                                                                 d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
                                                             <path
@@ -151,13 +189,15 @@
                                                     </span>
                                                 </a>
                                             </div>
-                            
+
                                             <div *ngIf="isTXTFile(res)" class="w-full shadow-lg rounded-lg p-2">
-                                                <ngx-doc-viewer class="border border-primary-600 rounded-sm mb-3" [url]="res.url" viewer="google"
+                                                <ngx-doc-viewer class="border border-primary-600 rounded-sm mb-3"
+                                                    [url]="res.url" viewer="google"
                                                     style="width:100%;height:50vh;"></ngx-doc-viewer>
                                                 <span (click)="downloadFileContent(res)"
                                                     class="hover:text-primary-500 break-words flex justify-center gap-3 w-full text-center cursor-pointer">{{res.name}}
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                        fill="currentColor" class="w-5 h-5">
                                                         <path
                                                             d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
                                                         <path
@@ -165,14 +205,17 @@
                                                     </svg>
                                                 </span>
                                             </div>
-                            
+
                                             <div *ngIf="isZIPFile(res)" class="w-full group shadow-lg rounded-lg p-2">
-                                                <a href="{{res.url}}" target="_blank" rel="noopener" download="res.name">
+                                                <a href="{{res.url}}" target="_blank" rel="noopener"
+                                                    download="res.name">
                                                     <div class="border border-primary-600 rounded-sm mb-3 p-20">
-                                                        <svg class="w-full h-full m-auto text-primary-600" fill="currentColor" version="1.1"
-                                                            id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px"
-                                                            viewBox="0 0 31.519 31.519" xml:space="preserve">
+                                                        <svg class="w-full h-full m-auto text-primary-600"
+                                                            fill="currentColor" version="1.1" id="Capa_1"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="800px"
+                                                            height="800px" viewBox="0 0 31.519 31.519"
+                                                            xml:space="preserve">
                                                             <g>
                                                                 <path
                                                                     d="M11.183,0L3.021,8.619v22.9h25.477V0H11.183z M21.132,24.505c-0.06,0.096-0.201,0.315-0.834,0.321
@@ -187,8 +230,8 @@
                                                     </div>
                                                     <span
                                                         class="group-hover:text-primary-500 break-words flex gap-3 justify-center w-full text-center">{{res.name}}
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                                            class="w-5 h-5">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                            fill="currentColor" class="w-5 h-5">
                                                             <path
                                                                 d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
                                                             <path
@@ -201,7 +244,7 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            
+
                             <div class="courses_ressourses w-full flex flex-col space-y-11">
                                 <ng-container *ngFor="let res of courseResources; let i = index">
                                     <app-course-card [title]="res.title" [course]="res"></app-course-card>
@@ -210,53 +253,62 @@
                         </div>
 
                     </div>
-            
+
                     <div *ngIf="isSubscriber" class="lesson_complete_btn my-10">
                         <div *ngIf="lesson" class="flex justify-center font-semibold">
-                            <button *ngIf="!completed" (click)="toggleCompleted()" [disabled]="isCompleting" [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
+                            <button *ngIf="!completed" (click)="toggleCompleted()" [disabled]="isCompleting"
+                                [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
                                 class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">
                                 <span>Marquer cette leçon terminée</span>
-                                <svg *ngIf="!isCompleting" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                                    stroke="currentColor" class="w-5 h-5 mt-0.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                <svg *ngIf="!isCompleting" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-5 h-5 mt-0.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                 </svg>
                                 <svg *ngIf="isCompleting" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"
+                                    preserveAspectRatio="xMidYMid">
                                     <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
-                                        stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                                        style="animation-play-state:paused"></circle>
+                                        stroke-dasharray="164.93361431346415 56.97787143782138"
+                                        transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused"></circle>
                                 </svg>
                             </button>
-                            <button *ngIf="completed" (click)="toggleCompleted()" [disabled]="isCompleting" [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
+                            <button *ngIf="completed" (click)="toggleCompleted()" [disabled]="isCompleting"
+                                [ngClass]="{'cursor-not-allowed bg-opacity-70 hover:bg-opacity-70': isCompleting}"
                                 class="flex items-center gap-2 shadow-xl rounded-md p-4 py-3 text-white  bg-error hover:bg-red-500 transition-all duration-300">
                                 Marquer cette leçon non terminée
                                 <svg *ngIf="isCompleting" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"
+                                    preserveAspectRatio="xMidYMid">
                                     <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
-                                        stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                                        style="animation-play-state:paused"></circle>
+                                        stroke-dasharray="164.93361431346415 56.97787143782138"
+                                        transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused"></circle>
                                 </svg>
                             </button>
                         </div>
                     </div>
-            
+
                     <div class="lesson_pagination my-10">
                         <div *ngIf="lesson" class="flex gap-5 lg:gap-10 font-semibold">
-                            <a *ngIf="prevLesson$|async as prev" routerLink="{{'/cours/'+ (course|slugify) + '/' + (prev|slugify)}}"
+                            <a *ngIf="prevLesson$|async as prev"
+                                routerLink="{{'/cours/'+ (course|slugify) + '/' + (prev|slugify)}}"
                                 class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                                     stroke="currentColor" class="w-5 h-5 mt-0.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 19.5L8.25 12l7.5-7.5" />
                                 </svg>
                                 <span class="w-full text-center">{{prev.title}}</span>
                             </a>
-            
-                            <a *ngIf="nextLesson$|async as next" routerLink="{{'/cours/'+ (course|slugify) + '/' + (next|slugify)}}"
+
+                            <a *ngIf="nextLesson$|async as next"
+                                routerLink="{{'/cours/'+ (course|slugify) + '/' + (next|slugify)}}"
                                 class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
                                 <span class="w-full text-center">{{next.title}}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                                     stroke="currentColor" class="w-5 h-5 mt-0.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                 </svg>
                             </a>
                         </div>
@@ -271,10 +323,10 @@
                             style="animation-play-state:paused"></circle>
                     </svg>
                 </div>
-                <div class="giscus py-8"></div>
-        
             </main>
-            
+
+            <div class="giscus py-8"></div>
+
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>

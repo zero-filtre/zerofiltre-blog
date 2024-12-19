@@ -38,7 +38,7 @@ export class CourseDetailPageComponent implements OnInit {
   lessons$: Observable<Lesson[]>;
   course: Course;
 
-  courseEnrollment$: Observable<boolean | CourseEnrollment>;
+  courseEnrollment$: Observable<CourseEnrollment>;
   isSubscriber: boolean;
   isLoading: boolean;
   isCheckingEnrollment: boolean;
@@ -208,6 +208,21 @@ export class CourseDetailPageComponent implements OnInit {
     this.currentVideoId = params.get('v') as string;
   }
 
+  manageEnrollment(user: User) {
+    if (!user) return;
+    
+    this.isCheckingEnrollment = true;
+    this.courseEnrollment$ = this.enrollmentService
+      .checkSubscriptionAndEnroll(user.id, this.courseID)
+      .pipe(
+        map((result: CourseEnrollment) => {
+          this.isCheckingEnrollment = false;
+          this.isSubscriber = !!result;
+          return result;
+        })
+      );
+  }
+
   ngOnInit(): void {
     const user = this.authService?.currentUsr;
 
@@ -215,17 +230,7 @@ export class CourseDetailPageComponent implements OnInit {
       const parsedParams = params.get('course_id')?.split('-')[0];
       this.courseID = parsedParams!;
       this.getCourse(this.courseID);
-
-      this.isCheckingEnrollment = true;
-      this.courseEnrollment$ = this.enrollmentService
-        .checkSubscriptionAndEnroll(user.id, this.courseID)
-        .pipe(
-          map((result: boolean) => {
-            this.isCheckingEnrollment = false;
-            this.isSubscriber = !!result;
-            return !!result;
-          })
-        );
+      this.manageEnrollment(user);
     });
 
     this.chapters$ = this.chapterService.fetchAllChapters(this.courseID);

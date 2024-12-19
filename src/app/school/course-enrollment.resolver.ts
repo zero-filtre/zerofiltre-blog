@@ -32,6 +32,7 @@ export class CourseEnrollmentResolver implements Resolve<boolean> {
 
     const user = this.authService?.currentUsr;
     const courseId = route.params['course_id']?.split('-')[0];
+    const lessonId = route.params?.lesson_id?.split('-')[0];
 
     if (!user || !courseId) {
       return of(true);
@@ -39,7 +40,7 @@ export class CourseEnrollmentResolver implements Resolve<boolean> {
 
     this.messageService.cancel();
 
-    return this.checkSubscription(user.id, courseId);
+    return this.checkSubscription(user.id, courseId, lessonId);
   }
 
   /**
@@ -47,16 +48,18 @@ export class CourseEnrollmentResolver implements Resolve<boolean> {
    */
   private checkSubscription(
     userId: string,
-    courseId: string
+    courseId: string,
+    lessonId: string
   ): Observable<boolean> {
     return this.courseService
       .findSubscribedByCourseId({ courseId, userId })
       .pipe(
+        // tap(() => this.navigateToCourse(courseId)),
         map(() => true), // Abonnement trouvé, navigation autorisée
         catchError(() => {
           // Erreur : tenter l'enrôlement
           this.messageService.cancel();
-          return this.enrollUser(courseId);
+          return this.enrollUser(courseId, lessonId);
         }),
         catchError(() => {
           // En cas d'échec d'enrôlement, permettre la navigation
@@ -69,13 +72,14 @@ export class CourseEnrollmentResolver implements Resolve<boolean> {
   /**
    * Enrôle automatiquement l'utilisateur au cours.
    */
-  private enrollUser(courseId: string): Observable<boolean> {
+  private enrollUser(courseId: string, lessonId: string): Observable<boolean> {
     this.cleanLocalSubscriptions(courseId);
 
     return this.courseService.subscribeToCourse(+courseId).pipe(
-      tap(() =>
+      tap(() => {
         console.log(`Utilisateur enrôlé automatiquement au cours ${courseId}`)
-      ),
+        if (!lessonId) this.navigateToCourse(courseId);
+      }),
       map(() => true)
     );
   }
@@ -87,5 +91,13 @@ export class CourseEnrollmentResolver implements Resolve<boolean> {
     const subIds = JSON.parse(localStorage.getItem('_subs') || '[]');
     const updatedSubs = subIds.filter((id: string) => id !== courseId);
     localStorage.setItem('_subs', JSON.stringify(updatedSubs));
+  }
+
+  /**
+  * Navigue vers une page de cours.
+  * @param courseId ID du cours
+  */
+  private navigateToCourse(courseId: string): void {
+    this.router.navigateByUrl(`/cours/${courseId}${'/%3F'}`);
   }
 }
