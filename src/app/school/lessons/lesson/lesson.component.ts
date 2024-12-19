@@ -64,7 +64,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
-  courseEnrollment$: Observable<boolean | CourseEnrollment>;
+  courseEnrollment$: Observable<CourseEnrollment>;
   prevLesson$: Observable<any>;
   nextLesson$: Observable<any>;
   nextLesson: Lesson;
@@ -87,6 +87,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   durations = [];
 
   userProgress: UserProgress = {};
+
+  isCheckingEnrollment: boolean;
 
   // giscusConfig = (lesson: Lesson) => ({
   //   'data-repo': 'zero-filtre/zerofiltre-blog',
@@ -703,6 +705,35 @@ export class LessonComponent implements OnInit, OnDestroy {
     });
   }
 
+  manageEnrollment(user: User, lessonId: string) {
+    if (!user) return;
+
+    this.isCheckingEnrollment = true;
+    this.courseEnrollment$ = this.enrollmentService
+      .checkSubscriptionAndEnroll(user.id, this.courseID, lessonId)
+      .pipe(
+        map((result: CourseEnrollment) => {
+          debugger
+          this.isCheckingEnrollment = false;
+          this.isSubscriber = !!result;
+          this.courseEnrollmentID = result?.id;
+          this.completedLessons = result?.completedLessons;
+          this.completedLessonsIds = [
+            ...new Set(
+              result?.completedLessons?.map(
+                (compLesson: any) => compLesson.lessonId
+              )
+            ),
+          ] as number[];
+          this.completed = this.isLessonCompleted(this.lesson);
+          this.lessonsCount = result?.course?.lessonsCount;
+          this.loadCompleteProgressBar(this.completedLessonsIds);
+
+          return result;
+        })
+      );
+  }
+
   ngOnInit(): void {
     const user = this.authService?.currentUsr;
 
@@ -721,46 +752,8 @@ export class LessonComponent implements OnInit, OnDestroy {
       const parsedParams = params.get('lesson_id')?.split('-')[0];
       this.lessonID = parsedParams!;
       this.loadLessonData(this.lessonID);
-
-      this.courseEnrollment$ = this.enrollmentService
-        .checkSubscriptionAndEnroll(user.id, this.courseID)
-        .pipe(
-          map((result: CourseEnrollment) => {
-            this.isSubscriber = !!result;
-            this.courseEnrollmentID = result?.id;
-            this.completedLessons = result?.completedLessons;
-            this.completedLessonsIds = [
-              ...new Set(
-                result?.completedLessons?.map(
-                  (compLesson: any) => compLesson.lessonId
-                )
-              ),
-            ] as number[];
-            this.completed = this.isLessonCompleted(this.lesson);
-            this.lessonsCount = result?.course?.lessonsCount;
-            this.loadCompleteProgressBar(this.completedLessonsIds);
-
-            return !!result;
-          })
-        );
+      this.manageEnrollment(user, this.lessonID);
     });
-
-    // this.courseEnrollment$ = this.route.data
-    //   .pipe(
-    //     map(({ sub }) => {
-    //       if (sub === true) return;
-
-    //       this.isSubscriber = !!sub;
-    //       this.courseEnrollmentID = sub?.id
-    //       this.completedLessons = sub?.completedLessons;
-    //       this.completedLessonsIds = [...new Set(sub?.completedLessons?.map((l: CompletedLesson) => l.lessonId))] as number[];
-    //       this.completed = this.isLessonCompleted(this.lesson);
-    //       this.lessonsCount = sub?.course?.lessonsCount;
-    //       this.loadCompleteProgressBar(this.completedLessonsIds);
-
-    //       return sub
-    //     })
-    //   )
   }
 
   ngOnDestroy(): void {
