@@ -216,8 +216,8 @@ export class CourseDetailPageComponent implements OnInit {
       .checkSubscriptionAndEnroll(user.id, this.courseID)
       .pipe(
         map((result: CourseEnrollment) => {
-          this.isCheckingEnrollment = false;
           this.isSubscriber = !!result;
+          this.isCheckingEnrollment = false;
           return result;
         })
       );

@@ -708,7 +708,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   manageEnrollment(user: User, lessonId: string) {
     if (!user) return;
 
-    this.isCheckingEnrollment = true;
+    // this.isCheckingEnrollment = true;
     this.courseEnrollment$ = this.enrollmentService
       .checkSubscriptionAndEnroll(user.id, this.courseID, lessonId)
       .pipe(
