@@ -53,7 +53,7 @@ export class EnrollmentService {
       tap(() => {
         console.log(`Utilisateur enrôlé automatiquement au cours ${courseId}`);
         this.updateLocalSubscriptions(courseId);
-        this.navigateToCourse(courseId, lessonId);
+        this.navigateToLesson(courseId, lessonId);
       }),
       // map(() => true),
       map((data: CourseEnrollment) => data)
@@ -82,10 +82,8 @@ export class EnrollmentService {
   * Navigue vers une page de cours.
   * @param courseId ID du cours
   */
-  private navigateToCourse(courseId: string, lessonId?: string): void {
-    if (lessonId) {
-      this.router.navigateByUrl(`/cours/${courseId}/${lessonId}`);
-    } else {
+  private navigateToLesson(courseId: string, lessonId?: string): void {
+    if (!lessonId || !(/^\d+$/).test(lessonId)) {
       this.router.navigateByUrl(`/cours/${courseId}${'/%3F'}`);
     }
   }
