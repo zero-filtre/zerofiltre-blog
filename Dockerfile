@@ -3,7 +3,7 @@ LABEL stage=deps
 LABEL autodelete="true"
 
 WORKDIR /app
-COPY package.json .
+COPY package.json package-lock.json ./
 
 RUN npm install -g @angular/cli
 RUN npm install -f
