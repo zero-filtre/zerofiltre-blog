@@ -63,6 +63,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   MY_ACCOUNT = 'Mon compte';
   MY_ARTICLES = 'Mes articles';
   ALL_ARTICLES = 'Tous nos articles';
+  ADMIN_SPACE = 'Espace administrateur';
+  ALL_COMPANIES = 'Toutes les organisations';
+  DASHBOARD = 'Tableau de bord';
   MY_COURSES = 'Mes cours';
   MY_TRAININGS = 'Mes formations';
   ALL_TRAININGS = 'Toutes nos formations';
@@ -106,8 +109,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  checkRouteUrl(): boolean {
+  isSidenavOpenedByDefault(): boolean {
     const componentsPrefix = [
+      '/admin',
       '/user/profile',
       '/user/profile/edit',
       '/user/dashboard',
@@ -186,6 +190,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   setActiveLinkFromActiveRoute(url: string) {
+    if (url?.startsWith('/admin')) this.activePage = this.ADMIN_SPACE;
     if (url?.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
     if (url?.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
     if (url?.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;

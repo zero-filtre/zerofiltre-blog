@@ -168,7 +168,7 @@
   <!-- PROFILE SIDEBAR -->
   <mat-sidenav *appShellNoRender
     class="profile-sidebar !hidden lg:!block bg-skin-bgMuted shadow-sm border-0 rounded-none !fixed w-full max-w-xs"
-    mode="side" [opened]="checkRouteUrl()">
+    mode="side" [opened]="isSidenavOpenedByDefault()">
 
     <div class="profile-sidebar-container relative pt-32 px-10 text-skin-base h-full">
 
@@ -263,6 +263,54 @@
             {{'profile.allAdminArticles' | translate}}
           </span>
         </a>
+
+        <div class="admin-links" *ngIf="authService?.isAdmin">
+          <a aria-labelledby="Link to admin dashboard"
+            routerLink="/admin"
+            [ngClass]="activePage === ADMIN_SPACE ? 'link-active' : 'link-inactive'"
+            class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              [ngClass]="activePage === ADMIN_SPACE ? 'svg-active' : 'svg-inactive'"
+              class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
+              fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>
+            <span class="truncate">
+              {{ ADMIN_SPACE }}
+            </span>
+          </a>
+
+          <div class="flex flex-col pl-4 mt-2">
+            <a aria-labelledby="Link to dashboard"
+              routerLink="/admin"
+              [ngClass]="activePage === DASHBOARD ? 'link-active' : 'link-inactive'"
+              class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                [ngClass]="activePage === DASHBOARD ? 'svg-active' : 'svg-inactive'"
+                 class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 h-6 w-6 transition-all duration-200"
+                 fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+              </svg>
+              <span class="truncate ml-3">
+                {{ DASHBOARD }}
+              </span>
+            </a>
+            <a aria-labelledby="Link to companies"
+              routerLink="/admin/companies"
+              [ngClass]="activePage === ALL_COMPANIES ? 'link-active' : 'link-inactive'"
+              class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" 
+                [ngClass]="activePage === ALL_COMPANIES ? 'svg-active' : 'svg-inactive'"
+                class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 h-6 w-6 transition-all duration-200"
+                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+              </svg>
+              <span class="truncate ml-3">
+                {{ ALL_COMPANIES }}
+              </span>
+            </a>
+          </div>
+        </div>
       </div>
 
       <div class=" absolute bottom-0 inset-x-0 p-4">
