@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoadEnvService } from '../services/load-env.service';
 import { MessageService } from '../services/message.service';
@@ -14,6 +14,7 @@ export class HasRoleGuard implements CanActivate {
     private loadEnvService: LoadEnvService,
     private authService: AuthService,
     private messageService: MessageService,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: any
   ) { }
 
@@ -33,7 +34,8 @@ export class HasRoleGuard implements CanActivate {
       const isAuthorised = user?.roles?.includes(route.data?.role);
 
       if (!isAuthorised) {
-        this.messageService.openSnackBarError("Desolé vous n'etes pas autorisé à acceder à ce contenu.", 'OK');
+        // this.messageService.openSnackBarError("Desolé vous n'etes pas autorisé à acceder à ce contenu.", 'OK');
+        this.router.navigateByUrl('**');
       }
 
       return isAuthorised;
