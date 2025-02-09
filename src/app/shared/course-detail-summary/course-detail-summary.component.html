@@ -10,12 +10,12 @@
         <!-- Status -->
         <div class="text-center text-sm">
             <div class="flex flex-col">
-                <button class="text-gray-600 bg-skin-cardMuted rounded-md py-2 mb-2 cursor-text">{{enrolled ? 'Inscrit' : 'Non Inscrit'}}</button>
-                <button *ngIf="!enrolled" class="bg-primary-500 text-white px-6 py-2 rounded-md hover:bg-primary-600" (click)="buyCourse()">
+                <a routerLink="?" *ngIf="enrolled" class="bg-primary-500 text-white text-sm font-medium px-6 py-2 rounded-md hover:bg-primary-600">Aller en cours</a>
+                <button *ngIf="!enrolled" class="bg-primary-500 text-white text-sm font-medium px-6 py-2 rounded-md hover:bg-primary-600" (click)="buyCourse()">
                     Débuter le cours
                 </button>
             </div>
-            <p class="text-primary-800 mt-3">{{course.price ? ((course.price/100)|currency:'EUR') : "Gratuit"}}</p>
+            <p *ngIf="!enrolled" class="text-primary-500 text-sm font-semibold mt-3">{{course.price ? ((course.price/100)|currency:'EUR') : "Gratuit"}}</p>
         </div>
 
         <!-- Course Details -->

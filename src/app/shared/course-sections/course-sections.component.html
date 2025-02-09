@@ -16,37 +16,43 @@
 </ng-container> -->
 
 
-<cdk-accordion class="example-accordion">
+<cdk-accordion class="flex flex-col gap-0.5">
     <ng-container *ngFor="let section of sections; let index = index">
-        <cdk-accordion-item #accordionItem="cdkAccordionItem" class="example-accordion-item">
-            <button class="example-accordion-item-header" [ngClass]="{'!bg-[#eee]' : accordionItem.expanded}" (click)="accordionItem.toggle()" tabindex="0"
+        <cdk-accordion-item #accordionItem="cdkAccordionItem" class="block">
+            <!-- class="example-accordion-item-header" 
+            [ngClass]="{'!bg-[#eee]' : accordionItem.expanded}"  -->
+            <button 
+                class="w-full flex items-center justify-between gap-4 uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold"
+                (click)="accordionItem.toggle()" tabindex="0"
                 [attr.id]="'accordion-header-' + index" [attr.aria-expanded]="accordionItem.expanded"
                 [attr.aria-controls]="'accordion-body-' + index">
                 {{ section.title }}
-                <span class="example-accordion-item-description hidden lg:block">
-                    Cliquer pour {{ accordionItem.expanded ? 'fermer' : 'ouvrir' }}
-                </span>
 
-                <div *ngIf="accordionItem.expanded" class="lg:hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        class="w-4 h-4 mt-[3px]">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                    </svg>
-                </div>
-                <div *ngIf="!accordionItem.expanded" class="lg:hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        class="w-4 h-4 mt-[3px]">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                    </svg>
+                <div class="capitalize text-sm font-medium">
+                    <div *ngIf="accordionItem.expanded" class="flex items-center gap-1">
+                        <span class="hidden lg:inline-flex ">fermer</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            class="w-4 h-4 mt-[3px]">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                        </svg>
+                    </div>
+                    <div *ngIf="!accordionItem.expanded"
+                        class="flex items-center gap-1">
+                        <span class="hidden lg:inline-flex">dérouler</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            class="w-4 h-4 mt-[3px]">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </div>
                 </div>
             </button>
 
             <ng-container *ngIf="accordionItem.expanded">
-                <div class="example-accordion-item-body" role="region"
+                <div class="example-accordion-item-body lg:mt-4" role="region"
                     [style.display]="accordionItem.expanded ? '' : 'none'" [attr.id]="'accordion-body-' + index"
                     [attr.aria-labelledby]="'accordion-header-' + index">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
