@@ -13,11 +13,11 @@ h3 {
 }
 
 h1 {
-  @apply text-3xl lg:text-[40px] lg:leading-10 font-medium;
+  @apply text-3xl lg:text-[40px] lg:leading-10 font-extrabold;
 }
 
 h2 {
-  @apply text-xl lg:text-[1.7rem] lg:leading-10 font-light;
+  @apply text-xl lg:text-[1.2rem] lg:leading-5 font-light;
 }
 
 h3 {
@@ -33,9 +33,9 @@ iframe {
   border: none;
 }
 
-section {
+/* section {
   @apply py-6 lg:py-12;
-}
+} */
 
 section:nth-of-type(even) {
   @apply bg-white;
@@ -69,7 +69,7 @@ ol > li:before {
 
 
 .enrol-tooltip {
-  @apply absolute w-auto p-2 min-w-max top-12 right-4 rounded-md shadow-md
+  @apply absolute w-auto p-2 min-w-max top-12 left-4 rounded-md shadow-md
       text-white bg-secondary text-xs font-medium transition-all duration-200 scale-0 origin-center;
 }
 

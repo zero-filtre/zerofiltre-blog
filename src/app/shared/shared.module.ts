@@ -80,6 +80,8 @@ import { ReactionsComponent } from './reactions/reactions.component';
 import { ArticlesCardComponent } from '../articles/article-card/articles-card.component';
 import { LoginModalComponent } from './login-modal/login-modal.component';
 import { SignupModalComponent } from './signup-modal/signup-modal.component';
+import { CourseDetailSummaryComponent } from './course-detail-summary/course-detail-summary.component';
+import { CourseSectionsComponent } from './course-sections/course-sections.component';
 
 const components = [
   AppShellRenderDirective,
@@ -129,7 +131,9 @@ const components = [
   ReactionsComponent,
   ArticlesCardComponent,
   LoginModalComponent,
-  SignupModalComponent
+  SignupModalComponent,
+  CourseDetailSummaryComponent,
+  CourseSectionsComponent
 ];
 
 const modules = [

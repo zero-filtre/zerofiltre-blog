@@ -1,0 +1,73 @@
+section {
+    @apply py-6 lg:py-12;
+}
+
+section:nth-of-type(even) {
+@apply bg-white;
+}
+
+section:nth-of-type(even).regular-section .image {
+@apply lg:order-1;
+}
+section:nth-of-type(even).regular-section .text {
+@apply lg:order-2;
+}
+
+h3.lesson-group-title {
+@apply text-xl lg:text-2xl mb-10 after:left-0 text-left font-bold;
+}
+
+/* ol auto increment */
+ol {
+list-style: none;
+counter-reset: item;
+}
+
+ol > li:before {
+content: counters(item, ".") ". ";
+counter-increment: item;
+font-weight: 500;
+/* font-style: oblique; */
+}
+
+h1,
+h3 {
+  @apply text-primary-500;
+}
+
+h1 {
+  @apply text-3xl lg:text-[40px] lg:leading-10 font-extrabold;
+}
+
+h2 {
+  @apply text-xl lg:text-[1.2rem] lg:leading-5 font-light;
+}
+
+h3 {
+  @apply text-2xl lg:text-3xl font-medium mb-12 relative after:absolute after:w-32 lg:after:w-24 after:h-1.5 after:bg-accent-400 after:-bottom-6 after:left-[calc(50%-4rem)] after:rounded-sm;
+  @apply text-center;
+}
+
+p {
+  @apply text-lg lg:text-xl font-normal !mb-5 last:!mb-0 text-center;
+}
+
+
+
+/* ACCORDION STYLES */
+.example-accordion-item-description {
+  font-size: 0.85em;
+  text-transform: lowercase;
+}
+
+.example-accordion-item-body {
+  padding: 16px;
+}
+
+.example-accordion-item-header:hover {
+  cursor: pointer;
+}
+
+
+
+
