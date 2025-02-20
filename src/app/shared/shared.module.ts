@@ -82,6 +82,7 @@ import { LoginModalComponent } from './login-modal/login-modal.component';
 import { SignupModalComponent } from './signup-modal/signup-modal.component';
 import { CourseDetailSummaryComponent } from './course-detail-summary/course-detail-summary.component';
 import { CourseSectionsComponent } from './course-sections/course-sections.component';
+import { CompanyCardComponent } from './company-card/company-card.component';
 
 const components = [
   AppShellRenderDirective,
@@ -133,7 +134,8 @@ const components = [
   LoginModalComponent,
   SignupModalComponent,
   CourseDetailSummaryComponent,
-  CourseSectionsComponent
+  CourseSectionsComponent,
+  CompanyCardComponent
 ];
 
 const modules = [
