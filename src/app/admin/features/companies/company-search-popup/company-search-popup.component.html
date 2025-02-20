@@ -1,0 +1,43 @@
+<div *ngIf="loading; else popupContent" class="min-w-[150px] min-h-[100px] flex items-center justify-center">
+    <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid">
+        <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
+            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
+            style="animation-play-state:paused"></circle>
+    </svg>
+</div>
+
+<ng-template #popupContent>
+    <h1 mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">Lier le cours <strong>"{{ data.course.title }}"</strong> à une organisation</h1>
+    <h2 mat-dialog-title class="sr-only">Effectuer une recherche</h2>
+    <mat-dialog-content>
+        <div class="flex items-center justify-center min-w-full px-2">
+            <div class="min-w-full">
+                <input (keyup)="onSearchChange(getValue($event))" id="modalSearchBox" placeholder="Recherche..."
+                    class="border-0 text-lg font-medium outline-none ring-0 h-14 px-2 lg:px-4 bg-skin-bgMuted border-b-4 border-primary-500 w-full" />
+                <p *ngIf="results.length === 0" class="text-xs text-center text-gray-500 mt-4">Aucun résultat pour
+                    l'instant
+                </p>
+                <ul *ngIf="results.length > 0" class="flex flex-col gap-2 mt-2">
+                    <li *ngFor="let result of results" mat-button mat-dialog-close
+                        class="flex items-center justify-between gap-2 p-2 hover:bg-gray-100">
+                        <div>
+                            <h2 class="font-semibold text-primary-500 text-lg">{{result.companyName}}</h2>
+                            <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.siren }}</p>
+                        </div>
+
+                        <button (click)="linkCourseToCompany(result.id)" type="button" aria-labelledby="A tag"
+                            class="flex items-center px-3 py-1 text-sm font-medium text-primary-500 rounded-full border border-skin-border bg-skin-card transition-all duration-200">
+                            <svg class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                                <circle cx="4" cy="4" r="3"></circle>
+                            </svg>
+                            <span
+                                class="truncate font-semibold group-hover:text-primary-500">Lier</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </mat-dialog-content>
+</ng-template>

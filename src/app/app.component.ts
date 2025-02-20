@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   MY_ARTICLES = 'Mes articles';
   ALL_ARTICLES = 'Tous nos articles';
   ADMIN_SPACE = 'Espace administrateur';
-  ALL_COMPANIES = 'Toutes les organisations';
+  ALL_COMPANIES = 'Toutes nos organisations';
   DASHBOARD = 'Tableau de bord';
   MY_COURSES = 'Mes cours';
   MY_TRAININGS = 'Mes formations';
@@ -188,6 +188,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   setActiveLinkFromActiveRoute(url: string) {
     if (url?.startsWith('/admin')) this.activePage = this.ADMIN_SPACE;
+    if (url?.startsWith('/admin/companies')) this.activePage = this.ALL_COMPANIES;
     if (url?.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
     if (url?.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
     if (url?.startsWith('/user/dashboard/admin'))
