@@ -168,7 +168,7 @@
                                 <span>{{'sidebar.myTrainings' | translate}}</span>
                             </a>
 
-                            <a *ngIf="activeCourseModule && authService?.isAdmin" aria-labelledby="Link to about page"
+                            <!-- <a *ngIf="activeCourseModule && authService?.isAdmin" aria-labelledby="Link to about page"
                                 routerLink="/user/dashboard/courses/all"
                                 class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
@@ -177,9 +177,9 @@
                                         d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                 </svg>
                                 <span>{{'sidebar.allTrainings' | translate}}</span>
-                            </a>
+                            </a> -->
 
-                            <a *ngIf="authService?.isAdmin" aria-labelledby="Link to about page"
+                            <!-- <a *ngIf="authService?.isAdmin" aria-labelledby="Link to about page"
                                 routerLink="/user/dashboard/admin"
                                 class="flex items-center gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
@@ -188,10 +188,21 @@
                                         d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                 </svg>
                                 <span>{{'profile.allAdminArticles' | translate}}</span>
+                            </a> -->
+
+                            <a *ngIf="authService?.canAccessAdminDashboard" aria-labelledby="Link to admin dashboard"
+                                routerLink="/admin"
+                                class="flex items-center text-primary-500 gap-3 px-4 py-3 border-b hover:bg-skin-link hover:text-primary-500 text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="size-6"
+                                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                </svg>
+                                <span>Espace administrateur</span>
                             </a>
 
                             <button (click)="logout()" aria-labelledby="logout button"
-                                class="flex items-center gap-3 px-4 py-3 hover:bg-skin-link hover:text-error text-sm w-full">
+                                class="flex items-center text-error gap-3 px-4 py-3 hover:bg-skin-link hover:text-error text-sm w-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
