@@ -5,12 +5,20 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CompaniesComponent } from './features/companies/companies.component';
 import { SharedModule } from '../shared/shared.module';
+import { BaseCompanyListComponent } from './core/base-company-list/base-company-list.component';
+import { CompanyCreatePopupComponent } from './features/companies/company-create-popup/company-create-popup.component';
+import { CompanyDeletePopupComponent } from './features/companies/company-delete-popup/company-delete-popup.component';
+import { CompanySearchPopupComponent } from './features/companies/company-search-popup/company-search-popup.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    CompaniesComponent
+    CompaniesComponent,
+    BaseCompanyListComponent,
+    CompanyCreatePopupComponent,
+    CompanyDeletePopupComponent,
+    CompanySearchPopupComponent
   ],
   imports: [
     CommonModule,
