@@ -270,3 +270,7 @@ img {
 .cc-nb-buttons-container .cc-nb-reject:hover {
   opacity: 0.9;
 }
+
+.mat-menu-panel {
+  min-height: auto !important;
+}

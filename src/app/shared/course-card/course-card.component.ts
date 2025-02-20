@@ -6,6 +6,7 @@ import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete
 import { CourseService } from 'src/app/school/courses/course.service';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
+import { CompanySearchPopupComponent } from '../../admin/features/companies/company-search-popup/company-search-popup.component';
 
 @Component({
   selector: 'app-course-card',
@@ -33,6 +34,10 @@ export class CourseCardComponent {
     return this.courseService.canEditCourse(user, course);
   }
 
+  canLinkCourseToCompany() {
+    return this.authService.canAccessAdminDashboard;
+  }
+
   openCourseDeleteDialog(courseId: any): void {
     this.dialogDeleteRef.open(CourseDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
@@ -42,6 +47,17 @@ export class CourseCardComponent {
       },
     });
   }
+
+  openCompanySearchPopup(course: Course): void {
+    this.dialogDeleteRef.open(CompanySearchPopupComponent, {
+      panelClass: 'popup-search',
+      backdropClass: 'popup-search-overlay',
+      disableClose: false,
+      minHeight: '400px',
+      width: '700px',
+      data: { course: course },
+    });
+  } 
 
   downloadCoursePdf(courseId: number): void {
     this.courseService.downloadPdf(courseId).subscribe({
