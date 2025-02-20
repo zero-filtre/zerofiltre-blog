@@ -144,6 +144,10 @@ export class AuthService {
     }
   }
 
+  get canAccessAdminDashboard(): boolean {
+    return this.isAdmin;
+  }
+
   setUserData(user: User) {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('user_data', JSON.stringify(user));
