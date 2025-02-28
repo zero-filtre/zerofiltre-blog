@@ -19,7 +19,7 @@ jobs:
       KUBE_CONFIG : ${{ secrets.KUBE_CONFIG }}
       env_name: ${{startsWith(github.ref, 'refs/heads/release-') && 'prod' || 'dev'}}
       api_host : ${{startsWith(github.ref, 'refs/heads/release-') && 'blog-api.zerofiltre.tech' || 'blog-api-dev.zerofiltre.tech'}}
-      DOCKER_TAG_SUFFIX: ${{startsWith(github.ref, 'refs/heads/release-') && 'stable' || 'unstable'}}
+      DOCKER_TAG_SUFFIX: ''
       replicas : ${{startsWith(github.ref, 'refs/heads/release-') && 1 || 1 }}
       requests_cpu : ${{startsWith(github.ref, 'refs/heads/release-') && 0.1 || 0.1 }}
       requests_memory : ${{startsWith(github.ref, 'refs/heads/release-') && '0.5Gi' || '0.5Gi' }}
@@ -60,11 +60,23 @@ jobs:
         key: ${{ runner.os }}-buildx-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-buildx-
+
     - name: Docker Login
       uses: docker/login-action@v2.1.0
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    - name: Find release version OR branch name
+      run: |
+        if [[ ${{ github.ref }} == refs/heads/release-* ]]; then
+          VERSION_OR_BRANCH=${{ github.ref }}
+          DOCKER_TAG_SUFFIX=${VERSION_OR_BRANCH#refs/heads/release-}
+        else
+          DOCKER_TAG_SUFFIX=${{ github.ref_name }}
+        fi
+        echo "DOCKER_TAG_SUFFIX=$DOCKER_TAG_SUFFIX" >> $GITHUB_ENV
+        echo "$DOCKER_TAG_SUFFIX"
 
     - name: Build and push
       uses: docker/build-push-action@v2
