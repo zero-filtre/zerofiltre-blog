@@ -85,6 +85,7 @@ import { CourseSectionsComponent } from './course-sections/course-sections.compo
 import { BroadcastComponent } from './broadcast/broadcast.component';
 import { CertificateConfirmComponent } from './certificate-confirm/certificate-confirm.component';
 import { CompanyCardComponent } from './company-card/company-card.component';
+import { CompanyCoursesComponent } from './company-courses/company-courses.component';
 
 const components = [
   AppShellRenderDirective,
@@ -139,7 +140,8 @@ const components = [
   CourseSectionsComponent,
   BroadcastComponent,
   CertificateConfirmComponent,
-  CompanyCardComponent
+  CompanyCardComponent,
+  CompanyCoursesComponent
 ];
 
 const modules = [
