@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Course } from 'src/app/school/courses/course';
-import { CourseDeletePopupComponent } from 'src/app/school/courses/course-delete-popup/course-delete-popup.component';
-import { CourseService } from 'src/app/school/courses/course.service';
-import { AuthService } from 'src/app/user/auth.service';
-import { User } from 'src/app/user/user.model';
+import { Course } from '../../school/courses/course';
+import { CourseDeletePopupComponent } from '../../school/courses/course-delete-popup/course-delete-popup.component';
+import { CourseService } from '../../school/courses/course.service';
+import { AuthService } from '../../user/auth.service';
+import { User } from '../../user/user.model';
 import { CompanySearchPopupComponent } from '../../admin/features/companies/company-search-popup/company-search-popup.component';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-course-card',
@@ -22,7 +23,8 @@ export class CourseCardComponent {
     public authService: AuthService,
     private courseService: CourseService,
     private dialogDeleteRef: MatDialog,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   parseUrl(url: string) {
@@ -49,15 +51,22 @@ export class CourseCardComponent {
   }
 
   openCompanySearchPopup(course: Course): void {
-    this.dialogDeleteRef.open(CompanySearchPopupComponent, {
-      panelClass: 'popup-search',
-      backdropClass: 'popup-search-overlay',
-      disableClose: false,
-      minHeight: '400px',
-      width: '700px',
-      data: { course: course },
-    });
-  } 
+    this.dialogDeleteRef
+      .open(CompanySearchPopupComponent, {
+        panelClass: 'popup-search',
+        disableClose: false,
+        minHeight: '400px',
+        width: '700px',
+        data: { course: course },
+      })
+      .afterClosed()
+      .subscribe((message) => {
+        debugger
+        if (message) {
+          this.messageService.openSnackBarSuccess(message, '');
+        }
+      });
+  }
 
   downloadCoursePdf(courseId: number): void {
     this.courseService.downloadPdf(courseId).subscribe({
