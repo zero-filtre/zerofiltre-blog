@@ -17,6 +17,8 @@ import { SocialAuthComponent } from './social-auth/social-auth.component';
 import { UserResolver } from './user.resolver';
 import { SingleRouteGuard } from '../shared/guard/single-route.guard';
 import { AdminCoursesListComponent } from './courses/admin-courses-list/admin-courses-list.component';
+import { CompaniesComponent } from '../admin/features/companies/companies.component';
+import { CompanyCoursesComponent } from '../shared/company-courses/company-courses.component';
 
 
 
@@ -60,6 +62,16 @@ const routes: Routes = [
     path: 'dashboard/courses',
     component: StudentCoursesListComponent,
     canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard],
+  },
+  {
+    path: 'dashboard/companies',
+    component: CompaniesComponent,
+    canActivate: [TokenExpiredGuard, AuthGuard],
+  },
+  {
+    path: 'dashboard/companies/:companyId/courses',
+    component: CompanyCoursesComponent,
+    canActivate: [TokenExpiredGuard, AuthGuard],
   },
   {
     path: 'dashboard/teacher/courses',
