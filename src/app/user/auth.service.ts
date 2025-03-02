@@ -162,6 +162,11 @@ export class AuthService {
     return this.isAdmin;
   }
 
+  getUsers(pageNumber: number, limit: number): Observable<User[]> {
+    return this.http.get<any>(`${this.apiServerUrl}/user?pageNumber=${pageNumber}&pageSize=${limit}`)
+      .pipe(shareReplay());
+  }
+
   setUserData(user: User) {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('user_data', JSON.stringify(user));
