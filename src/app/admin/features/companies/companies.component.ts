@@ -72,8 +72,10 @@ export class CompaniesComponent
       height: '350px',
       panelClass: 'article-popup-panel',
     }).afterClosed().subscribe((company: Company) => {
-      this.fetchAllCompanies();
-      this.messageService.openSnackBarSuccess("Entreprise créée avec succès !", 'OK');
+      if (company) {
+        this.fetchAllCompanies();
+        this.messageService.openSnackBarSuccess("Entreprise créée avec succès !", 'OK');
+      }
     });
   }
 
