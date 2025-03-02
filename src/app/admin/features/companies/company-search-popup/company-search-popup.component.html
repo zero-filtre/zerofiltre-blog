@@ -9,34 +9,66 @@
 </div>
 
 <ng-template #popupContent>
-    <h1 mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">Lier le cours <strong>"{{ data.course.title }}"</strong> à une organisation</h1>
+    <h1 *ngIf="isCourseSearch" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">
+        Lier ce cours à une organisation
+    </h1>
+    <h1 *ngIf="!isCourseSearch" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">
+        Ajouter des utilisateurs à cette organisation
+    </h1>
     <h2 mat-dialog-title class="sr-only">Effectuer une recherche</h2>
     <mat-dialog-content>
         <div class="flex items-center justify-center min-w-full px-2">
             <div class="min-w-full">
                 <input (keyup)="onSearchChange(getValue($event))" id="modalSearchBox" placeholder="Recherche..."
                     class="border-0 text-lg font-medium outline-none ring-0 h-14 px-2 lg:px-4 bg-skin-bgMuted border-b-4 border-primary-500 w-full" />
-                <p *ngIf="results.length === 0" class="text-xs text-center text-gray-500 mt-4">Aucun résultat pour
-                    l'instant
+                
+                <div *ngIf="selectedUsers.length > 0" class="mt-4 p-4 bg-gray-100 rounded-md">
+                    <h3 class="text-sm font-semibold text-primary-500">Selection :</h3>
+                    <ul class="flex flex-col gap-2 mt-2">
+                        <li *ngFor="let selected of selectedUsers" class="flex items-center justify-between gap-2 px-3 py-1 bg-white rounded-md shadow">
+                            <div class="flex items-center gap-2">
+                                <h2 *ngIf="!isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ selected.fullName }} - <span class="text-sm text-skin-base font-medium">{{ selected.role }}</span></h2>
+                            </div>
+                            <button (click)="toggleSelection(selected)" class="text-red-500 text-sm">Retirer</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <p *ngIf="results.length === 0" class="text-xs text-center text-gray-500 mt-4">
+                    Aucun résultat pour l'instant
                 </p>
                 <ul *ngIf="results.length > 0" class="flex flex-col gap-2 mt-2">
-                    <li *ngFor="let result of results" mat-button mat-dialog-close
-                        class="flex items-center justify-between gap-2 p-2 hover:bg-gray-100">
-                        <div>
-                            <h2 class="font-semibold text-primary-500 text-lg">{{result.companyName}}</h2>
-                            <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.siren }}</p>
+                    <li *ngFor="let result of results" class="flex items-center justify-between gap-2 p-2 hover:bg-gray-100">
+                        <div class="flex items-center gap-2">
+                            <input id="result-{{result.id}}" type="checkbox" [value]="result.id" (change)="toggleSelection(result)" [checked]="isSelected(result.id)" />
+                            <div>
+                                <label for="result-{{result.id}}" *ngIf="isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ result.companyName }}</label>
+                                <label for="result-{{result.id}}" *ngIf="!isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ result.fullName }}</label>
+                                <p *ngIf="isCourseSearch" class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.siren }}</p>
+                            </div>
                         </div>
+                        <div class="flex items-center gap-2">
+                            <select *ngIf="!isCourseSearch" (change)="updateUserRole(result.id, getValue($event))" class="appearance-none lg:w-28 py-1.5 px-3 border font-medium">
+                                <option value="VIEWER" selected>Viewer</option>
+                                <option value="EDITOR">Editor</option>
+                                <option value="ADMIN">Admin</option>
+                            </select>
 
-                        <button (click)="linkCourseToCompany(result.id)" type="button" aria-labelledby="A tag"
-                            class="flex items-center px-3 py-1 text-sm font-medium text-primary-500 rounded-full border border-skin-border bg-skin-card transition-all duration-200">
-                            <svg class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
-                                <circle cx="4" cy="4" r="3"></circle>
-                            </svg>
-                            <span
-                                class="truncate font-semibold group-hover:text-primary-500">Lier</span>
-                        </button>
+                            <button (click)="linkCourseOrUserToCompany(result.id)" type="button"
+                                class="flex items-center gap-0.5 px-1 pr-1.5 py-1 text-sm font-medium text-primary-500 rounded-full border border-skin-border bg-skin-card transition-all duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                                </svg>
+                                <span *ngIf="isCourseSearch">Lier</span>
+                                <span *ngIf="!isCourseSearch">Ajouter</span>
+                            </button>
+                        </div>
                     </li>
                 </ul>
+                <button *ngIf="selectedUsers.length > 0" (click)="linkSelectedUsers()" type="button"
+                    class="mt-4 w-full py-2 text-white bg-primary-500 rounded-lg font-semibold hover:bg-primary-700">
+                    Ajouter la sélection
+                </button>
             </div>
         </div>
     </mat-dialog-content>

@@ -5,3 +5,5 @@ export interface Company {
   siren: string;
   companyName: string;
 }
+
+export type CompanyUserRoleType = 'ADMIN' | 'EDITOR' | 'VIEWER';

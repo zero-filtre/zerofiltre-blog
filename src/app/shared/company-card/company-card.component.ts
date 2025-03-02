@@ -4,6 +4,7 @@ import { AuthService } from '../../user/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CompanyDeletePopupComponent } from '../../admin/features/companies/company-delete-popup/company-delete-popup.component';
 import { MessageService } from '../../services/message.service';
+import { CompanySearchPopupComponent } from '../../admin/features/companies/company-search-popup/company-search-popup.component';
 
 @Component({
   selector: 'app-company-card',
@@ -17,7 +18,7 @@ export class CompanyCardComponent {
   constructor(
     public authService: AuthService,
     private dialogDeleteRef: MatDialog,
-    private messageService: MessageService,
+    private messageService: MessageService
   ) {}
 
   parseUrl(url: string) {
@@ -43,6 +44,25 @@ export class CompanyCardComponent {
         if (message) {
           this.fetchAllCompanies();
           this.messageService.openSnackBarSuccess(message, 'OK');
+        }
+      });
+  }
+
+  openCompanyEditDialog(company: Company): void {}
+
+  openCompanySearchPopup(company: Company): void {
+    this.dialogDeleteRef
+      .open(CompanySearchPopupComponent, {
+        panelClass: 'popup-search',
+        disableClose: false,
+        minHeight: '400px',
+        width: '700px',
+        data: { company: company },
+      })
+      .afterClosed()
+      .subscribe((message) => {
+        if (message) {
+          this.messageService.openSnackBarSuccess(message, '');
         }
       });
   }

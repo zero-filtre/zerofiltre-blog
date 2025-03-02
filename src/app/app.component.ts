@@ -26,9 +26,10 @@ import {
 } from '@angular/router';
 
 import { LoadEnvService } from './services/load-env.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 import { GeoLocationService } from './services/geolocaton.service';
 import { TipsService } from './services/tips.service';
+import { CompanyService } from './admin/features/companies/company.service';
 
 declare let Prism: any;
 
@@ -86,7 +87,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     private fileUploadService: FileUploadService,
     private modalService: ModalService,
     public geoLocationService: GeoLocationService,
-    private tipsService: TipsService
+    private tipsService: TipsService,
+    private companyService: CompanyService
   ) {
     this.setBrowserTranslationConfigs();
   }
