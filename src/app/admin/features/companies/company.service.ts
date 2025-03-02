@@ -36,7 +36,7 @@ export class CompanyService {
 
   getCompanies(pageNumber: any, limit: any): Observable<any[]> {
     return this.http
-      .get<any[]>(
+      .get<any>(
         `${this.apiServerUrl}/company/all?pageNumber=${pageNumber}&pageSize=${limit}`
       )
       .pipe(shareReplay());
@@ -70,6 +70,12 @@ export class CompanyService {
       (company: Company) => company.companyName.toLowerCase().includes(query.toLowerCase()))
 
     return of(filteredCompanies);
+  }
+
+  findAllCoursesBycompanyId(companyId: string, pageNumber: number, limit: number): Observable<any[]> {
+    return this.http
+      .get<any>(`${this.apiServerUrl}/company/${companyId}/course?pageNumber=${pageNumber}&pageSize=${limit}`, httpOptions)
+      .pipe(shareReplay());
   }
   
 }
