@@ -9,34 +9,52 @@
 </div>
 
 <ng-template #popupContent>
-    <h1 mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">Lier le cours <strong>"{{ data.course.title }}"</strong> à une organisation</h1>
+    <h1 *ngIf="isCourseSearch" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">
+        Lier ce cours à une organisation
+    </h1>
+    <h1 *ngIf="!isCourseSearch" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">
+        Ajouter des utilisateurs à cette organisation
+    </h1>
     <h2 mat-dialog-title class="sr-only">Effectuer une recherche</h2>
     <mat-dialog-content>
         <div class="flex items-center justify-center min-w-full px-2">
             <div class="min-w-full">
                 <input (keyup)="onSearchChange(getValue($event))" id="modalSearchBox" placeholder="Recherche..."
                     class="border-0 text-lg font-medium outline-none ring-0 h-14 px-2 lg:px-4 bg-skin-bgMuted border-b-4 border-primary-500 w-full" />
-                <p *ngIf="results.length === 0" class="text-xs text-center text-gray-500 mt-4">Aucun résultat pour
-                    l'instant
+                <p *ngIf="results.length === 0" class="text-xs text-center text-gray-500 mt-4">
+                    Aucun résultat pour l'instant
                 </p>
                 <ul *ngIf="results.length > 0" class="flex flex-col gap-2 mt-2">
-                    <li *ngFor="let result of results" mat-button mat-dialog-close
-                        class="flex items-center justify-between gap-2 p-2 hover:bg-gray-100">
-                        <div>
-                            <h2 class="font-semibold text-primary-500 text-lg">{{result.companyName}}</h2>
-                            <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.siren }}</p>
+                    <li *ngFor="let result of results" class="flex items-center justify-between gap-2 p-2 hover:bg-gray-100">
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" [value]="result.id" (change)="toggleSelection(result.id)" />
+                            <div>
+                                <h2 *ngIf="isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ result.companyName }}</h2>
+                                <h2 *ngIf="!isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ result.fullName }}</h2>
+                                <p *ngIf="isCourseSearch" class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.siren }}</p>
+                            </div>
                         </div>
-
-                        <button (click)="linkCourseToCompany(result.id)" type="button" aria-labelledby="A tag"
-                            class="flex items-center px-3 py-1 text-sm font-medium text-primary-500 rounded-full border border-skin-border bg-skin-card transition-all duration-200">
-                            <svg class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
-                                <circle cx="4" cy="4" r="3"></circle>
-                            </svg>
-                            <span
-                                class="truncate font-semibold group-hover:text-primary-500">Lier</span>
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <select class="px-4" (change)="updateUserRole(result.id, getValue($event))" class="border px-2 py-1 rounded">
+                                <option value="ADMIN">ADMIN</option>
+                                <option value="VIEWER">VIEWER</option>
+                                <option value="EDITOR">EDITOR</option>
+                            </select>
+                            <button (click)="linkCourseOrUserToCompany(result.id)" type="button"
+                                class="flex items-center gap-1 px-3 py-1 text-sm font-medium text-primary-500 rounded-full border border-skin-border bg-skin-card transition-all duration-200">
+                                <svg class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
+                                    <circle cx="4" cy="4" r="3"></circle>
+                                </svg>
+                                <span *ngIf="isCourseSearch">Lier</span>
+                                <span *ngIf="!isCourseSearch">Ajouter</span>
+                            </button>
+                        </div>
                     </li>
                 </ul>
+                <button (click)="linkSelectedUsers()" type="button"
+                    class="mt-4 w-full py-2 text-white bg-primary-500 rounded-lg font-semibold hover:bg-primary-700">
+                    Confirmer la sélection
+                </button>
             </div>
         </div>
     </mat-dialog-content>
