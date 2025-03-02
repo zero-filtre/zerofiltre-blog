@@ -9,7 +9,8 @@
 </div>
 
 <ng-template #popupContent>
-    <h1 mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">Lier le cours <strong>"{{ data.course.title }}"</strong> à une organisation</h1>
+    <h1 *ngIf="isCourseSearch" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">Lier le cours <strong>"{{ data.course.title }}"</strong> à une organisation</h1>
+    <h1 *ngIf="!isCourseSearch" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">Ajouter un utilisateur à cette organisation</h1>
     <h2 mat-dialog-title class="sr-only">Effectuer une recherche</h2>
     <mat-dialog-content>
         <div class="flex items-center justify-center min-w-full px-2">
@@ -23,17 +24,19 @@
                     <li *ngFor="let result of results" mat-button mat-dialog-close
                         class="flex items-center justify-between gap-2 p-2 hover:bg-gray-100">
                         <div>
-                            <h2 class="font-semibold text-primary-500 text-lg">{{result.companyName}}</h2>
-                            <p class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.siren }}</p>
+                            <h2 *ngIf="isCourseSearch" class="font-semibold text-primary-500 text-lg">{{result.companyName}}</h2>
+                            <h2 *ngIf="!isCourseSearch" class="font-semibold text-primary-500 text-lg">{{result.fullName}}</h2>
+                            <p *ngIf="isCourseSearch" class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.siren }}</p>
+                            <p *ngIf="!isCourseSearch" class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.email }}</p>
                         </div>
 
-                        <button (click)="linkCourseToCompany(result.id)" type="button" aria-labelledby="A tag"
+                        <button (click)="linkCourseOrUserToCompany(result.id)" type="button" aria-labelledby="A tag"
                             class="flex items-center px-3 py-1 text-sm font-medium text-primary-500 rounded-full border border-skin-border bg-skin-card transition-all duration-200">
                             <svg class="mr-1 h-2 w-2" fill="currentColor" viewBox="0 0 8 8">
                                 <circle cx="4" cy="4" r="3"></circle>
                             </svg>
-                            <span
-                                class="truncate font-semibold group-hover:text-primary-500">Lier</span>
+                            <span *ngIf="isCourseSearch" class="truncate font-semibold group-hover:text-primary-500">Lier</span>
+                            <span *ngIf="!isCourseSearch" class="truncate font-semibold group-hover:text-primary-500">Ajouter</span>
                         </button>
                     </li>
                 </ul>
