@@ -40,8 +40,10 @@ export class CompanyCardComponent {
       })
       .afterClosed()
       .subscribe((message: string) => {
-        this.fetchAllCompanies();
-        this.messageService.openSnackBarSuccess(message, 'OK');
+        if (message) {
+          this.fetchAllCompanies();
+          this.messageService.openSnackBarSuccess(message, 'OK');
+        }
       });
   }
 }
