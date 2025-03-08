@@ -713,7 +713,6 @@ export class LessonComponent implements OnInit, OnDestroy {
       .checkSubscriptionAndEnroll(user.id, this.courseID, lessonId)
       .pipe(
         map((result: CourseEnrollment) => {
-          debugger
           this.isCheckingEnrollment = false;
           this.isSubscriber = !!result;
           this.courseEnrollmentID = result?.id;
