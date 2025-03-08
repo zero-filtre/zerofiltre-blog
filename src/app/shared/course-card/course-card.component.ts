@@ -61,7 +61,6 @@ export class CourseCardComponent {
       })
       .afterClosed()
       .subscribe((message) => {
-        debugger
         if (message) {
           this.messageService.openSnackBarSuccess(message, '');
         }
