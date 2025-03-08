@@ -129,6 +129,10 @@ img {
   @apply fixed inset-0 bg-gray-900 bg-opacity-70 backdrop-blur-sm z-40
 }
 
+.popup-search .mat-dialog-container {
+  @apply !rounded-lg
+}
+
 .popup-login {
   @apply max-sm:!w-full mx-4 lg:mx-0
 }
