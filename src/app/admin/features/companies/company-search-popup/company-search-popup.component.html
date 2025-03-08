@@ -20,14 +20,26 @@
         <div class="flex items-center justify-center min-w-full px-2">
             <div class="min-w-full">
                 <input (keyup)="onSearchChange(getValue($event))" id="modalSearchBox" placeholder="Recherche..."
-                    class="border-0 text-lg font-medium outline-none ring-0 h-14 px-2 lg:px-4 bg-skin-bgMuted border-b-4 border-primary-500 w-full" />
+                    class="border-0 rounded-md text-lg font-medium outline-none ring-0 h-14 px-2 lg:px-4 bg-skin-bgMuted border-b-4 border-primary-500 w-full" />
                 
                 <div *ngIf="selectedUsers.length > 0" class="mt-4 p-4 bg-gray-100 rounded-md">
                     <h3 class="text-sm font-semibold text-primary-500">Selection :</h3>
                     <ul class="flex flex-col gap-2 mt-2">
                         <li *ngFor="let selected of selectedUsers" class="flex items-center justify-between gap-2 px-3 py-1 bg-white rounded-md shadow">
                             <div class="flex items-center gap-2">
-                                <h2 *ngIf="!isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ selected.fullName }} - <span class="text-sm text-skin-base font-medium">{{ selected.role }}</span></h2>
+                                <p *ngIf="isCourseSearch" class="flex items-center gap-3 font-semibold text-primary-500 text-lg">
+                                    <span>{{ selected.companyName }}</span>
+                                    <span>-</span> 
+                                    <span class="text-sm text-skin-base font-medium">{{ selected.siren }}</span>
+                                </p>
+                                <p *ngIf="!isCourseSearch" class="flex items-center gap-3 font-semibold text-primary-500 text-lg">
+                                    <app-image [classes]="'h-10 w-10 rounded-full'"
+                                    [alt]="selected?.fullName" [sourceUrl]="selected.profilePicture">
+                                    </app-image>
+                                    <span>{{ selected.fullName }}</span> 
+                                    <span>-</span>
+                                    <span class="text-sm text-skin-base font-medium">{{ selected.role }}</span>
+                                </p>
                             </div>
                             <button (click)="toggleSelection(selected)" class="text-red-500 text-sm">Retirer</button>
                         </li>
@@ -38,20 +50,25 @@
                     Aucun résultat pour l'instant
                 </p>
                 <ul *ngIf="results.length > 0" class="flex flex-col gap-2 mt-2">
-                    <li *ngFor="let result of results" class="flex items-center justify-between gap-2 p-2 hover:bg-gray-100">
-                        <div class="flex items-center gap-2">
-                            <input id="result-{{result.id}}" type="checkbox" [value]="result.id" (change)="toggleSelection(result)" [checked]="isSelected(result.id)" />
+                    <li *ngFor="let result of results" class="flex items-center justify-between gap-2 p-2 hover:bg-gray-100 rounded-md">
+                        <div class="flex items-center gap-3">
+                            <input class="mr-1" id="result-{{result.id}}" type="checkbox" [value]="result.id" (change)="toggleSelection(result)" [checked]="isSelected(result.id)" />
                             <div>
                                 <label for="result-{{result.id}}" *ngIf="isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ result.companyName }}</label>
-                                <label for="result-{{result.id}}" *ngIf="!isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ result.fullName }}</label>
-                                <p *ngIf="isCourseSearch" class="line-clamp-2 text-skin-base text-sm mt-1">{{ result.siren }}</p>
+                                <label for="result-{{result.id}}" *ngIf="!isCourseSearch" class="flex items-center gap-3 font-semibold text-primary-500 text-lg">
+                                    <app-image [classes]="'h-10 w-10 rounded-full'"
+                                    [alt]="result?.fullName" [sourceUrl]="result.profilePicture">
+                                    </app-image>
+                                    {{ result.fullName }}
+                                </label>
+                                <p *ngIf="isCourseSearch" class="line-clamp-2 text-skin-base text-sm">{{ result.siren }}</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
                             <select *ngIf="!isCourseSearch" (change)="updateUserRole(result.id, getValue($event))" class="appearance-none lg:w-28 py-1.5 px-3 border font-medium">
-                                <option value="VIEWER" selected>Viewer</option>
-                                <option value="EDITOR">Editor</option>
-                                <option value="ADMIN">Admin</option>
+                                <option value="VIEWER" selected>VIEWER</option>
+                                <option value="EDITOR">EDITOR</option>
+                                <option value="ADMIN">ADMIN</option>
                             </select>
 
                             <button (click)="linkCourseOrUserToCompany(result.id)" type="button"
