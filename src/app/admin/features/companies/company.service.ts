@@ -92,7 +92,7 @@ export class CompanyService {
   }
 
   linkUserToCompany(data: any): Observable<any> {
-    const { companyId, userId, role = 'ADMIN' } = data;
+    const { companyId, userId, role } = data;
     return this.http
       .post<any>(
         `${this.apiServerUrl}/company/${companyId}/user/${userId}/role/${role}`,

@@ -16,7 +16,7 @@ export class CompanySearchPopupComponent {
   public companies: Company[] = [];
 
   query: string = '';
-  selectedUsers: { id: number, role: string, fullName?: string }[] = [];
+  selectedUsers: { id: number, profilePicture?: string, role?: string, fullName?: string, companyName?: string, siren?: string }[] = [];
   results: any[] = [];
   isCourseSearch: boolean = false;
   private SearchText$ = new Subject<string>();
@@ -63,9 +63,10 @@ export class CompanySearchPopupComponent {
   }
 
   linkUserToCompany(userId: number): void {
-    const selectedUser = this.selectedUsers.find(user => user.id === userId);
-    const role = selectedUser ? selectedUser.role : 'VIEWER';
-
+    const selectedUser = this.selectedUsers.find(someUser => someUser.id === userId);
+    const resultUser = this.results.find(someUser => someUser.id === userId);
+    const role = selectedUser ? selectedUser.role : (resultUser && resultUser.role) ? resultUser.role : 'VIEWER';
+    
     const {
       company: { id },
     } = this.data;
@@ -155,21 +156,27 @@ export class CompanySearchPopupComponent {
 
   toggleSelection(user: any) {
     const index = this.selectedUsers.findIndex(someUser => someUser.id === user.id);
+
+    const resultUser = this.results.find(someUser => someUser.id === user.id);
+    const role = (resultUser && resultUser.role) ? resultUser.role : 'VIEWER';
+
     if (index > -1) {
       this.selectedUsers.splice(index, 1);
     } else {
-      this.selectedUsers.push({ id: user.id, role: 'VIEWER', fullName: user.fullName });
+      this.selectedUsers.push({ id: user.id, profilePicture: user.profilePicture, role, fullName: user.fullName, companyName: user.companyName, siren: user.siren });
     }
   }
 
   updateUserRole(userId: number, role: string) {
-    const user = this.selectedUsers.find(user => user.id === userId);
+    const user = this.selectedUsers.find(someUser => someUser.id === userId);
     if (user) {
       user.role = role;
     } 
-    // else {
-    //   this.selectedUsers.push({ id: userId, role });
-    // }
+    
+    const resultUser = this.results.find(someUser => someUser.id === userId);
+    if (resultUser) {
+      resultUser.role = role;
+    } 
   }
 
   linkCourseOrUserToCompanyBis(userId: number) {
@@ -188,15 +195,15 @@ export class CompanySearchPopupComponent {
     this.sendLinkRequest(this.selectedUsers);
   }
 
-  sendLinkRequest(users: { id: number, role: string }[]) {
-    const {
-      company: { id },
-    } = this.data;
+  sendLinkRequest(users: { id: number, role?: string, companyName?: string, siren?: string }[]) {
+    // const { company: { id } } = this.data;
+    // const { company: { id: companyId } } = this.data;
+    // const { course: { id: courseId } } = this.data;
     
-    const bodyData = { users, companyId: id };
+    // const bodyData = { users, companyId: id };
 
     console.log("Envoi de la liaison avec :", users);
-    alert(JSON.stringify(users));
+    this.messageService.openSnackBarError("API d'ajout de users en masse pas encore disponible...!", "")
   }
 
 
