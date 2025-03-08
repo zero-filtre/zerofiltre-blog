@@ -16,7 +16,7 @@ export class CompanySearchPopupComponent {
   public companies: Company[] = [];
 
   query: string = '';
-  selectedUsers: { id: number, role: string, fullName?: string }[] = [];
+  selectedUsers: { id: number, role?: string, fullName?: string, companyName?: string, siren?: string }[] = [];
   results: any[] = [];
   isCourseSearch: boolean = false;
   private SearchText$ = new Subject<string>();
@@ -158,7 +158,7 @@ export class CompanySearchPopupComponent {
     if (index > -1) {
       this.selectedUsers.splice(index, 1);
     } else {
-      this.selectedUsers.push({ id: user.id, role: 'VIEWER', fullName: user.fullName });
+      this.selectedUsers.push({ id: user.id, fullName: user.fullName, companyName: user.companyName, siren: user.siren });
     }
   }
 
@@ -188,12 +188,12 @@ export class CompanySearchPopupComponent {
     this.sendLinkRequest(this.selectedUsers);
   }
 
-  sendLinkRequest(users: { id: number, role: string }[]) {
-    const {
-      company: { id },
-    } = this.data;
+  sendLinkRequest(users: { id: number, role?: string, companyName?: string, siren?: string }[]) {
+    // const { company: { id } } = this.data;
+    // const { company: { id: companyId } } = this.data;
+    // const { course: { id: courseId } } = this.data;
     
-    const bodyData = { users, companyId: id };
+    // const bodyData = { users, companyId: id };
 
     console.log("Envoi de la liaison avec :", users);
     alert(JSON.stringify(users));

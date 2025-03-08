@@ -27,6 +27,7 @@
                     <ul class="flex flex-col gap-2 mt-2">
                         <li *ngFor="let selected of selectedUsers" class="flex items-center justify-between gap-2 px-3 py-1 bg-white rounded-md shadow">
                             <div class="flex items-center gap-2">
+                                <h2 *ngIf="isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ selected.companyName }} - <span class="text-sm text-skin-base font-medium">{{ selected.siren }}</span></h2>
                                 <h2 *ngIf="!isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ selected.fullName }} - <span class="text-sm text-skin-base font-medium">{{ selected.role }}</span></h2>
                             </div>
                             <button (click)="toggleSelection(selected)" class="text-red-500 text-sm">Retirer</button>
