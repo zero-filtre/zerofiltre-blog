@@ -57,6 +57,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   lessonID!: any;
   courseID!: any;
   courseEnrollmentID: any;
+  companyId: string;
 
   course$: Observable<Course>;
   lessonVideo$: Observable<any>;
@@ -710,7 +711,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
     // this.isCheckingEnrollment = true;
     this.courseEnrollment$ = this.enrollmentService
-      .checkSubscriptionAndEnroll(user.id, this.courseID, lessonId)
+      .checkSubscriptionAndEnroll(user.id, this.courseID, lessonId, this.companyId)
       .pipe(
         map((result: CourseEnrollment) => {
           this.isSubscriber = !!result;
@@ -751,12 +752,19 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.loadCourseData(this.courseID);
     this.loadAllChapters(this.courseID, this.lessonID);
 
+    this.route.queryParamMap.subscribe(
+      query => {
+        this.companyId = query.get('companyId')!;
+      }
+    );
+
     this.route.paramMap.subscribe((params) => {
       const parsedParams = params.get('lesson_id')?.split('-')[0];
       this.lessonID = parsedParams!;
       this.loadLessonData(this.lessonID);
       this.manageEnrollment(user, this.lessonID);
     });
+
   }
 
   ngOnDestroy(): void {
