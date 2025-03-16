@@ -65,7 +65,7 @@
                                             id="{{lesson.id}}" *ngIf="lesson?.chapterId === chapter?.id"
                                             [ngClass]="{'cursor-grab' : canEdit}"
                                             class="curriculum_chapter_lesson_elt hover:bg-skin-link bg-skin-cardMuted transition-all duration-200 rounded">
-                                            <a routerLink="{{'/cours/'+(course|slugify)+'/'+(lesson|slugify)}}"
+                                            <a routerLink="{{'/cours/'+(course|slugify)+'/'+(lesson|slugify)}}" [queryParams]="{companyId:companyId}"
                                                 [style.pointer-events]="lesson?.number && !canAccessCourse ? 'auto' : 'auto'"
                                                 class="lesson_link w-full p-3 pr-0 flex justify-between items-center gap-2">
                                                 <div class="left_content flex items-center gap-2">
