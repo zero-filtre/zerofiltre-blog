@@ -115,11 +115,11 @@
                                 </div>
                             </section>
 
-                            <section class="curriculum">
-                                <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
-                                    [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber" [canEdit]="canEditCourse"
-                                    [mobileQuery]="mobileQuery"></app-curriculum>
-                            </section>
+                    <section class="curriculum">
+                        <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
+                            [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber" [canEdit]="canEditCourse"
+                            [mobileQuery]="mobileQuery" [companyId]="companyId"></app-curriculum>
+                    </section>
 
                             <button *ngIf="!isSubscriber && !isCheckingEnrollment && isPublished$|async" (click)="buyCourse()"
                                 class="mt-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">

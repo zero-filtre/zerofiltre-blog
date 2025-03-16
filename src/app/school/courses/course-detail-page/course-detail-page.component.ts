@@ -33,6 +33,7 @@ export class CourseDetailPageComponent implements OnInit {
   STRIPE_PUBLIC_KEY = environment.stripePublicKey;
 
   courseID: string;
+  companyId: string;
   course$: Observable<Course>;
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
@@ -220,6 +221,14 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const user = this.authService?.currentUsr;
+
+    this.route.queryParamMap.subscribe(
+      query => {
+        this.companyId = query.get('companyId')!;
+      }
+    );
+
     this.route.paramMap.subscribe((params) => {
       const parsedParams = params.get('course_id')?.split('-')[0];
       this.courseID = parsedParams!;

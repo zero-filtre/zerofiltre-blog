@@ -18,6 +18,7 @@ export class CourseCardComponent {
   @Input() title: string;
   @Input() canDownloadCertificate = false;
   @Input() course: Course;
+  @Input() companyId: string;
 
   constructor(
     public authService: AuthService,

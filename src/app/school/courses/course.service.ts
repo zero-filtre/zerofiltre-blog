@@ -56,8 +56,8 @@ export class CourseService {
     return subIds?.includes(courseId);
   }
 
-  subscribeToCourse(courseId: number): Observable<any> {
-    return this.http.post<any>(`${this.apiServerUrl}/enrollment?courseId=${courseId}`, httpOptions)
+  subscribeToCourse(courseId: string, companyId?: string): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/enrollment?courseId=${courseId}` + (companyId != "" ? `&companyId=${companyId}` : ""), httpOptions)
       .pipe(
         tap((data: CourseEnrollment) => {
           const subIds = JSON.parse(localStorage?.getItem('_subs'));

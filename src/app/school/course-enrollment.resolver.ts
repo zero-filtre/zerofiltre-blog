@@ -75,7 +75,7 @@ export class CourseEnrollmentResolver implements Resolve<boolean> {
   private enrollUser(courseId: string, lessonId: string): Observable<boolean> {
     this.cleanLocalSubscriptions(courseId);
 
-    return this.courseService.subscribeToCourse(+courseId).pipe(
+    return this.courseService.subscribeToCourse(courseId).pipe(
       tap(() => {
         console.log(`Utilisateur enrôlé automatiquement au cours ${courseId}`)
         if (!lessonId) this.navigateToCourse(courseId);

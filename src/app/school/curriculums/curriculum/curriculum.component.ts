@@ -14,6 +14,7 @@ import { CourseService } from '../../courses/course.service';
 })
 export class CurriculumComponent implements OnInit {
   @Input() course!: Course;
+  @Input() companyId!: string;
   @Input() lessons!: Lesson[];
   @Input() chapters!: Chapter[];
   @Input() canAccessCourse!: boolean;
