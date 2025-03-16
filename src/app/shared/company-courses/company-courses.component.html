@@ -27,7 +27,7 @@
 
                 <ng-template [ngIf]="courses" *appShellNoRender>
                     <div *ngFor="let course of courses; let i=index" class="space-y-11">
-                        <app-course-card [course]="course" [title]="course.title"></app-course-card>
+                        <app-course-card [course]="course" [title]="course.title" [companyId]="companyId"></app-course-card>
 
                         <!-- Sponsor Content -->
                         <ng-container *ngIf="(i+1)%3 === 0">
