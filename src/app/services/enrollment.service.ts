@@ -53,11 +53,11 @@ export class EnrollmentService {
   /**
    * Enrôle automatiquement l'utilisateur au cours.
    */
-  private enrollUser(courseId: string, lessonId?: string): Observable<boolean | CourseEnrollment> {
+  private enrollUser(courseId: string, lessonId?: string, companyId?: string): Observable<boolean | CourseEnrollment> {
     this.cleanLocalSubscriptions(courseId);
     this.messageService.cancel();
 
-    return this.courseService.subscribeToCourse(+courseId).pipe(
+    return this.courseService.subscribeToCourse(courseId, companyId).pipe(
       tap(() => {
         console.log(`Utilisateur enrôlé automatiquement au cours ${courseId}`);
         this.updateLocalSubscriptions(courseId);
