@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, shareReplay, tap } from 'rxjs';
+import { map, Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { User } from '../../../user/user.model';
 import { Company } from './company.model';
@@ -21,25 +21,7 @@ export class CompanyService {
   companies: Company[] = [];
   users: User[] = [];
 
-  constructor(private http: HttpClient, private authService: AuthService) {
-    this.loadDataBaseData();
-  }
-
-  loadDataBaseData(): void {
-    this.fetchAllCompanies();
-  }
-
-  fetchAllCompanies(): void {
-    this.getCompanies(0, 100).subscribe(({ content }: any) => {
-      this.companies = content as Company[];
-    });
-  }
-
-  fetchAllUsers(): void {
-    this.authService.getUsers(0, 100).subscribe(({ content }: any) => {
-      this.users = content as User[] || [this.authService.currentUsr];
-    });
-  }
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   isAdminUser(user: User) {
     if (!user) return false;
@@ -103,13 +85,8 @@ export class CompanyService {
   }
 
   search(query: string, isCourseSearch: boolean): Observable<any[]> {
-    let filteredResults: any[] = [];
-
     if (isCourseSearch) {
-      filteredResults = this.companies.filter((company: Company) =>
-        company.companyName.toLowerCase().includes(query.toLowerCase())
-      );
-      return of(filteredResults);
+      return this.searchCompanies(query)
     } else {
       return this.searchUsers(query);
     }
@@ -119,6 +96,19 @@ export class CompanyService {
     return this.http
       .get<any[]>(
         `${this.apiServerUrl}/search/users?query=${query}`,
+        httpOptions
+      )
+      .pipe(shareReplay());
+  }
+
+  searchCompanies(query: string): Observable<any[]> {
+    return  this.getCompanies(0, 100).pipe(
+      map(({ content }: any) => content as Company[])
+    );
+
+    return this.http
+      .get<any[]>(
+        `${this.apiServerUrl}/search/companies?query=${query}`,
         httpOptions
       )
       .pipe(shareReplay());
