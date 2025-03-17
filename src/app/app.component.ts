@@ -92,7 +92,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     private modalService: ModalService,
     public geoLocationService: GeoLocationService,
     private tipsService: TipsService,
-    private companyService: CompanyService
   ) {
     this.setBrowserTranslationConfigs();
   }
