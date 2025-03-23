@@ -14,7 +14,7 @@ export class TipsModalComponent {
 
   public closeModal() {
     const today = new Date().toISOString().split('T')[0];
-    localStorage.setItem('lastTipDate', today);
+    sessionStorage.setItem('lastTipDate', today);
     this.modalRef.close();
   }
 }
