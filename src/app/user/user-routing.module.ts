@@ -81,10 +81,11 @@ const routes: Routes = [
   {
     path: 'dashboard/courses/all',
     component: AdminCoursesListComponent,
-    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
-    data: {
-      role: 'ROLE_ADMIN'
-    }
+    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard],
+    // canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
+    // data: {
+    //   role: 'ROLE_ADMIN'
+    // }
   },
   {
     path: ':userID',
