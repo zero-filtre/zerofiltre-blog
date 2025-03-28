@@ -133,7 +133,7 @@ export class ProPageComponent {
       },
       time: '/mois',
       pros: [
-        'Tous les cours hors parcours mentorés 🌍',
+        'Tous les cours 🌍',
         'Tous les articles y compris les articles premium 📖',
       ],
       cons: [],
@@ -159,7 +159,7 @@ export class ProPageComponent {
       },
       time: '/mois',
       pros: [
-        'Tous les cours hors parcours mentorés 🌍',
+        'Tous les cours 🌍',
         'Tous les articles y compris les articles premium 📖',
       ],
       cons: [],
