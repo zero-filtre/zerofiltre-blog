@@ -10,22 +10,24 @@
                         <span>{{'dashboard.published' | translate}}</span>
                     </button>
 
-                    <button type=" button" (click)="sortByTab(DRAFT)" aria-current="false"
-                        aria-labelledby="Toggle to draft articles tab"
-                        [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>{{'dashboard.draft' | translate}}</span>
-                    </button>
+                    <ng-container *ngIf="authService.canAccessAdminDashboard">
+                        <button type=" button" (click)="sortByTab(DRAFT)" aria-current="false"
+                            aria-labelledby="Toggle to draft articles tab"
+                            [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
+                            class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                            <span>{{'dashboard.draft' | translate}}</span>
+                        </button>
 
-                    <button type="button" (click)="sortByTab(IN_REVIEW)" aria-current="false"
-                        aria-labelledby="Toggle to in-review articles tab"
-                        [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>{{'dashboard.inReview' | translate}}</span>
-                    </button>
+                        <button type="button" (click)="sortByTab(IN_REVIEW)" aria-current="false"
+                            aria-labelledby="Toggle to in-review articles tab"
+                            [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
+                            class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                            <span>{{'dashboard.inReview' | translate}}</span>
+                        </button>
+                    </ng-container>
                 </nav>
 
-                <div *ngIf="authService.currentUsr">
+                <div *ngIf="authService.canAccessAdminDashboard">
                     <button aria-label="Button to create a new course" (click)="openCourseEntryDialog()" type="button"
                         class="">
                         <span class="sr-only">Nouveau cours</span>
