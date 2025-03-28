@@ -1,8 +1,9 @@
 <div class="course-card lg:grid grid-cols-3 gap-6 group">
 
     <a aria-labelledby="Link to course detail page"
-        href='{{"/cours/" + (course|slugify)}}'
+        routerLink='{{"/cours/" + (course|slugify)}}'
         rel="noopener"
+        [queryParams]="{companyId:companyId}"
         class="article-preview hover:opacity-75">
         <div class="aspect-w-3 aspect-h-2 shadow-lg rounded-lg overflow-hidden">
             <app-image [classes]="'object-cover transition-all duration-200'"
@@ -32,7 +33,7 @@
             </div>
 
             <!-- Contextuel menu for editing -->
-            <div *ngIf="canEditCourse(course) || canDownloadCertificate">
+            <div *ngIf="canEditCourse(course) || canDownloadCertificate || canLinkCourseToCompany()">
                 <button [matMenuTriggerFor]="menu"
                     class="rounded-full p-2 opacity-0 group-hover:opacity-100 hover:bg-skin-link transition-all duration-500"
                     aria-label="icon-button with a menu">
@@ -44,6 +45,14 @@
                 </button>
 
                 <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
+                    <button *ngIf="canLinkCourseToCompany()" (click)="openCompanySearchPopup(course)" aria-labelledby="Link course to a company button"
+                        class="flex items-center gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                        </svg>
+                        <span>Ajouter ce cours à une organisation</span>
+                    </button>
+
                     <ng-container *ngIf="canEditCourse(course)">
                         <a aria-labelledby="Link to course edit page" routerLink="/cours/{{course|slugify}}/edit/"
                             class="flex items-end gap-3 px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
@@ -79,8 +88,9 @@
         <div class="mt-2">
 
             <a aria-labelledby="Link to about page"
-                href='{{"/cours/" + (course|slugify)}}'
+                routerLink='{{"/cours/" + (course|slugify)}}'
                 rel="noopener"
+                [queryParams]="{companyId:companyId}"
                 class="course-title">
                 <h4
                     class="text-lg inline-block leading-6 font-semibold text-skin-inverted hover:text-primary-500 transition-all duration-200">
