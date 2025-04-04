@@ -115,7 +115,7 @@
                     <section class="curriculum">
                         <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
                             [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber" [canEdit]="canEditCourse"
-                            [mobileQuery]="mobileQuery"></app-curriculum>
+                            [mobileQuery]="mobileQuery" [companyId]="companyId"></app-curriculum>
                     </section>
 
                     <button *ngIf="!isSubscriber && !isCheckingEnrollment && isPublished$|async" (click)="buyCourse()"

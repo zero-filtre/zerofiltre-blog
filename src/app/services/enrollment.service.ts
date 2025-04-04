@@ -21,18 +21,22 @@ export class EnrollmentService {
   checkSubscriptionAndEnroll(
     userId: string,
     courseId: string,
-    lessonId?: string
+    lessonId?: string,
+    companyId?: string
   ): Observable<boolean | CourseEnrollment> {
     return this.courseService
       .findSubscribedByCourseId({ courseId, userId })
       .pipe(
         // Abonnement trouvé
-        tap(() => console.log(`L'utilisateur ${userId} est déjà inscrit au cours ${courseId}.`)),
+        tap(() => {
+          console.log(`L'utilisateur ${userId} est déjà inscrit au cours ${courseId}.`);
+          // this.navigateToLesson(courseId, lessonId);
+        }),
         map((data: CourseEnrollment) => data),
         catchError(() => {
           // Abonnement non trouvé : tenter l'enrôlement
           this.messageService.cancel();
-          return this.enrollUser(courseId, lessonId);
+          return this.enrollUser(courseId, lessonId, companyId);
         }),
         catchError(() => {
           // Échec de l'enrôlement
@@ -45,11 +49,11 @@ export class EnrollmentService {
   /**
    * Enrôle automatiquement l'utilisateur au cours.
    */
-  private enrollUser(courseId: string, lessonId?: string): Observable<boolean | CourseEnrollment> {
+  private enrollUser(courseId: string, lessonId?: string, companyId?: string): Observable<boolean | CourseEnrollment> {
     this.cleanLocalSubscriptions(courseId);
     this.messageService.cancel();
 
-    return this.courseService.subscribeToCourse(+courseId).pipe(
+    return this.courseService.subscribeToCourse(courseId, companyId).pipe(
       tap(() => {
         this.updateLocalSubscriptions(courseId);
         console.log(`Utilisateur enrôlé automatiquement au cours ${courseId}`);

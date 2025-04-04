@@ -33,6 +33,7 @@ export class CourseDetailPageComponent implements OnInit {
   STRIPE_PUBLIC_KEY = environment.stripePublicKey;
 
   courseID: string;
+  companyId: string;
   course$: Observable<Course>;
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
@@ -114,9 +115,9 @@ export class CourseDetailPageComponent implements OnInit {
       )
       .subscribe({
         next: (data: Course) => {
-          const rootUrl = this.router.url.split('/')[1];
-          const sluggedUrl = `${rootUrl}/${this.slugify.transform(data)}`;
-          this.location.replaceState(sluggedUrl);
+          // const rootUrl = this.router.url.split('/')[1];
+          // const sluggedUrl = `${rootUrl}/${this.slugify.transform(data)}`;
+          // this.location.replaceState(sluggedUrl);
 
           this.seo.generateTags({
             title: data.title,
@@ -213,7 +214,7 @@ export class CourseDetailPageComponent implements OnInit {
     
     this.isCheckingEnrollment = true;
     this.courseEnrollment$ = this.enrollmentService
-      .checkSubscriptionAndEnroll(user.id, this.courseID)
+      .checkSubscriptionAndEnroll(user.id, this.courseID, null, this.companyId)
       .pipe(
         map((result: CourseEnrollment) => {
           this.isSubscriber = !!result;
@@ -226,6 +227,12 @@ export class CourseDetailPageComponent implements OnInit {
   ngOnInit(): void {
     const user = this.authService?.currentUsr;
 
+    this.route.queryParamMap.subscribe(
+      query => {
+        this.companyId = query.get('companyId')!;
+      }
+    );
+
     this.route.paramMap.subscribe((params) => {
       const parsedParams = params.get('course_id')?.split('-')[0];
       this.courseID = parsedParams!;
@@ -235,14 +242,6 @@ export class CourseDetailPageComponent implements OnInit {
 
     this.chapters$ = this.chapterService.fetchAllChapters(this.courseID);
 
-    // this.courseEnrollment$ = this.route.data.pipe(
-    //   map(({ sub }) => {
-    //     if (sub === true) return;
-
-    //     this.isSubscriber = !!sub;
-    //     return sub;
-    //   })
-    // );
   }
 
   ngOnDestroy(): void {
