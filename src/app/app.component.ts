@@ -211,7 +211,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   showTip() {
-    const lastShownDate = sessionStorage.getItem('lastTipDate');
+    const lastShownDate = localStorage.getItem('lastTipDate');
     const today = new Date().toISOString().split('T')[0];
     if (lastShownDate !== today) {
       this.tipsService.getTipOfTheDay().subscribe({

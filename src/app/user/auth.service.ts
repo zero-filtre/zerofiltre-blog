@@ -342,11 +342,11 @@ export class AuthService {
   }
 
   private clearLSwithoutExcludedKey() {
-    const excludedKey = '';
-    const keys = []
+    const excludedKey = 'lastTipDate';
+    const keys: string[] = [];
     if (isPlatformBrowser(this.platformId)) {
       for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i)
+        const key = localStorage.key(i) as string;
         keys.push(key)
       }
       const clearables = keys.filter(key => key !== excludedKey)
