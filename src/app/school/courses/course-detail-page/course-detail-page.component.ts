@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
-import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay } from 'rxjs';
+import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay, of } from 'rxjs';
 import { Course, Reaction, Review, Section } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
@@ -100,12 +100,21 @@ export class CourseDetailPageComponent implements OnInit {
 
   getCourse(courseId: string) {
     this.isLoading = true;
+    this.isCheckingEnrollment = true;
+
+    const user = this.authService?.currentUsr as User
 
     this.courseService
       .findCourseById(courseId)
       .pipe(
+        catchError(err => {
+          this.router.navigateByUrl('**')
+          return of(false);
+        }),
         tap((data) => {
-          if (data.status === 'PUBLISHED') {
+          if (data.status !== 'PUBLISHED' && !user) {
+            this.router.navigateByUrl('**')
+          } else if (data.status === 'PUBLISHED') {
             this.isPublished.next(true);
           } else {
             this.isPublished.next(false);
@@ -164,10 +173,13 @@ export class CourseDetailPageComponent implements OnInit {
           this.orderSections(data);
           this.extractVideoId(data.video);
 
+          this.manageEnrollment(user);
+
           return this.course;
         },
         error: (err: HttpErrorResponse) => {
           this.isLoading = false;
+          this.isCheckingEnrollment = false;
 
           if (err.status === 404) {
             this.notify.openSnackBarError(
@@ -180,6 +192,7 @@ export class CourseDetailPageComponent implements OnInit {
         },
         complete: () => {
           this.isLoading = false;
+          this.isCheckingEnrollment = false;
           return this.course;
         },
       });
@@ -224,25 +237,14 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const user = this.authService?.currentUsr;
-
     this.route.paramMap.subscribe((params) => {
       const parsedParams = params.get('course_id')?.split('-')[0];
       this.courseID = parsedParams!;
       this.getCourse(this.courseID);
-      this.manageEnrollment(user);
     });
 
     this.chapters$ = this.chapterService.fetchAllChapters(this.courseID);
-
-    // this.courseEnrollment$ = this.route.data.pipe(
-    //   map(({ sub }) => {
-    //     if (sub === true) return;
-
-    //     this.isSubscriber = !!sub;
-    //     return sub;
-    //   })
-    // );
+    
   }
 
   ngOnDestroy(): void {

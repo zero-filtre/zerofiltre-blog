@@ -16,7 +16,8 @@ const routes: Routes = [
   {
     path: ':course_id',
     component: CourseDetailPageComponent,
-    canActivate: [CourseAccessGuardGuard],
+    // canActivate: [CourseAccessGuardGuard],
+
     // resolve: {
     //   sub: CourseEnrollmentResolver
     // },
@@ -24,7 +25,8 @@ const routes: Routes = [
   {
     path: ':course_id/edit',
     component: CourseEditPageComponent,
-    canActivate: [TokenExpiredGuard, AuthGuard, CourseAccessGuardGuard],
+    canActivate: [TokenExpiredGuard, AuthGuard],
+    // canActivate: [TokenExpiredGuard, AuthGuard, CourseAccessGuardGuard],
   },
 ];
 
