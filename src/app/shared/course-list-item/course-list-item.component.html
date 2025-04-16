@@ -1,6 +1,7 @@
 <div class="course-card group {{gridItem ? 'size-full flex flex-col shadow-lg rounded-xl lg:hover:scale-105 transition-transform ease-in-out duration-500' : 'grid lg:grid-cols-3 gap-6'}}">
+    <!-- routerLink="{{canAccessCourse(course) ? (course | slugify) + '/' + '?' : (course | slugify)}}" -->
     <a aria-labelledby="Link to course detail page"
-        routerLink="{{canAccessCourse(course) ? (course | slugify) + '/' + '?' : (course | slugify)}}"
+        routerLink="{{course | slugify}}"
         class="relative group/imagecard article-preview hover:opacity-75">
         <div class="relative aspect-w-3 aspect-h-2 overflow-hidden {{gridItem ? 'rounded-t-xl' : 'shadow-lg rounded-lg'}}">
             <app-image [classes]="'object-cover transition-all duration-200'" [sourceUrl]="course?.thumbnail!"
@@ -66,8 +67,9 @@
 
         <div class="mt-3">
             <div class="flex justify-between items-center gap-2">
+                <!-- routerLink="{{canAccessCourse(course) ? (course|slugify) + '/' + '?' : (course|slugify)}}" -->
                 <a aria-labelledby="Link to course detail page"
-                    routerLink="{{canAccessCourse(course) ? (course|slugify) + '/' + '?' : (course|slugify)}}"
+                    routerLink="{{course|slugify}}"
                     class="article-title">
                     <h4
                         class="article-title text-lg lg:text-[1.3rem] inline-block leading-[1.7rem] font-semibold text-skin-inverted transition-all duration-200 hover:text-primary-500">

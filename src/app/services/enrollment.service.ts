@@ -27,7 +27,9 @@ export class EnrollmentService {
       .findSubscribedByCourseId({ courseId, userId })
       .pipe(
         // Abonnement trouvé
-        tap(() => console.log(`L'utilisateur ${userId} est déjà inscrit au cours ${courseId}.`)),
+        tap(() => {
+          console.log(`L'utilisateur ${userId} est déjà inscrit au cours ${courseId}.`)
+        }),
         map((data: CourseEnrollment) => data),
         catchError(() => {
           // Abonnement non trouvé : tenter l'enrôlement
