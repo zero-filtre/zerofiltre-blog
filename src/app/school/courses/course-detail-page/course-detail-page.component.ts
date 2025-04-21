@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
-import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay, of, EMPTY } from 'rxjs';
+import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay, of, EMPTY, finalize } from 'rxjs';
 import { Course, Reaction, Review, Section } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
@@ -42,7 +42,8 @@ export class CourseDetailPageComponent implements OnInit {
   isSubscriber: boolean;
   isLoading: boolean;
   isCheckingEnrollment: boolean;
-
+  
+  notRedirectToFirstLesson: string;
   currentVideoId: string;
   orderedSections: Section[];
   mobileQuery: MediaQueryList;
@@ -204,12 +205,16 @@ export class CourseDetailPageComponent implements OnInit {
     
     this.isCheckingEnrollment = true;
     this.courseEnrollment$ = this.enrollmentService
-      .checkSubscriptionAndEnroll(user.id, this.courseID)
+      .checkSubscriptionAndEnroll(user.id, this.courseID, null, this.notRedirectToFirstLesson)
       .pipe(
         map((result: CourseEnrollment) => {
           this.isSubscriber = !!result;
-          this.isCheckingEnrollment = false;
           return result;
+        }),
+        finalize(() => {
+          setTimeout(() => {
+            this.isCheckingEnrollment = false;
+          }, 100);
         })
       );
   }
@@ -220,6 +225,12 @@ export class CourseDetailPageComponent implements OnInit {
       this.courseID = parsedParams!;
       this.getCourse(this.courseID);
     });
+
+    this.route.queryParamMap.subscribe(
+      query => {
+        this.notRedirectToFirstLesson = query.get('notRedirectToFirstLesson')!;
+      }
+    );
 
     this.chapters$ = this.chapterService.fetchAllChapters(this.courseID);
     
