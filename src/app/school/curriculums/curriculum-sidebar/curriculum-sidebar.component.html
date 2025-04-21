@@ -3,9 +3,12 @@
     <div class="px-1.5 pt-5 lg:pr-8 lg:pl-0">
         <ng-container *ngIf="course; else sideBarSkeleton">
             <div class="curriculum_wrapper max-w-3xl m-auto">
+                <!-- routerLink="{{'/cours/'+(course|slugify)}}" -->
                 <h2
                     class="flex justify-between items-center pb-4 lg:pb-6 lg:pl-2 font-black text-xl lg:text-2xl text-primary-500">
-                    <a routerLink="{{'/cours/'+(course|slugify)}}">{{course?.title}}</a>
+                    <a 
+                    [routerLink]="['/cours', course | slugify]" [queryParams]="{ notRedirectToFirstLesson: 'true' }"
+                    >{{course?.title}}</a>
 
                     <app-mentored-icon *ngIf="course?.mentored" [position]="'bottom-l'" [size]="'w-24'"
                         [classes]="'w-auto'">

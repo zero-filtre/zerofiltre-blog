@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
-import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay, of } from 'rxjs';
+import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay, of, EMPTY, finalize } from 'rxjs';
 import { Course, Reaction, Review, Section } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
@@ -42,13 +42,13 @@ export class CourseDetailPageComponent implements OnInit {
   isSubscriber: boolean;
   isLoading: boolean;
   isCheckingEnrollment: boolean;
-
+  
+  notRedirectToFirstLesson: string;
   currentVideoId: string;
   orderedSections: Section[];
   mobileQuery: MediaQueryList;
   // paymentHandler: any = null;
 
-  public loading!: boolean;
   private isPublished = new BehaviorSubject<any>(null);
   public isPublished$ = this.isPublished.asObservable();
 
@@ -100,16 +100,15 @@ export class CourseDetailPageComponent implements OnInit {
 
   getCourse(courseId: string) {
     this.isLoading = true;
-    this.isCheckingEnrollment = true;
-
     const user = this.authService?.currentUsr as User
 
-    this.courseService
+    this.course$ = this.courseService
       .findCourseById(courseId)
       .pipe(
         catchError(err => {
+          this.isLoading = false;
           this.router.navigateByUrl('**')
-          return of(false);
+          return EMPTY;
         }),
         tap((data) => {
           if (data.status !== 'PUBLISHED' && !user) {
@@ -119,10 +118,8 @@ export class CourseDetailPageComponent implements OnInit {
           } else {
             this.isPublished.next(false);
           }
-        })
-      )
-      .subscribe({
-        next: (data: Course) => {
+        }),
+        map((data: Course) => {
           const rootUrl = this.router.url.split('/')[1];
           const sluggedUrl = `${rootUrl}/${this.slugify.transform(data)}`;
           this.location.replaceState(sluggedUrl);
@@ -140,7 +137,7 @@ export class CourseDetailPageComponent implements OnInit {
             '@type': 'Course',
             author: {
               '@type': 'Person',
-              name: data.author.fullName,
+              name: data.author?.fullName,
             },
             name: data.title,
             description: data.summary,
@@ -154,7 +151,7 @@ export class CourseDetailPageComponent implements OnInit {
             offers: {
               '@type': 'Offer',
               category: 'Intermediaire',
-              price: data.price.toString(),
+              price: data.price?.toString(),
               priceCurrency: 'EUR',
             },
             provider: {
@@ -166,6 +163,8 @@ export class CourseDetailPageComponent implements OnInit {
 
           this.jsonLd.setData(dataSchema);
 
+          this.manageEnrollment(user);
+
           this.isLoading = false;
           this.isSubscriber = this.courseService.isSubscriber(data.id);
 
@@ -173,29 +172,9 @@ export class CourseDetailPageComponent implements OnInit {
           this.orderSections(data);
           this.extractVideoId(data.video);
 
-          this.manageEnrollment(user);
-
-          return this.course;
-        },
-        error: (err: HttpErrorResponse) => {
-          this.isLoading = false;
-          this.isCheckingEnrollment = false;
-
-          if (err.status === 404) {
-            this.notify.openSnackBarError(
-              "Oops ce cours est n'existe pas 😣!",
-              ''
-            );
-            this.navigate.back();
-          }
-          return throwError(() => err?.message);
-        },
-        complete: () => {
-          this.isLoading = false;
-          this.isCheckingEnrollment = false;
-          return this.course;
-        },
-      });
+          return data
+        })
+      )
   }
 
   orderSections(course: Course) {
@@ -226,12 +205,16 @@ export class CourseDetailPageComponent implements OnInit {
     
     this.isCheckingEnrollment = true;
     this.courseEnrollment$ = this.enrollmentService
-      .checkSubscriptionAndEnroll(user.id, this.courseID)
+      .checkSubscriptionAndEnroll(user.id, this.courseID, null, this.notRedirectToFirstLesson)
       .pipe(
         map((result: CourseEnrollment) => {
           this.isSubscriber = !!result;
-          this.isCheckingEnrollment = false;
           return result;
+        }),
+        finalize(() => {
+          setTimeout(() => {
+            this.isCheckingEnrollment = false;
+          }, 100);
         })
       );
   }
@@ -242,6 +225,12 @@ export class CourseDetailPageComponent implements OnInit {
       this.courseID = parsedParams!;
       this.getCourse(this.courseID);
     });
+
+    this.route.queryParamMap.subscribe(
+      query => {
+        this.notRedirectToFirstLesson = query.get('notRedirectToFirstLesson')!;
+      }
+    );
 
     this.chapters$ = this.chapterService.fetchAllChapters(this.courseID);
     

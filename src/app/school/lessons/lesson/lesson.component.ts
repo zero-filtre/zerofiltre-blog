@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
-import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay, forkJoin } from 'rxjs';
+import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay, forkJoin, finalize } from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
 import { Course } from '../../courses/course';
 import { AuthService } from '../../../user/auth.service';
@@ -713,8 +713,6 @@ export class LessonComponent implements OnInit, OnDestroy {
       .checkSubscriptionAndEnroll(user.id, this.courseID, lessonId)
       .pipe(
         map((result: CourseEnrollment) => {
-          debugger
-          this.isCheckingEnrollment = false;
           this.isSubscriber = !!result;
           this.courseEnrollmentID = result?.id;
           this.completedLessons = result?.completedLessons;
@@ -730,6 +728,11 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.loadCompleteProgressBar(this.completedLessonsIds);
 
           return result;
+        }),
+        finalize(() => {
+          setTimeout(() => {
+            this.isCheckingEnrollment = false;
+          }, 100);
         })
       );
   }

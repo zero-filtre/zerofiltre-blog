@@ -1,6 +1,7 @@
-<ng-container *ngIf="courseEnrollment$|async"></ng-container>
+<ng-container *ngIf="courseEnrollment$ | async"></ng-container>
+<ng-container *ngIf="course$ | async as course;"></ng-container>
 
-<div *ngIf="isCheckingEnrollment" class="loading-container">
+<ng-template #loadingSpinner>
     <div class="flex justify-center items-center h-[88vh]">
         <svg class="w-40 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -9,7 +10,7 @@
                 style="animation-play-state:paused"></circle>
         </svg>
     </div>
-</div>
+</ng-template>
 
 <div class="flex justify-center items-center h-[88vh]" *appShellRender>
     <svg class="w-40 animate-spin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -19,124 +20,129 @@
             style="animation-play-state:paused"></circle>
     </svg>
 </div>
-<article
-    class="site-container min-h-screen text-skin-art lg:grid grid-cols-7 gap-5 py-5 lg:py-10 items-stretch">
-    <main class="col-span-5">
-        <div class="text-skin-art">
-            <div *appShellNoRender>
-                <div *ngIf="!isCheckingEnrollment && course && !loading" class="content">
-                    <div class="page-title max-md:py-8 text-center space-y-5 lg:max-w-7xl mx-auto md:mb-12">
 
-                        <ng-template [ngIf]="course.mentored">
-                            <app-mentored-icon [size]="'w-full'" [classes]="'hidden sm:block w-36 mx-auto'">
-                            </app-mentored-icon>
-                            <app-mentored-icon [size]="'w-28'" [classes]="'sm:hidden w-32 mx-auto'"
-                                [position]="'bottom'">
-                            </app-mentored-icon>
-                        </ng-template>
+<div class="min-h-screen">
+    <ng-container *ngIf="!isLoading && !isCheckingEnrollment; else loadingSpinner">
+        <article class="site-container text-skin-art lg:grid grid-cols-7 gap-5 py-5 lg:py-10 items-stretch">
+            <main class="col-span-5">
+                <div class="text-skin-art">
+                    <div *appShellNoRender>
+                        <div class="content">
+                            <div class="page-title max-md:py-8 text-center space-y-5 lg:max-w-7xl mx-auto md:mb-12">
 
-                        <h1>{{course?.title}}</h1>
-                        <h2>{{course?.subTitle}}</h2>
+                                <ng-template [ngIf]="course.mentored">
+                                    <app-mentored-icon [size]="'w-full'" [classes]="'hidden sm:block w-36 mx-auto'">
+                                    </app-mentored-icon>
+                                    <app-mentored-icon [size]="'w-28'" [classes]="'sm:hidden w-32 mx-auto'"
+                                        [position]="'bottom'">
+                                    </app-mentored-icon>
+                                </ng-template>
 
-                        <div
-                            class="group flex items-center justify-center text-skin-inverted gap-2 text-right text-sm font-medium">
+                                <h1>{{course?.title}}</h1>
+                                <h2>{{course?.subTitle}}</h2>
 
-                            <span class="enrol-total relative inline-flex items-end gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                    class="size-10 inline text-accent-300" viewBox="0 0 16 16">
-                                    <path
-                                        d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                    <path fill-rule="evenodd"
-                                        d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
-                                    <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
-                                </svg>
+                                <div
+                                    class="group flex items-center justify-center text-skin-inverted gap-2 text-right text-sm font-medium">
 
-                                <span>{{course?.enrolledCount}}</span>
+                                    <span class="enrol-total relative inline-flex items-end gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                            class="size-10 inline text-accent-300" viewBox="0 0 16 16">
+                                            <path
+                                                d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            <path fill-rule="evenodd"
+                                                d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+                                            <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                                        </svg>
 
-                                <span class="enrol-tooltip">
-                                    {{ course?.enrolledCount | i18nPlural: {
-                                    '=0': 'Aucune personne ne suit ce cours',
-                                    '=1': 'Une personne suit ce cours',
-                                    'other': '# personnes suivent ce cours'
-                                    }
-                                    }}
+                                        <span>{{course?.enrolledCount}}</span>
+
+                                        <span class="enrol-tooltip">
+                                            {{ course?.enrolledCount | i18nPlural: {
+                                            '=0': 'Aucune personne ne suit ce cours',
+                                            '=1': 'Une personne suit ce cours',
+                                            'other': '# personnes suivent ce cours'
+                                            }
+                                            }}
+                                        </span>
+                                    </span>
+
+                                    <span class="enrol-total relative inline-flex items-end top-[1px]">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                            class="inline size-10 text-accent-300">
+                                            <path
+                                                d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                                        </svg>
+
+                                        <span>{{course?.reactions?.length}}</span>
+                                        <span class="enrol-tooltip">
+                                            {{ course?.reactions?.length | i18nPlural: {
+                                            '=0': "Pas encore de like sur ce cours",
+                                            '=1': 'Une personne aime ce cours',
+                                            'other': '# personnes aiment ce cours'
+                                            }
+                                            }}
+                                        </span>
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <app-course-sections [sections]="orderedSections"></app-course-sections>
+                            
+                            <button *ngIf="!isSubscriber && !isCheckingEnrollment && isPublished$|async" (click)="buyCourse()"
+                                class="max-lg:hidden w-fit mx-auto mt-12 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
+                                <span class="text-center">Débuter le cours</span>
+                            
+                                <span class="mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
                                 </span>
-                            </span>
+                            </button>
 
-                            <span class="enrol-total relative inline-flex items-end top-[1px]">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    class="inline size-10 text-accent-300">
-                                    <path
-                                        d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-                                </svg>
+                            <div class="lg:hidden mt-8">
+                                <app-course-detail-summary [course]="course" [enrolled]="isSubscriber"
+                                    [chapters]="chapters$|async"></app-course-detail-summary>
+                            </div>
+                        
+                            <app-carousel [courseId]="course.id"></app-carousel>
+                            
+                            <section *ngIf="currentVideoId" class="presentation-video">
+                                <div class="site-container">
+                                    <app-youtube-video-player [videoId]="currentVideoId" [width]="800"
+                                        [height]="mobileQuery.matches ? 400 : 450"></app-youtube-video-player>
+                                </div>
+                            </section>
 
-                                <span>{{course?.reactions?.length}}</span>
-                                <span class="enrol-tooltip">
-                                    {{ course?.reactions?.length | i18nPlural: {
-                                    '=0': "Pas encore de like sur ce cours",
-                                    '=1': 'Une personne aime ce cours',
-                                    'other': '# personnes aiment ce cours'
-                                    }
-                                    }}
+                            <section class="curriculum">
+                                <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
+                                    [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber" [canEdit]="canEditCourse"
+                                    [mobileQuery]="mobileQuery"></app-curriculum>
+                            </section>
+
+                            <button *ngIf="!isSubscriber && !isCheckingEnrollment && isPublished$|async" (click)="buyCourse()"
+                                class="mt-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
+                                <span class="text-center">Débuter le cours</span>
+
+                                <span class="mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
                                 </span>
-                            </span>
+                            </button>
                         </div>
-
                     </div>
-
-                    <app-course-sections [sections]="orderedSections"></app-course-sections>
-                    
-                    <button *ngIf="!isSubscriber && !isCheckingEnrollment && isPublished$|async" (click)="buyCourse()"
-                        class="max-lg:hidden w-fit mx-auto mt-12 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
-                        <span class="text-center">Débuter le cours</span>
-                    
-                        <span class="mt-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </span>
-                    </button>
-
-                    <div class="lg:hidden mt-8">
-                        <app-course-detail-summary [course]="course" [enrolled]="isSubscriber"
-                            [chapters]="chapters$|async"></app-course-detail-summary>
-                    </div>
-                
-                    <app-carousel [courseId]="course.id"></app-carousel>
-                    
-                    <section *ngIf="currentVideoId" class="presentation-video">
-                        <div class="site-container">
-                            <app-youtube-video-player [videoId]="currentVideoId" [width]="800"
-                                [height]="mobileQuery.matches ? 400 : 450"></app-youtube-video-player>
-                        </div>
-                    </section>
-
-                    <section class="curriculum">
-                        <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
-                            [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber" [canEdit]="canEditCourse"
-                            [mobileQuery]="mobileQuery"></app-curriculum>
-                    </section>
-
-                    <button *ngIf="!isSubscriber && !isCheckingEnrollment && isPublished$|async" (click)="buyCourse()"
-                        class="mt-10 w-fit mx-auto flex items-center justify-center gap-2 px-4 py-2.5 rounded-md shadow-sm bg-primary-500 text-white font-normal hover:bg-primary-700 transition-all duration-300">
-                        <span class="text-center">Débuter le cours</span>
-
-                        <span class="mt-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden md:block" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </span>
-                    </button>
                 </div>
-            </div>
-        </div>
-    </main>
-    <aside *ngIf="!isCheckingEnrollment && course && !loading" class="col-span-2 max-lg:hidden space-y-6 lg:space-y-10">
-        <div class="sticky top-36">
-            <app-course-detail-summary [course]="course" [enrolled]="isSubscriber"
-                [chapters]="chapters$|async"></app-course-detail-summary>
-        </div>
-    </aside>
-</article>
+            </main>
+
+            <aside class="col-span-2 max-lg:hidden space-y-6 lg:space-y-10">
+                <div class="sticky top-36">
+                    <app-course-detail-summary [course]="course" [enrolled]="isSubscriber"
+                        [chapters]="chapters$|async"></app-course-detail-summary>
+                </div>
+            </aside>
+        </article>
+    </ng-container>
+</div>

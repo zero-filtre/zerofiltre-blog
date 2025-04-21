@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CourseService } from '../school/courses/course.service';
 import { MessageService } from '../services/message.service';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, EMPTY, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { CourseEnrollment } from '../school/studentCourse';
 import { Router } from '@angular/router';
 
@@ -17,31 +17,32 @@ export class EnrollmentService {
 
   /**
    * Vérifie l'abonnement de l'utilisateur, avec enrôlement si nécessaire.
-   */
+  */
   checkSubscriptionAndEnroll(
     userId: string,
     courseId: string,
-    lessonId?: string
+    lessonId?: string,
+    notRedirectToFirstLesson?: string
   ): Observable<boolean | CourseEnrollment> {
-    return this.courseService
-      .findSubscribedByCourseId({ courseId, userId })
-      .pipe(
-        // Abonnement trouvé
-        tap(() => {
-          console.log(`L'utilisateur ${userId} est déjà inscrit au cours ${courseId}.`)
-        }),
-        map((data: CourseEnrollment) => data),
-        catchError(() => {
-          // Abonnement non trouvé : tenter l'enrôlement
-          this.messageService.cancel();
-          return this.enrollUser(courseId, lessonId);
-        }),
-        catchError(() => {
-          // Échec de l'enrôlement
-          this.messageService.cancel();
-          return of(false);
-        })
-      );
+    return this.courseService.findSubscribedByCourseId({ courseId, userId }).pipe(
+      switchMap((enrollment: CourseEnrollment) => {
+        console.log(`L'utilisateur ${userId} est déjà inscrit au cours ${courseId}.`);
+        if (!notRedirectToFirstLesson) {
+          this.navigateToLesson(courseId, lessonId);
+        }
+        return of(enrollment);
+      }),
+      catchError(() => {
+        // User is not subscribed, try enrollment
+        this.messageService.cancel();
+        return this.enrollUser(courseId, lessonId);
+      }),
+      catchError(() => {
+        // Enrollment failed
+        this.messageService.cancel();
+        return of(null);
+      })
+    );
   }
 
   /**
@@ -53,7 +54,6 @@ export class EnrollmentService {
 
     return this.courseService.subscribeToCourse(+courseId).pipe(
       tap(() => {
-        this.updateLocalSubscriptions(courseId);
         console.log(`Utilisateur enrôlé automatiquement au cours ${courseId}`);
         this.updateLocalSubscriptions(courseId);
         this.navigateToLesson(courseId, lessonId);
