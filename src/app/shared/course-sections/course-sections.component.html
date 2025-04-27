@@ -1,28 +1,8 @@
-<!-- <ng-container *ngFor="let section of sections; let i = index">
-    <section class="regular-section">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="text lg:col-span-8">
-                <h3>{{section.title}}</h3>
-                <app-markdown-preview [data]="section?.content"></app-markdown-preview>
-            </div>
-
-            <div class="image lg:col-span-4 self-center">
-                <app-image [classes]="'w-full h-full max-w-[300px] lg:max-w-[350px] mx-auto object-contain'"
-                    [sourceUrl]="section?.image" [alt]="section?.title">
-                </app-image>
-            </div>
-        </div>
-    </section>
-</ng-container> -->
-
-
 <cdk-accordion class="flex flex-col gap-0.5">
     <ng-container *ngFor="let section of sections; let index = index">
         <cdk-accordion-item #accordionItem="cdkAccordionItem" class="block">
-            <!-- class="example-accordion-item-header" 
-            [ngClass]="{'!bg-[#eee]' : accordionItem.expanded}"  -->
             <button 
-                class="w-full flex items-center justify-between gap-4 uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold"
+                class="w-full flex items-center justify-between gap-4 uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold rounded"
                 (click)="accordionItem.toggle()" tabindex="0"
                 [attr.id]="'accordion-header-' + index" [attr.aria-expanded]="accordionItem.expanded"
                 [attr.aria-controls]="'accordion-body-' + index">

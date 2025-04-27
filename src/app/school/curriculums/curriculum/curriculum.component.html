@@ -23,7 +23,7 @@
                             [ngClass]="{'cursor-grab' : canEdit}">
 
                             <div (click)="chapter?.lessons?.length && accordionItem.toggle()"
-                                class="curriculum_chapter_title flex items-center justify-between gap-4 uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold">
+                                class="curriculum_chapter_title flex items-center justify-between gap-4 uppercase opacity-90 bg-primary-100 text-secondary p-3 font-semibold rounded">
                                 {{chapter?.title}}
 
                                 <div *ngIf="chapter?.lessons?.length"
@@ -57,14 +57,14 @@
                                 <ul *ngIf="chapter?.lessons?.length" cdkDropList
                                     [cdkDropListData]="chapter?.lessons"
                                     (cdkDropListDropped)="dropLessons($event)"
-                                    class="curriculum_chapter_lessons space-y-0.5">
+                                    class="curriculum_chapter_lessons space-y-0.5 mt-0.5">
 
                                     <ng-container *ngFor="let lesson of chapter?.lessons">
 
                                         <li cdkDrag [cdkDragDisabled]="!canEdit || mobileQuery.matches"
                                             id="{{lesson.id}}" *ngIf="lesson?.chapterId === chapter?.id"
                                             [ngClass]="{'cursor-grab' : canEdit}"
-                                            class="curriculum_chapter_lesson_elt hover:bg-skin-link bg-skin-cardMuted transition-all duration-200">
+                                            class="curriculum_chapter_lesson_elt hover:bg-skin-link bg-skin-cardMuted transition-all duration-200 rounded">
                                             <a routerLink="{{'/cours/'+(course|slugify)+'/'+(lesson|slugify)}}"
                                                 [style.pointer-events]="lesson?.number && !canAccessCourse ? 'auto' : 'auto'"
                                                 class="lesson_link w-full p-3 pr-0 flex justify-between items-center gap-2">
