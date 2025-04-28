@@ -232,6 +232,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       });
 
     if (isPlatformBrowser(this.platformId)) {
+      this.showTip();
       this.loadCopyToClipboardSvg();
       (window as any).onload = AddTargetToExternalLinks();
     }
@@ -241,6 +242,5 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.modalService.checkUserEmail(this.authService.currentUsr);
     }
 
-    this.showTip();
   }
 }
