@@ -101,10 +101,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     
     if (error.status === 0) {
-      // Client side Error
+      // Erreur côté client
       errorMessage = 'Une erreur est survenue. Veuillez essayer de nouveau ou contacter le support Zerofiltre (info@zerofiltre.tech)';
+    } else if (error.status === 200 && error instanceof HttpErrorResponse) {
+      console.log('ATTENTION -> Réponse serveur invalide! Format inattendu (Non JSON)', error);
     } else {
-      // Server side error
+      // Erreur côté serveur
       let serverError = JSON.stringify(error?.error)
       
       if (!!serverError) {
