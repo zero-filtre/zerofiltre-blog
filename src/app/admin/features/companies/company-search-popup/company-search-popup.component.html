@@ -9,10 +9,13 @@
 </div>
 
 <ng-template #popupContent>
-    <h1 *ngIf="isCourseSearch" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">
+    <h1 *ngIf="data.dataType == 'Course'" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">
+        Ajouter des cours à cette organisation
+    </h1>
+    <h1 *ngIf="data.dataType == 'Company'" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">
         Ajouter ce cours à une organisation
     </h1>
-    <h1 *ngIf="!isCourseSearch" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">
+    <h1 *ngIf="data.dataType == 'User'" mat-dialog-title class="lg:text-xl text-secondary font-normal text-center">
         Ajouter des utilisateurs à cette organisation
     </h1>
     <h2 mat-dialog-title class="sr-only">Effectuer une recherche</h2>
@@ -27,12 +30,15 @@
                     <ul class="flex flex-col gap-2 mt-2">
                         <li *ngFor="let selected of selectedUsers" class="flex items-center justify-between gap-2 px-3 py-1 bg-white rounded-md shadow">
                             <div class="flex items-center gap-2">
-                                <p *ngIf="isCourseSearch" class="flex items-center gap-3 font-semibold text-primary-500 text-lg">
+                                <p *ngIf="data.dataType == 'Company'" class="flex items-center gap-3 font-semibold text-primary-500 text-lg">
                                     <span>{{ selected.companyName }}</span>
                                     <span>-</span> 
                                     <span class="text-sm text-skin-base font-medium">{{ selected.siren }}</span>
                                 </p>
-                                <p *ngIf="!isCourseSearch" class="flex items-center gap-3 font-semibold text-primary-500 text-lg">
+                                <p *ngIf="data.dataType == 'Course'" class="flex items-center gap-3 font-semibold text-primary-500 text-lg">
+                                    <span class="text-sm text-skin-base font-medium">{{ selected.title }}</span>
+                                </p>
+                                <p *ngIf="data.dataType == 'User'" class="flex items-center gap-3 font-semibold text-primary-500 text-lg">
                                     <app-image [classes]="'h-10 w-10 rounded-full'"
                                     [alt]="selected?.fullName" [sourceUrl]="selected.profilePicture">
                                     </app-image>
@@ -54,18 +60,19 @@
                         <div class="flex items-center gap-3">
                             <input class="mr-1" id="result-{{result.id}}" type="checkbox" [value]="result.id" (change)="toggleSelection(result)" [checked]="isSelected(result.id)" />
                             <div>
-                                <label for="result-{{result.id}}" *ngIf="isCourseSearch" class="font-semibold text-primary-500 text-lg">{{ result.companyName }}</label>
-                                <label for="result-{{result.id}}" *ngIf="!isCourseSearch" class="flex items-center gap-3 font-semibold text-primary-500 text-lg">
+                                <label for="result-{{result.id}}" *ngIf="data.dataType == 'Company'" class="font-semibold text-primary-500 text-lg">{{ result.companyName }}</label>
+                                <label for="result-{{result.id}}" *ngIf="data.dataType == 'Course'" class="font-semibold text-primary-500 text-lg">{{ result.title }}</label>
+                                <label for="result-{{result.id}}" *ngIf="data.dataType == 'User'" class="flex items-center gap-3 font-semibold text-primary-500 text-lg">
                                     <app-image [classes]="'h-10 w-10 rounded-full'"
                                     [alt]="result?.fullName" [sourceUrl]="result.profilePicture">
                                     </app-image>
                                     {{ result.fullName }}
                                 </label>
-                                <p *ngIf="isCourseSearch" class="line-clamp-2 text-skin-base text-sm">{{ result.siren }}</p>
+                                <p *ngIf="data.dataType == 'Company'" class="line-clamp-2 text-skin-base text-sm">{{ result.siren }}</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <select *ngIf="!isCourseSearch" (change)="updateUserRole(result.id, getValue($event))" class="appearance-none lg:w-28 py-1.5 px-3 border font-medium">
+                            <select *ngIf="data.dataType == 'User'" (change)="updateUserRole(result.id, getValue($event))" class="appearance-none lg:w-28 py-1.5 px-3 border font-medium">
                                 <option value="VIEWER" selected>VIEWER</option>
                                 <option value="EDITOR">EDITOR</option>
                                 <option value="ADMIN">ADMIN</option>
@@ -76,8 +83,9 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
                                     <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
                                 </svg>
-                                <span *ngIf="isCourseSearch">Lier</span>
-                                <span *ngIf="!isCourseSearch">Ajouter</span>
+                                <span *ngIf="data.dataType == 'Company'">Lier</span>
+                                <span *ngIf="data.dataType == 'Course'">Ajouter</span>
+                                <span *ngIf="data.dataType == 'User'">Ajouter</span>
                             </button>
                         </div>
                     </li>

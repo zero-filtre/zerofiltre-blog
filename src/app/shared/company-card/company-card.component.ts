@@ -29,6 +29,11 @@ export class CompanyCardComponent {
     return this.authService.canAccessAdminDashboard;
   }
 
+  canLinkCourseToCompany() {
+    // return this.authService.canAccessAdminDashboard;
+    return true;
+  }
+
   fetchAllCompanies() {
     this.onCompanyDeleteEvent.emit();
   }
@@ -50,14 +55,17 @@ export class CompanyCardComponent {
 
   openCompanyEditDialog(company: Company): void {}
 
-  openCompanySearchPopup(company: Company): void {
+  openCompanySearchPopup(company: Company, dataType: "Course" | "User"): void {
     this.dialogDeleteRef
       .open(CompanySearchPopupComponent, {
         panelClass: 'popup-search',
         disableClose: false,
         minHeight: '400px',
         width: '700px',
-        data: { company: company },
+        data: { 
+          company: company,
+          dataType: dataType
+        },
       })
       .afterClosed()
       .subscribe((message) => {
@@ -66,4 +74,5 @@ export class CompanyCardComponent {
         }
       });
   }
+
 }
