@@ -26,12 +26,20 @@
                 </button>
 
                 <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
-                    <button (click)="openCompanySearchPopup(company)" aria-labelledby="Delete company button"
+                    <button (click)="openCompanySearchPopup(company, 'User')" aria-labelledby="Delete company button"
                         class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
                         <span>Ajouter un utilisateur</span>
+                    </button>
+
+                    <button (click)="openCompanySearchPopup(company, 'Course')" aria-labelledby="Delete company button"
+                        class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        <span>Ajouter un cours</span>
                     </button>
 
                     <!-- <button (click)="openCompanyDeleteDialog(company)" aria-labelledby="Delete company button"

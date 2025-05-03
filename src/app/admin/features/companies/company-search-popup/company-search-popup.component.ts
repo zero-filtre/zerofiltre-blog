@@ -16,9 +16,8 @@ export class CompanySearchPopupComponent {
   public companies: Company[] = [];
 
   query: string = '';
-  selectedUsers: { id: number, profilePicture?: string, role?: string, fullName?: string, companyName?: string, siren?: string }[] = [];
+  selectedUsers: { id: number, profilePicture?: string, role?: string, fullName?: string, companyName?: string, siren?: string, title?: string }[] = [];
   results: any[] = [];
-  isCourseSearch: boolean = false;
   private SearchText$ = new Subject<string>();
 
   constructor(
@@ -41,7 +40,7 @@ export class CompanySearchPopupComponent {
     this.dialogRef.close();
   }
 
-  linkCourseToCompany(companyId: number): void {
+  linkCourseAndCompany(companyId: number): void {
     const {
       course: { id },
     } = this.data;
@@ -62,7 +61,31 @@ export class CompanySearchPopupComponent {
       });
   }
 
-  linkUserToCompany(userId: number): void {
+  addCourseToCompany(courseId: number): void {
+    const selectedUser = this.selectedUsers.find(someCourse => someCourse.id === courseId);
+    const resultUser = this.results.find(someCourse => someCourse.id === courseId);
+
+    const {
+      company: { id },
+    } = this.data;
+    const bodyData = { courseId, companyId: id };
+
+    this.companyService
+      .linkCourseToCompany(bodyData)
+      .pipe(
+        catchError((err) => {
+          this.loading = false;
+          return throwError(() => err?.message);
+        })
+      )
+      .subscribe((_message: string) => {
+        this.loading = false;
+        // this.dialogRef.close('La liaison a bien été créé');
+        this.messageService.openSnackBarSuccess("Le cours a été ajouté à l'organisation avec succès !", 'OK');
+      });
+  }
+
+  addUserToCompany(userId: number): void {
     const selectedUser = this.selectedUsers.find(someUser => someUser.id === userId);
     const resultUser = this.results.find(someUser => someUser.id === userId);
     const role = selectedUser ? selectedUser.role : (resultUser && resultUser.role) ? resultUser.role : 'VIEWER';
@@ -106,21 +129,24 @@ export class CompanySearchPopupComponent {
   setDataSource() {
     const companies = this.companyService.companies;
     const users = this.companyService.users;
+    const courses = this.companyService.courses;
 
-    if (this.data.course) {
-      this.isCourseSearch = true;
-      this.results.push(...companies);
-    } else {
-      this.isCourseSearch = false;
+    if (this.data.dataType == "Course") {
+      this.results.push(...courses);
+    } else if (this.data.dataType == "User") {
       this.results.push(...users);
+    } else {
+      this.results.push(...companies);
     }
   }
 
   linkCourseOrUserToCompany(dataId: number): void {
-    if (this.isCourseSearch) {
-      this.linkCourseToCompany(dataId);
+    if (this.data.dataType == "Course") {
+      this.addCourseToCompany(dataId);
+    } else if (this.data.dataType == "User") {
+      this.addUserToCompany(dataId);
     } else {
-      this.linkUserToCompany(dataId);
+      this.linkCourseAndCompany(dataId);
     }
   }
 
@@ -130,16 +156,16 @@ export class CompanySearchPopupComponent {
         debounceTime(300),
         distinctUntilChanged(),
         switchMap((query: string) => {
-          const safeQuery = query.replace(/[^a-zA-Z0-9]/g, '');
+          const safeQuery = query.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
           if (safeQuery.length >= 3) {
-          return this.companyService.search(safeQuery, this.isCourseSearch).pipe(
-            catchError((error: HttpErrorResponse) => {
-              return throwError(() => error);
-            }),
-            tap((data: Company[]) => {
-              this.results = data;
-            })
-          );
+            return this.companyService.search(safeQuery, this.data.dataType).pipe(
+              catchError((error: HttpErrorResponse) => {
+                return throwError(() => error);
+              }),
+              tap((data: Company[]) => {
+                this.results = data;
+              })
+            );
           } else {
             this.results = [];
             return new Observable((observer) => observer.next({ results: [] }));
@@ -163,7 +189,7 @@ export class CompanySearchPopupComponent {
     if (index > -1) {
       this.selectedUsers.splice(index, 1);
     } else {
-      this.selectedUsers.push({ id: user.id, profilePicture: user.profilePicture, role, fullName: user.fullName, companyName: user.companyName, siren: user.siren });
+      this.selectedUsers.push({ id: user.id, profilePicture: user.profilePicture, role, fullName: user.fullName, companyName: user.companyName, siren: user.siren, title: user.title });
     }
   }
 
