@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { User } from '../../../user/user.model';
 import { Company } from './company.model';
 import { AuthService } from '../../../user/auth.service';
+import { Course } from 'src/app/school/courses/course';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,6 +21,7 @@ export class CompanyService {
 
   companies: Company[] = [];
   users: User[] = [];
+  courses: User[] = [];
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -42,6 +44,14 @@ export class CompanyService {
     return this.http
       .get<any>(
         `${this.apiServerUrl}/company/all?pageNumber=${pageNumber}&pageSize=${limit}`
+      )
+      .pipe(shareReplay());
+  }
+
+  getCourses(pageNumber: any, limit: any): Observable<any[]> {
+    return this.http
+      .get<any>(
+        `${this.apiServerUrl}/course?pageNumber=${pageNumber}&pageSize=${limit}&status=published`
       )
       .pipe(shareReplay());
   }
@@ -84,11 +94,13 @@ export class CompanyService {
       .pipe(shareReplay());
   }
 
-  search(query: string, isCourseSearch: boolean): Observable<any[]> {
-    if (isCourseSearch) {
-      return this.searchCompanies(query)
-    } else {
+  search(query: string, dataType: string): Observable<any[]> {
+    if (dataType == "Course") {
+      return this.searchCourses(query)
+    } else if (dataType == "User") {
       return this.searchUsers(query);
+    } else {
+      return this.searchCompanies(query)
     }
   }
 
@@ -103,7 +115,20 @@ export class CompanyService {
 
   searchCompanies(query: string): Observable<any[]> {
     return  this.getCompanies(0, 100).pipe(
-      map(({ content }: any) => content as Company[])
+      map(({ content }: any) => content.filter((company: Company) => company.companyName.toLowerCase().includes(query)))
+    );
+
+    return this.http
+      .get<any[]>(
+        `${this.apiServerUrl}/search/companies?query=${query}`,
+        httpOptions
+      )
+      .pipe(shareReplay());
+  }
+
+  searchCourses(query: string): Observable<any[]> {
+    return  this.getCourses(0, 100).pipe(
+      map(({ content }: any) => content.filter((course: Course) => course.title.toLowerCase().includes(query)))
     );
 
     return this.http
