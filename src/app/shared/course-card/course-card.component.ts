@@ -52,14 +52,17 @@ export class CourseCardComponent {
     });
   }
 
-  openCompanySearchPopup(course: Course): void {
+  openCompanySearchPopup(course: Course, dataType: "Company"): void {
     this.dialogDeleteRef
       .open(CompanySearchPopupComponent, {
         panelClass: 'popup-search',
         disableClose: false,
         minHeight: '400px',
         width: '700px',
-        data: { course: course },
+        data: { 
+          course: course,
+          dataType: dataType
+        },
       })
       .afterClosed()
       .subscribe((message) => {
