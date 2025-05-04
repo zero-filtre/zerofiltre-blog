@@ -1,9 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
+import { catchError, EMPTY, map, Observable, throwError } from 'rxjs';
 import { CourseService } from '../course.service';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
+import { CompanyService } from '../../../admin/features/companies/company.service'
+import { Company } from 'src/app/admin/features/companies/company.model';
 
 @Component({
   selector: 'app-course-init-popup',
@@ -12,6 +14,8 @@ import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 })
 export class CourseInitPopupComponent implements OnInit {
   public title: string = '';
+  public selectedCompany: string | null
+  public companies$: Observable<any[]>;
   public loading: boolean = false;
   public course!: any;
 
@@ -19,6 +23,7 @@ export class CourseInitPopupComponent implements OnInit {
     public dialogRef: MatDialogRef<CourseInitPopupComponent>,
     private router: Router,
     private courseService: CourseService,
+    private companyService: CompanyService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private slugify: SlugUrlPipe
   ) { }
@@ -32,7 +37,7 @@ export class CourseInitPopupComponent implements OnInit {
 
     this.loading = true;
 
-    this.courseService.initCourse(this.title)
+    this.courseService.initCourse(this.title, this.selectedCompany)
       .pipe(catchError(err => {
         this.loading = false
         return throwError(() => err)
@@ -45,8 +50,18 @@ export class CourseInitPopupComponent implements OnInit {
 
   }
 
+  fecthCompanies() {
+    this.companies$ = this.companyService.getCompanies(0, 100)
+      .pipe(
+        catchError(err => {
+          return EMPTY
+        }),
+        map(({ content }: any) => content as Company[])
+    )
+  }
+
   ngOnInit(): void {
-    // do nothing.
+    this.fecthCompanies();
   }
 
 }
