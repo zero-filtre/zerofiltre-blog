@@ -26,7 +26,10 @@ export class CompanyCoursesComponent
   courses$: Subscription;
   courses: Course[] = [];
 
-  PUBLISHED = 'published';
+  PUBLISHED = 'PUBLISHED';
+  IN_REVIEW = 'IN_REVIEW';
+  DRAFT = 'DRAFT';
+  ARCHIVER = 'ARCHIVED';
 
   activePage: string = this.PUBLISHED;
   mainPage = true;
@@ -62,12 +65,24 @@ export class CompanyCoursesComponent
   }
 
   sortByTab(tab: string): void {
-    return null;
-    this.courses = [];
-
     if (tab === this.PUBLISHED) {
       this.activePage = this.PUBLISHED;
-      this.router.navigateByUrl('/user/dashboard/courses');
+      this.router.navigateByUrl(`/user/dashboard/companies/${this.companyId}/courses`);
+    }
+    
+    if (tab === this.IN_REVIEW) {
+      this.activePage = this.IN_REVIEW;
+      this.router.navigateByUrl(`/user/dashboard/companies/${this.companyId}/courses?status=${this.IN_REVIEW}`);
+    }
+    
+    if (tab === this.DRAFT) {
+      this.activePage = this.DRAFT;
+      this.router.navigateByUrl(`/user/dashboard/companies/${this.companyId}/courses?status=${this.DRAFT}`);
+    }
+
+    if (tab === this.ARCHIVER) {
+      this.activePage = this.ARCHIVER;
+      this.router.navigateByUrl(`/user/dashboard/companies/${this.companyId}/courses?status=${this.ARCHIVER}`);
     }
 
     this.scrollyPageNumber = 0;
@@ -77,7 +92,7 @@ export class CompanyCoursesComponent
   findAllCoursesBycompanyId(companyId: string) {
     this.loading = true;
     this.subscription$ = this.companyService
-      .findAllCoursesBycompanyId(companyId, this.pageNumber, this.pageItemsLimit)
+      .findAllCoursesBycompanyId(companyId, this.pageNumber, this.pageItemsLimit, this.activePage)
       .subscribe(this.handleFetchedCourses);
   }
 
@@ -89,6 +104,7 @@ export class CompanyCoursesComponent
         this.companyId,
         this.scrollyPageNumber,
         this.pageItemsLimit,
+        this.activePage
       )
       .subscribe((response: any) => this.handleFetchNewCourses(response));
   }
@@ -98,8 +114,10 @@ export class CompanyCoursesComponent
       this.route.paramMap.subscribe((params) => {
         const parsedParams = params.get('companyId');
         this.companyId = parsedParams!;
+      });
 
-        this.activePage = this.PUBLISHED;
+      this.route.queryParamMap.subscribe(params => {
+        this.activePage = params.get('status') || this.PUBLISHED;
         this.findAllCoursesBycompanyId(this.companyId);
       });
 
