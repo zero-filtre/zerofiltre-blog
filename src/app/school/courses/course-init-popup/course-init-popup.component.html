@@ -37,6 +37,25 @@
             </span>
         </div>
 
+        <div class="mt-2 mb-5">
+            <span class="text-xs sm:text-sm text-skin-muted font-light block mt-4 mb-1">
+                Pour une organisation ? Sélectionnez-la :
+            </span>
+            
+            <select name="company" id="company"
+                    [(ngModel)]="selectedCompany"
+                    #company="ngModel"
+                    class="bg-transparent">
+                <option value="" selected>
+                    -- Sélectionner une organisation --
+                </option>
+                
+                <option *ngFor="let company of companies$|async" [value]="company.id">
+                    {{ company.companyName }}
+                </option>
+            </select>
+        </div>
+
         <div class="action-buttons flex space-x-1 sm:space-x-2 mt-4">
             <button aria-labelledby="cancel"
                 class="px-4 py-2 border border-skin-border rounded-full shadow-sm bg-skin-card text-sm leading-5 font-semibold text-skin-base hover:bg-skin-cardMuted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-body focus:ring-primary-500 transition-all duration-200"
