@@ -131,8 +131,8 @@ export class CourseService {
       .pipe(shareReplay());
   }
 
-  initCourse(courseTitle: string): Observable<any> {
-    return this.http.post<any>(`${this.apiServerUrl}/course?title=${courseTitle}`, httpOptions)
+  initCourse(courseTitle: string, companyId: string): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/course?title=${courseTitle}` + (companyId ? `&companyId=${companyId}` : ""), httpOptions)
       .pipe(shareReplay());
   }
 
