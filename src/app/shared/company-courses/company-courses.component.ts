@@ -13,6 +13,7 @@ import { AuthService } from '../../../app/user/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { JsonLdService } from 'ngx-seo';
 import { CompanyService } from '../../../app/admin/features/companies/company.service';
+import { User } from '../../user/user.model';
 
 @Component({
   selector: 'app-company-courses',
@@ -62,6 +63,17 @@ export class CompanyCoursesComponent
       dialogEntryRef,
       dialogDeleteRef
     );
+  }
+
+  canManageCompanyCourses() {
+    const user = this.authService.currentUsr as User | null;
+    if (!user) return false;
+
+    const isAdminOrEditorInCompany = user.companies?.some(
+      company => company.companyId === +this.companyId && (company.role === 'ADMIN' || company.role === "EDITOR")
+    );
+
+    return this.authService.canAccessAdminDashboard || !!isAdminOrEditorInCompany;
   }
 
   sortByTab(tab: string): void {

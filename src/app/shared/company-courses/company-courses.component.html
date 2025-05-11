@@ -10,38 +10,42 @@
                         <span>{{'dashboard.published' | translate}}</span>
                     </button>
 
-                    <button type="button" (click)="sortByTab(IN_REVIEW)" aria-current="page"
-                        aria-labelledby="Toggle to in review articles tab"
-                        [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>{{'dashboard.inReview' | translate}}</span>
-                    </button>
-
-                    <button type="button" (click)="sortByTab(DRAFT)" aria-current="page"
-                        aria-labelledby="Toggle to draft articles tab"
-                        [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>{{'dashboard.draft' | translate}}</span>
-                    </button>
-
-                    <button type="button" (click)="sortByTab(ARCHIVER)" aria-current="page"
-                        aria-labelledby="Toggle to draft articles tab"
-                        [ngClass]="activePage === ARCHIVER ? 'active-tab' : ''"
-                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
-                        <span>Archivés</span>
-                    </button>
+                    <ng-container *ngIf="canManageCompanyCourses()">
+                        <button type="button" (click)="sortByTab(IN_REVIEW)" aria-current="page"
+                            aria-labelledby="Toggle to in review articles tab"
+                            [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
+                            class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                            <span>{{'dashboard.inReview' | translate}}</span>
+                        </button>
+    
+                        <button type="button" (click)="sortByTab(DRAFT)" aria-current="page"
+                            aria-labelledby="Toggle to draft articles tab"
+                            [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
+                            class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                            <span>{{'dashboard.draft' | translate}}</span>
+                        </button>
+    
+                        <button type="button" (click)="sortByTab(ARCHIVER)" aria-current="page"
+                            aria-labelledby="Toggle to draft articles tab"
+                            [ngClass]="activePage === ARCHIVER ? 'active-tab' : ''"
+                            class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                            <span>Archivés</span>
+                        </button>
+                    </ng-container>
                 </nav>
 
-                <button aria-label="Button to create a new course" (click)="openCourseEntryDialog()" type="button"
-                    class="">
-                    <span class="sr-only">Nouveau cours</span>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-10 w-10 text-white fill-primary-500 border-primary-500" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"
-                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </button>
+                <ng-container *ngIf="canManageCompanyCourses()">
+                    <button aria-label="Button to create a new course" (click)="openCourseEntryDialog()" type="button"
+                        class="">
+                        <span class="sr-only">Nouveau cours</span>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-10 w-10 text-white fill-primary-500 border-primary-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"
+                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                </ng-container>
             </div>
 
             <div class="articles-wrapper articles-scrollable-list-panel py-12 space-y-12 lg:space-y-11 min-h-screen"
