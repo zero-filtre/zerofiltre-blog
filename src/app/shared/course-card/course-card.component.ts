@@ -38,8 +38,7 @@ export class CourseCardComponent {
   }
 
   canLinkCourseToCompany() {
-    // return this.authService.canAccessAdminDashboard;
-    return true;
+    return this.authService.canAccessAdminDashboard;
   }
 
   openCourseDeleteDialog(courseId: any): void {
