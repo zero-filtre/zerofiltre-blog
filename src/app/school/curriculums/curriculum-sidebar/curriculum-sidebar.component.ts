@@ -64,7 +64,7 @@ export class CurriculumSidebarComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const el = document.querySelector('.sidebar_curriculum');
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // el.scrollIntoView({ behavior: 'smooth', block: 'end' });
       }
     }
   }
