@@ -147,7 +147,7 @@ export class CompanyService {
   ): Observable<any[]> {
     return this.http
       .get<any>(
-        `${this.apiServerUrl}/company/${companyId}/course/status/${status}?pageNumber=${pageNumber}&pageSize=${limit}`,
+        `${this.apiServerUrl}/company/${companyId}/course?status=${status}&pageNumber=${pageNumber}&pageSize=${limit}`,
         httpOptions
       )
       .pipe(shareReplay());
