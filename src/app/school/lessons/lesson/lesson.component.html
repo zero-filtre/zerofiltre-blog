@@ -24,7 +24,8 @@
             [opened]="!mobileQuery.matches" class="pt-36 border-none lg:bg-transparent lg:min-w-[370px] !shadow-none">
             <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art" *appShellNoRender>
                 <app-curriculum-sidebar [drawer]="snav" [canEdit]="canEditCourse" [course]="course$|async"
-                    [lessons]="lessons$ | async" [chapters]="chapters$ | async" [activeLessonID]="lessonID"
+                    [lessons]="lessons$ | async" [chapters]="chapters$ | async" [activeLessonID]="lessonID" 
+                    [activeChapterID]="lesson?.chapterId"
                     [canAccessCourse]="canAccessCourse" [loading]="loadingChapters"
                     [completedLessonsIds]="completedLessonsIds" [durations]="durations" [mobileQuery]="mobileQuery">
                 </app-curriculum-sidebar>

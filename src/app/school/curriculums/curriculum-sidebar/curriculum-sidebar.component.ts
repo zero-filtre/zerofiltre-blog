@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../user/auth.service';
@@ -21,6 +21,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { MessageService } from 'src/app/services/message.service';
 import { ModalService } from 'src/app/services/modal.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-curriculum-sidebar',
@@ -33,6 +34,7 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() course!: Course;
   @Input() lessons!: Lesson[];
   @Input() activeLessonID: number;
+  @Input() activeChapterID: number;
   @Input() chapters!: Chapter[];
   @Input() canAccessCourse!: boolean;
   @Input() loading!: boolean;
@@ -54,8 +56,18 @@ export class CurriculumSidebarComponent implements OnInit {
     private dialogDeleteLessonRef: MatDialog,
     private router: Router,
     private messageService: MessageService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    @Inject(PLATFORM_ID) public platformId: any,
   ) {}
+
+  scrollToChapter(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const el = document.querySelector('.sidebar_curriculum');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
 
   dropLessons(event: CdkDragDrop<Lesson[]>) {
     if (event.previousContainer === event.container) {
