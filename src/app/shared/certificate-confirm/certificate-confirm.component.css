@@ -1,0 +1,66 @@
+.container {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--secondary);
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--skin);
+}
+
+.error {
+  background-color: #f8d7da;
+  padding: 1rem;
+  border-radius: 8px;
+  color: var(--error);
+  text-align: center;
+}
+
+.card {
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  background: white;
+  border-left: 6px solid var(--primary);
+}
+
+.card.valid {
+  border-color: var(--primary);
+}
+
+.card.invalid {
+  border-color: var(--invalid);
+}
+
+.card h1 {
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.description {
+  margin: 1rem 0;
+  color: var(--skin);
+  line-height: 1.5;
+}
+
+.details {
+  background-color: #f9fafb;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+
+.contact {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--skin);
+}
+
+.contact a {
+  color: var(--primary);
+  text-decoration: none;
+}

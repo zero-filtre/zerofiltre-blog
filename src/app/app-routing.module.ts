@@ -19,6 +19,7 @@ import { BotStatGuard } from './shared/guard/bot-stat.guard';
 import { ProPageComponent } from './shared/pro-page/pro-page.component';
 import { AuthGuard } from './user/auth.guard';
 import { BroadcastComponent } from './shared/broadcast/broadcast.component';
+import { CertificateConfirmComponent } from './shared/certificate-confirm/certificate-confirm.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
     path: 'broadcast/unsubscribe',
     component: BroadcastComponent,
     canActivate: [TokenExpiredGuard, AuthGuard]
+  },
+  {
+    path: 'certificate/verification',
+    component: CertificateConfirmComponent,
   },
   {
     path: 'pdf',
