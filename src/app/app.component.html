@@ -110,30 +110,29 @@
             <span>{{'sidebar.myTrainings' | translate}}</span>
           </a>
 
-          <a *ngIf="activeCourseModule && authService?.isAdmin" aria-labelledby="Link to about page"
-            routerLink="/user/dashboard/courses/all" (click)="drawer.close()"
+          <a *ngIf="authService?.isAdmin" aria-labelledby="Link to user companies page"
+            routerLink="/user/dashboard/companies" (click)="drawer.close()"
             class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
             </svg>
-            <span>{{'sidebar.allTrainings' | translate}}</span>
+            <span>Mes organisations</span>
           </a>
 
-          <a *ngIf="authService?.isAdmin" aria-labelledby="Link to about page" routerLink="/user/dashboard/admin"
+          <a *ngIf="authService?.isAdmin" aria-labelledby="Link to admin dashboard" routerLink="/admin"
             (click)="drawer.close()"
-            class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            class="flex items-center text-primary-500 gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              class="size-6"
+              fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
             </svg>
-            <span>{{'profile.allAdminArticles' | translate}}</span>
+            <span>Espace administrateur</span>
           </a>
 
           <button (click)="logout()" aria-labelledby="logout button"
-            class="flex items-center gap-3 w-full text-left py-3 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
+            class="flex items-center text-error gap-3 w-full text-left py-3 px-1 rounded-md hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -168,7 +167,7 @@
   <!-- PROFILE SIDEBAR -->
   <mat-sidenav *appShellNoRender
     class="profile-sidebar !hidden lg:!block bg-skin-bgMuted shadow-sm border-0 rounded-none !fixed w-full max-w-xs"
-    mode="side" [opened]="checkRouteUrl()">
+    mode="side" [opened]="isSidenavOpenedByDefault()">
 
     <div class="profile-sidebar-container relative pt-32 px-10 text-skin-base h-full">
 
@@ -232,7 +231,22 @@
           </span>
         </a>
 
-        <a aria-labelledby="Link to all courses dashboard" *ngIf="activeCourseModule && authService?.isAdmin"
+        <a aria-labelledby="Link to my companies dashboard"
+          routerLink="/user/dashboard/companies"
+          [ngClass]="activePage === MY_COMPANIES ? 'link-active' : 'link-inactive'"
+          class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+          <svg xmlns="http://www.w3.org/2000/svg" 
+            [ngClass]="activePage === MY_COMPANIES ? 'svg-active' : 'svg-inactive'"
+            class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
+            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+          </svg>
+          <span class="truncate">
+            Mes organisations
+          </span>
+        </a>
+
+        <a aria-labelledby="Link to all our courses dashboard" *ngIf="activeCourseModule"
           routerLink="/user/dashboard/courses/all" (click)="fetchAllCoursesAsAdmin()"
           [ngClass]="activePage === ALL_TRAININGS ? 'link-active' : 'link-inactive'"
           class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
@@ -248,21 +262,67 @@
           </span>
         </a>
 
-        <a aria-labelledby="Link to all articles dashboard" *ngIf="authService?.isAdmin"
-          routerLink="/user/dashboard/admin" (click)="fetchAllArticlesAsAdmin()"
-          [ngClass]="activePage === ALL_ARTICLES ? 'link-active' : 'link-inactive'"
-          class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
-          <svg xmlns="http://www.w3.org/2000/svg"
-            [ngClass]="activePage === ALL_ARTICLES ? 'svg-active' : 'svg-inactive'"
-            class="text-skin-muted group-hover:text-skin-base flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
-            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-          <span class="truncate">
-            {{'profile.allAdminArticles' | translate}}
-          </span>
-        </a>
+        <div class="admin-links bg-secondary px-2 py-4 rounded-lg text-white !mt-4" *ngIf="authService?.canAccessAdminDashboard">
+          <h3 aria-labelledby="Link to admin space"
+            class="flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
+              fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>
+            <span class="truncate">
+              {{ ADMIN_SPACE }}
+            </span>
+          </h3>
+        
+          <div class="flex flex-col pl-4 mt-2">
+            <a aria-labelledby="Link to the dashboard" routerLink="/admin"
+              [ngClass]="activePage === ADMIN_SPACE ? 'link-active' : 'text-skin-muted'"
+              class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" [ngClass]="activePage === DASHBOARD ? 'svg-active' : 'text-skin-muted'"
+                class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
+                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+              </svg>
+              <span class="truncate">
+                {{ DASHBOARD }}
+              </span>
+            </a>
+
+            <a aria-labelledby="Link to all articles dashboard" *ngIf="authService?.isAdmin"
+              routerLink="/user/dashboard/admin" (click)="fetchAllArticlesAsAdmin()"
+              [ngClass]="activePage === ALL_ARTICLES ? 'link-active' : 'text-skin-muted'"
+              class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                [ngClass]="activePage === ALL_ARTICLES ? 'svg-active' : 'text-skin-muted'"
+                class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              <span class="truncate">
+                {{'profile.allAdminArticles' | translate}}
+              </span>
+            </a>
+
+            <a aria-labelledby="Link to all companies"
+              routerLink="/admin/companies"
+              [ngClass]="activePage === ALL_COMPANIES ? 'link-active' : 'text-skin-muted'"
+              class="group flex w-full items-center px-3 py-2 text-sm font-semibold rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" 
+                [ngClass]="activePage === ALL_COMPANIES ? 'svg-active' : 'text-skin-muted'"
+                class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 transition-all duration-200"
+                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+              </svg>
+              <span class="truncate">
+                {{ ALL_COMPANIES }}
+              </span>
+            </a>
+          </div>
+        </div>
       </div>
 
       <div class=" absolute bottom-0 inset-x-0 p-4">
