@@ -9,6 +9,7 @@ import { BaseCompanyListComponent } from './core/base-company-list/base-company-
 import { CompanyCreatePopupComponent } from './features/companies/company-create-popup/company-create-popup.component';
 import { CompanyDeletePopupComponent } from './features/companies/company-delete-popup/company-delete-popup.component';
 import { CompanySearchPopupComponent } from './features/companies/company-search-popup/company-search-popup.component';
+import { StatCardComponent } from './dashboard/stat-card/stat-card.component';
 
 
 @NgModule({
@@ -18,12 +19,9 @@ import { CompanySearchPopupComponent } from './features/companies/company-search
     BaseCompanyListComponent,
     CompanyCreatePopupComponent,
     CompanyDeletePopupComponent,
-    CompanySearchPopupComponent
+    CompanySearchPopupComponent,
+    StatCardComponent,
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    AdminRoutingModule
-  ]
+  imports: [CommonModule, SharedModule, AdminRoutingModule],
 })
-export class AdminModule { }
+export class AdminModule {}
