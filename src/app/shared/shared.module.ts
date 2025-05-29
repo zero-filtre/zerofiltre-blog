@@ -83,6 +83,7 @@ import { SignupModalComponent } from './signup-modal/signup-modal.component';
 import { CourseDetailSummaryComponent } from './course-detail-summary/course-detail-summary.component';
 import { CourseSectionsComponent } from './course-sections/course-sections.component';
 import { BroadcastComponent } from './broadcast/broadcast.component';
+import { CertificateConfirmComponent } from './certificate-confirm/certificate-confirm.component';
 
 const components = [
   AppShellRenderDirective,
@@ -135,7 +136,8 @@ const components = [
   SignupModalComponent,
   CourseDetailSummaryComponent,
   CourseSectionsComponent,
-  BroadcastComponent
+  BroadcastComponent,
+  CertificateConfirmComponent
 ];
 
 const modules = [

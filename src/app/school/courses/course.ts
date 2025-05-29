@@ -93,3 +93,10 @@ export type Review =  {
     role: string,
     stars: number
 }
+
+export interface CertificateResponse {
+  response: string,
+  description: string,
+  courseTitle: string,
+  ownerFullName: string
+}
