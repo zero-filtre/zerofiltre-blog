@@ -1,13 +1,12 @@
 <!-- Section principale du tableau de bord -->
-<div class="site-container py-12 lg:h-[91vh]">
+<div class="site-container py-8 lg:py-10 lg:h-[91vh]">
     <div class="mb-8">
         <h1 class="text-2xl font-bold text-secondary mb-2">Tableau de bord</h1>
         <p class="text-skin-muted">Gérez votre contenu et suivez vos statistiques</p>
     </div>
 
     <div *ngIf="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div *ngFor="let i of [1,2,3]"
-            class="bg-white rounded-xl shadow-sm p-6 border border-skin-border animate-pulse">
+        <div *ngFor="let i of [1,2,3]" class="bg-white rounded-xl shadow-sm p-6 border border-skin-border animate-pulse">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center space-x-3">
                     <div class="p-2 rounded-lg bg-gray-200 w-10 h-10"></div>
@@ -20,79 +19,9 @@
     </div>
 
     <div *ngIf="!loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow p-6 border border-skin-border">
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-primary-50 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2" />
-                        </svg>
-                    </div>
-                    <h2 class="text-lg font-semibold text-secondary">Articles</h2>
-                </div>
-                <span class="text-2xl font-bold text-secondary">{{stats?.articles || 0}}</span>
-            </div>
-            <p class="text-skin-muted mb-4">Total des articles publiés</p>
-            <a href="user/dashboard/admin" class="inline-flex items-center text-primary-500 hover:text-primary-600">
-                Voir les articles
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd" />
-                </svg>
-            </a>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow p-6 border border-skin-border">
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-accent-100 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-500" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                    </div>
-                    <h2 class="text-lg font-semibold text-secondary">Cours</h2>
-                </div>
-                <span class="text-2xl font-bold text-secondary">{{stats?.courses || 0}}</span>
-            </div>
-            <p class="text-skin-muted mb-4">Total des cours disponibles</p>
-            <a href="user/dashboard/courses/all" class="inline-flex items-center text-primary-500 hover:text-primary-600">
-                Voir les cours
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd" />
-                </svg>
-            </a>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow p-6 border border-skin-border">
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-secondary bg-opacity-10 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-secondary" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                    </div>
-                    <h2 class="text-lg font-semibold text-secondary">Organisations</h2>
-                </div>
-                <span class="text-2xl font-bold text-secondary">{{stats?.organizations || 0}}</span>
-            </div>
-            <p class="text-skin-muted mb-4">Total des organisations</p>
-            <a href="/admin/companies" class="inline-flex items-center text-primary-500 hover:text-primary-600">
-                Voir les organisations
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd" />
-                </svg>
-            </a>
-        </div>
+        <app-stat-card *ngFor="let card of cards" [title]="card.title" [value]="card.getValue()"
+            [description]="card.description" [link]="card.link" [linkText]="card.linkText" [iconBgClass]="card.iconBgClass"
+            [icon]="card.icon">
+        </app-stat-card>
     </div>
 </div>
