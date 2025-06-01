@@ -117,26 +117,12 @@ export class CompanyService {
     return  this.getCompanies(0, 100).pipe(
       map(({ content }: any) => content.filter((company: Company) => company.companyName.toLowerCase().includes(query)))
     );
-
-    return this.http
-      .get<any[]>(
-        `${this.apiServerUrl}/search/companies?query=${query}`,
-        httpOptions
-      )
-      .pipe(shareReplay());
   }
 
   searchCourses(query: string): Observable<any[]> {
     return  this.getCourses(0, 100).pipe(
       map(({ content }: any) => content.filter((course: Course) => course.title.toLowerCase().includes(query)))
     );
-
-    return this.http
-      .get<any[]>(
-        `${this.apiServerUrl}/search/companies?query=${query}`,
-        httpOptions
-      )
-      .pipe(shareReplay());
   }
 
   findAllCoursesBycompanyId(

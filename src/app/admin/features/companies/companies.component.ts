@@ -67,16 +67,22 @@ export class CompaniesComponent
   }
 
   openCompanyEntryDialog(): void {
-    this.dialogEntryRef.open(CompanyCreatePopupComponent, {
-      width: '850px',
-      height: '350px',
-      panelClass: 'article-popup-panel',
-    }).afterClosed().subscribe((company: Company) => {
-      if (company) {
-        this.fetchAllCompanies();
-        this.messageService.openSnackBarSuccess("Entreprise créée avec succès !", 'OK');
-      }
-    });
+    this.dialogEntryRef
+      .open(CompanyCreatePopupComponent, {
+        width: '850px',
+        height: '350px',
+        panelClass: 'article-popup-panel',
+      })
+      .afterClosed()
+      .subscribe((company: Company) => {
+        if (company) {
+          this.fetchAllCompanies();
+          this.messageService.openSnackBarSuccess(
+            'Entreprise créée avec succès !',
+            'OK'
+          );
+        }
+      });
   }
 
   sortByTab(tab: string): void {
@@ -100,8 +106,6 @@ export class CompaniesComponent
 
   fetchMoreCompanies(): any {
     this.scrollyPageNumber += 1;
-
-    const queryParam = this.route.snapshot.queryParamMap.get('filter')!;
 
     this.companyService
       .getCompanies(this.scrollyPageNumber, this.pageItemsLimit)
