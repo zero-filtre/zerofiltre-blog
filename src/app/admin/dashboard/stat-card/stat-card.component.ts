@@ -17,7 +17,7 @@ export class StatCardComponent {
   private _icon: string;
   public safeIcon: SafeHtml;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private readonly sanitizer: DomSanitizer) {}
 
   @Input()
   set icon(value: string) {

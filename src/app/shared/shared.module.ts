@@ -87,6 +87,11 @@ import { CertificateConfirmComponent } from './certificate-confirm/certificate-c
 import { TipsModalComponent } from '../tips-modal/tips-modal.component';
 import { CompanyCardComponent } from './company-card/company-card.component';
 import { CompanyCoursesComponent } from './company-courses/company-courses.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { CompanySkeletonComponent } from '../admin/features/companies/components/company-skeleton/company-skeleton.component';
+import { NoCompaniesComponent } from '../admin/features/companies/components/no-companies/no-companies.component';
+import { CourseSkeletonComponent } from './components/course-skeleton/course-skeleton.component';
+import { NoCoursesComponent } from './components/no-courses/no-courses.component';
 
 const components = [
   AppShellRenderDirective,
@@ -111,17 +116,17 @@ const components = [
   PaymentPopupComponent,
   PdfPreviewComponent,
   PricingComponent,
-  BotUserProfileComponent, 
+  BotUserProfileComponent,
   BotUserPopupComponent,
-  StatChartComponent, 
+  StatChartComponent,
   BotSignupFormComponent,
   BotUserInfosComponent,
   BotPhoneVerificationComponent,
   AddEmailPopupComponent,
   PricePlanComponent,
   MentoredIconComponent,
-  ProPageComponent, 
-  AdsSquareComponent, 
+  ProPageComponent,
+  AdsSquareComponent,
   AdsRectangleComponent,
   CollapsibleTagsComponent,
   CourseCardComponent,
@@ -143,7 +148,12 @@ const components = [
   CertificateConfirmComponent,
   TipsModalComponent,
   CompanyCardComponent,
-  CompanyCoursesComponent
+  CompanyCoursesComponent,
+  LoadingSpinnerComponent,
+  CompanySkeletonComponent,
+  NoCompaniesComponent,
+  CourseSkeletonComponent,
+  NoCoursesComponent,
 ];
 
 const modules = [

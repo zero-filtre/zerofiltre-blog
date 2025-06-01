@@ -12,8 +12,7 @@
                 </nav>
 
                 <div *ngIf="authService.canAccessAdminDashboard">
-                    <button aria-label="Button to create a new company" (click)="openCompanyEntryDialog()" type="button"
-                        class="">
+                    <button aria-label="Button to create a new company" (click)="openCompanyEntryDialog()" type="button">
                         <span class="sr-only">Nouvelle organisation</span>
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="h-10 w-10 text-white fill-primary-500 border-primary-500" fill="none"
@@ -28,15 +27,7 @@
             <div class="articles-wrapper articles-scrollable-list-panel py-12 space-y-12 lg:space-y-11 min-h-screen"
                 infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
 
-                <div class="flex justify-center items-center min-h-[50vh]" *appShellRender>
-                    <svg class="w-10 h-10 animate-spin" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
-                        preserveAspectRatio="xMidYMid">
-                        <circle cx="50" cy="50" fill="none" stroke="#15b2bc" stroke-width="10" r="35"
-                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                            style="animation-play-state:paused"></circle>
-                    </svg>
-                </div>
+                <app-loading-spinner *appShellRender></app-loading-spinner>
 
                 <ng-template [ngIf]="companies" *appShellNoRender>
                     <div *ngFor="let company of companies; let i=index" class="space-y-11">
@@ -44,105 +35,13 @@
                     </div>
                 </ng-template>
 
-                <!-- Loading companies skeletons -->
                 <ng-template [ngIf]="loading">
-                    <div *ngFor="let elt of [].constructor(pageSize)">
-                        <div class="skeleton-container lg:grid grid-cols-3 gap-6 items-start">
-                            <div class="aspect-w-3 aspect-h-2">
-                                <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                                    'border-radius': '8px',
-                                     'height.%': 100,
-                                     'width.%': 100
-                                    }">
-                                </ngx-skeleton-loader>
-                            </div>
-
-                            <div class="col-span-2 mt-4 lg:mt-0">
-                                <div class="tags-container flex space-x-3">
-                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                                    'border-radius': '9999px',
-                                        height: '30px',
-                                        width: '100px',
-                                        display: 'block'
-                                    }">
-                                    </ngx-skeleton-loader>
-                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                                        'border-radius': '9999px',
-                                            height: '30px',
-                                            width: '100px',
-                                            display: 'block'
-                                        }">
-                                    </ngx-skeleton-loader>
-                                </div>
-
-                                <div class="content-container mt-2">
-                                    <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                                    'border-radius': '5px',
-                                        height: '40px',
-                                        display: 'block'
-                                    }">
-                                    </ngx-skeleton-loader>
-                                    <ngx-skeleton-loader count="2" appearance="line" [theme]="{ 
-                                            'border-radius': '5px',
-                                                height: '15px',
-                                                display: 'block'
-                                            }">
-                                    </ngx-skeleton-loader>
-
-                                    <div class="flex items-center space-x-2">
-                                        <div class="">
-                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                                            'border-radius': '9999px',
-                                                'width.px': 50,
-                                                'height.px': 50
-                                            }">
-                                            </ngx-skeleton-loader>
-                                        </div>
-                                        <div class="flex-1">
-                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                                            'border-radius': '5px',
-                                                height: '10px',
-                                                display: 'block'
-                                            }">
-                                            </ngx-skeleton-loader>
-                                            <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
-                                            'border-radius': '5px',
-                                                height: '10px',
-                                                 display: 'block'
-                                            }">
-                                            </ngx-skeleton-loader>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <app-company-skeleton *ngFor="let elt of [].constructor(pageSize)"></app-company-skeleton>
                 </ng-template>
 
-                <!-- No Content Found Message -->
-                <ng-template [ngIf]="noCompanyAvailable">
-                    <div class="flex flex-col justify-center items-center h-96 space-y-5">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-primary-500" fill="currentColor"
-                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
-                        </svg>
-                        <div class="text-sm font-semibold text-skin-base">
-                            Aucune organisation pour le moment 😊!
-                        </div>
-                    </div>
-                </ng-template>
+                <app-no-companies *ngIf="noCompanyAvailable"></app-no-companies>
 
-                <!-- Loading More Spinner -->
-                <div *ngIf="loadingMore" class="flex justify-center py-5">
-                    <svg class="w-10 h-10 animate-spin text-primary-500" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 100 100"
-                        preserveAspectRatio="xMidYMid">
-                        <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="8" r="35"
-                            stroke-dasharray="164.93361431346415 56.97787143782138" transform="matrix(1,0,0,1,0,0)"
-                            style="animation-play-state:paused"></circle>
-                    </svg>
-                </div>
+                <app-loading-spinner *ngIf="loadingMore" class="py-5"></app-loading-spinner>
 
             </div>
         </div>

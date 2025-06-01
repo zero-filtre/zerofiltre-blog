@@ -60,7 +60,9 @@ export class CompanyCardComponent {
       });
   }
 
-  openCompanyEditDialog(company: Company): void {}
+  openCompanyEditDialog(company: Company): void {
+    // TODO: Implement company edit dialog
+  }
 
   openCompanySearchPopup(company: Company, dataType: "Course" | "User"): void {
     this.dialogDeleteRef
