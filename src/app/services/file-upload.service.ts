@@ -1,6 +1,6 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, shareReplay, Subject, tap, throwError, map, EMPTY } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { MessageService } from './message.service';
@@ -16,46 +16,43 @@ const httpOptions = {
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FileUploadService {
   readonly apiServerUrl = environment.apiBaseUrl;
   readonly ovhServerUrl = environment.ovhServerUrl;
 
-  private XTOKEN_NAME = 'x_token';
+  private readonly XTOKEN_NAME = 'x_token';
 
-  private subject = new BehaviorSubject<any>(null!);
+  private readonly subject = new BehaviorSubject<any>(null!);
   public xToken$ = this.subject.asObservable();
 
-
   constructor(
-    private http: HttpClient,
-    private messageService: MessageService,
-    @Inject(PLATFORM_ID) private platformId: any
-  ) { 
+    private readonly http: HttpClient,
+    private  readonly messageService: MessageService,
+    @Inject(PLATFORM_ID) private readonly platformId: any
+  ) {
     this.getOvhToken();
   }
 
   getOvhToken() {
-    this.xToken$ = this.http.get<any>(`${this.apiServerUrl}/ovh/token`)
-      .pipe(
-        catchError(error => {
-          return throwError(() => error);
-        }),
-        tap(({ accessToken, expiresAt }: any) => {
+    this.xToken$ = this.http.get<any>(`${this.apiServerUrl}/ovh/token`).pipe(
+      catchError((error) => {
+        return throwError(() => error);
+      }),
+      tap(({ accessToken, expiresAt }: any) => {
+        const xToken = accessToken;
+        const expireAt = expiresAt;
+        const tokenObj = {
+          xToken,
+          expireAt,
+        };
 
-          const xToken = accessToken;
-          const expireAt = expiresAt;
-          const tokenObj = {
-            xToken,
-            expireAt
-          }
-          
-          this.subject.next(tokenObj);
-          localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(tokenObj));
-        }),
-        shareReplay()
-      )
+        this.subject.next(tokenObj);
+        localStorage.setItem(this.XTOKEN_NAME, JSON.stringify(tokenObj));
+      }),
+      shareReplay()
+    );
   }
 
   private extractTokenFromHeaders(response: any) {
@@ -66,106 +63,110 @@ export class FileUploadService {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem(this.XTOKEN_NAME);
     }
+    return null;
   }
 
   get xTokenObj(): any {
     if (isPlatformBrowser(this.platformId)) {
       return JSON.parse(this.xTokenData);
     }
+    return null;
   }
 
   private validateImage(file: File): boolean {
-    let isValid = false;
     const maxSize = 5;
 
     const sizeUnit = 1024 * 1024;
     const fileSize = Math.round(file.size / sizeUnit);
-    const fileType = file.type.split('/')[1]
+    const fileType = file.type.split('/')[1];
 
     if (
       fileType !== 'jpeg' &&
       fileType !== 'png' &&
       fileType !== 'jpg' &&
       fileType !== 'svg' &&
-      fileType !== 'pdf') {
-      isValid = false
+      fileType !== 'pdf'
+    ) {
       this.messageService.fileTypeWarning();
+      return false;
     } else if (fileSize > maxSize) {
-      isValid = false
       this.messageService.fileSizeWarning(maxSize);
+      return false;
     } else {
-      isValid = true;
+      return true;
     }
 
-    return isValid;
   }
-  
+
   private validateResource(file: File): boolean {
-    let isValid = false;
     const maxSize = 200;
     const acceptedTypes = ['txt', 'pdf', 'img', 'zip', 'doc', 'docx'];
 
     const sizeUnit = 1024 * 1024;
     const fileSize = Math.round(file.size / sizeUnit);
-    let fileType = file.type
-
+    let fileType = file.type;
 
     if (fileType.startsWith('image')) {
-      fileType = 'img'
+      fileType = 'img';
     } else {
-      const nameParts = file.name.split('.')
+      const nameParts = file.name.split('.');
       fileType = nameParts[nameParts.length - 1];
     }
 
     if (!acceptedTypes.includes(fileType)) {
-      this.messageService.openSnackBarWarning("Le document n'est pas au format autorisé ('.txt', '.pdf', '.zip', '.doc', 'image*')", 'OK')
+      this.messageService.openSnackBarWarning(
+        "Le document n'est pas au format autorisé ('.txt', '.pdf', '.zip', '.doc', 'image*')",
+        'OK'
+      );
+      return false;
     } else if (fileSize > maxSize) {
       this.messageService.fileSizeWarning(maxSize);
+      return false;
     } else {
-      isValid = true;
+      return true;
     }
-
-    return isValid;
   }
 
   private uploadImage(fileName: string, file: File): Observable<any> {
-    if (!this.validateImage(file)) return throwError(() => new Error('Invalid file'))
+    if (!this.validateImage(file))
+      return throwError(() => new Error('Invalid file'));
 
     const xToken = this.xTokenObj?.xToken;
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
-      .set('X-Auth-Token', xToken)
+      .set('X-Auth-Token', xToken);
 
-    return this.http.put<string>(`${this.ovhServerUrl}/${fileName}`, file, {
-      ...httpOptions,
-      reportProgress: true,
-      observe: 'events'
-    })
+    return this.http
+      .put<string>(`${this.ovhServerUrl}/${fileName}`, file, {
+        ...httpOptions,
+        reportProgress: true,
+        observe: 'events',
+      })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           this.handleError(error);
-          return throwError(() => error)
+          return throwError(() => error);
         })
-      )
+      );
   }
 
   private uploadDoc(fileName: string, file: File): Observable<any> {
-    if (!this.validateResource(file)) return throwError(() => new Error('Invalid document'))
+    if (!this.validateResource(file))
+      return throwError(() => new Error('Invalid document'));
 
     const xToken = this.xTokenObj?.xToken;
 
-    let fileType = file.type
+    let fileType = file.type;
     let contentType = '';
 
     if (fileType.startsWith('image')) {
-      fileType = 'img'
-      contentType = 'image/*'
+      contentType = 'image/*';
     } else {
-      const nameParts = file.name.split('.')
+      const nameParts = file.name.split('.');
       fileType = nameParts[nameParts.length - 1];
 
-      if (fileType === 'pdf'){
+      if (fileType === 'pdf') {
         contentType = 'application/pdf';
       } else if (fileType === 'zip') {
         contentType = 'application/zip';
@@ -174,25 +175,27 @@ export class FileUploadService {
       } else if (fileType === 'doc') {
         contentType = 'application/msword';
       } else if (fileType === 'docx') {
-        contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        contentType =
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
       }
     }
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', contentType)
-      .set('X-Auth-Token', xToken)
+      .set('X-Auth-Token', xToken);
 
-    return this.http.put<string>(`${this.ovhServerUrl}/${fileName}`, file, {
-      ...httpOptions,
-      reportProgress: true,
-      observe: 'events'
-    })
+    return this.http
+      .put<string>(`${this.ovhServerUrl}/${fileName}`, file, {
+        ...httpOptions,
+        reportProgress: true,
+        observe: 'events',
+      })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           this.handleError(error);
-          return throwError(() => error)
+          return throwError(() => error);
         })
-      )
+      );
   }
 
   public removeImage(fileName: string): Observable<any> {
@@ -200,15 +203,16 @@ export class FileUploadService {
 
     httpOptions.headers = httpOptions.headers
       .set('Content-Type', 'image/png')
-      .set('X-Auth-Token', xToken)
+      .set('X-Auth-Token', xToken);
 
-    return this.http.delete<any>(`${this.ovhServerUrl}/${fileName}`, httpOptions)
+    return this.http
+      .delete<any>(`${this.ovhServerUrl}/${fileName}`, httpOptions)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           this.handleError(error);
-          return throwError(() => error)
+          return throwError(() => error);
         })
-      )
+      );
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -225,12 +229,14 @@ export class FileUploadService {
       sel.text = myValue;
     }
     // Microsoft Edge
-    else if (window.navigator.userAgent.indexOf("Edge") > -1) {
+    else if (window.navigator.userAgent.indexOf('Edge') > -1) {
       const startPos = myField.selectionStart;
       const endPos = myField.selectionEnd;
 
-      myField.value = myField.value.substring(0, startPos) + myValue
-        + myField.value.substring(endPos, myField.value.length);
+      myField.value =
+        myField.value.substring(0, startPos) +
+        myValue +
+        myField.value.substring(endPos, myField.value.length);
 
       const pos = startPos + myValue.length;
       myField.focus();
@@ -240,9 +246,10 @@ export class FileUploadService {
     else if (myField.selectionStart || myField.selectionStart == '0') {
       const startPos = myField.selectionStart;
       const endPos = myField.selectionEnd;
-      myField.value = myField.value.substring(0, startPos)
-        + myValue
-        + myField.value.substring(endPos, myField.value.length);
+      myField.value =
+        myField.value.substring(0, startPos) +
+        myValue +
+        myField.value.substring(endPos, myField.value.length);
     } else {
       myField.value += myValue;
     }
@@ -250,8 +257,8 @@ export class FileUploadService {
 
   public deleteFile(
     fileFormControl: FormControl,
-    formControlSub?: Subject<any>): Observable<any> {
-
+    formControlSub?: Subject<any>
+  ): Observable<any> {
     const fileName = fileFormControl.value.split('/')[6];
     const fileNameUrl = fileFormControl.value.split('/')[2];
 
@@ -261,27 +268,26 @@ export class FileUploadService {
       return EMPTY;
     }
 
-    return this.removeImage(fileName)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          if (error.status === 404) {
-            fileFormControl.setValue('');
-            formControlSub?.next('');
-          }
-          return throwError(() => error)
-        })
-      )
+    return this.removeImage(fileName).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          fileFormControl.setValue('');
+          formControlSub?.next('');
+        }
+        return throwError(() => error);
+      })
+    );
   }
 
   public uploadFile(file: any): Observable<any> {
-    const fileName = file.data.name
+    const fileName = file.data.name;
     file.inProgress = true;
 
     return this.uploadImage(fileName, file.data).pipe(
       map((event) => {
         switch (event.type) {
           case HttpEventType.UploadProgress:
-            file.progress = Math.round(event.loaded * 100 / event.total);
+            file.progress = Math.round((event.loaded * 100) / event.total);
             break;
           case HttpEventType.Response:
             return event;
@@ -290,18 +296,19 @@ export class FileUploadService {
       catchError((_error: HttpErrorResponse) => {
         file.inProgress = false;
         return throwError(() => 'Upload failed');
-      }))
+      })
+    );
   }
 
   public uploadResourceFile(file: any): Observable<any> {
-    const fileName = file.data.name
+    const fileName = file.data.name;
     file.inProgress = true;
 
     return this.uploadDoc(fileName, file.data).pipe(
       map((event) => {
         switch (event.type) {
           case HttpEventType.UploadProgress:
-            file.progress = Math.round(event.loaded * 100 / event.total);
+            file.progress = Math.round((event.loaded * 100) / event.total);
             break;
           case HttpEventType.Response:
             return event;
@@ -310,6 +317,7 @@ export class FileUploadService {
       catchError((_error: HttpErrorResponse) => {
         file.inProgress = false;
         return throwError(() => 'Upload failed');
-      }))
+      })
+    );
   }
 }
