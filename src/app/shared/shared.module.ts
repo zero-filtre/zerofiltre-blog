@@ -84,6 +84,7 @@ import { CourseDetailSummaryComponent } from './course-detail-summary/course-det
 import { CourseSectionsComponent } from './course-sections/course-sections.component';
 import { BroadcastComponent } from './broadcast/broadcast.component';
 import { CertificateConfirmComponent } from './certificate-confirm/certificate-confirm.component';
+import { TipsModalComponent } from '../tips-modal/tips-modal.component';
 
 const components = [
   AppShellRenderDirective,
@@ -137,7 +138,8 @@ const components = [
   CourseDetailSummaryComponent,
   CourseSectionsComponent,
   BroadcastComponent,
-  CertificateConfirmComponent
+  CertificateConfirmComponent,
+  TipsModalComponent
 ];
 
 const modules = [
