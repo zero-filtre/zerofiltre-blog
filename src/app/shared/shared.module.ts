@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-import { MatDialogModule } from '@angular/material/dialog'
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppShellRenderDirective } from '../directives/app-shell-render.directive';
@@ -20,14 +20,17 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
-import {MatTooltipModule} from '@angular/material/tooltip';
-
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MarkdownModule } from 'ngx-markdown';
+import {
+  MarkdownModule,
+  MarkedOptions,
+  ClipboardOptions,
+} from 'ngx-markdown';
 import { YouTubePlayerModule } from '@angular/youtube-player';
-import { NgxDocViewerModule } from'ngx-doc-viewer'
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { NgChartsModule } from 'ng2-charts';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -109,17 +112,17 @@ const components = [
   PaymentPopupComponent,
   PdfPreviewComponent,
   PricingComponent,
-  BotUserProfileComponent, 
+  BotUserProfileComponent,
   BotUserPopupComponent,
-  StatChartComponent, 
+  StatChartComponent,
   BotSignupFormComponent,
   BotUserInfosComponent,
   BotPhoneVerificationComponent,
   AddEmailPopupComponent,
   PricePlanComponent,
   MentoredIconComponent,
-  ProPageComponent, 
-  AdsSquareComponent, 
+  ProPageComponent,
+  AdsSquareComponent,
   AdsRectangleComponent,
   CollapsibleTagsComponent,
   CourseCardComponent,
@@ -139,7 +142,7 @@ const components = [
   CourseSectionsComponent,
   BroadcastComponent,
   CertificateConfirmComponent,
-  TipsModalComponent
+  TipsModalComponent,
 ];
 
 const modules = [
@@ -168,32 +171,54 @@ const modules = [
   NgxIntlTelInputModule,
   NgChartsModule,
   MatTooltipModule,
-  SurveyModule
+  SurveyModule,
 ];
 
 @NgModule({
   declarations: [...components],
   imports: [
     ...modules,
-    MarkdownModule.forRoot(),
+    MarkdownModule.forRoot({
+      sanitize: SecurityContext.NONE,
+      markedOptions: {
+        provide: MarkedOptions,
+        useValue: {
+          gfm: true,
+          breaks: true,
+          pedantic: false,
+          smartLists: true,
+          smartypants: true,
+        },
+      },
+      clipboardOptions: {
+        provide: ClipboardOptions,
+        useValue: {
+          buttonComponent: null,
+          buttonTemplate: `
+            <button class="copy-button" title="Copier le code">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-label="Copy to clipboard button" class="w-5 lg:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </button>
+          `,
+        },
+      },
+    }),
 
     ImagekitioAngularModule.forRoot({
       publicKey: 'public_TOa/IP2yX1o2eHip4nsS+rPLsjE=', // or environment.imagekitPublicKey
       urlEndpoint: 'https://ik.imagekit.io/lfegvix1p', // or environment.imagekitUrlEndpoint
-      authenticationEndpoint: '' // or environment.bucketAuthenticationEndpoint
+      authenticationEndpoint: '', // or environment.bucketAuthenticationEndpoint
     }),
 
     TranslateModule.forRoot({
       defaultLanguage: 'fr',
       loader: {
         provide: TranslateLoader,
-        useClass: TranslateUniversalLoader
-      }
-    })
+        useClass: TranslateUniversalLoader,
+      },
+    }),
   ],
-  exports: [
-    ...components,
-    ...modules,
-  ]
+  exports: [...components, ...modules],
 })
-export class SharedModule { }
+export class SharedModule {}

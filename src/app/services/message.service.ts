@@ -8,9 +8,9 @@ import { ModalService } from './modal.service';
   providedIn: 'root'
 })
 export class MessageService {
-  private defaultHorizontalPosition = 'right'
-  private defaultVerticalPosition = 'top'
-  private OK = 'OK';
+  private readonly defaultHorizontalPosition = 'right'
+  private readonly defaultVerticalPosition = 'top'
+  private readonly OK = 'OK';
   
   DURATION_DEFAULT = 8;
 
@@ -20,10 +20,10 @@ export class MessageService {
   DURATION_ERROR = this.DURATION_DEFAULT;
 
   constructor(
-    private snackBar: MatSnackBar,
-    private router: Router,
-    private translate: TranslateService,
-    private modalService: ModalService
+    private readonly snackBar: MatSnackBar,
+    private readonly router: Router,
+    private readonly translate: TranslateService,
+    private readonly modalService: ModalService
   ) { }
 
   private openSnackBar(message: string, action: string, className: string, type: string, duration: number, vtPosition: any, hoPosition: any) {
