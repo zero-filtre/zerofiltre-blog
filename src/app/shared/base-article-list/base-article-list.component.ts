@@ -97,7 +97,10 @@ export class BaseArticleListComponent implements OnInit {
           queryParamsHandling: 'merge',
         });
 
-      this.messageService.openSnackBarInfo('Veuillez vous connecter pour rédiger un article 🙂', 'OK');
+      this.messageService.showInfo(
+        'Veuillez vous connecter pour rédiger un article 🙂',
+        'OK'
+      );
 
       return;
     }

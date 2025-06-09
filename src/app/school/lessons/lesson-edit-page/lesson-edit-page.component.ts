@@ -195,7 +195,10 @@ export class LessonEditPageComponent implements OnInit {
 
         this.resUploading = false;
         this.resources.push(resItem)
-        this.messageService.openSnackBarSuccess('Votre document a bien été ajouté', 'OK')
+        this.messageService.showSuccess(
+          'Votre document a bien été ajouté',
+          'OK'
+        );
       })
   }
 
@@ -208,7 +211,7 @@ export class LessonEditPageComponent implements OnInit {
       .subscribe(_data => {
         this.resUploading = false;
         this.resources.removeAt(resIndex);
-        this.messageService.openSnackBarSuccess('Le document a bien été suprimé', 'OK')
+        this.messageService.showSuccess('Le document a bien été suprimé', 'OK');
       })
   }
 
@@ -316,7 +319,10 @@ export class LessonEditPageComponent implements OnInit {
           this.isLoading = false;
 
           if (err.status === 404) {
-            this.messageService.openSnackBarError("Oops cette lesson est n'existe pas 😣!", '');
+            this.messageService.showError(
+              "Oops cette lesson est n'existe pas 😣!",
+              ''
+            );
             this.navigate.back();
           }
           return throwError(() => err?.message)
@@ -355,7 +361,10 @@ export class LessonEditPageComponent implements OnInit {
       .subscribe({
         next: (_res: Lesson) => {
           this.isSaving = false;
-          this.messageService.openSnackBarSuccess('Publication de la leçon réussie !', '');
+          this.messageService.showSuccess(
+            'Publication de la leçon réussie !',
+            ''
+          );
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
@@ -370,7 +379,10 @@ export class LessonEditPageComponent implements OnInit {
     this.vimeo.initVideoUpload(this.file.data)
       .pipe(catchError(err => {
         this.uploading = false;
-        this.messageService.openSnackBarError('Un probleme est survenu lors du chargement!', 'OK')
+        this.messageService.showError(
+          'Un probleme est survenu lors du chargement!',
+          'OK'
+        );
         return throwError(() => err.message)
       }))
       .subscribe(
@@ -394,7 +406,7 @@ export class LessonEditPageComponent implements OnInit {
   notifySucessOnVideoFileDelete() {
     this.video.setValue('');
     this.typeInVideo('');
-    this.messageService.openSnackBarSuccess('La vidéo a bien été supprimée!', 'OK')
+    this.messageService.showSuccess('La vidéo a bien été supprimée!', 'OK');
   }
 
   deleteVideo(lesson: Lesson) {
@@ -412,7 +424,10 @@ export class LessonEditPageComponent implements OnInit {
           this.notifySucessOnVideoFileDelete();
           return EMPTY;
         }
-        this.messageService.openSnackBarError('Un problème est survenu lors de la suppression!', 'OK')
+        this.messageService.showError(
+          'Un problème est survenu lors de la suppression!',
+          'OK'
+        );
         return throwError(() => err.message)
       }))
       .subscribe(_data => {

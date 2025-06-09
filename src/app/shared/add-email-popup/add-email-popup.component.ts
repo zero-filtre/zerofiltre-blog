@@ -52,7 +52,7 @@ export class AddEmailPopupComponent {
         this.sendConfirmationEmail(this.email.value);
       },
       error: (_error: HttpErrorResponse) => {
-        this.notify.openSnackBarError("Echec de l'enregistrement de l'adresse", '')
+        this.notify.showError("Echec de l'enregistrement de l'adresse", '');
         this.saving = false;
       }
     });
@@ -67,7 +67,7 @@ export class AddEmailPopupComponent {
         this.dialogRef.close();
       },
       error: (_error: HttpErrorResponse) => {
-        this.notify.openSnackBarError("Echec d'envoi du message de confirmation", '')
+        this.notify.showError("Echec d'envoi du message de confirmation", '');
         this.saving = false;
       },
       complete: () => this.authService.logout()

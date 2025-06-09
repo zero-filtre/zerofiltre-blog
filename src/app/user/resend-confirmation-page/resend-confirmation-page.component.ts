@@ -38,7 +38,7 @@ export class ResendConfirmationPageComponent implements OnInit {
     this.loading = true;
     this.authService.resendUserConfirm(this.email?.value).subscribe({
       next: (response: any) => {
-        this.messageService.openSnackBarSuccess(response, '');
+        this.messageService.showSuccess(response, '');
         this.loading = false;
       },
       error: (_error: HttpErrorResponse) => {

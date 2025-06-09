@@ -38,7 +38,7 @@ export class DeleteArticlePopupComponent implements OnInit {
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
           this.router.navigateByUrl(`${this.data.history}`))
 
-        this.messageService.openSnackBarSuccess(response, 'OK');
+        this.messageService.showSuccess(response, 'OK');
         this.loading = false;
         this.dialogRef.close();
       },

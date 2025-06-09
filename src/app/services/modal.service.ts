@@ -21,7 +21,7 @@ export class ModalService {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const validEmail = regex.test(user.email!);
 
-    if (validEmail) {
+    if (validEmail || !user.email) {
       return;
     } else {
       this.openEmailModal();

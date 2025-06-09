@@ -1,176 +1,283 @@
-import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Injectable, inject } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalService } from './modal.service';
 
+export enum NotificationType {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  WARNING = 'warning',
+  INFO = 'info',
+}
+
+export interface NotificationConfig extends MatSnackBarConfig {
+  message: string;
+  action?: string;
+  type: NotificationType;
+}
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessageService {
-  private readonly defaultHorizontalPosition = 'right'
-  private readonly defaultVerticalPosition = 'top'
-  private readonly OK = 'OK';
-  
-  DURATION_DEFAULT = 8;
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
+  private readonly modalService = inject(ModalService);
 
-  DURATION_SUCCESS = this.DURATION_DEFAULT;
-  DURATION_WARNING = 10;
-  DURATION_INFO = this.DURATION_DEFAULT;
-  DURATION_ERROR = this.DURATION_DEFAULT;
+  // Durées par défaut en secondes
+  private readonly DEFAULT_DURATION = 5;
+  private readonly WARNING_DURATION = 8;
 
-  constructor(
-    private readonly snackBar: MatSnackBar,
-    private readonly router: Router,
-    private readonly translate: TranslateService,
-    private readonly modalService: ModalService
-  ) { }
+  // Configuration par défaut
+  private readonly defaultConfig: MatSnackBarConfig = {
+    duration: this.DEFAULT_DURATION * 1000,
+    horizontalPosition: 'right',
+    verticalPosition: 'bottom',
+    panelClass: [],
+  };
 
-  private openSnackBar(message: string, action: string, className: string, type: string, duration: number, vtPosition: any, hoPosition: any) {
-    this.snackBar.open(message, action, {
-      horizontalPosition: hoPosition,
-      verticalPosition: vtPosition,
+  /**
+   * Affiche une notification avec la configuration spécifiée
+   */
+  private showNotification(config: NotificationConfig): void {
+    const finalConfig: MatSnackBarConfig = {
+      ...this.defaultConfig,
+      ...config,
+      panelClass: [`${config.type}-snackbar`, ...(config.panelClass || [])],
+    };
+
+    this.snackBar.open(config.message, config.action || 'OK', finalConfig);
+  }
+
+ 
+  public showSuccess(
+    message: string,
+    action?: string,
+    duration = this.DEFAULT_DURATION
+  ): void {
+    this.showNotification({
+      message,
+      action,
       duration: duration * 1000,
-      panelClass: [className, type],
+      type: NotificationType.SUCCESS,
     });
-
   }
 
-  public openSnackBarSuccess(message: string, action: string, duration = this.DURATION_SUCCESS, vtPosition = this.defaultVerticalPosition, hoPosition = this.defaultHorizontalPosition) {
-    this.openSnackBar(message, action, 'success-snackbar', 'success', duration, vtPosition, hoPosition)
+  public showError(
+    message: string,
+    action?: string,
+    duration = this.DEFAULT_DURATION
+  ): void {
+    this.showNotification({
+      message,
+      action,
+      duration: duration * 1000,
+      type: NotificationType.ERROR,
+    });
   }
 
-  public openSnackBarError(message: string, action: string, duration = this.DURATION_ERROR, vtPosition = this.defaultVerticalPosition, hoPosition = this.defaultHorizontalPosition) {
-    this.openSnackBar(message, action, 'error-snackbar', 'error', duration, vtPosition, hoPosition)
+  public showWarning(
+    message: string,
+    action?: string,
+    duration = this.WARNING_DURATION
+  ): void {
+    this.showNotification({
+      message,
+      action,
+      duration: duration * 1000,
+      type: NotificationType.WARNING,
+    });
   }
 
-  public openSnackBarWarning(message: string, action: string, duration = this.DURATION_WARNING, vtPosition = this.defaultVerticalPosition, hoPosition = this.defaultHorizontalPosition) {
-    this.openSnackBar(message, action, 'warning-snackbar', 'error', duration, vtPosition, hoPosition)
+  public showInfo(
+    message: string,
+    action?: string,
+    duration = this.DEFAULT_DURATION
+  ): void {
+    this.showNotification({
+      message,
+      action,
+      duration: duration * 1000,
+      type: NotificationType.INFO,
+    });
   }
 
-  public openSnackBarInfo(message: string, action: string, duration = this.DURATION_INFO, vtPosition = this.defaultVerticalPosition, hoPosition = this.defaultHorizontalPosition) {
-    this.openSnackBar(message, action, 'info-snackbar', 'info', duration, vtPosition, hoPosition)
-  }
-
-  public cancel() {
+  public cancel(): void {
     this.snackBar.dismiss();
   }
 
-  // For expired session
-  sessionExpired(state: any) {
-    this.openSnackBarError('Votre session est expirée ! Veuillez vous reconnecter.', 'OK');
+  // Méthodes spécifiques pour les cas d'usage courants
 
-    this.router.navigate(
-      ['/login'],
-      {
-        relativeTo: state,
-        queryParams: { redirectURL: state.url },
-        queryParamsHandling: 'merge',
-      });
+  /**
+   * Gestion de l'expiration de session
+   */
+  public sessionExpired(state: any): void {
+    this.showError('Votre session est expirée ! Veuillez vous reconnecter.');
+    this.router.navigate(['/login'], {
+      relativeTo: state,
+      queryParams: { redirectURL: state.url },
+      queryParamsHandling: 'merge',
+    });
   }
 
-  // For non authenticated requests
-  authError(message = this.translate.instant('login.authErrorMessage')) {
-    this.openSnackBarError(message, this.OK);
+  /**
+   * Erreur d'authentification
+   */
+  public authError(
+    message = this.translate.instant('login.authErrorMessage')
+  ): void {
+    this.showError(message);
   }
 
-  // When a route/module is not allowed
-  loadModuleError() {
+  /**
+   * Erreur de chargement de module
+   */
+  public loadModuleError(): void {
     this.router.navigateByUrl('**');
   }
 
-  // When user is already logged In
-  loggedInAuthError() {
+  /**
+   * Utilisateur déjà connecté
+   */
+  public loggedInAuthError(): void {
     this.router.navigateByUrl('/cours');
   }
 
-  // When logging In
-  loginError() {
+  /**
+   * Erreur de connexion
+   */
+  public loginError(): void {
     const msg = this.translate.instant('login.loginFailedMessage');
-    this.openSnackBarError(msg, this.OK);
+    this.showError(msg);
   }
 
-  loadUserFailed() {
+  /**
+   * Erreur de chargement utilisateur
+   */
+  public loadUserFailed(): void {
     const msg = this.translate.instant('login.loadUserFailedMessage');
-    this.openSnackBarError(msg, this.OK);
+    this.showError(msg);
   }
 
-  // If not the author
-  authorRouteError() {
+  /**
+   * Erreur d'accès auteur
+   */
+  public authorRouteError(): void {
     const msg = this.translate.instant('app.authorRouteError');
-    this.openSnackBarError(msg, this.OK);
+    this.showError(msg);
     this.router.navigateByUrl('/cours');
   }
 
-  // Email notification on signup success
-  signUpSuccess() {
+  /**
+   * Succès inscription
+   */
+  public signUpSuccess(): void {
     const msg = this.translate.instant('signup.signUpSuccessMessage');
-    this.openSnackBarSuccess(msg, this.OK);
+    this.showSuccess(msg);
   }
 
-  saveArticleError() {
+  /**
+   * Erreur sauvegarde article
+   */
+  public saveArticleError(): void {
     const msg = this.translate.instant('articleEntryEdit.saveFailedMessage');
-    this.openSnackBarError(msg, this.OK);
+    this.showError(msg);
   }
 
-  autoSaveAlert(arg = false) {
-    // const msg = this.translate.instant('articleEntryEdit.autoSaveAlertMessage');
-    // this.openSnackBarWarning("Vos changement seront perdu !, souhaittez vous quiter cette page ?", "Quitter", 0)
-    // return false;
-
-    if (arg == false) {
-      let snackBarRef = this.snackBar.open("Vos changement seront perdu ! souhaittez vous quiter cette page ?", "Quitter", { duration: 0 });
+  /**
+   * Alerte sauvegarde automatique
+   */
+  public autoSaveAlert(confirmed = false): boolean {
+    if (!confirmed) {
+      const snackBarRef = this.snackBar.open(
+        'Vos changements seront perdus ! Souhaitez-vous quitter cette page ?',
+        'Quitter',
+        { duration: 0 }
+      );
 
       snackBarRef.onAction().subscribe(() => {
         this.autoSaveAlert(true);
       });
     }
-
-    return arg;
+    return confirmed;
   }
 
-  saveArticleSuccess() {
+  /**
+   * Succès sauvegarde article
+   */
+  public saveArticleSuccess(): void {
     const msg = this.translate.instant('articleEntryEdit.saveSuccessMessage');
-    this.openSnackBarSuccess(msg, this.OK);
+    this.showSuccess(msg);
   }
 
-  publishArticleSuccess() {
-    const msg = this.translate.instant('articleEntryEdit.publishSuccessMessage');
-    this.openSnackBarSuccess(msg, this.OK);
+  /**
+   * Succès publication article
+   */
+  public publishArticleSuccess(): void {
+    const msg = this.translate.instant(
+      'articleEntryEdit.publishSuccessMessage'
+    );
+    this.showSuccess(msg);
   }
 
-  resendConfirmationSuccess() {
-    const msg = this.translate.instant('resendConfirmation.resendConfirmationSuccessMesssage');
-    this.openSnackBarSuccess(msg, this.OK, 10);
+  /**
+   * Succès renvoi confirmation
+   */
+  public resendConfirmationSuccess(): void {
+    const msg = this.translate.instant(
+      'resendConfirmation.resendConfirmationSuccessMesssage'
+    );
+    this.showSuccess(msg, undefined, 10);
   }
 
-  updateProfileSuccess() {
+  /**
+   * Succès mise à jour profil
+   */
+  public updateProfileSuccess(): void {
     const msg = this.translate.instant('profile.updateSuccessMessage');
-    this.openSnackBarSuccess(msg, this.OK);
+    this.showSuccess(msg);
   }
 
-  badSocialLinksFormat() {
+  /**
+   * Format liens sociaux invalide
+   */
+  public badSocialLinksFormat(): void {
     const msg = this.translate.instant('profileEdit.invalidSocialLinkMessage');
-    this.openSnackBarWarning(msg, this.OK);
+    this.showWarning(msg);
   }
 
-  fileSizeWarning(maxSize: number) {
-    const msg = this.translate.instant('fileUpload.sizeWarningMessage');
-    this.openSnackBarWarning(`La taille de fichier maximum est limitée à ${maxSize}MB !`, this.OK)
+  /**
+   * Avertissement taille fichier
+   */
+  public fileSizeWarning(maxSize: number): void {
+    this.showWarning(
+      `La taille de fichier maximum est limitée à ${maxSize}MB !`
+    );
   }
 
-  fileTypeWarning() {
+  /**
+   * Avertissement type fichier
+   */
+  public fileTypeWarning(): void {
     const msg = this.translate.instant('fileUpload.typeWarningMessage');
-    this.openSnackBarWarning(msg, this.OK)
+    this.showWarning(msg);
   }
 
-  fileUploadAuthError() {
+  /**
+   * Erreur authentification upload fichier
+   */
+  public fileUploadAuthError(): void {
     const msg = this.translate.instant('fileUpload.AuthError');
-    this.openSnackBarError(msg, this.OK);
+    this.showError(msg);
   }
 
-  codeCopied() {
+  /**
+   * Code copié
+   */
+  public codeCopied(): void {
     const msg = this.translate.instant('app.codeCopied');
-    this.openSnackBarInfo(msg, '', 1, 'center');
+    this.showInfo(msg, '', 1);
   }
 }

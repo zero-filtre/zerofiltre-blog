@@ -41,7 +41,10 @@ export class TokenExpiredGuard implements CanActivate {
     if (authToken && userOrigin === null) {
       if (todayTime > refreshTokenExpiresIn) {
         this.authService.logout();
-        this.messageService.openSnackBarError('Votre session est expirée ! Veuillez vous reconnecter.', 'OK');
+        this.messageService.showError(
+          'Votre session est expirée ! Veuillez vous reconnecter.',
+          'OK'
+        );
       }
     }
   }

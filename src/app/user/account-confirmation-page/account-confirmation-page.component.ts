@@ -40,7 +40,7 @@ export class AccountConfirmationPageComponent implements OnInit {
       next: (response: any) => {
         this.loading = false;
         this.isTokenValid = true;
-        this.messageService.openSnackBarSuccess(response, 'OK');
+        this.messageService.showSuccess(response, 'OK');
         this.successMessage = true;
       },
       error: (_error: HttpErrorResponse) => {
@@ -64,7 +64,10 @@ export class AccountConfirmationPageComponent implements OnInit {
           queryParamsHandling: 'merge',
         });
 
-      this.messageService.openSnackBarInfo('Veuillez vous connecter pour rédiger un article 🙂', 'OK');
+      this.messageService.showInfo(
+        'Veuillez vous connecter pour rédiger un article 🙂',
+        'OK'
+      );
 
       return;
     }

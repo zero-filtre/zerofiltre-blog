@@ -25,7 +25,10 @@ export class BotStatGuard implements CanActivate {
     
     this.bot.logout();
     this.router.navigateByUrl('wachatgpt');
-    this.notify.openSnackBarWarning('Veuillez vous connecter en cliquant sur le boutton "Mon compte"', 'OK');
+    this.notify.showWarning(
+      'Veuillez vous connecter en cliquant sur le boutton "Mon compte"',
+      'OK'
+    );
 
     return false;
   }

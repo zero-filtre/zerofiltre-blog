@@ -33,7 +33,7 @@ body {
 }
 
 .mdc-dialog__surface {
-  @apply !px-4 md:!px-6;
+  @apply !p-4 md:!p-6;
 }
 
 .cdk-global-overlay-wrapper {
@@ -169,37 +169,6 @@ img {
   @apply !rounded-2xl bg-skin-bg;
 }
 
-/* Message Notification styles */
-.success-snackbar {
-  @apply bg-primary-600;
-}
-
-.error-snackbar {
-  @apply bg-error;
-}
-
-.warning-snackbar {
-  @apply bg-accent-600;
-}
-
-.info-snackbar {
-  @apply bg-secondary;
-}
-
-.success-snackbar,
-.error-snackbar,
-.warning-snackbar,
-.info-snackbar {
-  @apply text-white;
-}
-
-.success-snackbar button,
-.error-snackbar button,
-.warning-snackbar button,
-.info-snackbar button {
-  @apply text-white;
-}
-
 /* Block code styles */
 /* .code-toolbar {
   @apply relative z-20 text-sm lg:text-lg;
@@ -299,3 +268,128 @@ img {
   margin: 0 .05em 0 .1em;
   vertical-align: -0.1em;
 }
+
+/* Styles de base pour les snackbars */
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-shape: 4px;
+  --mdc-snackbar-supporting-text-line-height: 20px;
+  --mdc-snackbar-supporting-text-size: 14px;
+  --mdc-snackbar-supporting-text-weight: 500;
+}
+
+/* Style pour les notifications de succès */
+.success-snackbar {
+  --mdc-snackbar-container-color: #2e7d32;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  
+  .mdc-snackbar__surface {
+    background-color: var(--mdc-snackbar-container-color) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: var(--mdc-snackbar-supporting-text-color) !important;
+  }
+
+  .mat-mdc-button {
+    color: #69f0ae !important;
+  }
+}
+
+/* Style pour les notifications d'erreur */
+.error-snackbar {
+  --mdc-snackbar-container-color: #d32f2f;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  
+  .mdc-snackbar__surface {
+    background-color: var(--mdc-snackbar-container-color) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: var(--mdc-snackbar-supporting-text-color) !important;
+  }
+
+  .mat-mdc-button {
+    color: #ff9e80 !important;
+  }
+}
+
+/* Style pour les notifications d'avertissement */
+.warning-snackbar {
+  --mdc-snackbar-container-color: #ed6c02;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  
+  .mdc-snackbar__surface {
+    background-color: var(--mdc-snackbar-container-color) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: var(--mdc-snackbar-supporting-text-color) !important;
+  }
+
+  .mat-mdc-button {
+    color: #ffd740 !important;
+  }
+}
+
+/* Style pour les notifications d'information */
+.info-snackbar {
+  --mdc-snackbar-container-color: #0288d1;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  
+  .mdc-snackbar__surface {
+    background-color: var(--mdc-snackbar-container-color) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: var(--mdc-snackbar-supporting-text-color) !important;
+  }
+
+  .mat-mdc-button {
+    color: #80d8ff !important;
+  }
+}
+
+.mat-mdc-snack-bar-container.mat-mdc-snack-bar-center {
+  animation: snackbar-show-centered 225ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes snackbar-show-centered {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* .success-snackbar {
+  @apply bg-primary-600;
+}
+
+.error-snackbar {
+  @apply bg-error;
+}
+
+.warning-snackbar {
+  @apply bg-accent-600;
+}
+
+.info-snackbar {
+  @apply bg-secondary;
+}
+
+.success-snackbar,
+.error-snackbar,
+.warning-snackbar,
+.info-snackbar {
+  @apply text-white;
+}
+
+.success-snackbar button,
+.error-snackbar button,
+.warning-snackbar button,
+.info-snackbar button {
+  @apply text-white;
+} */

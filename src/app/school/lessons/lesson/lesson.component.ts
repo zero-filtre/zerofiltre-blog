@@ -481,7 +481,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         if (err.status === 404) {
-          this.messageService.openSnackBarError(
+          this.messageService.showError(
             "Oops ce cours est n'existe pas 😣!",
             ''
           );

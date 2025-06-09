@@ -221,7 +221,7 @@ export class CurriculumSidebarComponent implements OnInit {
           this.publishBtnText = this.authService.isAdmin
             ? 'Publier'
             : 'Soumettre';
-          this.messageService.openSnackBarSuccess(msg, 'OK');
+          this.messageService.showSuccess(msg, 'OK');
         })
       )
       .subscribe();
@@ -237,18 +237,18 @@ export class CurriculumSidebarComponent implements OnInit {
 
     if (!currentUsr) {
       this.modalService.openLoginModal();
-      this.messageService.openSnackBarInfo(
+      this.messageService.showInfo(
         'Veuillez vous connecter pour réagir sur ce cours 🙂',
-        'OK', 5,'bottom', 'center'
+        'OK',
       );
 
       return;
     }
 
     if (this.course.status !== 'PUBLISHED') {
-      this.messageService.openSnackBarInfo(
+      this.messageService.showInfo(
         'Vous pourrez réagir sur ce cours après sa publication.',
-        'OK', 5,'top', 'center'
+        'OK',
       );
 
       return;
