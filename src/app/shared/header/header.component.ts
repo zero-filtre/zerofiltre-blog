@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   logoFull = 'https://ik.imagekit.io/lfegvix1p/Logo%20Horizontal_CPY64pImj.svg'
   logoShort = 'https://ik.imagekit.io/lfegvix1p/Logo%20Symbole_fFcHDpP7s.svg'
 
-  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
+  prod = !this.blogUrl.startsWith('https://dev.');
 
   @Input() changingRoute!: boolean;
   @Input() drawer!: any;
@@ -50,8 +50,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/pro');
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { /* TODO document why this method 'ngOnInit' is empty */ }
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {

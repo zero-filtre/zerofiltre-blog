@@ -118,7 +118,10 @@ export class FileUploadService {
     }
 
     if (!acceptedTypes.includes(fileType)) {
-      this.messageService.openSnackBarWarning("Le document n'est pas au format autorisé ('.txt', '.pdf', '.zip', '.doc', 'image*')", 'OK')
+      this.messageService.showWarning(
+        "Le document n'est pas au format autorisé ('.txt', '.pdf', '.zip', '.doc', 'image*')",
+        'OK'
+      );
     } else if (fileSize > maxSize) {
       this.messageService.fileSizeWarning(maxSize);
     } else {

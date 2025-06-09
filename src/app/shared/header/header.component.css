@@ -33,6 +33,10 @@
   @apply !bg-primary-500;
 }
 
-::ng-deep .mat-progress-bar-buffer {
+.mdc-linear-progress__buffer {
   @apply !bg-[#e4e8eb];
+}
+
+.mat-mdc-progress-bar {
+  --mdc-linear-progress-active-indicator-color: var(--primary);
 }

@@ -65,7 +65,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             }
 
             const errorMessage = this.setError(error, request);
-            this.messageService.openSnackBarError(errorMessage, 'OK');
+            this.messageService.showError(errorMessage, 'OK');
             return throwError(() => errorMessage);
           })
         );

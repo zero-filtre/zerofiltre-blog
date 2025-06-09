@@ -79,7 +79,10 @@ export class CourseEditPageComponent implements OnInit {
         catchError(err => {
           if (err.status === 404) {
             this.isLoading = false;
-            this.messageService.openSnackBarError("Oops ce cours est n'existe pas 😣!", '');
+            this.messageService.showError(
+              "Oops ce cours est n'existe pas 😣!",
+              ''
+            );
             this.navigate.back();
           }
           return throwError(() => err?.message)
@@ -99,7 +102,7 @@ export class CourseEditPageComponent implements OnInit {
       .subscribe({
         next: (_res: Course) => {
           this.isSaving = false;
-          this.messageService.openSnackBarSuccess('Enregistrement réussi !', '');
+          this.messageService.showSuccess('Enregistrement réussi !', '');
         },
         error: (_error: HttpErrorResponse) => {
           this.isSaving = false;
@@ -112,7 +115,7 @@ export class CourseEditPageComponent implements OnInit {
     this.courseService.updateCourse(course)
       .subscribe({
         next: (_res: Course) => {
-          this.messageService.openSnackBarSuccess('Succes !', '');
+          this.messageService.showSuccess('Succes !', '');
         },
         error: (_error: HttpErrorResponse) => {
         }
@@ -215,7 +218,7 @@ export class CourseEditPageComponent implements OnInit {
         return throwError(() => err.message);
       }))
       .subscribe(_data => {
-        this.messageService.openSnackBarSuccess('Section supprimée!', 'OK');
+        this.messageService.showSuccess('Section supprimée!', 'OK');
         this.sections.removeAt(index);
         this.typeInSections();
       })

@@ -1,5 +1,3 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"); */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,6 +14,12 @@ body {
   overflow-x: hidden;
 }
 
+/* .markdown-clipboard-toolbar {}
+
+.markdown-clipboard-button {}
+
+.markdown-clipboard-button.copied {} */
+
 /* Always shox Snackbar popup on top of other elements */
 .cdk-overlay-pane:has(> .mat-snack-bar-container) {
   @apply !mt-[72px] lg:!mt-16 !max-w-screen-sm;
@@ -28,8 +32,8 @@ body {
   @apply !max-w-screen-sm md:!max-w-none;
 }
 
-.mat-dialog-container {
-  @apply !px-4 md:!px-6;
+.mdc-dialog__surface {
+  @apply !p-4 md:!p-6;
 }
 
 .cdk-global-overlay-wrapper {
@@ -105,7 +109,7 @@ img {
   @apply mx-auto px-4 xl:px-[5%];
 }
 
-.payment-popup .mat-dialog-container {
+.payment-popup .mdc-dialog__surface {
   @apply bg-white rounded-2xl;
 }
 
@@ -113,7 +117,7 @@ img {
   @apply !overflow-y-scroll;
 }
 
-.edit-section-popup-panel .mat-dialog-container{
+.edit-section-popup-panel .mdc-dialog__surface{
   @apply rounded-none;
 }
 
@@ -133,71 +137,40 @@ img {
   @apply max-sm:!w-full mx-4 lg:mx-0
 }
 
-.popup-login .mat-dialog-container {
+.popup-login .mdc-dialog__surface {
   @apply !rounded-xl
 }
 
-.article-popup-panel .mat-dialog-container {
+.article-popup-panel .mdc-dialog__surface {
   @apply !rounded-2xl !flex bg-skin-bg justify-center items-center !p-4 sm:p-6;
 }
 
-.popup-panel .mat-dialog-container {
+.popup-panel .mdc-dialog__surface {
   @apply !rounded-2xl !flex bg-skin-bg justify-center items-center !p-4 sm:!p-4 lg:!p-5 w-fit;
 }
 
-.popup-panel-nps .mat-dialog-container {
+.popup-panel-nps .mdc-dialog__surface {
   @apply !rounded-2xl bg-skin-bg;
 } 
 
-.password-popup-panel .mat-dialog-container {
+.password-popup-panel .mdc-dialog__surface {
   @apply !rounded-2xl bg-skin-bg;
 }
 
-.delete-account-popup-panel .mat-dialog-container {
+.delete-account-popup-panel .mdc-dialog__surface {
   @apply !rounded-2xl bg-skin-bg;
 }
 
-.profile-image-popup-panel .mat-dialog-container {
+.profile-image-popup-panel .mdc-dialog__surface {
   @apply !rounded-2xl bg-skin-bg sm:!min-w-[390px];
 }
 
-.delete-article-popup-panel .mat-dialog-container {
+.delete-article-popup-panel .mdc-dialog__surface {
   @apply !rounded-2xl bg-skin-bg;
 }
 
-/* Message Notification styles */
-.success-snackbar {
-  @apply bg-primary-600;
-}
-
-.error-snackbar {
-  @apply bg-error;
-}
-
-.warning-snackbar {
-  @apply bg-accent-600;
-}
-
-.info-snackbar {
-  @apply bg-secondary;
-}
-
-.success-snackbar,
-.error-snackbar,
-.warning-snackbar,
-.info-snackbar {
-  @apply text-white;
-}
-
-.success-snackbar button,
-.error-snackbar button,
-.warning-snackbar button,
-.info-snackbar button {
-  @apply text-white;
-}
-
 /* Block code styles */
-.code-toolbar {
+/* .code-toolbar {
   @apply relative z-20 text-sm lg:text-lg;
 }
 
@@ -214,7 +187,7 @@ img {
 
 .toolbar-item button {
   @apply text-sm h-full w-full;
-}
+} */
 
 /* Markdown preview styles */
 .markdown-content {
@@ -278,3 +251,145 @@ img {
 .cc-nb-buttons-container .cc-nb-reject:hover {
   opacity: 0.9;
 }
+
+/* Styles pour le bouton de copie */
+/* .copy-to-clipboard-button {
+  @apply inline-flex items-center justify-center h-8 w-8 rounded-md text-skin-base bg-skin-card hover:bg-skin-muted transition-colors duration-200;
+}
+
+.copy-to-clipboard-button svg {
+  @apply w-4 h-4;
+} */
+
+/* Styles pour les emojis */
+.emoji-class {
+  height: 1.5em;
+  width: 1.5em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+}
+
+/* Styles de base pour les snackbars */
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-shape: 4px;
+  --mdc-snackbar-supporting-text-line-height: 20px;
+  --mdc-snackbar-supporting-text-size: 14px;
+  --mdc-snackbar-supporting-text-weight: 500;
+}
+
+/* Style pour les notifications de succès */
+.success-snackbar {
+  --mdc-snackbar-container-color: #2e7d32;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  
+  .mdc-snackbar__surface {
+    background-color: var(--mdc-snackbar-container-color) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: var(--mdc-snackbar-supporting-text-color) !important;
+  }
+
+  .mat-mdc-button {
+    color: #69f0ae !important;
+  }
+}
+
+/* Style pour les notifications d'erreur */
+.error-snackbar {
+  --mdc-snackbar-container-color: #d32f2f;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  
+  .mdc-snackbar__surface {
+    background-color: var(--mdc-snackbar-container-color) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: var(--mdc-snackbar-supporting-text-color) !important;
+  }
+
+  .mat-mdc-button {
+    color: #ff9e80 !important;
+  }
+}
+
+/* Style pour les notifications d'avertissement */
+.warning-snackbar {
+  --mdc-snackbar-container-color: #ed6c02;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  
+  .mdc-snackbar__surface {
+    background-color: var(--mdc-snackbar-container-color) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: var(--mdc-snackbar-supporting-text-color) !important;
+  }
+
+  .mat-mdc-button {
+    color: #ffd740 !important;
+  }
+}
+
+/* Style pour les notifications d'information */
+.info-snackbar {
+  --mdc-snackbar-container-color: #0288d1;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  
+  .mdc-snackbar__surface {
+    background-color: var(--mdc-snackbar-container-color) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: var(--mdc-snackbar-supporting-text-color) !important;
+  }
+
+  .mat-mdc-button {
+    color: #80d8ff !important;
+  }
+}
+
+.mat-mdc-snack-bar-container.mat-mdc-snack-bar-center {
+  animation: snackbar-show-centered 225ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes snackbar-show-centered {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* .success-snackbar {
+  @apply bg-primary-600;
+}
+
+.error-snackbar {
+  @apply bg-error;
+}
+
+.warning-snackbar {
+  @apply bg-accent-600;
+}
+
+.info-snackbar {
+  @apply bg-secondary;
+}
+
+.success-snackbar,
+.error-snackbar,
+.warning-snackbar,
+.info-snackbar {
+  @apply text-white;
+}
+
+.success-snackbar button,
+.error-snackbar button,
+.warning-snackbar button,
+.info-snackbar button {
+  @apply text-white;
+} */

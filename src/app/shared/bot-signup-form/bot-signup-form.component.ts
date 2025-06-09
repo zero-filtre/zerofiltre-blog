@@ -93,7 +93,10 @@ export class BotSignupFormComponent {
       .pipe(
         catchError(err => {
           this.sendingCode = false;
-          this.notify.openSnackBarError("Une erreur est survenue lors de l'envoi du code", 'OK');
+          this.notify.showError(
+            "Une erreur est survenue lors de l'envoi du code",
+            'OK'
+          );
           return throwError(() => err?.message)
         }),
         map(({ _message, verification_id }) => {
@@ -116,13 +119,16 @@ export class BotSignupFormComponent {
       .pipe(
         catchError(err => {
           this.saving = false;
-          this.notify.openSnackBarError('Une erreur est survenue.', 'OK');
+          this.notify.showError('Une erreur est survenue.', 'OK');
           return throwError(() => err?.message)
         }),)
       .subscribe(_data => {
         this.saving = false;
         this.dialogRef.close();
-        this.notify.openSnackBarSuccess('Félicitations, votre compte a bien été crée!', 'OK');
+        this.notify.showSuccess(
+          'Félicitations, votre compte a bien été crée!',
+          'OK'
+        );
       })
 
   }

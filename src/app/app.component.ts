@@ -31,7 +31,7 @@ import { environment } from 'src/environments/environment';
 import { GeoLocationService } from './services/geolocaton.service';
 import { TipsService } from './services/tips.service';
 
-declare var Prism: any;
+declare let Prism: any;
 
 @Component({
   selector: 'app-root',
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   appLogoUrl = 'https://ik.imagekit.io/lfegvix1p/logoblue_XmLzzzq19.svg?updatedAt=1681556349203';
 
-  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
+  prod = !this.blogUrl.startsWith('https://dev.');
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])
@@ -76,8 +76,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   loading: boolean = true;
 
   constructor(
-    private loadEnvService: LoadEnvService,
-    @Inject(PLATFORM_ID) private platformId: any,
+    private readonly loadEnvService: LoadEnvService,
+    @Inject(PLATFORM_ID) private readonly platformId: any,
     private translate: TranslateService,
     private breakpointObserver: BreakpointObserver,
     private messageService: MessageService,
@@ -233,7 +233,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     if (isPlatformBrowser(this.platformId)) {
       this.showTip();
-      this.loadCopyToClipboardSvg();
+      // this.loadCopyToClipboardSvg();
       (window as any).onload = AddTargetToExternalLinks();
     }
 

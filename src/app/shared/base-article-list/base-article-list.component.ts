@@ -27,7 +27,7 @@ export class BaseArticleListComponent implements OnInit {
 
   readonly blogUrl = environment.blogUrl;
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
-  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
+  prod = !this.blogUrl.startsWith('https://dev.');
   siteUrl = this.prod ? "https://zerofiltre.tech" : "https://dev.zerofiltre.tech"
 
   articles!: Article[];
@@ -97,7 +97,10 @@ export class BaseArticleListComponent implements OnInit {
           queryParamsHandling: 'merge',
         });
 
-      this.messageService.openSnackBarInfo('Veuillez vous connecter pour rédiger un article 🙂', 'OK');
+      this.messageService.showInfo(
+        'Veuillez vous connecter pour rédiger un article 🙂',
+        'OK'
+      );
 
       return;
     }

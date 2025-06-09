@@ -36,7 +36,7 @@ export class DeleteAccountPopupComponent implements OnInit {
       next: (response) => {
         this.authService.logout();
         this.router.navigateByUrl(`/`);
-        this.messageService.openSnackBarSuccess(response, 'OK');
+        this.messageService.showSuccess(response, 'OK');
         this.loading = false;
         this.dialogRef.close();
       },

@@ -32,7 +32,10 @@ export class UserResolver implements Resolve<User> {
         .pipe(
           catchError(_ => {
             this.navigate.back();
-            this.messageService.openSnackBarError("Oops ce profil n'existe pas 😣!", '');
+            this.messageService.showError(
+              "Oops ce profil n'existe pas 😣!",
+              ''
+            );
             return EMPTY;
           })
         )

@@ -115,44 +115,30 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     return this.articleService.canAccesPremium(user, article);
   }
 
-  // injectGiscus(data: any) {
-  //   const scriptElement: HTMLScriptElement = document.createElement("script");
-
-  //   scriptElement.src = "https://giscus.app/client.js";
-  //   scriptElement.async = true;
-
-  //   for (let key in data) {
-  //     scriptElement.setAttribute(key, data[key]);
-  //   }
-
-  //   document.body.appendChild(scriptElement);
-  // }
-
-
   addReaction(reactionType: string) {
     const currentUsr = this.authService?.currentUsr;
 
     if (!currentUsr) {
       this.modalService.openLoginModal();
-      this.messageService.openSnackBarInfo(
+      this.messageService.showInfo(
         'Veuillez vous connecter pour réagir sur cet article  🙂',
-        'OK', 5,'bottom', 'center'
+        'OK',
       );
 
       return;
     }
 
     if (this.article.status !== 'PUBLISHED') {
-      this.messageService.openSnackBarInfo(
+      this.messageService.showInfo(
         'Vous pourrez réagir sur cet article après sa publication.',
-        'OK', 5, 'top', 'center'
+        'OK',
       );
 
       return;
     }
 
     this.articleService
-      .addReactionToAnArticle(this.article.id!, reactionType)
+      .addReactionToAnArticle(this.article.id, reactionType)
       .subscribe({
         next: (response) => {
           this.article = { ...this.article, reactions: response };
@@ -245,7 +231,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         },
         error: (_error: HttpErrorResponse) => {
           this.loading = false;
-          this.messageService.openSnackBarError(
+          this.messageService.showError(
             "Oops cet article est n'existe pas 😣!",
             ''
           );

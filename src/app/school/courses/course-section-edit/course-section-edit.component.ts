@@ -98,7 +98,7 @@ export class CourseSectionEditComponent implements OnInit {
       }))
       .subscribe(data => {
         this.sections.push(data)
-        this.messageService.openSnackBarSuccess('Section ajoutée!', 'OK');
+        this.messageService.showSuccess('Section ajoutée!', 'OK');
         this.dialogRef.close();
       })
   }
@@ -113,7 +113,7 @@ export class CourseSectionEditComponent implements OnInit {
         if (id !== -1) {
           this.sections[id] = data;
         }
-        this.messageService.openSnackBarSuccess('Section modifiée!', 'OK');
+        this.messageService.showSuccess('Section modifiée!', 'OK');
         this.dialogRef.close();
       })
   }

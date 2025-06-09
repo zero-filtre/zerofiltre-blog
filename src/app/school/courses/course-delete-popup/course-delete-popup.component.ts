@@ -40,7 +40,7 @@ export class CourseDeletePopupComponent implements OnInit {
         location.reload();
         this.loading = false;
         this.dialogRef.close();
-        this.messageService.openSnackBarSuccess("Le cours a bien été supprimé", 'OK');
+        this.messageService.showSuccess('Le cours a bien été supprimé', 'OK');
       })
   }
 

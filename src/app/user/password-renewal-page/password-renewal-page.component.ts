@@ -80,7 +80,7 @@ export class PasswordRenewalPageComponent implements OnInit, OnDestroy {
       next: (response: any) => {
         this.loading = false;
         this.authService.logout();
-        this.messageService.openSnackBarSuccess(response, 'Ok');
+        this.messageService.showSuccess(response, 'Ok');
         this.successMessage = true;
       },
       error: (_error: HttpErrorResponse) => {

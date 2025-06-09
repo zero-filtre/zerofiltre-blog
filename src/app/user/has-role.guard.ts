@@ -33,7 +33,10 @@ export class HasRoleGuard implements CanActivate {
       const isAuthorised = user?.roles?.includes(route.data?.role);
 
       if (!isAuthorised) {
-        this.messageService.openSnackBarError("Desolé vous n'etes pas autorisé à acceder à ce contenu.", 'OK');
+        this.messageService.showError(
+          "Desolé vous n'etes pas autorisé à acceder à ce contenu.",
+          'OK'
+        );
       }
 
       return isAuthorised;

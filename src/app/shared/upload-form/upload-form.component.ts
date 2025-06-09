@@ -44,7 +44,10 @@ export class UploadFormComponent implements OnInit {
       .pipe(
         catchError(err => {
           this.loading = false;
-          this.notify.openSnackBarError('Un probleme est survenu lors du chargement!', 'OK');
+          this.notify.showError(
+            'Un probleme est survenu lors du chargement!',
+            'OK'
+          );
           return throwError(() => err.message)
         }),
         finalize(() => this.reset())
@@ -62,7 +65,7 @@ export class UploadFormComponent implements OnInit {
           this.loading = false;
           this.dialogRef.close();
           this.updateVideoAfterUpload(this.uri);
-          this.notify.openSnackBarSuccess('Votre vidéo a bien été chargée', 'OK');
+          this.notify.showSuccess('Votre vidéo a bien été chargée', 'OK');
           console.log('UPLOAD COMPLETED: ', uploadOffset);
         } else if (uploadOffset < this.fileSize) {
           console.log('STILL UPLOADING: ', uploadOffset);

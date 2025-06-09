@@ -11,3 +11,136 @@
 .tab {
   @apply hover:bg-skin-link;
 }
+
+.editor_wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.editor_md {
+  position: relative;
+  width: 100%;
+}
+
+.editor-btn {
+  @apply inline-flex items-center justify-center h-9 w-9 shadow-sm rounded-full text-skin-base bg-skin-link hover:text-primary-500 transition-all duration-200;
+}
+
+.editor-textarea {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  resize: none;
+  tab-size: 4;
+}
+
+.editor-textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px theme('colors.primary.500');
+}
+
+.active-tab {
+  transform: scale(1) !important;
+}
+
+/* Styles pour la prévisualisation */
+.markdown-preview-container {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Styles pour le mode plein écran */
+:fullscreen .editor_wrapper {
+  height: 100vh;
+  background-color: white;
+}
+
+:fullscreen .editor-header {
+  margin-top: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+:fullscreen .tabs-content-wrapper {
+  height: calc(100vh - 4rem) !important;
+}
+
+/* Styles pour les boutons de la barre d'outils */
+.editor-btn:hover {
+  @apply bg-primary-50;
+}
+
+.editor-btn:focus {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+}
+
+/* Styles pour le bouton de copie de code */
+:host ::ng-deep .copy-button {
+  @apply absolute top-2 right-2 p-1 rounded-md bg-gray-800 text-white opacity-0 transition-opacity duration-200;
+}
+
+:host ::ng-deep pre:hover .copy-button {
+  @apply opacity-100;
+}
+
+:host ::ng-deep .copy-button:hover {
+  @apply bg-gray-700;
+}
+
+:host ::ng-deep .copy-button:focus {
+  @apply outline-none ring-2 ring-primary-500;
+}
+
+/* Styles pour les blocs de code */
+:host ::ng-deep pre {
+  @apply relative;
+}
+
+:host ::ng-deep code {
+  @apply font-mono text-sm;
+}
+
+/* Styles pour les numéros de ligne */
+:host ::ng-deep .line-numbers {
+  @apply text-gray-500 select-none;
+}
+
+/* Styles pour les emojis */
+:host ::ng-deep .emoji {
+  @apply inline-block align-middle;
+}
+
+/* Styles pour les images */
+:host ::ng-deep img {
+  @apply max-w-full h-auto rounded-lg shadow-lg;
+}
+
+/* Styles pour les liens */
+:host ::ng-deep a {
+  @apply text-primary-500 hover:text-primary-600 transition-colors duration-200;
+}
+
+/* Styles pour les tableaux */
+:host ::ng-deep table {
+  @apply min-w-full divide-y divide-gray-200;
+}
+
+:host ::ng-deep th {
+  @apply px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+}
+
+:host ::ng-deep td {
+  @apply px-6 py-4 whitespace-nowrap text-sm text-gray-500;
+}
+
+/* Styles pour les citations */
+:host ::ng-deep blockquote {
+  @apply border-l-4 border-primary-500 pl-4 italic text-gray-600;
+}
+
+/* Styles pour les listes */
+:host ::ng-deep ul, :host ::ng-deep ol {
+  @apply pl-5 space-y-2;
+}
+
+:host ::ng-deep li {
+  @apply text-gray-700;
+}

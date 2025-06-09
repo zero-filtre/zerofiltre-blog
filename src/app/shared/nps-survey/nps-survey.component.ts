@@ -38,12 +38,12 @@ export class NpsSurveyComponent {
       .saveSurveyResults(resultData)
       .subscribe({
         next: data => {
-          options.showSaveSuccess("Merci pour votre avis 🤗");
-          // this.notify.openSnackBarSuccess("Merci pour votre avis!", "")
+          options.showSaveSuccess('Merci pour votre avis 🤗');
+          // this.notify.showSuccess("Merci pour votre avis!", "")
         },
         error: (err: HttpErrorResponse) => {
           options.showSaveError("Echec d'enregistrement, veuillez réessayer");
-          // this.notify.openSnackBarError("Echec d'enregistrement, veuillez réessayer", "Ok")
+          // this.notify.showError("Echec d'enregistrement, veuillez réessayer", "Ok")
         },
         complete: () => setTimeout(() => {
           this.dialogRef.close()

@@ -67,7 +67,7 @@ export class BotUserInfosComponent {
       .pipe(
         catchError(err => {
           this.saving = false;
-          this.notify.openSnackBarError('Une erreur est survenue.', 'OK');
+          this.notify.showError('Une erreur est survenue.', 'OK');
           return throwError(() => err?.message)
         })
       )

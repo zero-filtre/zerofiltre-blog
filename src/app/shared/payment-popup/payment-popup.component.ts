@@ -144,9 +144,9 @@ export class PaymentPopupComponent implements OnInit {
       this.dialogRef.close();
       this.modalService.openLoginModal();
 
-      this.notify.openSnackBarInfo(
+      this.notify.showInfo(
         'Veuillez vous connecter pour effectuer votre achat 🙂',
-        'OK', 5,'bottom', 'center'
+        'OK',
       );
 
       return false;
