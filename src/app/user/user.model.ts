@@ -16,6 +16,7 @@ export interface User {
     language?: string;
     plan?: PlanType;
     pro?: boolean;
+    companies?: Company[];
 }
 
 export const PLANS = { PRO: 'PRO', BASIC: 'BASIC' } as const;
@@ -25,3 +26,9 @@ export const ROLES = { ADMIN: 'ROLE_ADMIN', USER: 'ROLE_USER' } as const;
 export type RoleType = 'ROLE_ADMIN' | 'ROLE_USER'
 
 // export type RoleType = keyof typeof ROLES;
+
+type Company = {
+    companyId: number,
+	role: 'ADMIN' | 'EDITOR' | 'VIEWER'
+}
+
