@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompanyDeletePopupComponent } from '../../admin/features/companies/company-delete-popup/company-delete-popup.component';
 import { MessageService } from '../../services/message.service';
 import { CompanySearchPopupComponent } from '../../admin/features/companies/company-search-popup/company-search-popup.component';
-import { User } from '../../user/user.model';
 
 @Component({
   selector: 'app-company-card',
@@ -26,19 +25,12 @@ export class CompanyCardComponent {
     return encodeURIComponent(url);
   }
 
-  canManageCompany() {
+  canManageZerofiltrePlatform() {
     return this.authService.canAccessAdminDashboard;
   }
 
-  canAddUsersToCompany() {
-    const user = this.authService.currentUsr as User | null;
-    if (!user) return false;
-
-    const isAdminInCompany = user.companies?.some(
-      company => company.companyId === this.company.id && company.role === 'ADMIN'
-    );
-
-    return this.authService.canAccessAdminDashboard || !!isAdminInCompany;
+  canManageCompany() {
+    return this.authService.canManageCompany(this.company.id)
   }
 
   fetchAllCompanies() {
