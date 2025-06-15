@@ -109,7 +109,7 @@
             <span>{{'sidebar.myTrainings' | translate}}</span>
           </a>
 
-          <a *ngIf="authService?.isAdmin" aria-labelledby="Link to user companies page"
+          <a aria-labelledby="Link to user companies page"
             routerLink="/user/dashboard/companies" (click)="drawer.close()"
             class="flex items-center gap-3 py-3 px-1 border-b hover:bg-skin-link hover:text-primary-500 text-xs transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
