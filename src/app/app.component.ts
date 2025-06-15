@@ -29,7 +29,6 @@ import { LoadEnvService } from './services/load-env.service';
 import { environment } from '../environments/environment';
 import { GeoLocationService } from './services/geolocaton.service';
 import { TipsService } from './services/tips.service';
-import { CompanyService } from './admin/features/companies/company.service';
 
 declare let Prism: any;
 
@@ -191,14 +190,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   setActiveLinkFromActiveRoute(url: string) {
     if (url?.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
     if (url?.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
-    if (url?.startsWith('/user/dashboard/admin'))
-      this.activePage = this.ALL_ARTICLES;
-    if (url?.startsWith('/user/dashboard/courses'))
-      this.activePage = this.MY_COURSES;
-    if (url?.startsWith('/user/dashboard/teacher/courses'))
-      this.activePage = this.MY_TRAININGS;
-    if (url?.startsWith('/user/dashboard/courses/all'))
-      this.activePage = this.ALL_TRAININGS;
+    
     if (url?.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
     if (url?.startsWith('/user/dashboard/teacher/courses')) this.activePage = this.MY_TRAININGS;
     if (url?.startsWith('/user/dashboard/companies')) this.activePage = this.MY_COMPANIES;
