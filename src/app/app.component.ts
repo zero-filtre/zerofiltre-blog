@@ -3,7 +3,6 @@ import { isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   Component,
-  HostListener,
   Inject,
   OnInit,
   PLATFORM_ID,
@@ -31,7 +30,7 @@ import { environment } from 'src/environments/environment';
 import { GeoLocationService } from './services/geolocaton.service';
 import { TipsService } from './services/tips.service';
 
-declare var Prism: any;
+declare let Prism: any;
 
 @Component({
   selector: 'app-root',
@@ -39,18 +38,15 @@ declare var Prism: any;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  @HostListener('click', ['$event']) onClick(event: any) {
-    this.logCopySuccessMessage(event);
-  }
-
   readonly servicesUrl = environment.servicesUrl;
   readonly coursesUrl = environment.coursesUrl;
   readonly blogUrl = environment.blogUrl;
   readonly activeCourseModule = environment.courseRoutesActive === 'true';
 
-  appLogoUrl = 'https://ik.imagekit.io/lfegvix1p/logoblue_XmLzzzq19.svg?updatedAt=1681556349203';
+  appLogoUrl =
+    'https://ik.imagekit.io/lfegvix1p/logoblue_XmLzzzq19.svg?updatedAt=1681556349203';
 
-  prod = this.blogUrl.startsWith('https://dev.') ? false : true;
+  prod = !this.blogUrl.startsWith('https://dev.');
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe([Breakpoints.Handset])
@@ -159,14 +155,15 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.activePage = this.ALL_TRAININGS;
   }
 
-  logCopySuccessMessage(event: any) {
-    if (
-      event.target.innerText === 'Copy' ||
-      event.target.className === 'copy-to-clipboard-button' ||
-      event.target.parentElement?.className === 'copy-to-clipboard-button'
-    ) {
-      this.messageService.codeCopied();
-    }
+  setCopyToClipboardEventMessage() {
+    const buttons = document.querySelectorAll('.copy-to-clipboard-button');
+  
+    buttons.forEach((btn) => {
+      if (!(btn as any)._listenerAttached) {
+        btn.addEventListener('click', () => this.messageService.codeCopied());
+        (btn as any)._listenerAttached = true;
+      }
+    });
   }
 
   loadCopyToClipboardSvg() {
@@ -176,10 +173,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       svgButton.ariaLabel = 'Copy to clipboard button';
 
       svgButton.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" aria-label="Copy to clipboard button" class="w-5 lg:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-    </svg>
-    `;
+      <svg xmlns="http://www.w3.org/2000/svg" aria-label="Copy to clipboard button" class="w-5 lg:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+      </svg>
+      `;
 
       return svgButton;
     });
@@ -188,20 +185,35 @@ export class AppComponent implements OnInit, AfterViewInit {
   setActiveLinkFromActiveRoute(url: string) {
     if (url?.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
     if (url?.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
-    if (url?.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
-    if (url?.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
-    if (url?.startsWith('/user/dashboard/teacher/courses')) this.activePage = this.MY_TRAININGS;
-    if (url?.startsWith('/user/dashboard/courses/all')) this.activePage = this.ALL_TRAININGS;
+    if (url?.startsWith('/user/dashboard/admin'))
+      this.activePage = this.ALL_ARTICLES;
+    if (url?.startsWith('/user/dashboard/courses'))
+      this.activePage = this.MY_COURSES;
+    if (url?.startsWith('/user/dashboard/teacher/courses'))
+      this.activePage = this.MY_TRAININGS;
+    if (url?.startsWith('/user/dashboard/courses/all'))
+      this.activePage = this.ALL_TRAININGS;
   }
 
   ngAfterViewInit(): void {
     this.router.events
-      .pipe(filter((event): event is RouterEvent => event instanceof RouterEvent))
+      .pipe(
+        filter((event): event is RouterEvent => event instanceof RouterEvent)
+      )
       .subscribe((e) => {
-        setTimeout(() => {
-          this.checkRouteChange(e);
-        }, 0);
+        setTimeout(() => this.checkRouteChange(e), 0);
       });
+  
+    if (isPlatformBrowser(this.platformId)) {
+      const observer = new MutationObserver(() => {
+        this.setCopyToClipboardEventMessage();
+      });
+  
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+    }
   }
 
   subscribedCourses$: Observable<any[]>;
@@ -213,6 +225,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   showTip() {
     const lastShownDate = localStorage.getItem('lastTipDate');
     const today = new Date().toISOString().split('T')[0];
+
     if (lastShownDate !== today) {
       this.tipsService.getTipOfTheDay().subscribe({
         next: (response: string) => {
@@ -226,10 +239,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.router.events
-      .subscribe(({ url }: any) => {
-        this.setActiveLinkFromActiveRoute(url);
-      });
+    this.router.events.subscribe(({ url }: any) => {
+      this.setActiveLinkFromActiveRoute(url);
+    });
 
     if (isPlatformBrowser(this.platformId)) {
       this.showTip();
@@ -241,6 +253,5 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.fileUploadService.xToken$.subscribe();
       this.modalService.checkUserEmail(this.authService.currentUsr);
     }
-
   }
 }
