@@ -5,7 +5,6 @@ import { Course } from '../../school/courses/course';
 import { CourseDeletePopupComponent } from '../../school/courses/course-delete-popup/course-delete-popup.component';
 import { CourseService } from '../../school/courses/course.service';
 import { AuthService } from '../../user/auth.service';
-import { User } from '../../user/user.model';
 import { CompanySearchPopupComponent } from '../../admin/features/companies/company-search-popup/company-search-popup.component';
 import { MessageService } from '../../services/message.service';
 
@@ -22,10 +21,10 @@ export class CourseCardComponent {
 
   constructor(
     public authService: AuthService,
-    private courseService: CourseService,
-    private dialogDeleteRef: MatDialog,
-    private router: Router,
-    private messageService: MessageService
+    private readonly courseService: CourseService,
+    private readonly dialogDeleteRef: MatDialog,
+    private readonly router: Router,
+    private readonly messageService: MessageService
   ) {}
 
   parseUrl(url: string) {
@@ -33,12 +32,16 @@ export class CourseCardComponent {
   }
 
   canEditCourse(course: Course) {
-    const user = this.authService?.currentUsr as User;
-    return this.courseService.canEditCourse(user, course);
+    const user = this.authService?.currentUsr;
+    return this.courseService.canEditCourse(user, course) || this.canManageCompany();
   }
 
   canLinkCourseToCompany() {
     return this.authService.canAccessAdminDashboard;
+  }
+
+  canManageCompany() {
+    return this.authService.canManageCompany(+this.companyId)
   }
 
   openCourseDeleteDialog(courseId: any): void {

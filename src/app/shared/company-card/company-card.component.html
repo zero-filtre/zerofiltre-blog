@@ -14,7 +14,7 @@
     <div class="col-span-2 lg:flex flex-col justify-between mt-4 lg:mt-0">
         <div class="flex justify-between items-start">
             <!-- Contextuel menu for editing -->
-            <div *ngIf="canManageCompany() || canAddUsersToCompany()">
+            <div *ngIf="canManageCompany()">
                 <button [matMenuTriggerFor]="menu"
                     class="rounded-full p-2 opacity-0 group-hover:opacity-100 hover:bg-skin-link transition-all duration-500"
                     aria-label="icon-button with a menu">
@@ -26,17 +26,15 @@
                 </button>
 
                 <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
-                    <ng-container *ngIf="canAddUsersToCompany()">
-                        <button (click)="openCompanySearchPopup(company, 'User')" aria-labelledby="Delete company button"
-                            class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                            <span>Ajouter un utilisateur</span>
-                        </button>
-                    </ng-container>
+                    <button (click)="openCompanySearchPopup(company, 'User')" aria-labelledby="Delete company button"
+                        class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        <span>Ajouter un utilisateur</span>
+                    </button>
 
-                    <ng-container *ngIf="canManageCompany()">
+                    <ng-container *ngIf="canManageZerofiltrePlatform()">
                         <button (click)="openCompanySearchPopup(company, 'Course')" aria-labelledby="Delete company button"
                             class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">

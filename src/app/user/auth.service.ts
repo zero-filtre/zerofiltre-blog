@@ -162,6 +162,17 @@ export class AuthService {
     return this.isAdmin;
   }
 
+  canManageCompany(someCompanyId: number) {
+    const user = this.currentUsr;
+    if (!user) return false;
+
+    const isAdminInCompany = user.companies?.some(
+      company => company.companyId === someCompanyId && company.role === 'ADMIN'
+    );
+
+    return this.canAccessAdminDashboard || !!isAdminInCompany;
+  }
+
   getUsers(pageNumber: number, limit: number): Observable<User[]> {
     return this.http.get<any>(`${this.apiServerUrl}/user?pageNumber=${pageNumber}&pageSize=${limit}`)
       .pipe(shareReplay());
@@ -216,7 +227,7 @@ export class AuthService {
         map((response) => {
           if (response.body) {
             this.handleJWTauth({ body: response.body }, 'Bearer');
-            return this.currentUsr as User;
+            return this.currentUsr;
           }
           throw new Error('Empty response body');
         }),
@@ -225,8 +236,6 @@ export class AuthService {
   }
 
   logout() {
-    // if (confirm("Voulez-vous vraiment vous deconnecter ?")) {
-    // }
     this.subject.next(null!);
     this.clearLSwithoutExcludedKey();
     this.isAdmin = false;
