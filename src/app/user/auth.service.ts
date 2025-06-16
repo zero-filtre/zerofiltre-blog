@@ -163,6 +163,10 @@ export class AuthService {
   }
 
   canManageCompany(someCompanyId: number) {
+    return this.isAdmin || this.adminInCompany(someCompanyId);
+  }
+
+  adminInCompany(someCompanyId: number) {
     const user = this.currentUsr;
     if (!user) return false;
 
@@ -170,7 +174,7 @@ export class AuthService {
       company => company.companyId === someCompanyId && company.role === 'ADMIN'
     );
 
-    return this.canAccessAdminDashboard || !!isAdminInCompany;
+    return !!isAdminInCompany;
   }
 
   getUsers(pageNumber: number, limit: number): Observable<User[]> {
