@@ -14,10 +14,7 @@ import { capitalizeString } from 'src/app/services/utilities.service';
 import { CourseService } from '../../courses/course.service';
 import { Observable, catchError, of, tap, throwError } from 'rxjs';
 
-import {
-  CdkDragDrop,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MessageService } from 'src/app/services/message.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -40,6 +37,7 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() completedLessonsIds!: number[];
   @Input() durations!: any[];
   @Input() mobileQuery: MediaQueryList;
+  @Input() exclusive: boolean;
 
   currentRoute: string;
   isPublishing: boolean;
@@ -47,16 +45,16 @@ export class CurriculumSidebarComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    private courseService: CourseService,
-    public dialogNewChapterRef: MatDialog,
-    private dialogDeleteChapterRef: MatDialog,
-    private dialogUpdateChapterRef: MatDialog,
-    private dialogNewLessonRef: MatDialog,
-    private dialogDeleteLessonRef: MatDialog,
-    private router: Router,
-    private messageService: MessageService,
-    private modalService: ModalService,
-    @Inject(PLATFORM_ID) public platformId: any,
+    private readonly courseService: CourseService,
+    public readonly dialogNewChapterRef: MatDialog,
+    private readonly dialogDeleteChapterRef: MatDialog,
+    private readonly dialogUpdateChapterRef: MatDialog,
+    private readonly dialogNewLessonRef: MatDialog,
+    private readonly dialogDeleteLessonRef: MatDialog,
+    private readonly router: Router,
+    private readonly messageService: MessageService,
+    private readonly modalService: ModalService,
+    @Inject(PLATFORM_ID) public platformId: any
   ) {}
 
   scrollToChapter(): void {
@@ -183,7 +181,7 @@ export class CurriculumSidebarComponent implements OnInit {
 
   publishCourse(course: Course) {
     this.isPublishing = true;
-    this.publishBtnText = this.authService.isAdmin
+    this.publishBtnText = (this.authService.isAdmin || this.exclusive)
       ? 'Publication'
       : 'Soumission';
 
@@ -207,17 +205,17 @@ export class CurriculumSidebarComponent implements OnInit {
       .pipe(
         catchError((err) => {
           this.isPublishing = false;
-          this.publishBtnText = this.authService.isAdmin
+          this.publishBtnText = (this.authService.isAdmin || this.exclusive)
             ? 'Publier'
             : 'Soumettre';
           return throwError(() => err);
         }),
         tap((_data) => {
-          const msg = this.authService.isAdmin
+          const msg = (this.authService.isAdmin || this.exclusive)
             ? 'Publication reussie !'
             : 'Soumission reussie !';
           this.isPublishing = false;
-          this.publishBtnText = this.authService.isAdmin
+          this.publishBtnText = (this.authService.isAdmin || this.exclusive)
             ? 'Publier'
             : 'Soumettre';
           this.messageService.openSnackBarSuccess(msg, 'OK');
@@ -238,7 +236,10 @@ export class CurriculumSidebarComponent implements OnInit {
       this.modalService.openLoginModal();
       this.messageService.openSnackBarInfo(
         'Veuillez vous connecter pour réagir sur ce cours 🙂',
-        'OK', 5,'bottom', 'center'
+        'OK',
+        5,
+        'bottom',
+        'center'
       );
 
       return;
@@ -247,7 +248,10 @@ export class CurriculumSidebarComponent implements OnInit {
     if (this.course.status !== 'PUBLISHED') {
       this.messageService.openSnackBarInfo(
         'Vous pourrez réagir sur ce cours après sa publication.',
-        'OK', 5,'top', 'center'
+        'OK',
+        5,
+        'top',
+        'center'
       );
 
       return;
@@ -264,6 +268,6 @@ export class CurriculumSidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentRoute = this.router.url;
-    this.publishBtnText = this.authService.isAdmin ? 'Publier' : 'Soumettre';
+    this.publishBtnText = (this.authService.isAdmin || this.exclusive) ? 'Publier' : 'Soumettre';    
   }
 }
