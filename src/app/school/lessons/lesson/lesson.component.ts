@@ -10,7 +10,7 @@ import { MessageService } from '../../../services/message.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
-import { CompletedLesson, Lesson, Resource, UserProgress } from '../lesson';
+import { Lesson, Resource, UserProgress } from '../lesson';
 import { ChapterService } from '../../chapters/chapter.service';
 import { FormGroup } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
@@ -90,20 +90,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   userProgress: UserProgress = {};
 
   isCheckingEnrollment: boolean;
-
-  // giscusConfig = (lesson: Lesson) => ({
-  //   'data-repo': 'zero-filtre/zerofiltre-blog',
-  //   'data-repo-id': 'R_kgDOGhkG4Q',
-  //   'data-category': 'Announcements',
-  //   'data-category-id': 'DIC_kwDOGhkG4c4CW2nQ',
-  //   'data-mapping': 'specific',
-  //   'data-term': `${lesson.title}`,
-  //   'data-reactions-enabled': '1',
-  //   'data-input-position': 'top',
-  //   'data-theme': 'light',
-  //   'data-loading': 'lazy',
-  //   crossorigin: 'anonymous',
-  // });
 
   giscusConfig = {
     'data-repo': 'zero-filtre/zerofiltre-blog',
@@ -257,16 +243,16 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  private _mobileQueryListener: () => void;
+  private readonly _mobileQueryListener: () => void;
 
   get canAccessCourse() {
-    const user = this.authService?.currentUsr as User;
+    const user = this.authService?.currentUsr;
     return (
       this.courseService.canAccessCourse(user, this.course) || this.isSubscriber
     );
   }
   get canEditCourse() {
-    const user = this.authService?.currentUsr as User;
+    const user = this.authService?.currentUsr;
     return this.courseService.canEditCourse(user, this.course);
   }
 
@@ -298,7 +284,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   toggleCompleted() {
     const data = { lessonId: this.lessonID, courseId: this.courseID };
     this.isCompleting = true;
-    // const isCourseFullyCompleted = this.completeProgressVal == Math.round(100 * ((this.lessonsCount - 1) / this.lessonsCount)) ? true : false
 
     if (!this.completed) {
       this.courseService
@@ -441,10 +426,6 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.lesson = lesson;
         this.injectGiscus();
 
-        // const rootUrl = this.router.url.split('/')[1];
-        // const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
-        // this.location.replaceState(sluggedUrl);
-
         const desc = lesson?.summary || '';
         const img =
           this.course?.thumbnail ||
@@ -508,10 +489,6 @@ export class LessonComponent implements OnInit, OnDestroy {
       tap((data) => {
         this.loadingCourse = false;
         this.course = data;
-
-        // const rootUrl = this.router.url.split('/')[1];
-        // const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(this.lesson)}`
-        // this.location.replaceState(sluggedUrl);
       }),
       shareReplay()
     );
@@ -528,8 +505,6 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.allChapters = data;
         this.loadingChapters = false;
         this.updateUserProgressForEachChapter(data);
-
-        // this.getEachLessonDuration(data);
 
         if (lessonId === '?') {
           this.lesson = data[0]?.lessons[0];
@@ -631,8 +606,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
       chap?.lessons.forEach((lesson: Lesson, i) => {
         const videoId = lesson.video?.split('.com/')[1] || '';
-        if (!videoId) {
-        }
+        if (!videoId) { /* empty */ }
 
         this.vimeo
           .getVideo(videoId)
@@ -711,7 +685,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   manageEnrollment(user: User, lessonId: string) {
     if (!user) return;
 
-    // this.isCheckingEnrollment = true;
     this.courseEnrollment$ = this.enrollmentService
       .checkSubscriptionAndEnroll(user.id, this.courseID, lessonId, this.companyId)
       .pipe(

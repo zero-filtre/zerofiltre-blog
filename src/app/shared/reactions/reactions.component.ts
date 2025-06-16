@@ -1,11 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Article } from 'src/app/articles/article.model';
-import { ArticleService } from 'src/app/articles/article.service';
 import { Course, Reaction } from 'src/app/school/courses/course';
-import { CourseService } from 'src/app/school/courses/course.service';
-import { MessageService } from 'src/app/services/message.service';
-import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   selector: 'app-reactions',
