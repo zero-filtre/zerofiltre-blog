@@ -94,6 +94,16 @@ export class CompanyService {
       .pipe(shareReplay());
   }
 
+  getLinkBetweenCourseAndCompany(data: any): Observable<any> {
+    const { companyId, courseId } = data;
+    return this.http
+      .get<any[]>(
+        `${this.apiServerUrl}/company/${companyId}/course/${courseId}`,
+        httpOptions
+      )
+      .pipe(shareReplay());
+  }
+
   search(query: string, dataType: string): Observable<any[]> {
     if (dataType == "Course") {
       return this.searchCourses(query)

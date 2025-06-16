@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CourseService } from '../school/courses/course.service';
 import { MessageService } from '../services/message.service';
-import { catchError, EMPTY, map, Observable, of, shareReplay, switchMap, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
 import { CourseEnrollment } from '../school/studentCourse';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
