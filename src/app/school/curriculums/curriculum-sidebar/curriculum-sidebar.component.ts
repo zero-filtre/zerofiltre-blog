@@ -17,7 +17,6 @@ import { Observable, catchError, of, tap, throwError } from 'rxjs';
 import {
   CdkDragDrop,
   moveItemInArray,
-  transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { MessageService } from 'src/app/services/message.service';
 import { ModalService } from 'src/app/services/modal.service';
