@@ -64,8 +64,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               return throwError(() => 'Connexion internet perdue!');
             }
 
+            if (error.status === 404) {
+              return throwError(() => error);
+            }
+
             const errorMessage = this.setError(error, request);
             this.messageService.openSnackBarError(errorMessage, 'OK');
+
             return throwError(() => errorMessage);
           })
         );
