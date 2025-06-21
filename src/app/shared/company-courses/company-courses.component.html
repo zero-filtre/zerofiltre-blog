@@ -1,0 +1,79 @@
+<main class="articles-list-container site-container py-5">
+    <div class="max-w-2xl mx-auto">
+        <div class="main-side-container">
+            <div class="tabs-wrapper relative flex items-center justify-between lg:mt-8 border-b border-skin-border">
+                <nav class="relative flex space-x-3 lg:space-x-8 -mb-[2px]" aria-label="Tabs">
+                    <button type="button" (click)="sortByTab(PUBLISHED)" aria-current="page"
+                        aria-labelledby="Toggle to published articles tab"
+                        [ngClass]="activePage === PUBLISHED ? 'active-tab' : ''"
+                        class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                        <span>{{'dashboard.published' | translate}}</span>
+                    </button>
+
+                    <ng-container *ngIf="canManageCompanyCourses()">
+                        <button type="button" (click)="sortByTab(IN_REVIEW)" aria-current="page"
+                            aria-labelledby="Toggle to in review articles tab"
+                            [ngClass]="activePage === IN_REVIEW ? 'active-tab' : ''"
+                            class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                            <span>{{'dashboard.inReview' | translate}}</span>
+                        </button>
+    
+                        <button type="button" (click)="sortByTab(DRAFT)" aria-current="page"
+                            aria-labelledby="Toggle to draft articles tab"
+                            [ngClass]="activePage === DRAFT ? 'active-tab' : ''"
+                            class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                            <span>{{'dashboard.draft' | translate}}</span>
+                        </button>
+    
+                        <button type="button" (click)="sortByTab(ARCHIVER)" aria-current="page"
+                            aria-labelledby="Toggle to draft articles tab"
+                            [ngClass]="activePage === ARCHIVER ? 'active-tab' : ''"
+                            class="text-skin-muted hover:text-skin-base hover:border-skin-border py-4 px-1 text-sm font-semibold border-b-4 border-transparent transition-all duration-200">
+                            <span>Archivés</span>
+                        </button>
+                    </ng-container>
+                </nav>
+
+                <ng-container *ngIf="canManageCompanyCourses()">
+                    <button aria-label="Button to create a new course" (click)="openCourseEntryDialog()" type="button"
+                        class="">
+                        <span class="sr-only">Nouveau cours</span>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-10 w-10 text-white fill-primary-500 border-primary-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1"
+                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                </ng-container>
+            </div>
+
+            <div class="articles-wrapper articles-scrollable-list-panel py-12 space-y-12 lg:space-y-11 min-h-screen"
+                infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+
+                <app-loading-spinner *appShellRender></app-loading-spinner>
+
+                <ng-template [ngIf]="courses" *appShellNoRender>
+                    <div *ngFor="let course of courses; let i=index" class="space-y-11">
+                        <app-course-card [course]="course" [title]="course.title" [companyId]="companyId"></app-course-card>
+
+                        <ng-container *ngIf="(i+1)%3 === 0">
+                            <!-- SHOULD OR NOT DISPLAY COURSES ADS -->
+                        </ng-container>
+                    </div>
+                </ng-template>
+
+                <!-- Loading courses skeletons -->
+                <ng-template [ngIf]="loading">
+                    <div *ngFor="let elt of [].constructor(pageItemsLimit)">
+                        <app-course-skeleton></app-course-skeleton>
+                    </div>
+                </ng-template>
+
+                <app-no-courses *ngIf="noCourseAvailable"></app-no-courses>
+
+                <app-loading-spinner *ngIf="loadingMore" class="py-5"></app-loading-spinner>
+            </div>
+        </div>
+    </div>
+</main>
