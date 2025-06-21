@@ -80,7 +80,7 @@ export class VimeoService {
     httpOptions.headers = httpOptions.headers
       .set('Authorization', `bearer ${this.accessToken}`)
 
-    return this.http.delete<any>(`${apiBase}/videos/${videoID}`, httpOptions)
+    return this.http.delete<any>(`${this.apiServerUrl}/videos/${videoID}`, httpOptions)
       .pipe(shareReplay())
   }
 
