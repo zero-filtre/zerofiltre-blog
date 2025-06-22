@@ -118,14 +118,6 @@ export class CompanySearchPopupComponent {
     });
   }
 
-  fetchAllUsers(): void {
-    this.loading = true;
-    this.companyService.getCompanies(0, 100).subscribe(({ content }: any) => {
-      this.loading = false;
-      this.results.push(...content);
-    });
-  }
-
   setDataSource() {
     const companies = this.companyService.companies;
     const users = this.companyService.users;

@@ -83,6 +83,16 @@ export class CompanyService {
       .pipe(shareReplay());
   }
 
+  unLinkCourseFromCompany(data: any): Observable<any> {
+    const { companyId, courseId } = data;
+    return this.http
+      .delete<any>(
+        `${this.apiServerUrl}/company/${companyId}/course/${courseId}?hard=false`,
+        httpOptions
+      )
+      .pipe(shareReplay());
+  }
+
   linkUserToCompany(data: any): Observable<any> {
     const { companyId, userId, role } = data;
     return this.http
@@ -105,12 +115,12 @@ export class CompanyService {
   }
 
   search(query: string, dataType: string): Observable<any[]> {
-    if (dataType == "Course") {
-      return this.searchCourses(query)
-    } else if (dataType == "User") {
+    if (dataType == 'Course') {
+      return this.searchCourses(query);
+    } else if (dataType == 'User') {
       return this.searchUsers(query);
     } else {
-      return this.searchCompanies(query)
+      return this.searchCompanies(query);
     }
   }
 
@@ -124,14 +134,22 @@ export class CompanyService {
   }
 
   searchCompanies(query: string): Observable<any[]> {
-    return  this.getCompanies(0, 100).pipe(
-      map(({ content }: any) => content.filter((company: Company) => company.companyName.toLowerCase().includes(query)))
+    return this.getCompanies(0, 100).pipe(
+      map(({ content }: any) =>
+        content.filter((company: Company) =>
+          company.companyName.toLowerCase().includes(query)
+        )
+      )
     );
   }
 
   searchCourses(query: string): Observable<any[]> {
-    return  this.getCourses(0, 100).pipe(
-      map(({ content }: any) => content.filter((course: Course) => course.title.toLowerCase().includes(query)))
+    return this.getCourses(0, 100).pipe(
+      map(({ content }: any) =>
+        content.filter((course: Course) =>
+          course.title.toLowerCase().includes(query)
+        )
+      )
     );
   }
 
