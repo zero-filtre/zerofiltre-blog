@@ -65,7 +65,7 @@ export class CompanyCoursesComponent
   }
 
   canManageCompanyCourses() {
-    const user = this.authService.currentUsr as User | null;
+    const user = this.authService.currentUsr;
     if (!user) return false;
 
     const isAdminOrEditorInCompany = user.companies?.some(
