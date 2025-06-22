@@ -17,8 +17,8 @@ export class CompanyCardComponent {
 
   constructor(
     public authService: AuthService,
-    private dialogDeleteRef: MatDialog,
-    private messageService: MessageService
+    private readonly dialogDeleteRef: MatDialog,
+    private readonly messageService: MessageService
   ) {}
 
   parseUrl(url: string) {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Course } from '../../school/courses/course';
@@ -7,6 +7,8 @@ import { CourseService } from '../../school/courses/course.service';
 import { AuthService } from '../../user/auth.service';
 import { CompanySearchPopupComponent } from '../../admin/features/companies/company-search-popup/company-search-popup.component';
 import { MessageService } from '../../services/message.service';
+import { CompanyService } from 'src/app/admin/features/companies/company.service';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-course-card',
@@ -18,13 +20,15 @@ export class CourseCardComponent {
   @Input() canDownloadCertificate = false;
   @Input() course: Course;
   @Input() companyId: string;
+  @Output() onCourseDeleteEvent = new EventEmitter<any>();
 
   constructor(
     public authService: AuthService,
     private readonly courseService: CourseService,
     private readonly dialogDeleteRef: MatDialog,
     private readonly router: Router,
-    private readonly messageService: MessageService
+    private readonly messageService: MessageService,
+    private readonly companyService: CompanyService
   ) {}
 
   parseUrl(url: string) {
@@ -37,11 +41,35 @@ export class CourseCardComponent {
   }
 
   canLinkCourseToCompany() {
-    return this.authService.canAccessAdminDashboard;
+    return this.authService.canAccessAdminDashboard && !this.companyId;
+  }
+
+  canUnLinkCourseFromCompany() {
+    return this.canManageCompany() && this.companyId;
   }
 
   canManageCompany() {
     return this.authService.canManageCompany(+this.companyId)
+  }
+
+  fetchAllCourses() {
+    this.onCourseDeleteEvent.emit();
+  }
+
+  unlinkCourseFromCompany(): void {
+    const bodyData = { courseId: this.course.id, companyId: this.companyId };
+
+    this.companyService
+      .unLinkCourseFromCompany(bodyData)
+      .pipe(
+        catchError((err) => {
+          return throwError(() => err?.message);
+        })
+      )
+      .subscribe((message: string) => {
+        this.fetchAllCourses();
+        this.messageService.openSnackBarSuccess((message || "Le cours a été retiré de l'organisation avec succès !"), 'OK');
+      });
   }
 
   openCourseDeleteDialog(courseId: any): void {
