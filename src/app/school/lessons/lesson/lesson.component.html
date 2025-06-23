@@ -25,6 +25,7 @@
             <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art" *appShellNoRender>
                 <app-curriculum-sidebar [drawer]="snav" [canEdit]="canEditCourse" [course]="course$|async"
                     [lessons]="lessons$ | async" [chapters]="chapters$ | async" [activeLessonID]="lessonID"
+                    [exclusive]="isCourseExclusive$ | async"
                     [activeChapterID]="lesson?.chapterId" [canAccessCourse]="canAccessCourse"
                     [loading]="loadingChapters" [completedLessonsIds]="completedLessonsIds" [durations]="durations"
                     [mobileQuery]="mobileQuery">

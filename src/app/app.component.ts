@@ -26,7 +26,7 @@ import {
 } from '@angular/router';
 
 import { LoadEnvService } from './services/load-env.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 import { GeoLocationService } from './services/geolocaton.service';
 import { TipsService } from './services/tips.service';
 
@@ -59,8 +59,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   MY_ACCOUNT = 'Mon compte';
   MY_ARTICLES = 'Mes articles';
   ALL_ARTICLES = 'Tous nos articles';
+  ADMIN_SPACE = 'Espace administrateur';
+  ALL_COMPANIES = 'Toutes nos organisations';
+  DASHBOARD = 'Tableau de bord';
   MY_COURSES = 'Mes cours';
   MY_TRAININGS = 'Mes formations';
+  MY_COMPANIES = 'Mes organisations';
   ALL_TRAININGS = 'Toutes nos formations';
 
   changingRoute: boolean;
@@ -82,7 +86,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private fileUploadService: FileUploadService,
     private modalService: ModalService,
     public geoLocationService: GeoLocationService,
-    private tipsService: TipsService
+    private tipsService: TipsService,
   ) {
     this.setBrowserTranslationConfigs();
   }
@@ -102,8 +106,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  checkRouteUrl(): boolean {
+  isSidenavOpenedByDefault(): boolean {
     const componentsPrefix = [
+      '/admin',
       '/user/profile',
       '/user/profile/edit',
       '/user/dashboard',
@@ -185,14 +190,15 @@ export class AppComponent implements OnInit, AfterViewInit {
   setActiveLinkFromActiveRoute(url: string) {
     if (url?.startsWith('/user/profile')) this.activePage = this.MY_ACCOUNT;
     if (url?.startsWith('/user/dashboard')) this.activePage = this.MY_ARTICLES;
-    if (url?.startsWith('/user/dashboard/admin'))
-      this.activePage = this.ALL_ARTICLES;
-    if (url?.startsWith('/user/dashboard/courses'))
-      this.activePage = this.MY_COURSES;
-    if (url?.startsWith('/user/dashboard/teacher/courses'))
-      this.activePage = this.MY_TRAININGS;
-    if (url?.startsWith('/user/dashboard/courses/all'))
-      this.activePage = this.ALL_TRAININGS;
+    
+    if (url?.startsWith('/user/dashboard/courses')) this.activePage = this.MY_COURSES;
+    if (url?.startsWith('/user/dashboard/teacher/courses')) this.activePage = this.MY_TRAININGS;
+    if (url?.startsWith('/user/dashboard/companies')) this.activePage = this.MY_COMPANIES;
+
+    if (url?.startsWith('/admin')) this.activePage = this.ADMIN_SPACE;
+    if (url?.startsWith('/admin/companies')) this.activePage = this.ALL_COMPANIES;
+    if (url?.startsWith('/user/dashboard/admin')) this.activePage = this.ALL_ARTICLES;
+    if (url?.startsWith('/user/dashboard/courses/all')) this.activePage = this.ALL_TRAININGS;
   }
 
   ngAfterViewInit(): void {
