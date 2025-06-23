@@ -1,7 +1,15 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SeoService } from '../../../services/seo.service';
-import { Observable, switchMap, catchError, tap, throwError, BehaviorSubject, map, shareReplay, of, EMPTY, finalize } from 'rxjs';
-import { Course, Reaction, Review, Section } from '../course';
+import {
+  Observable,
+  catchError,
+  tap,
+  BehaviorSubject,
+  map,
+  EMPTY,
+  finalize,
+} from 'rxjs';
+import { Course, Section } from '../course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../course.service';
 import { MessageService } from '../../../services/message.service';
@@ -16,7 +24,6 @@ import { CourseEnrollment } from '../../studentCourse';
 import { PaymentService } from 'src/app/services/payment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { HttpErrorResponse } from '@angular/common/http';
 import { JsonLdService } from 'ngx-seo';
 import { JsonLd } from 'ngx-seo/lib/json-ld';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
@@ -38,57 +45,58 @@ export class CourseDetailPageComponent implements OnInit {
   chapters$: Observable<Chapter[]>;
   lessons$: Observable<Lesson[]>;
   course: Course;
+  chapters: Chapter[];
 
   courseEnrollment$: Observable<CourseEnrollment>;
   isSubscriber: boolean;
   isLoading: boolean;
   isCheckingEnrollment: boolean;
-  
+
   notRedirectToFirstLesson: string;
   currentVideoId: string;
   orderedSections: Section[];
   mobileQuery: MediaQueryList;
   // paymentHandler: any = null;
 
-  private isPublished = new BehaviorSubject<any>(null);
+  private readonly isPublished = new BehaviorSubject<any>(null);
   public isPublished$ = this.isPublished.asObservable();
 
-  private nberOfReactions = new BehaviorSubject<number>(0);
+  private readonly nberOfReactions = new BehaviorSubject<number>(0);
   public nberOfReactions$ = this.nberOfReactions.asObservable();
 
   constructor(
-    private seo: SeoService,
-    private jsonLd: JsonLdService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private courseService: CourseService,
-    private chapterService: ChapterService,
-    private notify: MessageService,
-    private navigate: NavigationService,
-    private authService: AuthService,
-    private paymentService: PaymentService,
-    private surveyService: SurveyService,
+    private readonly seo: SeoService,
+    private readonly jsonLd: JsonLdService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly courseService: CourseService,
+    private readonly chapterService: ChapterService,
+    private readonly notify: MessageService,
+    private readonly navigate: NavigationService,
+    private readonly authService: AuthService,
+    private readonly paymentService: PaymentService,
+    private readonly surveyService: SurveyService,
     public dialogPaymentRef: MatDialog,
     public slugify: SlugUrlPipe,
-    private location: Location,
+    private readonly location: Location,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private enrollmentService: EnrollmentService
+    private readonly enrollmentService: EnrollmentService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  private _mobileQueryListener: () => void;
+  private readonly _mobileQueryListener: () => void;
 
   get canAccessCourse() {
-    const user = this.authService?.currentUsr as User;
+    const user = this.authService?.currentUsr;
     return this.courseService.canAccessCourse(user, this.course);
   }
 
   get canEditCourse() {
-    const user = this.authService?.currentUsr as User;
+    const user = this.authService?.currentUsr;
     return this.courseService.canEditCourse(user, this.course);
   }
 
@@ -101,81 +109,78 @@ export class CourseDetailPageComponent implements OnInit {
 
   getCourse(courseId: string) {
     this.isLoading = true;
-    const user = this.authService?.currentUsr as User
+    const user = this.authService?.currentUsr;
 
-    this.course$ = this.courseService
-      .findCourseById(courseId)
-      .pipe(
-        catchError(err => {
-          this.isLoading = false;
-          this.router.navigateByUrl('**')
-          return EMPTY;
-        }),
-        tap((data) => {
-          if (data.status !== 'PUBLISHED' && !user) {
-            this.router.navigateByUrl('**')
-          } else if (data.status === 'PUBLISHED') {
-            this.isPublished.next(true);
-          } else {
-            this.isPublished.next(false);
-          }
-        }),
-        map((data: Course) => {
-          const rootUrl = this.router.url.split('/')[1];
-          const sluggedUrl = `${rootUrl}/${this.slugify.transform(data)}`;
-          this.location.replaceState(sluggedUrl);
+    this.course$ = this.courseService.findCourseById(courseId).pipe(
+      catchError((err) => {
+        this.isLoading = false;
+        this.router.navigateByUrl('**');
+        return EMPTY;
+      }),
+      tap((data) => {
+        if (data.status !== 'PUBLISHED' && !user) {
+          this.router.navigateByUrl('**');
+        } else if (data.status === 'PUBLISHED') {
+          this.isPublished.next(true);
+        } else {
+          this.isPublished.next(false);
+        }
+      }),
+      map((data: Course) => {
+        const rootUrl = this.router.url.split('/')[1];
+        const sluggedUrl = `${rootUrl}/${this.slugify.transform(data)}`;
+        this.location.replaceState(sluggedUrl);
 
-          this.seo.generateTags({
-            title: data.title,
-            description: data.summary,
-            image: data.thumbnail,
-            author: data.author?.fullName,
-            publishDate: data.publishedAt?.substring(0, 10),
-          });
+        this.seo.generateTags({
+          title: data.title,
+          description: data.summary,
+          image: data.thumbnail,
+          author: data.author?.fullName,
+          publishDate: data.publishedAt?.substring(0, 10),
+        });
 
-          const dataSchema = {
-            '@context': 'https://schema.org',
-            '@type': 'Course',
-            author: {
-              '@type': 'Person',
-              name: data.author?.fullName,
-            },
-            name: data.title,
-            description: data.summary,
-            image: data.thumbnail,
-            datePublished: data.publishedAt?.substring(0, 10),
-            hasCourseInstance: {
-              '@type': 'CourseInstance',
-              courseMode: 'online',
-              CourseWorkload: 'PT5H',
-            },
-            offers: {
-              '@type': 'Offer',
-              category: 'Intermediaire',
-              price: data.price?.toString(),
-              priceCurrency: 'EUR',
-            },
-            provider: {
-              '@type': 'Organization',
-              name: 'Zerofiltre',
-              sameAs: 'https://www.zerofiltre.tech',
-            },
-          } as JsonLd | any;
+        const dataSchema = {
+          '@context': 'https://schema.org',
+          '@type': 'Course',
+          author: {
+            '@type': 'Person',
+            name: data.author?.fullName,
+          },
+          name: data.title,
+          description: data.summary,
+          image: data.thumbnail,
+          datePublished: data.publishedAt?.substring(0, 10),
+          hasCourseInstance: {
+            '@type': 'CourseInstance',
+            courseMode: 'online',
+            CourseWorkload: 'PT5H',
+          },
+          offers: {
+            '@type': 'Offer',
+            category: 'Intermediaire',
+            price: data.price?.toString(),
+            priceCurrency: 'EUR',
+          },
+          provider: {
+            '@type': 'Organization',
+            name: 'Zerofiltre',
+            sameAs: 'https://www.zerofiltre.tech',
+          },
+        } as JsonLd | any;
 
-          this.jsonLd.setData(dataSchema);
+        this.jsonLd.setData(dataSchema);
 
-          this.manageEnrollment(user);
+        this.manageEnrollment(user);
 
-          this.isLoading = false;
-          this.isSubscriber = this.courseService.isSubscriber(data.id);
+        this.isSubscriber = this.courseService.isSubscriber(data.id);
 
-          this.course = data;
-          this.orderSections(data);
-          this.extractVideoId(data.video);
+        this.course = data;
+        this.orderSections(data);
+        this.extractVideoId(data.video);
 
-          return data
-        })
-      )
+        return data;
+      })
+    );
   }
 
   orderSections(course: Course) {
@@ -198,15 +203,20 @@ export class CourseDetailPageComponent implements OnInit {
     if (!videoLink) return;
     if (!this.isValidURL(videoLink)) return;
     const params = new URL(videoLink).searchParams;
-    this.currentVideoId = params.get('v') as string;
+    this.currentVideoId = params.get('v');
   }
 
   manageEnrollment(user: User) {
     if (!user) return;
-    
+
     this.isCheckingEnrollment = true;
     this.courseEnrollment$ = this.enrollmentService
-      .checkSubscriptionAndEnroll(user.id, this.courseID, null, this.notRedirectToFirstLesson)
+      .checkSubscriptionAndEnroll(
+        user.id,
+        this.courseID,
+        null,
+        this.notRedirectToFirstLesson
+      )
       .pipe(
         map((result: CourseEnrollment) => {
           this.isSubscriber = !!result;
@@ -221,13 +231,9 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const user = this.authService?.currentUsr;
-
-    this.route.queryParamMap.subscribe(
-      query => {
-        this.companyId = query.get('companyId')!;
-      }
-    );
+    this.route.queryParamMap.subscribe((query) => {
+      this.companyId = query.get('companyId')!;
+    });
 
     this.route.paramMap.subscribe((params) => {
       const parsedParams = params.get('course_id')?.split('-')[0];
@@ -235,14 +241,19 @@ export class CourseDetailPageComponent implements OnInit {
       this.getCourse(this.courseID);
     });
 
-    this.route.queryParamMap.subscribe(
-      query => {
-        this.notRedirectToFirstLesson = query.get('notRedirectToFirstLesson')!;
-      }
-    );
+    this.route.queryParamMap.subscribe((query) => {
+      this.notRedirectToFirstLesson = query.get('notRedirectToFirstLesson')!;
+    });
 
-    this.chapters$ = this.chapterService.fetchAllChapters(this.courseID);
-    
+    this.chapters$ = this.chapterService.fetchAllChapters(this.courseID).pipe(
+      catchError((err) => {
+        this.isLoading = false;
+        this.router.navigateByUrl('**');
+        return EMPTY;
+      }),
+      map((data) => (this.chapters = data)),
+      finalize(() => (this.isLoading = false))
+    );
   }
 
   ngOnDestroy(): void {
