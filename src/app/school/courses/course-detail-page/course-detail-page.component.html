@@ -1,5 +1,6 @@
 <ng-container *ngIf="courseEnrollment$ | async"></ng-container>
 <ng-container *ngIf="course$ | async as course;"></ng-container>
+<ng-container *ngIf="chapters$ | async as chapters;"></ng-container>
 
 <ng-template #loadingSpinner>
     <div class="flex justify-center items-center h-[88vh]">
@@ -103,7 +104,7 @@
 
                             <div class="lg:hidden mt-8">
                                 <app-course-detail-summary [course]="course" [enrolled]="isSubscriber"
-                                    [chapters]="chapters$|async"></app-course-detail-summary>
+                                    [chapters]="chapters"></app-course-detail-summary>
                             </div>
                         
                             <app-carousel [courseId]="course.id"></app-carousel>
@@ -116,7 +117,7 @@
                             </section>
 
                     <section class="curriculum">
-                        <app-curriculum [chapters]="chapters$|async" [lessons]="lessons$|async" [course]="course"
+                        <app-curriculum [chapters]="chapters" [lessons]="lessons$|async" [course]="course"
                             [canAccessCourse]="canAccessCourse" [isSubscriber]="isSubscriber" [canEdit]="canEditCourse"
                             [mobileQuery]="mobileQuery" [companyId]="companyId"></app-curriculum>
                     </section>
@@ -140,7 +141,7 @@
             <aside class="col-span-2 max-lg:hidden space-y-6 lg:space-y-10">
                 <div class="sticky top-36">
                     <app-course-detail-summary [course]="course" [enrolled]="isSubscriber"
-                        [chapters]="chapters$|async"></app-course-detail-summary>
+                        [chapters]="chapters"></app-course-detail-summary>
                 </div>
             </aside>
         </article>
