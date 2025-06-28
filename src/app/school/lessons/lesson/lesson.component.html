@@ -102,18 +102,6 @@
                             </div>
                         </ng-container>
 
-                        <ng-container *ngIf="!lesson?.video">
-                            <div
-                                class="p-5 text-base lg:text-xl text-skin-base h-full flex items-center justify-center bg-skin-link">
-                                <div>
-                                    <app-image
-                                        [sourceUrl]="'https://ik.imagekit.io/lfegvix1p/No_video_r2eSRddth.png?updatedAt=1683447891407'"
-                                        [classes]="'w-1/12 m-auto'">
-                                    </app-image>
-                                    <p class="text-center text-sm mt-5">Cette leçon ne contient pas de vidéo : l'essentiel est dans le contenu ci-dessous. Bonne lecture !</p>
-                                </div>
-                            </div>
-                        </ng-container>
                     </ng-container>
 
                     <ng-template #novideo class="lessonCoverVideoSkeletonLoader">
