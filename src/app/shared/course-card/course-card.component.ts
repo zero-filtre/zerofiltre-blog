@@ -37,7 +37,7 @@ export class CourseCardComponent {
 
   canEditCourse(course: Course) {
     const user = this.authService?.currentUsr;
-    return this.courseService.canEditCourse(user, course);
+    return this.courseService.canEditCourse(user, course) || this.canManageCompany();
   }
 
   canLinkCourseToCompany() {
