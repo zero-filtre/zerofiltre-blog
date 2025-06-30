@@ -408,10 +408,6 @@ export class LessonEditPageComponent implements OnInit {
     this.vimeo.deleteVideoFile(videoID)
       .pipe(catchError(err => {
         this.uploading = false;
-        if (err.status == 404){
-          this.notifySucessOnVideoFileDelete();
-          return EMPTY;
-        }
         this.messageService.openSnackBarError('Un problème est survenu lors de la suppression!', 'OK')
         return throwError(() => err.message)
       }))
