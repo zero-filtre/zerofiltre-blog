@@ -166,6 +166,10 @@ export class AuthService {
     return this.isAdmin || this.adminInCompany(someCompanyId);
   }
 
+  canEditCompanyCourses(someCompanyId: number) {
+    return this.canManageCompany(someCompanyId) || this.editorInCompany(someCompanyId);
+  }
+
   adminInCompany(someCompanyId: number) {
     const user = this.currentUsr;
     if (!user) return false;
@@ -175,6 +179,17 @@ export class AuthService {
     );
 
     return !!isAdminInCompany;
+  }
+
+  editorInCompany(someCompanyId: number) {
+    const user = this.currentUsr;
+    if (!user) return false;
+
+    const isEditorInCompany = user.companies?.some(
+      company => company.companyId === someCompanyId && company.role === 'EDITOR'
+    );
+
+    return !!isEditorInCompany;
   }
 
   getUsers(pageNumber: number, limit: number): Observable<User[]> {

@@ -45,6 +45,8 @@ export class CourseEditPageComponent implements OnInit {
   courseID!: string;
   course: Course;
 
+  companyId: string;
+
   form!: FormGroup;
 
   isLoading = true;
@@ -74,7 +76,7 @@ export class CourseEditPageComponent implements OnInit {
   ) { }
 
   getCourse(): Observable<any> {
-    return this.courseService.findCourseById(this.courseID)
+    return this.courseService.findCourseById(this.courseID, this.companyId)
       .pipe(
         catchError(err => {
           if (err.status === 404) {
@@ -314,6 +316,10 @@ export class CourseEditPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.route.queryParamMap.subscribe((query) => {
+      this.companyId = query.get('companyId')!;
+    });
 
     this.course$ = this.route.paramMap
       .pipe(
