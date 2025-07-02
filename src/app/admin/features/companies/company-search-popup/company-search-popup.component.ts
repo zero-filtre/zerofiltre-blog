@@ -110,6 +110,31 @@ export class CompanySearchPopupComponent {
       });
   }
 
+  removeUserFromCompany(userId: number): void {
+    const selectedUser = this.selectedUsers.find(someUser => someUser.id === userId);
+    const resultUser = this.results.find(someUser => someUser.id === userId);
+    const role = selectedUser ? selectedUser.role : (resultUser && resultUser.role) ? resultUser.role : 'VIEWER';
+    
+    const {
+      company: { id },
+    } = this.data;
+    const bodyData = { userId, companyId: id, role };
+
+    this.companyService
+      .unLinkUserFromCompany(bodyData)
+      .pipe(
+        catchError((err) => {
+          this.loading = false;
+          return throwError(() => err?.message);
+        })
+      )
+      .subscribe((_message: string) => {
+        this.loading = false;
+        // this.dialogRef.close("L'utilisateur a bien été retiré de la société"); A utiliser pour la selection multiple
+        this.messageService.openSnackBarSuccess("L'utilisateur a été retiré de cette organisation avec succès !", 'OK');
+      });
+  }
+
   fetchAllCompanies(): void {
     this.loading = true;
     this.companyService.getCompanies(0, 100).subscribe(({ content }: any) => {

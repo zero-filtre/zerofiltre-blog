@@ -104,6 +104,16 @@ export class CompanyService {
       .pipe(shareReplay());
   }
 
+  unLinkUserFromCompany(data: any): Observable<any> {
+    const { companyId, userId, role } = data;
+    return this.http
+      .delete<any>(
+        `${this.apiServerUrl}/company/${companyId}/user/${userId}?hard=false`,
+        httpOptions
+      )
+      .pipe(shareReplay());
+  }
+
   getLinkBetweenCourseAndCompany(data: any): Observable<any> {
     const { companyId, courseId } = data;
     return this.http
