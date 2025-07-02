@@ -111,7 +111,7 @@ export class CourseDetailPageComponent implements OnInit {
     this.isLoading = true;
     const user = this.authService?.currentUsr;
 
-    this.course$ = this.courseService.findCourseById(courseId).pipe(
+    this.course$ = this.courseService.findCourseById(courseId, this.companyId).pipe(
       catchError((err) => {
         this.isLoading = false;
         this.router.navigateByUrl('**');

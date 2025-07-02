@@ -37,7 +37,18 @@ export class CourseCardComponent {
 
   canEditCourse(course: Course) {
     const user = this.authService?.currentUsr;
-    return this.courseService.canEditCourse(user, course) || this.canManageCompany();
+    return (
+      this.courseService.canEditCourse(user, course) ||
+      this.canManageCompany() ||
+      this.canEditCompanyCourses()
+    );
+  }
+
+  canDeleteCourse(course: Course) {
+    const user = this.authService?.currentUsr;
+    return (
+      this.courseService.canEditCourse(user, course) || this.authService.isAdmin
+    );
   }
 
   canLinkCourseToCompany() {
@@ -49,7 +60,11 @@ export class CourseCardComponent {
   }
 
   canManageCompany() {
-    return this.authService.canManageCompany(+this.companyId)
+    return this.authService.canManageCompany(+this.companyId);
+  }
+
+  canEditCompanyCourses() {
+    return this.authService.canEditCompanyCourses(+this.companyId);
   }
 
   fetchAllCourses() {
@@ -68,7 +83,10 @@ export class CourseCardComponent {
       )
       .subscribe((message: string) => {
         this.fetchAllCourses();
-        this.messageService.openSnackBarSuccess((message || "Le cours a été retiré de l'organisation avec succès !"), 'OK');
+        this.messageService.openSnackBarSuccess(
+          message || "Le cours a été retiré de l'organisation avec succès !",
+          'OK'
+        );
       });
   }
 
@@ -82,16 +100,16 @@ export class CourseCardComponent {
     });
   }
 
-  openCompanySearchPopup(course: Course, dataType: "Company"): void {
+  openCompanySearchPopup(course: Course, dataType: 'Company'): void {
     this.dialogDeleteRef
       .open(CompanySearchPopupComponent, {
         panelClass: 'popup-search',
         disableClose: false,
         minHeight: '400px',
         width: '700px',
-        data: { 
+        data: {
           course: course,
-          dataType: dataType
+          dataType: dataType,
         },
       })
       .afterClosed()

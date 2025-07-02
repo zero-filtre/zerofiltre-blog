@@ -126,8 +126,8 @@ export class CourseService {
       .pipe(shareReplay());
   }
 
-  findCourseById(courseId: any): Observable<any> {
-    return this.http.get<any>(`${this.apiServerUrl}/course/${courseId}`, httpOptions)
+  findCourseById(courseId: any, companyId?: string): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/course/${courseId}` + (companyId ? `?companyId=${companyId}` : ""), httpOptions)
       .pipe(shareReplay());
   }
 
