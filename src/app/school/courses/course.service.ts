@@ -56,8 +56,8 @@ export class CourseService {
     return subIds?.includes(courseId);
   }
 
-  subscribeToCourse(courseId: number): Observable<any> {
-    return this.http.post<any>(`${this.apiServerUrl}/enrollment?courseId=${courseId}`, httpOptions)
+  subscribeToCourse(courseId: string, companyId?: string): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/enrollment?courseId=${courseId}` + (companyId ? `&companyId=${companyId}` : ""), httpOptions)
       .pipe(
         tap((data: CourseEnrollment) => {
           const subIds = JSON.parse(localStorage?.getItem('_subs'));
@@ -126,13 +126,13 @@ export class CourseService {
       .pipe(shareReplay());
   }
 
-  findCourseById(courseId: any): Observable<any> {
-    return this.http.get<any>(`${this.apiServerUrl}/course/${courseId}`, httpOptions)
+  findCourseById(courseId: any, companyId?: string): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/course/${courseId}` + (companyId ? `?companyId=${companyId}` : ""), httpOptions)
       .pipe(shareReplay());
   }
 
-  initCourse(courseTitle: string): Observable<any> {
-    return this.http.post<any>(`${this.apiServerUrl}/course?title=${courseTitle}`, httpOptions)
+  initCourse(courseTitle: string, companyId: string): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/course?title=${courseTitle}` + (companyId ? `&companyId=${companyId}` : ""), httpOptions)
       .pipe(shareReplay());
   }
 

@@ -1,6 +1,30 @@
-import { ChangeDetectorRef, Component, OnDestroy, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  HostListener,
+  OnInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
-import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay, forkJoin, finalize } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  throwError,
+  Subject,
+  tap,
+  map,
+  of,
+  shareReplay,
+  forkJoin,
+  finalize,
+  first,
+  filter,
+  mergeMap,
+  from,
+  EMPTY,
+} from 'rxjs';
 import { VimeoService } from '../../../services/vimeo.service';
 import { Course } from '../../courses/course';
 import { AuthService } from '../../../user/auth.service';
@@ -10,7 +34,7 @@ import { MessageService } from '../../../services/message.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../courses/course.service';
 import { Chapter } from '../../chapters/chapter';
-import { CompletedLesson, Lesson, Resource, UserProgress } from '../lesson';
+import { Lesson, Resource, UserProgress } from '../lesson';
 import { ChapterService } from '../../chapters/chapter.service';
 import { FormGroup } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
@@ -26,6 +50,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { NpsSurveyComponent } from 'src/app/shared/nps-survey/nps-survey.component';
 import { EnrollmentService } from 'src/app/services/enrollment.service';
+import { CompanyService } from 'src/app/admin/features/companies/company.service';
 
 @Component({
   selector: 'app-course-content',
@@ -57,6 +82,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   lessonID!: any;
   courseID!: any;
   courseEnrollmentID: any;
+  companyId: string;
 
   course$: Observable<Course>;
   lessonVideo$: Observable<any>;
@@ -70,6 +96,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   nextLesson: Lesson;
 
   CompletedText$ = new Subject<boolean>();
+  isCourseExclusive$: Observable<boolean>;
 
   docTypes = ['txt', 'doc', 'pdf'];
   imageResources: Resource[] = [];
@@ -89,20 +116,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   userProgress: UserProgress = {};
 
   isCheckingEnrollment: boolean;
-
-  // giscusConfig = (lesson: Lesson) => ({
-  //   'data-repo': 'zero-filtre/zerofiltre-blog',
-  //   'data-repo-id': 'R_kgDOGhkG4Q',
-  //   'data-category': 'Announcements',
-  //   'data-category-id': 'DIC_kwDOGhkG4c4CW2nQ',
-  //   'data-mapping': 'specific',
-  //   'data-term': `${lesson.title}`,
-  //   'data-reactions-enabled': '1',
-  //   'data-input-position': 'top',
-  //   'data-theme': 'light',
-  //   'data-loading': 'lazy',
-  //   crossorigin: 'anonymous',
-  // });
 
   giscusConfig = {
     'data-repo': 'zero-filtre/zerofiltre-blog',
@@ -230,40 +243,41 @@ export class LessonComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private seo: SeoService,
-    private vimeoService: VimeoService,
+    private readonly seo: SeoService,
+    private readonly vimeoService: VimeoService,
     public authService: AuthService,
-    private lessonService: LessonService,
-    private chapterService: ChapterService,
-    private courseService: CourseService,
-    private messageService: MessageService,
-    private navigate: NavigationService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private vimeo: VimeoService,
+    private readonly lessonService: LessonService,
+    private readonly chapterService: ChapterService,
+    private readonly courseService: CourseService,
+    private readonly messageService: MessageService,
+    private readonly navigate: NavigationService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly vimeo: VimeoService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private paymentService: PaymentService,
-    private slugify: SlugUrlPipe,
-    private location: Location,
-    private modalService: MatDialog,
-    private enrollmentService: EnrollmentService
+    private readonly paymentService: PaymentService,
+    private readonly slugify: SlugUrlPipe,
+    private readonly location: Location,
+    private readonly modalService: MatDialog,
+    private readonly enrollmentService: EnrollmentService,
+    private readonly companyService: CompanyService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  private _mobileQueryListener: () => void;
+  private readonly _mobileQueryListener: () => void;
 
   get canAccessCourse() {
-    const user = this.authService?.currentUsr as User;
+    const user = this.authService?.currentUsr;
     return (
       this.courseService.canAccessCourse(user, this.course) || this.isSubscriber
     );
   }
   get canEditCourse() {
-    const user = this.authService?.currentUsr as User;
+    const user = this.authService?.currentUsr;
     return this.courseService.canEditCourse(user, this.course);
   }
 
@@ -295,7 +309,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   toggleCompleted() {
     const data = { lessonId: this.lessonID, courseId: this.courseID };
     this.isCompleting = true;
-    // const isCourseFullyCompleted = this.completeProgressVal == Math.round(100 * ((this.lessonsCount - 1) / this.lessonsCount)) ? true : false
 
     if (!this.completed) {
       this.courseService
@@ -311,7 +324,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.completed = true;
           this.completeProgressVal = Math.round(
             100 *
-            ([...new Set(data.completedLessons)].length / this.lessonsCount)
+              ([...new Set(data.completedLessons)].length / this.lessonsCount)
           );
 
           if (this.nextLesson)
@@ -340,7 +353,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.completed = false;
           this.completeProgressVal = Math.round(
             100 *
-            ([...new Set(data.completedLessons)].length / this.lessonsCount)
+              ([...new Set(data.completedLessons)].length / this.lessonsCount)
           );
           this.userProgress[this.currentChapter.id].completedLessons.delete(
             this.lesson.id
@@ -413,7 +426,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       parseInt(res.url.split('/').pop() || '')
     );
 
-    const observables = ids.map((id) => this.courseService.findCourseById(id));
+    const observables = ids.map((id) => this.courseService.findCourseById(id, this.companyId));
 
     forkJoin(observables).subscribe({
       next: (courses: Course[]) => {
@@ -437,10 +450,6 @@ export class LessonComponent implements OnInit, OnDestroy {
       next: (lesson: Lesson) => {
         this.lesson = lesson;
         this.injectGiscus();
-
-        // const rootUrl = this.router.url.split('/')[1];
-        // const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(lesson)}`
-        // this.location.replaceState(sluggedUrl);
 
         const desc = lesson?.summary || '';
         const img =
@@ -497,7 +506,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   loadCourseData(courseId: any) {
     this.loadingCourse = true;
-    this.course$ = this.courseService.findCourseById(courseId).pipe(
+    this.course$ = this.courseService.findCourseById(courseId, this.companyId).pipe(
       catchError((err) => {
         this.loadingCourse = false;
         return throwError(() => err?.message);
@@ -506,9 +515,31 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.loadingCourse = false;
         this.course = data;
 
-        // const rootUrl = this.router.url.split('/')[1];
-        // const sluggedUrl = `${rootUrl}/${this.slugify.transform(this.course)}/${this.slugify.transform(this.lesson)}`
-        // this.location.replaceState(sluggedUrl);
+        if (this.authService.isAdmin) return
+
+        const userCompanies = this.authService.currentUsr.companies;
+
+        from(userCompanies)
+          .pipe(
+            filter((company: { companyId: number }) =>
+              this.authService.adminInCompany(company.companyId)
+            ),
+            mergeMap((company: { companyId: number }) =>
+              this.companyService.getLinkBetweenCourseAndCompany({
+                companyId: company.companyId,
+                courseId: this.course.id,
+              })
+            ),
+            catchError(() => {
+              this.messageService.cancel()
+              return of(null);
+            }),
+            map((data: { exclusive: boolean }) => data.exclusive),
+            first((exclusive: boolean) => exclusive === true, false)
+          )
+          .subscribe((exclusive: boolean) => {
+            this.isCourseExclusive$ = of(exclusive);
+          });
       }),
       shareReplay()
     );
@@ -526,15 +557,11 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.loadingChapters = false;
         this.updateUserProgressForEachChapter(data);
 
-        // this.getEachLessonDuration(data);
-
         if (lessonId === '?') {
           this.lesson = data[0]?.lessons[0];
           this.lessonID = this.lesson?.id;
           this.lesson$ = of(this.lesson);
-          this.lessonVideo$ = this.vimeoService.getOneVideo(
-            this.lesson?.video
-          );
+          this.lessonVideo$ = this.vimeoService.getOneVideo(this.lesson?.video);
 
           this.currentChapter = data[0];
           this.loadPrevNext(this.currentChapter, this.allChapters, lessonId);
@@ -592,7 +619,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     } else if (currentLessonIndex == 0 && currentChapterIndex > 0) {
       const prevChapterLastLesson =
         allChapters[currentChapterIndex - 1]?.lessons[
-        prevChapterLastLessonIndex
+          prevChapterLastLessonIndex
         ];
       prev = prevChapterLastLesson;
     } else {
@@ -607,7 +634,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     ) {
       const nextChapterFirstLesson =
         allChapters[currentChapterIndex + 1]?.lessons[
-        nextChapterFirstLessonIndex
+          nextChapterFirstLessonIndex
         ];
       next = nextChapterFirstLesson;
     } else {
@@ -629,6 +656,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       chap?.lessons.forEach((lesson: Lesson, i) => {
         const videoId = lesson.video?.split('.com/')[1] || '';
         if (!videoId) {
+          /* empty */
         }
 
         this.vimeo
@@ -708,9 +736,13 @@ export class LessonComponent implements OnInit, OnDestroy {
   manageEnrollment(user: User, lessonId: string) {
     if (!user) return;
 
-    // this.isCheckingEnrollment = true;
     this.courseEnrollment$ = this.enrollmentService
-      .checkSubscriptionAndEnroll(user.id, this.courseID, lessonId)
+      .checkSubscriptionAndEnroll(
+        user.id,
+        this.courseID,
+        lessonId,
+        this.companyId
+      )
       .pipe(
         map((result: CourseEnrollment) => {
           this.isSubscriber = !!result;
@@ -750,6 +782,10 @@ export class LessonComponent implements OnInit, OnDestroy {
 
     this.loadCourseData(this.courseID);
     this.loadAllChapters(this.courseID, this.lessonID);
+
+    this.route.queryParamMap.subscribe((query) => {
+      this.companyId = query.get('companyId')!;
+    });
 
     this.route.paramMap.subscribe((params) => {
       const parsedParams = params.get('lesson_id')?.split('-')[0];
