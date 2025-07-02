@@ -426,7 +426,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       parseInt(res.url.split('/').pop() || '')
     );
 
-    const observables = ids.map((id) => this.courseService.findCourseById(id));
+    const observables = ids.map((id) => this.courseService.findCourseById(id, this.companyId));
 
     forkJoin(observables).subscribe({
       next: (courses: Course[]) => {
@@ -506,7 +506,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   loadCourseData(courseId: any) {
     this.loadingCourse = true;
-    this.course$ = this.courseService.findCourseById(courseId).pipe(
+    this.course$ = this.courseService.findCourseById(courseId, this.companyId).pipe(
       catchError((err) => {
         this.loadingCourse = false;
         return throwError(() => err?.message);
