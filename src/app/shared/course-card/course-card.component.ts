@@ -47,7 +47,7 @@ export class CourseCardComponent {
   canDeleteCourse(course: Course) {
     const user = this.authService?.currentUsr;
     return (
-      this.courseService.canEditCourse(user, course) || this.authService.isAdmin
+      this.courseService.canEditCourse(user, course) || this.authService.isAdmin || this.canManageCompany() || this.canEditCompanyCourses()
     );
   }
 

@@ -38,6 +38,7 @@ export class CurriculumSidebarComponent implements OnInit {
   @Input() durations!: any[];
   @Input() mobileQuery: MediaQueryList;
   @Input() exclusive: boolean;
+  @Input() companyId: string;
 
   currentRoute: string;
   isPublishing: boolean;

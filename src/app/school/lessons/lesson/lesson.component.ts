@@ -24,7 +24,10 @@ import {
   mergeMap,
   from,
   EMPTY,
+  combineLatest,
+  takeUntil
 } from 'rxjs';
+
 import { VimeoService } from '../../../services/vimeo.service';
 import { Course } from '../../courses/course';
 import { AuthService } from '../../../user/auth.service';
@@ -426,7 +429,9 @@ export class LessonComponent implements OnInit, OnDestroy {
       parseInt(res.url.split('/').pop() || '')
     );
 
-    const observables = ids.map((id) => this.courseService.findCourseById(id, this.companyId));
+    const observables = ids.map((id) =>
+      this.courseService.findCourseById(id, this.companyId)
+    );
 
     forkJoin(observables).subscribe({
       next: (courses: Course[]) => {
@@ -506,43 +511,45 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   loadCourseData(courseId: any) {
     this.loadingCourse = true;
-    this.course$ = this.courseService.findCourseById(courseId, this.companyId).pipe(
-      catchError((err) => {
-        this.loadingCourse = false;
-        return throwError(() => err?.message);
-      }),
-      tap((data) => {
-        this.loadingCourse = false;
-        this.course = data;
+    this.course$ = this.courseService
+      .findCourseById(courseId, this.companyId)
+      .pipe(
+        catchError((err) => {
+          this.loadingCourse = false;
+          return throwError(() => err?.message);
+        }),
+        tap((data) => {
+          this.loadingCourse = false;
+          this.course = data;
 
-        if (this.authService.isAdmin) return
+          if (this.authService.isAdmin) return;
 
-        const userCompanies = this.authService.currentUsr.companies;
+          const userCompanies = this.authService.currentUsr.companies;
 
-        from(userCompanies)
-          .pipe(
-            filter((company: { companyId: number }) =>
-              this.authService.adminInCompany(company.companyId)
-            ),
-            mergeMap((company: { companyId: number }) =>
-              this.companyService.getLinkBetweenCourseAndCompany({
-                companyId: company.companyId,
-                courseId: this.course.id,
-              })
-            ),
-            catchError(() => {
-              this.messageService.cancel()
-              return of(null);
-            }),
-            map((data: { exclusive: boolean }) => data.exclusive),
-            first((exclusive: boolean) => exclusive === true, false)
-          )
-          .subscribe((exclusive: boolean) => {
-            this.isCourseExclusive$ = of(exclusive);
-          });
-      }),
-      shareReplay()
-    );
+          from(userCompanies)
+            .pipe(
+              filter((company: { companyId: number }) =>
+                this.authService.adminInCompany(company.companyId)
+              ),
+              mergeMap((company: { companyId: number }) =>
+                this.companyService.getLinkBetweenCourseAndCompany({
+                  companyId: company.companyId,
+                  courseId: this.course.id,
+                })
+              ),
+              catchError(() => {
+                this.messageService.cancel();
+                return of(null);
+              }),
+              map((data: { exclusive: boolean }) => data.exclusive),
+              first((exclusive: boolean) => exclusive === true, false)
+            )
+            .subscribe((exclusive: boolean) => {
+              this.isCourseExclusive$ = of(exclusive);
+            });
+        }),
+        shareReplay()
+      );
   }
 
   loadAllChapters(courseId: any, lessonId: any) {
@@ -769,34 +776,41 @@ export class LessonComponent implements OnInit, OnDestroy {
       );
   }
 
+  private destroy$ = new Subject<void>();
+
   ngOnInit(): void {
     const user = this.authService?.currentUsr;
 
     this.seo.unmountFooter();
-    this.courseID = this.route.snapshot.paramMap
-      .get('course_id')
-      ?.split('-')[0];
-    this.lessonID = this.route.snapshot.paramMap
-      .get('lesson_id')
-      ?.split('-')[0];
 
-    this.loadCourseData(this.courseID);
-    this.loadAllChapters(this.courseID, this.lessonID);
+    combineLatest([this.route.queryParamMap, this.route.paramMap])
+      .pipe(
+        takeUntil(this.destroy$),
+        map(([queryParams, routeParams]) => {
+          const companyId = queryParams.get('companyId')!;
+          const courseID = routeParams.get('course_id')?.split('-')[0]!;
+          const lessonID = routeParams.get('lesson_id')?.split('-')[0]!;
 
-    this.route.queryParamMap.subscribe((query) => {
-      this.companyId = query.get('companyId')!;
-    });
+          return { companyId, lessonID, courseID };
+        })
+      )
+      .subscribe(({ companyId, lessonID, courseID }) => {
+        this.companyId = companyId;
+        this.courseID = courseID;
+        this.lessonID = lessonID;
 
-    this.route.paramMap.subscribe((params) => {
-      const parsedParams = params.get('lesson_id')?.split('-')[0];
-      this.lessonID = parsedParams!;
-      this.loadLessonData(this.lessonID);
-      this.manageEnrollment(user, this.lessonID);
-    });
+        this.loadCourseData(this.courseID);
+        this.loadAllChapters(this.courseID, this.lessonID);
+        this.loadLessonData(this.lessonID);
+        this.manageEnrollment(user, this.lessonID);
+      });
   }
 
   ngOnDestroy(): void {
     this.seo.mountFooter();
     this.mobileQuery.removeListener(this._mobileQueryListener);
+
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
