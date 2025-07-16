@@ -27,9 +27,11 @@ export class CourseAccessGuardGuard implements CanActivate {
     const courseID = route.params?.course_id?.split('-')[0]
     const user = this.authService?.currentUsr as User
 
+    const companyId = route.queryParams?.companyId;
+
     if (isPlatformServer(this.platformId)) return true;
 
-    return this.courseService.findCourseById(courseID)
+    return this.courseService.findCourseById(courseID, companyId)
       .pipe(
         catchError(err => {
           this.router.navigateByUrl('**')
