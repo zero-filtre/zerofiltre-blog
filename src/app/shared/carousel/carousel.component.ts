@@ -6,6 +6,7 @@ import { catchError, forkJoin, map, mergeMap, Observable, of } from 'rxjs';
 import { User } from 'src/app/user/user.model';
 import { SurveyService } from 'src/app/services/survey.service';
 import { CourseService } from 'src/app/school/courses/course.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-carousel',
@@ -19,6 +20,8 @@ export class CarouselComponent {
     private userService: AuthService,
     private courseService: CourseService,
     private surveyService: SurveyService,
+    public router: Router,
+    public route: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: any,
   ){}
 
@@ -157,7 +160,9 @@ export class CarouselComponent {
             return of(currentReviewValue)
           }
 
-          return this.courseService.findCourseById(review.courseId)
+          const companyId = this.route.snapshot.queryParamMap.get('companyId')!;
+
+          return this.courseService.findCourseById(review.courseId, companyId)
             .pipe(
               map((course: Course) => ({
                 ...currentReviewValue,
