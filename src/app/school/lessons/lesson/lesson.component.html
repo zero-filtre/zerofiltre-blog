@@ -124,7 +124,30 @@
                                 class="lesson_name mb-6 lg:mb-8 text-3xl w-full font-black text-primary-500 tracking-tighter sm:text-3xl sm:leading-10 md:text-4xl lg:text-5xl lg:leading-[3rem] xl:leading-[3.5rem]">
                                 <h1>{{capitalize(lesson?.title)}}</h1>
                             </div>
-                            <app-markdown-preview [data]="lesson?.content"></app-markdown-preview>
+                            <div class="relative overflow-hidden">
+                                <div *ngIf="!lesson.free && !canAccessCourse"
+                                    class="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-skin-bg to-transparent">
+                                </div>
+                                <app-markdown-preview [data]="lesson?.content"></app-markdown-preview>
+                            </div>
+
+                            <div *ngIf="!lesson.free && !canAccessCourse"
+                                class="mt-10 text-skin-base shadow-lg rounded-lg bg-skin-card p-6 max-w-xl mx-auto">
+                                <p class="text-sm">Cette leçon est réservée aux abonnés. Déjà abonné ? <a routerLink="/login"
+                                        class="underline">Connectez-vous</a></p>
+                                <h3 class="text-2xl lg:text-3xl text-primary-500 font-extrabold py-3">Accédez à toutes nos
+                                    formations</h3>
+                                <p>
+                                    Cette leçon est réservée aux membres Pro.
+                                    Passez à l’abonnement Pro pour débloquer instantanément cette leçon et tous les cours.
+                                </p>
+
+                                <a routerLink="/pro"
+                                    class="block mt-4 border border-primary-500 text-center rounded-md hover:shadow-sm transition-all duration-300 hover:bg-primary-100 hover:bg-opacity-20">
+                                    <p class="text-sm sm:text-lg text-primary-500 font-extrabold px-1.5 py-2.5">Passer PRO
+                                    </p>
+                                </a>
+                            </div>
                         </div>
 
                         <ng-container *ngIf="loading" class="articleCoverImageSkeletonLoader">
