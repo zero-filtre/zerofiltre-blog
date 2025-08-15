@@ -1,10 +1,8 @@
-
-
 name: Angular CI/CD Pipeline with k8s
 
 on:
   push:
-    branches: 
+    branches:
       - '*'
 
 jobs:
@@ -13,107 +11,149 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      KUBE_CONFIG : ${{ secrets.KUBE_CONFIG }}
-      env_name: ${{startsWith(github.ref, 'refs/heads/release-') && 'prod' || 'dev'}}
-      api_host : ${{startsWith(github.ref, 'refs/heads/release-') && 'blog-api.zerofiltre.tech' || 'blog-api-dev.zerofiltre.tech'}}
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+
+      branch_name: ${{ github.ref_name }}
+
+      env_name: >-
+        ${{
+          github.ref_name == 'main' && 'uat' ||
+          startsWith(github.ref, 'refs/heads/release-') && 'prod' ||
+          'dev'
+        }}
+
+      api_host: >-
+        ${{
+          github.ref_name == 'main' && 'blog-api-uat.zerofiltre.tech' ||
+          startsWith(github.ref, 'refs/heads/release-') && 'blog-api.zerofiltre.tech' ||
+          'blog-api-dev.zerofiltre.tech'
+        }}
+
+      domain_name: >-
+        ${{
+          github.ref_name == 'main' && 'uat.zerofiltre.tech' ||
+          startsWith(github.ref, 'refs/heads/release-') && 'zerofiltre.tech' ||
+          'dev.zerofiltre.tech'
+        }}
+
+      tag_number: ${{ github.run_number }}
+
+      # Always 1
+      replicas: 1
+
+      # CPU request
+      requests_cpu: >-
+        ${{
+          github.ref_name ==  'main' && '10m' ||
+          startsWith(github.ref, 'refs/heads/release-') && '10m' ||
+          '10m'
+        }}
+
+      requests_memory: >-
+        ${{
+          github.ref_name ==  'main' && '500Mi' ||
+          startsWith(github.ref, 'refs/heads/release-') && '500Mi' ||
+          '500Mi'
+        }}
+
+      limits_memory: >-
+        ${{
+          github.ref_name == 'main' && '1Gi' ||
+          startsWith(github.ref, 'refs/heads/release-') && '1.5Gi' ||
+          '1Gi'
+        }}
       DOCKER_TAG_SUFFIX: ''
-      replicas : ${{startsWith(github.ref, 'refs/heads/release-') && 1 || 1 }}
-      requests_cpu : ${{startsWith(github.ref, 'refs/heads/release-') && 0.1 || 0.1 }}
-      requests_memory : ${{startsWith(github.ref, 'refs/heads/release-') && '0.5Gi' || '0.5Gi' }}
-      limits_cpu : ${{startsWith(github.ref, 'refs/heads/release-') && 0.5 || 0.5 }}
-      limits_memory : ${{startsWith(github.ref, 'refs/heads/release-') && '1.5Gi' || '1Gi' }}
-      domain_name : ${{startsWith(github.ref, 'refs/heads/release-') && 'zerofiltre.tech' || 'dev.zerofiltre.tech' }}
-      
+
 
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-    - name: Cache Docker layers
-      uses: actions/cache@v4
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
-    - name: Docker Login
-      uses: docker/login-action@v2.1.0
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Docker Login
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-    - name: Cache Docker layers
-      uses: actions/cache@v4
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
-    - name: Docker Login
-      uses: docker/login-action@v2.1.0
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Docker Login
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-    - name: Find release version OR branch name
-      run: |
-        if [[ ${{ github.ref }} == refs/heads/release-* ]]; then
-          VERSION_OR_BRANCH=${{ github.ref }}
-          DOCKER_TAG_SUFFIX=${VERSION_OR_BRANCH#refs/heads/release-}
-        else
-          DOCKER_TAG_SUFFIX=${{ github.ref_name }}
-        fi
-        echo "DOCKER_TAG_SUFFIX=$DOCKER_TAG_SUFFIX" >> $GITHUB_ENV
-        echo "$DOCKER_TAG_SUFFIX"
+      - name: Find release version OR branch name
+        run: |
+          if [[ ${{ github.ref }} == refs/heads/release-* ]]; then
+            VERSION_OR_BRANCH=${{ github.ref }}
+            DOCKER_TAG_SUFFIX=${VERSION_OR_BRANCH#refs/heads/release-}
+          else
+            DOCKER_TAG_SUFFIX=${{ github.ref_name }}
+          fi
+          echo "DOCKER_TAG_SUFFIX=$DOCKER_TAG_SUFFIX" >> $GITHUB_ENV
+          echo "$DOCKER_TAG_SUFFIX"
 
-    - name: Build and push
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: imzerofiltre/zerofiltretech-blog-front:${{ github.run_number }}_${{ env.DOCKER_TAG_SUFFIX }}
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache-new
-    
-    - name: Set up kubectl
-      uses: tale/kubectl-action@v1
-      with:
-        base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: imzerofiltre/zerofiltretech-blog-front:${{ github.run_number }}_${{ env.DOCKER_TAG_SUFFIX }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
-    - name: Set up k8s manifest
-      run: |
-        envsubst < k8s/microservices.yaml > k8s.yml
-        cat k8s.yml
-        
-    - name: Deploy to k8s
-      run: |
-        kubectl apply -f k8s.yml
-        kubectl set image deployment/zerofiltretech-blog-front-${{ env.env_name }} zerofiltretech-blog-front-${{ env.env_name }}=imzerofiltre/zerofiltretech-blog-front:${{ github.run_number }}_${{ env.DOCKER_TAG_SUFFIX }} -n zerofiltretech-${{ env.env_name }}
-        kubectl annotate deployment zerofiltretech-blog-front-${{ env.env_name }} kubernetes.io/change-cause="version change to: ${{ github.run_number }}_${{ env.DOCKER_TAG_SUFFIX }} " -n zerofiltretech-${{ env.env_name }} --overwrite=true
-        if ! kubectl rollout status -w deployment/zerofiltretech-blog-front-${{ env.env_name }} -n zerofiltretech-${{ env.env_name }}; then
-              kubectl rollout undo deployment.v1.apps/zerofiltretech-blog-front-${{ env.env_name }} -n zerofiltretech-${{ env.env_name }}
-              kubectl rollout status deployment/zerofiltretech-blog-front-${{ env.env_name }} -n zerofiltretech-${{ env.env_name }}
-              exit 1
-        fi
-        
-    - name: Get commit author email
-      if: ${{ failure() }}
-      run: |
-        COMMIT_AUTHOR_EMAIL=$(git log -1 --pretty=format:'%ae')
-        echo "COMMIT_AUTHOR_EMAIL=$COMMIT_AUTHOR_EMAIL" >> $GITHUB_ENV
-      
-    - name: Send email on failure
-      uses: dawidd6/action-send-mail@v2.5.0
-      with:
+      - name: Set up kubectl
+        uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+
+      - name: Set up k8s manifest
+        run: |
+          envsubst < k8s/microservices.yaml > k8s.yml
+          cat k8s.yml
+
+      - name: Deploy to k8s
+        run: |
+          kubectl apply -f k8s.yml
+          kubectl set image deployment/zerofiltretech-blog-front-${{ env.env_name }} zerofiltretech-blog-front-${{ env.env_name }}=imzerofiltre/zerofiltretech-blog-front:${{ github.run_number }}_${{ env.DOCKER_TAG_SUFFIX }} -n zerofiltretech-${{ env.env_name }}
+          kubectl annotate deployment zerofiltretech-blog-front-${{ env.env_name }} kubernetes.io/change-cause="version change to: ${{ github.run_number }}_${{ env.DOCKER_TAG_SUFFIX }} " -n zerofiltretech-${{ env.env_name }} --overwrite=true
+          if ! kubectl rollout status -w deployment/zerofiltretech-blog-front-${{ env.env_name }} -n zerofiltretech-${{ env.env_name }}; then
+                kubectl rollout undo deployment.v1.apps/zerofiltretech-blog-front-${{ env.env_name }} -n zerofiltretech-${{ env.env_name }}
+                kubectl rollout status deployment/zerofiltretech-blog-front-${{ env.env_name }} -n zerofiltretech-${{ env.env_name }}
+                exit 1
+          fi
+
+      - name: Get commit author email
+        if: ${{ failure() }}
+        run: |
+          COMMIT_AUTHOR_EMAIL=$(git log -1 --pretty=format:'%ae')
+          echo "COMMIT_AUTHOR_EMAIL=$COMMIT_AUTHOR_EMAIL" >> $GITHUB_ENV
+
+      - name: Send email on failure
+        uses: dawidd6/action-send-mail@v2.5.0
+        with:
           server_address: smtp.gmail.com
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
@@ -123,9 +163,9 @@ jobs:
             Workflow failed on ${{ github.repository }}/${{ github.head_ref }} (commit ${{ github.sha }}). \nSee the workflow run log for more details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           from: "GitHub Actions <${{ vars.EMAIL_FROM }}>"
           to: ${{ env.COMMIT_AUTHOR_EMAIL }}
-      if: ${{ failure() }}
- 
-    - name: Move cache
-      run: |
-        rm -rf /tmp/.buildx-cache
-        mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+        if: ${{ failure() }}
+
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
