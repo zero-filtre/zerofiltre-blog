@@ -1,0 +1,20 @@
+<div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow p-6 border border-skin-border">
+    <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-3">
+            <div class="p-2 rounded-lg" [ngClass]="iconBgClass">
+                <div class="h-6 w-6" [innerHTML]="safeIcon"></div>
+            </div>
+            <h2 class="text-lg font-semibold text-secondary">{{title}}</h2>
+        </div>
+        <span class="text-2xl font-bold text-secondary">{{value || 0}}</span>
+    </div>
+    <p class="text-skin-muted mb-4">{{description}}</p>
+    <a [routerLink]="link" class="inline-flex items-center text-primary-500 hover:text-primary-600">
+        {{linkText}}
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd" />
+        </svg>
+    </a>
+</div>
