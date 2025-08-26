@@ -141,7 +141,7 @@ export class CarouselComponent {
       }
     }
 
-    return this.userService.findUserProfile(review.reviewAuthorId.toString())
+    return this.userService.findUserProfile(review.authorId.toString())
       .pipe(
         mergeMap((author: User) => {
           const currentReviewValue = {
