@@ -85,7 +85,7 @@ export type Review =  {
     favoriteLearningToolOfTheChapter?: string[],
     reasonFavoriteLearningToolOfTheChapter?: string,
     improvementSuggestion?: string,
-    reviewAuthorId?: number,
+    authorId?: number,
     
     comment: string,
     avatar: string,
