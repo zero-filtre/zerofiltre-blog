@@ -42,8 +42,8 @@ export class NpsSurveyComponent {
           // this.notify.openSnackBarSuccess("Merci pour votre avis!", "")
         },
         error: (err: HttpErrorResponse) => {
-          options.showSaveError("Echec d'enregistrement, veuillez réessayer");
-          // this.notify.openSnackBarError("Echec d'enregistrement, veuillez réessayer", "Ok")
+          options.showSaveError("Echec d\'enregistrement, veuillez réessayer");
+          // this.notify.openSnackBarError("Echec d\'enregistrement, veuillez réessayer", "Ok")
         },
         complete: () => setTimeout(() => {
           this.dialogRef.close()
@@ -52,6 +52,23 @@ export class NpsSurveyComponent {
   }
 
   surveyComplete(survey: any, options: any) {
+    const chapterImpressionsValue = survey.data.chapterImpressions || '';
+    const whyRecommendingThisCourseValue = survey.data.whyRecommendingThisCourse || '';
+
+    const chapterImpressionsJson = this.jsonSchema['elements'].find(q => q.name === 'chapterImpressions');
+    const whyRecommendingThisCourseJson = this.jsonSchema['elements'].find(q => q.name === 'whyRecommendingThisCourse');
+
+    const minLength1 = chapterImpressionsJson ? chapterImpressionsJson.minLength : 0;
+    const minLength2 = whyRecommendingThisCourseJson ? whyRecommendingThisCourseJson.minLength : 0;
+
+    if (minLength1 > 0 && chapterImpressionsValue.length < minLength1) {
+        return;
+    }
+
+    if (minLength2 > 0 && whyRecommendingThisCourseValue.length < minLength2) {
+        return;
+    }
+
     const userId = this.authService?.currentUsr?.id
     // survey.setValue("userId", userId);
     // survey.setValue("courseId", this.course.id);
@@ -80,6 +97,20 @@ export class NpsSurveyComponent {
   ngOnInit() {
     const survey = new Model(this.jsonSchema);
     this.surveyModel = survey;
+
+    survey.onValidateQuestion.add((survey, options) => {
+      const questionName = options.question.name;
+      if (questionName === 'chapterImpressions' || questionName === 'whyRecommendingThisCourse') {
+        const questionJson = this.jsonSchema['elements'].find(q => q.name === questionName);
+        const minLength = questionJson ? questionJson.minLength : 0;
+        const value = options.value || '';
+
+        if (minLength > 0 && value.length < minLength) {
+          options.error = `Le nombre minimum de caractères est de ${minLength}.`;
+        }
+      }
+    });
+
     survey.onComplete.add((survey, options) => this.surveyComplete(survey, options));
   }
 
