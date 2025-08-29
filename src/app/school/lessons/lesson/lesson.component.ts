@@ -138,7 +138,8 @@ export class LessonComponent implements OnInit, OnDestroy {
         title:
           "Qu'est-ce que vous avez le plus apprécié dans ce chapitre ? Décrivez une fonctionnalité ou une leçon qui vous a particulièrement marqué.",
         type: 'comment',
-        maxLength: 500,
+        minLength: 100,
+        maxLength: 250,
       },
       {
         name: 'whyRecommendingThisCourse',
@@ -146,7 +147,8 @@ export class LessonComponent implements OnInit, OnDestroy {
         title:
           'Dites-nous pourquoi vous recommanderiez ce cours à un ami ou un collègue',
         type: 'comment',
-        maxLength: 500,
+        minLength: 100,
+        maxLength: 250,
       },
       {
         name: 'chapterExplanations',
