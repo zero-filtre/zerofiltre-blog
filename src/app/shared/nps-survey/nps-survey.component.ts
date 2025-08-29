@@ -42,8 +42,8 @@ export class NpsSurveyComponent {
           // this.notify.openSnackBarSuccess("Merci pour votre avis!", "")
         },
         error: (err: HttpErrorResponse) => {
-          options.showSaveError("Echec d'enregistrement, veuillez réessayer");
-          // this.notify.openSnackBarError("Echec d'enregistrement, veuillez réessayer", "Ok")
+          options.showSaveError("Echec d\'enregistrement, veuillez réessayer");
+          // this.notify.openSnackBarError("Echec d\'enregistrement, veuillez réessayer", "Ok")
         },
         complete: () => setTimeout(() => {
           this.dialogRef.close()
@@ -80,7 +80,25 @@ export class NpsSurveyComponent {
   ngOnInit() {
     const survey = new Model(this.jsonSchema);
     this.surveyModel = survey;
-    survey.onComplete.add((survey, options) => this.surveyComplete(survey, options));
+    let isMinLengthOk = true;
+
+    survey.onValidateQuestion.add((survey, options) => {
+      const questionName = options.question.name;
+      if (questionName === 'chapterImpressions' || questionName === 'whyRecommendingThisCourse') {
+        const questionJson = this.jsonSchema['elements'].find(q => q.name === questionName);
+        const minLength = questionJson ? questionJson.minLength : 0;
+        const value = options.value || '';
+
+        if (minLength > 0 && value.length < minLength) {
+          options.error = `Le nombre minimum de caractères est de ${minLength}.`;
+          isMinLengthOk = false;
+        }
+      }
+    });
+
+    if(isMinLengthOk) {
+      survey.onComplete.add((survey, options) => this.surveyComplete(survey, options));
+    }
   }
 
 }
