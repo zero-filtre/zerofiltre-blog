@@ -108,7 +108,7 @@ export const fr = {
         title: 'Demander un code de confirmation de compte',
         titleEmail: 'Veuillez saisir votre adresse email',
         message: "Veuillez renseigner votre adresse e-mail et nous vous enverrons un nouveau lien de confirmation de compte.",
-        messageEmail: "Nous n’avons pas pu récupérer votre @‌email. C'est obligatoire pour le bon fonctionnement de votre profil.",
+        messageEmail: "Nous n'avons pas pu récupérer votre @‌email. C'est obligatoire pour le bon fonctionnement de votre profil.",
         email: 'Email',
         invaldEmail: 'Vous devez entrer une adresse email valide',
         sendLink: '(R)envoyer le lien de confirmation',
@@ -129,7 +129,7 @@ export const fr = {
         loadArticlesErrorMessage: 'Oops...!'
     },
     articleDetail: {
-        aboutAuthor: 'À propos de l’auteur',
+        aboutAuthor: "À propos de l'auteur",
         simailarArticles: 'Articles similaires',
         updateOn: 'Mis à jour le',
         ofReadTime: 'min(s) de lecture',
@@ -313,7 +313,7 @@ export const fr = {
     },
     course: {
         noMoreCourse: 'Plus aucun cours 😏!',
-        noCourseAvailable: 'Aucun cours trouvé 😊!',
+        noCourseAvailable: 'Aucun cours pour le moment 😊!',
         loginToReactText: '🚨 Vous devez vous connecter pour réagir sur ce cours',
         publishToReactText: 'Vous pourrez reagir sur ce cours après sa publication.'
     }

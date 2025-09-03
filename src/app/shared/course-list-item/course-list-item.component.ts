@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from 'src/app/school/courses/course';
 import { CourseService } from 'src/app/school/courses/course.service';
 import { AuthService } from 'src/app/user/auth.service';
-import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-course-list-item',
@@ -16,16 +15,16 @@ export class CourseListItemComponent {
 
   constructor(
     public authService: AuthService,
-    private courseService: CourseService
+    private readonly courseService: CourseService
   ) { }
 
   canAccessCourse(course: Course) {
-    const user = this.authService?.currentUsr as User
+    const user = this.authService?.currentUsr
     return this.courseService.canAccessCourse(user, course);
   }
 
   canEditCourse(course: Course) {
-    const user = this.authService?.currentUsr as User
+    const user = this.authService?.currentUsr
     return this.courseService.canEditCourse(user, course);
   }
 
