@@ -17,6 +17,8 @@ import { SocialAuthComponent } from './social-auth/social-auth.component';
 import { UserResolver } from './user.resolver';
 import { SingleRouteGuard } from '../shared/guard/single-route.guard';
 import { AdminCoursesListComponent } from './courses/admin-courses-list/admin-courses-list.component';
+import { CompaniesComponent } from '../admin/features/companies/companies.component';
+import { CompanyCoursesComponent } from '../shared/company-courses/company-courses.component';
 
 
 
@@ -62,6 +64,16 @@ const routes: Routes = [
     canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard],
   },
   {
+    path: 'dashboard/companies',
+    component: CompaniesComponent,
+    canActivate: [TokenExpiredGuard, AuthGuard],
+  },
+  {
+    path: 'dashboard/companies/:companyId/courses',
+    component: CompanyCoursesComponent,
+    canActivate: [TokenExpiredGuard, AuthGuard],
+  },
+  {
     path: 'dashboard/teacher/courses',
     component: TeacherCoursesListComponent,
     canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard],
@@ -69,10 +81,11 @@ const routes: Routes = [
   {
     path: 'dashboard/courses/all',
     component: AdminCoursesListComponent,
-    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
-    data: {
-      role: 'ROLE_ADMIN'
-    }
+    canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard],
+    // canActivate: [SingleRouteGuard, TokenExpiredGuard, AuthGuard, HasRoleGuard],
+    // data: {
+    //   role: 'ROLE_ADMIN'
+    // }
   },
   {
     path: ':userID',
