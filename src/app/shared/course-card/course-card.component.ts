@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Course } from '../../school/courses/course';
@@ -13,14 +13,19 @@ import { catchError, throwError } from 'rxjs';
 @Component({
   selector: 'app-course-card',
   templateUrl: './course-card.component.html',
-  styleUrls: ['./course-card.component.css'],
+  styleUrls: ['./course-card.component.css']
 })
-export class CourseCardComponent {
+export class CourseCardComponent implements OnInit {
   @Input() title: string;
   @Input() canDownloadCertificate = false;
   @Input() course: Course;
   @Input() companyId: string;
   @Output() onCourseDeleteEvent = new EventEmitter<any>();
+
+  exclusiveCourse!: boolean;
+  canLinkCourseToCompany!: boolean;
+  canUnlinkCourseFromCompany!: boolean;
+  canManageCourse!: boolean;
 
   constructor(
     public authService: AuthService,
@@ -31,40 +36,65 @@ export class CourseCardComponent {
     private readonly companyService: CompanyService
   ) {}
 
-  parseUrl(url: string) {
-    return encodeURIComponent(url);
+  ngOnInit(): void {
+    this.exclusiveCourse = this.course.exclusive;
+    this.canLinkCourseToCompany = this.checkLinkCourseToCompany();
+    this.canUnlinkCourseFromCompany = this.checkUnLinkCourseFromCompany();
+    this.canManageCourse = this.checkManageCourse();
   }
 
-  canEditCourse(course: Course) {
-    const user = this.authService?.currentUsr;
-    return (
-      this.courseService.canEditCourse(user, course) ||
-      this.canManageCompany() ||
-      this.canEditCompanyCourses()
-    );
-  }
-
-  canDeleteCourse(course: Course) {
-    const user = this.authService?.currentUsr;
-    return (
-      this.courseService.canEditCourse(user, course) || this.authService.isAdmin || this.canManageCompany() || this.canEditCompanyCourses()
-    );
-  }
-
-  canLinkCourseToCompany() {
+  checkLinkCourseToCompany() {
     return this.authService.canAccessAdminDashboard && !this.companyId;
   }
 
-  canUnLinkCourseFromCompany() {
-    return this.canManageCompany() && this.companyId;
+  checkUnLinkCourseFromCompany() {
+    if(this.companyId && !this.exclusiveCourse && this.isPublishedCourse() && this.isAdminOrCompanyAdmin()) {
+        return true;
+    }
+
+    return false;
   }
 
-  canManageCompany() {
-    return this.authService.canManageCompany(+this.companyId);
+  isDraftOrInReviewCourse() {
+    return this.course.status === 'DRAFT' || this.course.status === 'IN_REVIEW';
   }
 
-  canEditCompanyCourses() {
-    return this.authService.canEditCompanyCourses(+this.companyId);
+  isPublishedCourse() {
+    return this.course.status === 'PUBLISHED';
+  }
+
+  isAdmin() {
+    return this.authService.isAdmin;
+  }
+
+  isAdminOrAuthor() {
+    return (this.authService.isAdmin || this.authService?.currentUsr.id === this.course.author.id);
+  }
+
+  isAdminOrCompanyAdmin() {
+    return (this.authService.isAdmin || this.authService?.adminInCompany(+this.companyId));
+  }
+
+  isAdminOrCompanyAdminOrEditor() {
+    return (this.authService.isAdmin || this.authService?.adminInCompany(+this.companyId) || this.authService?.editorInCompany(+this.companyId));
+  }
+
+  checkManageCourse() {
+    if(!this.companyId && this.isPublishedCourse() && this.isAdmin()) {
+        return true;
+    }
+    if(!this.companyId && this.isDraftOrInReviewCourse() && this.isAdminOrAuthor()) {
+        return true;
+    }
+
+    if(this.companyId && this.exclusiveCourse && this.isPublishedCourse() && this.isAdminOrCompanyAdmin()) {
+        return true;
+    }
+    if(this.companyId && this.exclusiveCourse && this.isDraftOrInReviewCourse() && this.isAdminOrCompanyAdminOrEditor()) {
+        return true;
+    }
+
+    return false;
   }
 
   fetchAllCourses() {
