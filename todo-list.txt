@@ -1,0 +1,35 @@
+// [x] dans courseInfosService ajouter une méthode pour enregistrer le cours exclusif
+// [x] dans LessonComponent remplacer la recherche du cours exclusif par une méthode dans courseInfosService
+// [x] dans courseInfosService ajouter une méthode pour réinitialiser toutes les attributs
+// [ ] trouver le problème du texte de la leçon qui est affiché alors qu'il n'existe pas
+// [ ] transférer la navigation vers LessonEditPageComponent dans CurriculumSidebar.component.ts
+// [ ] définir dans quelles situations il faut réinitialiser toutes les attributs dans courseInfosService
+// [ ] Pour un brouillon de cours appartenant exclusivement à une organisation
+        Dans LessonComponent
+            1 - GET	http://localhost/course/42?companyId=6
+            2 - GET	http://localhost/chapter/course/42
+            3 - GET	http://localhost/company/6/course/42
+
+            clic sur le bouton pour modifier la leçon
+            4 - GET	http://localhost/lesson/59
+
+        Dans LessonEditPageComponent
+            1 - GET	http://localhost/lesson/59
+
+            clic sur le bouton pour retourner dans la leçon
+            1 - GET	http://localhost/lesson/59
+
+        Dans LessonComponent
+            1 - GET http://localhost/lesson/59
+            2 - GET	http://localhost/course/42 => ERREUR 403
+            3 - GET	http://localhost/chapter/course/42
+
+        Question: pourquoi GET	http://localhost/lesson/59 est appelé 4 fois au lieu de 2 ?
+// [ ] un admin de la plateforme peut modifier un brouillon de cours (exclusif avec une vidéo) d'une organisation
+// [ ] un admin de l'organisation peut modifier un brouillon de cours (exclusif avec une vidéo) d'une organisation
+// [ ] un éditeur de l'organisation peut modifier un cours en attente (exclusif avec une vidéo) d'une organisation
+// [ ] un admin de la plateforme peut modifier un cours en attente (exclusif avec une vidéo) d'une organisation
+// [ ] un admin de l'organisation peut modifier un cours en attente (exclusif avec une vidéo) d'une organisation
+// [ ] un éditeur de l'organisation peut modifier un cours en attente (exclusif avec une vidéo) d'une organisation
+// [ ] un admin de la plateforme peut modifier un cours publié (exclusif avec une vidéo) d'une organisation
+// [ ] un admin de l'organisation peut modifier un cours publié (exclusif avec une vidéo) d'une organisation

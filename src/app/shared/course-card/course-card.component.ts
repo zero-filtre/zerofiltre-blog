@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Course } from '../../school/courses/course';
@@ -9,11 +9,13 @@ import { CompanySearchPopupComponent } from '../../admin/features/companies/comp
 import { MessageService } from '../../services/message.service';
 import { CompanyService } from 'src/app/admin/features/companies/company.service';
 import { catchError, throwError } from 'rxjs';
+import { CourseInfosService } from 'src/app/school/courses/course-infos.service';
 
 @Component({
   selector: 'app-course-card',
   templateUrl: './course-card.component.html',
-  styleUrls: ['./course-card.component.css']
+  styleUrls: ['./course-card.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseCardComponent implements OnInit {
   @Input() title: string;
@@ -26,6 +28,7 @@ export class CourseCardComponent implements OnInit {
   canLinkCourseToCompany!: boolean;
   canUnlinkCourseFromCompany!: boolean;
   canManageCourse!: boolean;
+  test!: string;
 
   constructor(
     public authService: AuthService,
@@ -33,14 +36,18 @@ export class CourseCardComponent implements OnInit {
     private readonly dialogDeleteRef: MatDialog,
     private readonly router: Router,
     private readonly messageService: MessageService,
-    private readonly companyService: CompanyService
+    private readonly companyService: CompanyService,
+    private readonly courseInfosService: CourseInfosService
   ) {}
 
   ngOnInit(): void {
+    console.log('CourseCardComponent');
     this.exclusiveCourse = this.course.exclusive;
     this.canLinkCourseToCompany = this.checkLinkCourseToCompany();
     this.canUnlinkCourseFromCompany = this.checkUnLinkCourseFromCompany();
     this.canManageCourse = this.checkManageCourse();
+    console.log('  - this.companyId =', this.companyId);
+    console.log('  - this.exclusiveCourse =', this.exclusiveCourse);
   }
 
   checkLinkCourseToCompany() {
@@ -95,6 +102,16 @@ export class CourseCardComponent implements OnInit {
     }
 
     return false;
+  }
+
+  saveCourseInfos() {
+    if(this.isAdmin) this.courseInfosService.setAdmin(true);
+    if(!this.isAdmin) this.courseInfosService.setUserCompanyRole(this.authService.getUserRoleInCompany(+this.companyId));
+
+    if(this.exclusiveCourse) this.courseInfosService.setExclusiveCourse(this.exclusiveCourse);
+
+    this.courseInfosService.setCompanyId(this.companyId);
+    this.courseInfosService.setModeEditCourse(this.canManageCourse);
   }
 
   fetchAllCourses() {
@@ -165,4 +182,5 @@ export class CourseCardComponent implements OnInit {
       },
     });
   }
+
 }

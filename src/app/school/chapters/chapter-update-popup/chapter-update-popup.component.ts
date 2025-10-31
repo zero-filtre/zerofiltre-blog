@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { ChapterService } from '../chapter.service';
 
 @Component({
@@ -10,11 +9,11 @@ import { ChapterService } from '../chapter.service';
 })
 export class ChapterUpdatePopupComponent implements OnInit {
   title: string = '';
+  index!: number;
   loading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ChapterUpdatePopupComponent>,
-    private router: Router,
     private chapterService: ChapterService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
@@ -34,9 +33,8 @@ export class ChapterUpdatePopupComponent implements OnInit {
 
     this.chapterService.updateChapter(payload)
       .subscribe(_data => {
-        location.reload();
-        // this.loading = false;
-        // this.dialogRef.close();
+        this.loading = false;
+        this.dialogRef.close({title: this.title, index: this.data.indexChapter});
       });
   }
 

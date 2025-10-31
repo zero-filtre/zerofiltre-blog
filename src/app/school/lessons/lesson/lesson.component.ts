@@ -5,7 +5,7 @@ import {
   HostListener,
   OnInit,
   ViewChild,
-  ElementRef,
+  ElementRef
 } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
 import {
@@ -19,11 +19,6 @@ import {
   shareReplay,
   forkJoin,
   finalize,
-  first,
-  filter,
-  mergeMap,
-  from,
-  EMPTY,
   combineLatest,
   takeUntil
 } from 'rxjs';
@@ -49,11 +44,10 @@ import { environment } from 'src/environments/environment';
 import { PaymentService } from 'src/app/services/payment.service';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
-import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { NpsSurveyComponent } from 'src/app/shared/nps-survey/nps-survey.component';
 import { EnrollmentService } from 'src/app/services/enrollment.service';
-import { CompanyService } from 'src/app/admin/features/companies/company.service';
+import { CourseInfosService } from '../../courses/course-infos.service';
 
 @Component({
   selector: 'app-course-content',
@@ -86,6 +80,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   courseID!: any;
   courseEnrollmentID: any;
   companyId: string;
+  isEditCourse!: boolean;
+  isExclusiveCourse!: boolean;
 
   course$: Observable<Course>;
   lessonVideo$: Observable<any>;
@@ -99,7 +95,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   nextLesson: Lesson;
 
   CompletedText$ = new Subject<boolean>();
-  isCourseExclusive$: Observable<boolean>;
 
   docTypes = ['txt', 'doc', 'pdf'];
   imageResources: Resource[] = [];
@@ -247,6 +242,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     ],
   };
 
+  static counter: number = 0;
+
   constructor(
     private readonly seo: SeoService,
     private readonly vimeoService: VimeoService,
@@ -263,10 +260,9 @@ export class LessonComponent implements OnInit, OnDestroy {
     media: MediaMatcher,
     private readonly paymentService: PaymentService,
     private readonly slugify: SlugUrlPipe,
-    private readonly location: Location,
     private readonly modalService: MatDialog,
     private readonly enrollmentService: EnrollmentService,
-    private readonly companyService: CompanyService
+    private readonly courseInfosService: CourseInfosService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -278,12 +274,12 @@ export class LessonComponent implements OnInit, OnDestroy {
   get canAccessCourse() {
     const user = this.authService?.currentUsr;
     return (
-      this.courseService.canAccessCourse(user, this.course) || this.isSubscriber
+      this.isEditCourse || this.courseService.canAccessCourse(user, this.course) || this.isSubscriber
     );
   }
+  
   get canEditCourse() {
-    const user = this.authService?.currentUsr;
-    return this.courseService.canEditCourse(user, this.course);
+    return this.isEditCourse;
   }
 
   injectGiscus() {
@@ -301,7 +297,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   @HostListener('document:keydown.control.b', ['$event'])
   @HostListener('document:keydown.meta.b', ['$event'])
-  onKeyDown(event: KeyboardEvent): void {
+  onKeyDown(event: Event): void {
     event.preventDefault();
     this.toggleSidenav();
   }
@@ -456,7 +452,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.lessonService.findLessonById(lessonId).subscribe({
       next: (lesson: Lesson) => {
         this.lesson = lesson;
-        this.injectGiscus();
+
+        if(!this.isEditCourse) this.injectGiscus();
 
         const desc = lesson?.summary || '';
         const img =
@@ -523,32 +520,6 @@ export class LessonComponent implements OnInit, OnDestroy {
         tap((data) => {
           this.loadingCourse = false;
           this.course = data;
-
-          if (this.authService.isAdmin) return;
-
-          const userCompanies = this.authService.currentUsr.companies;
-
-          from(userCompanies)
-            .pipe(
-              filter((company: { companyId: number }) =>
-                this.authService.adminInCompany(company.companyId)
-              ),
-              mergeMap((company: { companyId: number }) =>
-                this.companyService.getLinkBetweenCourseAndCompany({
-                  companyId: company.companyId,
-                  courseId: this.course.id,
-                })
-              ),
-              catchError(() => {
-                this.messageService.cancel();
-                return of(null);
-              }),
-              map((data: { exclusive: boolean }) => data.exclusive),
-              first((exclusive: boolean) => exclusive === true, false)
-            )
-            .subscribe((exclusive: boolean) => {
-              this.isCourseExclusive$ = of(exclusive);
-            });
         }),
         shareReplay()
       );
@@ -743,7 +714,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   manageEnrollment(user: User, lessonId: string) {
-    if (!user) return;
+    if (!user || this.isEditCourse) return;
 
     this.courseEnrollment$ = this.enrollmentService
       .checkSubscriptionAndEnroll(
@@ -781,7 +752,20 @@ export class LessonComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
+    console.log('LessonComponent');
     const user = this.authService?.currentUsr;
+
+    this.courseInfosService.isEditCourse$.subscribe(isEditCourse =>
+      {this.isEditCourse = isEditCourse});
+    console.log('  - this.isEditCourse =', this.isEditCourse);
+
+    this.courseInfosService.companyId$.subscribe(companyId =>
+      {this.companyId = companyId});
+    console.log('  - this.companyId =', this.companyId);
+
+    this.courseInfosService.isExclusiveCourse$.subscribe(isExclusiveCourse =>
+      {this.isExclusiveCourse = isExclusiveCourse});
+    console.log('  - this.isExclusiveCourse =', this.isExclusiveCourse);
 
     this.seo.unmountFooter();
 
@@ -797,9 +781,15 @@ export class LessonComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe(({ companyId, lessonID, courseID }) => {
-        this.companyId = companyId;
+        if(companyId) {
+         this.companyId = companyId;
+        } else {
+          this.companyId = '';
+        }
         this.courseID = courseID;
         this.lessonID = lessonID;
+        console.log('  - this.companyId =', this.companyId);
+        console.log('  - this.courseID =', this.courseID);
 
         this.loadCourseData(this.courseID);
         this.loadAllChapters(this.courseID, this.lessonID);

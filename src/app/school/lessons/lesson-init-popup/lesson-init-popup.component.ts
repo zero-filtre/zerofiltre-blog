@@ -11,7 +11,7 @@ import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
   templateUrl: './lesson-init-popup.component.html',
   styleUrls: ['./lesson-init-popup.component.css']
 })
-export class LessonInitPopupComponent implements OnInit {
+export class LessonInitPopupComponent {
   public title: string = '';
   public loading: boolean = false;
 
@@ -47,16 +47,19 @@ export class LessonInitPopupComponent implements OnInit {
           return throwError(() => err?.message)
         })
       )
-      .subscribe(lesson => {
+      .subscribe(newLesson => {
         this.loading = false;
-        this.dialogRef.close();
-        this.router.navigateByUrl(`/cours/${this.slugify.transform(this.data.course)}/${this.slugify.transform(lesson)}/edit`)
-      })
-  }
+        console.log('this.data.indexChapter =', this.data.indexChapter);
+        this.dialogRef.close({lesson: newLesson, indexChapter: this.data.indexChapter});
 
-  ngOnInit(): void {
-    // console.log('DATA: ', this.data);
-    // do nothing.
+        const queryParams: { [key: string]: string } = {};
+
+        if (this.data.companyId !== undefined) {
+            queryParams['companyId'] = this.data.companyId;
+        }
+
+        this.router.navigate([`/cours/${this.slugify.transform(this.data.course)}/${this.slugify.transform(newLesson)}/edit`], { queryParams });
+      })
   }
 
 }
