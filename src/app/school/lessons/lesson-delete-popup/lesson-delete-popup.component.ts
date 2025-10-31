@@ -1,7 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { MessageService } from '../../../services/message.service';
 import { LessonService } from '../lesson.service';
 import { catchError, throwError } from 'rxjs';
 
@@ -10,13 +8,11 @@ import { catchError, throwError } from 'rxjs';
   templateUrl: './lesson-delete-popup.component.html',
   styleUrls: ['./lesson-delete-popup.component.css']
 })
-export class LessonDeletePopupComponent implements OnInit {
+export class LessonDeletePopupComponent {
   public loading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<LessonDeletePopupComponent>,
-    private messageService: MessageService,
-    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private lessonService: LessonService
   ) { }
@@ -38,14 +34,8 @@ export class LessonDeletePopupComponent implements OnInit {
         })
       )
       .subscribe(_data => {
-        location.reload();
-        // this.loading = false;
-        // this.dialogRef.close();
+        this.loading = false;
+        this.dialogRef.close({indexChapter: this.data.indexChapter, indexLesson: this.data.indexLesson});
       })
   }
-
-  ngOnInit(): void {
-    // do nothing.
-  }
-
 }

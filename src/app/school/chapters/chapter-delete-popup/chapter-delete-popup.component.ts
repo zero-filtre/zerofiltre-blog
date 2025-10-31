@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
-import { MessageService } from '../../../services/message.service';
 import { ChapterService } from '../chapter.service';
 
 @Component({
@@ -10,13 +8,11 @@ import { ChapterService } from '../chapter.service';
   templateUrl: './chapter-delete-popup.component.html',
   styleUrls: ['./chapter-delete-popup.component.css']
 })
-export class ChapterDeletePopupComponent implements OnInit {
+export class ChapterDeletePopupComponent {
   public loading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ChapterDeletePopupComponent>,
-    private messageService: MessageService,
-    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private chapterService: ChapterService
   ) { }
@@ -24,7 +20,6 @@ export class ChapterDeletePopupComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 
   handleDeleteChapter(): void {
     this.loading = true;
@@ -38,14 +33,9 @@ export class ChapterDeletePopupComponent implements OnInit {
         })
       )
       .subscribe(_data => {
-        location.reload();
-        // this.loading = false;
-        // this.dialogRef.close();
+        this.loading = false;
+        this.dialogRef.close(this.data.indexChapter);
       })
-  }
-
-  ngOnInit(): void {
-    // do nothing.
   }
 
 }

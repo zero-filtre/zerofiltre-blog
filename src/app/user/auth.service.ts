@@ -192,6 +192,16 @@ export class AuthService {
     return !!isEditorInCompany;
   }
 
+  getUserRoleInCompany(someCompanyId: number): string | undefined {
+    const user = this.currentUsr;
+    if (!user) return '';
+
+    const userRoleInCompany = user.companies?.find(
+      company => company.companyId === someCompanyId);
+
+      return userRoleInCompany ? userRoleInCompany.role : undefined;
+  }
+
   getUsers(pageNumber: number, limit: number): Observable<User[]> {
     return this.http.get<any>(`${this.apiServerUrl}/user?pageNumber=${pageNumber}&pageSize=${limit}`)
       .pipe(shareReplay());

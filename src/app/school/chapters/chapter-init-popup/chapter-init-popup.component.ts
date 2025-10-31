@@ -1,7 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { MessageService } from '../../../services/message.service';
 import { ChapterService } from '../chapter.service';
 import { catchError, throwError } from 'rxjs';
 
@@ -10,14 +8,12 @@ import { catchError, throwError } from 'rxjs';
   templateUrl: './chapter-init-popup.component.html',
   styleUrls: ['./chapter-init-popup.component.css']
 })
-export class ChapterInitPopupComponent implements OnInit {
+export class ChapterInitPopupComponent {
   public title: string = '';
   public loading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ChapterInitPopupComponent>,
-    private router: Router,
-    private messageService: MessageService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private chapterService: ChapterService
   ) { }
@@ -46,15 +42,10 @@ export class ChapterInitPopupComponent implements OnInit {
         })
       )
       .subscribe(_data => {
-        location.reload();
-        // this.loading = false;
-        // this.dialogRef.close();
+        this.loading = false;
+        this.dialogRef.close(_data);
       })
 
-  }
-
-  ngOnInit(): void {
-    // do nothing.
   }
 
 }
