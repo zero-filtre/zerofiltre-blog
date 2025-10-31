@@ -38,6 +38,7 @@ export class LessonEditPageComponent implements OnInit {
   lessonVideo$: Observable<any>;
   lessonID!: string;
   courseID!: string;
+  companyId!: string;
 
   isLoading: boolean;
   isPublishing: boolean;
@@ -69,6 +70,16 @@ export class LessonEditPageComponent implements OnInit {
     private vimeo: VimeoService,
     private dialogUploadRef: MatDialog
   ) { }
+
+  returnToLesson() {
+    const queryParams: { [key: string]: string } = {};
+
+    if (this.companyId !== undefined) {
+        queryParams['companyId'] = this.companyId;
+    }
+
+    this.router.navigate([`/cours/${this.courseID}/${this.lessonID}`], { queryParams });
+  }
 
   isZIPFile(res: Resource): boolean {
     const parts = res.url.split('.')
@@ -316,7 +327,7 @@ export class LessonEditPageComponent implements OnInit {
           this.isLoading = false;
 
           if (err.status === 404) {
-            this.messageService.openSnackBarError("Oops cette lesson est n'existe pas 😣!", '');
+            this.messageService.openSnackBarError("Oops cette leçon n'existe pas 😣!", '');
             this.navigate.back();
           }
           return throwError(() => err?.message)
@@ -487,6 +498,10 @@ export class LessonEditPageComponent implements OnInit {
         return this.getLesson();
       })
     );
+
+    this.route.queryParams.subscribe(params => {
+      this.companyId = params['companyId'];
+    });
 
     this.triggerAutoSave();
   }

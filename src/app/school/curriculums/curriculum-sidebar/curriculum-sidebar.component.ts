@@ -10,7 +10,7 @@ import { Course } from '../../courses/course';
 import { Lesson } from '../../lessons/lesson';
 import { Chapter } from '../../chapters/chapter';
 import { ChapterUpdatePopupComponent } from '../../chapters/chapter-update-popup/chapter-update-popup.component';
-import { capitalizeString } from 'src/app/services/utilities.service';
+import { capitalizeString, slugify } from 'src/app/services/utilities.service';
 import { CourseService } from '../../courses/course.service';
 import { Observable, catchError, of, tap, throwError } from 'rxjs';
 
@@ -22,7 +22,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-curriculum-sidebar',
   templateUrl: './curriculum-sidebar.component.html',
-  styleUrls: ['./curriculum-sidebar.component.css'],
+  styleUrls: ['./curriculum-sidebar.component.css']
 })
 export class CurriculumSidebarComponent implements OnInit {
   @Input() drawer!: any;
@@ -125,54 +125,108 @@ export class CurriculumSidebarComponent implements OnInit {
       height: '350px',
       panelClass: 'article-popup-panel',
       data: {
-        courseId,
-        history: this.router.url,
-      },
+        courseId
+      }
+    })
+    .afterClosed()
+    .subscribe(newChapter => {
+      if(newChapter) {
+        this.chapters.push(newChapter);
+        this.chapters = [...this.chapters];
+      }
     });
   }
 
-  openChapterUpdateDialog(chapter: Chapter): void {
+  openChapterUpdateDialog(chapter: Chapter, indexChapter: number): void {
     this.dialogUpdateChapterRef.open(ChapterUpdatePopupComponent, {
       width: '850px',
       height: '350px',
       panelClass: 'article-popup-panel',
       data: {
         chapter,
-        history: this.router.url,
-      },
+        indexChapter
+      }
+    })
+    .afterClosed()
+    .subscribe(chapterInfos => {
+      if(chapterInfos){
+        this.chapters[chapterInfos.index].title = chapterInfos.title;
+        this.chapters = [...this.chapters];
+      }
     });
   }
 
-  openChapterDeleteDialog(chapterId: number): void {
+  openChapterDeleteDialog(chapterId: number, indexChapter: number): void {
     this.dialogDeleteChapterRef.open(ChapterDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
         chapterId,
-        history: this.router.url,
-      },
+        indexChapter
+      }
+    })
+    .afterClosed()
+    .subscribe(indexChapter => {
+      if(indexChapter) {
+        this.chapters.splice(indexChapter);
+        this.chapters = [...this.chapters];
+      }
     });
   }
 
-  openLessonInitDialog(chapterId: number, course: Course): void {
+  openLessonInitDialog(chapterId: number, course: Course, indexChapter: number): void {
     this.dialogNewLessonRef.open(LessonInitPopupComponent, {
       width: '850px',
       height: '350px',
       panelClass: 'article-popup-panel',
       data: {
         chapterID: chapterId,
-        course: course,
-        history: this.router.url,
-      },
+        course,
+        indexChapter,
+        companyId: this.companyId
+      }
+    })
+    .afterClosed()
+    .subscribe(newLesson => {
+      if(newLesson) {
+        const lessons = this.chapters[newLesson.indexChapter].lessons;
+        lessons.push(newLesson.lesson);
+        this.chapters = [...this.chapters];
+      }
     });
   }
 
-  openLessonDeleteDialog(lessonId: number): void {
+  openLessonDeleteDialog(lessonId: number, indexChapter: number, indexLesson: number): void {
     this.dialogDeleteLessonRef.open(LessonDeletePopupComponent, {
       panelClass: 'delete-article-popup-panel',
       data: {
         lessonId,
-        history: this.router.url,
+        indexChapter,
+        indexLesson
       },
+    })
+    .afterClosed()
+    .subscribe(data => {
+      if(data) {
+        const lessons = this.chapters[data.indexChapter].lessons;
+        lessons.splice(data.indexLesson);
+
+        this.chapters = [...this.chapters];
+
+        const queryParams: { [key: string]: string } = {};
+        if (this.companyId !== undefined) {
+            queryParams['companyId'] = this.companyId;
+        }
+
+        const courseSlug = slugify(this.course);
+
+        if(lessons.length > 0) {
+          const lessonSlug = slugify(lessons[lessons.length - 1]);
+
+          this.router.navigate([`/cours/${courseSlug}/${lessonSlug}`], { queryParams });
+        } else {
+          this.router.navigate([`/cours/${courseSlug}/?`], { queryParams });
+        }
+      }
     });
   }
 

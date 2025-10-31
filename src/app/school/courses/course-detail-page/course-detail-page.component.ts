@@ -30,6 +30,7 @@ import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 import { Location } from '@angular/common';
 import { SurveyService } from 'src/app/services/survey.service';
 import { EnrollmentService } from 'src/app/services/enrollment.service';
+import { CourseInfosService } from '../course-infos.service';
 
 @Component({
   selector: 'app-course-detail-page',
@@ -51,6 +52,7 @@ export class CourseDetailPageComponent implements OnInit {
   isSubscriber: boolean;
   isLoading: boolean;
   isCheckingEnrollment: boolean;
+  isEditCourse!: boolean;
 
   notRedirectToFirstLesson: string;
   currentVideoId: string;
@@ -81,7 +83,8 @@ export class CourseDetailPageComponent implements OnInit {
     private readonly location: Location,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private readonly enrollmentService: EnrollmentService
+    private readonly enrollmentService: EnrollmentService,
+    private readonly courseInfosService: CourseInfosService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -96,8 +99,7 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   get canEditCourse() {
-    const user = this.authService?.currentUsr;
-    return this.courseService.canEditCourse(user, this.course);
+    return this.isEditCourse;
   }
 
   buyCourse() {
@@ -170,9 +172,11 @@ export class CourseDetailPageComponent implements OnInit {
 
         this.jsonLd.setData(dataSchema);
 
-        this.manageEnrollment(user);
+        if(!this.isEditCourse) {
+          this.manageEnrollment(user);
 
-        this.isSubscriber = this.courseService.isSubscriber(data.id);
+          this.isSubscriber = this.courseService.isSubscriber(data.id);
+        }
 
         this.course = data;
         this.orderSections(data);
@@ -231,6 +235,9 @@ export class CourseDetailPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.courseInfosService.isEditCourse$.subscribe(isEditCourse =>
+      {this.isEditCourse = isEditCourse});
+
     this.route.queryParamMap.subscribe((query) => {
       this.companyId = query.get('companyId')!;
     });

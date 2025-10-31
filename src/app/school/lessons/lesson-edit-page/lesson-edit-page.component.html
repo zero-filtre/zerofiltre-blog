@@ -1,7 +1,7 @@
 <div class="edit-toolbar sticky top-[72px] lg:top-20 z-20 bg-primary-100">
     <nav class="top-nav font-semibold">
         <div class="site-container flex items-center justify-between gap-4 lg:gap-5 h-16">
-            <a routerLink="/cours/{{courseID}}/{{lessonID}}" class="flex items-center justify-center bg-primary-50 text-white h-full w-16"
+            <a (click)="returnToLesson()" class="flex items-center justify-center bg-primary-50 text-white h-full w-16"
                 aria-label="navigate back button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="group-hover:text-primary-300"
                     data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">

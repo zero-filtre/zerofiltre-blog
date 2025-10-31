@@ -25,7 +25,7 @@
             <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art" *appShellNoRender>
                 <app-curriculum-sidebar [drawer]="snav" [canEdit]="canEditCourse" [course]="course$|async"
                     [lessons]="lessons$ | async" [chapters]="chapters$ | async" [activeLessonID]="lessonID"
-                    [exclusive]="isCourseExclusive$ | async"
+                    [exclusive]="isExclusiveCourse"
                     [activeChapterID]="lesson?.chapterId" [canAccessCourse]="canAccessCourse"
                     [loading]="loadingChapters" [completedLessonsIds]="completedLessonsIds" [durations]="durations"
                     [companyId]="companyId"
@@ -315,7 +315,7 @@
                     </div>
 
                     <div class="lesson_pagination my-10">
-                        <div *ngIf="lesson" class="flex gap-5 lg:gap-10 font-semibold">
+                        <div *ngIf="!isEditCourse && lesson" class="flex gap-5 lg:gap-10 font-semibold">
                             <a *ngIf="prevLesson$|async as prev"
                                 routerLink="{{'/cours/'+ (course|slugify) + '/' + (prev|slugify)}}"
                                 class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
