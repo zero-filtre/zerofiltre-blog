@@ -82,7 +82,7 @@
                                             </button>
 
                                             <mat-menu #menu="matMenu" class="font-normal text-secondary bg-primary-100">
-                                                <button (click)="openLessonInitDialog(chapter?.id, course)"
+                                                <button (click)="openLessonInitDialog(chapter?.id, course, index)"
                                                     aria-labelledby="Add Lesson button"
                                                     class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -93,7 +93,7 @@
                                                     </svg>
                                                     <span>Ajouter une leçon</span>
                                                 </button>
-                                                <button (click)="openChapterUpdateDialog(chapter)"
+                                                <button (click)="openChapterUpdateDialog(chapter, index)"
                                                     aria-labelledby="Delete chapter button"
                                                     class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -104,7 +104,7 @@
                                                     </svg>
                                                     <span>Modifier ce chapitre</span>
                                                 </button>
-                                                <button (click)="openChapterDeleteDialog(chapter?.id)"
+                                                <button (click)="openChapterDeleteDialog(chapter?.id, index)"
                                                     aria-labelledby="Delete chapter button"
                                                     class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -178,7 +178,7 @@
                                                                             d="M4.5 12.75l6 6 9-13.5" />
                                                                     </svg>
 
-                                                                    <svg *ngIf="!lesson?.free && !canAccessCourse"
+                                                                    <svg *ngIf="!canEdit && !lesson?.free && !canAccessCourse"
                                                                         xmlns="http://www.w3.org/2000/svg"
                                                                         viewBox="0 0 24 24" fill="currentColor"
                                                                         class="w-5 h-5 text-secondary">
@@ -230,7 +230,7 @@
                                                                             <span>Modifier la leçon</span>
                                                                         </a>
                                                                         <button
-                                                                            (click)="openLessonDeleteDialog(lesson?.id)"
+                                                                            (click)="openLessonDeleteDialog(lesson?.id, index, j)"
                                                                             aria-labelledby="Delete article button"
                                                                             class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
