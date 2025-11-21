@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { catchError, throwError } from 'rxjs';
+import { MessageService } from 'src/app/services/message.service';
 import { ChapterService } from '../chapter.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class ChapterDeletePopupComponent {
   constructor(
     public dialogRef: MatDialogRef<ChapterDeletePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private chapterService: ChapterService
+    private chapterService: ChapterService,
+    private messageService: MessageService
   ) { }
 
   onNoClick(): void {
@@ -29,13 +31,19 @@ export class ChapterDeletePopupComponent {
         catchError(err => {
           this.loading = false;
           this.dialogRef.close();
-          return throwError(() => err?.message)
+          
+          return throwError(() => err);
         })
       )
-      .subscribe(_data => {
-        this.loading = false;
-        this.dialogRef.close(this.data.indexChapter);
-      })
+      .subscribe({
+        next: (_data) => {
+          this.loading = false;
+          this.dialogRef.close(this.data.indexChapter);
+        },
+        error: (err) => {
+          this.messageService.openSnackBarError(err.error.error.reason, 'OK');
+        }
+      });
   }
 
 }

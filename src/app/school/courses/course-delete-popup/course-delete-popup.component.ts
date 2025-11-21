@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { MessageService } from '../../../services/message.service';
 import { CourseService } from '../course.service';
@@ -10,13 +9,12 @@ import { CourseService } from '../course.service';
   templateUrl: './course-delete-popup.component.html',
   styleUrls: ['./course-delete-popup.component.css']
 })
-export class CourseDeletePopupComponent implements OnInit {
+export class CourseDeletePopupComponent {
   public loading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<CourseDeletePopupComponent>,
     private messageService: MessageService,
-    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private courseService: CourseService
   ) { }
@@ -33,19 +31,19 @@ export class CourseDeletePopupComponent implements OnInit {
       .pipe(
         catchError(err => {
           this.loading = false;
-          return throwError(() => err?.message)
+          return throwError(() => err)
         })
       )
-      .subscribe(_data => {
-        location.reload();
-        this.loading = false;
-        this.dialogRef.close();
-        this.messageService.openSnackBarSuccess("Le cours a bien été supprimé", 'OK');
+      .subscribe({
+        next: (_data) => {
+          location.reload();
+          this.loading = false;
+          this.dialogRef.close();
+          this.messageService.openSnackBarSuccess("Le cours a bien été supprimé", 'OK');
+        },
+        error: (err) => {
+          this.messageService.openSnackBarError(err, 'OK');
+        }
       })
   }
-
-  ngOnInit(): void {
-    // do nothing.
-  }
-
 }
