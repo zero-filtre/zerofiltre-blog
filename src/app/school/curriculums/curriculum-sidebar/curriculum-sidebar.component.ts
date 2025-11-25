@@ -10,7 +10,7 @@ import { Course } from '../../courses/course';
 import { Lesson } from '../../lessons/lesson';
 import { Chapter } from '../../chapters/chapter';
 import { ChapterUpdatePopupComponent } from '../../chapters/chapter-update-popup/chapter-update-popup.component';
-import { capitalizeString } from 'src/app/services/utilities.service';
+import { capitalizeString, slugify } from 'src/app/services/utilities.service';
 import { CourseService } from '../../courses/course.service';
 import { Observable, catchError, of, tap, throwError } from 'rxjs';
 
@@ -75,8 +75,8 @@ export class CurriculumSidebarComponent implements OnInit {
         event.currentIndex
       );
 
-      const currPosition = event.currentIndex;
-      const prevPosition = event.previousIndex;
+      const currPosition = event.currentIndex + 1;
+      const prevPosition = event.previousIndex + 1;
       const draggedElement = event.item.dropContainer.data[
         event.currentIndex
       ] as Lesson;
@@ -84,7 +84,7 @@ export class CurriculumSidebarComponent implements OnInit {
       if (currPosition != prevPosition) {
         this.courseService
           .moveLesson(draggedElement.chapterId, draggedElement.id, currPosition)
-          .subscribe((_data) => console.log('DRAGGED LESSON'));
+          .subscribe();
       }
     }
   }
@@ -106,7 +106,7 @@ export class CurriculumSidebarComponent implements OnInit {
       if (currPosition != prevPosition) {
         this.courseService
           .moveChapter(draggedElement.id, currPosition)
-          .subscribe((_data) => console.log('DRAGGED CHAPTER'));
+          .subscribe();
       }
     }
   }
@@ -120,60 +120,129 @@ export class CurriculumSidebarComponent implements OnInit {
   }
 
   openChapterInitDialog(courseId: number): void {
-    this.dialogNewChapterRef.open(ChapterInitPopupComponent, {
-      width: '850px',
-      height: '350px',
-      panelClass: 'article-popup-panel',
-      data: {
-        courseId,
-        history: this.router.url,
-      },
-    });
+    this.dialogNewChapterRef
+      .open(ChapterInitPopupComponent, {
+        width: '850px',
+        height: '350px',
+        panelClass: 'article-popup-panel',
+        data: {
+          courseId,
+        },
+      })
+      .afterClosed()
+      .subscribe((newChapter) => {
+        if (newChapter) {
+          this.chapters.push(newChapter);
+          this.chapters = [...this.chapters];
+        }
+      });
   }
 
-  openChapterUpdateDialog(chapter: Chapter): void {
-    this.dialogUpdateChapterRef.open(ChapterUpdatePopupComponent, {
-      width: '850px',
-      height: '350px',
-      panelClass: 'article-popup-panel',
-      data: {
-        chapter,
-        history: this.router.url,
-      },
-    });
+  openChapterUpdateDialog(chapter: Chapter, indexChapter: number): void {
+    this.dialogUpdateChapterRef
+      .open(ChapterUpdatePopupComponent, {
+        width: '850px',
+        height: '350px',
+        panelClass: 'article-popup-panel',
+        data: {
+          chapter,
+          indexChapter,
+        },
+      })
+      .afterClosed()
+      .subscribe((chapterInfos) => {
+        if (chapterInfos) {
+          this.chapters[chapterInfos.index].title = chapterInfos.title;
+          this.chapters = [...this.chapters];
+        }
+      });
   }
 
-  openChapterDeleteDialog(chapterId: number): void {
-    this.dialogDeleteChapterRef.open(ChapterDeletePopupComponent, {
-      panelClass: 'delete-article-popup-panel',
-      data: {
-        chapterId,
-        history: this.router.url,
-      },
-    });
+  openChapterDeleteDialog(chapterId: number, indexChapter: number): void {
+    this.dialogDeleteChapterRef
+      .open(ChapterDeletePopupComponent, {
+        panelClass: 'delete-article-popup-panel',
+        data: {
+          chapterId,
+          indexChapter,
+        },
+      })
+      .afterClosed()
+      .subscribe((indexChapter) => {
+        if (indexChapter) {
+          this.chapters.splice(indexChapter);
+          this.chapters = [...this.chapters];
+        }
+      });
   }
 
-  openLessonInitDialog(chapterId: number, course: Course): void {
-    this.dialogNewLessonRef.open(LessonInitPopupComponent, {
-      width: '850px',
-      height: '350px',
-      panelClass: 'article-popup-panel',
-      data: {
-        chapterID: chapterId,
-        course: course,
-        history: this.router.url,
-      },
-    });
+  openLessonInitDialog(
+    chapterId: number,
+    course: Course,
+    indexChapter: number
+  ): void {
+    this.dialogNewLessonRef
+      .open(LessonInitPopupComponent, {
+        width: '850px',
+        height: '350px',
+        panelClass: 'article-popup-panel',
+        data: {
+          chapterID: chapterId,
+          course,
+          indexChapter,
+          companyId: this.companyId,
+        },
+      })
+      .afterClosed()
+      .subscribe((newLesson) => {
+        if (newLesson) {
+          const lessons = this.chapters[newLesson.indexChapter].lessons;
+          lessons.push(newLesson.lesson);
+          this.chapters = [...this.chapters];
+        }
+      });
   }
 
-  openLessonDeleteDialog(lessonId: number): void {
-    this.dialogDeleteLessonRef.open(LessonDeletePopupComponent, {
-      panelClass: 'delete-article-popup-panel',
-      data: {
-        lessonId,
-        history: this.router.url,
-      },
-    });
+  openLessonDeleteDialog(
+    lessonId: number,
+    indexChapter: number,
+    indexLesson: number
+  ): void {
+    this.dialogDeleteLessonRef
+      .open(LessonDeletePopupComponent, {
+        panelClass: 'delete-article-popup-panel',
+        data: {
+          lessonId,
+          indexChapter,
+          indexLesson,
+        },
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          const lessons = this.chapters[data.indexChapter].lessons;
+          lessons.splice(data.indexLesson);
+
+          this.chapters = [...this.chapters];
+
+          const queryParams: { [key: string]: string } = {};
+          if (this.companyId !== undefined) {
+            queryParams['companyId'] = this.companyId;
+          }
+
+          const courseSlug = slugify(this.course);
+
+          if (lessons.length > 0) {
+            const lessonSlug = slugify(lessons[lessons.length - 1]);
+
+            this.router.navigate([`/cours/${courseSlug}/${lessonSlug}`], {
+              queryParams,
+            });
+          } else {
+            this.router.navigate([`/cours/${courseSlug}/?`], { queryParams });
+          }
+        }
+      });
   }
 
   capitalize(str: string): string {
@@ -182,9 +251,8 @@ export class CurriculumSidebarComponent implements OnInit {
 
   publishCourse(course: Course) {
     this.isPublishing = true;
-    this.publishBtnText = (this.authService.isAdmin || this.exclusive)
-      ? 'Publication'
-      : 'Soumission';
+    this.publishBtnText =
+      this.authService.isAdmin || this.exclusive ? 'Publication' : 'Soumission';
 
     const { subTitle, summary } = course;
     if (subTitle == null) {
@@ -206,19 +274,22 @@ export class CurriculumSidebarComponent implements OnInit {
       .pipe(
         catchError((err) => {
           this.isPublishing = false;
-          this.publishBtnText = (this.authService.isAdmin || this.exclusive)
-            ? 'Publier'
-            : 'Soumettre';
+          this.publishBtnText =
+            this.authService.isAdmin || this.exclusive
+              ? 'Publier'
+              : 'Soumettre';
           return throwError(() => err);
         }),
         tap((_data) => {
-          const msg = (this.authService.isAdmin || this.exclusive)
-            ? 'Publication reussie !'
-            : 'Soumission reussie !';
+          const msg =
+            this.authService.isAdmin || this.exclusive
+              ? 'Publication reussie !'
+              : 'Soumission reussie !';
           this.isPublishing = false;
-          this.publishBtnText = (this.authService.isAdmin || this.exclusive)
-            ? 'Publier'
-            : 'Soumettre';
+          this.publishBtnText =
+            this.authService.isAdmin || this.exclusive
+              ? 'Publier'
+              : 'Soumettre';
           this.messageService.openSnackBarSuccess(msg, 'OK');
         })
       )
@@ -267,8 +338,35 @@ export class CurriculumSidebarComponent implements OnInit {
       });
   }
 
+  canPublishOrSubmit(): boolean {
+    if (this.course.publishedAt) {
+      this.isPublishing = true;
+      return false;
+    }
+
+    this.isPublishing = false;
+
+    if (
+      (this.course.status === 'DRAFT' || this.course.status === 'IN_REVIEW') &&
+      (this.authService.isAdmin ||
+        (this.exclusive && this.authService.adminInCompany(+this.companyId)))
+    ) {
+      this.publishBtnText = 'Publier';
+      return true;
+    }
+
+    if (
+      this.course.status === 'DRAFT' &&
+      this.authService.editorInCompany(+this.companyId)
+    ) {
+      this.publishBtnText = 'Soumettre';
+      return true;
+    }
+
+    return false;
+  }
+
   ngOnInit(): void {
     this.currentRoute = this.router.url;
-    this.publishBtnText = (this.authService.isAdmin || this.exclusive) ? 'Publier' : 'Soumettre';    
   }
 }

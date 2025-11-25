@@ -5,11 +5,8 @@
             <div class="max-w-3xl m-auto">
                 <h2
                     class="flex justify-between items-center pb-4 lg:pb-6 lg:pl-2 font-black text-xl lg:text-2xl text-primary-500">
-                    <a 
-                    [routerLink]="['/cours', course | slugify]" 
-                    rel="noopener"
-                    [queryParams]="{ notRedirectToFirstLesson: 'true', companyId: companyId }"
-                    >{{course?.title}}</a>
+                    <a [routerLink]="['/cours', course | slugify]" rel="noopener"
+                        [queryParams]="{ notRedirectToFirstLesson: 'true', companyId: companyId }">{{course?.title}}</a>
 
                     <app-mentored-icon *ngIf="course?.mentored" [position]="'bottom-l'" [size]="'w-24'"
                         [classes]="'w-auto'">
@@ -17,7 +14,8 @@
                 </h2>
 
                 <div class="reactions-container mb-6">
-                    <app-reactions [obj]="course" [loading]="loading" (reactionEvent)="addReaction($event)"></app-reactions>
+                    <app-reactions [obj]="course" [loading]="loading"
+                        (reactionEvent)="addReaction($event)"></app-reactions>
                 </div>
 
                 <ng-container *ngIf="canEdit">
@@ -32,18 +30,21 @@
                             <span>Nouveau chapitre</span>
                         </button>
 
-                        <button (click)="publishCourse(course)" [disabled]="isPublishing"
-                            [ngClass]="{'cursor-not-allowed bg-opacity-60 hover:bg-opacity-60': isPublishing}"
-                            class="flex items-center gap-1 mb-4 border shadow-lg rounded-md px-4 text-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">
-                            <span class="line-clamp-1" [ngClass]="{'text-sm': isPublishing}">{{(exclusive || authService.isAdmin) ? 'Publier' : 'Soumettre'}}</span>
-                            <svg *ngIf="isPublishing" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"
-                                preserveAspectRatio="xMidYMid">
-                                <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
-                                    stroke-dasharray="164.93361431346415 56.97787143782138"
-                                    transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused"></circle>
-                            </svg>
-                        </button>
+                        <ng-container *ngIf="canPublishOrSubmit()">
+                            <button (click)="publishCourse(course)"
+                                [ngClass]="{'cursor-not-allowed bg-opacity-60 hover:bg-opacity-60': isPublishing}"
+                                class="flex items-center gap-1 mb-4 border shadow-lg rounded-md px-4 text-white bg-primary-500 hover:bg-primary-600 transition-all duration-300">
+                                <span class="line-clamp-1"
+                                    [ngClass]="{'text-sm': isPublishing}">{{publishBtnText}}</span>
+                                <svg *ngIf="isPublishing" class="w-5 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"
+                                    preserveAspectRatio="xMidYMid">
+                                    <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="3" r="35"
+                                        stroke-dasharray="164.93361431346415 56.97787143782138"
+                                        transform="matrix(1,0,0,1,0,0)" style="animation-play-state:paused"></circle>
+                                </svg>
+                            </button>
+                        </ng-container>
                     </div>
                 </ng-container>
 
@@ -57,9 +58,8 @@
                             <cdk-accordion-item *ngFor="let chapter of chapters ; let index = index; first as isFirst"
                                 #accordionItem="cdkAccordionItem" role="button" tabindex="0"
                                 [attr.id]="'accordion-header-' + index" [attr.aria-expanded]="accordionItem.expanded"
-                                [attr.aria-controls]="'accordion-body-' + index" [expanded]="activeChapterID == chapter.id"
-                                (opened)="scrollToChapter()"
-                                >
+                                [attr.aria-controls]="'accordion-body-' + index"
+                                [expanded]="activeChapterID == chapter.id" (opened)="scrollToChapter()">
 
                                 <li cdkDrag [cdkDragDisabled]="!canEdit || mobileQuery.matches"
                                     [ngClass]="{'cursor-grab' : canEdit}">
@@ -82,7 +82,7 @@
                                             </button>
 
                                             <mat-menu #menu="matMenu" class="font-normal text-secondary bg-primary-100">
-                                                <button (click)="openLessonInitDialog(chapter?.id, course)"
+                                                <button (click)="openLessonInitDialog(chapter?.id, course, index)"
                                                     aria-labelledby="Add Lesson button"
                                                     class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -93,7 +93,7 @@
                                                     </svg>
                                                     <span>Ajouter une leçon</span>
                                                 </button>
-                                                <button (click)="openChapterUpdateDialog(chapter)"
+                                                <button (click)="openChapterUpdateDialog(chapter, index)"
                                                     aria-labelledby="Delete chapter button"
                                                     class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -104,7 +104,7 @@
                                                     </svg>
                                                     <span>Modifier ce chapitre</span>
                                                 </button>
-                                                <button (click)="openChapterDeleteDialog(chapter?.id)"
+                                                <button (click)="openChapterDeleteDialog(chapter?.id, index)"
                                                     aria-labelledby="Delete chapter button"
                                                     class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -126,7 +126,8 @@
                                         <ul *ngIf="chapter?.lessons?.length" cdkDropList
                                             [cdkDropListData]="chapter?.lessons"
                                             (cdkDropListDropped)="dropLessons($event)"
-                                            class="curriculum_chapter_lessons mt-1 space-y-0.5" id="chapter_lessons_{{chapter?.id}}">
+                                            class="curriculum_chapter_lessons mt-1 space-y-0.5"
+                                            id="chapter_lessons_{{chapter?.id}}">
 
                                             <ng-container *ngFor="let lesson of chapter?.lessons ; let j = index">
 
@@ -138,8 +139,7 @@
                                                         class="lesson_link w-full group flex justify-between items-center gap-2">
                                                         <div class="w-full flex items-center gap-2 pr-3">
                                                             <a routerLink="{{'/cours/'+(course|slugify)+'/'+(lesson|slugify)}}"
-                                                                rel="noopener"
-                                                                [queryParams]="{companyId:companyId}"
+                                                                rel="noopener" [queryParams]="{companyId:companyId}"
                                                                 [style.pointer-events]="lesson?.free && !canAccessCourse ? 'auto' : 'auto'"
                                                                 class="w-full flex items-center p-3 gap-2"
                                                                 (click)="mobileQuery.matches ? drawer?.toggle() : null">
@@ -178,7 +178,7 @@
                                                                             d="M4.5 12.75l6 6 9-13.5" />
                                                                     </svg>
 
-                                                                    <svg *ngIf="!lesson?.free && !canAccessCourse"
+                                                                    <svg *ngIf="!canEdit && !lesson?.free && !canAccessCourse"
                                                                         xmlns="http://www.w3.org/2000/svg"
                                                                         viewBox="0 0 24 24" fill="currentColor"
                                                                         class="w-5 h-5 text-secondary">
@@ -230,7 +230,7 @@
                                                                             <span>Modifier la leçon</span>
                                                                         </a>
                                                                         <button
-                                                                            (click)="openLessonDeleteDialog(lesson?.id)"
+                                                                            (click)="openLessonDeleteDialog(lesson?.id, index, j)"
                                                                             aria-labelledby="Delete article button"
                                                                             class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
