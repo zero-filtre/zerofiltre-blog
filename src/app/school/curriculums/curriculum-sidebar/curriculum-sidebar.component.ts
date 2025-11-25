@@ -75,8 +75,8 @@ export class CurriculumSidebarComponent implements OnInit {
         event.currentIndex
       );
 
-      const currPosition = event.currentIndex;
-      const prevPosition = event.previousIndex;
+      const currPosition = event.currentIndex + 1;
+      const prevPosition = event.previousIndex + 1;
       const draggedElement = event.item.dropContainer.data[
         event.currentIndex
       ] as Lesson;
@@ -84,7 +84,7 @@ export class CurriculumSidebarComponent implements OnInit {
       if (currPosition != prevPosition) {
         this.courseService
           .moveLesson(draggedElement.chapterId, draggedElement.id, currPosition)
-          .subscribe((_data) => console.log('DRAGGED LESSON'));
+          .subscribe();
       }
     }
   }
@@ -106,7 +106,7 @@ export class CurriculumSidebarComponent implements OnInit {
       if (currPosition != prevPosition) {
         this.courseService
           .moveChapter(draggedElement.id, currPosition)
-          .subscribe((_data) => console.log('DRAGGED CHAPTER'));
+          .subscribe();
       }
     }
   }
