@@ -169,8 +169,8 @@ export class CurriculumSidebarComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((indexChapter) => {
-        if (indexChapter) {
-          this.chapters.splice(indexChapter);
+        if (indexChapter !== null) {
+          this.chapters.splice(indexChapter, 1);
           this.chapters = [...this.chapters];
         }
       });

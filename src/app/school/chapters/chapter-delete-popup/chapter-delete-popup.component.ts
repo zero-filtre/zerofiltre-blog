@@ -30,7 +30,7 @@ export class ChapterDeletePopupComponent {
       .pipe(
         catchError(err => {
           this.loading = false;
-          this.dialogRef.close();
+          this.dialogRef.close(null);
           
           return throwError(() => err);
         })
