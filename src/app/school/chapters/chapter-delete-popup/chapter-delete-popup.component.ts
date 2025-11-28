@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
-import { MessageService } from '../../../services/message.service';
+import { MessageService } from 'src/app/services/message.service';
 import { ChapterService } from '../chapter.service';
 
 @Component({
@@ -10,21 +9,19 @@ import { ChapterService } from '../chapter.service';
   templateUrl: './chapter-delete-popup.component.html',
   styleUrls: ['./chapter-delete-popup.component.css']
 })
-export class ChapterDeletePopupComponent implements OnInit {
+export class ChapterDeletePopupComponent {
   public loading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ChapterDeletePopupComponent>,
-    private messageService: MessageService,
-    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private chapterService: ChapterService
+    private chapterService: ChapterService,
+    private messageService: MessageService
   ) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 
   handleDeleteChapter(): void {
     this.loading = true;
@@ -33,19 +30,20 @@ export class ChapterDeletePopupComponent implements OnInit {
       .pipe(
         catchError(err => {
           this.loading = false;
-          this.dialogRef.close();
-          return throwError(() => err?.message)
+          this.dialogRef.close(null);
+          
+          return throwError(() => err);
         })
       )
-      .subscribe(_data => {
-        location.reload();
-        // this.loading = false;
-        // this.dialogRef.close();
-      })
-  }
-
-  ngOnInit(): void {
-    // do nothing.
+      .subscribe({
+        next: (_data) => {
+          this.loading = false;
+          this.dialogRef.close(this.data.indexChapter);
+        },
+        error: (err) => {
+          this.messageService.openSnackBarError(err.error.error.reason, 'OK');
+        }
+      });
   }
 
 }

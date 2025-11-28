@@ -33,7 +33,7 @@
             </div>
 
             <!-- Contextuel menu for editing -->
-            <div *ngIf="canEditCourse(course) || canDownloadCertificate || canLinkCourseToCompany() || canManageCompany()">
+            <div *ngIf="canManageCourse || canLinkCourseToCompany || canUnlinkCourseFromCompany || canDownloadCertificate">
                 <button [matMenuTriggerFor]="menu"
                     class="rounded-full p-2 opacity-0 group-hover:opacity-100 hover:bg-skin-link transition-all duration-500"
                     aria-label="icon-button with a menu">
@@ -45,7 +45,7 @@
                 </button>
 
                 <mat-menu #menu="matMenu" class="font-normal text-skin-base bg-skin-bg">
-                    <ng-container *ngIf="canLinkCourseToCompany()">
+                    <ng-container *ngIf="canLinkCourseToCompany">
                         <button (click)="openCompanySearchPopup(course, 'Company')" aria-labelledby="Link course to a company button"
                             class="flex items-center gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -55,17 +55,17 @@
                         </button>
                     </ng-container>
 
-                    <ng-container *ngIf="canUnLinkCourseFromCompany()">
+                    <ng-container *ngIf="canUnlinkCourseFromCompany">
                         <button (click)="unlinkCourseFromCompany()" aria-labelledby="Link course to a company button"
                             class="flex items-center gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.181 8.68a4.503 4.503 0 0 1 1.903 6.405m-9.768-2.782L3.56 14.06a4.5 4.5 0 0 0 6.364 6.365l3.129-3.129m5.614-5.615 1.757-1.757a4.5 4.5 0 0 0-6.364-6.365l-4.5 4.5c-.258.26-.479.541-.661.84m1.903 6.405a4.495 4.495 0 0 1-1.242-.88 4.483 4.483 0 0 1-1.062-1.683m6.587 2.345 5.907 5.907m-5.907-5.907L8.898 8.898M2.991 2.99 8.898 8.9" />
                             </svg>
-                            <span>Retirer ce cours de l'organisation</span>
+                            <span>Retirer de l'organisation ce cours de plateforme</span>
                         </button>
                     </ng-container>
 
-                    <ng-container *ngIf="canEditCourse(course)">
+                    <ng-container *ngIf="canManageCourse">
                         <a aria-labelledby="Link to course edit page" 
                             routerLink="/cours/{{course|slugify}}/edit/"
                             rel="noopener"
@@ -80,6 +80,7 @@
                             <span>Modifier les infos du cours</span>
                         </a>
                         <a aria-labelledby="Link to course edit page" 
+                            (click)="saveCourseInfos()"
                             routerLink="/cours/{{course|slugify}}/?"
                             rel="noopener"
                             [queryParams]="{companyId:companyId}"
@@ -93,18 +94,15 @@
                             <span>Gérer les leçons</span>
                         </a>
 
-                        <ng-container *ngIf="canDeleteCourse(course)">
-                            <button (click)="openCourseDeleteDialog(course?.id)" aria-labelledby="Delete course button"
-                                class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                    class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                </svg>
-                                <span>Supprimer ce cours</span>
-                            </button>
-                        </ng-container>
-
+                        <button (click)="openCourseDeleteDialog(course?.id)" aria-labelledby="Delete course button"
+                            class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+                            <span>Supprimer ce cours</span>
+                        </button>
                     </ng-container>
 
                     <button *ngIf="canDownloadCertificate"  (click)="downloadCoursePdf(course.id)" aria-labelledby="Download course certificate button" class="flex items-end gap-3 w-full text-left px-4 py-2 hover:bg-skin-link hover:text-primary-500 text-sm transition-all duration-200">

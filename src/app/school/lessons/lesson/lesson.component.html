@@ -10,9 +10,9 @@
             </svg>
         </button>
 
-        <progress *ngIf="isSubscriber" id="bluebar" class="progress_bar h-10"
+        <progress *ngIf="isSubscriber" id="bluebar1" class="progress_bar h-10"
             [ngClass]="{'sidebar-closed':!snav.opened}" [value]="completeProgressVal" max="100"></progress>
-        <progress *ngIf="!isSubscriber" id="bluebar" class="progress_bar h-10 opacity-0"
+        <progress *ngIf="!isSubscriber" id="bluebar2" class="progress_bar h-10 opacity-0"
             [ngClass]="{'sidebar-closed':!snav.opened}" [value]="0" max="100"></progress>
     </div>
 </div>
@@ -25,7 +25,7 @@
             <aside aria-labelledby="course-curriculum-sidebar" class="text-skin-art" *appShellNoRender>
                 <app-curriculum-sidebar [drawer]="snav" [canEdit]="canEditCourse" [course]="course$|async"
                     [lessons]="lessons$ | async" [chapters]="chapters$ | async" [activeLessonID]="lessonID"
-                    [exclusive]="isCourseExclusive$ | async"
+                    [exclusive]="isExclusiveCourse"
                     [activeChapterID]="lesson?.chapterId" [canAccessCourse]="canAccessCourse"
                     [loading]="loadingChapters" [completedLessonsIds]="completedLessonsIds" [durations]="durations"
                     [companyId]="companyId"
@@ -53,7 +53,7 @@
 
                     <ng-container *ngIf="!loading && lesson; else novideo">
                         <ng-container *ngIf="lesson.video">
-                            <div class="mx-auto" id="lesson_video_player">
+                            <div class="mx-auto lesson_video_player">
                                 <div class="vid_wrapper w-full h-full">
                                     <div class="vid_wrapper w-full h-full">
                                         <iframe *ngIf="canAccessCourse || lesson.free" [src]="lesson.video | vimeoUrl"
@@ -107,7 +107,7 @@
                     </ng-container>
 
                     <ng-template #novideo class="lessonCoverVideoSkeletonLoader">
-                        <div class="mx-auto" id="lesson_video_player">
+                        <div class="mx-auto lesson_video_player">
                             <div class="vid_wrapper w-full h-full">
                                 <div class="vid_wrapper w-full h-full">
                                     <ngx-skeleton-loader count="1" appearance="line" [theme]="{ 
@@ -315,7 +315,7 @@
                     </div>
 
                     <div class="lesson_pagination my-10">
-                        <div *ngIf="lesson" class="flex gap-5 lg:gap-10 font-semibold">
+                        <div *ngIf="!isEditCourse && lesson" class="flex gap-5 lg:gap-10 font-semibold">
                             <a *ngIf="prevLesson$|async as prev"
                                 routerLink="{{'/cours/'+ (course|slugify) + '/' + (prev|slugify)}}"
                                 class="flex items-center justify-between gap-2 w-full rounded-md p-4 py-3 text-primary-500 border border-primary-500 hover:bg-primary-100 hover:bg-opacity-40 transition-all duration-300">
