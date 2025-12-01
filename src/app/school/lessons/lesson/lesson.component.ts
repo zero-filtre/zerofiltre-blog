@@ -524,7 +524,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.loadingCourse = false;
           this.course = data;
 
-          if (this.authService.isAdmin) return;
+          if (this.authService.isAdmin || this.authService.currentUsr === null) return;
 
           const userCompanies = this.authService.currentUsr.companies;
 
