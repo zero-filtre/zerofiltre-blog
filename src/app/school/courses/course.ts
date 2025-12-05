@@ -23,6 +23,7 @@ export interface Course {
     video: string;
     sections: Section[];
     publishedAt: string;
+    exclusive?: boolean;
 }
 
 export interface Section {
