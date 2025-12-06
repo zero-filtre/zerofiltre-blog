@@ -15,6 +15,15 @@ spec:
       labels:
         app: zerofiltretech-blog-front-${env_name}
       annotations:
+        vault.hashicorp.com/agent-requests-cpu: "10m"      # Down from 250m default
+        vault.hashicorp.com/agent-requests-mem: "64Mi"
+        vault.hashicorp.com/agent-limits-cpu: "100m"
+        vault.hashicorp.com/agent-limits-mem: "128Mi"
+        vault.hashicorp.com/agent-init-requests-cpu: "10m"
+        vault.hashicorp.com/agent-init-requests-mem: "32Mi"
+        vault.hashicorp.com/agent-init-limits-cpu: "50m"
+        vault.hashicorp.com/agent-init-limits-mem: "64Mi"
+
         vault.hashicorp.com/agent-inject: "true"
         vault.hashicorp.com/role: "internal-app"
         vault.hashicorp.com/agent-inject-secret-config: "${env_name}/data/zerofiltre-blog-front"
