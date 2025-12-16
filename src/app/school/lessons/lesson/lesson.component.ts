@@ -1,32 +1,6 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  HostListener,
-  OnInit,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SeoService } from 'src/app/services/seo.service';
-import {
-  Observable,
-  catchError,
-  throwError,
-  Subject,
-  tap,
-  map,
-  of,
-  shareReplay,
-  forkJoin,
-  finalize,
-  first,
-  filter,
-  mergeMap,
-  from,
-  EMPTY,
-  combineLatest,
-  takeUntil
-} from 'rxjs';
+import { Observable, catchError, throwError, Subject, tap, map, of, shareReplay, forkJoin, finalize, first, filter, mergeMap, from, combineLatest, takeUntil } from 'rxjs';
 
 import { VimeoService } from '../../../services/vimeo.service';
 import { Course } from '../../courses/course';
