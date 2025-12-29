@@ -1,8 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
-import { MessageService } from '../../../services/message.service';
 import { LessonService } from '../lesson.service';
 import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
 
@@ -11,14 +10,13 @@ import { SlugUrlPipe } from 'src/app/shared/pipes/slug-url.pipe';
   templateUrl: './lesson-init-popup.component.html',
   styleUrls: ['./lesson-init-popup.component.css']
 })
-export class LessonInitPopupComponent implements OnInit {
+export class LessonInitPopupComponent {
   public title: string = '';
   public loading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<LessonInitPopupComponent>,
     private router: Router,
-    private messageService: MessageService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private lessonService: LessonService,
     private slugify: SlugUrlPipe
@@ -47,16 +45,18 @@ export class LessonInitPopupComponent implements OnInit {
           return throwError(() => err?.message)
         })
       )
-      .subscribe(lesson => {
+      .subscribe(newLesson => {
         this.loading = false;
-        this.dialogRef.close();
-        this.router.navigateByUrl(`/cours/${this.slugify.transform(this.data.course)}/${this.slugify.transform(lesson)}/edit`)
-      })
-  }
+        this.dialogRef.close({lesson: newLesson, indexChapter: this.data.indexChapter});
 
-  ngOnInit(): void {
-    // console.log('DATA: ', this.data);
-    // do nothing.
+        const queryParams: { [key: string]: string } = {};
+
+        if (this.data.companyId !== undefined) {
+            queryParams['companyId'] = this.data.companyId;
+        }
+
+        this.router.navigate([`/cours/${this.slugify.transform(this.data.course)}/${this.slugify.transform(newLesson)}/edit`], { queryParams });
+      })
   }
 
 }

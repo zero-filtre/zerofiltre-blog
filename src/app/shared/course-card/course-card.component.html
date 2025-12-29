@@ -80,6 +80,7 @@
                             <span>Modifier les infos du cours</span>
                         </a>
                         <a aria-labelledby="Link to course edit page" 
+                            (click)="saveCourseInfos()"
                             routerLink="/cours/{{course|slugify}}/?"
                             rel="noopener"
                             [queryParams]="{companyId:companyId}"

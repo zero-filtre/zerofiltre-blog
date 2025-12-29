@@ -1,7 +1,7 @@
 <div class="edit-toolbar sticky top-[72px] lg:top-20 z-20 bg-primary-100">
     <nav class="top-nav font-semibold">
         <div class="site-container flex items-center justify-between gap-4 lg:gap-5 h-16">
-            <a routerLink="/cours/{{courseID}}/{{lessonID}}" class="flex items-center justify-center bg-primary-50 text-white h-full w-16"
+            <a (click)="returnToLesson()" class="flex items-center justify-center bg-primary-50 text-white h-full w-16"
                 aria-label="navigate back button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="group-hover:text-primary-300"
                     data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
@@ -248,7 +248,7 @@
                             </div>
                         </ng-container>
 
-                        <label *ngIf="!resUploading" for="file" (click)="fileUpload.click()"
+                        <label *ngIf="!resUploading" for="file" (click)="fileUploadResources.click()"
                             class="group text-skin-base flex flex-col items-center justify-center hover:bg-base-100 p-5 rounded cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-10 w-10 group-hover:text-primary-500"
                                 viewBox="0 0 512 512">
@@ -262,7 +262,7 @@
 
                             <span class="group-hover:text-primary-500 text-center">Ajouter un fichier <br> (jusqu'à 200 MB)</span>
 
-                            <input class="sr-only" type="file" id="fileUpload" name="fileUpload" #fileUpload
+                            <input class="sr-only" type="file" id="fileUploadResources" name="fileUploadResources" #fileUploadResources
                                 (change)="uploadRessource($event)" accept="image/*,.pdf,.txt,.doc,.docx,.zip" />
                         </label>
 
